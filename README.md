@@ -1,2 +1,3 @@
-# serialist.js
-A library of methods for generating and transformation of number sequences
+# serialism.js
+
+A set of methods for the generation and transformation of number sequences in algorithmic composition
