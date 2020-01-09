@@ -1,0 +1,40 @@
+{
+  "name": "total-serialism",
+  "version": "1.0.0",
+  "description": "A set of methods for the generation and transformation of number sequences in algorithmic composition",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tmhglnd/serialism.js.git"
+  },
+  "keywords": [
+    "serialism",
+    "composition",
+    "total",
+    "algorithmic",
+    "twelvetone",
+    "melody",
+    "pitch",
+    "rhythm",
+    "harmony",
+    "chord",
+    "progression",
+    "sequence",
+    "pattern",
+    "note",
+    "tone",
+    "rhythmic",
+    "generative",
+    "transformation",
+    "permutation"
+  ],
+  "author": "Timo Hoogland",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tmhglnd/serialism.js/issues"
+  },
+  "homepage": "https://github.com/tmhglnd/serialism.js#readme"
+}
