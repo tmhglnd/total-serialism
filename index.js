@@ -1,4 +1,4 @@
-const Gen = require('./lib/generate.js');
+const Gen = require('./lib/gen-basic.js');
 // const Algo = require('./lib/algorithmic.js');
 // const Util = require('./lib/utilities.js');
 // const Trans = require('./lib/transformational.js');
