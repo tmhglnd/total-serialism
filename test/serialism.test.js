@@ -28,6 +28,23 @@ function testGen(){
 }
 
 function testTransform(){
+	test("Trans.clone()");
+	test("Trans.clone([0, 10, 20], 0, 5, 100)");
+	test("Trans.clone(['hello', 'world'], 0, 1, 2)");
+
+	test("Trans.duplicate()");
+	test("Trans.duplicate([0, 1, 2])");
+	test("Trans.duplicate([0, 1, 2], 4)");
+
+	test("Trans.join()");
+	test("Trans.join([0, 1], [[22, 33], 4])");
+	test("Trans.join([1, 2], 3, [4, 5])");
+
+	test("Trans.palindrome()");
+	test("Trans.palindrome([0, 1, 2, 3])");
+	test("Trans.palindrome([0, 1, 2, 3], true)");
+	test("Trans.palindrome([0, 1, 2, 3], 1)");
+
 	test("Trans.rotate()");
 	test("Trans.rotate([0, 1, 2, 3])");
 	test("Trans.rotate([0, 1, 2, 3], 1)");
@@ -38,16 +55,12 @@ function testTransform(){
 	test("Trans.reverse([0, 1, 2, 3])");
 	test("Trans.reverse([0, [11, 12], 2, 3])");
 
-	test("Trans.duplicate()");
-	test("Trans.duplicate([0, 1, 2])");
-	test("Trans.duplicate([0, 1, 2], 4)");
-
-	test("Trans.unique()");
-	test("Trans.unique([0, 1, 2, 2, 1])");
-
 	test("Trans.shuffle()");
 	test("Trans.shuffle([0, 1, 2, 3])");
 	test("Trans.shuffle([0, 1, 2, 3])");
+
+	test("Trans.unique()");
+	test("Trans.unique([0, 1, 2, 2, 1])");
 }
 
 function test(f){
