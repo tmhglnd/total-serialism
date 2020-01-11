@@ -20,6 +20,8 @@ function testGen(){
 	test("Gen.spreadFloat(4, -1, 1)");
 	test("Gen.spreadInclusiveFloat(5, -1, 1)");
 	test("Gen.spreadInclusiveFloatExp(5, 0, 1, 2)");
+	test("Gen.fill(0, 2, 5, 3, 10, 4)");
+	test("Gen.fill()");
 }
 
 function test(f){
