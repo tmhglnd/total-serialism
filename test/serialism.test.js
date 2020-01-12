@@ -12,7 +12,7 @@ const Trans = require("../index").Transform;
 */
 
 // testGen();
-testTransform();
+// testTransform();
 
 function testGen(){
 	test("Gen.spread()");
@@ -44,6 +44,9 @@ function testTransform(){
 	test("Trans.join()");
 	test("Trans.join([0, 1], [[22, 33], 4])");
 	test("Trans.join([1, 2], 3, [4, 5])");
+
+	test("Trans.lace([0, 2, 4], [1, 3, 5], ['hello'])");
+	test("Trans.lace([1, 2, 3], [10, 20], [100, 200, 300, 400])");
 
 	test("Trans.merge()");
 	test("Trans.merge([0, 1, 2], [3, 4], [5, 6, 7, 8])");
