@@ -1,4 +1,4 @@
-const Gen = require('./lib/gen-basic.js');
+const Generative = require('./lib/gen-basic.js');
 const Transform = require('./lib/transform.js');
 // const Algo = require('./lib/algorithmic.js');
 // const Util = require('./lib/utilities.js');
@@ -7,7 +7,7 @@ const Transform = require('./lib/transform.js');
 // require seedrandom package
 // const seedrandom = require('seedrandom');
 
-exports.Gen = Gen;
+exports.Generative = Generative;
 exports.Transform = Transform;
 // exports.Algo = Algo;
 // exports.Util = Util;

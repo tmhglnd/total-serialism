@@ -1,7 +1,7 @@
 {
   "name": "total-serialism",
-  "version": "1.0.2",
-  "description": "A set of methods for the generation and transformation of number sequences in algorithmic composition",
+  "version": "1.0.3",
+  "description": "A set of methods for the generation and transformation of number sequences useful in algorithmic composition",
   "main": "index.js",
   "scripts": {
     "test": "node test/serialism.test.js"
