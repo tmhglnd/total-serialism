@@ -1,6 +1,7 @@
+
 const Generative = require('./lib/gen-basic.js');
+const Algorithmic = require('./lib/gen-complex.js');
 const Transform = require('./lib/transform.js');
-// const Algo = require('./lib/algorithmic.js');
 // const Util = require('./lib/utilities.js');
 // const Dict = require('./lib/dict.js');
 
@@ -9,7 +10,7 @@ const Transform = require('./lib/transform.js');
 
 exports.Generative = Generative;
 exports.Transform = Transform;
-// exports.Algo = Algo;
+exports.Algorithmic = Algorithmic;
 // exports.Util = Util;
 // exports.Dict = Dict;
 

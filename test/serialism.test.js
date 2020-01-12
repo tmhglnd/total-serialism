@@ -1,6 +1,7 @@
 
 const Serial = require("../index");
 const Gen = require("../index").Generative;
+const Algo = require("../index").Algorithmic;
 const Trans = require("../index").Transform;
 
 /*
@@ -12,6 +13,7 @@ const Trans = require("../index").Transform;
 */
 
 testGen();
+testAlgo();
 testTransform();
 
 function testGen(){
@@ -26,6 +28,13 @@ function testGen(){
 	
 	test("Gen.fill()");
 	test("Gen.fill(10, 2, 15, 3, 20, 4)");
+}
+
+function testAlgo(){
+	test("Algo.euclid()");
+	test("Algo.euclid(10, 3)");
+	test("Algo.euclid(8, 5)");
+	test("Algo.euclid(16, 9, 1)");
 }
 
 function testTransform(){
