@@ -13,7 +13,7 @@
 const Generative = require('./lib/gen-basic.js');
 const Algorithmic = require('./lib/gen-complex.js');
 const Modification = require('./lib/transform.js');
-// const Util = require('./lib/utilities.js');
+const Utility = require('./lib/utility.js');
 // const Dict = require('./lib/dict.js');
 
 // require seedrandom package
@@ -23,7 +23,7 @@ const Modification = require('./lib/transform.js');
 exports.Gen = Generative;
 exports.Mod = Modification;
 exports.Algo = Algorithmic;
-// exports.Util = Util;
+exports.Util = Utility;
 // exports.Dict = Dict;
 
 /*

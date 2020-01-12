@@ -3,6 +3,7 @@ const Srl = require("../index");
 const Gen = require("../index").Gen;
 const Algo = require("../index").Algo;
 const Mod = require("../index").Mod;
+const Util = require("../index").Util;
 
 /*
 	Test criteria:
@@ -12,10 +13,11 @@ const Mod = require("../index").Mod;
 	- test for negative values
 */
 
-testSerial();
-testGen();
-testAlgo();
-testMod();
+// testSerial();
+// testGen();
+// testAlgo();
+// testMod();
+testUtil();
 
 function testSerial(){
 	pagebreak("Serial");
@@ -99,6 +101,18 @@ function testMod(){
 
 	test("Mod.unique()");
 	test("Mod.unique([5, 7, 5, 0, 12, 7, 5])");
+}
+
+function testUtil(){
+	test("Util.mod(7, 3)");
+	test("Util.mod([-2, 4, 3, 7], 5)");
+
+	test("Util.constrain(10.34, 0, 3.14)");
+	test("Util.constrain([-2, 4, 3, 7], 1, 5)");
+
+	test("Util.map(0.5, 0, 1, 0, 2)");
+	test("Util.map(0.5, 0, 1, 0, 2, 0.5)");
+	test("Util.map([0, 1, 2, 3, 4], 0, 4, -1, 1)");
 }
 
 function test(f){
