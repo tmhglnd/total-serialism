@@ -15,20 +15,24 @@ $ npm install total-serialism
 The entire library
 
 ```js
-const Serial = require('total-serialism');
+const Serialism = require('total-serialism');
 ```
 Or an individual section
 
 ```js
-const Gen = require('total-serialism').Generative;
-const Trs = require('total-serialism').Transform;
+const Gen  = require('total-serialism').Generativ;
+const Algo = require('total-serialism').Algorithmic;
+const Mod  = require('total-serialism').Transform;
+const Rand = require('total-serialism').Stochastic;
+const Util = require('total-serialism').Utility;
 ```
 
 # Examples
 
+Generative Methods
+
 ```js
 const Gen = require('total-serialism').Generative;
-const Trs = require('total-serialism').Transform;
 
 // generate an array of 7 ints between range 0-7
 Gen.spread(7); //=> [0, 1, 2, 3, 4, 5, 6]
@@ -41,6 +45,32 @@ Gen.spreadInclusiveFloat(9, -1, 1); //=> [-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 
 
 // fill an array with duplicates of a value
 Gen.fill(10, 2, 15, 3, 20, 4); //=> [10, 10, 15, 15, 15, 20, 20, 20, 20]
+```
+
+Stochastic Methods
+```js
+const Rand = require('total-serialism').Stochastic;
+
+// set the random number generator seed
+Rand.seed(19374);
+
+// generate an array of random floats in range -1 to 1
+Rand.randomFloat(3, -1, 1); //=>  [0.6291111850577886, 0.15153786227276944, 0.32814801081039646]
+
+// generate an array of random integers in range
+Rand.random(5, 0, 12); //=>  [3, 3, 7, 1, 0]
+
+// generate an array of coin tosses
+Rand.coin(10); //=> [0, 1, 0, 1, 0, 1, 0, 0, 1, 0]
+
+// generate an array of dice rolls
+Rand.dice(4); //=>  [4, 4, 2, 3] 
+```
+
+Transformative Methods
+
+```js
+const Trs = require('total-serialism').Transform;
 
 // duplicate an array with an offset added to every value
 Trs.clone([0, 5, 7], 0, 12, -12); //=>  [0, 5, 7, 12, 17, 19, -12, -7, -5] 
