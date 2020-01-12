@@ -21,9 +21,10 @@ Or an individual section
 
 ```js
 const Gen = require('total-serialism').Generative;
-const Trans = require('total-serialism').Transform;
+const Trs = require('total-serialism').Transform;
 ```
-# Quick Examples
+
+# Examples
 
 ```js
 const Gen = require('total-serialism').Generative;
@@ -59,7 +60,7 @@ Trs.lace([0, 5, 9], [3, 3], [7, 12, 11, -1]); //=>  [0, 3, 7, 5, 3, 12, 9, 11, -
 // merge arrays into a 2D-array
 Trs.merge([0, 3, 7], [3, 12], [12, -1, 19, 5]); //=>  [[0, 3, 12], [3, 12, -1], [7, 19], [5]]
 
-// generate a palindrome of an array (similar as Trs.join([], Trs.reverse([])); )
+// generate a palindrome of an array
 Trs.palindrome([0, 3, 5, 7]); //=> [0, 3, 5, 7, 7, 5, 3, 0]
 
 // rotate an array in positive or negative direction
@@ -68,7 +69,7 @@ Trs.rotate([0, 5, 7, 12], -1); //=>  [5, 7, 12, 0]
 // reverse an array
 Trs.reverse([0, 5, 7, 12]); //=>  [12, 7, 5, 0]
 
-// shuffle the items in an array (Fischer-Yates shuffle algorithm)
+// shuffle the items in an array (Fisher-Yates shuffle algorithm)
 Trs.shuffle([0, 5, 7, 12]); //=>  [7, 5, 0, 12] 
 
 // remove duplicates from an array, leave order of appearance intact
