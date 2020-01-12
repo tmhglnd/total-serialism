@@ -17,7 +17,7 @@ const Util = require("../index").Util;
 // testGen();
 // testAlgo();
 // testMod();
-testUtil();
+// testUtil();
 
 function testSerial(){
 	pagebreak("Serial");
