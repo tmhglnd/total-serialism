@@ -1,10 +1,80 @@
-# serialism.js
+# total-serialism
 
-A set of methods for the generation and transformation of number sequences in algorithmic composition
+`total-serialism` is a set of methods for the generation and transformation of number sequences mainly designed for algorithmic composition of music.
 
-# About
+!!! Work-In-Progress !!!
 
-!!! Currently under development, not working properly yet !!!
+# Install
+
+```
+$ npm install total-serialism
+```
+
+# Usage
+
+The entire library
+
+```js
+const Serial = require('total-serialism');
+```
+Or an individual section
+
+```js
+const Gen = require('total-serialism').Generative;
+const Trans = require('total-serialism').Transform;
+```
+# Quick Examples
+
+```js
+const Gen = require('total-serialism').Generative;
+const Trs = require('total-serialism').Transform;
+
+// generate an array of 7 ints between range 0-7
+Gen.spread(7); //=> [0, 1, 2, 3, 4, 5, 6]
+
+// generate an array of 5 ints between range 7-19
+Gen.spread(5, 7, 19); //=> [7, 9, 11, 14, 16]
+
+// generate an array of 9 floats between -1 - 1 (inclusive)
+Gen.spreadInclusiveFloat(9, -1, 1); //=> [-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1]
+
+// fill an array with duplicates of a value
+Gen.fill(10, 2, 15, 3, 20, 4); //=> [10, 10, 15, 15, 15, 20, 20, 20, 20]
+
+// duplicate an array with an offset added to every value
+Trs.clone([0, 5, 7], 0, 12, -12); //=>  [0, 5, 7, 12, 17, 19, -12, -7, -5] 
+
+// combine multiple numbers/arrays into one
+Trs.combine([0, 5], 12, [7, 3]); //=>  [0, 5, 12, 7, 3] 
+
+// duplicate an array certain amount of times
+Trs.duplicate([0, 5, 7], 3); //=> [0, 5, 7, 0, 5, 7, 0, 5, 7]
+
+// invert an array around a center point
+Trs.invert([0, 2, 5, 10, 13], 5); //=>  [10, 8, 5, 0, -3]
+
+// interleave multiple arrays into one
+Trs.lace([0, 5, 9], [3, 3], [7, 12, 11, -1]); //=>  [0, 3, 7, 5, 3, 12, 9, 11, -1]
+
+// merge arrays into a 2D-array
+Trs.merge([0, 3, 7], [3, 12], [12, -1, 19, 5]); //=>  [[0, 3, 12], [3, 12, -1], [7, 19], [5]]
+
+// generate a palindrome of an array (similar as Trs.join([], Trs.reverse([])); )
+Trs.palindrome([0, 3, 5, 7]); //=> [0, 3, 5, 7, 7, 5, 3, 0]
+
+// rotate an array in positive or negative direction
+Trs.rotate([0, 5, 7, 12], -1); //=>  [5, 7, 12, 0] 
+
+// reverse an array
+Trs.reverse([0, 5, 7, 12]); //=>  [12, 7, 5, 0]
+
+// shuffle the items in an array (Fischer-Yates shuffle algorithm)
+Trs.shuffle([0, 5, 7, 12]); //=>  [7, 5, 0, 12] 
+
+// remove duplicates from an array, leave order of appearance intact
+Trs.unique([5, 7, 5, 0, 12, 7, 5]); //=>  [5, 7, 0, 12] 
+
+```
 
 # License
 
