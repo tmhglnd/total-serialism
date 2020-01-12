@@ -12,30 +12,15 @@
 // require the various libraries
 const Generative = require('./lib/gen-basic.js');
 const Algorithmic = require('./lib/gen-complex.js');
+const Stochastic = require('./lib/gen-stochastic.js');
 const Modification = require('./lib/transform.js');
 const Utility = require('./lib/utility.js');
 // const Dict = require('./lib/dict.js');
 
-// require seedrandom package
-// const seedrandom = require('seedrandom');
-
 // export the various libraries
 exports.Gen = Generative;
-exports.Mod = Modification;
 exports.Algo = Algorithmic;
+exports.Rand = Stochastic;
+exports.Mod = Modification;
 exports.Util = Utility;
 // exports.Dict = Dict;
-
-/*
-// Set the seed for all the Random Number Generators. 
-// If seed is 0 set to unpredictable seeding
-function seed(v){
-	if (v == 0){
-		seedrandom();
-	} else {
-		seedrandom(v, {global: true});
-	}
-}//seed()
-
-exports.seed = seed;
-*/

@@ -4,6 +4,7 @@ const Gen = require("../index").Gen;
 const Algo = require("../index").Algo;
 const Mod = require("../index").Mod;
 const Util = require("../index").Util;
+const Rand = require("../index").Rand;
 
 /*
 	Test criteria:
@@ -16,6 +17,7 @@ const Util = require("../index").Util;
 // testSerial();
 // testGen();
 // testAlgo();
+testRand();
 // testMod();
 // testUtil();
 
@@ -50,6 +52,26 @@ function testAlgo(){
 	test("Algo.euclid(10, 3)");
 	test("Algo.euclid(8, 5)");
 	test("Algo.euclid(16, 9, 1)");
+}
+
+function testRand(){
+	test("Rand.seed(19374)");
+	test("Rand.randomFloat(3, -1, 1)");
+	test("Rand.randomFloat(3, 0.2, 0.5)");
+
+	test("Rand.seed(4827)");
+	test("Rand.random(5, 2)");
+	test("Rand.random(5, 0, 12)");
+
+	test("Rand.seed(4827)");
+	test("Rand.random(5, 2)");
+	test("Rand.random(5, 0, 12)");
+
+	test("Rand.seed(0)");
+	test("Rand.coin(10)");
+
+	test("Rand.dice(4)");
+	test("Rand.dice(4)");
 }
 
 function testMod(){
@@ -135,7 +157,12 @@ function test(f){
 	// print the written function to console
 	console.log(f);
 	// evaluate the function and print results
-	console.log("=> ", eval(f), "\n");
+	r = eval(f);
+	if (r === undefined){
+		r = "void return";
+	}
+
+	console.log("=> ", r, "\n");
 }
 
 function pagebreak(n){
