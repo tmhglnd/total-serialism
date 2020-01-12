@@ -107,12 +107,28 @@ function testUtil(){
 	test("Util.mod(7, 3)");
 	test("Util.mod([-2, 4, 3, 7], 5)");
 
-	test("Util.constrain(10.34, 0, 3.14)");
-	test("Util.constrain([-2, 4, 3, 7], 1, 5)");
+	test("Util.bound(10.34, 0, 3.14)");
+	test("Util.bound([-2, 4, 3, 7], 1, 5)");
 
 	test("Util.map(0.5, 0, 1, 0, 2)");
 	test("Util.map(0.5, 0, 1, 0, 2, 0.5)");
 	test("Util.map([0, 1, 2, 3, 4], 0, 4, -1, 1)");
+
+	test("Util.add(5, 2)");
+	test("Util.add([0, 3, 7], 2)");
+	test("Util.add([1, 2, 3, 4], [1, 2, 3])");
+
+	test("Util.sub(5, 2)");
+	test("Util.sub([0, 3, 7], 2)");
+	test("Util.sub([1, 2, 3, 4], [1, 2, 3])");
+
+	test("Util.mul(5, 2)");
+	test("Util.mul([0, 3, 7], 2)");
+	test("Util.mul([1, 2, 3, 4], [1, 2, 3])");
+
+	test("Util.div(5, 2)");
+	test("Util.div([0, 3, 7], 2)");
+	test("Util.div([1, 2, 3, 4], [1, 2, 3])");
 }
 
 function test(f){
