@@ -1,5 +1,5 @@
 
-const Serialism = require("../index");
+const Serial = require("../index");
 const Gen = require("../index").Gen;
 const Trans = require("../index").Transform;
 
@@ -36,9 +36,18 @@ function testTransform(){
 	test("Trans.duplicate([0, 1, 2])");
 	test("Trans.duplicate([0, 1, 2], 4)");
 
+	test("Trans.invert()");
+	test("Trans.invert([0, 2, 5, 10, 13])");
+	test("Trans.invert([0, 2, 5, 10, 13], 8)");
+	test("Trans.invert([0, 2, 5, 10, 13], 0, 12)");
+
 	test("Trans.join()");
 	test("Trans.join([0, 1], [[22, 33], 4])");
 	test("Trans.join([1, 2], 3, [4, 5])");
+
+	test("Trans.merge()");
+	test("Trans.merge([0, 1, 2], [3, 4], [5, 6, 7, 8])");
+	test("Trans.merge([0, 1, 2, 3], [10, 20, 30, 40])");
 
 	test("Trans.palindrome()");
 	test("Trans.palindrome([0, 1, 2, 3])");
