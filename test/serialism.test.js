@@ -1,10 +1,10 @@
 
 const Srl = require("../index");
-const Gen = require("../index").Gen;
-const Algo = require("../index").Algo;
-const Mod = require("../index").Mod;
-const Util = require("../index").Util;
-const Rand = require("../index").Rand;
+const Gen = require("../index").Generative;
+const Algo = require("../index").Algorithmic;
+const Mod = require("../index").Transform;
+const Rand = require("../index").Stochastic;
+const Util = require("../index").Utility;
 
 /*
 	Test criteria:
@@ -14,19 +14,19 @@ const Rand = require("../index").Rand;
 	- test for negative values
 */
 
-// testSerial();
-// testGen();
-// testAlgo();
+testSerial();
+testGen();
+testAlgo();
 testRand();
-// testMod();
-// testUtil();
+testMod();
+testUtil();
 
 function testSerial(){
 	pagebreak("Serial");
 
-	test("Srl.Gen.spread(10)");
-	test("Srl.Algo.euclid(5, 3, 1)");
-	test("Srl.Mod.lace([0, 1, 2], [3, 4, 5])");
+	test("Srl.Generative.spread(10)");
+	test("Srl.Algorithmic.euclid(5, 3, 1)");
+	test("Srl.Transform.lace([0, 1, 2], [3, 4, 5])");
 }
 
 function testGen(){
@@ -55,6 +55,8 @@ function testAlgo(){
 }
 
 function testRand(){
+	pagebreak("Stochastic");
+
 	test("Rand.seed(19374)");
 	test("Rand.randomFloat(3, -1, 1)");
 	test("Rand.randomFloat(3, 0.2, 0.5)");
@@ -126,6 +128,8 @@ function testMod(){
 }
 
 function testUtil(){
+	pagebreak("Utility");
+
 	test("Util.mod(7, 3)");
 	test("Util.mod([-2, 4, 3, 7], 5)");
 
