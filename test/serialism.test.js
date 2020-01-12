@@ -1,8 +1,8 @@
 
-const Serial = require("../index");
-const Gen = require("../index").Generative;
-const Algo = require("../index").Algorithmic;
-const Trans = require("../index").Transform;
+const Srl = require("../index");
+const Gen = require("../index").Gen;
+const Algo = require("../index").Algo;
+const Mod = require("../index").Mod;
 
 /*
 	Test criteria:
@@ -12,11 +12,22 @@ const Trans = require("../index").Transform;
 	- test for negative values
 */
 
+testSerial();
 testGen();
 testAlgo();
-testTransform();
+testMod();
+
+function testSerial(){
+	pagebreak("Serial");
+
+	test("Srl.Gen.spread(10)");
+	test("Srl.Algo.euclid(5, 3, 1)");
+	test("Srl.Mod.lace([0, 1, 2], [3, 4, 5])");
+}
 
 function testGen(){
+	pagebreak("Generative");
+
 	test("Gen.spread()");
 	test("Gen.spreadFloat(7)");
 	test("Gen.spread(5, 7, 19)");
@@ -31,59 +42,63 @@ function testGen(){
 }
 
 function testAlgo(){
+	pagebreak("Generative Complex");
+
 	test("Algo.euclid()");
 	test("Algo.euclid(10, 3)");
 	test("Algo.euclid(8, 5)");
 	test("Algo.euclid(16, 9, 1)");
 }
 
-function testTransform(){
-	test("Trans.clone()");
-	test("Trans.clone([0, 5, 7], 0, 12, -12)");
-	test("Trans.clone(['hello', 'world'], 0, 1, 2)");
+function testMod(){
+	pagebreak("Transform");
+	
+	test("Mod.clone()");
+	test("Mod.clone([0, 5, 7], 0, 12, -12)");
+	test("Mod.clone(['hello', 'world'], 0, 1, 2)");
 
-	test("Trans.combine()");
-	test("Trans.combine([0, 1], [[22, 33], 4])");
-	test("Trans.combine([0, 5], 12, [7, 3])");
-	test("Trans.combine(0, 12, 3)");
+	test("Mod.combine()");
+	test("Mod.combine([0, 1], [[22, 33], 4])");
+	test("Mod.combine([0, 5], 12, [7, 3])");
+	test("Mod.combine(0, 12, 3)");
 
-	test("Trans.duplicate()");
-	test("Trans.duplicate([0, 1, 2])");
-	test("Trans.duplicate([0, 1, 2], 4)");
+	test("Mod.duplicate()");
+	test("Mod.duplicate([0, 1, 2])");
+	test("Mod.duplicate([0, 1, 2], 4)");
 
-	test("Trans.invert()");
-	test("Trans.invert([0, 2, 5, 10, 13])");
-	test("Trans.invert([0, 2, 5, 10, 13], 5)");
-	test("Trans.invert([0, 2, 5, 10, 13], 0, 12)");
+	test("Mod.invert()");
+	test("Mod.invert([0, 2, 5, 10, 13])");
+	test("Mod.invert([0, 2, 5, 10, 13], 5)");
+	test("Mod.invert([0, 2, 5, 10, 13], 0, 12)");
 
-	test("Trans.lace([0, 2, 4], [1, 3, 5], ['hello'])");
-	test("Trans.lace([0, 5, 9], [3, 3], [7, 12, 11, -1])");
+	test("Mod.lace([0, 2, 4], [1, 3, 5], ['hello'])");
+	test("Mod.lace([0, 5, 9], [3, 3], [7, 12, 11, -1])");
 
-	test("Trans.merge()");
-	test("Trans.merge([0, 3, 7], [3, 12], [12, -1, 19, 5])");
-	test("Trans.merge([0, 1, 2, 3], [10, 20, 30, 40])");
+	test("Mod.merge()");
+	test("Mod.merge([0, 3, 7], [3, 12], [12, -1, 19, 5])");
+	test("Mod.merge([0, 1, 2, 3], [10, 20, 30, 40])");
 
-	test("Trans.palindrome()");
-	test("Trans.palindrome([0, 1, 2, 3])");
-	test("Trans.palindrome([0, 1, 2, 3], true)");
-	test("Trans.palindrome([0, 1, 2, 3], 1)");
+	test("Mod.palindrome()");
+	test("Mod.palindrome([0, 1, 2, 3])");
+	test("Mod.palindrome([0, 1, 2, 3], true)");
+	test("Mod.palindrome([0, 1, 2, 3], 1)");
 
-	test("Trans.rotate()");
-	test("Trans.rotate([0, 1, 2, 3])");
-	test("Trans.rotate([0, 1, 2, 3], 1)");
-	test("Trans.rotate([0, 5, 7, 12], -1)");
-	test("Trans.rotate([0, [11, 12], 2, 3], 1)");
+	test("Mod.rotate()");
+	test("Mod.rotate([0, 1, 2, 3])");
+	test("Mod.rotate([0, 1, 2, 3], 1)");
+	test("Mod.rotate([0, 5, 7, 12], -1)");
+	test("Mod.rotate([0, [11, 12], 2, 3], 1)");
 
-	test("Trans.reverse()");
-	test("Trans.reverse([0, 5, 7, 12])");
-	test("Trans.reverse([0, [11, 12], 2, 3])");
+	test("Mod.reverse()");
+	test("Mod.reverse([0, 5, 7, 12])");
+	test("Mod.reverse([0, [11, 12], 2, 3])");
 
-	test("Trans.shuffle()");
-	test("Trans.shuffle([0, 5, 7, 12])");
-	test("Trans.shuffle([0, 5, 7, 12])");
+	test("Mod.shuffle()");
+	test("Mod.shuffle([0, 5, 7, 12])");
+	test("Mod.shuffle([0, 5, 7, 12])");
 
-	test("Trans.unique()");
-	test("Trans.unique([5, 7, 5, 0, 12, 7, 5])");
+	test("Mod.unique()");
+	test("Mod.unique([5, 7, 5, 0, 12, 7, 5])");
 }
 
 function test(f){
@@ -91,4 +106,10 @@ function test(f){
 	console.log(f);
 	// evaluate the function and print results
 	console.log("=> ", eval(f), "\n");
+}
+
+function pagebreak(n){
+	console.log("====================================");
+	console.log("=> \t", n);
+	console.log("====================================\n");
 }
