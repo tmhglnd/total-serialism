@@ -14,12 +14,12 @@ const Util = require("../index").Utility;
 	- test for negative values
 */
 
-// testSerial();
-// testGen();
-// testAlgo();
-// testRand();
+testSerial();
+testGen();
+testAlgo();
+testRand();
 testMod();
-// testUtil();
+testUtil();
 
 function testSerial(){
 	pagebreak("Serial");
@@ -102,6 +102,13 @@ function testMod(){
 	test("Mod.duplicate()");
 	test("Mod.duplicate([0, 1, 2])");
 	test("Mod.duplicate([0, 1, 2], 4)");
+
+	// var evArr = [1, 0, 1, 0, 1, 1, 0, 1];
+	// console.log(Mod.every([1, 0, 1, 0, 1, 1, 0, 1], 2, 8));
+	// console.log(evArr);
+	test("Mod.every([1, 0, 1, 0, 1, 1, 0, 1], 2, 8)");
+	test("Mod.every([1, 0, 1, 1], 1, 16, 0.5)");
+	test("Mod.every([1, 1, 0, 1], 4, 5, -1)");
 
 	// var invArr = [0, 2, 5, 10, 13];
 	// console.log(Mod.invert(invArr, 5));
