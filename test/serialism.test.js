@@ -14,12 +14,12 @@ const Util = require("../index").Utility;
 	- test for negative values
 */
 
-testSerial();
-testGen();
-testAlgo();
-testRand();
+// testSerial();
+// testGen();
+// testAlgo();
+// testRand();
 testMod();
-testUtil();
+// testUtil();
 
 function testSerial(){
 	pagebreak("Serial");
@@ -79,50 +79,96 @@ function testRand(){
 function testMod(){
 	pagebreak("Transform");
 	
+	// var modArr = [0, 5, 7];
+	// console.log(Mod.clone(modArr, 0, 12, -12));
+	// console.log(modArr);
 	test("Mod.clone()");
-	test("Mod.clone([0, 5, 7], 0, 12, -12)");
+	test('Mod.clone([0, 5, 7], 0, 12, -12)');
 	test("Mod.clone(['hello', 'world'], 0, 1, 2)");
 
+	// var comArr1 = [0, 1];
+	// var comArr2 = [[22, 33], 4];
+	// console.log(Mod.combine(comArr1, comArr2));
+	// console.log(comArr1);
+	// console.log(comArr2);
 	test("Mod.combine()");
 	test("Mod.combine([0, 1], [[22, 33], 4])");
 	test("Mod.combine([0, 5], 12, [7, 3])");
 	test("Mod.combine(0, 12, 3)");
 
+	// var dupArr = [0, 1, 2];
+	// console.log(Mod.duplicate(dupArr, 4));
+	// console.log(dupArr);
 	test("Mod.duplicate()");
 	test("Mod.duplicate([0, 1, 2])");
 	test("Mod.duplicate([0, 1, 2], 4)");
 
+	// var invArr = [0, 2, 5, 10, 13];
+	// console.log(Mod.invert(invArr, 5));
+	// console.log(invArr);
 	test("Mod.invert()");
 	test("Mod.invert([0, 2, 5, 10, 13])");
 	test("Mod.invert([0, 2, 5, 10, 13], 5)");
 	test("Mod.invert([0, 2, 5, 10, 13], 0, 12)");
 
+	// var lacArr1 = [0, 2, 4];
+	// var lacArr2 = [1, 3, 5];
+	// console.log(Mod.lace(lacArr1, lacArr2));
+	// console.log(lacArr1);
+	// console.log(lacArr2);
 	test("Mod.lace([0, 2, 4], [1, 3, 5], ['hello'])");
 	test("Mod.lace([0, 5, 9], [3, 3], [7, 12, 11, -1])");
 
+	// var merArr1 = [0, 3, 7];
+	// var merArr2 = [3, 12];
+	// var merArr3 = [12, -1, 19, 5];
+	// console.log(Mod.merge(merArr1, merArr2, merArr3));
+	// console.log(merArr1, merArr2, merArr3);
 	test("Mod.merge()");
 	test("Mod.merge([0, 3, 7], [3, 12], [12, -1, 19, 5])");
 	test("Mod.merge([0, 1, 2, 3], [10, 20, 30, 40])");
 
+	// var palArr = [0, 1, 2, 3];
+	// console.log(Mod.palindrome(palArr, false));
+	// console.log(palArr);
 	test("Mod.palindrome()");
 	test("Mod.palindrome([0, 1, 2, 3])");
 	test("Mod.palindrome([0, 1, 2, 3], true)");
 	test("Mod.palindrome([0, 1, 2, 3], 1)");
 
+	// var revArr = [0, 5, 7, 12];
+	// console.log(Mod.reverse(revArr));
+	// console.log(revArr);	
+	test("Mod.reverse()");
+	test("Mod.reverse([0, 5, 7, 12])");
+	test("Mod.reverse([0, [11, 12], 2, 3])");
+
+	// var rotArr = [0, 1, 2, 3];
+	// console.log(Mod.rotate(rotArr, -1));
+	// console.log(rotArr);
 	test("Mod.rotate()");
 	test("Mod.rotate([0, 1, 2, 3])");
 	test("Mod.rotate([0, 1, 2, 3], 1)");
 	test("Mod.rotate([0, 5, 7, 12], -1)");
 	test("Mod.rotate([0, [11, 12], 2, 3], 1)");
 
-	test("Mod.reverse()");
-	test("Mod.reverse([0, 5, 7, 12])");
-	test("Mod.reverse([0, [11, 12], 2, 3])");
-
+	// var shufArr = [0, 5, 7, 12];
+	// console.log(Mod.shuffle(shufArr));
+	// console.log(shufArr);
 	test("Mod.shuffle()");
 	test("Mod.shuffle([0, 5, 7, 12])");
 	test("Mod.shuffle([0, 5, 7, 12])");
 
+	// var sprArr1 = [12, 19, 24];
+	// var sprArr2 = [1, 0, 0, 1, 1, 0, 1, 0, 0.2];
+	// console.log(Mod.spray(sprArr1, sprArr2));
+	// console.log(sprArr1, sprArr2);
+	test("Mod.spray()");
+	test("Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0])");
+
+	// var unArr = [5, 7, 5, 0, 12, 7, 5];
+	// console.log(Mod.unique(unArr));
+	// console.log(unArr);
 	test("Mod.unique()");
 	test("Mod.unique([5, 7, 5, 0, 12, 7, 5])");
 }
