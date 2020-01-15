@@ -7,7 +7,7 @@
 - [Usage](#usage)
 	- [Generative Methods](#generative-methods)
 	- [Stochastic Methods](#stochastic-methods)
-	- [Transformative Methods](#transformative)
+	- [Transformative Methods](#transformative-methods)
 - [Inspiration & Further Reading](#inspiration-further-reading)
 - [Missing Something?](#missing-something)
 - [License](#license)
