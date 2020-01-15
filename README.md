@@ -1,16 +1,25 @@
-# total-serialism
+# Total Serialism
 
-`total-serialism` is a set of methods for the generation and transformation of number sequences mainly designed for algorithmic composition of music.
+`total-serialism` is a set of methods used for procedurally generating and transforming number sequences. This library is mainly designed with algorithmic composition of music in mind, but can surely be useful for other purposes that involve generation and manipulation of arrays and numbers.
 
-!!! Work-In-Progress !!!
+The library consists of a few subsets:
+- `Generative` : Basic methods that generate arrays of number sequences, such as methods that generate an ascending array of numbers evenly spread between a low and high value.
+- `Algorithmic` : More complex methods to generate number sequences, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci sequence, pisano periods and more.
+- `Transform` : Methods that transform the array in some fashion. Think of methods such as reversing, palindrome, duplicating, inversing, interleaving and more.
+- `Stochastic` : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more.
+- `Utility` : Methods necessary to run functions in the libraries above.
 
-# Install
+## Missing something?
+
+This library is a work in progress, and I'm always interested to receive inspiration, suggestions, enhancements, literature and more. Feel free to file an issue for this repository and I will gladly look into it!
+
+## Install
 
 ```
 $ npm install total-serialism
 ```
 
-# Usage
+## Usage
 
 The entire library
 
@@ -20,14 +29,14 @@ const Serialism = require('total-serialism');
 Or an individual section
 
 ```js
-const Gen  = require('total-serialism').Generativ;
+const Gen  = require('total-serialism').Generative;
 const Algo = require('total-serialism').Algorithmic;
 const Mod  = require('total-serialism').Transform;
 const Rand = require('total-serialism').Stochastic;
 const Util = require('total-serialism').Utility;
 ```
 
-# Examples
+## Examples
 
 Generative Methods
 
@@ -107,6 +116,10 @@ Mod.unique([5, 7, 5, 0, 12, 7, 5]); //=>  [5, 7, 0, 12]
 
 ```
 
-# License
+## Inspiration / Further reading
+
+
+
+## License
 
 The MIT License
