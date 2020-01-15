@@ -5,7 +5,9 @@
 - [Content](#content)
 - [Install](#install)
 - [Usage](#usage)
-- [Examples](#examples)
+	- [Generative Methods](#generative-methods)
+	- [Stochastic Methods](#stochastic-methods)
+	- [Transformative Methods](#transformative)
 - [Inspiration & Further Reading](#inspiration-further-reading)
 - [Missing Something?](#missing-something)
 - [License](#license)
@@ -44,7 +46,7 @@ const Util = require('total-serialism').Utility;
 
 ## Examples
 
-Generative Methods
+### Generative Methods
 
 ```js
 const Gen = require('total-serialism').Generative;
@@ -62,7 +64,8 @@ Gen.spreadInclusiveFloat(9, -1, 1); //=> [-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 
 Gen.fill(10, 2, 15, 3, 20, 4); //=> [10, 10, 15, 15, 15, 20, 20, 20, 20]
 ```
 
-Stochastic Methods
+### Stochastic Methods
+
 ```js
 const Rand = require('total-serialism').Stochastic;
 
@@ -82,7 +85,7 @@ Rand.coin(10); //=> [0, 1, 0, 1, 0, 1, 0, 0, 1, 0]
 Rand.dice(4); //=>  [4, 4, 2, 3] 
 ```
 
-Transformative Methods
+### Transformative Methods
 
 ```js
 const Mod = require('total-serialism').Transform;
@@ -95,6 +98,9 @@ Mod.combine([0, 5], 12, [7, 3]); //=>  [0, 5, 12, 7, 3]
 
 // duplicate an array certain amount of times
 Mod.duplicate([0, 5, 7], 3); //=> [0, 5, 7, 0, 5, 7, 0, 5, 7]
+
+// add zeroes to a rhythm to make it play once over a certain amount of bars
+Mod.every([1, 0, 1, 0, 1, 1, 0, 1], 2, 8)); // => [1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
 
 // invert an array around a center point
 Mod.invert([0, 2, 5, 10, 13], 5); //=>  [10, 8, 5, 0, -3]
@@ -116,6 +122,10 @@ Mod.reverse([0, 5, 7, 12]); //=>  [12, 7, 5, 0]
 
 // shuffle the items in an array (Fisher-Yates shuffle algorithm)
 Mod.shuffle([0, 5, 7, 12]); //=>  [7, 5, 0, 12] 
+
+// spray values from one array on the non-zero places of another array
+Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0]);
+//=>  [12, 0, 0, 19, 24, 0, 12, 19, 0]
 
 // remove duplicates from an array, leave order of appearance intact
 Mod.unique([5, 7, 5, 0, 12, 7, 5]); //=>  [5, 7, 0, 12] 
