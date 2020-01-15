@@ -8,7 +8,7 @@
 	- [Generative Methods](#generative-methods)
 	- [Stochastic Methods](#stochastic-methods)
 	- [Transformative Methods](#transformative-methods)
-- [Inspiration & Further Reading](#inspiration-further-reading)
+- [Inspiration & Further Reading](#inspiration--further-reading)
 - [Missing Something?](#missing-something)
 - [License](#license)
 
@@ -134,9 +134,9 @@ Mod.unique([5, 7, 5, 0, 12, 7, 5]); //=>  [5, 7, 0, 12]
 
 ## Inspiration & Further Reading
 
-This library is inspired by the composition technique named `Serialism` and `Total Serialism`. The technique approaches the parameters that make up a piece of music as individual series of values. These parameters are (but not limited to) *pitch, duration/rhythm and velocity/dynamic*.
+This library is inspired by the composition techniques named `Serialism` and `Total Serialism`. The technique approaches the parameters that make up a piece of music as individual series of values. These parameters are (but not limited to) *pitch, duration/rhythm and velocity/dynamic*.
 
-Serialism originated from Arnold Schoenberg's `twelve-tone` technique. This technique starts out with a randomly ordered set of the twelve chromatic notes. From there on out you can apply transformations on this set, such as reverse/retrograde, inverse, transpose, and combinations between those.
+Serialism originated from the `twelve-tone` technique, described in 1919 by Josef Hauer in his published work "Law of the twelve tones". This technique starts out with a randomly ordered set of the twelve chromatic notes. From there on out you can apply transformations on this set, such as reverse/retrograde, inverse, transpose, and combinations between those.
 
 For many of the functions programmed much inspiration was gained from Laurie Spiegels paper on "Manipulation of Musical Patterns" (1981) in which she suggests to *"extract a basic "library" consisting of the most elemental  transformations which have consistently been successfully used on musical patterns, a basic group of "tried-and-true" musical manipulations."*
 
@@ -156,7 +156,7 @@ Inspiration for the sequencing also came from the Live Coding scene and current 
 
 ## Missing Something?
 
-This library is a work in progress, and I'm always interested to receive inspiration, suggestions, enhancements, literature and more. Feel free to file an issue for this repository and I will gladly look into it!
+This library is a work in progress, and I'm always interested to receive inspiration, suggestions, enhancements, literature and more. Feel free to file an [issue here](https://github.com/tmhglnd/total-serialism/issues) and I will gladly look into it!
 
 ## License
 
