@@ -83,6 +83,9 @@ Rand.coin(10); //=> [0, 1, 0, 1, 0, 1, 0, 0, 1, 0]
 
 // generate an array of dice rolls
 Rand.dice(4); //=>  [4, 4, 2, 3] 
+
+// shuffle the items in an array, influenced by the random seed
+Rand.shuffle([0, 5, 7, 12]); //=>  [7, 5, 0, 12]
 ```
 
 ### Transformative Methods
@@ -119,9 +122,6 @@ Mod.rotate([0, 5, 7, 12], -1); //=>  [5, 7, 12, 0]
 
 // reverse an array
 Mod.reverse([0, 5, 7, 12]); //=>  [12, 7, 5, 0]
-
-// shuffle the items in an array (Fisher-Yates shuffle algorithm)
-Mod.shuffle([0, 5, 7, 12]); //=>  [7, 5, 0, 12] 
 
 // spray values from one array on the non-zero places of another array
 Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0]);

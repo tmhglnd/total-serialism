@@ -74,6 +74,17 @@ function testRand(){
 
 	test("Rand.dice(4)");
 	test("Rand.dice(4)");
+
+	// var shufArr = [0, 5, 7, 12];
+	// console.log(Mod.shuffle(shufArr));
+	// console.log(shufArr);
+	test("Rand.shuffle()");
+	test("Rand.seed(1473)");
+	test("Rand.shuffle([0, 5, 7, 12])");
+	test("Rand.shuffle([0, 5, 7, 12])");
+
+	test("Rand.seed(1473)");
+	test("Rand.shuffle([0, 5, 7, 12])");
 }
 
 function testMod(){
@@ -158,13 +169,6 @@ function testMod(){
 	test("Mod.rotate([0, 1, 2, 3], 1)");
 	test("Mod.rotate([0, 5, 7, 12], -1)");
 	test("Mod.rotate([0, [11, 12], 2, 3], 1)");
-
-	// var shufArr = [0, 5, 7, 12];
-	// console.log(Mod.shuffle(shufArr));
-	// console.log(shufArr);
-	test("Mod.shuffle()");
-	test("Mod.shuffle([0, 5, 7, 12])");
-	test("Mod.shuffle([0, 5, 7, 12])");
 
 	// var sprArr1 = [12, 19, 24];
 	// var sprArr2 = [1, 0, 0, 1, 1, 0, 1, 0, 0.2];
