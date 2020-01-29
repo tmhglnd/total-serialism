@@ -4,6 +4,7 @@ const Gen = require("../index").Generative;
 const Algo = require("../index").Algorithmic;
 const Mod = require("../index").Transform;
 const Rand = require("../index").Stochastic;
+const Conv = require("../index").Translate;
 const Util = require("../index").Utility;
 
 /*
@@ -14,12 +15,13 @@ const Util = require("../index").Utility;
 	- test for negative values
 */
 
-testSerial();
-testGen();
-testAlgo();
-testRand();
-testMod();
-testUtil();
+// testSerial();
+// testGen();
+// testAlgo();
+// testRand();
+// testMod();
+testConv();
+// testUtil();
 
 function testSerial(){
 	pagebreak("Serial");
@@ -182,6 +184,10 @@ function testMod(){
 	// console.log(unArr);
 	test("Mod.unique()");
 	test("Mod.unique([5, 7, 5, 0, 12, 7, 5])");
+}
+
+function testConv(){
+	console.log(Conv.midiToTone(69));
 }
 
 function testUtil(){
