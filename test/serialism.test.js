@@ -39,9 +39,9 @@ test("TsL.semiToFreq(0);");
 test("TsL.semiToFreq([0, 2, 7, -3, -12, 12]);");
 test("TsL.stof([0, 2, 7, -3, -12, 12], 3);");
 
-test("TsL.noteToSemi(48);");
-test("TsL.noteToSemi([48, 50, 55, 45, 36, 60]);");
-test("TsL.ntos([48, 50, 55, 45, 36, 60], 3);");
+test("TsL.midiToSemi(48);");
+test("TsL.midiToSemi([48, 50, 55, 45, 36, 60]);");
+test("TsL.mtos([48, 50, 55, 45, 36, 60], 3);");
 
 // testSerial();
 // testGen();
