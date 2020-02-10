@@ -4,7 +4,7 @@ const Gen = require("../index").Generative;
 const Algo = require("../index").Algorithmic;
 const Mod = require("../index").Transform;
 const Rand = require("../index").Stochastic;
-const Conv = require("../index").Translate;
+const TsL = require("../index").Translate;
 const Util = require("../index").Utility;
 
 /*
@@ -15,12 +15,40 @@ const Util = require("../index").Utility;
 	- test for negative values
 */
 
+test("TsL.midiToNote(48);");
+test("TsL.mton([60, 67, 72]);");
+
+test("TsL.noteToMidi('c2');");
+test("TsL.noteToMidi(['c2','d2','f#2']);");
+test("TsL.ntom(['f-1','bb3','g#2']);");
+
+test("TsL.midiToFreq(60);");
+test("TsL.mtof([60, 67, 72]);");
+
+test("TsL.noteToFreq('c2');");
+test("TsL.noteToFreq(['c2','d2','f#2']);");
+test("TsL.ntof(['f-1','bb3','g###2']);");
+
+// test("TsL.midiToNote(Mod.palindrome(Gen.spread(3, 48, 60)));");
+
+test("TsL.semiToMidi(0);");
+test("TsL.semiToMidi([0, 2, 7, -3, -12, 12]);");
+test("TsL.stom([0, 2, 7, -3, -12, 12], 3);");
+
+test("TsL.semiToFreq(0);");
+test("TsL.semiToFreq([0, 2, 7, -3, -12, 12]);");
+test("TsL.stof([0, 2, 7, -3, -12, 12], 3);");
+
+test("TsL.noteToSemi(48);");
+test("TsL.noteToSemi([48, 50, 55, 45, 36, 60]);");
+test("TsL.ntos([48, 50, 55, 45, 36, 60], 3);");
+
 // testSerial();
 // testGen();
 // testAlgo();
 // testRand();
 // testMod();
-testConv();
+// testTranslate();
 // testUtil();
 
 function testSerial(){
@@ -186,7 +214,7 @@ function testMod(){
 	test("Mod.unique([5, 7, 5, 0, 12, 7, 5])");
 }
 
-function testConv(){
+function testTranslate(){
 	console.log(Conv.midiToTone(69));
 }
 
