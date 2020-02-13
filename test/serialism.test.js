@@ -43,16 +43,15 @@ const Util = require("../index").Utility;
 // test("TsL.midiToSemi([48, 50, 55, 45, 36, 60]);");
 // test("TsL.mtos([48, 50, 55, 45, 36, 60], 3);");
 
-test("TsL.scaleNames();");
-
-test("TsL.setScale('harmonic minor', 'd');");
-test("TsL.setScale('prometheus', 'A#');");
-test("TsL.setScale('minor pentatonic', 'd');");
-test("TsL.getScale();");
+// test("TsL.scaleNames();");
+// test("TsL.setScale('harmonic minor', 'd');");
+// test("TsL.setScale('prometheus', 'A#');");
+// test("TsL.setScale('minor pentatonic', 'd');");
+// test("TsL.getScale();");
 
 // testSerial();
 // testGen();
-// testAlgo();
+testAlgo();
 // testRand();
 // testMod();
 // testTranslate();
@@ -89,6 +88,12 @@ function testAlgo(){
 	test("Algo.euclid(10, 3)");
 	test("Algo.euclid(8, 5)");
 	test("Algo.euclid(16, 9, 1)");
+
+	test("Algo.hexBeat('f0f');");
+	test("Algo.hexBeat('898');");
+	test("Algo.hexBeat('a9d2');");
+	test("Algo.hexBeat('573');");
+	test("Algo.hexBeat(573);");
 }
 
 function testRand(){

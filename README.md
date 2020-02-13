@@ -64,6 +64,21 @@ Gen.spreadInclusiveFloat(9, -1, 1); //=> [-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 
 Gen.fill(10, 2, 15, 3, 20, 4); //=> [10, 10, 15, 15, 15, 20, 20, 20, 20]
 ```
 
+### Algorithmic Methods
+```js
+const Algo = require('total-serialism').Algorithmic;
+
+// generate a euclidean rhythm evenly spacing n-beats amongst n-steps
+Algo.euclid(16, 9, 1); 
+//=> [0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1]
+// inspired by Godfried Toussaints famous paper "The Euclidean Algorithm Generates Traditional Musical Rhythms"
+
+// generate a hexadecimal rhythm based on a hexadecimal string (0-f)
+Algo.hexBeat('a9d2');
+//=> [1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0]
+// inspired by Steven Yi's implementation in CSound
+```
+
 ### Stochastic Methods
 
 ```js
@@ -140,6 +155,8 @@ Serialism originated from the `twelve-tone` technique, described in 1919 by Jose
 
 For many of the functions programmed much inspiration was gained from Laurie Spiegels paper on "Manipulation of Musical Patterns" (1981) in which she suggests to *"extract a basic "library" consisting of the most elemental  transformations which have consistently been successfully used on musical patterns, a basic group of "tried-and-true" musical manipulations."*
 
+The euclidean rhythm generator was inspired by the famous paper by Godfried Toussaint and the hexadecimal rhythm generator was inspired by Steven Yi's implementation in the CSound livecoding environment and a workshop given by him during the ICLC 2020 in Limerick.
+
 Inspiration for the sequencing also came from the Live Coding scene and current programming languages available such as Tidal, Extempore, SonicPi and more. In Live Coding the Serialism technique is very comming when programming the music. In many cases the rhythms, melodies, and more are expressed in some form of arrays that is iterated through based on the timing of the system.
 
 - [Serialism on Wikipedia](https://en.wikipedia.org/wiki/Serialism)
@@ -153,6 +170,12 @@ Inspiration for the sequencing also came from the Live Coding scene and current 
 - [Phillip Magnuson - Sound Patterns Ch.45 - Serialism](http://academic.udayton.edu/PhillipMagnuson/soundpatterns/microcosms/serialism.html)
 
 - [Alex McLean - Tidal Pattern Language for Live Coding of Music](https://s3.amazonaws.com/academia.edu.documents/11010319/39.pdf?response-content-disposition=inline%3B%20filename%3DTidal_Pattern_Language_for_Live_Coding_o.pdf&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWOWYYGZ2Y53UL3A%2F20200115%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200115T225654Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=a1d10c16a032d819fa4b9c8f9bb6f79eacf3a81fb13704d60cd08ef4cd0e1f51)
+
+- [Godfried Toussaint - The Euclidean Algorithm Generates Traditional Musical Rhythms](http://cgm.cs.mcgill.ca/~godfried/publications/banff.pdf)
+
+- [Steven Yi - Hexadecimal Beat](https://github.com/kunstmusik/csound-live-code/blob/master/doc/hexadecimal_beats.md)
+
+- [Bernhard Wagner - Rhythmic Patterns As Binary Numbers](http://bernhardwagner.net/musings/RPABN.html)
 
 ## Missing Something?
 
