@@ -79,6 +79,8 @@ Algo.hexBeat('a9d2');
 // inspired by Steven Yi's implementation in CSound
 ```
 
+- [Learn hex beats](https://kunstmusik.github.io/learn-hex-beats/)
+
 ### Stochastic Methods
 
 ```js
