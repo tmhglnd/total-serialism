@@ -6,10 +6,11 @@
 - [Install](#install)
 - [Usage](#usage)
 	- [Generative Methods](#generative-methods)
+	- [Algorithmic Methods](#algorithmic-methods)
 	- [Stochastic Methods](#stochastic-methods)
 	- [Transformative Methods](#transformative-methods)
-- [Inspiration & Further Reading](#inspiration--further-reading)
 - [Missing Something?](#missing-something)
+- [Inspiration & Further Reading](#inspiration--further-reading)
 - [License](#license)
 
 ## Content
@@ -76,7 +77,7 @@ Algo.euclid(16, 9, 1);
 // generate a hexadecimal rhythm based on a hexadecimal string (0-f)
 Algo.hexBeat('a9d2');
 //=> [1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0]
-// inspired by Steven Yi's implementation in CSound
+// inspired by Steven Yi's implementation in CSound Live Coding
 ```
 
 - [Learn hex beats](https://kunstmusik.github.io/learn-hex-beats/)
