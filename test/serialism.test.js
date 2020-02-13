@@ -15,33 +15,40 @@ const Util = require("../index").Utility;
 	- test for negative values
 */
 
-test("TsL.midiToNote(48);");
-test("TsL.mton([60, 67, 72]);");
+// test("TsL.midiToNote(48);");
+// test("TsL.mton([60, 67, 72]);");
 
-test("TsL.noteToMidi('c2');");
-test("TsL.noteToMidi(['c2','d2','f#2']);");
-test("TsL.ntom(['f-1','bb3','g#2']);");
+// test("TsL.noteToMidi('c2');");
+// test("TsL.noteToMidi(['c2','d2','f#2']);");
+// test("TsL.ntom(['f-1','bb3','g#2']);");
 
-test("TsL.midiToFreq(60);");
-test("TsL.mtof([60, 67, 72]);");
+// test("TsL.midiToFreq(60);");
+// test("TsL.mtof([60, 67, 72]);");
 
-test("TsL.noteToFreq('c2');");
-test("TsL.noteToFreq(['c2','d2','f#2']);");
-test("TsL.ntof(['f-1','bb3','g###2']);");
+// test("TsL.noteToFreq('c2');");
+// test("TsL.noteToFreq(['c2','d2','f#2']);");
+// test("TsL.ntof(['f-1','bb3','g###2']);");
 
 // test("TsL.midiToNote(Mod.palindrome(Gen.spread(3, 48, 60)));");
 
-test("TsL.semiToMidi(0);");
-test("TsL.semiToMidi([0, 2, 7, -3, -12, 12]);");
-test("TsL.stom([0, 2, 7, -3, -12, 12], 3);");
+// test("TsL.semiToMidi(0);");
+// test("TsL.semiToMidi([0, 2, 7, -3, -12, 12]);");
+// test("TsL.stom([0, 2, 7, -3, -12, 12], 3);");
 
-test("TsL.semiToFreq(0);");
-test("TsL.semiToFreq([0, 2, 7, -3, -12, 12]);");
-test("TsL.stof([0, 2, 7, -3, -12, 12], 3);");
+// test("TsL.semiToFreq(0);");
+// test("TsL.semiToFreq([0, 2, 7, -3, -12, 12]);");
+// test("TsL.stof([0, 2, 7, -3, -12, 12], 3);");
 
-test("TsL.midiToSemi(48);");
-test("TsL.midiToSemi([48, 50, 55, 45, 36, 60]);");
-test("TsL.mtos([48, 50, 55, 45, 36, 60], 3);");
+// test("TsL.midiToSemi(48);");
+// test("TsL.midiToSemi([48, 50, 55, 45, 36, 60]);");
+// test("TsL.mtos([48, 50, 55, 45, 36, 60], 3);");
+
+test("TsL.scaleNames();");
+
+test("TsL.setScale('harmonic minor', 'd');");
+test("TsL.setScale('prometheus', 'A#');");
+test("TsL.setScale('minor pentatonic', 'd');");
+test("TsL.getScale();");
 
 // testSerial();
 // testGen();
