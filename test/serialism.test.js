@@ -20,7 +20,7 @@ testGen();
 testAlgo();
 testRand();
 testMod();
-testTranslate();
+// testTranslate();
 testUtil();
 
 function testSerial(){
@@ -92,6 +92,13 @@ function testRand(){
 
 	test("Rand.seed(1473)");
 	test("Rand.shuffle([0, 5, 7, 12])");
+
+	test("Rand.seed(4923)");
+	test("Rand.twelveTone()");
+	test("Rand.twelveTone()");
+
+	test("Rand.seed(4923)");
+	test("Rand.twelveTone()");
 }
 
 function testMod(){

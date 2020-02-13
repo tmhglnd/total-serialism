@@ -103,6 +103,10 @@ Rand.dice(4); //=>  [4, 4, 2, 3]
 
 // shuffle the items in an array, influenced by the random seed
 Rand.shuffle([0, 5, 7, 12]); //=>  [7, 5, 0, 12]
+
+// generate a twelve-tone series, influenced by the random seed
+// basically the same as: Mod.shuffle(Gen.spread(12));
+Rand.twelveTone(); //=>  [11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10]
 ```
 
 ### Transformative Methods
@@ -159,7 +163,7 @@ For many of the functions programmed much inspiration was gained from Laurie Spi
 
 The euclidean rhythm generator was inspired by the famous paper by Godfried Toussaint and the hexadecimal rhythm generator was inspired by Steven Yi's implementation in the CSound livecoding environment and a workshop given by him during the ICLC 2020 in Limerick.
 
-Inspiration for the sequencing also came from the Live Coding scene and current programming languages available such as Tidal, Extempore, SonicPi and more. In Live Coding the Serialism technique is very comming when programming the music. In many cases the rhythms, melodies, and more are expressed in some form of arrays that is iterated through based on the timing of the system.
+Inspiration for the sequencing also came from the Live Coding scene and current programming languages available such as Tidal, Extempore, SonicPi and more. In Live Coding the Serialism technique is very common when programming music. In many cases the rhythms, melodies, and other musical expressions are expressed in arrays that are iterated based on the timing of the system.
 
 - [Serialism on Wikipedia](https://en.wikipedia.org/wiki/Serialism)
 
