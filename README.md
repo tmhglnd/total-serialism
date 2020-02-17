@@ -70,14 +70,17 @@ Gen.fill(10, 2, 15, 3, 20, 4); //=> [10, 10, 15, 15, 15, 20, 20, 20, 20]
 const Algo = require('total-serialism').Algorithmic;
 ```
 
-Euclidean Rhythm Generator
+### Euclidean Rhythm Generator
+
 ```js
 // generate a euclidean rhythm evenly spacing n-beats amongst n-steps
 Algo.euclid(16, 9, 1); 
 //=> [0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1]
 // inspired by Godfried Toussaints famous paper "The Euclidean Algorithm Generates Traditional Musical Rhythms"
 ```
-Hexadecimal Rhythm Generator
+
+### Hexadecimal Rhythm Generator
+
 ```js
 // generate a hexadecimal rhythm based on a hexadecimal string (0-f)
 Algo.hexBeat('a9d2');
@@ -85,7 +88,10 @@ Algo.hexBeat('a9d2');
 // inspired by Steven Yi's implementation in CSound Live Coding
 ```
 
-Lindenmayer String Expansion
+- [Learn hex beats](https://kunstmusik.github.io/learn-hex-beats/)
+
+### Lindenmayer String Expansion
+
 ```js
 // Koch curve
 Algo.linden('F', 2, {F: 'F+F-F-F+F'});
@@ -100,7 +106,8 @@ Algo.linden('F-G-G', 1, {'F': 'F−G+F+G−F', 'G' : 'GG'});
 //=> 'F−G+F+G−F-GG-GG'
 ```
 
-L-System with integers and arrays
+### L-System return Array with Ints
+
 ```js
 Algo.linden();
 //default => [1, 0, 1, 1, 0]
@@ -121,8 +128,6 @@ var complexRules = {
 Algo.linden(0, 2, complexRules);
 //=> [0, 3, 7, -1, 0, 12, 19, 0, -1, 0, 3, 7, 12, 0, 0, 5, 19, 0, 3, 7]
 ```
-
-- [Learn hex beats](https://kunstmusik.github.io/learn-hex-beats/)
 
 ## Stochastic Methods
 
