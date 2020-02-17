@@ -13,22 +13,22 @@
 - [Inspiration & Further Reading](#inspiration--further-reading)
 - [License](#license)
 
-## Content
+# Content
 
 The library consists of a few subsets:
 - `Generative` : Basic methods that generate arrays of number sequences, such as methods that generate an ascending array of numbers evenly spread between a low and high value.
-- `Algorithmic` : More complex methods to generate number sequences, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci sequence, pisano periods and more.
+- `Algorithmic` : These are also generative methods, but are in general more complex algorithms, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci sequence, pisano periods and more.
 - `Transform` : Methods that transform the array in some fashion. Think of methods such as reversing, palindrome, duplicating, inversing, interleaving and more.
 - `Stochastic` : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more.
 - `Utility` : Methods necessary to run functions in the libraries above.
 
-## Install
+# Install
 
 ```
 $ npm install total-serialism
 ```
 
-## Usage
+# Usage
 
 The entire library
 
@@ -45,9 +45,9 @@ const Rand = require('total-serialism').Stochastic;
 const Util = require('total-serialism').Utility;
 ```
 
-## Examples
+# Examples
 
-### Generative Methods
+## Generative Methods
 
 ```js
 const Gen = require('total-serialism').Generative;
@@ -65,24 +65,66 @@ Gen.spreadInclusiveFloat(9, -1, 1); //=> [-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 
 Gen.fill(10, 2, 15, 3, 20, 4); //=> [10, 10, 15, 15, 15, 20, 20, 20, 20]
 ```
 
-### Algorithmic Methods
+## Algorithmic Methods
 ```js
 const Algo = require('total-serialism').Algorithmic;
+```
 
+Euclidean Rhythm Generator
+```js
 // generate a euclidean rhythm evenly spacing n-beats amongst n-steps
 Algo.euclid(16, 9, 1); 
 //=> [0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1]
 // inspired by Godfried Toussaints famous paper "The Euclidean Algorithm Generates Traditional Musical Rhythms"
-
+```
+Hexadecimal Rhythm Generator
+```js
 // generate a hexadecimal rhythm based on a hexadecimal string (0-f)
 Algo.hexBeat('a9d2');
 //=> [1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0]
 // inspired by Steven Yi's implementation in CSound Live Coding
 ```
 
+Lindenmayer String Expansion
+```js
+// Koch curve
+Algo.linden('F', 2, {F: 'F+F-F-F+F'});
+//=> 'F+F-F-F+F+F+F-F-F+F-F+F-F-F+F-F+F-F-F+F+F+F-F-F+F'
+
+// Cantor set
+Algo.linden('A', 3, {A: 'ABA', B: 'BBB'});
+//=> 'ABABBBABABBBBBBBBBABABBBABA'
+
+// Sierpinski Triangle
+Algo.linden('F-G-G', 1, {'F': 'F−G+F+G−F', 'G' : 'GG'});
+//=> 'F−G+F+G−F-GG-GG'
+```
+
+L-System with integers and arrays
+```js
+Algo.linden();
+//default => [1, 0, 1, 1, 0]
+
+// Cantor set as 0's and 1's in an array ruleset
+Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]});
+//=> [1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1]
+
+// Set more complex rules for generating semitones for example
+var complexRules = {
+	0: [0, 3, 7],
+	3: [-1, 0],
+	7: [12, 19, 0],
+	12: [12, 0, 0, 5], 
+	5: [0, -3, 0]
+}
+
+Algo.linden(0, 2, complexRules);
+//=> [0, 3, 7, -1, 0, 12, 19, 0, -1, 0, 3, 7, 12, 0, 0, 5, 19, 0, 3, 7]
+```
+
 - [Learn hex beats](https://kunstmusik.github.io/learn-hex-beats/)
 
-### Stochastic Methods
+## Stochastic Methods
 
 ```js
 const Rand = require('total-serialism').Stochastic;
@@ -110,7 +152,7 @@ Rand.shuffle([0, 5, 7, 12]); //=>  [7, 5, 0, 12]
 Rand.twelveTone(); //=>  [11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10]
 ```
 
-### Transformative Methods
+## Transformative Methods
 
 ```js
 const Mod = require('total-serialism').Transform;
@@ -154,7 +196,7 @@ Mod.unique([5, 7, 5, 0, 12, 7, 5]); //=>  [5, 7, 0, 12]
 
 ```
 
-## Inspiration & Further Reading
+# Inspiration & Further Reading
 
 This library is inspired by the composition techniques named `Serialism` and `Total Serialism`. The technique approaches the parameters that make up a piece of music as individual series of values. These parameters are (but not limited to) *pitch, duration/rhythm and velocity/dynamic*.
 
@@ -184,11 +226,11 @@ Inspiration for the sequencing also came from the Live Coding scene and current 
 
 - [Bernhard Wagner - Rhythmic Patterns As Binary Numbers](http://bernhardwagner.net/musings/RPABN.html)
 
-## Missing Something?
+# Missing Something?
 
 This library is a work in progress, and I'm always interested to receive inspiration, suggestions, enhancements, literature and more. Feel free to file an [issue here](https://github.com/tmhglnd/total-serialism/issues) and I will gladly look into it!
 
-## License
+# License
 
 The MIT License
 

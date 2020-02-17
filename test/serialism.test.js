@@ -78,11 +78,10 @@ function testAlgo(){
 	test("Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]})");
 	// Sierpinski Triangle
 	test("Algo.linden('F-G-G', 1, {'F': 'F−G+F+G−F', 'G' : 'GG'})");
-
 	// usage with integers and arrays
 	test("Algo.linden([1, 0, 1], 3, {0: [1], 1: [0, 1]})");
-	// more complex rules for semitone melodies
-	test("Algo.linden(0, 2, complexRules)");
+	// more complex rules for semitone melodies (see above for rules)
+	test("Algo.linden(0, 3, complexRules)");
 }
 
 function testRand(){
