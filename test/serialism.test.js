@@ -60,6 +60,13 @@ function testAlgo(){
 	test("Algo.hexBeat('f898');");
 	test("Algo.hexBeat('a9d2');");
 	test("Algo.hexBeat(573);");
+
+	test("Algo.linden()")
+	test("Algo.linden('A')")
+	test("Algo.linden('A', {A:'B', B:'AB'})")
+	test("Algo.linden('A', {A:'B', B:'AB'}, 2)")
+	test("Algo.linden('A', {A:'B', B:'AB'}, 5)")
+	test("Algo.linden('F', {F:'F+F-F-F+F'})")
 }
 
 function testRand(){
