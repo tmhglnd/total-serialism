@@ -22,6 +22,24 @@ The library consists of a few subsets:
 - `Stochastic` : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more.
 - `Utility` : Methods necessary to run functions in the libraries above.
 
+# Newest features
+
+Generate Twelve-tone sequences
+
+```js
+// generate a twelve-tone series, influenced by the random seed
+// basically the same as: Mod.shuffle(Gen.spread(12));
+Rand.twelveTone(); //=>  [11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10]
+```
+
+Generate Lindenmayer system sequences
+
+```js
+// Cantor set as 0's and 1's in an array ruleset
+Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]});
+//=> [1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1]
+```
+
 # Install
 
 ```
