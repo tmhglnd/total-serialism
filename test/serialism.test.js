@@ -24,13 +24,13 @@ var complexRules = {
 	5: [0, -3, 0]
 }
 
-testSerial();
+// testSerial();
 testGen();
-testAlgo();
-testRand();
-testMod();
-// testTranslate();
-testUtil();
+// testAlgo();
+// testRand();
+// testMod();
+// // testTranslate();
+// testUtil();
 
 function testSerial(){
 	pagebreak("Serial");
@@ -54,6 +54,16 @@ function testGen(){
 	
 	test("Gen.fill()");
 	test("Gen.fill(10, 2, 15, 3, 20, 4)");
+
+	test("Gen.sineFloat()");
+	test("Gen.sineFloat(10, 1, -1, 1, 0.5)");
+	test("Gen.cosineFloat(10, 1, -1, 1)");
+
+	test("Gen.sine()");
+	test("Gen.sine(12, 1, -1, 1)");
+	test("Gen.sine(12, 1, 10, 20)");
+
+	test("Gen.cosine(12, 1, 10, 20)");
 }
 
 function testAlgo(){
@@ -297,7 +307,6 @@ function test(f){
 	if (r === undefined){
 		r = "void return";
 	}
-
 	console.log("=> ", r, "\n");
 }
 
