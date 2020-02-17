@@ -16,12 +16,20 @@ const Util = require("../index").Utility;
 	- test for strings vs numbers
 */
 
+var complexRules = {
+	0: [0, 3, 7],
+	3: [-1, 0],
+	7: [12, 19, 0],
+	12: [12, 0, 0, 5], 
+	5: [0, -3, 0]
+}
+
 testSerial();
 testGen();
 testAlgo();
 testRand();
 testMod();
-testTranslate();
+// testTranslate();
 testUtil();
 
 function testSerial(){
@@ -61,12 +69,20 @@ function testAlgo(){
 	test("Algo.hexBeat('a9d2');");
 	test("Algo.hexBeat(573);");
 
-	test("Algo.linden()")
-	test("Algo.linden('A')")
-	test("Algo.linden('A', {A:'B', B:'AB'})")
-	test("Algo.linden('A', {A:'B', B:'AB'}, 2)")
-	test("Algo.linden('A', {A:'B', B:'AB'}, 5)")
-	test("Algo.linden('F', {F:'F+F-F-F+F'})")
+	test("Algo.linden()");
+	// koch curve
+	test("Algo.linden('F', 2, {F: 'F+F-F-F+F'})");
+	// cantor set
+	test("Algo.linden('A', 3, {A: 'ABA', B: 'BBB'})");
+	// cantor set as 0's and 1's in an array ruleset
+	test("Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]})");
+	// Sierpinski Triangle
+	test("Algo.linden('F-G-G', 1, {'F': 'F−G+F+G−F', 'G' : 'GG'})");
+
+	// usage with integers and arrays
+	test("Algo.linden([1, 0, 1], 3, {0: [1], 1: [0, 1]})");
+	// more complex rules for semitone melodies
+	test("Algo.linden(0, 2, complexRules)");
 }
 
 function testRand(){
