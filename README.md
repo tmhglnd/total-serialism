@@ -20,7 +20,7 @@ The library consists of a few subsets:
 - `Algorithmic` : These are also generative methods, but are in general more complex algorithms, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci sequence, pisano periods and more.
 - `Transform` : Methods that transform the array in some fashion. Think of methods such as reversing, palindrome, duplicating, inversing, interleaving and more.
 - `Stochastic` : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more.
-- `Utility` : Methods necessary to run functions in the libraries above.
+- `Utility` : Methods necessary to run functions in the libraries above. But can also be of help in your own algorithmic processes.
 
 # Newest features
 
@@ -29,7 +29,8 @@ Generate Twelve-tone sequences
 ```js
 // generate a twelve-tone series, influenced by the random seed
 // basically the same as: Mod.shuffle(Gen.spread(12));
-Rand.twelveTone(); //=>  [11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10]
+Rand.twelveTone(); 
+//=>  [11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10]
 ```
 
 Generate Lindenmayer system sequences
@@ -71,16 +72,37 @@ const Util = require('total-serialism').Utility;
 const Gen = require('total-serialism').Generative;
 
 // generate an array of 7 ints between range 0-7
-Gen.spread(7); //=> [0, 1, 2, 3, 4, 5, 6]
+Gen.spread(7); 
+//=> [ 0, 1, 2, 3, 4, 5, 6 ]
 
-// generate an array of 5 ints between range 7-19
-Gen.spread(5, 7, 19); //=> [7, 9, 11, 14, 16]
+// generate an array of 5 ints between range 7-19 (19 inclusive)
+Gen.spreadInclusive(5, 7, 19); 
+//=> [ 7, 9, 11, 14, 16 ]
 
 // generate an array of 9 floats between -1 - 1 (inclusive)
-Gen.spreadInclusiveFloat(9, -1, 1); //=> [-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1]
+Gen.spreadInclusiveFloat(9, -1, 1); 
+//=> [ -1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1 ]
 
 // fill an array with duplicates of a value
-Gen.fill(10, 2, 15, 3, 20, 4); //=> [10, 10, 15, 15, 15, 20, 20, 20, 20]
+Gen.fill(10, 2, 15, 3, 20, 4); 
+//=> [ 10, 10, 15, 15, 15, 20, 20, 20, 20 ]
+
+// generate 10 ints with 1 period of a sine function
+// between a default range of 0-12
+Gen.sine(10);
+//=>  [ 6, 9, 11, 11, 9, 6, 2, 0, 0, 2 ] 
+
+// generate 10 ints with 4 periods a sine function
+Gen.sine(11, 4, 0, 7);
+//=>  [ 3, 6, 0, 5, 4, 0, 6, 2, 1, 6, 0 ]
+
+// generate 7 ints of 1.5 period a cosine function
+Gen.cosine(7, 1.5);
+//=>  [ 12, 7, 0, 2, 9, 11, 4 ] 
+
+// generate 8 floats with 1 period of a cosine function
+Gen.cosineFloat(8);
+//=>  [ 1, 0.707, 0.000, -0.707, -1, -0.707, -0.000, 0.707 ] 
 ```
 
 ## Algorithmic Methods
@@ -108,7 +130,9 @@ Algo.hexBeat('a9d2');
 
 - [Learn hex beats](https://kunstmusik.github.io/learn-hex-beats/)
 
-### Lindenmayer String Expansion
+### Lindenmayer String Expansion (L-System)
+
+The original Lindenmayer string expansion returns a string of characters based on a set of rules and an axiom specified as strings.
 
 ```js
 // Koch curve
@@ -124,11 +148,13 @@ Algo.linden('F-G-G', 1, {'F': 'F−G+F+G−F', 'G' : 'GG'});
 //=> 'F−G+F+G−F-GG-GG'
 ```
 
-### L-System return Array with Ints
+### L-System returning Array with Ints
+
+A more useful version that works nicely with the rest of library. By returning an array of integers it can be quickly put to use in combination with other methods and generate rhythms, melodies and more based on custom rulesets.
 
 ```js
 Algo.linden();
-//default => [1, 0, 1, 1, 0]
+//=> [1, 0, 1, 1, 0] (default)
 
 // Cantor set as 0's and 1's in an array ruleset
 Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]});
@@ -156,23 +182,29 @@ const Rand = require('total-serialism').Stochastic;
 Rand.seed(19374);
 
 // generate an array of random floats in range -1 to 1
-Rand.randomFloat(3, -1, 1); //=>  [0.6291111850577886, 0.15153786227276944, 0.32814801081039646]
+Rand.randomFloat(3, -1, 1); 
+//=>  [0.6291111850577886, 0.15153786227276944, 0.32814801081039646]
 
 // generate an array of random integers in range
-Rand.random(5, 0, 12); //=>  [3, 3, 7, 1, 0]
+Rand.random(5, 0, 12); 
+//=>  [3, 3, 7, 1, 0]
 
 // generate an array of coin tosses
-Rand.coin(10); //=> [0, 1, 0, 1, 0, 1, 0, 0, 1, 0]
+Rand.coin(10); 
+//=> [0, 1, 0, 1, 0, 1, 0, 0, 1, 0]
 
 // generate an array of dice rolls
-Rand.dice(4); //=>  [4, 4, 2, 3] 
+Rand.dice(4); 
+//=>  [4, 4, 2, 3] 
 
 // shuffle the items in an array, influenced by the random seed
-Rand.shuffle([0, 5, 7, 12]); //=>  [7, 5, 0, 12]
+Rand.shuffle([0, 5, 7, 12]); 
+//=>  [7, 5, 0, 12]
 
 // generate a twelve-tone series, influenced by the random seed
 // basically the same as: Mod.shuffle(Gen.spread(12));
-Rand.twelveTone(); //=>  [11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10]
+Rand.twelveTone(); 
+//=>  [11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10]
 ```
 
 ## Transformative Methods
@@ -181,41 +213,53 @@ Rand.twelveTone(); //=>  [11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10]
 const Mod = require('total-serialism').Transform;
 
 // duplicate an array with an offset added to every value
-Mod.clone([0, 5, 7], 0, 12, -12); //=>  [0, 5, 7, 12, 17, 19, -12, -7, -5] 
+Mod.clone([0, 5, 7], 0, 12, -12); 
+//=>  [0, 5, 7, 12, 17, 19, -12, -7, -5] 
 
 // combine multiple numbers/arrays into one
-Mod.combine([0, 5], 12, [7, 3]); //=>  [0, 5, 12, 7, 3] 
+Mod.combine([0, 5], 12, [7, 3]); 
+//=>  [0, 5, 12, 7, 3] 
 
 // duplicate an array certain amount of times
-Mod.duplicate([0, 5, 7], 3); //=> [0, 5, 7, 0, 5, 7, 0, 5, 7]
+Mod.duplicate([0, 5, 7], 3); 
+//=> [0, 5, 7, 0, 5, 7, 0, 5, 7]
 
 // add zeroes to a rhythm to make it play once over a certain amount of bars
-Mod.every([1, 0, 1, 0, 1, 1, 0, 1], 2, 8)); // => [1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+Mod.every([1, 0, 1, 0, 1, 1, 0, 1], 2, 8)); 
+// => [1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
 
 // invert an array around a center point
-Mod.invert([0, 2, 5, 10, 13], 5); //=>  [10, 8, 5, 0, -3]
+Mod.invert([0, 2, 5, 10, 13], 5); 
+//=>  [10, 8, 5, 0, -3]
 
 // interleave multiple arrays into one
-Mod.lace([0, 5, 9], [3, 3], [7, 12, 11, -1]); //=>  [0, 3, 7, 5, 3, 12, 9, 11, -1]
+Mod.lace([0, 5, 9], [3, 3], [7, 12, 11, -1]); 
+//=>  [0, 3, 7, 5, 3, 12, 9, 11, -1]
 
 // merge arrays into a 2D-array
-Mod.merge([0, 3, 7], [3, 12], [12, -1, 19, 5]); //=>  [[0, 3, 12], [3, 12, -1], [7, 19], [5]]
+Mod.merge([0, 3, 7], [3, 12], [12, -1, 19, 5]); 
+//=>  [[0, 3, 12], [3, 12, -1], [7, 19], [5]]
 
 // generate a palindrome of an array
-Mod.palindrome([0, 3, 5, 7]); //=> [0, 3, 5, 7, 7, 5, 3, 0]
+Mod.palindrome([0, 3, 5, 7]); 
+//=> [0, 3, 5, 7, 7, 5, 3, 0]
 
 // rotate an array in positive or negative direction
-Mod.rotate([0, 5, 7, 12], -1); //=>  [5, 7, 12, 0] 
+Mod.rotate([0, 5, 7, 12], -1); 
+//=>  [5, 7, 12, 0] 
 
 // reverse an array
-Mod.reverse([0, 5, 7, 12]); //=>  [12, 7, 5, 0]
+Mod.reverse([0, 5, 7, 12]); 
+//=>  [12, 7, 5, 0]
 
 // spray values from one array on the non-zero places of another array
 Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0]);
+
 //=>  [12, 0, 0, 19, 24, 0, 12, 19, 0]
 
 // remove duplicates from an array, leave order of appearance intact
-Mod.unique([5, 7, 5, 0, 12, 7, 5]); //=>  [5, 7, 0, 12] 
+Mod.unique([5, 7, 5, 0, 12, 7, 5]); 
+//=>  [5, 7, 0, 12] 
 
 ```
 

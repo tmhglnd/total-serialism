@@ -57,13 +57,13 @@ function testGen(){
 
 	test("Gen.sineFloat()");
 	test("Gen.sineFloat(10, 1, -1, 1, 0.5)");
-	test("Gen.cosineFloat(10, 1, -1, 1)");
+	test("Gen.cosineFloat(8)");
 
-	test("Gen.sine()");
+	test("Gen.sine(10)");
 	test("Gen.sine(12, 1, -1, 1)");
-	test("Gen.sine(12, 1, 10, 20)");
+	test("Gen.sine(11, 4, 0, 7)");
 
-	test("Gen.cosine(12, 1, 10, 20)");
+	test("Gen.cosine(7, 1.5)");
 }
 
 function testAlgo(){
@@ -301,13 +301,13 @@ function testUtil(){
 
 function test(f){
 	// print the written function to console
-	console.log(f);
+	console.log(f+";");
 	// evaluate the function and print results
 	r = eval(f);
 	if (r === undefined){
 		r = "void return";
 	}
-	console.log("=> ", r, "\n");
+	console.log("//=> ", r, "\n");
 }
 
 function pagebreak(n){
