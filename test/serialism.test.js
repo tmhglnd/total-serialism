@@ -13,6 +13,7 @@ const Util = require("../index").Utility;
 	- test for single argument
 	- test for multiple arguments
 	- test for negative values
+	- test for strings vs numbers
 */
 
 testSerial();
@@ -20,7 +21,7 @@ testGen();
 testAlgo();
 testRand();
 testMod();
-// testTranslate();
+testTranslate();
 testUtil();
 
 function testSerial(){
