@@ -28,9 +28,8 @@ Generate Twelve-tone sequences
 
 ```js
 // generate a twelve-tone series, influenced by the random seed
-// basically the same as: Mod.shuffle(Gen.spread(12));
 Rand.twelveTone(); 
-//=>  [11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10]
+//=>  [ 11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10 ]
 ```
 
 Generate Lindenmayer system sequences
@@ -38,7 +37,14 @@ Generate Lindenmayer system sequences
 ```js
 // Cantor set as 0's and 1's in an array ruleset
 Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]});
-//=> [1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1]
+//=> [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1 ]
+```
+
+Pick random values from an urn filled with a range of integers
+```js
+// with default range 0 to 12 (exclusive), influenced by the random seed
+Rand.urn(5);
+//=>  [ 3, 6, 2, 8, 7 ] 
 ```
 
 # Install
@@ -114,18 +120,20 @@ const Algo = require('total-serialism').Algorithmic;
 
 ```js
 // generate a euclidean rhythm evenly spacing n-beats amongst n-steps
+// inspired by Godfried Toussaints famous paper "The Euclidean 
+// Algorithm Generates Traditional Musical Rhythms"
 Algo.euclid(16, 9, 1); 
-//=> [0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1]
-// inspired by Godfried Toussaints famous paper "The Euclidean Algorithm Generates Traditional Musical Rhythms"
+//=> [ 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1 ]
+
 ```
 
 ### Hexadecimal Rhythm Generator
 
 ```js
 // generate a hexadecimal rhythm based on a hexadecimal string (0-f)
-Algo.hexBeat('a9d2');
-//=> [1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0]
 // inspired by Steven Yi's implementation in CSound Live Coding
+Algo.hexBeat('a9d2');
+//=> [ 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0 ]
 ```
 
 - [Learn hex beats](https://kunstmusik.github.io/learn-hex-beats/)
@@ -154,11 +162,11 @@ A more useful version that works nicely with the rest of library. By returning a
 
 ```js
 Algo.linden();
-//=> [1, 0, 1, 1, 0] (default)
+//=> [ 1, 0, 1, 1, 0 ] (default)
 
 // Cantor set as 0's and 1's in an array ruleset
 Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]});
-//=> [1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1]
+//=> [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1 ]
 
 // Set more complex rules for generating semitones for example
 var complexRules = {
@@ -170,7 +178,7 @@ var complexRules = {
 }
 
 Algo.linden(0, 2, complexRules);
-//=> [0, 3, 7, -1, 0, 12, 19, 0, -1, 0, 3, 7, 12, 0, 0, 5, 19, 0, 3, 7]
+//=> [ 0, 3, 7, -1, 0, 12, 19, 0, -1, 0, 3, 7, 12, 0, 0, 5, 19, 0, 3, 7 ]
 ```
 
 ## Stochastic Methods
@@ -183,28 +191,43 @@ Rand.seed(19374);
 
 // generate an array of random floats in range -1 to 1
 Rand.randomFloat(3, -1, 1); 
-//=>  [0.6291111850577886, 0.15153786227276944, 0.32814801081039646]
+//=>  [ 0.6291111850577886, 0.15153786227276944, 0.32814801081039646 ]
 
 // generate an array of random integers in range
 Rand.random(5, 0, 12); 
-//=>  [3, 3, 7, 1, 0]
+//=>  [ 3, 3, 7, 1, 0 ]
 
 // generate an array of coin tosses
 Rand.coin(10); 
-//=> [0, 1, 0, 1, 0, 1, 0, 0, 1, 0]
+//=> [ 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 ]
 
 // generate an array of dice rolls
 Rand.dice(4); 
-//=>  [4, 4, 2, 3] 
+//=>  [ 4, 4, 2, 3 ] 
 
 // shuffle the items in an array, influenced by the random seed
 Rand.shuffle([0, 5, 7, 12]); 
-//=>  [7, 5, 0, 12]
+//=>  [ 7, 5, 0, 12 ]
 
 // generate a twelve-tone series, influenced by the random seed
 // basically the same as: Mod.shuffle(Gen.spread(12));
 Rand.twelveTone(); 
-//=>  [11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10]
+//=>  [ 11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10 ]
+
+// generate an array with random values picked from an urn
+// with default range 0 to 12 (exclusive)
+Rand.urn(5);
+//=>  [ 3, 6, 2, 8, 7 ] 
+
+// set the range with a second argument to 0-7 (exclusive)
+// when more values then range are requested the urn 
+// refills and reshuffles
+Rand.urn(10, 7);
+//=>  [ 6, 4, 3, 2, 0, 5, 1, 4, 2, 1 ] 
+
+// A third argument sets a lower range replacing the default 0
+Rand.urn(12, -3, 3);
+//=>  [ -3, 1, -1, 2, 0, -2, 2, -2, 0, -1, -3, 1 ]
 ```
 
 ## Transformative Methods
@@ -214,51 +237,51 @@ const Mod = require('total-serialism').Transform;
 
 // duplicate an array with an offset added to every value
 Mod.clone([0, 5, 7], 0, 12, -12); 
-//=>  [0, 5, 7, 12, 17, 19, -12, -7, -5] 
+//=>  [ 0, 5, 7, 12, 17, 19, -12, -7, -5 ] 
 
 // combine multiple numbers/arrays into one
 Mod.combine([0, 5], 12, [7, 3]); 
-//=>  [0, 5, 12, 7, 3] 
+//=>  [ 0, 5, 12, 7, 3 ] 
 
 // duplicate an array certain amount of times
 Mod.duplicate([0, 5, 7], 3); 
-//=> [0, 5, 7, 0, 5, 7, 0, 5, 7]
+//=> [ 0, 5, 7, 0, 5, 7, 0, 5, 7 ]
 
 // add zeroes to a rhythm to make it play once over a certain amount of bars
 Mod.every([1, 0, 1, 0, 1, 1, 0, 1], 2, 8)); 
-// => [1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+//=> [ 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ]
 
 // invert an array around a center point
 Mod.invert([0, 2, 5, 10, 13], 5); 
-//=>  [10, 8, 5, 0, -3]
+//=>  [ 10, 8, 5, 0, -3 ]
 
 // interleave multiple arrays into one
 Mod.lace([0, 5, 9], [3, 3], [7, 12, 11, -1]); 
-//=>  [0, 3, 7, 5, 3, 12, 9, 11, -1]
+//=>  [ 0, 3, 7, 5, 3, 12, 9, 11, -1 ]
 
 // merge arrays into a 2D-array
 Mod.merge([0, 3, 7], [3, 12], [12, -1, 19, 5]); 
-//=>  [[0, 3, 12], [3, 12, -1], [7, 19], [5]]
+//=>  [ [0, 3, 12], [3, 12, -1], [7, 19], [5] ]
 
 // generate a palindrome of an array
 Mod.palindrome([0, 3, 5, 7]); 
-//=> [0, 3, 5, 7, 7, 5, 3, 0]
+//=> [ 0, 3, 5, 7, 7, 5, 3, 0 ]
 
 // rotate an array in positive or negative direction
 Mod.rotate([0, 5, 7, 12], -1); 
-//=>  [5, 7, 12, 0] 
+//=>  [ 5, 7, 12, 0 ] 
 
 // reverse an array
 Mod.reverse([0, 5, 7, 12]); 
-//=>  [12, 7, 5, 0]
+//=>  [ 12, 7, 5, 0 ]
 
 // spray values from one array on the non-zero places of another array
 Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0]);
-//=>  [12, 0, 0, 19, 24, 0, 12, 19, 0]
+//=>  [ 12, 0, 0, 19, 24, 0, 12, 19, 0 ]
 
 // remove duplicates from an array, leave order of appearance intact
 Mod.unique([5, 7, 5, 0, 12, 7, 5]); 
-//=>  [5, 7, 0, 12] 
+//=>  [ 5, 7, 0, 12 ] 
 
 ```
 
