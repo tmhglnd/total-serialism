@@ -76,7 +76,8 @@ const Util = require('total-serialism').Utility;
 
 ```js
 const Gen = require('total-serialism').Generative;
-
+```
+```js
 // generate an array of 7 ints between range 0-7
 Gen.spread(7); 
 //=> [ 0, 1, 2, 3, 4, 5, 6 ]
@@ -185,7 +186,8 @@ Algo.linden(0, 2, complexRules);
 
 ```js
 const Rand = require('total-serialism').Stochastic;
-
+```
+```js
 // set the random number generator seed
 Rand.seed(19374);
 
@@ -234,7 +236,8 @@ Rand.urn(12, -3, 3);
 
 ```js
 const Mod = require('total-serialism').Transform;
-
+```
+```js
 // duplicate an array with an offset added to every value
 Mod.clone([0, 5, 7], 0, 12, -12); 
 //=>  [ 0, 5, 7, 12, 17, 19, -12, -7, -5 ] 
@@ -282,7 +285,6 @@ Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0]);
 // remove duplicates from an array, leave order of appearance intact
 Mod.unique([5, 7, 5, 0, 12, 7, 5]); 
 //=>  [ 5, 7, 0, 12 ] 
-
 ```
 
 # Inspiration & Further Reading
