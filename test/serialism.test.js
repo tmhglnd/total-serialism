@@ -16,6 +16,15 @@ const Util = require("../index").Utility;
 	- test for strings vs numbers
 */
 
+// testSerial();
+// testGen();
+// testAlgo();
+testRand();
+// testMod();
+// // testTranslate();
+// testUtil();
+
+// Global vars for tests
 var complexRules = {
 	0: [0, 3, 7],
 	3: [-1, 0],
@@ -24,14 +33,7 @@ var complexRules = {
 	5: [0, -3, 0]
 }
 
-// testSerial();
-testGen();
-// testAlgo();
-// testRand();
-// testMod();
-// // testTranslate();
-// testUtil();
-
+// Test different sections of the package
 function testSerial(){
 	pagebreak("Serial");
 
@@ -132,6 +134,11 @@ function testRand(){
 
 	test("Rand.seed(4923)");
 	test("Rand.twelveTone()");
+
+	test('Rand.seed(75631)');
+	test('Rand.urn(5)');
+	test('Rand.urn(10, 7)');
+	test('Rand.urn(12, -3, 3)');
 }
 
 function testMod(){

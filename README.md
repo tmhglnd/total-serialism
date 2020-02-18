@@ -254,7 +254,6 @@ Mod.reverse([0, 5, 7, 12]);
 
 // spray values from one array on the non-zero places of another array
 Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0]);
-
 //=>  [12, 0, 0, 19, 24, 0, 12, 19, 0]
 
 // remove duplicates from an array, leave order of appearance intact
