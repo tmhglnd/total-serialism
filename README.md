@@ -97,19 +97,19 @@ Gen.fill(10, 2, 15, 3, 20, 4);
 // generate 10 ints with 1 period of a sine function
 // between a default range of 0-12
 Gen.sine(10);
-//=>  [ 6, 9, 11, 11, 9, 6, 2, 0, 0, 2 ] 
+//=> [ 6, 9, 11, 11, 9, 6, 2, 0, 0, 2 ] 
 
 // generate 10 ints with 4 periods a sine function
 Gen.sine(11, 4, 0, 7);
-//=>  [ 3, 6, 0, 5, 4, 0, 6, 2, 1, 6, 0 ]
+//=> [ 3, 6, 0, 5, 4, 0, 6, 2, 1, 6, 0 ]
 
 // generate 7 ints of 1.5 period a cosine function
 Gen.cosine(7, 1.5);
-//=>  [ 12, 7, 0, 2, 9, 11, 4 ] 
+//=> [ 12, 7, 0, 2, 9, 11, 4 ] 
 
 // generate 8 floats with 1 period of a cosine function
 Gen.cosineFloat(8);
-//=>  [ 1, 0.707, 0.000, -0.707, -1, -0.707, -0.000, 0.707 ] 
+//=> [ 1, 0.707, 0.000, -0.707, -1, -0.707, -0.000, 0.707 ] 
 ```
 
 ## Algorithmic Methods
@@ -193,11 +193,11 @@ Rand.seed(19374);
 
 // generate an array of random floats in range -1 to 1
 Rand.randomFloat(3, -1, 1); 
-//=>  [ 0.6291111850577886, 0.15153786227276944, 0.32814801081039646 ]
+//=> [ 0.6291111850577886, 0.15153786227276944, 0.32814801081039646 ]
 
 // generate an array of random integers in range
 Rand.random(5, 0, 12); 
-//=>  [ 3, 3, 7, 1, 0 ]
+//=> [ 3, 3, 7, 1, 0 ]
 
 // generate an array of coin tosses
 Rand.coin(10); 
@@ -205,31 +205,31 @@ Rand.coin(10);
 
 // generate an array of dice rolls
 Rand.dice(4); 
-//=>  [ 4, 4, 2, 3 ] 
+//=> [ 4, 4, 2, 3 ] 
 
 // shuffle the items in an array, influenced by the random seed
 Rand.shuffle([0, 5, 7, 12]); 
-//=>  [ 7, 5, 0, 12 ]
+//=> [ 7, 5, 0, 12 ]
 
 // generate a twelve-tone series, influenced by the random seed
 // basically the same as: Mod.shuffle(Gen.spread(12));
 Rand.twelveTone(); 
-//=>  [ 11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10 ]
+//=> [ 11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10 ]
 
 // generate an array with random values picked from an urn
 // with default range 0 to 12 (exclusive)
 Rand.urn(5);
-//=>  [ 3, 6, 2, 8, 7 ] 
+//=> [ 3, 6, 2, 8, 7 ] 
 
 // set the range with a second argument to 0-7 (exclusive)
 // when more values then range are requested the urn 
 // refills and reshuffles
 Rand.urn(10, 7);
-//=>  [ 6, 4, 3, 2, 0, 5, 1, 4, 2, 1 ] 
+//=> [ 6, 4, 3, 2, 0, 5, 1, 4, 2, 1 ] 
 
 // A third argument sets a lower range replacing the default 0
 Rand.urn(12, -3, 3);
-//=>  [ -3, 1, -1, 2, 0, -2, 2, -2, 0, -1, -3, 1 ]
+//=> [ -3, 1, -1, 2, 0, -2, 2, -2, 0, -1, -3, 1 ]
 ```
 
 ## Transformative Methods
@@ -240,11 +240,11 @@ const Mod = require('total-serialism').Transform;
 ```js
 // duplicate an array with an offset added to every value
 Mod.clone([0, 5, 7], 0, 12, -12); 
-//=>  [ 0, 5, 7, 12, 17, 19, -12, -7, -5 ] 
+//=> [ 0, 5, 7, 12, 17, 19, -12, -7, -5 ] 
 
 // combine multiple numbers/arrays into one
 Mod.combine([0, 5], 12, [7, 3]); 
-//=>  [ 0, 5, 12, 7, 3 ] 
+//=> [ 0, 5, 12, 7, 3 ] 
 
 // duplicate an array certain amount of times
 Mod.duplicate([0, 5, 7], 3); 
@@ -256,15 +256,15 @@ Mod.every([1, 0, 1, 0, 1, 1, 0, 1], 2, 8));
 
 // invert an array around a center point
 Mod.invert([0, 2, 5, 10, 13], 5); 
-//=>  [ 10, 8, 5, 0, -3 ]
+//=> [ 10, 8, 5, 0, -3 ]
 
 // interleave multiple arrays into one
 Mod.lace([0, 5, 9], [3, 3], [7, 12, 11, -1]); 
-//=>  [ 0, 3, 7, 5, 3, 12, 9, 11, -1 ]
+//=> [ 0, 3, 7, 5, 3, 12, 9, 11, -1 ]
 
 // merge arrays into a 2D-array
 Mod.merge([0, 3, 7], [3, 12], [12, -1, 19, 5]); 
-//=>  [ [0, 3, 12], [3, 12, -1], [7, 19], [5] ]
+//=> [ [0, 3, 12], [3, 12, -1], [7, 19], [5] ]
 
 // generate a palindrome of an array
 Mod.palindrome([0, 3, 5, 7]); 
@@ -272,19 +272,19 @@ Mod.palindrome([0, 3, 5, 7]);
 
 // rotate an array in positive or negative direction
 Mod.rotate([0, 5, 7, 12], -1); 
-//=>  [ 5, 7, 12, 0 ] 
+//=> [ 5, 7, 12, 0 ] 
 
 // reverse an array
 Mod.reverse([0, 5, 7, 12]); 
-//=>  [ 12, 7, 5, 0 ]
+//=> [ 12, 7, 5, 0 ]
 
 // spray values from one array on the non-zero places of another array
 Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0]);
-//=>  [ 12, 0, 0, 19, 24, 0, 12, 19, 0 ]
+//=> [ 12, 0, 0, 19, 24, 0, 12, 19, 0 ]
 
 // remove duplicates from an array, leave order of appearance intact
 Mod.unique([5, 7, 5, 0, 12, 7, 5]); 
-//=>  [ 5, 7, 0, 12 ] 
+//=> [ 5, 7, 0, 12 ] 
 ```
 
 # Inspiration & Further Reading

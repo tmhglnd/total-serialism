@@ -314,7 +314,7 @@ function test(f){
 	if (r === undefined){
 		r = "void return";
 	}
-	console.log("//=> ", r, "\n");
+	console.log("//=>", r, "\n");
 }
 
 function pagebreak(n){
