@@ -19,7 +19,7 @@ const Util = require("../index").Utility;
 // testSerial();
 // testGen();
 // testAlgo();
-testRand();
+// testRand();
 // testMod();
 // // testTranslate();
 // testUtil();

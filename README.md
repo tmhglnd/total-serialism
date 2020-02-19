@@ -233,23 +233,24 @@ Rand.urn(10, 7);
 Rand.urn(12, -3, 3);
 //=> [ -3, 1, -1, 2, 0, -2, 2, -2, 0, -1, -3, 1 ]
 ```
+
 ```js
 // Choose random items from an array provided, uniform distribution
 Rand.choose(5, [0, 1, 2, 3, 5, 8, 13]);
-//=> [ 8, 1, 2, 1, 8 ] 
+//=> [ 3, 0, 13, 3, 2 ] 
 
 // Array can have any datatype
 Rand.choose(5, ['c', 'e', 'g']);
-//=> [ 'e', 'e', 'g', 'g', 'e' ] 
+//=> [ 'c', 'c', 'g', 'e', 'g' ] 
 
 // Pick random items from an array similar to urn
 // no repeating values untill urn is empty
 Rand.pick(5, [0, 1, 2, 3, 5, 8, 13]);
-//=> [ 3, 0, 5, 1, 13 ] 
+//=> [ 2, 5, 8, 1, 3 ] 
 
 // Array can have any datatype
 Rand.pick(5, ['c', 'e', ['g', 'd']]);
-//=> [ 'c', 'e', [ 'g', 'd' ], 'e', [ 'g', 'd' ] ] 
+//=> [ 'e', [ 'g', 'd' ], 'c', [ 'g', 'd' ], 'e' ] 
 ```
 
 ## Transformative Methods
