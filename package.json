@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/tmhglnd/serialism.js#readme",
   "dependencies": {
+    "bignumber.js": "^9.0.0",
     "seedrandom": "^3.0.5",
     "tonal": "^2.2.2"
   }
