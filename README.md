@@ -215,7 +215,9 @@ Rand.shuffle([0, 5, 7, 12]);
 // basically the same as: Mod.shuffle(Gen.spread(12));
 Rand.twelveTone(); 
 //=> [ 11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10 ]
+```
 
+```js
 // generate an array with random values picked from an urn
 // with default range 0 to 12 (exclusive)
 Rand.urn(5);
@@ -230,6 +232,24 @@ Rand.urn(10, 7);
 // A third argument sets a lower range replacing the default 0
 Rand.urn(12, -3, 3);
 //=> [ -3, 1, -1, 2, 0, -2, 2, -2, 0, -1, -3, 1 ]
+```
+```js
+// Choose random items from an array provided, uniform distribution
+Rand.choose(5, [0, 1, 2, 3, 5, 8, 13]);
+//=> [ 8, 1, 2, 1, 8 ] 
+
+// Array can have any datatype
+Rand.choose(5, ['c', 'e', 'g']);
+//=> [ 'e', 'e', 'g', 'g', 'e' ] 
+
+// Pick random items from an array similar to urn
+// no repeating values untill urn is empty
+Rand.pick(5, [0, 1, 2, 3, 5, 8, 13]);
+//=> [ 3, 0, 5, 1, 13 ] 
+
+// Array can have any datatype
+Rand.pick(5, ['c', 'e', ['g', 'd']]);
+//=> [ 'c', 'e', [ 'g', 'd' ], 'e', [ 'g', 'd' ] ] 
 ```
 
 ## Transformative Methods

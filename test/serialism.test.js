@@ -139,6 +139,11 @@ function testRand(){
 	test('Rand.urn(5)');
 	test('Rand.urn(10, 7)');
 	test('Rand.urn(12, -3, 3)');
+
+	test("Rand.choose(5, [0, 1, 2, 3, 5, 8, 13])");
+	test("Rand.choose(5, ['c', 'e', 'g'])");
+	test("Rand.pick(5, [0, 1, 2, 3, 5, 8, 13])");
+	test("Rand.pick(5, ['c', 'e', ['g', 'd']])");
 }
 
 function testMod(){
