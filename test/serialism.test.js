@@ -16,9 +16,9 @@ const Util = require("../index").Utility;
 	- test for strings vs numbers
 */
 
-console.log(Algo.fibonacci(20).map(x => x.toFixed()));
-console.log(Algo.pell(20).map(x => x.toFixed()));
-console.log(Algo.tribonacci(20).map(x => x.toFixed()));
+// console.log(Algo.fibonacci(20).map(x => x.toFixed()));
+// console.log(Algo.pell(20).map(x => x.toFixed()));
+// console.log(Algo.tribonacci(20).map(x => x.toFixed()));
 
 // testSerial();
 // testGen();
