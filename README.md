@@ -320,6 +320,8 @@ The euclidean rhythm generator was inspired by the famous paper by Godfried Tous
 
 Inspiration for the sequencing also came from the Live Coding scene and current programming languages available such as Tidal, Extempore, SonicPi and more. In Live Coding the Serialism technique is very common when programming music. In many cases the rhythms, melodies, and other musical expressions are expressed in arrays that are iterated based on the timing of the system.
 
+The inspiration for usage of Integer Sequences came from composers such as Iannis Xenakis, who used the fibonacci formula in his piece *Nomos Alpha* and referred to the technique as *Fibonacci Motion*. Also Xenakis referred to the usuage of set theory for composition as *Symbolic Music*. 
+
 - [Serialism on Wikipedia](https://en.wikipedia.org/wiki/Serialism)
 
 - [Twelve-Tone on Wikipedia](https://en.wikipedia.org/wiki/Twelve-tone_technique)
@@ -337,6 +339,10 @@ Inspiration for the sequencing also came from the Live Coding scene and current 
 - [Steven Yi - Hexadecimal Beat](https://github.com/kunstmusik/csound-live-code/blob/master/doc/hexadecimal_beats.md)
 
 - [Bernhard Wagner - Rhythmic Patterns As Binary Numbers](http://bernhardwagner.net/musings/RPABN.html)
+
+- [Iannis Xenakis - Formalized Music, Thought and Mathematics in Music](https://books.google.nl/books?hl=en&lr=&id=y6lL3I0vmMwC&oi=fnd&pg=PR7&dq=symbolic+music+xenakis&ots=W_s_gzotb2&sig=Y6-2zjquOIwju7q8uaoRcPuboC8&redir_esc=y#v=onepage&q=symbolic%20music%20xenakis&f=false)
+
+- [Thomas DeLio - Nomos Alpha: The Dialects of Structure and Materials](https://www.jstor.org/stable/843739?seq=1)
 
 # Missing Something?
 
