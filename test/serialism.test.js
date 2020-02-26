@@ -17,8 +17,19 @@ const Util = require("../index").Utility;
 */
 
 console.log(Algo.fibonacci(20));
-console.log(Algo.pisano(10, 4));
-console.log(Algo.pisano(10));
+// console.log(Algo.pisano(10, 4));
+// console.log(Algo.pisano(20, 10));
+// Algo.pisano(5);
+
+// test("Algo.pisano(-1, 2)");
+// test("Algo.pisano(-1, 3)");
+// test("Algo.pisano(-1, 4)");
+// test("Algo.pisano(-1, 5)");
+// test("Algo.pisano(20, 6)");
+// test("Algo.pisano(-1, 7)");
+// test("Algo.pisano(-1, 8)");
+// test("Algo.pisano(-1, 9)");
+// test("Algo.pisano(-1, 10)");
 
 console.log(Algo.pell(10).map(x => x.toFixed()));
 console.log(Algo.tribonacci(10).map(x => x.toFixed()));
