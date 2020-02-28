@@ -28,14 +28,6 @@ The library consists of a few subsets:
 
 # Newest features
 
-Generate Twelve-tone sequences
-
-```js
-// generate a twelve-tone series, influenced by the random seed
-Rand.twelveTone(); 
-//=>  [ 11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10 ]
-```
-
 Generate Lindenmayer system sequences
 
 ```js
@@ -49,6 +41,20 @@ Pick random values from an urn filled with a range of integers
 // with default range 0 to 12 (exclusive), influenced by the random seed
 Rand.urn(5);
 //=>  [ 3, 6, 2, 8, 7 ] 
+```
+
+Generate Pisano periods from Fibonacci sequences
+
+```js 
+Algo.pisano(7);
+//=> [ 0, 1, 1, 2, 3, 5, 1, 6, 0, 6, 6, 5, 4, 2, 6, 1 ]
+```
+
+Get fibonacci values as strings (to preserve the big numbers)
+
+```js 
+Algo.fibonacci(2, 100);
+//=> [ '354224848179261915075', '573147844013817084101' ] 
 ```
 
 # Install
@@ -188,7 +194,7 @@ Algo.linden(0, 2, complexRules);
 
 ### Fibonacci Sequence
 
-Generate an array of Fibonacci numbers. Numbers are by default represented as Strings in order to allow for bigger numbers than 64-bit integers can represent. The calculations are done using the bignumber.js library. A second argument sets an offset to pick a certain number from the sequence.
+Generate an array of Fibonacci numbers `F[n] = F[n-1] + F[n-2]`. Numbers are by default represented as Strings in order to allow for bigger numbers than 64-bit integers can represent. The calculations are done using the bignumber.js library. A second argument sets an offset to pick a certain number from the sequence.
 
 ```js
 // 10 fibonacci numbers, starting from 0, 1, 1 etc...
@@ -200,7 +206,7 @@ Algo.fibonacci(2, 100);
 //=> [ '354224848179261915075', '573147844013817084101' ] 
 ```
 
-Generate Pisano periods for the Fibonacci sequence. The pisano period is a result of applying a modulo operation on the Fibonacci sequence. The length of the period differs per modulus value, but the sequence will always have a repetition. 
+Generate Pisano periods for the Fibonacci sequence. The pisano period is a result of applying a modulo operation on the Fibonacci sequence `F[n] = (F[n-1] + F[n-2]) mod a`. The length of the period differs per modulus value, but the sequence will always have a repetition. 
 
 ```js
 // the pisano period for mod 7 has a length of 16
@@ -225,9 +231,10 @@ Algo.lucas(10);
 //=> [ '2', '1', '3', '4', '7', '11', '18', '29', '47', '76' ] 
 ```
 
-Or choose a custom starting pair of numbers to generate an n-bonacci sequence following the method: `F[n] = t * F[n-1] + F[n-2]`
+Set a custom starting pair of numbers to generate an n-bonacci sequence according to the following method: `F[n] = t * F[n-1] + F[n-2]`
 
 ```js
+// start with 1, 3, then multiply [n-1] by 2 before adding with [n-2]
 Algo.nbonacci(10, 1, 3, 2);
 //=> [ '1', '3', '7', '17', '41', '99', '239', '577', '1393', '3363' ] 
 
@@ -397,6 +404,8 @@ The inspiration for usage of Integer Sequences came from composers such as Ianni
 - [Iannis Xenakis - Formalized Music, Thought and Mathematics in Music](https://books.google.nl/books?hl=en&lr=&id=y6lL3I0vmMwC&oi=fnd&pg=PR7&dq=symbolic+music+xenakis&ots=W_s_gzotb2&sig=Y6-2zjquOIwju7q8uaoRcPuboC8&redir_esc=y#v=onepage&q=symbolic%20music%20xenakis&f=false)
 
 - [Thomas DeLio - Nomos Alpha: The Dialects of Structure and Materials](https://www.jstor.org/stable/843739?seq=1)
+
+- [Online Encyclopedia of Integer Sequences](https://oeis.org/A000045)
 
 # Missing Something?
 

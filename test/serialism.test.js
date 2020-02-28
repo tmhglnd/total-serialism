@@ -97,6 +97,7 @@ function testAlgo(){
 
 	test("Algo.fibonacci(12)");
 	test("Algo.fibonacci(2, 100)");
+	test('Algo.fibonacci(1, 100)[0].split("").map(x => Number(x))');
 	
 	test("Algo.pisano(12)");
 	test("Algo.pisano(7)");
