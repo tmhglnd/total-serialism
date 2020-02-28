@@ -95,16 +95,20 @@ function testAlgo(){
 	// more complex rules for semitone melodies (see above for rules)
 	test("Algo.linden(0, 3, complexRules)");
 
-	test("Algo.fibonacci(5)");
+	test("Algo.fibonacci(12)");
 	test("Algo.fibonacci(2, 100)");
-	test("Algo.pell(5)");
-	test("Algo.threeFibonacci(5)");
-	test("Algo.lucas(5)");
-	test("Algo.nbonacci(10, 1, 3, 2)");
-
+	
 	test("Algo.pisano(12)");
 	test("Algo.pisano(7)");
 	test("Algo.pisano(4, 10)");
+
+	test("Algo.pell(10)");
+	test("Algo.threeFibonacci(10)");
+	test("Algo.lucas(10)");
+
+
+	test("Algo.nbonacci(10, 1, 3, 2)");
+	test("Algo.nbonacci(10, 0, 1, 1)");
 }
 
 function testRand(){

@@ -7,6 +7,10 @@
 - [Usage](#usage)
 	- [Generative Methods](#generative-methods)
 	- [Algorithmic Methods](#algorithmic-methods)
+		- [Euclidean Rhythm](#euclidean-rhythm-generator)
+		- [Hexadecimal Rhythm](#hexadecimal-rhythm-generator)
+		- [Lindenmayer System](#lindenmayer-string-expansion-l-system)
+		- [Fibonacci Sequence](#fibonacci-sequence)
 	- [Stochastic Methods](#stochastic-methods)
 	- [Transformative Methods](#transformative-methods)
 - [Missing Something?](#missing-something)
@@ -182,18 +186,54 @@ Algo.linden(0, 2, complexRules);
 //=> [ 0, 3, 7, -1, 0, 12, 19, 0, -1, 0, 3, 7, 12, 0, 0, 5, 19, 0, 3, 7 ]
 ```
 
-### Fibonacci sequence
+### Fibonacci Sequence
 
 Generate an array of Fibonacci numbers. Numbers are by default represented as Strings in order to allow for bigger numbers than 64-bit integers can represent. The calculations are done using the bignumber.js library. A second argument sets an offset to pick a certain number from the sequence.
 
 ```js
 // 10 fibonacci numbers, starting from 0, 1, 1 etc...
-Algo.fibonacci(10);
+Algo.fibonacci(12);
 //=> [ '0', '1', '1', '2', '3', '5', '8', '13', '21', '34', '55', '89' ] 
 
 // 2 fibonacci numbers, starting from the 100th value
 Algo.fibonacci(2, 100);
 //=> [ '354224848179261915075', '573147844013817084101' ] 
+```
+
+Generate Pisano periods for the Fibonacci sequence. The pisano period is a result of applying a modulo operation on the Fibonacci sequence. The length of the period differs per modulus value, but the sequence will always have a repetition. 
+
+```js
+// the pisano period for mod 7 has a length of 16
+Algo.pisano(7);
+//=> [ 0, 1, 1, 2, 3, 5, 1, 6, 0, 6, 6, 5, 4, 2, 6, 1 ]
+
+// second argument gives a fixed length output
+Algo.pisano(4, 10);
+//=> [ 0, 1, 1, 2, 3, 1, 0, 1, 1, 2, 3, 1 ]
+```
+
+Other integer sequences based on Fibonacci are also available
+
+```js
+Algo.pell(10);
+//=> [ '0', '1', '2', '5', '12', '29', '70', '169', '408', '985' ] 
+
+Algo.threeFibonacci(10);
+//=> [ '0', '1', '3', '10', '33', '109', '360', '1189', '3927', '12970' ] 
+
+Algo.lucas(10);
+//=> [ '2', '1', '3', '4', '7', '11', '18', '29', '47', '76' ] 
+```
+
+Or choose a custom starting pair of numbers to generate an n-bonacci sequence following the method: `F[n] = t * F[n-1] + F[n-2]`
+
+```js
+Algo.nbonacci(10, 1, 3, 2);
+//=> [ '1', '3', '7', '17', '41', '99', '239', '577', '1393', '3363' ] 
+
+// this is the same as Algo.fibonacci(10)
+Algo.nbonacci(10, 0, 1, 1);
+//=> [ '0', '1', '1', '2', '3', '5', '8', '13', '21', '34' ] 
 ```
 
 ## Stochastic Methods
