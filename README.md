@@ -182,6 +182,20 @@ Algo.linden(0, 2, complexRules);
 //=> [ 0, 3, 7, -1, 0, 12, 19, 0, -1, 0, 3, 7, 12, 0, 0, 5, 19, 0, 3, 7 ]
 ```
 
+### Fibonacci sequence
+
+Generate an array of Fibonacci numbers. Numbers are by default represented as Strings in order to allow for bigger numbers than 64-bit integers can represent. The calculations are done using the bignumber.js library. A second argument sets an offset to pick a certain number from the sequence.
+
+```js
+// 10 fibonacci numbers, starting from 0, 1, 1 etc...
+Algo.fibonacci(10);
+//=> [ '0', '1', '1', '2', '3', '5', '8', '13', '21', '34', '55', '89' ] 
+
+// 2 fibonacci numbers, starting from the 100th value
+Algo.fibonacci(2, 100);
+//=> [ '354224848179261915075', '573147844013817084101' ] 
+```
+
 ## Stochastic Methods
 
 ```js

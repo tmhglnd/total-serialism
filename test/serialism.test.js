@@ -16,46 +16,9 @@ const Util = require("../index").Utility;
 	- test for strings vs numbers
 */
 
-console.log(Algo.fibonacci(20));
-// console.log(Algo.pisano(10, 4));
-// console.log(Algo.pisano(20, 10));
-// console.log(Algo.pisano(2));
-// console.log(Algo.pisano(3));
-// console.log(Algo.pisano(4));
-// console.log(Algo.pisano(5));
-// console.log(Algo.pisano(6));
-// console.log(Algo.pisano(7));
-// console.log(Algo.pisano(8));
-// console.log(Algo.pisano(9));
-// console.log(Algo.pisano(10));
-// console.log(Algo.pisano(11));
-// console.log(Algo.pisano(12));
-// console.log(Algo.pisano(29));
-// console.log(Algo.pisano(74));
-// console.log(Algo.pisano(128));
-// console.log(Algo.pisano(130));
-// console.log(Algo.pisano(125));
-// console.log(Algo.pisano(144));
-// console.log(Algo.pisano(1000));
-
-// test("Algo.pisano(-1, 2)");
-// test("Algo.pisano(-1, 3)");
-// test("Algo.pisano(-1, 4)");
-// test("Algo.pisano(-1, 5)");
-// test("Algo.pisano(20, 6)");
-// test("Algo.pisano(-1, 7)");
-// test("Algo.pisano(-1, 8)");
-// test("Algo.pisano(-1, 9)");
-// test("Algo.pisano(-1, 10)");
-
-// test("Algo.pell(10)");
-// test("Algo.tribonacci(10)");
-// test("Algo.lucas(10)");
-// test("Algo.nbonacci(10, 64, 3)");
-
 // testSerial();
 // testGen();
-// testAlgo();
+testAlgo();
 // testRand();
 // testMod();
 // // testTranslate();
@@ -131,6 +94,17 @@ function testAlgo(){
 	test("Algo.linden([1, 0, 1], 3, {0: [1], 1: [0, 1]})");
 	// more complex rules for semitone melodies (see above for rules)
 	test("Algo.linden(0, 3, complexRules)");
+
+	test("Algo.fibonacci(5)");
+	test("Algo.fibonacci(2, 100)");
+	test("Algo.pell(5)");
+	test("Algo.threeFibonacci(5)");
+	test("Algo.lucas(5)");
+	test("Algo.nbonacci(10, 1, 3, 2)");
+
+	test("Algo.pisano(12)");
+	test("Algo.pisano(7)");
+	test("Algo.pisano(4, 10)");
 }
 
 function testRand(){
