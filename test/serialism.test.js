@@ -4,7 +4,7 @@ const Gen = require("../index").Generative;
 const Algo = require("../index").Algorithmic;
 const Mod = require("../index").Transform;
 const Rand = require("../index").Stochastic;
-const TsL = require("../index").Translate;
+const TL = require("../index").Translate;
 const Util = require("../index").Utility;
 
 /*
@@ -16,9 +16,20 @@ const Util = require("../index").Utility;
 	- test for strings vs numbers
 */
 
+Srl.setBPM(120);
+console.log(Srl.getSettings());
+
+var divs = ['1/4', '1/8', '3/16', '1/4', '1/6', '2'];
+console.log(TL.divisionToMs(divs));
+console.log(divs);
+
+var rts = [0.25, 0.125, 0.1875, 0.25, 0.16667, 2];
+console.log(TL.divisionToMs(rts));
+console.log(rts);
+
 // testSerial();
 // testGen();
-testAlgo();
+// testAlgo();
 // testRand();
 // testMod();
 // // testTranslate();

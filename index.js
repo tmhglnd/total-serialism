@@ -26,3 +26,12 @@ exports.Transform = Transform;
 exports.Translate = Translate;
 exports.Utility = Utility;
 // exports.Dict = Dict;
+
+// Methods exposed to global scope
+exports.getSettings = Translate.getSettings;
+exports.setTempo = Translate.setTempo;
+exports.setBPM = Translate.setTempo;
+exports.getTempo = Translate.getTempo;
+exports.getBPM = Translate.getTempo;
+exports.setScale = Translate.setScale;
+exports.getScale = Translate.getScale;
