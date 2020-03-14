@@ -16,20 +16,20 @@ const Util = require("../index").Utility;
 	- test for strings vs numbers
 */
 
-Srl.setBPM(120);
-console.log(Srl.getSettings());
+// Srl.setBPM(120);
+// console.log(Srl.getSettings());
 
-var divs = ['1/4', '1/8', '3/16', '1/4', '1/6', '2'];
-console.log(TL.divisionToMs(divs));
-console.log(divs);
+// var divs = ['1/4', '1/8', '3/16', '1/4', '1/6', '2'];
+// console.log(TL.divisionToMs(divs));
+// console.log(divs);
 
-var rts = [0.25, 0.125, 0.1875, 0.25, 0.16667, 2];
-console.log(TL.divisionToMs(rts));
-console.log(rts);
+// var rts = [0.25, 0.125, 0.1875, 0.25, 0.16667, 2];
+// console.log(TL.divisionToMs(rts));
+// console.log(rts);
 
 // testSerial();
 // testGen();
-// testAlgo();
+testAlgo();
 // testRand();
 // testMod();
 // // testTranslate();
@@ -81,17 +81,21 @@ function testGen(){
 
 function testAlgo(){
 	pagebreak("Generative Complex");
-
+	
+	pagebreak("Euclid");
 	test("Algo.euclid()");
 	test("Algo.euclid(10, 3)");
 	test("Algo.euclid(8, 5)");
 	test("Algo.euclid(16, 9, 1)");
-
-	test("Algo.hexBeat();");
-	test("Algo.hexBeat('f898');");
-	test("Algo.hexBeat('a9d2');");
-	test("Algo.hexBeat(573);");
-
+	
+	pagebreak("HexBeat");
+	test("Algo.hexBeat()");
+	test("Algo.hexBeat('f898')");
+	test("Algo.hexBeat('a9d2')");
+	test("Algo.hexBeat(573)");
+	test("Algo.hexBeat(['32fa'])");
+	
+	pagebreak("Lindenmayer");
 	test("Algo.linden()");
 	// koch curve
 	test("Algo.linden('F', 2, {F: 'F+F-F-F+F'})");
@@ -106,6 +110,7 @@ function testAlgo(){
 	// more complex rules for semitone melodies (see above for rules)
 	test("Algo.linden(0, 3, complexRules)");
 
+	pagebreak("Fibonacci");
 	test("Algo.fibonacci(12)");
 	test("Algo.fibonacci(2, 100)");
 	test('Algo.fibonacci(1, 100)[0].split("").map(x => Number(x))');
