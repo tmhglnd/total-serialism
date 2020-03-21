@@ -16,7 +16,25 @@ const Util = require("../index").Utility;
 	- test for strings vs numbers
 */
 
-// const { Interval } = require('@tonaljs/tonal');
+Srl.setScale("minor_pentatonic");
+
+Rand.seed(3728);
+var notes = Gen.spread(12, -12, 12);
+console.log(notes);
+var notes = TL.toScale(notes);
+console.log(notes);
+
+var melody = Gen.sine(4, 3.5, -7, 12);
+console.log(melody);
+sMelody = TL.toScale(melody);
+console.log(sMelody);
+
+var mMelody = Gen.sine(8, 3.5, 0, 12);
+console.log(mMelody);
+console.log(TL.toScale(mMelody));
+mMelody = TL.toMidi(mMelody);
+console.log(mMelody);
+
 
 // console.log(Interval.distance('c3', 'g3'));
 // var midis = Gen.spread(24).map(x => x+33);
@@ -45,7 +63,7 @@ const Util = require("../index").Utility;
 // testAlgo();
 // testRand();
 // testMod();
-testTranslate();
+// testTranslate();
 // testUtil();
 
 // Global vars for tests
@@ -319,6 +337,10 @@ function testTranslate(){
 	test("TL.rtom([-12, 0, 7, 12])");
 	test("TL.rtom([-12, 0, 7, 12], 3)");
 	test("TL.rtom([-12, 0, 7, 12], 'a4')");
+
+	test("TL.rtof([-12, 0, 7, 12])");
+	test("TL.rtof([-12, 0, 7, 12], 3)");
+	test("TL.rtof([-12, 0, 7, 12], 'a4')");
 
 	// test("TsL.scaleNames();");
 	// test("TsL.setScale('harmonic minor', 'd');");
