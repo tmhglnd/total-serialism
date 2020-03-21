@@ -16,8 +16,38 @@ const Util = require("../index").Utility;
 	- test for strings vs numbers
 */
 
-// Srl.setBPM(120);
+// var midis = Gen.spread(24).map(x => x+33);
+// var notes = TL.midiToNote(midis).map(x => x.toLowerCase());
+// var freqs = TL.midiToFreq(midis);
+// var convs = TL.noteToMidi(notes);
+
+// console.log(convs);
+// console.log(midis);
+// console.log(notes);
+// console.log(freqs);
+
+console.log(TL.rtom([-12, 0, 7, 12]));
+console.log(TL.rtom([-12, 0, 7, 12], 4));
+console.log(TL.rtom([-12, 0, 7, 12], 'c3'));
+console.log(TL.rtom([-12, 0, 7, 12], 'C3'));
+
+
+// Srl.setBPM(95);
+// console.log(Srl.getTempo());
+
+// Srl.setScale("major", "a");
+// Srl.setScale("minor_harmonic", "a");
 // console.log(Srl.getSettings());
+
+// Srl.setScale("major", "d");
+// console.log(Srl.getSettings());
+
+// Srl.setScale("major_pentatonic", "f#");
+// console.log(Srl.getSettings());
+
+// console.log(TL.scaleNames());
+// console.log(TL.scaleName());
+// TL.searchScales(['1P', '2M', '3m', '4P', '6m', '7M']);
 
 // var divs = ['1/4', '1/8', '3/16', '1/4', '1/6', '2'];
 // console.log(TL.divisionToMs(divs));
@@ -29,10 +59,10 @@ const Util = require("../index").Utility;
 
 // testSerial();
 // testGen();
-testAlgo();
+// testAlgo();
 // testRand();
 // testMod();
-// // testTranslate();
+// testTranslate();
 // testUtil();
 
 // Global vars for tests
@@ -94,6 +124,7 @@ function testAlgo(){
 	test("Algo.hexBeat('a9d2')");
 	test("Algo.hexBeat(573)");
 	test("Algo.hexBeat(['32fa'])");
+	test("Algo.hexBeat(['-zxyt'])");
 	
 	pagebreak("Lindenmayer");
 	test("Algo.linden()");
@@ -103,6 +134,10 @@ function testAlgo(){
 	test("Algo.linden('A', 3, {A: 'ABA', B: 'BBB'})");
 	// cantor set as 0's and 1's in an array ruleset
 	test("Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]})");
+	// Thue-Morse sequence
+	test("Algo.linden('A', 4, {A: 'AB', B: 'BA'})");
+	// Thue-Morse sequence as 0's and 1's
+	test("Algo.linden(1, 4, {0: [0, 1], 1: [1, 0]})");
 	// Sierpinski Triangle
 	test("Algo.linden('F-G-G', 1, {'F': 'F−G+F+G−F', 'G' : 'GG'})");
 	// usage with integers and arrays
@@ -122,7 +157,6 @@ function testAlgo(){
 	test("Algo.pell(10)");
 	test("Algo.threeFibonacci(10)");
 	test("Algo.lucas(10)");
-
 
 	test("Algo.nbonacci(10, 1, 3, 2)");
 	test("Algo.nbonacci(10, 0, 1, 1)");
@@ -278,39 +312,37 @@ function testMod(){
 function testTranslate(){
 	pagebreak("Translate");
 
-	test("TsL.midiToNote(48);");
-	test("TsL.mton([60, 67, 72]);");
+	test("TL.midiToNote(48);");
+	test("TL.mton([60, 67, 72]);");
 
-	test("TsL.noteToMidi('c2');");
-	test("TsL.noteToMidi(['c2','d2','f#2']);");
-	test("TsL.ntom(['f-1','bb3','g#2']);");
+	test("TL.noteToMidi('c2');");
+	test("TL.noteToMidi(['c2','d2','f#2']);");
+	test("TL.ntom(['f-1','bb3','g#2']);");
 
-	test("TsL.midiToFreq(60);");
-	test("TsL.mtof([60, 67, 72]);");
+	test("TL.midiToFreq(60);");
+	test("TL.mtof([60, 67, 72]);");
 
-	test("TsL.noteToFreq('c2');");
-	test("TsL.noteToFreq(['c2','d2','f#2']);");
-	test("TsL.ntof(['f-1','bb3','g###2']);");
+	test("TL.noteToFreq('c2');");
+	test("TL.noteToFreq(['c2','d2','f#2']);");
+	test("TL.ntof(['f-1','bb3','g###2']);");
 
-	test("TsL.midiToNote(Mod.palindrome(Gen.spread(3, 48, 60)));");
+	// test("TsL.semiToMidi(0);");
+	// test("TsL.semiToMidi([0, 2, 7, -3, -12, 12]);");
+	// test("TsL.stom([0, 2, 7, -3, -12, 12], 3);");
 
-	test("TsL.semiToMidi(0);");
-	test("TsL.semiToMidi([0, 2, 7, -3, -12, 12]);");
-	test("TsL.stom([0, 2, 7, -3, -12, 12], 3);");
+	// test("TsL.semiToFreq(0);");
+	// test("TsL.semiToFreq([0, 2, 7, -3, -12, 12]);");
+	// test("TsL.stof([0, 2, 7, -3, -12, 12], 3);");
 
-	test("TsL.semiToFreq(0);");
-	test("TsL.semiToFreq([0, 2, 7, -3, -12, 12]);");
-	test("TsL.stof([0, 2, 7, -3, -12, 12], 3);");
+	// test("TsL.midiToSemi(48);");
+	// test("TsL.midiToSemi([48, 50, 55, 45, 36, 60]);");
+	// test("TsL.mtos([48, 50, 55, 45, 36, 60], 3);");
 
-	test("TsL.midiToSemi(48);");
-	test("TsL.midiToSemi([48, 50, 55, 45, 36, 60]);");
-	test("TsL.mtos([48, 50, 55, 45, 36, 60], 3);");
-
-	test("TsL.scaleNames();");
-	test("TsL.setScale('harmonic minor', 'd');");
-	test("TsL.setScale('prometheus', 'A#');");
-	test("TsL.setScale('minor pentatonic', 'd');");
-	test("TsL.getScale();");
+	// test("TsL.scaleNames();");
+	// test("TsL.setScale('harmonic minor', 'd');");
+	// test("TsL.setScale('prometheus', 'A#');");
+	// test("TsL.setScale('minor pentatonic', 'd');");
+	// test("TsL.getScale();");
 }
 
 function testUtil(){
