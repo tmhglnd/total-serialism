@@ -29,20 +29,22 @@ const Util = require("../index").Utility;
 // console.log(notes);
 // console.log(freqs);
 
-// Srl.setBPM(95);
-// console.log(Srl.getTempo());
 
-// Srl.setScale("major", "a");
-// Srl.setScale("minor_harmonic", "a");
-// console.log(Srl.getSettings());
+Srl.setBPM(95);
+Srl.setScale("major", "a");
+console.log(Srl.getSettings());
 
-// Srl.setScale("major", "d");
-// console.log(Srl.getSettings());
+Srl.setBPM(110);
+Srl.setScale("minor_harmonic", "a");
+console.log(Srl.getSettings());
 
-// Srl.setScale("major_pentatonic", "f#");
-// console.log(Srl.getSettings());
+Srl.setBPM(145);
+Srl.setScale("major_pentatonic", "f#");
+console.log(Srl.getSettings());
 
-// console.log(TL.scaleNames());
+console.log(Srl.getScale());
+console.log(TL.scaleNames());
+
 // console.log(TL.scaleName());
 // TL.searchScales(['1P', '2M', '3m', '4P', '6m', '7M']);
 
