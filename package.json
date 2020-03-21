@@ -47,7 +47,6 @@
     "@tonaljs/tonal": "^3.6.0",
     "bignumber.js": "^9.0.0",
     "jsonfile": "^5.0.0",
-    "seedrandom": "^3.0.5",
-    "tonal": "^2.2.2"
+    "seedrandom": "^3.0.5"
   }
 }
