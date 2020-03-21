@@ -16,6 +16,9 @@ const Util = require("../index").Utility;
 	- test for strings vs numbers
 */
 
+// const { Interval } = require('@tonaljs/tonal');
+
+// console.log(Interval.distance('c3', 'g3'));
 // var midis = Gen.spread(24).map(x => x+33);
 // var notes = TL.midiToNote(midis).map(x => x.toLowerCase());
 // var freqs = TL.midiToFreq(midis);
@@ -25,12 +28,6 @@ const Util = require("../index").Utility;
 // console.log(midis);
 // console.log(notes);
 // console.log(freqs);
-
-console.log(TL.rtom([-12, 0, 7, 12]));
-console.log(TL.rtom([-12, 0, 7, 12], 4));
-console.log(TL.rtom([-12, 0, 7, 12], 'c3'));
-console.log(TL.rtom([-12, 0, 7, 12], 'C3'));
-
 
 // Srl.setBPM(95);
 // console.log(Srl.getTempo());
@@ -60,7 +57,7 @@ console.log(TL.rtom([-12, 0, 7, 12], 'C3'));
 // testSerial();
 // testGen();
 // testAlgo();
-// testRand();
+testRand();
 // testMod();
 // testTranslate();
 // testUtil();
@@ -326,17 +323,9 @@ function testTranslate(){
 	test("TL.noteToFreq(['c2','d2','f#2']);");
 	test("TL.ntof(['f-1','bb3','g###2']);");
 
-	// test("TsL.semiToMidi(0);");
-	// test("TsL.semiToMidi([0, 2, 7, -3, -12, 12]);");
-	// test("TsL.stom([0, 2, 7, -3, -12, 12], 3);");
-
-	// test("TsL.semiToFreq(0);");
-	// test("TsL.semiToFreq([0, 2, 7, -3, -12, 12]);");
-	// test("TsL.stof([0, 2, 7, -3, -12, 12], 3);");
-
-	// test("TsL.midiToSemi(48);");
-	// test("TsL.midiToSemi([48, 50, 55, 45, 36, 60]);");
-	// test("TsL.mtos([48, 50, 55, 45, 36, 60], 3);");
+	test("TL.rtom([-12, 0, 7, 12])");
+	test("TL.rtom([-12, 0, 7, 12], 3)");
+	test("TL.rtom([-12, 0, 7, 12], 'a4')");
 
 	// test("TsL.scaleNames();");
 	// test("TsL.setScale('harmonic minor', 'd');");
