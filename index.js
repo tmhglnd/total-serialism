@@ -16,7 +16,6 @@ const Stochastic = require('./lib/gen-stochastic.js');
 const Transform = require('./lib/transform.js');
 const Translate = require('./lib/translate.js');
 const Utility = require('./lib/utility.js');
-// const Dict = require('./lib/dict.js');
 
 // export the various libraries
 exports.Generative = Generative;
@@ -25,7 +24,6 @@ exports.Stochastic = Stochastic;
 exports.Transform = Transform;
 exports.Translate = Translate;
 exports.Utility = Utility;
-// exports.Dict = Dict;
 
 // Methods exposed to global scope
 exports.getSettings = Translate.getSettings;
