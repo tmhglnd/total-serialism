@@ -28,8 +28,10 @@ exports.Utility = Utility;
 // Methods exposed to global scope
 exports.getSettings = Translate.getSettings;
 exports.setTempo = Translate.setTempo;
-exports.setBPM = Translate.setTempo;
 exports.getTempo = Translate.getTempo;
+exports.setBPM = Translate.setTempo;
 exports.getBPM = Translate.getTempo;
 exports.setScale = Translate.setScale;
 exports.getScale = Translate.getScale;
+exports.setRoot = Translate.setRoot;
+exports.getRoot = Translate.getRoot;

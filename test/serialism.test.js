@@ -16,36 +16,24 @@ const Util = require("../index").Utility;
 	- test for strings vs numbers
 */
 
-Srl.setScale("minor_pentatonic");
+Srl.setScale('minor_harmonic', 'b');
 
 Rand.seed(3728);
-var notes = Gen.spread(12, -12, 12);
+var notes = Gen.spread(12, -12, 24);
 console.log(notes);
 var notes = TL.toScale(notes);
 console.log(notes);
 
-var melody = Gen.sine(4, 3.5, -7, 12);
+var melody = Gen.sine(4, 3.5, -7, 24);
 console.log(melody);
 sMelody = TL.toScale(melody);
 console.log(sMelody);
 
-var mMelody = Gen.sine(8, 3.5, 0, 12);
+var mMelody = Gen.sineFloat(8, 3.5, 0, 24);
 console.log(mMelody);
 console.log(TL.toScale(mMelody));
-mMelody = TL.toMidi(mMelody);
-console.log(mMelody);
-
-
-// console.log(Interval.distance('c3', 'g3'));
-// var midis = Gen.spread(24).map(x => x+33);
-// var notes = TL.midiToNote(midis).map(x => x.toLowerCase());
-// var freqs = TL.midiToFreq(midis);
-// var convs = TL.noteToMidi(notes);
-
-// console.log(convs);
-// console.log(midis);
-// console.log(notes);
-// console.log(freqs);
+// mMelody = TL.toMidi(mMelody);
+// console.log(mMelody);
 
 // console.log(TL.scaleName());
 // TL.searchScales(['1P', '2M', '3m', '4P', '6m', '7M']);
@@ -315,6 +303,8 @@ function testTranslate(){
 
 	test("Srl.setBPM(110)");
 	test("Srl.setScale('minor_harmonic', 'a')");
+
+	test("Srl.setRoot('Db')");
 	test("Srl.getSettings()");
 
 	test("TL.scaleNames()");
