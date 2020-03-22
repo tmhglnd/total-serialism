@@ -13,6 +13,7 @@
 		- [Fibonacci Sequence](#fibonacci-sequence)
 	- [Stochastic Methods](#stochastic-methods)
 	- [Transformative Methods](#transformative-methods)
+	- [Translate Methods](#translate-methods)
 - [Missing Something?](#missing-something)
 - [Inspiration & Further Reading](#inspiration--further-reading)
 - [License](#license)
@@ -386,7 +387,7 @@ Mod.unique([5, 7, 5, 0, 12, 7, 5]);
 //=> [ 5, 7, 0, 12 ] 
 ```
 
-## Translate
+## Translate Methods
 
 ```js
 const TL = require('total-serialism').Translate;
