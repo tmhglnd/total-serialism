@@ -4,7 +4,8 @@
   "description": "A set of methods for the generation and transformation of number sequences useful in algorithmic composition",
   "main": "index.js",
   "scripts": {
-    "test": "node test/serialism.test.js"
+    "test": "node test/serialism.test.js",
+    "database": "node lib/database.js"
   },
   "repository": {
     "type": "git",
