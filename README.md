@@ -379,6 +379,8 @@ const TL = require('total-serialism').Translate;
 <!-- // Specify the Beats Per Minute used duration <> ms translation
 TL.setTempo(110); -->
 
+### Conversion between units
+
 ```js
 
 // Convert Array or Int as midi-number to midi-notenames
@@ -402,19 +404,23 @@ TL.noteToFreq(['c2','d2','f#2']);
 // alternative: TL.ntof()
 
 // Convert relative semitone values to midi-numbers
-// specify the octave as second argument
+// specify the octave as second argument (default = 'C3' = 4 => 48)
 TL.relativeToMidi([-12, 0, 7, 12], 4);
 //=> [ 36, 48, 55, 60 ] 
 // alternative: TL.rtom()
 
 // Convert relative semitone values to frequency (A4 = 440 Hz)
-// specify the octave as second argument
-TL.rtof([-12, 0, 7, 12], 3);
+// specify the octave as second argument (default = 'C3' = 4 => 48)
+TL.rtof([-12, 0, 7, 12], 4);
 //=> [ 65.40639132514966,
 //   130.8127826502993,
 //   195.99771799087463,
 //   261.6255653005986 ] 
+```
 
+### Working with predefined scale and root
+
+```js
 // Set the global scale used with toScale() and toMidi() methods
 TL.setScale('minor_harmonic', 'a');
 
@@ -445,6 +451,19 @@ TL.toScale([8, 14, -2, 22, -7, 22, -2, 14]);
 // Preserves floating point for detune/microtonality
 TL.toScale([0, 4.1, 6.5, 7.1, 9.25]);
 //=> [ 0, 3.1, 7.5, 7.1, 8.25 ] 
+
+// Map relative numbers to a specified scale class (including root)
+// output as midi value. Specify an octave (default = 'C3' = 4 => 48)
+TL.toMidi([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 4);;
+//=> [ 48, 48, 50, 51, 51, 53, 55, 55, 56, 56, 59, 59 ] 
+
+// Works with negative relative values
+TL.toMidi([8, 14, -2, 22, -7, 22, -2, 14], 4);
+//=> [ 56, 62, 47, 71, 41, 71, 47, 62 ] 
+
+// Preserves floating point for detune/microtonality
+TL.toMidi([0, 4.1, 6.5, 7.1, 9.25], 'c3');
+//=> [ 48, 51.1, 55.5, 55.1, 56.25 ] 
 ```
 
 # Inspiration & Further Reading

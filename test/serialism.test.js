@@ -16,26 +16,6 @@ const Util = require("../index").Utility;
 	- test for strings vs numbers
 */
 
-Srl.setScale('minor_harmonic', 'b');
-
-Rand.seed(3728);
-var notes = Gen.spread(12, -12, 24);
-console.log(notes);
-var notes = TL.toScale(notes);
-console.log(notes);
-
-var melody = Gen.sine(4, 3.5, -7, 24);
-console.log(melody);
-sMelody = TL.toScale(melody);
-console.log(sMelody);
-
-var mMelody = Gen.sineFloat(8, 3.5, 0, 24);
-console.log(mMelody);
-console.log(TL.toScale(mMelody));
-
-// mMelody = TL.toMidi(mMelody);
-// console.log(mMelody);
-
 // console.log(TL.scaleName());
 // TL.searchScales(['1P', '2M', '3m', '4P', '6m', '7M']);
 
@@ -326,28 +306,25 @@ function testTranslate(){
 	test("TL.ntof(['f-1','bb3','g###2'])");
 
 	test("TL.rtom([-12, 0, 7, 12])");
-	test("TL.rtom([-12, 0, 7, 12], 3)");
-	test("TL.rtom([-12, 0, 7, 12], 'a4')");
+	test("TL.rtom([-12, 0, 7, 12], 4)");
+	test("TL.rtom([-12, 0, 7, 12], 'c3')");
 
 	test("TL.rtof([-12, 0, 7, 12])");
-	test("TL.rtof([-12, 0, 7, 12], 3)");
-	test("TL.rtof([-12, 0, 7, 12], 'a4')");
+	test("TL.rtof([-12, 0, 7, 12], 4)");
+	test("TL.rtof([-12, 0, 7, 12], 'c3')");
 
 	Srl.setScale('minor_harmonic', 'b');
 
 	test("TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);");
-	
 	test("TL.toScale(Gen.sine(8, 3.5, -7, 24))");
-
 	test("TL.toScale([0, 4.1, 6.5, 7.1, 9.25])");
-	// console.log(mMelody);
-	// console.log(TL.toScale(mMelody));
 
-	// test("TsL.scaleNames();");
-	// test("TsL.setScale('harmonic minor', 'd');");
-	// test("TsL.setScale('prometheus', 'A#');");
-	// test("TsL.setScale('minor pentatonic', 'd');");
-	// test("TsL.getScale();");
+	test("Srl.setRoot('c')");
+	test("Srl.getSettings()");
+
+	test("TL.toMidi([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);");
+	test("TL.toMidi(Gen.sine(8, 3.5, -7, 24), 4)");
+	test("TL.toMidi([0, 4.1, 6.5, 7.1, 9.25], 'c3')");
 }
 
 function testUtil(){
