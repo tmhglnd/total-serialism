@@ -32,6 +32,7 @@ console.log(sMelody);
 var mMelody = Gen.sineFloat(8, 3.5, 0, 24);
 console.log(mMelody);
 console.log(TL.toScale(mMelody));
+
 // mMelody = TL.toMidi(mMelody);
 // console.log(mMelody);
 
@@ -51,7 +52,7 @@ console.log(TL.toScale(mMelody));
 // testAlgo();
 // testRand();
 // testMod();
-// testTranslate();
+testTranslate();
 // testUtil();
 
 // Global vars for tests
@@ -311,7 +312,7 @@ function testTranslate(){
 
 	test("TL.midiToNote(48)");
 	test("TL.midiToNote('c4')");
-	test("TL.mton([60, 67, 72])");
+	test("TL.mton([60, 67, 70])");
 
 	test("TL.noteToMidi('c2')");
 	test("TL.noteToMidi(['c2','d2','f#2'])");
@@ -331,6 +332,16 @@ function testTranslate(){
 	test("TL.rtof([-12, 0, 7, 12])");
 	test("TL.rtof([-12, 0, 7, 12], 3)");
 	test("TL.rtof([-12, 0, 7, 12], 'a4')");
+
+	Srl.setScale('minor_harmonic', 'b');
+
+	test("TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);");
+	
+	test("TL.toScale(Gen.sine(8, 3.5, -7, 24))");
+
+	test("TL.toScale([0, 4.1, 6.5, 7.1, 9.25])");
+	// console.log(mMelody);
+	// console.log(TL.toScale(mMelody));
 
 	// test("TsL.scaleNames();");
 	// test("TsL.setScale('harmonic minor', 'd');");

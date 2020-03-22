@@ -24,6 +24,7 @@ The library consists of a few subsets:
 - `Algorithmic` : These are also generative methods, but are in general more complex algorithms, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci sequence, pisano periods and more.
 - `Transform` : Methods that transform the array in some fashion. Think of methods such as reversing, palindrome, duplicating, inversing, interleaving and more.
 - `Stochastic` : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more.
+- `Translate` : Translate between different notation systems. For example convert midi values to frequency, or note names to midi integers. Or use a relative semitone notation system and convert to midi. Map values in an Array to a specified scale, and output the relative values in the specified scale, root and octave.
 - `Utility` : Methods necessary to run functions in the libraries above. But can also be of help in your own algorithmic processes.
 
 # Newest features
@@ -367,6 +368,83 @@ Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0]);
 // remove duplicates from an array, leave order of appearance intact
 Mod.unique([5, 7, 5, 0, 12, 7, 5]); 
 //=> [ 5, 7, 0, 12 ] 
+```
+
+## Translate
+
+```js
+const TL = require('total-serialism').Translate;
+```
+
+<!-- // Specify the Beats Per Minute used duration <> ms translation
+TL.setTempo(110); -->
+
+```js
+
+// Convert Array or Int as midi-number to midi-notenames
+TL.midiToNote([60, 67, 70]);
+//=> [ 'C4', 'G4', 'Bb4' ]
+// alternative: TL.mton()
+
+// Convert Array of String as midi-notenames to midi-pitch
+TL.noteToMidi(['c2','d2','f#2']);
+//=> [ 36, 38, 42 ] 
+// alternative: TL.ntom()
+
+// Convert midi-pitches to frequency (A4 = 440 Hz)
+TL.midiToFrequency([60, 67, 72]);
+//=> [ 261.6255653005986, 391.99543598174927, 523.2511306011972 ] 
+// alternative: TL.mtof()
+
+// Convert midi-notenames to frequency (A4 = 440 Hz)
+TL.noteToFreq(['c2','d2','f#2']);
+//=> [ 65.40639132514966, 73.41619197935188, 92.4986056779086 ] 
+// alternative: TL.ntof()
+
+// Convert relative semitone values to midi-numbers
+// specify the octave as second argument
+TL.relativeToMidi([-12, 0, 7, 12], 4);
+//=> [ 36, 48, 55, 60 ] 
+// alternative: TL.rtom()
+
+// Convert relative semitone values to frequency (A4 = 440 Hz)
+// specify the octave as second argument
+TL.rtof([-12, 0, 7, 12], 3);
+//=> [ 65.40639132514966,
+//   130.8127826502993,
+//   195.99771799087463,
+//   261.6255653005986 ] 
+
+// Set the global scale used with toScale() and toMidi() methods
+TL.setScale('minor_harmonic', 'a');
+
+// Set only the root for the global scale
+TL.setRoot('Db');
+
+// Return all the specified settings
+TL.getSettings();
+//=> { scale: 'minor_harmonic',
+//   root: 'Db',
+//   rootInt: 1,
+//   map: [ 0, 0, 2, 3, 3, 5, 7, 7, 8, 8, 11, 11 ],
+//   bpm: 110,
+//   measureInMs: 2181.818181818182 }
+
+// Return all the available scale names
+TL.scaleNames();
+//=> [ 'chromatic', 'major', etc... ] 
+
+// Map relative numbers to a specified scale class (excluding root)
+TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);;
+//=> [ 0, 0, 2, 3, 3, 5, 7, 7, 8, 8, 11, 11 ] 
+
+// Works with negative relative values
+TL.toScale([8, 14, -2, 22, -7, 22, -2, 14]);
+//=> [ 8, 14, -1, 23, -7, 23, -1, 14 ] 
+
+// Preserves floating point for detune/microtonality
+TL.toScale([0, 4.1, 6.5, 7.1, 9.25]);
+//=> [ 0, 3.1, 7.5, 7.1, 8.25 ] 
 ```
 
 # Inspiration & Further Reading
