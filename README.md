@@ -29,6 +29,22 @@ The library consists of a few subsets:
 
 # Newest features
 
+Set a global scale and map relative values to that scale to stay in tune
+
+```js
+// Set the global scale used with toScale() and toMidi() methods
+TL.setScale('minor_harmonic', 'c');
+
+// Map relative numbers to a specified scale class (excluding root)
+TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);;
+//=> [ 0, 0, 2, 3, 3, 5, 7, 7, 8, 8, 11, 11 ] 
+
+// Map relative numbers to a specified scale class (including root)
+// output as midi value. Specify an octave (default = 'C3' = 4 => 48)
+TL.toMidi([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 4);;
+//=> [ 48, 48, 50, 51, 51, 53, 55, 55, 56, 56, 59, 59 ] 
+```
+
 Generate Lindenmayer system sequences
 
 ```js
@@ -425,7 +441,7 @@ TL.rtof([-12, 0, 7, 12], 4);
 TL.setScale('minor_harmonic', 'a');
 
 // Set only the root for the global scale
-TL.setRoot('Db');
+TL.setRoot('c');
 
 // Return all the specified settings
 TL.getSettings();
