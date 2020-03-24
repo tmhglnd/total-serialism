@@ -1,6 +1,8 @@
 # Total Serialism
 
-`total-serialism` is a set of methods used for procedurally generating and transforming number sequences. This library is mainly designed with algorithmic composition of music in mind, but can surely be useful for other purposes that involve generation and manipulation of arrays and numbers.
+`total-serialism` is a set of methods used for procedurally generating and transforming number sequences. This library is mainly designed with the algorithmic composition of music in mind, but can surely be found useful for other purposes that involve generation and manipulation of arrays and numbers sequences.
+
+*This library is a work in progress, and I'm always interested in receiving inspiration, suggestions, enhancements, literature and more. Feel free to file an [issue here](https://github.com/tmhglnd/total-serialism/issues) or make a pull request and I will gladly look into it!*
 
 - [Content](#content)
 - [Install](#install)
@@ -14,7 +16,6 @@
 	- [Stochastic Methods](#stochastic-methods)
 	- [Transformative Methods](#transformative-methods)
 	- [Translate Methods](#translate-methods)
-- [Missing Something?](#missing-something)
 - [Inspiration & Further Reading](#inspiration--further-reading)
 - [License](#license)
 
@@ -520,10 +521,6 @@ The inspiration for usage of Integer Sequences came from composers such as Ianni
 - [Thomas DeLio - Nomos Alpha: The Dialects of Structure and Materials](https://www.jstor.org/stable/843739?seq=1)
 
 - [Online Encyclopedia of Integer Sequences](https://oeis.org/A000045)
-
-# Missing Something?
-
-This library is a work in progress, and I'm always interested to receive inspiration, suggestions, enhancements, literature and more. Feel free to file an [issue here](https://github.com/tmhglnd/total-serialism/issues) and I will gladly look into it!
 
 # License
 
