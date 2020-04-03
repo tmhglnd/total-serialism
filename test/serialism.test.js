@@ -1,11 +1,14 @@
 
-const Srl = require("../index");
-const Gen = require("../index").Generative;
-const Algo = require("../index").Algorithmic;
-const Mod = require("../index").Transform;
-const Rand = require("../index").Stochastic;
-const TL = require("../index").Translate;
-const Util = require("../index").Utility;
+// const entryPoint = "../index";
+const entryPoint = "../build/bundle.js";
+
+const Srl = require(entryPoint);
+const Gen = require(entryPoint).Generative;
+const Algo = require(entryPoint).Algorithmic;
+const Mod = require(entryPoint).Transform;
+const Rand = require(entryPoint).Stochastic;
+const TL = require(entryPoint).Translate;
+const Util = require(entryPoint).Utility;
 
 /*
 	Test criteria:

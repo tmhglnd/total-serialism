@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "node test/serialism.test.js",
+    "build": "npm run clean && npm run bundle",
+    "clean": "rm -rf build",
+    "bundle": "mkdir build && browserify --standalone Bundle index.js > build/bundle.js",
     "database": "node lib/database.js"
   },
   "repository": {
@@ -49,5 +52,9 @@
     "bignumber.js": "^9.0.0",
     "jsonfile": "^5.0.0",
     "seedrandom": "^3.0.5"
+  },
+  "devDependencies": {
+    "browserify": "^16.5.1",
+    "uglify-js": "^3.8.1"
   }
 }
