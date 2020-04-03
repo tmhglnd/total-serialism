@@ -27,13 +27,14 @@ const Util = require("../index").Utility;
 // console.log(TL.divisionToMs(rts));
 // console.log(rts);
 
-// testSerial();
-// testGen();
-// testAlgo();
-// testRand();
+testSerial();
+testGen();
+testAlgo();
+testRand();
 testMod();
-// testTranslate();
-// testUtil();
+testTranslate();
+testUtil();
+pagebreak("Test Passed");
 
 // Global vars for tests
 var complexRules = {
