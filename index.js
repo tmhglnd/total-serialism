@@ -10,12 +10,12 @@
 //==============================================================================
 
 // require the various libraries
-const Generative = require('./lib/gen-basic.js');
-const Algorithmic = require('./lib/gen-complex.js');
-const Stochastic = require('./lib/gen-stochastic.js');
-const Transform = require('./lib/transform.js');
-const Translate = require('./lib/translate.js');
-const Utility = require('./lib/utility.js');
+const Generative = require('./src/gen-basic.js');
+const Algorithmic = require('./src/gen-complex.js');
+const Stochastic = require('./src/gen-stochastic.js');
+const Transform = require('./src/transform.js');
+const Translate = require('./src/translate.js');
+const Utility = require('./src/utility.js');
 
 // export the various libraries
 exports.Generative = Generative;
