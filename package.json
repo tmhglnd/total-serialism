@@ -1,13 +1,13 @@
 {
   "name": "total-serialism",
-  "version": "1.6.6",
+  "version": "1.6.7",
   "description": "A set of methods for the generation and transformation of number sequences useful in algorithmic composition",
   "main": "index.js",
   "scripts": {
     "test": "node test/serialism.test.js",
     "build": "npm run clean && npm run bundle && npm run build-es5 && npm run build-min",
     "clean": "rm -rf build",
-    "bundle": "mkdir build && browserify --standalone Bundle index.js > build/ts.bundle.js",
+    "bundle": "mkdir build && browserify --standalone TotalSerialism index.js > build/ts.bundle.js",
     "build-es5": "babel build/ts.bundle.js -o build/ts.es5.js",
     "build-min": "uglifyjs build/ts.es5.js -o build/ts.es5.min.js",
     "database": "node lib/database.js"
