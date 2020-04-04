@@ -93,6 +93,7 @@ function testAlgo(){
 	test("Algo.euclid(10, 3)");
 	test("Algo.euclid(8, 5)");
 	test("Algo.euclid(16, 9, 1)");
+	test("Algo.euclid(16, 2)");
 	
 	pagebreak("HexBeat");
 	test("Algo.hexBeat()");

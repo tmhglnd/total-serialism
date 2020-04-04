@@ -77,8 +77,8 @@ function euclid(steps=8, beats=4, rot=0){
 	}
     counts.push(divisor);
 	build(level);
-	
-	return Transform.rotate(pattern, rot + pattern.indexOf(1));
+
+	return Transform.rotate(pattern, rot - pattern.indexOf(1));
 }
 exports.euclid = euclid;
 
