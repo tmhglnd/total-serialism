@@ -5,12 +5,12 @@
 const entryPoint = "../build/ts.es5.min.js";
 
 const Srl = require(entryPoint);
-const Gen = require(entryPoint).Generative;
-const Algo = require(entryPoint).Algorithmic;
-const Mod = require(entryPoint).Transform;
-const Rand = require(entryPoint).Stochastic;
-const TL = require(entryPoint).Translate;
-const Util = require(entryPoint).Utility;
+const Gen = Srl.Generative;
+const Algo = Srl.Algorithmic;
+const Mod = Srl.Transform;
+const Rand = Srl.Stochastic;
+const TL = Srl.Translate;
+const Util = Srl.Utility;
 
 /*
 	Test criteria:
@@ -371,7 +371,7 @@ function test(f){
 	// print the written function to console
 	console.log(f+";");
 	// evaluate the function and print results
-	r = eval(f);
+	let r = eval(f);
 	if (r === undefined){
 		r = "void return";
 	}
