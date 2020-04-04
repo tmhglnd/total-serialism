@@ -79,7 +79,7 @@ function every(a=[0], bars=4, div=16, shift=0){
 	if (len < 1) { 
 		return a; 
 	} else {
-		arr = new Array(len).fill(0);
+		let arr = new Array(len).fill(0);
 		return rotate(a.concat(arr), Math.floor(shift*div));
 	}
 }
@@ -122,7 +122,7 @@ function lace(...args){
 	var arr = [];
 	for (var i=0; i<l; i++){
 		for (var k in args){
-			v = args[k][i];
+			let v = args[k][i];
 			if (v != undefined){ arr.push(v); }
 		}
 	}
@@ -146,7 +146,7 @@ function merge(...args){
 	for (var i=0; i<l; i++){
 		var a = [];
 		for (var k in args){
-			v = args[k][i];
+			let v = args[k][i];
 			if (v != undefined){ a.push(v); }
 		}
 		arr[i] = a;

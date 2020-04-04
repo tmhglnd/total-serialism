@@ -121,31 +121,31 @@ module.exports={
 //==============================================================================
 
 // require the various libraries
-const Generative = require('./src/gen-basic.js');
-const Algorithmic = require('./src/gen-complex.js');
-const Stochastic = require('./src/gen-stochastic.js');
-const Transform = require('./src/transform.js');
-const Translate = require('./src/translate.js');
-const Utility = require('./src/utility.js');
+const Generative    = require('./src/gen-basic.js');
+const Algorithmic   = require('./src/gen-complex.js');
+const Stochastic    = require('./src/gen-stochastic.js');
+const Transform     = require('./src/transform.js');
+const Translate     = require('./src/translate.js');
+const Utility       = require('./src/utility.js');
 
 // export the various libraries
-exports.Generative = Generative;
+exports.Generative  = Generative;
 exports.Algorithmic = Algorithmic;
-exports.Stochastic = Stochastic;
-exports.Transform = Transform;
-exports.Translate = Translate;
-exports.Utility = Utility;
+exports.Stochastic  = Stochastic;
+exports.Transform   = Transform;
+exports.Translate   = Translate;
+exports.Utility     = Utility;
 
 // Methods exposed to global scope
 exports.getSettings = Translate.getSettings;
-exports.setTempo = Translate.setTempo;
-exports.getTempo = Translate.getTempo;
-exports.setBPM = Translate.setTempo;
-exports.getBPM = Translate.getTempo;
-exports.setScale = Translate.setScale;
-exports.getScale = Translate.getScale;
-exports.setRoot = Translate.setRoot;
-exports.getRoot = Translate.getRoot;
+exports.setTempo    = Translate.setTempo;
+exports.getTempo    = Translate.getTempo;
+exports.setBPM      = Translate.setTempo;
+exports.getBPM      = Translate.getTempo;
+exports.setScale    = Translate.setScale;
+exports.getScale    = Translate.getScale;
+exports.setRoot     = Translate.setRoot;
+exports.getRoot     = Translate.getRoot;
 },{"./src/gen-basic.js":78,"./src/gen-complex.js":79,"./src/gen-stochastic.js":80,"./src/transform.js":81,"./src/translate.js":82,"./src/utility.js":83}],4:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/core')) :
@@ -16447,7 +16447,7 @@ function every(a=[0], bars=4, div=16, shift=0){
 	if (len < 1) { 
 		return a; 
 	} else {
-		arr = new Array(len).fill(0);
+		let arr = new Array(len).fill(0);
 		return rotate(a.concat(arr), Math.floor(shift*div));
 	}
 }
@@ -16490,7 +16490,7 @@ function lace(...args){
 	var arr = [];
 	for (var i=0; i<l; i++){
 		for (var k in args){
-			v = args[k][i];
+			let v = args[k][i];
 			if (v != undefined){ arr.push(v); }
 		}
 	}
@@ -16514,7 +16514,7 @@ function merge(...args){
 	for (var i=0; i<l; i++){
 		var a = [];
 		for (var k in args){
-			v = args[k][i];
+			let v = args[k][i];
 			if (v != undefined){ a.push(v); }
 		}
 		arr[i] = a;

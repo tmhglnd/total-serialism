@@ -1,7 +1,8 @@
 
 // const entryPoint = "../index";
 // const entryPoint = "../build/ts.bundle.js";
-const entryPoint = "../build/ts.es5.js";
+// const entryPoint = "../build/ts.es5.js";
+const entryPoint = "../build/ts.es5.min.js";
 
 const Srl = require(entryPoint);
 const Gen = require(entryPoint).Generative;

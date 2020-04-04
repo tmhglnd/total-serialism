@@ -1,4 +1,4 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f();}else if(typeof define==="function"&&define.amd){define([],f);}else{var g;if(typeof window!=="undefined"){g=window;}else if(typeof global!=="undefined"){g=global;}else if(typeof self!=="undefined"){g=self;}else{g=this;}g.Bundle=f();}})(function(){var define,module,exports;return function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a;}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r);},p,p.exports,r,e,n,t);}return n[i].exports;}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o;}return r;}()({1:[function(require,module,exports){module.exports={"chromatic":[0,1,2,3,4,5,6,7,8,9,10,11],"major":[0,0,2,2,4,5,5,7,7,9,9,11],"minor":[0,0,2,3,3,5,7,7,8,8,10,10],"minor_melodic":[0,0,2,3,3,5,7,7,9,9,11,11],"minor_harmonic":[0,0,2,3,3,5,7,7,8,8,11,11],"dorian":[0,0,2,3,3,5,5,7,7,9,10,10],"phrygian":[0,1,1,3,3,5,7,7,8,8,10,10],"lydian":[0,0,2,4,4,6,6,7,7,9,11,11],"myxolydian":[0,0,2,4,4,5,5,7,7,9,10,10],"locrian":[0,1,1,3,3,5,6,6,8,8,10,10],"hungarian":[0,0,2,3,3,6,6,7,8,8,11,11],"gypsy":[0,1,1,4,4,5,5,7,8,8,11,11],"major_neapolitan":[0,1,1,3,3,5,7,7,8,8,11,11],"minor_neapolitan":[0,1,1,3,3,5,7,7,9,9,11,11],"hexatonic":[0,0,2,2,4,4,6,6,8,8,10,10],"hexatonic_blues":[0,0,2,2,4,4,6,6,7,7,10,10],"hexatonic_prometheus":[0,0,2,2,4,4,6,6,9,9,10,10],"major_pentatonic":[0,0,2,2,4,4,7,7,7,9,9,9],"minor_pentatonic":[0,0,3,3,3,5,5,7,7,10,10,10]};},{}],2:[function(require,module,exports){module.exports={"c":0,"cbb":10,"cb":11,"c#":1,"c##":2,"cx":2,"d":2,"dbb":0,"db":1,"d#":3,"d##":4,"dx":4,"e":4,"ebb":2,"eb":3,"e#":5,"e##":6,"ex":6,"f":5,"fbb":3,"fb":4,"f#":6,"f##":7,"fx":7,"g":7,"gbb":5,"gb":6,"g#":8,"g##":9,"gx":9,"a":9,"abb":7,"ab":8,"a#":10,"a##":11,"ax":11,"b":11,"bbb":9,"bb":10,"b#":0,"b##":1,"bx":1,"C":0,"Cbb":10,"Cb":11,"C#":1,"C##":2,"Cx":2,"D":2,"Dbb":0,"Db":1,"D#":3,"D##":4,"Dx":4,"E":4,"Ebb":2,"Eb":3,"E#":5,"E##":6,"Ex":6,"F":5,"Fbb":3,"Fb":4,"F#":6,"F##":7,"Fx":7,"G":7,"Gbb":5,"Gb":6,"G#":8,"G##":9,"Gx":9,"A":9,"Abb":7,"Ab":8,"A#":10,"A##":11,"Ax":11,"B":11,"Bbb":9,"Bb":10,"B#":0,"B##":1,"Bx":1};},{}],3:[function(require,module,exports){//==============================================================================
+"use strict";function ownKeys(object,enumerableOnly){var keys=Object.keys(object);if(Object.getOwnPropertySymbols){var symbols=Object.getOwnPropertySymbols(object);if(enumerableOnly)symbols=symbols.filter(function(sym){return Object.getOwnPropertyDescriptor(object,sym).enumerable;});keys.push.apply(keys,symbols);}return keys;}function _objectSpread(target){for(var i=1;i<arguments.length;i++){var source=arguments[i]!=null?arguments[i]:{};if(i%2){ownKeys(Object(source),true).forEach(function(key){_defineProperty(target,key,source[key]);});}else if(Object.getOwnPropertyDescriptors){Object.defineProperties(target,Object.getOwnPropertyDescriptors(source));}else{ownKeys(Object(source)).forEach(function(key){Object.defineProperty(target,key,Object.getOwnPropertyDescriptor(source,key));});}}return target;}function _defineProperty(obj,key,value){if(key in obj){Object.defineProperty(obj,key,{value:value,enumerable:true,configurable:true,writable:true});}else{obj[key]=value;}return obj;}function _toConsumableArray(arr){return _arrayWithoutHoles(arr)||_iterableToArray(arr)||_unsupportedIterableToArray(arr)||_nonIterableSpread();}function _nonIterableSpread(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o,minLen){if(!o)return;if(typeof o==="string")return _arrayLikeToArray(o,minLen);var n=Object.prototype.toString.call(o).slice(8,-1);if(n==="Object"&&o.constructor)n=o.constructor.name;if(n==="Map"||n==="Set")return Array.from(n);if(n==="Arguments"||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return _arrayLikeToArray(o,minLen);}function _iterableToArray(iter){if(typeof Symbol!=="undefined"&&Symbol.iterator in Object(iter))return Array.from(iter);}function _arrayWithoutHoles(arr){if(Array.isArray(arr))return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr,len){if(len==null||len>arr.length)len=arr.length;for(var i=0,arr2=new Array(len);i<len;i++){arr2[i]=arr[i];}return arr2;}function _typeof(obj){"@babel/helpers - typeof";if(typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"){_typeof=function _typeof(obj){return typeof obj;};}else{_typeof=function _typeof(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};}return _typeof(obj);}(function(f){if((typeof exports==="undefined"?"undefined":_typeof(exports))==="object"&&typeof module!=="undefined"){module.exports=f();}else if(typeof define==="function"&&define.amd){define([],f);}else{var g;if(typeof window!=="undefined"){g=window;}else if(typeof global!=="undefined"){g=global;}else if(typeof self!=="undefined"){g=self;}else{g=this;}g.Bundle=f();}})(function(){var define,module,exports;return function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a;}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r);},p,p.exports,r,e,n,t);}return n[i].exports;}for(var u="function"==typeof require&&require,i=0;i<t.length;i++){o(t[i]);}return o;}return r;}()({1:[function(require,module,exports){module.exports={"chromatic":[0,1,2,3,4,5,6,7,8,9,10,11],"major":[0,0,2,2,4,5,5,7,7,9,9,11],"minor":[0,0,2,3,3,5,7,7,8,8,10,10],"minor_melodic":[0,0,2,3,3,5,7,7,9,9,11,11],"minor_harmonic":[0,0,2,3,3,5,7,7,8,8,11,11],"dorian":[0,0,2,3,3,5,5,7,7,9,10,10],"phrygian":[0,1,1,3,3,5,7,7,8,8,10,10],"lydian":[0,0,2,4,4,6,6,7,7,9,11,11],"myxolydian":[0,0,2,4,4,5,5,7,7,9,10,10],"locrian":[0,1,1,3,3,5,6,6,8,8,10,10],"hungarian":[0,0,2,3,3,6,6,7,8,8,11,11],"gypsy":[0,1,1,4,4,5,5,7,8,8,11,11],"major_neapolitan":[0,1,1,3,3,5,7,7,8,8,11,11],"minor_neapolitan":[0,1,1,3,3,5,7,7,9,9,11,11],"hexatonic":[0,0,2,2,4,4,6,6,8,8,10,10],"hexatonic_blues":[0,0,2,2,4,4,6,6,7,7,10,10],"hexatonic_prometheus":[0,0,2,2,4,4,6,6,9,9,10,10],"major_pentatonic":[0,0,2,2,4,4,7,7,7,9,9,9],"minor_pentatonic":[0,0,3,3,3,5,5,7,7,10,10,10]};},{}],2:[function(require,module,exports){module.exports={"c":0,"cbb":10,"cb":11,"c#":1,"c##":2,"cx":2,"d":2,"dbb":0,"db":1,"d#":3,"d##":4,"dx":4,"e":4,"ebb":2,"eb":3,"e#":5,"e##":6,"ex":6,"f":5,"fbb":3,"fb":4,"f#":6,"f##":7,"fx":7,"g":7,"gbb":5,"gb":6,"g#":8,"g##":9,"gx":9,"a":9,"abb":7,"ab":8,"a#":10,"a##":11,"ax":11,"b":11,"bbb":9,"bb":10,"b#":0,"b##":1,"bx":1,"C":0,"Cbb":10,"Cb":11,"C#":1,"C##":2,"Cx":2,"D":2,"Dbb":0,"Db":1,"D#":3,"D##":4,"Dx":4,"E":4,"Ebb":2,"Eb":3,"E#":5,"E##":6,"Ex":6,"F":5,"Fbb":3,"Fb":4,"F#":6,"F##":7,"Fx":7,"G":7,"Gbb":5,"Gb":6,"G#":8,"G##":9,"Gx":9,"A":9,"Abb":7,"Ab":8,"A#":10,"A##":11,"Ax":11,"B":11,"Bbb":9,"Bb":10,"B#":0,"B##":1,"Bx":1};},{}],3:[function(require,module,exports){//==============================================================================
 // index.js
 // main of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -9,9 +9,9 @@
 // composition for music in mind.
 //==============================================================================
 // require the various libraries
-const Generative=require('./src/gen-basic.js');const Algorithmic=require('./src/gen-complex.js');const Stochastic=require('./src/gen-stochastic.js');const Transform=require('./src/transform.js');const Translate=require('./src/translate.js');const Utility=require('./src/utility.js');// export the various libraries
+var Generative=require('./src/gen-basic.js');var Algorithmic=require('./src/gen-complex.js');var Stochastic=require('./src/gen-stochastic.js');var Transform=require('./src/transform.js');var Translate=require('./src/translate.js');var Utility=require('./src/utility.js');// export the various libraries
 exports.Generative=Generative;exports.Algorithmic=Algorithmic;exports.Stochastic=Stochastic;exports.Transform=Transform;exports.Translate=Translate;exports.Utility=Utility;// Methods exposed to global scope
-exports.getSettings=Translate.getSettings;exports.setTempo=Translate.setTempo;exports.getTempo=Translate.getTempo;exports.setBPM=Translate.setTempo;exports.getBPM=Translate.getTempo;exports.setScale=Translate.setScale;exports.getScale=Translate.getScale;exports.setRoot=Translate.setRoot;exports.getRoot=Translate.getRoot;},{"./src/gen-basic.js":78,"./src/gen-complex.js":79,"./src/gen-stochastic.js":80,"./src/transform.js":81,"./src/translate.js":82,"./src/utility.js":83}],4:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core'],factory):(global=global||self,factory(global.AbcNotation={},global.core));})(this,function(exports,core){'use strict';var fillStr=function(character,times){return Array(times+1).join(character);};var REGEX=/^(_{1,}|=|\^{1,}|)([abcdefgABCDEFG])([,']*)$/;function tokenize(str){var m=REGEX.exec(str);if(!m){return["","",""];}return[m[1],m[2],m[3]];}/**
+exports.getSettings=Translate.getSettings;exports.setTempo=Translate.setTempo;exports.getTempo=Translate.getTempo;exports.setBPM=Translate.setTempo;exports.getBPM=Translate.getTempo;exports.setScale=Translate.setScale;exports.getScale=Translate.getScale;exports.setRoot=Translate.setRoot;exports.getRoot=Translate.getRoot;},{"./src/gen-basic.js":78,"./src/gen-complex.js":79,"./src/gen-stochastic.js":80,"./src/transform.js":81,"./src/translate.js":82,"./src/utility.js":83}],4:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core'],factory):(global=global||self,factory(global.AbcNotation={},global.core));})(this,function(exports,core){'use strict';var fillStr=function fillStr(character,times){return Array(times+1).join(character);};var REGEX=/^(_{1,}|=|\^{1,}|)([abcdefgABCDEFG])([,']*)$/;function tokenize(str){var m=REGEX.exec(str);if(!m){return["","",""];}return[m[1],m[2],m[3]];}/**
    * Convert a (string) note in ABC notation into a (string) note in scientific notation
    *
    * @example
@@ -21,11 +21,11 @@ exports.getSettings=Translate.getSettings;exports.setTempo=Translate.setTempo;ex
    *
    * @example
    * scientificToAbcNotation("C#4") // => "^C"
-   */function scientificToAbcNotation(str){var n=core.note(str);if(n.empty||!n.oct){return"";}var letter=n.letter,acc=n.acc,oct=n.oct;var a=acc[0]==="b"?acc.replace(/b/g,"_"):acc.replace(/#/g,"^");var l=oct>4?letter.toLowerCase():letter;var o=oct===5?"":oct>4?fillStr("'",oct-5):fillStr(",",4-oct);return a+l+o;}function transpose(note,interval){return scientificToAbcNotation(core.transpose(abcToScientificNotation(note),interval));}function distance(from,to){return core.distance(abcToScientificNotation(from),abcToScientificNotation(to));}var index={abcToScientificNotation:abcToScientificNotation,scientificToAbcNotation:scientificToAbcNotation,tokenize:tokenize,transpose:transpose,distance:distance};exports.abcToScientificNotation=abcToScientificNotation;exports.default=index;exports.distance=distance;exports.scientificToAbcNotation=scientificToAbcNotation;exports.tokenize=tokenize;exports.transpose=transpose;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10}],5:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core'],factory):(global=global||self,factory(global.Array={},global.core));})(this,function(exports,core){'use strict';// ascending range
+   */function scientificToAbcNotation(str){var n=core.note(str);if(n.empty||!n.oct){return"";}var letter=n.letter,acc=n.acc,oct=n.oct;var a=acc[0]==="b"?acc.replace(/b/g,"_"):acc.replace(/#/g,"^");var l=oct>4?letter.toLowerCase():letter;var o=oct===5?"":oct>4?fillStr("'",oct-5):fillStr(",",4-oct);return a+l+o;}function transpose(note,interval){return scientificToAbcNotation(core.transpose(abcToScientificNotation(note),interval));}function distance(from,to){return core.distance(abcToScientificNotation(from),abcToScientificNotation(to));}var index={abcToScientificNotation:abcToScientificNotation,scientificToAbcNotation:scientificToAbcNotation,tokenize:tokenize,transpose:transpose,distance:distance};exports.abcToScientificNotation=abcToScientificNotation;exports["default"]=index;exports.distance=distance;exports.scientificToAbcNotation=scientificToAbcNotation;exports.tokenize=tokenize;exports.transpose=transpose;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10}],5:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core'],factory):(global=global||self,factory(global.Array={},global.core));})(this,function(exports,core){'use strict';// ascending range
 function ascR(b,n){var a=[];// tslint:disable-next-line:curly
-for(;n--;a[n]=n+b);return a;}// descending range
+for(;n--;a[n]=n+b){;}return a;}// descending range
 function descR(b,n){var a=[];// tslint:disable-next-line:curly
-for(;n--;a[n]=b-n);return a;}/**
+for(;n--;a[n]=b-n){;}return a;}/**
    * Creates a numeric range
    *
    * @param {number} from
@@ -100,7 +100,7 @@ for(;n--;a[n]=b-n);return a;}/**
    *   ["c", "a", "b"],
    *   ["c", "b", "a"]
    * ]
-   */function permutations(arr){if(arr.length===0){return[[]];}return permutations(arr.slice(1)).reduce(function(acc,perm){return acc.concat(arr.map(function(e,pos){var newPerm=perm.slice();newPerm.splice(pos,0,arr[0]);return newPerm;}));},[]);}exports.compact=compact;exports.permutations=permutations;exports.range=range;exports.rotate=rotate;exports.shuffle=shuffle;exports.sortedNoteNames=sortedNoteNames;exports.sortedUniqNoteNames=sortedUniqNoteNames;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10}],6:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/chord-type'),require('@tonaljs/core'),require('@tonaljs/pcset')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/chord-type','@tonaljs/core','@tonaljs/pcset'],factory):(global=global||self,factory(global.ChordDetect={},global.chordType,global.core,global.pcset));})(this,function(exports,chordType,core,pcset){'use strict';var NotFound={weight:0,name:""};var namedSet=function(notes){var pcToName=notes.reduce(function(record,n){var chroma=core.note(n).chroma;if(chroma!==undefined){record[chroma]=record[chroma]||core.note(n).name;}return record;},{});return function(chroma){return pcToName[chroma];};};function detect(source){var notes=source.map(function(n){return core.note(n).pc;}).filter(function(x){return x;});if(core.note.length===0){return[];}var found=findExactMatches(notes,1);return found.filter(function(chord){return chord.weight;}).sort(function(a,b){return b.weight-a.weight;}).map(function(chord){return chord.name;});}function findExactMatches(notes,weight){var tonic=notes[0];var tonicChroma=core.note(tonic).chroma;var noteName=namedSet(notes);var allModes=pcset.modes(notes,false);var found=allModes.map(function(mode,chroma){var chordName=chordType.get(mode).aliases[0];if(!chordName){return NotFound;}var baseNote=noteName(chroma);var isInversion=chroma!==tonicChroma;if(isInversion){return{weight:0.5*weight,name:""+baseNote+chordName+"/"+tonic};}else{return{weight:1*weight,name:""+baseNote+chordName};}});return found;}var index={detect:detect};exports.default=index;exports.detect=detect;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/chord-type":7,"@tonaljs/core":10,"@tonaljs/pcset":17}],7:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core'),require('@tonaljs/pcset')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core','@tonaljs/pcset'],factory):(global=global||self,factory(global.ChordType={},global.core,global.pcset));})(this,function(exports,core,pcset){'use strict';/*! *****************************************************************************
+   */function permutations(arr){if(arr.length===0){return[[]];}return permutations(arr.slice(1)).reduce(function(acc,perm){return acc.concat(arr.map(function(e,pos){var newPerm=perm.slice();newPerm.splice(pos,0,arr[0]);return newPerm;}));},[]);}exports.compact=compact;exports.permutations=permutations;exports.range=range;exports.rotate=rotate;exports.shuffle=shuffle;exports.sortedNoteNames=sortedNoteNames;exports.sortedUniqNoteNames=sortedUniqNoteNames;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10}],6:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/chord-type'),require('@tonaljs/core'),require('@tonaljs/pcset')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/chord-type','@tonaljs/core','@tonaljs/pcset'],factory):(global=global||self,factory(global.ChordDetect={},global.chordType,global.core,global.pcset));})(this,function(exports,chordType,core,pcset){'use strict';var NotFound={weight:0,name:""};var namedSet=function namedSet(notes){var pcToName=notes.reduce(function(record,n){var chroma=core.note(n).chroma;if(chroma!==undefined){record[chroma]=record[chroma]||core.note(n).name;}return record;},{});return function(chroma){return pcToName[chroma];};};function detect(source){var notes=source.map(function(n){return core.note(n).pc;}).filter(function(x){return x;});if(core.note.length===0){return[];}var found=findExactMatches(notes,1);return found.filter(function(chord){return chord.weight;}).sort(function(a,b){return b.weight-a.weight;}).map(function(chord){return chord.name;});}function findExactMatches(notes,weight){var tonic=notes[0];var tonicChroma=core.note(tonic).chroma;var noteName=namedSet(notes);var allModes=pcset.modes(notes,false);var found=allModes.map(function(mode,chroma){var chordName=chordType.get(mode).aliases[0];if(!chordName){return NotFound;}var baseNote=noteName(chroma);var isInversion=chroma!==tonicChroma;if(isInversion){return{weight:0.5*weight,name:""+baseNote+chordName+"/"+tonic};}else{return{weight:1*weight,name:""+baseNote+chordName};}});return found;}var index={detect:detect};exports["default"]=index;exports.detect=detect;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/chord-type":7,"@tonaljs/core":10,"@tonaljs/pcset":17}],7:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core'),require('@tonaljs/pcset')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core','@tonaljs/pcset'],factory):(global=global||self,factory(global.ChordType={},global.core,global.pcset));})(this,function(exports,core,pcset){'use strict';/*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
     Licensed under the Apache License, Version 2.0 (the "License"); you may not use
     this file except in compliance with the License. You may obtain a copy of the
@@ -113,7 +113,7 @@ for(;n--;a[n]=b-n);return a;}/**
 
     See the Apache Version 2.0 License for specific language governing permissions
     and limitations under the License.
-    ***************************************************************************** */var __assign=function(){__assign=Object.assign||function __assign(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s)if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p];}return t;};return __assign.apply(this,arguments);};/**
+    ***************************************************************************** */var _assign=function __assign(){_assign=Object.assign||function __assign(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s){if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p];}}return t;};return _assign.apply(this,arguments);};/**
      * @private
      * Chord List
      * Source: https://en.wikibooks.org/wiki/Music_Theory/Complete_List_of_Chord_Patterns
@@ -128,7 +128,7 @@ for(;n--;a[n]=b-n);return a;}/**
 ["1P 3M 5P 7m 9m","dominant b9","7b9"],["1P 3M 5P 7m 9A","dominant #9","7#9"],["1P 3M 7m 9m","altered","alt7"],// '''Suspended'''
 ["1P 4P 5P","suspended 4th","sus4"],["1P 2M 5P","suspended 2nd","sus2"],["1P 4P 5P 7m","suspended 4th seventh","7sus4"],["1P 5P 7m 9M 11P","eleventh","11"],["1P 4P 5P 7m 9m","suspended 4th b9","b9sus phryg"],// ==Other==
 ["1P 5P","fifth","5"],["1P 3M 5A","augmented","aug + +5"],["1P 3M 5A 7M","augmented seventh","maj7#5 maj7+5"],["1P 3M 5P 7M 9M 11A","major #11 (lydian)","maj9#11 Δ9#11"],// ==Legacy==
-["1P 2M 4P 5P","","sus24 sus4add9"],["1P 3M 13m","","Mb6"],["1P 3M 5A 7M 9M","","maj9#5 Maj9#5"],["1P 3M 5A 7m","","7#5 +7 7aug aug7"],["1P 3M 5A 7m 9A","","7#5#9 7alt"],["1P 3M 5A 7m 9M","","9#5 9+"],["1P 3M 5A 7m 9M 11A","","9#5#11"],["1P 3M 5A 7m 9m","","7#5b9"],["1P 3M 5A 7m 9m 11A","","7#5b9#11"],["1P 3M 5A 9A","","+add#9"],["1P 3M 5A 9M","","M#5add9 +add9"],["1P 3M 5P 6M 11A","","M6#11 M6b5 6#11 6b5"],["1P 3M 5P 6M 7M 9M","","M7add13"],["1P 3M 5P 6M 9M 11A","","69#11"],["1P 3M 5P 6m 7m","","7b6"],["1P 3M 5P 7M 9A 11A","","maj7#9#11"],["1P 3M 5P 7M 9M 11A 13M","","M13#11 maj13#11 M13+4 M13#4"],["1P 3M 5P 7M 9m","","M7b9"],["1P 3M 5P 7m 11A 13m","","7#11b13 7b5b13"],["1P 3M 5P 7m 13M","","7add6 67 7add13"],["1P 3M 5P 7m 9A 11A","","7#9#11 7b5#9"],["1P 3M 5P 7m 9A 11A 13M","","13#9#11"],["1P 3M 5P 7m 9A 11A 13m","","7#9#11b13"],["1P 3M 5P 7m 9A 13M","","13#9"],["1P 3M 5P 7m 9A 13m","","7#9b13"],["1P 3M 5P 7m 9M 11A","","9#11 9+4 9#4"],["1P 3M 5P 7m 9M 11A 13M","","13#11 13+4 13#4"],["1P 3M 5P 7m 9M 11A 13m","","9#11b13 9b5b13"],["1P 3M 5P 7m 9m 11A","","7b9#11 7b5b9"],["1P 3M 5P 7m 9m 11A 13M","","13b9#11"],["1P 3M 5P 7m 9m 11A 13m","","7b9b13#11 7b9#11b13 7b5b9b13"],["1P 3M 5P 7m 9m 13M","","13b9"],["1P 3M 5P 7m 9m 13m","","7b9b13"],["1P 3M 5P 7m 9m 9A","","7b9#9"],["1P 3M 5P 9M","","Madd9 2 add9 add2"],["1P 3M 5P 9m","","Maddb9"],["1P 3M 5d","","Mb5"],["1P 3M 5d 6M 7m 9M","","13b5"],["1P 3M 5d 7M","","M7b5"],["1P 3M 5d 7M 9M","","M9b5"],["1P 3M 5d 7m","","7b5"],["1P 3M 5d 7m 9M","","9b5"],["1P 3M 7m","","7no5"],["1P 3M 7m 13m","","7b13"],["1P 3M 7m 9M","","9no5"],["1P 3M 7m 9M 13M","","13no5"],["1P 3M 7m 9M 13m","","9b13"],["1P 3m 4P 5P","","madd4"],["1P 3m 5A","","m#5 m+ mb6"],["1P 3m 5P 6M 9M","","m69"],["1P 3m 5P 6m 7M","","mMaj7b6"],["1P 3m 5P 6m 7M 9M","","mMaj9b6"],["1P 3m 5P 7M 9M","","mMaj9"],["1P 3m 5P 7m 11P","","m7add11 m7add4"],["1P 3m 5P 9M","","madd9"],["1P 3m 5d 6M 7M","","o7M7"],["1P 3m 5d 7M","","oM7"],["1P 3m 6m 7M","","mb6M7"],["1P 3m 6m 7m","","m7#5"],["1P 3m 6m 7m 9M","","m9#5"],["1P 3m 6m 7m 9M 11P","","m11A"],["1P 3m 6m 9m","","mb6b9"],["1P 3m 7m 12d 2M","","m9b5 h9"],["1P 3m 7m 12d 2M 4P","","m11b5 h11"],["1P 4P 5A 7M","","M7#5sus4"],["1P 4P 5A 7M 9M","","M9#5sus4"],["1P 4P 5A 7m","","7#5sus4"],["1P 4P 5P 7M","","M7sus4"],["1P 4P 5P 7M 9M","","M9sus4"],["1P 4P 5P 7m 9M","","9sus4 9sus"],["1P 4P 5P 7m 9M 13M","","13sus4 13sus"],["1P 4P 5P 7m 9m 13m","","7sus4b9b13 7b9b13sus4"],["1P 4P 7m 10m","","4 quartal"],["1P 5P 7m 9m 11P","","11b9"]];var NoChordType=__assign(__assign({},pcset.EmptyPcset),{name:"",quality:"Unknown",intervals:[],aliases:[]});var dictionary=[];var index={};/**
+["1P 2M 4P 5P","","sus24 sus4add9"],["1P 3M 13m","","Mb6"],["1P 3M 5A 7M 9M","","maj9#5 Maj9#5"],["1P 3M 5A 7m","","7#5 +7 7aug aug7"],["1P 3M 5A 7m 9A","","7#5#9 7alt"],["1P 3M 5A 7m 9M","","9#5 9+"],["1P 3M 5A 7m 9M 11A","","9#5#11"],["1P 3M 5A 7m 9m","","7#5b9"],["1P 3M 5A 7m 9m 11A","","7#5b9#11"],["1P 3M 5A 9A","","+add#9"],["1P 3M 5A 9M","","M#5add9 +add9"],["1P 3M 5P 6M 11A","","M6#11 M6b5 6#11 6b5"],["1P 3M 5P 6M 7M 9M","","M7add13"],["1P 3M 5P 6M 9M 11A","","69#11"],["1P 3M 5P 6m 7m","","7b6"],["1P 3M 5P 7M 9A 11A","","maj7#9#11"],["1P 3M 5P 7M 9M 11A 13M","","M13#11 maj13#11 M13+4 M13#4"],["1P 3M 5P 7M 9m","","M7b9"],["1P 3M 5P 7m 11A 13m","","7#11b13 7b5b13"],["1P 3M 5P 7m 13M","","7add6 67 7add13"],["1P 3M 5P 7m 9A 11A","","7#9#11 7b5#9"],["1P 3M 5P 7m 9A 11A 13M","","13#9#11"],["1P 3M 5P 7m 9A 11A 13m","","7#9#11b13"],["1P 3M 5P 7m 9A 13M","","13#9"],["1P 3M 5P 7m 9A 13m","","7#9b13"],["1P 3M 5P 7m 9M 11A","","9#11 9+4 9#4"],["1P 3M 5P 7m 9M 11A 13M","","13#11 13+4 13#4"],["1P 3M 5P 7m 9M 11A 13m","","9#11b13 9b5b13"],["1P 3M 5P 7m 9m 11A","","7b9#11 7b5b9"],["1P 3M 5P 7m 9m 11A 13M","","13b9#11"],["1P 3M 5P 7m 9m 11A 13m","","7b9b13#11 7b9#11b13 7b5b9b13"],["1P 3M 5P 7m 9m 13M","","13b9"],["1P 3M 5P 7m 9m 13m","","7b9b13"],["1P 3M 5P 7m 9m 9A","","7b9#9"],["1P 3M 5P 9M","","Madd9 2 add9 add2"],["1P 3M 5P 9m","","Maddb9"],["1P 3M 5d","","Mb5"],["1P 3M 5d 6M 7m 9M","","13b5"],["1P 3M 5d 7M","","M7b5"],["1P 3M 5d 7M 9M","","M9b5"],["1P 3M 5d 7m","","7b5"],["1P 3M 5d 7m 9M","","9b5"],["1P 3M 7m","","7no5"],["1P 3M 7m 13m","","7b13"],["1P 3M 7m 9M","","9no5"],["1P 3M 7m 9M 13M","","13no5"],["1P 3M 7m 9M 13m","","9b13"],["1P 3m 4P 5P","","madd4"],["1P 3m 5A","","m#5 m+ mb6"],["1P 3m 5P 6M 9M","","m69"],["1P 3m 5P 6m 7M","","mMaj7b6"],["1P 3m 5P 6m 7M 9M","","mMaj9b6"],["1P 3m 5P 7M 9M","","mMaj9"],["1P 3m 5P 7m 11P","","m7add11 m7add4"],["1P 3m 5P 9M","","madd9"],["1P 3m 5d 6M 7M","","o7M7"],["1P 3m 5d 7M","","oM7"],["1P 3m 6m 7M","","mb6M7"],["1P 3m 6m 7m","","m7#5"],["1P 3m 6m 7m 9M","","m9#5"],["1P 3m 6m 7m 9M 11P","","m11A"],["1P 3m 6m 9m","","mb6b9"],["1P 3m 7m 12d 2M","","m9b5 h9"],["1P 3m 7m 12d 2M 4P","","m11b5 h11"],["1P 4P 5A 7M","","M7#5sus4"],["1P 4P 5A 7M 9M","","M9#5sus4"],["1P 4P 5A 7m","","7#5sus4"],["1P 4P 5P 7M","","M7sus4"],["1P 4P 5P 7M 9M","","M9sus4"],["1P 4P 5P 7m 9M","","9sus4 9sus"],["1P 4P 5P 7m 9M 13M","","13sus4 13sus"],["1P 4P 5P 7m 9m 13m","","7sus4b9b13 7b9b13sus4"],["1P 4P 7m 10m","","4 quartal"],["1P 5P 7m 9m 11P","","11b9"]];var NoChordType=_assign(_assign({},pcset.EmptyPcset),{name:"",quality:"Unknown",intervals:[],aliases:[]});var dictionary=[];var index={};/**
      * Given a chord name or chroma, return the chord properties
      * @param {string} source - chord name or pitch class set chroma
      * @example
@@ -149,8 +149,8 @@ for(;n--;a[n]=b-n);return a;}/**
      * @param intervals
      * @param aliases
      * @param [fullName]
-     */function add(intervals,aliases,fullName){var quality=getQuality(intervals);var chord=__assign(__assign({},pcset.get(intervals)),{name:fullName||"",quality:quality,intervals:intervals,aliases:aliases});dictionary.push(chord);if(chord.name){index[chord.name]=chord;}index[chord.setNum]=chord;index[chord.chroma]=chord;chord.aliases.forEach(function(alias){return addAlias(chord,alias);});}function addAlias(chord,alias){index[alias]=chord;}function getQuality(intervals){var has=function(interval){return intervals.indexOf(interval)!==-1;};return has("5A")?"Augmented":has("3M")?"Major":has("5d")?"Diminished":has("3m")?"Minor":"Unknown";}CHORDS.forEach(function(_a){var ivls=_a[0],fullName=_a[1],names=_a[2];return add(ivls.split(" "),names.split(" "),fullName);});dictionary.sort(function(a,b){return a.setNum-b.setNum;});var index$1={names:names,symbols:symbols,get:get,all:all,add:add,removeAll:removeAll,keys:keys,// deprecated
-entries:entries,chordType:chordType};exports.add=add;exports.addAlias=addAlias;exports.all=all;exports.chordType=chordType;exports.default=index$1;exports.entries=entries;exports.get=get;exports.keys=keys;exports.names=names;exports.removeAll=removeAll;exports.symbols=symbols;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10,"@tonaljs/pcset":17}],8:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/chord-detect'),require('@tonaljs/chord-type'),require('@tonaljs/core'),require('@tonaljs/pcset'),require('@tonaljs/scale-type')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/chord-detect','@tonaljs/chord-type','@tonaljs/core','@tonaljs/pcset','@tonaljs/scale-type'],factory):(global=global||self,factory(global.Chord={},global.chordDetect,global.chordType,global.core,global.pcset,global.scaleType));})(this,function(exports,chordDetect,chordType,core,pcset,scaleType){'use strict';/*! *****************************************************************************
+     */function add(intervals,aliases,fullName){var quality=getQuality(intervals);var chord=_assign(_assign({},pcset.get(intervals)),{name:fullName||"",quality:quality,intervals:intervals,aliases:aliases});dictionary.push(chord);if(chord.name){index[chord.name]=chord;}index[chord.setNum]=chord;index[chord.chroma]=chord;chord.aliases.forEach(function(alias){return addAlias(chord,alias);});}function addAlias(chord,alias){index[alias]=chord;}function getQuality(intervals){var has=function has(interval){return intervals.indexOf(interval)!==-1;};return has("5A")?"Augmented":has("3M")?"Major":has("5d")?"Diminished":has("3m")?"Minor":"Unknown";}CHORDS.forEach(function(_a){var ivls=_a[0],fullName=_a[1],names=_a[2];return add(ivls.split(" "),names.split(" "),fullName);});dictionary.sort(function(a,b){return a.setNum-b.setNum;});var index$1={names:names,symbols:symbols,get:get,all:all,add:add,removeAll:removeAll,keys:keys,// deprecated
+entries:entries,chordType:chordType};exports.add=add;exports.addAlias=addAlias;exports.all=all;exports.chordType=chordType;exports["default"]=index$1;exports.entries=entries;exports.get=get;exports.keys=keys;exports.names=names;exports.removeAll=removeAll;exports.symbols=symbols;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10,"@tonaljs/pcset":17}],8:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/chord-detect'),require('@tonaljs/chord-type'),require('@tonaljs/core'),require('@tonaljs/pcset'),require('@tonaljs/scale-type')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/chord-detect','@tonaljs/chord-type','@tonaljs/core','@tonaljs/pcset','@tonaljs/scale-type'],factory):(global=global||self,factory(global.Chord={},global.chordDetect,global.chordType,global.core,global.pcset,global.scaleType));})(this,function(exports,chordDetect,chordType,core,pcset,scaleType){'use strict';/*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
     Licensed under the Apache License, Version 2.0 (the "License"); you may not use
     this file except in compliance with the License. You may obtain a copy of the
@@ -163,7 +163,7 @@ entries:entries,chordType:chordType};exports.add=add;exports.addAlias=addAlias;e
 
     See the Apache Version 2.0 License for specific language governing permissions
     and limitations under the License.
-    ***************************************************************************** */var __assign=function(){__assign=Object.assign||function __assign(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s)if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p];}return t;};return __assign.apply(this,arguments);};var NoChord={empty:true,name:"",type:"",tonic:null,setNum:NaN,quality:"Unknown",chroma:"",normalized:"",aliases:[],notes:[],intervals:[]};// 6, 64, 7, 9, 11 and 13 are consider part of the chord
+    ***************************************************************************** */var _assign2=function __assign(){_assign2=Object.assign||function __assign(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s){if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p];}}return t;};return _assign2.apply(this,arguments);};var NoChord={empty:true,name:"",type:"",tonic:null,setNum:NaN,quality:"Unknown",chroma:"",normalized:"",aliases:[],notes:[],intervals:[]};// 6, 64, 7, 9, 11 and 13 are consider part of the chord
 // (see https://github.com/danigb/tonal/issues/55)
 var NUM_TYPES=/^(6|64|7|9|11|13)$/;/**
      * Tokenize a chord name. It returns an array with the tonic and chord type
@@ -184,7 +184,7 @@ var NUM_TYPES=/^(6|64|7|9|11|13)$/;/**
 if(letter==="A"&&type==="ug"){return["","aug"];}// see: https://github.com/tonaljs/tonal/issues/70
 if(!type&&(oct==="4"||oct==="5")){return[letter+acc,oct];}if(NUM_TYPES.test(oct)){return[letter+acc,oct+type];}else{return[letter+acc+oct,type];}}/**
      * Get a Chord from a chord name.
-     */function get(src){var _a=findChord(src),type=_a.type,tonic=_a.tonic;if(!type||type.empty){return NoChord;}var notes=tonic?type.intervals.map(function(i){return core.transpose(tonic,i);}):[];var name=tonic?tonic+" "+type.name:type.name;return __assign(__assign({},type),{name:name,type:type.name,tonic:tonic||"",notes:notes});}var chord=core.deprecate("Chord.chord","Chord.get",get);function findChord(src){if(!src||!src.length){return{};}var tokens=Array.isArray(src)?src:tokenize(src);var tonic=core.note(tokens[0]).name;var type=chordType.get(tokens[1]);if(!type.empty){return{tonic:tonic,type:type};}else if(tonic&&typeof src==="string"){return{tonic:"",type:chordType.get(src)};}else{return{};}}/**
+     */function get(src){var _a=findChord(src),type=_a.type,tonic=_a.tonic;if(!type||type.empty){return NoChord;}var notes=tonic?type.intervals.map(function(i){return core.transpose(tonic,i);}):[];var name=tonic?tonic+" "+type.name:type.name;return _assign2(_assign2({},type),{name:name,type:type.name,tonic:tonic||"",notes:notes});}var chord=core.deprecate("Chord.chord","Chord.get",get);function findChord(src){if(!src||!src.length){return{};}var tokens=Array.isArray(src)?src:tokenize(src);var tonic=core.note(tokens[0]).name;var type=chordType.get(tokens[1]);if(!type.empty){return{tonic:tonic,type:type};}else if(tonic&&typeof src==="string"){return{tonic:"",type:chordType.get(src)};}else{return{};}}/**
      * Transpose a chord name
      *
      * @param {string} chordName - the chord name
@@ -212,11 +212,11 @@ if(!type&&(oct==="4"||oct==="5")){return[letter+acc,oct];}if(NUM_TYPES.test(oct)
      *
      * @example
      */function reduced(chordName){var s=get(chordName);var isSubset=pcset.isSubsetOf(s.chroma);return chordType.all().filter(function(chord){return isSubset(chord.chroma);}).map(function(chord){return s.tonic+chord.aliases[0];});}var index={get:get,detect:chordDetect.detect,chordScales:chordScales,extended:extended,reduced:reduced,tokenize:tokenize,transpose:transpose,// deprecate
-chord:chord};Object.defineProperty(exports,'detect',{enumerable:true,get:function(){return chordDetect.detect;}});exports.chord=chord;exports.chordScales=chordScales;exports.default=index;exports.extended=extended;exports.get=get;exports.reduced=reduced;exports.tokenize=tokenize;exports.transpose=transpose;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/chord-detect":6,"@tonaljs/chord-type":7,"@tonaljs/core":10,"@tonaljs/pcset":17,"@tonaljs/scale-type":21}],9:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports):typeof define==='function'&&define.amd?define(['exports'],factory):(global=global||self,factory(global.Collection={}));})(this,function(exports){'use strict';// ascending range
+chord:chord};Object.defineProperty(exports,'detect',{enumerable:true,get:function get(){return chordDetect.detect;}});exports.chord=chord;exports.chordScales=chordScales;exports["default"]=index;exports.extended=extended;exports.get=get;exports.reduced=reduced;exports.tokenize=tokenize;exports.transpose=transpose;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/chord-detect":6,"@tonaljs/chord-type":7,"@tonaljs/core":10,"@tonaljs/pcset":17,"@tonaljs/scale-type":21}],9:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports):typeof define==='function'&&define.amd?define(['exports'],factory):(global=global||self,factory(global.Collection={}));})(this,function(exports){'use strict';// ascending range
 function ascR(b,n){var a=[];// tslint:disable-next-line:curly
-for(;n--;a[n]=n+b);return a;}// descending range
+for(;n--;a[n]=n+b){;}return a;}// descending range
 function descR(b,n){var a=[];// tslint:disable-next-line:curly
-for(;n--;a[n]=b-n);return a;}/**
+for(;n--;a[n]=b-n){;}return a;}/**
    * Creates a numeric range
    *
    * @param {number} from
@@ -268,20 +268,20 @@ for(;n--;a[n]=b-n);return a;}/**
    *   ["c", "a", "b"],
    *   ["c", "b", "a"]
    * ]
-   */function permutations(arr){if(arr.length===0){return[[]];}return permutations(arr.slice(1)).reduce(function(acc,perm){return acc.concat(arr.map(function(e,pos){var newPerm=perm.slice();newPerm.splice(pos,0,arr[0]);return newPerm;}));},[]);}var index={compact:compact,permutations:permutations,range:range,rotate:rotate,shuffle:shuffle};exports.compact=compact;exports.default=index;exports.permutations=permutations;exports.range=range;exports.rotate=rotate;exports.shuffle=shuffle;Object.defineProperty(exports,'__esModule',{value:true});});},{}],10:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports):typeof define==='function'&&define.amd?define(['exports'],factory):(global=global||self,factory(global.Core={}));})(this,function(exports){'use strict';/**
+   */function permutations(arr){if(arr.length===0){return[[]];}return permutations(arr.slice(1)).reduce(function(acc,perm){return acc.concat(arr.map(function(e,pos){var newPerm=perm.slice();newPerm.splice(pos,0,arr[0]);return newPerm;}));},[]);}var index={compact:compact,permutations:permutations,range:range,rotate:rotate,shuffle:shuffle};exports.compact=compact;exports["default"]=index;exports.permutations=permutations;exports.range=range;exports.rotate=rotate;exports.shuffle=shuffle;Object.defineProperty(exports,'__esModule',{value:true});});},{}],10:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports):typeof define==='function'&&define.amd?define(['exports'],factory):(global=global||self,factory(global.Core={}));})(this,function(exports){'use strict';/**
    * Fill a string with a repeated character
    *
    * @param character
    * @param repetition
-   */var fillStr=function(s,n){return Array(Math.abs(n)+1).join(s);};function deprecate(original,alternative,fn){return function(){var args=[];for(var _i=0;_i<arguments.length;_i++){args[_i]=arguments[_i];}// tslint:disable-next-line
-console.warn(original+" is deprecated. Use "+alternative+".");return fn.apply(this,args);};}function isNamed(src){return src!==null&&typeof src==="object"&&typeof src.name==="string"?true:false;}function isPitch(pitch){return pitch!==null&&typeof pitch==="object"&&typeof pitch.step==="number"&&typeof pitch.alt==="number"?true:false;}// The number of fifths of [C, D, E, F, G, A, B]
+   */var fillStr=function fillStr(s,n){return Array(Math.abs(n)+1).join(s);};function deprecate(original,alternative,fn){return function(){var args=[];for(var _i=0;_i<arguments.length;_i++){args[_i]=arguments[_i];}// tslint:disable-next-line
+console.warn(original+" is deprecated. Use "+alternative+".");return fn.apply(this,args);};}function isNamed(src){return src!==null&&_typeof(src)==="object"&&typeof src.name==="string"?true:false;}function isPitch(pitch){return pitch!==null&&_typeof(pitch)==="object"&&typeof pitch.step==="number"&&typeof pitch.alt==="number"?true:false;}// The number of fifths of [C, D, E, F, G, A, B]
 var FIFTHS=[0,2,4,-1,1,3,5];// The number of octaves it span each step
 var STEPS_TO_OCTS=FIFTHS.map(function(fifths){return Math.floor(fifths*7/12);});function encode(pitch){var step=pitch.step,alt=pitch.alt,oct=pitch.oct,_a=pitch.dir,dir=_a===void 0?1:_a;var f=FIFTHS[step]+7*alt;if(oct===undefined){return[dir*f];}var o=oct-STEPS_TO_OCTS[step]-4*alt;return[dir*f,dir*o];}// We need to get the steps from fifths
 // Fifths for CDEFGAB are [ 0, 2, 4, -1, 1, 3, 5 ]
 // We add 1 to fifths to avoid negative numbers, so:
 // for ["F", "C", "G", "D", "A", "E", "B"] we have:
 var FIFTHS_TO_STEPS=[3,0,4,1,5,2,6];function decode(coord){var f=coord[0],o=coord[1],dir=coord[2];var step=FIFTHS_TO_STEPS[unaltered(f)];var alt=Math.floor((f+1)/7);if(o===undefined){return{step:step,alt:alt,dir:dir};}var oct=o+4*alt+STEPS_TO_OCTS[step];return{step:step,alt:alt,oct:oct,dir:dir};}// Return the number of fifths as if it were unaltered
-function unaltered(f){var i=(f+1)%7;return i<0?7+i:i;}var NoNote={empty:true,name:"",pc:"",acc:""};var cache=new Map();var stepToLetter=function(step){return"CDEFGAB".charAt(step);};var altToAcc=function(alt){return alt<0?fillStr("b",-alt):fillStr("#",alt);};var accToAlt=function(acc){return acc[0]==="b"?-acc.length:acc.length;};/**
+function unaltered(f){var i=(f+1)%7;return i<0?7+i:i;}var NoNote={empty:true,name:"",pc:"",acc:""};var cache=new Map();var stepToLetter=function stepToLetter(step){return"CDEFGAB".charAt(step);};var altToAcc=function altToAcc(alt){return alt<0?fillStr("b",-alt):fillStr("#",alt);};var accToAlt=function accToAlt(acc){return acc[0]==="b"?-acc.length:acc.length;};/**
    * Given a note literal (a note name or a note object), returns the Note object
    * @example
    * note('Bb4') // => { name: "Bb4", midi: 70, chroma: 10, ... }
@@ -336,7 +336,7 @@ function pitchName$1(props){var step=props.step,alt=props.alt,_a=props.oct,oct=_
    * @param {Note|string} to - the note or note name to calculate distance to
    * @return {string} the interval name or empty string if not valid notes
    *
-   */function distance(fromNote,toNote){var from=note(fromNote);var to=note(toNote);if(from.empty||to.empty){return"";}var fcoord=from.coord;var tcoord=to.coord;var fifths=tcoord[0]-fcoord[0];var octs=fcoord.length===2&&tcoord.length===2?tcoord[1]-fcoord[1]:-Math.floor(fifths*7/12);return coordToInterval([fifths,octs]).name;}exports.accToAlt=accToAlt;exports.altToAcc=altToAcc;exports.coordToInterval=coordToInterval;exports.coordToNote=coordToNote;exports.decode=decode;exports.deprecate=deprecate;exports.distance=distance;exports.encode=encode;exports.fillStr=fillStr;exports.interval=interval;exports.isNamed=isNamed;exports.isPitch=isPitch;exports.note=note;exports.stepToLetter=stepToLetter;exports.tokenizeInterval=tokenizeInterval;exports.tokenizeNote=tokenizeNote;exports.transpose=transpose;Object.defineProperty(exports,'__esModule',{value:true});});},{}],11:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports):typeof define==='function'&&define.amd?define(['exports'],factory):(global=global||self,factory(global.DurationValue={}));})(this,function(exports){'use strict';/*! *****************************************************************************
+   */function distance(fromNote,toNote){var from=note(fromNote);var to=note(toNote);if(from.empty||to.empty){return"";}var fcoord=from.coord;var tcoord=to.coord;var fifths=tcoord[0]-fcoord[0];var octs=fcoord.length===2&&tcoord.length===2?tcoord[1]-fcoord[1]:-Math.floor(fifths*7/12);return coordToInterval([fifths,octs]).name;}exports.accToAlt=accToAlt;exports.altToAcc=altToAcc;exports.coordToInterval=coordToInterval;exports.coordToNote=coordToNote;exports.decode=decode;exports.deprecate=deprecate;exports.distance=distance;exports.encode=encode;exports.fillStr=fillStr;exports.interval=interval;exports.isNamed=isNamed;exports.isPitch=isPitch;exports.note=note;exports.stepToLetter=stepToLetter;exports.tokenizeInterval=tokenizeInterval;exports.tokenizeNote=tokenizeNote;exports.transpose=transpose;Object.defineProperty(exports,'__esModule',{value:true});});},{}],11:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports):typeof define==='function'&&define.amd?define(['exports'],factory):(global=global||self,factory(global.DurationValue={}));})(this,function(exports){'use strict';/*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
     Licensed under the Apache License, Version 2.0 (the "License"); you may not use
     this file except in compliance with the License. You may obtain a copy of the
@@ -349,11 +349,11 @@ function pitchName$1(props){var step=props.step,alt=props.alt,_a=props.oct,oct=_
 
     See the Apache Version 2.0 License for specific language governing permissions
     and limitations under the License.
-    ***************************************************************************** */var __assign=function(){__assign=Object.assign||function __assign(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s)if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p];}return t;};return __assign.apply(this,arguments);};// source: https://en.wikipedia.org/wiki/Note_value
-var DATA=[[0.125,"dl",["large","duplex longa","maxima","octuple","octuple whole"]],[0.25,"l",["long","longa"]],[0.5,"d",["double whole","double","breve"]],[1,"w",["whole","semibreve"]],[2,"h",["half","minim"]],[4,"q",["quarter","crotchet"]],[8,"e",["eighth","quaver"]],[16,"s",["sixteenth","semiquaver"]],[32,"t",["thirty-second","demisemiquaver"]],[64,"sf",["sixty-fourth","hemidemisemiquaver"]],[128,"h",["hundred twenty-eighth"]],[256,"th",["two hundred fifty-sixth"]]];var VALUES=[];DATA.forEach(function(_a){var denominator=_a[0],shorthand=_a[1],names=_a[2];return add(denominator,shorthand,names);});var NoDuration={empty:true,name:"",value:0,fraction:[0,0],shorthand:"",dots:"",names:[]};function names(){return VALUES.reduce(function(names,duration){duration.names.forEach(function(name){return names.push(name);});return names;},[]);}function shorthands(){return VALUES.map(function(dur){return dur.shorthand;});}var REGEX=/^([^.]+)(\.*)$/;function get(name){var _a=REGEX.exec(name)||[],_=_a[0],simple=_a[1],dots=_a[2];var base=VALUES.find(function(dur){return dur.shorthand===simple||dur.names.includes(simple);});if(!base){return NoDuration;}var fraction=calcDots(base.fraction,dots.length);var value=fraction[0]/fraction[1];return __assign(__assign({},base),{name:name,dots:dots,value:value,fraction:fraction});}var value=function(name){return get(name).value;};var fraction=function(name){return get(name).fraction;};var index={names:names,shorthands:shorthands,get:get,value:value,fraction:fraction};//// PRIVATE ////
+    ***************************************************************************** */var _assign3=function __assign(){_assign3=Object.assign||function __assign(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s){if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p];}}return t;};return _assign3.apply(this,arguments);};// source: https://en.wikipedia.org/wiki/Note_value
+var DATA=[[0.125,"dl",["large","duplex longa","maxima","octuple","octuple whole"]],[0.25,"l",["long","longa"]],[0.5,"d",["double whole","double","breve"]],[1,"w",["whole","semibreve"]],[2,"h",["half","minim"]],[4,"q",["quarter","crotchet"]],[8,"e",["eighth","quaver"]],[16,"s",["sixteenth","semiquaver"]],[32,"t",["thirty-second","demisemiquaver"]],[64,"sf",["sixty-fourth","hemidemisemiquaver"]],[128,"h",["hundred twenty-eighth"]],[256,"th",["two hundred fifty-sixth"]]];var VALUES=[];DATA.forEach(function(_a){var denominator=_a[0],shorthand=_a[1],names=_a[2];return add(denominator,shorthand,names);});var NoDuration={empty:true,name:"",value:0,fraction:[0,0],shorthand:"",dots:"",names:[]};function names(){return VALUES.reduce(function(names,duration){duration.names.forEach(function(name){return names.push(name);});return names;},[]);}function shorthands(){return VALUES.map(function(dur){return dur.shorthand;});}var REGEX=/^([^.]+)(\.*)$/;function get(name){var _a=REGEX.exec(name)||[],_=_a[0],simple=_a[1],dots=_a[2];var base=VALUES.find(function(dur){return dur.shorthand===simple||dur.names.includes(simple);});if(!base){return NoDuration;}var fraction=calcDots(base.fraction,dots.length);var value=fraction[0]/fraction[1];return _assign3(_assign3({},base),{name:name,dots:dots,value:value,fraction:fraction});}var value=function value(name){return get(name).value;};var fraction=function fraction(name){return get(name).fraction;};var index={names:names,shorthands:shorthands,get:get,value:value,fraction:fraction};//// PRIVATE ////
 function add(denominator,shorthand,names){VALUES.push({empty:false,dots:"",name:"",value:1/denominator,fraction:denominator<1?[1/denominator,1]:[1,denominator],shorthand:shorthand,names:names});}function calcDots(fraction,dots){var pow=Math.pow(2,dots);var numerator=fraction[0]*pow;var denominator=fraction[1]*pow;var base=numerator;// add fractions
 for(var i=0;i<dots;i++){numerator+=base/Math.pow(2,i+1);}// simplify
-while(numerator%2===0&&denominator%2===0){numerator/=2;denominator/=2;}return[numerator,denominator];}exports.default=index;exports.fraction=fraction;exports.get=get;exports.names=names;exports.shorthands=shorthands;exports.value=value;Object.defineProperty(exports,'__esModule',{value:true});});},{}],12:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core'],factory):(global=global||self,factory(global.Interval={},global.core));})(this,function(exports,core){'use strict';/**
+while(numerator%2===0&&denominator%2===0){numerator/=2;denominator/=2;}return[numerator,denominator];}exports["default"]=index;exports.fraction=fraction;exports.get=get;exports.names=names;exports.shorthands=shorthands;exports.value=value;Object.defineProperty(exports,'__esModule',{value:true});});},{}],12:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core'],factory):(global=global||self,factory(global.Interval={},global.core));})(this,function(exports,core){'use strict';/**
    * Get the natural list of names
    */function names(){return"1P 2M 3M 4P 5P 6m 7m".split(" ");}/**
    * Get properties of an interval
@@ -369,22 +369,22 @@ while(numerator%2===0&&denominator%2===0){numerator/=2;denominator/=2;}return[nu
    * Interval.name('4P') // => "4P"
    * Interval.name('P4') // => "4P"
    * Interval.name('C4') // => ""
-   */var name=function(name){return core.interval(name).name;};/**
+   */var name=function(_name){function name(_x){return _name.apply(this,arguments);}name.toString=function(){return _name.toString();};return name;}(function(name){return core.interval(name).name;});/**
    * Get semitones of an interval
    * @function
    * @example
    * Interval.semitones('P4') // => 5
-   */var semitones=function(name){return core.interval(name).semitones;};/**
+   */var semitones=function semitones(name){return core.interval(name).semitones;};/**
    * Get quality of an interval
    * @function
    * @example
    * Interval.quality('P4') // => "P"
-   */var quality=function(name){return core.interval(name).q;};/**
+   */var quality=function quality(name){return core.interval(name).q;};/**
    * Get number of an interval
    * @function
    * @example
    * Interval.num('P4') // => 4
-   */var num=function(name){return core.interval(name).num;};/**
+   */var num=function num(name){return core.interval(name).num;};/**
    * Get the simplified version of an interval.
    *
    * @function
@@ -440,7 +440,7 @@ var IQ="P m M m M P d P m M m M".split(" ");/**
    * @function
    * @example
    * ['1P', '2M', '3M'].map(Interval.addTo('5P')) // => ["5P", "6M", "7M"]
-   */var addTo=function(interval){return function(other){return add(interval,other);};};/**
+   */var addTo=function addTo(interval){return function(other){return add(interval,other);};};/**
    * Subtracts two intervals
    *
    * @function
@@ -450,7 +450,7 @@ var IQ="P m M m M P d P m M m M".split(" ");/**
    * @example
    * Interval.substract('5P', '3M') // => '3m'
    * Interval.substract('3M', '5P') // => '-3m'
-   */var substract=combinator(function(a,b){return[a[0]-b[0],a[1]-b[1]];});var index={names:names,get:get,name:name,num:num,semitones:semitones,quality:quality,fromSemitones:fromSemitones,distance:distance,invert:invert,simplify:simplify,add:add,addTo:addTo,substract:substract};function combinator(fn){return function(a,b){var coordA=core.interval(a).coord;var coordB=core.interval(b).coord;if(coordA&&coordB){var coord=fn(coordA,coordB);return core.coordToInterval(coord).name;}};}exports.add=add;exports.addTo=addTo;exports.default=index;exports.distance=distance;exports.fromSemitones=fromSemitones;exports.get=get;exports.invert=invert;exports.name=name;exports.names=names;exports.num=num;exports.quality=quality;exports.semitones=semitones;exports.simplify=simplify;exports.substract=substract;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10}],13:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core'),require('@tonaljs/note'),require('@tonaljs/roman-numeral')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core','@tonaljs/note','@tonaljs/roman-numeral'],factory):(global=global||self,factory(global.Key={},global.core,global.note,global.romanNumeral));})(this,function(exports,core,note,romanNumeral){'use strict';/*! *****************************************************************************
+   */var substract=combinator(function(a,b){return[a[0]-b[0],a[1]-b[1]];});var index={names:names,get:get,name:name,num:num,semitones:semitones,quality:quality,fromSemitones:fromSemitones,distance:distance,invert:invert,simplify:simplify,add:add,addTo:addTo,substract:substract};function combinator(fn){return function(a,b){var coordA=core.interval(a).coord;var coordB=core.interval(b).coord;if(coordA&&coordB){var coord=fn(coordA,coordB);return core.coordToInterval(coord).name;}};}exports.add=add;exports.addTo=addTo;exports["default"]=index;exports.distance=distance;exports.fromSemitones=fromSemitones;exports.get=get;exports.invert=invert;exports.name=name;exports.names=names;exports.num=num;exports.quality=quality;exports.semitones=semitones;exports.simplify=simplify;exports.substract=substract;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10}],13:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core'),require('@tonaljs/note'),require('@tonaljs/roman-numeral')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core','@tonaljs/note','@tonaljs/roman-numeral'],factory):(global=global||self,factory(global.Key={},global.core,global.note,global.romanNumeral));})(this,function(exports,core,note,romanNumeral){'use strict';/*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
     Licensed under the Apache License, Version 2.0 (the "License"); you may not use
     this file except in compliance with the License. You may obtain a copy of the
@@ -463,10 +463,10 @@ var IQ="P m M m M P d P m M m M".split(" ");/**
 
     See the Apache Version 2.0 License for specific language governing permissions
     and limitations under the License.
-    ***************************************************************************** */var __assign=function(){__assign=Object.assign||function __assign(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s)if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p];}return t;};return __assign.apply(this,arguments);};var mapToScale=function(scale){return function(symbols,sep){if(sep===void 0){sep="";}return symbols.map(function(symbol,index){return symbol!=="-"?scale[index]+sep+symbol:"";});};};function keyScale(gradesLiteral,chordsLiteral,hfLiteral,chordScalesLiteral){return function(tonic){var grades=gradesLiteral.split(" ");var intervals=grades.map(function(gr){return romanNumeral.get(gr).interval||"";});var scale=intervals.map(function(interval){return core.transpose(tonic,interval);});var map=mapToScale(scale);return{tonic:tonic,grades:grades,intervals:intervals,scale:scale,chords:map(chordsLiteral.split(" ")),chordsHarmonicFunction:hfLiteral.split(" "),chordScales:map(chordScalesLiteral.split(",")," ")};};}var distInFifths=function(from,to){var f=core.note(from);var t=core.note(to);return f.empty||t.empty?0:t.coord[0]-f.coord[0];};var MajorScale=keyScale("I II III IV V VI VII","maj7 m7 m7 maj7 7 m7 m7b5","T SD T SD D T D","major,dorian,phrygian,lydian,mixolydian,minor,locrian");var NaturalScale=keyScale("I II bIII IV V bVI bVII","m7 m7b5 maj7 m7 m7 maj7 7","T SD T SD D SD SD","minor,locrian,major,dorian,phrygian,lydian,mixolydian");var HarmonicScale=keyScale("I II bIII IV V bVI VII","mmaj7 m7b5 +maj7 m7 7 maj7 mo7","T SD T SD D SD D","harmonic minor,locrian 6,major augmented,lydian diminished,phrygian dominant,lydian #9,ultralocrian");var MelodicScale=keyScale("I II bIII IV V VI VII","m6 m7 +maj7 7 7 m7b5 m7b5","T SD T SD D - -","melodic minor,dorian b2,lydian augmented,lydian dominant,mixolydian b6,locrian #2,altered");/**
+    ***************************************************************************** */var _assign4=function __assign(){_assign4=Object.assign||function __assign(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s){if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p];}}return t;};return _assign4.apply(this,arguments);};var mapToScale=function mapToScale(scale){return function(symbols,sep){if(sep===void 0){sep="";}return symbols.map(function(symbol,index){return symbol!=="-"?scale[index]+sep+symbol:"";});};};function keyScale(gradesLiteral,chordsLiteral,hfLiteral,chordScalesLiteral){return function(tonic){var grades=gradesLiteral.split(" ");var intervals=grades.map(function(gr){return romanNumeral.get(gr).interval||"";});var scale=intervals.map(function(interval){return core.transpose(tonic,interval);});var map=mapToScale(scale);return{tonic:tonic,grades:grades,intervals:intervals,scale:scale,chords:map(chordsLiteral.split(" ")),chordsHarmonicFunction:hfLiteral.split(" "),chordScales:map(chordScalesLiteral.split(",")," ")};};}var distInFifths=function distInFifths(from,to){var f=core.note(from);var t=core.note(to);return f.empty||t.empty?0:t.coord[0]-f.coord[0];};var MajorScale=keyScale("I II III IV V VI VII","maj7 m7 m7 maj7 7 m7 m7b5","T SD T SD D T D","major,dorian,phrygian,lydian,mixolydian,minor,locrian");var NaturalScale=keyScale("I II bIII IV V bVI bVII","m7 m7b5 maj7 m7 m7 maj7 7","T SD T SD D SD SD","minor,locrian,major,dorian,phrygian,lydian,mixolydian");var HarmonicScale=keyScale("I II bIII IV V bVI VII","mmaj7 m7b5 +maj7 m7 7 maj7 mo7","T SD T SD D SD D","harmonic minor,locrian 6,major augmented,lydian diminished,phrygian dominant,lydian #9,ultralocrian");var MelodicScale=keyScale("I II bIII IV V VI VII","m6 m7 +maj7 7 7 m7b5 m7b5","T SD T SD D - -","melodic minor,dorian b2,lydian augmented,lydian dominant,mixolydian b6,locrian #2,altered");/**
      * Get a major key properties in a given tonic
      * @param tonic
-     */function majorKey(tonic){var keyScale=MajorScale(tonic);var alteration=distInFifths("C",tonic);var map=mapToScale(keyScale.scale);return __assign(__assign({},keyScale),{type:"major",minorRelative:core.transpose(tonic,"-3m"),alteration:alteration,keySignature:core.altToAcc(alteration),secondaryDominants:map("- VI7 VII7 I7 II7 III7 -".split(" ")),secondaryDominantsMinorRelative:map("- IIIm7b5 IV#m7 Vm7 VIm7 VIIm7b5 -".split(" ")),substituteDominants:map("- bIII7 IV7 bV7 bVI7 bVII7 -".split(" ")),substituteDominantsMinorRelative:map("- IIIm7 Im7 IIbm7 VIm7 IVm7 -".split(" "))});}/**
+     */function majorKey(tonic){var keyScale=MajorScale(tonic);var alteration=distInFifths("C",tonic);var map=mapToScale(keyScale.scale);return _assign4(_assign4({},keyScale),{type:"major",minorRelative:core.transpose(tonic,"-3m"),alteration:alteration,keySignature:core.altToAcc(alteration),secondaryDominants:map("- VI7 VII7 I7 II7 III7 -".split(" ")),secondaryDominantsMinorRelative:map("- IIIm7b5 IV#m7 Vm7 VIm7 VIIm7b5 -".split(" ")),substituteDominants:map("- bIII7 IV7 bV7 bVI7 bVII7 -".split(" ")),substituteDominantsMinorRelative:map("- IIIm7 Im7 IIbm7 VIm7 IVm7 -".split(" "))});}/**
      * Get minor key properties in a given tonic
      * @param tonic
      */function minorKey(tonic){var alteration=distInFifths("C",tonic)-3;return{type:"minor",tonic:tonic,relativeMajor:core.transpose(tonic,"3m"),alteration:alteration,keySignature:core.altToAcc(alteration),natural:NaturalScale(tonic),harmonic:HarmonicScale(tonic),melodic:MelodicScale(tonic)};}/**
@@ -474,7 +474,7 @@ var IQ="P m M m M P d P m M m M".split(" ");/**
      * @param sigature
      * @example
      * majorTonicFromKeySignature('###') // => 'A'
-     */function majorTonicFromKeySignature(sig){if(typeof sig==="number"){return note.transposeFifths("C",sig);}else if(typeof sig==="string"&&/^b+|#+$/.test(sig)){return note.transposeFifths("C",core.accToAlt(sig));}return null;}var index={majorKey:majorKey,majorTonicFromKeySignature:majorTonicFromKeySignature,minorKey:minorKey};exports.default=index;exports.majorKey=majorKey;exports.majorTonicFromKeySignature=majorTonicFromKeySignature;exports.minorKey=minorKey;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10,"@tonaljs/note":16,"@tonaljs/roman-numeral":20}],14:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core'],factory):(global=global||self,factory(global.Midi={},global.core));})(this,function(exports,core){'use strict';function isMidi(arg){return+arg>=0&&+arg<=127;}/**
+     */function majorTonicFromKeySignature(sig){if(typeof sig==="number"){return note.transposeFifths("C",sig);}else if(typeof sig==="string"&&/^b+|#+$/.test(sig)){return note.transposeFifths("C",core.accToAlt(sig));}return null;}var index={majorKey:majorKey,majorTonicFromKeySignature:majorTonicFromKeySignature,minorKey:minorKey};exports["default"]=index;exports.majorKey=majorKey;exports.majorTonicFromKeySignature=majorTonicFromKeySignature;exports.minorKey=minorKey;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10,"@tonaljs/note":16,"@tonaljs/roman-numeral":20}],14:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core'],factory):(global=global||self,factory(global.Midi={},global.core));})(this,function(exports,core){'use strict';function isMidi(arg){return+arg>=0&&+arg<=127;}/**
    * Get the note midi number (a number between 0 and 127)
    *
    * It returns undefined if not valid note name
@@ -524,7 +524,7 @@ var IQ="P m M m M P d P m M m M".split(" ");/**
    * midiToNoteName(61, { pitchClass: true, sharps: true }) // => "C#"
    * // it rounds to nearest note
    * midiToNoteName(61.7) // => "D4"
-   */function midiToNoteName(midi,options){if(options===void 0){options={};}midi=Math.round(midi);var pcs=options.sharps===true?SHARPS:FLATS;var pc=pcs[midi%12];if(options.pitchClass){return pc;}var o=Math.floor(midi/12)-1;return pc+o;}var index={isMidi:isMidi,toMidi:toMidi,midiToFreq:midiToFreq,midiToNoteName:midiToNoteName,freqToMidi:freqToMidi};exports.default=index;exports.freqToMidi=freqToMidi;exports.isMidi=isMidi;exports.midiToFreq=midiToFreq;exports.midiToNoteName=midiToNoteName;exports.toMidi=toMidi;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10}],15:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core'),require('@tonaljs/pcset')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core','@tonaljs/pcset'],factory):(global=global||self,factory(global.Mode={},global.core,global.pcset));})(this,function(exports,core,pcset){'use strict';/*! *****************************************************************************
+   */function midiToNoteName(midi,options){if(options===void 0){options={};}midi=Math.round(midi);var pcs=options.sharps===true?SHARPS:FLATS;var pc=pcs[midi%12];if(options.pitchClass){return pc;}var o=Math.floor(midi/12)-1;return pc+o;}var index={isMidi:isMidi,toMidi:toMidi,midiToFreq:midiToFreq,midiToNoteName:midiToNoteName,freqToMidi:freqToMidi};exports["default"]=index;exports.freqToMidi=freqToMidi;exports.isMidi=isMidi;exports.midiToFreq=midiToFreq;exports.midiToNoteName=midiToNoteName;exports.toMidi=toMidi;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10}],15:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core'),require('@tonaljs/pcset')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core','@tonaljs/pcset'],factory):(global=global||self,factory(global.Mode={},global.core,global.pcset));})(this,function(exports,core,pcset){'use strict';/*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
     Licensed under the Apache License, Version 2.0 (the "License"); you may not use
     this file except in compliance with the License. You may obtain a copy of the
@@ -537,7 +537,7 @@ var IQ="P m M m M P d P m M m M".split(" ");/**
 
     See the Apache Version 2.0 License for specific language governing permissions
     and limitations under the License.
-    ***************************************************************************** */var __assign=function(){__assign=Object.assign||function __assign(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s)if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p];}return t;};return __assign.apply(this,arguments);};var DATA=[[0,2773,0,"ionian","","Maj7","major"],[1,2902,2,"dorian","m","m7"],[2,3418,4,"phrygian","m","m7"],[3,2741,-1,"lydian","","Maj7"],[4,2774,1,"mixolydian","","7"],[5,2906,3,"aeolian","m","m7","minor"],[6,3434,5,"locrian","dim","m7b5"]];var NoMode=__assign(__assign({},pcset.EmptyPcset),{name:"",alt:0,modeNum:NaN,triad:"",seventh:"",aliases:[]});var modes=DATA.map(toMode);var index={};modes.forEach(function(mode){index[mode.name]=mode;mode.aliases.forEach(function(alias){index[alias]=mode;});});/**
+    ***************************************************************************** */var _assign5=function __assign(){_assign5=Object.assign||function __assign(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s){if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p];}}return t;};return _assign5.apply(this,arguments);};var DATA=[[0,2773,0,"ionian","","Maj7","major"],[1,2902,2,"dorian","m","m7"],[2,3418,4,"phrygian","m","m7"],[3,2741,-1,"lydian","","Maj7"],[4,2774,1,"mixolydian","","7"],[5,2906,3,"aeolian","m","m7","minor"],[6,3434,5,"locrian","dim","m7b5"]];var NoMode=_assign5(_assign5({},pcset.EmptyPcset),{name:"",alt:0,modeNum:NaN,triad:"",seventh:"",aliases:[]});var modes=DATA.map(toMode);var index={};modes.forEach(function(mode){index[mode.name]=mode;mode.aliases.forEach(function(alias){index[alias]=mode;});});/**
      * Get a Mode by it's name
      *
      * @example
@@ -560,7 +560,7 @@ var IQ="P m M m M P d P m M m M".split(" ");/**
      */function all(){return modes.slice();}var entries=core.deprecate("Mode.mode","Mode.all",all);/**
      * Get a list of all mode names
      */function names(){return modes.map(function(mode){return mode.name;});}function toMode(mode){var modeNum=mode[0],setNum=mode[1],alt=mode[2],name=mode[3],triad=mode[4],seventh=mode[5],alias=mode[6];var aliases=alias?[alias]:[];var chroma=Number(setNum).toString(2);var intervals=pcset.chromaToIntervals(chroma);return{empty:false,intervals:intervals,modeNum:modeNum,chroma:chroma,normalized:chroma,name:name,setNum:setNum,alt:alt,triad:triad,seventh:seventh,aliases:aliases};}var index$1={get:get,names:names,all:all,// deprecated
-entries:entries,mode:mode};exports.all=all;exports.default=index$1;exports.entries=entries;exports.get=get;exports.mode=mode;exports.names=names;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10,"@tonaljs/pcset":17}],16:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core'),require('@tonaljs/midi')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core','@tonaljs/midi'],factory):(global=global||self,factory(global.Note={},global.core,global.midi$1));})(this,function(exports,core,midi$1){'use strict';var NAMES=["C","D","E","F","G","A","B"];var toName=function(n){return n.name;};var onlyNotes=function(array){return array.map(core.note).filter(function(n){return!n.empty;});};/**
+entries:entries,mode:mode};exports.all=all;exports["default"]=index$1;exports.entries=entries;exports.get=get;exports.mode=mode;exports.names=names;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10,"@tonaljs/pcset":17}],16:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core'),require('@tonaljs/midi')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core','@tonaljs/midi'],factory):(global=global||self,factory(global.Note={},global.core,global.midi$1));})(this,function(exports,core,midi$1){'use strict';var NAMES=["C","D","E","F","G","A","B"];var toName=function toName(n){return n.name;};var onlyNotes=function onlyNotes(array){return array.map(core.note).filter(function(n){return!n.empty;});};/**
    * Return the natural note names without octave
    * @function
    * @example
@@ -574,25 +574,25 @@ entries:entries,mode:mode};exports.all=all;exports.default=index$1;exports.entri
    */var get=core.note;/**
    * Get the note name
    * @function
-   */var name=function(note){return get(note).name;};/**
+   */var name=function name(note){return get(note).name;};/**
    * Get the note pitch class name
    * @function
-   */var pitchClass=function(note){return get(note).pc;};/**
+   */var pitchClass=function pitchClass(note){return get(note).pc;};/**
    * Get the note accidentals
    * @function
-   */var accidentals=function(note){return get(note).acc;};/**
+   */var accidentals=function accidentals(note){return get(note).acc;};/**
    * Get the note octave
    * @function
-   */var octave=function(note){return get(note).oct;};/**
+   */var octave=function octave(note){return get(note).oct;};/**
    * Get the note midi
    * @function
-   */var midi=function(note){return get(note).midi;};/**
+   */var midi=function midi(note){return get(note).midi;};/**
    * Get the note midi
    * @function
-   */var freq=function(note){return get(note).freq;};/**
+   */var freq=function freq(note){return get(note).freq;};/**
    * Get the note chroma
    * @function
-   */var chroma=function(note){return get(note).chroma;};/**
+   */var chroma=function chroma(note){return get(note).chroma;};/**
    * Given a midi number, returns a note name. Uses flats for altered notes.
    *
    * @function
@@ -619,14 +619,14 @@ entries:entries,mode:mode};exports.all=all;exports.default=index$1;exports.entri
    * @example
    * ["C", "D", "E"].map(Note.transposeBy("5P"));
    * // => ["G", "A", "B"]
-   */var transposeBy=function(interval){return function(note){return transpose(note,interval);};};var trBy=transposeBy;/**
+   */var transposeBy=function transposeBy(interval){return function(note){return transpose(note,interval);};};var trBy=transposeBy;/**
    * Transpose from a note
    * @function
    * @param {string} note
    * @return {function}  a function that transposes the the note by an interval
    * ["1P", "3M", "5P"].map(Note.transposeFrom("C"));
    * // => ["C", "E", "G"]
-   */var transposeFrom=function(note){return function(interval){return transpose(note,interval);};};var trFrom=transposeFrom;/**
+   */var transposeFrom=function transposeFrom(note){return function(interval){return transpose(note,interval);};};var trFrom=transposeFrom;/**
    * Transpose a note by a number of perfect fifths.
    *
    * @function
@@ -638,7 +638,7 @@ entries:entries,mode:mode};exports.all=all;exports.default=index$1;exports.entri
    * import { transposeFifths } from "@tonaljs/note"
    * transposeFifths("G4", 1) // => "D"
    * [0, 1, 2, 3, 4].map(fifths => transposeFifths("C", fifths)) // => ["C", "G", "D", "A", "E"]
-   */function transposeFifths(noteName,fifths){var note=get(noteName);if(note.empty){return"";}var _a=note.coord,nFifths=_a[0],nOcts=_a[1];var transposed=nOcts===undefined?core.coordToNote([nFifths+fifths]):core.coordToNote([nFifths+fifths,nOcts]);return transposed.name;}var trFifths=transposeFifths;var ascending=function(a,b){return a.height-b.height;};var descending=function(a,b){return b.height-a.height;};function sortedNames(notes,comparator){comparator=comparator||ascending;return onlyNotes(notes).sort(comparator).map(toName);}function sortedUniqNames(notes){return sortedNames(notes,ascending).filter(function(n,i,a){return i===0||n!==a[i-1];});}/**
+   */function transposeFifths(noteName,fifths){var note=get(noteName);if(note.empty){return"";}var _a=note.coord,nFifths=_a[0],nOcts=_a[1];var transposed=nOcts===undefined?core.coordToNote([nFifths+fifths]):core.coordToNote([nFifths+fifths,nOcts]);return transposed.name;}var trFifths=transposeFifths;var ascending=function ascending(a,b){return a.height-b.height;};var descending=function descending(a,b){return b.height-a.height;};function sortedNames(notes,comparator){comparator=comparator||ascending;return onlyNotes(notes).sort(comparator).map(toName);}function sortedUniqNames(notes){return sortedNames(notes,ascending).filter(function(n,i,a){return i===0||n!==a[i-1];});}/**
    * Simplify a note
    *
    * @function
@@ -659,8 +659,8 @@ entries:entries,mode:mode};exports.all=all;exports.default=index$1;exports.entri
    * @example
    * Note.enharmonic("Db") // => "C#"
    * Note.enharmonic("C") // => "C"
-   */var enharmonic=nameBuilder(false);function nameBuilder(sameAccidentals){return function(noteName){var note=get(noteName);if(note.empty){return"";}var sharps=sameAccidentals?note.alt>0:note.alt<0;var pitchClass=note.midi===null;return midi$1.midiToNoteName(note.midi||note.chroma,{sharps:sharps,pitchClass:pitchClass});};}var index={names:names,get:get,name:name,pitchClass:pitchClass,accidentals:accidentals,octave:octave,midi:midi,ascending:ascending,descending:descending,sortedNames:sortedNames,sortedUniqNames:sortedUniqNames,fromMidi:fromMidi,fromMidiSharps:fromMidiSharps,freq:freq,chroma:chroma,transpose:transpose,tr:tr,transposeBy:transposeBy,trBy:trBy,transposeFrom:transposeFrom,trFrom:trFrom,transposeFifths:transposeFifths,trFifths:trFifths,simplify:simplify,enharmonic:enharmonic};exports.accidentals=accidentals;exports.ascending=ascending;exports.chroma=chroma;exports.default=index;exports.descending=descending;exports.enharmonic=enharmonic;exports.freq=freq;exports.fromMidi=fromMidi;exports.fromMidiSharps=fromMidiSharps;exports.get=get;exports.midi=midi;exports.name=name;exports.names=names;exports.octave=octave;exports.pitchClass=pitchClass;exports.simplify=simplify;exports.sortedNames=sortedNames;exports.sortedUniqNames=sortedUniqNames;exports.tr=tr;exports.trBy=trBy;exports.trFifths=trFifths;exports.trFrom=trFrom;exports.transpose=transpose;exports.transposeBy=transposeBy;exports.transposeFifths=transposeFifths;exports.transposeFrom=transposeFrom;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10,"@tonaljs/midi":14}],17:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/collection'),require('@tonaljs/core')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/collection','@tonaljs/core'],factory):(global=global||self,factory(global.Pcset={},global.collection,global.core));})(this,function(exports,collection,core){'use strict';var _a;var EmptyPcset={empty:true,name:"",setNum:0,chroma:"000000000000",normalized:"000000000000",intervals:[]};// UTILITIES
-var setNumToChroma=function(num){return Number(num).toString(2);};var chromaToNumber=function(chroma){return parseInt(chroma,2);};var REGEX=/^[01]{12}$/;function isChroma(set){return REGEX.test(set);}var isPcsetNum=function(set){return typeof set==="number"&&set>=0&&set<=4095;};var isPcset=function(set){return set&&isChroma(set.chroma);};var cache=(_a={},_a[EmptyPcset.chroma]=EmptyPcset,_a);/**
+   */var enharmonic=nameBuilder(false);function nameBuilder(sameAccidentals){return function(noteName){var note=get(noteName);if(note.empty){return"";}var sharps=sameAccidentals?note.alt>0:note.alt<0;var pitchClass=note.midi===null;return midi$1.midiToNoteName(note.midi||note.chroma,{sharps:sharps,pitchClass:pitchClass});};}var index={names:names,get:get,name:name,pitchClass:pitchClass,accidentals:accidentals,octave:octave,midi:midi,ascending:ascending,descending:descending,sortedNames:sortedNames,sortedUniqNames:sortedUniqNames,fromMidi:fromMidi,fromMidiSharps:fromMidiSharps,freq:freq,chroma:chroma,transpose:transpose,tr:tr,transposeBy:transposeBy,trBy:trBy,transposeFrom:transposeFrom,trFrom:trFrom,transposeFifths:transposeFifths,trFifths:trFifths,simplify:simplify,enharmonic:enharmonic};exports.accidentals=accidentals;exports.ascending=ascending;exports.chroma=chroma;exports["default"]=index;exports.descending=descending;exports.enharmonic=enharmonic;exports.freq=freq;exports.fromMidi=fromMidi;exports.fromMidiSharps=fromMidiSharps;exports.get=get;exports.midi=midi;exports.name=name;exports.names=names;exports.octave=octave;exports.pitchClass=pitchClass;exports.simplify=simplify;exports.sortedNames=sortedNames;exports.sortedUniqNames=sortedUniqNames;exports.tr=tr;exports.trBy=trBy;exports.trFifths=trFifths;exports.trFrom=trFrom;exports.transpose=transpose;exports.transposeBy=transposeBy;exports.transposeFifths=transposeFifths;exports.transposeFrom=transposeFrom;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10,"@tonaljs/midi":14}],17:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/collection'),require('@tonaljs/core')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/collection','@tonaljs/core'],factory):(global=global||self,factory(global.Pcset={},global.collection,global.core));})(this,function(exports,collection,core){'use strict';var _a;var EmptyPcset={empty:true,name:"",setNum:0,chroma:"000000000000",normalized:"000000000000",intervals:[]};// UTILITIES
+var setNumToChroma=function setNumToChroma(num){return Number(num).toString(2);};var chromaToNumber=function chromaToNumber(chroma){return parseInt(chroma,2);};var REGEX=/^[01]{12}$/;function isChroma(set){return REGEX.test(set);}var isPcsetNum=function isPcsetNum(set){return typeof set==="number"&&set>=0&&set<=4095;};var isPcset=function isPcset(set){return set&&isChroma(set.chroma);};var cache=(_a={},_a[EmptyPcset.chroma]=EmptyPcset,_a);/**
    * Get the pitch class set of a collection of notes or set number or chroma
    */function get(src){var chroma=isChroma(src)?src:isPcsetNum(src)?setNumToChroma(src):Array.isArray(src)?listToChroma(src):isPcset(src)?src.chroma:EmptyPcset.chroma;return cache[chroma]=cache[chroma]||chromaToPcset(chroma);}/**
    * Use Pcset.properties
@@ -671,17 +671,17 @@ var setNumToChroma=function(num){return Number(num).toString(2);};var chromaToNu
    * @function
    * @example
    * Pcset.chroma(["c", "d", "e"]); //=> "101010000000"
-   */var chroma=function(set){return get(set).chroma;};/**
+   */var chroma=function chroma(set){return get(set).chroma;};/**
    * Get intervals (from C) of a set
    * @function
    * @example
    * Pcset.intervals(["c", "d", "e"]); //=>
-   */var intervals=function(set){return get(set).intervals;};/**
+   */var intervals=function intervals(set){return get(set).intervals;};/**
    * Get pitch class set number
    * @function
    * @example
    * Pcset.num(["c", "d", "e"]); //=> 2192
-   */var num=function(set){return get(set).setNum;};var IVLS=["1P","2m","2M","3m","3M","4P","5d","5P","6m","6M","7m","7M"];/**
+   */var num=function num(set){return get(set).setNum;};var IVLS=["1P","2m","2M","3m","3M","4P","5d","5P","6m","6M","7m","7M"];/**
    * @private
    * Get the intervals of a pcset *starting from C*
    * @param {Set} set - the pitch class set
@@ -771,7 +771,7 @@ pcset:pcset};//// PRIVATE ////
 function chromaRotations(chroma){var binary=chroma.split("");return binary.map(function(_,i){return collection.rotate(i,binary).join("");});}function chromaToPcset(chroma){var setNum=chromaToNumber(chroma);var normalizedNum=chromaRotations(chroma).map(chromaToNumber).filter(function(n){return n>=2048;}).sort()[0];var normalized=setNumToChroma(normalizedNum);var intervals=chromaToIntervals(chroma);return{empty:false,name:"",setNum:setNum,chroma:chroma,normalized:normalized,intervals:intervals};}function listToChroma(set){if(set.length===0){return EmptyPcset.chroma;}var pitch;var binary=[0,0,0,0,0,0,0,0,0,0,0,0];// tslint:disable-next-line:prefer-for-of
 for(var i=0;i<set.length;i++){pitch=core.note(set[i]);// tslint:disable-next-line: curly
 if(pitch.empty)pitch=core.interval(set[i]);// tslint:disable-next-line: curly
-if(!pitch.empty)binary[pitch.chroma]=1;}return binary.join("");}exports.EmptyPcset=EmptyPcset;exports.chromaToIntervals=chromaToIntervals;exports.chromas=chromas;exports.default=index;exports.filter=filter;exports.get=get;exports.includes=includes;exports.isEqual=isEqual;exports.isNoteIncludedIn=isNoteIncludedIn;exports.isSubsetOf=isSubsetOf;exports.isSupersetOf=isSupersetOf;exports.modes=modes;exports.pcset=pcset;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/collection":9,"@tonaljs/core":10}],18:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/chord'),require('@tonaljs/core'),require('@tonaljs/roman-numeral')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/chord','@tonaljs/core','@tonaljs/roman-numeral'],factory):(global=global||self,factory(global.Progression={},global.chord,global.core,global.romanNumeral));})(this,function(exports,chord,core,romanNumeral){'use strict';/**
+if(!pitch.empty)binary[pitch.chroma]=1;}return binary.join("");}exports.EmptyPcset=EmptyPcset;exports.chromaToIntervals=chromaToIntervals;exports.chromas=chromas;exports["default"]=index;exports.filter=filter;exports.get=get;exports.includes=includes;exports.isEqual=isEqual;exports.isNoteIncludedIn=isNoteIncludedIn;exports.isSubsetOf=isSubsetOf;exports.isSupersetOf=isSupersetOf;exports.modes=modes;exports.pcset=pcset;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/collection":9,"@tonaljs/core":10}],18:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/chord'),require('@tonaljs/core'),require('@tonaljs/roman-numeral')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/chord','@tonaljs/core','@tonaljs/roman-numeral'],factory):(global=global||self,factory(global.Progression={},global.chord,global.core,global.romanNumeral));})(this,function(exports,chord,core,romanNumeral){'use strict';/**
    * Given a tonic and a chord list expressed with roman numeral notation
    * returns the progression expressed with leadsheet chords symbols notation
    * @example
@@ -783,7 +783,7 @@ if(!pitch.empty)binary[pitch.chroma]=1;}return binary.join("");}exports.EmptyPcs
    * @example
    * toRomanNumerals("C", ["CMaj7", "Dm7", "G7"]);
    * // => ["IMaj7", "IIm7", "V7"]
-   */function toRomanNumerals(tonic,chords){return chords.map(function(chord$1){var _a=chord.tokenize(chord$1),note=_a[0],chordType=_a[1];var intervalName=core.distance(tonic,note);var roman=romanNumeral.get(core.interval(intervalName));return roman.name+chordType;});}var index={fromRomanNumerals:fromRomanNumerals,toRomanNumerals:toRomanNumerals};exports.default=index;exports.fromRomanNumerals=fromRomanNumerals;exports.toRomanNumerals=toRomanNumerals;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/chord":8,"@tonaljs/core":10,"@tonaljs/roman-numeral":20}],19:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/collection'),require('@tonaljs/midi')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/collection','@tonaljs/midi'],factory):(global=global||self,factory(global.Range={},global.collection,global.midi));})(this,function(exports,collection,midi){'use strict';/**
+   */function toRomanNumerals(tonic,chords){return chords.map(function(chord$1){var _a=chord.tokenize(chord$1),note=_a[0],chordType=_a[1];var intervalName=core.distance(tonic,note);var roman=romanNumeral.get(core.interval(intervalName));return roman.name+chordType;});}var index={fromRomanNumerals:fromRomanNumerals,toRomanNumerals:toRomanNumerals};exports["default"]=index;exports.fromRomanNumerals=fromRomanNumerals;exports.toRomanNumerals=toRomanNumerals;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/chord":8,"@tonaljs/core":10,"@tonaljs/roman-numeral":20}],19:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/collection'),require('@tonaljs/midi')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/collection','@tonaljs/midi'],factory):(global=global||self,factory(global.Range={},global.collection,global.midi));})(this,function(exports,collection,midi){'use strict';/**
    * Create a numeric range. You supply a list of notes or numbers and it will
    * be connected to create complex ranges.
    *
@@ -808,7 +808,7 @@ return[];}return midi$1.reduce(function(result,note){var last=result[result.leng
    * Range.chromatic("C2 E2 D2") // => ["C2", "Db2", "D2", "Eb2", "E2", "Eb2", "D2"]
    * // with sharps
    * Range.chromatic("C2 C3", true) // => [ "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", "A2", "A#2", "B2", "C3" ]
-   */function chromatic(notes,options){return numeric(notes).map(function(midi$1){return midi.midiToNoteName(midi$1,options);});}var index={numeric:numeric,chromatic:chromatic};exports.chromatic=chromatic;exports.default=index;exports.numeric=numeric;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/collection":9,"@tonaljs/midi":14}],20:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core'],factory):(global=global||self,factory(global.RomanNumeral={},global.core));})(this,function(exports,core){'use strict';var NoRomanNumeral={empty:true,name:"",chordType:""};var cache={};/**
+   */function chromatic(notes,options){return numeric(notes).map(function(midi$1){return midi.midiToNoteName(midi$1,options);});}var index={numeric:numeric,chromatic:chromatic};exports.chromatic=chromatic;exports["default"]=index;exports.numeric=numeric;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/collection":9,"@tonaljs/midi":14}],20:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core'],factory):(global=global||self,factory(global.RomanNumeral={},global.core));})(this,function(exports,core){'use strict';var NoRomanNumeral={empty:true,name:"",chordType:""};var cache={};/**
    * Get properties of a roman numeral string
    *
    * @function
@@ -831,7 +831,7 @@ return[];}return midi$1.reduce(function(result,note){var last=result[result.leng
    * @example
    * names() // => ["I", "II", "III", "IV", "V", "VI", "VII"]
    */function names(major){if(major===void 0){major=true;}return(major?NAMES:NAMES_MINOR).slice();}function fromPitch(pitch){return get(core.altToAcc(pitch.alt)+NAMES[pitch.step]);}var REGEX=/^(#{1,}|b{1,}|x{1,}|)(IV|I{1,3}|VI{0,2}|iv|i{1,3}|vi{0,2})([^IViv]*)$/;function tokenize(str){return REGEX.exec(str)||["","","",""];}var ROMANS="I II III IV V VI VII";var NAMES=ROMANS.split(" ");var NAMES_MINOR=ROMANS.toLowerCase().split(" ");function parse(src){var _a=tokenize(src),name=_a[0],acc=_a[1],roman=_a[2],chordType=_a[3];if(!roman){return NoRomanNumeral;}var upperRoman=roman.toUpperCase();var step=NAMES.indexOf(upperRoman);var alt=core.accToAlt(acc);var dir=1;return{empty:false,name:name,roman:roman,interval:core.interval({step:step,alt:alt,dir:dir}).name,acc:acc,chordType:chordType,alt:alt,step:step,major:roman===upperRoman,oct:0,dir:dir};}var index={names:names,get:get,// deprecated
-romanNumeral:romanNumeral};exports.default=index;exports.get=get;exports.names=names;exports.tokenize=tokenize;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10}],21:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core'),require('@tonaljs/pcset')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core','@tonaljs/pcset'],factory):(global=global||self,factory(global.ScaleType={},global.core,global.pcset));})(this,function(exports,core,pcset){'use strict';/*! *****************************************************************************
+romanNumeral:romanNumeral};exports["default"]=index;exports.get=get;exports.names=names;exports.tokenize=tokenize;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10}],21:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core'),require('@tonaljs/pcset')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core','@tonaljs/pcset'],factory):(global=global||self,factory(global.ScaleType={},global.core,global.pcset));})(this,function(exports,core,pcset){'use strict';/*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
     Licensed under the Apache License, Version 2.0 (the "License"); you may not use
     this file except in compliance with the License. You may obtain a copy of the
@@ -844,7 +844,7 @@ romanNumeral:romanNumeral};exports.default=index;exports.get=get;exports.names=n
 
     See the Apache Version 2.0 License for specific language governing permissions
     and limitations under the License.
-    ***************************************************************************** */var __assign=function(){__assign=Object.assign||function __assign(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s)if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p];}return t;};return __assign.apply(this,arguments);};// SCALES
+    ***************************************************************************** */var _assign6=function __assign(){_assign6=Object.assign||function __assign(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s){if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p];}}return t;};return _assign6.apply(this,arguments);};// SCALES
 // Format: ["intervals", "name", "alias1", "alias2", ...]
 var SCALES=[// 5-note scales
 ["1P 2M 3M 5P 6M","major pentatonic","pentatonic"],["1P 3M 4P 5P 7M","ionian pentatonic"],["1P 3M 4P 5P 7m","mixolydian pentatonic","indian"],["1P 2M 4P 5P 6M","ritusen"],["1P 2M 4P 5P 7m","egyptian"],["1P 3M 4P 5d 7m","neopolitan major pentatonic"],["1P 3m 4P 5P 6m","vietnamese 1"],["1P 2m 3m 5P 6m","pelog"],["1P 2m 4P 5P 6m","kumoijoshi"],["1P 2M 3m 5P 6m","hirajoshi"],["1P 2m 4P 5d 7m","iwato"],["1P 2m 4P 5P 7m","in-sen"],["1P 3M 4A 5P 7M","lydian pentatonic","chinese"],["1P 3m 4P 6m 7m","malkos raga"],["1P 3m 4P 5d 7m","locrian pentatonic","minor seven flat five pentatonic"],["1P 3m 4P 5P 7m","minor pentatonic","vietnamese 2"],["1P 3m 4P 5P 6M","minor six pentatonic"],["1P 2M 3m 5P 6M","flat three pentatonic","kumoi"],["1P 2M 3M 5P 6m","flat six pentatonic"],["1P 2m 3M 5P 6M","scriabin"],["1P 3M 5d 6m 7m","whole tone pentatonic"],["1P 3M 4A 5A 7M","lydian #5P pentatonic"],["1P 3M 4A 5P 7m","lydian dominant pentatonic"],["1P 3m 4P 5P 7M","minor #7M pentatonic"],["1P 3m 4d 5d 7m","super locrian pentatonic"],// 6-note scales
@@ -852,7 +852,7 @@ var SCALES=[// 5-note scales
 ["1P 2M 3M 4P 5d 6m 7m","locrian major","arabian"],["1P 2m 3M 4A 5P 6m 7M","double harmonic lydian"],["1P 2M 3m 4P 5P 6m 7M","harmonic minor"],["1P 2m 3m 3M 5d 6m 7m","altered","super locrian","diminished whole tone","pomeroy"],["1P 2M 3m 4P 5d 6m 7m","locrian #2","half-diminished",'"aeolian b5'],["1P 2M 3M 4P 5P 6m 7m","mixolydian b6","melodic minor fifth mode","hindu"],["1P 2M 3M 4A 5P 6M 7m","lydian dominant","lydian b7","overtone"],["1P 2M 3M 4A 5P 6M 7M","lydian"],["1P 2M 3M 4A 5A 6M 7M","lydian augmented"],["1P 2m 3m 4P 5P 6M 7m","dorian b2","phrygian #6","melodic minor second mode"],["1P 2M 3m 4P 5P 6M 7M","melodic minor"],["1P 2m 3m 4P 5d 6m 7m","locrian"],["1P 2m 3m 4d 5d 6m 7d","ultralocrian","superlocrian bb7","·superlocrian diminished"],["1P 2m 3m 4P 5d 6M 7m","locrian 6","locrian natural 6","locrian sharp 6"],["1P 2A 3M 4P 5P 5A 7M","augmented heptatonic"],["1P 2M 3m 5d 5P 6M 7m","romanian minor"],["1P 2M 3m 4A 5P 6M 7m","dorian #4"],["1P 2M 3m 4A 5P 6M 7M","lydian diminished"],["1P 2m 3m 4P 5P 6m 7m","phrygian"],["1P 2M 3M 4A 5A 7m 7M","leading whole tone"],["1P 2M 3M 4A 5P 6m 7m","lydian minor"],["1P 2m 3M 4P 5P 6m 7m","phrygian dominant","spanish","phrygian major"],["1P 2m 3m 4P 5P 6m 7M","balinese"],["1P 2m 3m 4P 5P 6M 7M","neopolitan major"],["1P 2M 3m 4P 5P 6m 7m","aeolian","minor"],["1P 2M 3M 4P 5P 6m 7M","harmonic major"],["1P 2m 3M 4P 5P 6m 7M","double harmonic major","gypsy"],["1P 2M 3m 4P 5P 6M 7m","dorian"],["1P 2M 3m 4A 5P 6m 7M","hungarian minor"],["1P 2A 3M 4A 5P 6M 7m","hungarian major"],["1P 2m 3M 4P 5d 6M 7m","oriental"],["1P 2m 3m 3M 4A 5P 7m","flamenco"],["1P 2m 3m 4A 5P 6m 7M","todi raga"],["1P 2M 3M 4P 5P 6M 7m","mixolydian","dominant"],["1P 2m 3M 4P 5d 6m 7M","persian"],["1P 2M 3M 4P 5P 6M 7M","major","ionian"],["1P 2m 3M 5d 6m 7m 7M","enigmatic"],["1P 2M 3M 4P 5A 6M 7M","major augmented","major #5","ionian augmented","ionian #5"],["1P 2A 3M 4A 5P 6M 7M","lydian #9"],// 8-note scales
 ["1P 2m 3M 4P 4A 5P 6m 7M","purvi raga"],["1P 2m 3m 3M 4P 5P 6m 7m","spanish heptatonic"],["1P 2M 3M 4P 5P 6M 7m 7M","bebop"],["1P 2M 3m 3M 4P 5P 6M 7m","bebop minor"],["1P 2M 3M 4P 5P 5A 6M 7M","bebop major"],["1P 2m 3m 4P 5d 5P 6m 7m","bebop locrian"],["1P 2M 3m 4P 5P 6m 7m 7M","minor bebop"],["1P 2M 3m 4P 5d 6m 6M 7M","diminished","whole-half diminished"],["1P 2M 3M 4P 5d 5P 6M 7M","ichikosucho"],["1P 2M 3m 4P 5P 6m 6M 7M","minor six diminished"],["1P 2m 3m 3M 4A 5P 6M 7m","half-whole diminished","dominant diminished"],["1P 3m 3M 4P 5P 6M 7m 7M","kafi raga"],// 9-note scales
 ["1P 2M 3m 3M 4P 5d 5P 6M 7m","composite blues"],// 12-note scales
-["1P 2m 2M 3m 3M 4P 5d 5P 6m 6M 7m 7M","chromatic"]];var NoScaleType=__assign(__assign({},pcset.EmptyPcset),{intervals:[],aliases:[]});var dictionary=[];var index={};function names(){return dictionary.map(function(scale){return scale.name;});}/**
+["1P 2m 2M 3m 3M 4P 5d 5P 6m 6M 7m 7M","chromatic"]];var NoScaleType=_assign6(_assign6({},pcset.EmptyPcset),{intervals:[],aliases:[]});var dictionary=[];var index={};function names(){return dictionary.map(function(scale){return scale.name;});}/**
      * Given a scale name or chroma, return the scale properties
      *
      * @param {string} type - scale name or pitch class set chroma
@@ -870,8 +870,8 @@ var SCALES=[// 5-note scales
      * @param intervals
      * @param name
      * @param aliases
-     */function add(intervals,name,aliases){if(aliases===void 0){aliases=[];}var scale=__assign(__assign({},pcset.get(intervals)),{name:name,intervals:intervals,aliases:aliases});dictionary.push(scale);index[scale.name]=scale;index[scale.setNum]=scale;index[scale.chroma]=scale;scale.aliases.forEach(function(alias){return addAlias(scale,alias);});return scale;}function addAlias(scale,alias){index[alias]=scale;}SCALES.forEach(function(_a){var ivls=_a[0],name=_a[1],aliases=_a.slice(2);return add(ivls.split(" "),name,aliases);});var index$1={names:names,get:get,all:all,add:add,removeAll:removeAll,keys:keys,// deprecated
-entries:entries,scaleType:scaleType};exports.NoScaleType=NoScaleType;exports.add=add;exports.addAlias=addAlias;exports.all=all;exports.default=index$1;exports.entries=entries;exports.get=get;exports.keys=keys;exports.names=names;exports.removeAll=removeAll;exports.scaleType=scaleType;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10,"@tonaljs/pcset":17}],22:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/chord-type'),require('@tonaljs/collection'),require('@tonaljs/core'),require('@tonaljs/note'),require('@tonaljs/pcset'),require('@tonaljs/scale-type')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/chord-type','@tonaljs/collection','@tonaljs/core','@tonaljs/note','@tonaljs/pcset','@tonaljs/scale-type'],factory):(global=global||self,factory(global.Scale={},global.chordType,global.collection,global.core,global.note,global.pcset,global.scaleType));})(this,function(exports,chordType,collection,core,note,pcset,scaleType){'use strict';/*! *****************************************************************************
+     */function add(intervals,name,aliases){if(aliases===void 0){aliases=[];}var scale=_assign6(_assign6({},pcset.get(intervals)),{name:name,intervals:intervals,aliases:aliases});dictionary.push(scale);index[scale.name]=scale;index[scale.setNum]=scale;index[scale.chroma]=scale;scale.aliases.forEach(function(alias){return addAlias(scale,alias);});return scale;}function addAlias(scale,alias){index[alias]=scale;}SCALES.forEach(function(_a){var ivls=_a[0],name=_a[1],aliases=_a.slice(2);return add(ivls.split(" "),name,aliases);});var index$1={names:names,get:get,all:all,add:add,removeAll:removeAll,keys:keys,// deprecated
+entries:entries,scaleType:scaleType};exports.NoScaleType=NoScaleType;exports.add=add;exports.addAlias=addAlias;exports.all=all;exports["default"]=index$1;exports.entries=entries;exports.get=get;exports.keys=keys;exports.names=names;exports.removeAll=removeAll;exports.scaleType=scaleType;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/core":10,"@tonaljs/pcset":17}],22:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/chord-type'),require('@tonaljs/collection'),require('@tonaljs/core'),require('@tonaljs/note'),require('@tonaljs/pcset'),require('@tonaljs/scale-type')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/chord-type','@tonaljs/collection','@tonaljs/core','@tonaljs/note','@tonaljs/pcset','@tonaljs/scale-type'],factory):(global=global||self,factory(global.Scale={},global.chordType,global.collection,global.core,global.note,global.pcset,global.scaleType));})(this,function(exports,chordType,collection,core,note,pcset,scaleType){'use strict';/*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
     Licensed under the Apache License, Version 2.0 (the "License"); you may not use
     this file except in compliance with the License. You may obtain a copy of the
@@ -884,7 +884,7 @@ entries:entries,scaleType:scaleType};exports.NoScaleType=NoScaleType;exports.add
 
     See the Apache Version 2.0 License for specific language governing permissions
     and limitations under the License.
-    ***************************************************************************** */var __assign=function(){__assign=Object.assign||function __assign(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s)if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p];}return t;};return __assign.apply(this,arguments);};var NoScale={empty:true,name:"",type:"",tonic:null,setNum:NaN,chroma:"",normalized:"",aliases:[],notes:[],intervals:[]};/**
+    ***************************************************************************** */var _assign7=function __assign(){_assign7=Object.assign||function __assign(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s){if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p];}}return t;};return _assign7.apply(this,arguments);};var NoScale={empty:true,name:"",type:"",tonic:null,setNum:NaN,chroma:"",normalized:"",aliases:[],notes:[],intervals:[]};/**
      * Given a string with a scale name and (optionally) a tonic, split
      * that components.
      *
@@ -904,7 +904,7 @@ entries:entries,scaleType:scaleType};exports.NoScaleType=NoScaleType;exports.add
      * @function
      */var names=scaleType.names;/**
      * Get a Scale from a scale name.
-     */function get(src){var tokens=Array.isArray(src)?src:tokenize(src);var tonic=core.note(tokens[0]).name;var st=scaleType.get(tokens[1]);if(st.empty){return NoScale;}var type=st.name;var notes=tonic?st.intervals.map(function(i){return core.transpose(tonic,i);}):[];var name=tonic?tonic+" "+type:type;return __assign(__assign({},st),{name:name,type:type,tonic:tonic,notes:notes});}var scale=core.deprecate("Scale.scale","Scale.get",get);/**
+     */function get(src){var tokens=Array.isArray(src)?src:tokenize(src);var tonic=core.note(tokens[0]).name;var st=scaleType.get(tokens[1]);if(st.empty){return NoScale;}var type=st.name;var notes=tonic?st.intervals.map(function(i){return core.transpose(tonic,i);}):[];var name=tonic?tonic+" "+type:type;return _assign7(_assign7({},st),{name:name,type:type,tonic:tonic,notes:notes});}var scale=core.deprecate("Scale.scale","Scale.get",get);/**
      * Get all chords that fits a given scale
      *
      * @function
@@ -956,8 +956,8 @@ entries:entries,scaleType:scaleType};exports.NoScaleType=NoScaleType;exports.add
      *   ["A", "minor pentatonic"]
      * ]
      */function modeNames(name){var s=get(name);if(s.empty){return[];}var tonics=s.tonic?s.notes:s.intervals;return pcset.modes(s.chroma).map(function(chroma,i){var modeName=get(chroma).name;return modeName?[tonics[i],modeName]:["",""];}).filter(function(x){return x[0];});}var index={get:get,names:names,extended:extended,modeNames:modeNames,reduced:reduced,scaleChords:scaleChords,scaleNotes:scaleNotes,tokenize:tokenize,// deprecated
-scale:scale};exports.default=index;exports.extended=extended;exports.get=get;exports.modeNames=modeNames;exports.names=names;exports.reduced=reduced;exports.scale=scale;exports.scaleChords=scaleChords;exports.scaleNotes=scaleNotes;exports.tokenize=tokenize;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/chord-type":7,"@tonaljs/collection":9,"@tonaljs/core":10,"@tonaljs/note":16,"@tonaljs/pcset":17,"@tonaljs/scale-type":21}],23:[function(require,module,exports){(function(global,factory){typeof exports==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/abc-notation'),require('@tonaljs/array'),require('@tonaljs/chord'),require('@tonaljs/chord-type'),require('@tonaljs/collection'),require('@tonaljs/core'),require('@tonaljs/duration-value'),require('@tonaljs/interval'),require('@tonaljs/key'),require('@tonaljs/midi'),require('@tonaljs/mode'),require('@tonaljs/note'),require('@tonaljs/pcset'),require('@tonaljs/progression'),require('@tonaljs/range'),require('@tonaljs/roman-numeral'),require('@tonaljs/scale'),require('@tonaljs/scale-type')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/abc-notation','@tonaljs/array','@tonaljs/chord','@tonaljs/chord-type','@tonaljs/collection','@tonaljs/core','@tonaljs/duration-value','@tonaljs/interval','@tonaljs/key','@tonaljs/midi','@tonaljs/mode','@tonaljs/note','@tonaljs/pcset','@tonaljs/progression','@tonaljs/range','@tonaljs/roman-numeral','@tonaljs/scale','@tonaljs/scale-type'],factory):(global=global||self,factory(global.Tonal={},global.abcNotation,global.array,global.chord,global.ChordType,global.collection,global.Core,global.durationValue,global.interval,global.key,global.midi,global.mode,global.note,global.Pcset,global.progression,global.range,global.romanNumeral,global.scale,global.ScaleType));})(this,function(exports,abcNotation,array,chord,ChordType,collection,Core,durationValue,interval,key,midi,mode,note,Pcset,progression,range,romanNumeral,scale,ScaleType){'use strict';abcNotation=abcNotation&&Object.prototype.hasOwnProperty.call(abcNotation,'default')?abcNotation['default']:abcNotation;chord=chord&&Object.prototype.hasOwnProperty.call(chord,'default')?chord['default']:chord;ChordType=ChordType&&Object.prototype.hasOwnProperty.call(ChordType,'default')?ChordType['default']:ChordType;collection=collection&&Object.prototype.hasOwnProperty.call(collection,'default')?collection['default']:collection;durationValue=durationValue&&Object.prototype.hasOwnProperty.call(durationValue,'default')?durationValue['default']:durationValue;interval=interval&&Object.prototype.hasOwnProperty.call(interval,'default')?interval['default']:interval;key=key&&Object.prototype.hasOwnProperty.call(key,'default')?key['default']:key;midi=midi&&Object.prototype.hasOwnProperty.call(midi,'default')?midi['default']:midi;mode=mode&&Object.prototype.hasOwnProperty.call(mode,'default')?mode['default']:mode;note=note&&Object.prototype.hasOwnProperty.call(note,'default')?note['default']:note;Pcset=Pcset&&Object.prototype.hasOwnProperty.call(Pcset,'default')?Pcset['default']:Pcset;progression=progression&&Object.prototype.hasOwnProperty.call(progression,'default')?progression['default']:progression;range=range&&Object.prototype.hasOwnProperty.call(range,'default')?range['default']:range;romanNumeral=romanNumeral&&Object.prototype.hasOwnProperty.call(romanNumeral,'default')?romanNumeral['default']:romanNumeral;scale=scale&&Object.prototype.hasOwnProperty.call(scale,'default')?scale['default']:scale;ScaleType=ScaleType&&Object.prototype.hasOwnProperty.call(ScaleType,'default')?ScaleType['default']:ScaleType;// deprecated (backwards compatibility)
-var Tonal=Core;var PcSet=Pcset;var ChordDictionary=ChordType;var ScaleDictionary=ScaleType;Object.keys(Core).forEach(function(k){if(k!=='default')Object.defineProperty(exports,k,{enumerable:true,get:function(){return Core[k];}});});exports.AbcNotation=abcNotation;exports.Array=array;exports.Chord=chord;exports.ChordType=ChordType;exports.Collection=collection;exports.Core=Core;exports.DurationValue=durationValue;exports.Interval=interval;exports.Key=key;exports.Midi=midi;exports.Mode=mode;exports.Note=note;exports.Pcset=Pcset;exports.Progression=progression;exports.Range=range;exports.RomanNumeral=romanNumeral;exports.Scale=scale;exports.ScaleType=ScaleType;exports.ChordDictionary=ChordDictionary;exports.PcSet=PcSet;exports.ScaleDictionary=ScaleDictionary;exports.Tonal=Tonal;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/abc-notation":4,"@tonaljs/array":5,"@tonaljs/chord":8,"@tonaljs/chord-type":7,"@tonaljs/collection":9,"@tonaljs/core":10,"@tonaljs/duration-value":11,"@tonaljs/interval":12,"@tonaljs/key":13,"@tonaljs/midi":14,"@tonaljs/mode":15,"@tonaljs/note":16,"@tonaljs/pcset":17,"@tonaljs/progression":18,"@tonaljs/range":19,"@tonaljs/roman-numeral":20,"@tonaljs/scale":22,"@tonaljs/scale-type":21}],24:[function(require,module,exports){(function(global){'use strict';var objectAssign=require('object-assign');// compare and isBuffer taken from https://github.com/feross/buffer/blob/680e9e5e488f22aac27599a57dc844a6315928dd/index.js
+scale:scale};exports["default"]=index;exports.extended=extended;exports.get=get;exports.modeNames=modeNames;exports.names=names;exports.reduced=reduced;exports.scale=scale;exports.scaleChords=scaleChords;exports.scaleNotes=scaleNotes;exports.tokenize=tokenize;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/chord-type":7,"@tonaljs/collection":9,"@tonaljs/core":10,"@tonaljs/note":16,"@tonaljs/pcset":17,"@tonaljs/scale-type":21}],23:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/abc-notation'),require('@tonaljs/array'),require('@tonaljs/chord'),require('@tonaljs/chord-type'),require('@tonaljs/collection'),require('@tonaljs/core'),require('@tonaljs/duration-value'),require('@tonaljs/interval'),require('@tonaljs/key'),require('@tonaljs/midi'),require('@tonaljs/mode'),require('@tonaljs/note'),require('@tonaljs/pcset'),require('@tonaljs/progression'),require('@tonaljs/range'),require('@tonaljs/roman-numeral'),require('@tonaljs/scale'),require('@tonaljs/scale-type')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/abc-notation','@tonaljs/array','@tonaljs/chord','@tonaljs/chord-type','@tonaljs/collection','@tonaljs/core','@tonaljs/duration-value','@tonaljs/interval','@tonaljs/key','@tonaljs/midi','@tonaljs/mode','@tonaljs/note','@tonaljs/pcset','@tonaljs/progression','@tonaljs/range','@tonaljs/roman-numeral','@tonaljs/scale','@tonaljs/scale-type'],factory):(global=global||self,factory(global.Tonal={},global.abcNotation,global.array,global.chord,global.ChordType,global.collection,global.Core,global.durationValue,global.interval,global.key,global.midi,global.mode,global.note,global.Pcset,global.progression,global.range,global.romanNumeral,global.scale,global.ScaleType));})(this,function(exports,abcNotation,array,chord,ChordType,collection,Core,durationValue,interval,key,midi,mode,note,Pcset,progression,range,romanNumeral,scale,ScaleType){'use strict';abcNotation=abcNotation&&Object.prototype.hasOwnProperty.call(abcNotation,'default')?abcNotation['default']:abcNotation;chord=chord&&Object.prototype.hasOwnProperty.call(chord,'default')?chord['default']:chord;ChordType=ChordType&&Object.prototype.hasOwnProperty.call(ChordType,'default')?ChordType['default']:ChordType;collection=collection&&Object.prototype.hasOwnProperty.call(collection,'default')?collection['default']:collection;durationValue=durationValue&&Object.prototype.hasOwnProperty.call(durationValue,'default')?durationValue['default']:durationValue;interval=interval&&Object.prototype.hasOwnProperty.call(interval,'default')?interval['default']:interval;key=key&&Object.prototype.hasOwnProperty.call(key,'default')?key['default']:key;midi=midi&&Object.prototype.hasOwnProperty.call(midi,'default')?midi['default']:midi;mode=mode&&Object.prototype.hasOwnProperty.call(mode,'default')?mode['default']:mode;note=note&&Object.prototype.hasOwnProperty.call(note,'default')?note['default']:note;Pcset=Pcset&&Object.prototype.hasOwnProperty.call(Pcset,'default')?Pcset['default']:Pcset;progression=progression&&Object.prototype.hasOwnProperty.call(progression,'default')?progression['default']:progression;range=range&&Object.prototype.hasOwnProperty.call(range,'default')?range['default']:range;romanNumeral=romanNumeral&&Object.prototype.hasOwnProperty.call(romanNumeral,'default')?romanNumeral['default']:romanNumeral;scale=scale&&Object.prototype.hasOwnProperty.call(scale,'default')?scale['default']:scale;ScaleType=ScaleType&&Object.prototype.hasOwnProperty.call(ScaleType,'default')?ScaleType['default']:ScaleType;// deprecated (backwards compatibility)
+var Tonal=Core;var PcSet=Pcset;var ChordDictionary=ChordType;var ScaleDictionary=ScaleType;Object.keys(Core).forEach(function(k){if(k!=='default')Object.defineProperty(exports,k,{enumerable:true,get:function get(){return Core[k];}});});exports.AbcNotation=abcNotation;exports.Array=array;exports.Chord=chord;exports.ChordType=ChordType;exports.Collection=collection;exports.Core=Core;exports.DurationValue=durationValue;exports.Interval=interval;exports.Key=key;exports.Midi=midi;exports.Mode=mode;exports.Note=note;exports.Pcset=Pcset;exports.Progression=progression;exports.Range=range;exports.RomanNumeral=romanNumeral;exports.Scale=scale;exports.ScaleType=ScaleType;exports.ChordDictionary=ChordDictionary;exports.PcSet=PcSet;exports.ScaleDictionary=ScaleDictionary;exports.Tonal=Tonal;Object.defineProperty(exports,'__esModule',{value:true});});},{"@tonaljs/abc-notation":4,"@tonaljs/array":5,"@tonaljs/chord":8,"@tonaljs/chord-type":7,"@tonaljs/collection":9,"@tonaljs/core":10,"@tonaljs/duration-value":11,"@tonaljs/interval":12,"@tonaljs/key":13,"@tonaljs/midi":14,"@tonaljs/mode":15,"@tonaljs/note":16,"@tonaljs/pcset":17,"@tonaljs/progression":18,"@tonaljs/range":19,"@tonaljs/roman-numeral":20,"@tonaljs/scale":22,"@tonaljs/scale-type":21}],24:[function(require,module,exports){(function(global){'use strict';var objectAssign=require('object-assign');// compare and isBuffer taken from https://github.com/feross/buffer/blob/680e9e5e488f22aac27599a57dc844a6315928dd/index.js
 // original notice:
 /*!
  * The buffer module from node.js, for the browser.
@@ -1034,7 +1034,7 @@ if(actual===expected){return true;}else if(isBuffer(actual)&&isBuffer(expected))
 // properties (`global`, `multiline`, `lastIndex`, `ignoreCase`).
 }else if(util.isRegExp(actual)&&util.isRegExp(expected)){return actual.source===expected.source&&actual.global===expected.global&&actual.multiline===expected.multiline&&actual.lastIndex===expected.lastIndex&&actual.ignoreCase===expected.ignoreCase;// 7.4. Other pairs that do not both pass typeof value == 'object',
 // equivalence is determined by ==.
-}else if((actual===null||typeof actual!=='object')&&(expected===null||typeof expected!=='object')){return strict?actual===expected:actual==expected;// If both values are instances of typed arrays, wrap their underlying
+}else if((actual===null||_typeof(actual)!=='object')&&(expected===null||_typeof(expected)!=='object')){return strict?actual===expected:actual==expected;// If both values are instances of typed arrays, wrap their underlying
 // ArrayBuffers in a Buffer each to increase performance
 // This optimization requires the arrays to have the same type as checked by
 // Object.prototype.toString (aka pToString). Never perform binary
@@ -1062,11 +1062,11 @@ assert.strictEqual=function strictEqual(actual,expected,message){if(actual!==exp
 assert.notStrictEqual=function notStrictEqual(actual,expected,message){if(actual===expected){fail(actual,expected,message,'!==',assert.notStrictEqual);}};function expectedException(actual,expected){if(!actual||!expected){return false;}if(Object.prototype.toString.call(expected)=='[object RegExp]'){return expected.test(actual);}try{if(actual instanceof expected){return true;}}catch(e){// Ignore.  The instanceof check doesn't work for arrow functions.
 }if(Error.isPrototypeOf(expected)){return false;}return expected.call({},actual)===true;}function _tryBlock(block){var error;try{block();}catch(e){error=e;}return error;}function _throws(shouldThrow,block,expected,message){var actual;if(typeof block!=='function'){throw new TypeError('"block" argument must be a function');}if(typeof expected==='string'){message=expected;expected=null;}actual=_tryBlock(block);message=(expected&&expected.name?' ('+expected.name+').':'.')+(message?' '+message:'.');if(shouldThrow&&!actual){fail(actual,expected,'Missing expected exception'+message);}var userProvidedMessage=typeof message==='string';var isUnwantedException=!shouldThrow&&util.isError(actual);var isUnexpectedException=!shouldThrow&&actual&&!expected;if(isUnwantedException&&userProvidedMessage&&expectedException(actual,expected)||isUnexpectedException){fail(actual,expected,'Got unwanted exception'+message);}if(shouldThrow&&actual&&expected&&!expectedException(actual,expected)||!shouldThrow&&actual){throw actual;}}// 11. Expected to throw an error:
 // assert.throws(block, Error_opt, message_opt);
-assert.throws=function(block,/*optional*/error,/*optional*/message){_throws(true,block,error,message);};// EXTENSION! This is annoying to write outside this module.
+assert["throws"]=function(block,/*optional*/error,/*optional*/message){_throws(true,block,error,message);};// EXTENSION! This is annoying to write outside this module.
 assert.doesNotThrow=function(block,/*optional*/error,/*optional*/message){_throws(false,block,error,message);};assert.ifError=function(err){if(err)throw err;};// Expose a strict only variant of assert
 function strict(value,message){if(!value)fail(value,true,message,'==',strict);}assert.strict=objectAssign(strict,assert,{equal:assert.strictEqual,deepEqual:assert.deepStrictEqual,notEqual:assert.notStrictEqual,notDeepEqual:assert.notDeepStrictEqual});assert.strict.strict=assert.strict;var objectKeys=Object.keys||function(obj){var keys=[];for(var key in obj){if(hasOwn.call(obj,key))keys.push(key);}return keys;};}).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});},{"object-assign":45,"util/":27}],25:[function(require,module,exports){if(typeof Object.create==='function'){// implementation from standard node.js 'util' module
 module.exports=function inherits(ctor,superCtor){ctor.super_=superCtor;ctor.prototype=Object.create(superCtor.prototype,{constructor:{value:ctor,enumerable:false,writable:true,configurable:true}});};}else{// old school shim for old browsers
-module.exports=function inherits(ctor,superCtor){ctor.super_=superCtor;var TempCtor=function(){};TempCtor.prototype=superCtor.prototype;ctor.prototype=new TempCtor();ctor.prototype.constructor=ctor;};}},{}],26:[function(require,module,exports){module.exports=function isBuffer(arg){return arg&&typeof arg==='object'&&typeof arg.copy==='function'&&typeof arg.fill==='function'&&typeof arg.readUInt8==='function';};},{}],27:[function(require,module,exports){(function(process,global){// Copyright Joyent, Inc. and other Node contributors.
+module.exports=function inherits(ctor,superCtor){ctor.super_=superCtor;var TempCtor=function TempCtor(){};TempCtor.prototype=superCtor.prototype;ctor.prototype=new TempCtor();ctor.prototype.constructor=ctor;};}},{}],26:[function(require,module,exports){module.exports=function isBuffer(arg){return arg&&_typeof(arg)==='object'&&typeof arg.copy==='function'&&typeof arg.fill==='function'&&typeof arg.readUInt8==='function';};},{}],27:[function(require,module,exports){(function(process,global){// Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the
@@ -1104,7 +1104,7 @@ exports._extend(ctx,opts);}// set default options
 if(isUndefined(ctx.showHidden))ctx.showHidden=false;if(isUndefined(ctx.depth))ctx.depth=2;if(isUndefined(ctx.colors))ctx.colors=false;if(isUndefined(ctx.customInspect))ctx.customInspect=true;if(ctx.colors)ctx.stylize=stylizeWithColor;return formatValue(ctx,obj,ctx.depth);}exports.inspect=inspect;// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
 inspect.colors={'bold':[1,22],'italic':[3,23],'underline':[4,24],'inverse':[7,27],'white':[37,39],'grey':[90,39],'black':[30,39],'blue':[34,39],'cyan':[36,39],'green':[32,39],'magenta':[35,39],'red':[31,39],'yellow':[33,39]};// Don't use 'blue' not visible on cmd.exe
 inspect.styles={'special':'cyan','number':'yellow','boolean':'yellow','undefined':'grey','null':'bold','string':'green','date':'magenta',// "name": intentionally not styling
-'regexp':'red'};function stylizeWithColor(str,styleType){var style=inspect.styles[styleType];if(style){return'\u001b['+inspect.colors[style][0]+'m'+str+'\u001b['+inspect.colors[style][1]+'m';}else{return str;}}function stylizeNoColor(str,styleType){return str;}function arrayToHash(array){var hash={};array.forEach(function(val,idx){hash[val]=true;});return hash;}function formatValue(ctx,value,recurseTimes){// Provide a hook for user-specified inspect functions.
+'regexp':'red'};function stylizeWithColor(str,styleType){var style=inspect.styles[styleType];if(style){return"\x1B["+inspect.colors[style][0]+'m'+str+"\x1B["+inspect.colors[style][1]+'m';}else{return str;}}function stylizeNoColor(str,styleType){return str;}function arrayToHash(array){var hash={};array.forEach(function(val,idx){hash[val]=true;});return hash;}function formatValue(ctx,value,recurseTimes){// Provide a hook for user-specified inspect functions.
 // Check that value is an object with an inspect function on it
 if(ctx.customInspect&&value&&isFunction(value.inspect)&&// Filter out the util module, it's inspect function is special
 value.inspect!==exports.inspect&&// Also filter out any prototype objects using the circular check.
@@ -1121,7 +1121,7 @@ if(isDate(value)){base=' '+Date.prototype.toUTCString.call(value);}// Make error
 if(isError(value)){base=' '+formatError(value);}if(keys.length===0&&(!array||value.length==0)){return braces[0]+base+braces[1];}if(recurseTimes<0){if(isRegExp(value)){return ctx.stylize(RegExp.prototype.toString.call(value),'regexp');}else{return ctx.stylize('[Object]','special');}}ctx.seen.push(value);var output;if(array){output=formatArray(ctx,value,recurseTimes,visibleKeys,keys);}else{output=keys.map(function(key){return formatProperty(ctx,value,recurseTimes,visibleKeys,key,array);});}ctx.seen.pop();return reduceToSingleString(output,base,braces);}function formatPrimitive(ctx,value){if(isUndefined(value))return ctx.stylize('undefined','undefined');if(isString(value)){var simple='\''+JSON.stringify(value).replace(/^"|"$/g,'').replace(/'/g,"\\'").replace(/\\"/g,'"')+'\'';return ctx.stylize(simple,'string');}if(isNumber(value))return ctx.stylize(''+value,'number');if(isBoolean(value))return ctx.stylize(''+value,'boolean');// For some reason typeof null is "object", so special case here.
 if(isNull(value))return ctx.stylize('null','null');}function formatError(value){return'['+Error.prototype.toString.call(value)+']';}function formatArray(ctx,value,recurseTimes,visibleKeys,keys){var output=[];for(var i=0,l=value.length;i<l;++i){if(hasOwnProperty(value,String(i))){output.push(formatProperty(ctx,value,recurseTimes,visibleKeys,String(i),true));}else{output.push('');}}keys.forEach(function(key){if(!key.match(/^\d+$/)){output.push(formatProperty(ctx,value,recurseTimes,visibleKeys,key,true));}});return output;}function formatProperty(ctx,value,recurseTimes,visibleKeys,key,array){var name,str,desc;desc=Object.getOwnPropertyDescriptor(value,key)||{value:value[key]};if(desc.get){if(desc.set){str=ctx.stylize('[Getter/Setter]','special');}else{str=ctx.stylize('[Getter]','special');}}else{if(desc.set){str=ctx.stylize('[Setter]','special');}}if(!hasOwnProperty(visibleKeys,key)){name='['+key+']';}if(!str){if(ctx.seen.indexOf(desc.value)<0){if(isNull(recurseTimes)){str=formatValue(ctx,desc.value,null);}else{str=formatValue(ctx,desc.value,recurseTimes-1);}if(str.indexOf('\n')>-1){if(array){str=str.split('\n').map(function(line){return'  '+line;}).join('\n').substr(2);}else{str='\n'+str.split('\n').map(function(line){return'   '+line;}).join('\n');}}}else{str=ctx.stylize('[Circular]','special');}}if(isUndefined(name)){if(array&&key.match(/^\d+$/)){return str;}name=JSON.stringify(''+key);if(name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)){name=name.substr(1,name.length-2);name=ctx.stylize(name,'name');}else{name=name.replace(/'/g,"\\'").replace(/\\"/g,'"').replace(/(^"|"$)/g,"'");name=ctx.stylize(name,'string');}}return name+': '+str;}function reduceToSingleString(output,base,braces){var numLinesEst=0;var length=output.reduce(function(prev,cur){numLinesEst++;if(cur.indexOf('\n')>=0)numLinesEst++;return prev+cur.replace(/\u001b\[\d\d?m/g,'').length+1;},0);if(length>60){return braces[0]+(base===''?'':base+'\n ')+' '+output.join(',\n  ')+' '+braces[1];}return braces[0]+base+' '+output.join(', ')+' '+braces[1];}// NOTE: These type checking functions intentionally don't use `instanceof`
 // because it is fragile and can be easily faked with `Object.create()`.
-function isArray(ar){return Array.isArray(ar);}exports.isArray=isArray;function isBoolean(arg){return typeof arg==='boolean';}exports.isBoolean=isBoolean;function isNull(arg){return arg===null;}exports.isNull=isNull;function isNullOrUndefined(arg){return arg==null;}exports.isNullOrUndefined=isNullOrUndefined;function isNumber(arg){return typeof arg==='number';}exports.isNumber=isNumber;function isString(arg){return typeof arg==='string';}exports.isString=isString;function isSymbol(arg){return typeof arg==='symbol';}exports.isSymbol=isSymbol;function isUndefined(arg){return arg===void 0;}exports.isUndefined=isUndefined;function isRegExp(re){return isObject(re)&&objectToString(re)==='[object RegExp]';}exports.isRegExp=isRegExp;function isObject(arg){return typeof arg==='object'&&arg!==null;}exports.isObject=isObject;function isDate(d){return isObject(d)&&objectToString(d)==='[object Date]';}exports.isDate=isDate;function isError(e){return isObject(e)&&(objectToString(e)==='[object Error]'||e instanceof Error);}exports.isError=isError;function isFunction(arg){return typeof arg==='function';}exports.isFunction=isFunction;function isPrimitive(arg){return arg===null||typeof arg==='boolean'||typeof arg==='number'||typeof arg==='string'||typeof arg==='symbol'||// ES6 symbol
+function isArray(ar){return Array.isArray(ar);}exports.isArray=isArray;function isBoolean(arg){return typeof arg==='boolean';}exports.isBoolean=isBoolean;function isNull(arg){return arg===null;}exports.isNull=isNull;function isNullOrUndefined(arg){return arg==null;}exports.isNullOrUndefined=isNullOrUndefined;function isNumber(arg){return typeof arg==='number';}exports.isNumber=isNumber;function isString(arg){return typeof arg==='string';}exports.isString=isString;function isSymbol(arg){return _typeof(arg)==='symbol';}exports.isSymbol=isSymbol;function isUndefined(arg){return arg===void 0;}exports.isUndefined=isUndefined;function isRegExp(re){return isObject(re)&&objectToString(re)==='[object RegExp]';}exports.isRegExp=isRegExp;function isObject(arg){return _typeof(arg)==='object'&&arg!==null;}exports.isObject=isObject;function isDate(d){return isObject(d)&&objectToString(d)==='[object Date]';}exports.isDate=isDate;function isError(e){return isObject(e)&&(objectToString(e)==='[object Error]'||e instanceof Error);}exports.isError=isError;function isFunction(arg){return typeof arg==='function';}exports.isFunction=isFunction;function isPrimitive(arg){return arg===null||typeof arg==='boolean'||typeof arg==='number'||typeof arg==='string'||_typeof(arg)==='symbol'||// ES6 symbol
 typeof arg==='undefined';}exports.isPrimitive=isPrimitive;exports.isBuffer=require('./support/isBuffer');function objectToString(o){return Object.prototype.toString.call(o);}function pad(n){return n<10?'0'+n.toString(10):n.toString(10);}var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];// 26 Feb 16:19:34
 function timestamp(){var d=new Date();var time=[pad(d.getHours()),pad(d.getMinutes()),pad(d.getSeconds())].join(':');return[d.getDate(),months[d.getMonth()],time].join(' ');}// log is just a thin wrapper to console.log that prepends a timestamp
 exports.log=function(){console.log('%s - %s',timestamp(),exports.format.apply(exports,arguments));};/**
@@ -1270,7 +1270,7 @@ ALPHABET='0123456789abcdefghijklmnopqrstuvwxyz';//------------------------------
      */function BigNumber(v,b){var alphabet,c,caseChanged,e,i,isNum,len,str,x=this;// Enable constructor call without `new`.
 if(!(x instanceof BigNumber))return new BigNumber(v,b);if(b==null){if(v&&v._isBigNumber===true){x.s=v.s;if(!v.c||v.e>MAX_EXP){x.c=x.e=null;}else if(v.e<MIN_EXP){x.c=[x.e=0];}else{x.e=v.e;x.c=v.c.slice();}return;}if((isNum=typeof v=='number')&&v*0==0){// Use `1 / n` to handle minus zero also.
 x.s=1/v<0?(v=-v,-1):1;// Fast path for integers, where n < 2147483648 (2**31).
-if(v===~~v){for(e=0,i=v;i>=10;i/=10,e++);if(e>MAX_EXP){x.c=x.e=null;}else{x.e=e;x.c=[v];}return;}str=String(v);}else{if(!isNumeric.test(str=String(v)))return parseNumeric(x,str,isNum);x.s=str.charCodeAt(0)==45?(str=str.slice(1),-1):1;}// Decimal point?
+if(v===~~v){for(e=0,i=v;i>=10;i/=10,e++){;}if(e>MAX_EXP){x.c=x.e=null;}else{x.e=e;x.c=[v];}return;}str=String(v);}else{if(!isNumeric.test(str=String(v)))return parseNumeric(x,str,isNum);x.s=str.charCodeAt(0)==45?(str=str.slice(1),-1):1;}// Decimal point?
 if((e=str.indexOf('.'))>-1)str=str.replace('.','');// Exponential form?
 if((i=str.search(/e/i))>0){// Determine exponent.
 if(e<0)e=i;e+=+str.slice(i+1);str=str.substring(0,i);}else if(e<0){// Integer.
@@ -1286,8 +1286,8 @@ if(i>e){e=len;continue;}}else if(!caseChanged){// Allow e.g. hexadecimal 'FF' as
 if(str==str.toUpperCase()&&(str=str.toLowerCase())||str==str.toLowerCase()&&(str=str.toUpperCase())){caseChanged=true;i=-1;e=0;continue;}}return parseNumeric(x,String(v),isNum,b);}}// Prevent later check for length on converted number.
 isNum=false;str=convertBase(str,b,10,x.s);// Decimal point?
 if((e=str.indexOf('.'))>-1)str=str.replace('.','');else e=str.length;}// Determine leading zeros.
-for(i=0;str.charCodeAt(i)===48;i++);// Determine trailing zeros.
-for(len=str.length;str.charCodeAt(--len)===48;);if(str=str.slice(i,++len)){len-=i;// '[BigNumber Error] Number primitive has more than 15 significant digits: {n}'
+for(i=0;str.charCodeAt(i)===48;i++){;}// Determine trailing zeros.
+for(len=str.length;str.charCodeAt(--len)===48;){;}if(str=str.slice(i,++len)){len-=i;// '[BigNumber Error] Number primitive has more than 15 significant digits: {n}'
 if(isNum&&BigNumber.DEBUG&&len>15&&(v>MAX_SAFE_INTEGER||v!==mathfloor(v))){throw Error(tooManyDigits+x.s*v);}// Overflow?
 if((e=e-i-1)>MAX_EXP){// Infinity.
 x.c=x.e=null;// Underflow?
@@ -1296,7 +1296,7 @@ x.c=[x.e=0];}else{x.e=e;x.c=[];// Transform base
 // e is the base 10 exponent.
 // i is where to slice str to get the first element of the coefficient array.
 i=(e+1)%LOG_BASE;if(e<0)i+=LOG_BASE;// i < 1
-if(i<len){if(i)x.c.push(+str.slice(0,i));for(len-=LOG_BASE;i<len;){x.c.push(+str.slice(i,i+=LOG_BASE));}i=LOG_BASE-(str=str.slice(i)).length;}else{i-=len;}for(;i--;str+='0');x.c.push(+str);}}else{// Zero.
+if(i<len){if(i)x.c.push(+str.slice(0,i));for(len-=LOG_BASE;i<len;){x.c.push(+str.slice(i,i+=LOG_BASE));}i=LOG_BASE-(str=str.slice(i)).length;}else{i-=len;}for(;i--;str+='0'){;}x.c.push(+str);}}else{// Zero.
 x.c=[x.e=0];}}// CONSTRUCTOR PROPERTIES
 BigNumber.clone=clone;BigNumber.ROUND_UP=0;BigNumber.ROUND_DOWN=1;BigNumber.ROUND_CEIL=2;BigNumber.ROUND_FLOOR=3;BigNumber.ROUND_HALF_UP=4;BigNumber.ROUND_HALF_DOWN=5;BigNumber.ROUND_HALF_EVEN=6;BigNumber.ROUND_HALF_CEIL=7;BigNumber.ROUND_HALF_FLOOR=8;BigNumber.EUCLID=9;/*
      * Configure infrequently-changing library-wide settings.
@@ -1331,7 +1331,7 @@ BigNumber.clone=clone;BigNumber.ROUND_UP=0;BigNumber.ROUND_DOWN=1;BigNumber.ROUN
      * Ignore properties/parameters set to null or undefined, except for ALPHABET.
      *
      * Return an object with the properties current values.
-     */BigNumber.config=BigNumber.set=function(obj){var p,v;if(obj!=null){if(typeof obj=='object'){// DECIMAL_PLACES {number} Integer, 0 to MAX inclusive.
+     */BigNumber.config=BigNumber.set=function(obj){var p,v;if(obj!=null){if(_typeof(obj)=='object'){// DECIMAL_PLACES {number} Integer, 0 to MAX inclusive.
 // '[BigNumber Error] DECIMAL_PLACES {not a primitive number|not an integer|out of range}: {v}'
 if(obj.hasOwnProperty(p='DECIMAL_PLACES')){v=obj[p];intCheck(v,0,MAX,p);DECIMAL_PLACES=v;}// ROUNDING_MODE {number} Integer, 0 to 8 inclusive.
 // '[BigNumber Error] ROUNDING_MODE {not a primitive number|not an integer|out of range}: {v}'
@@ -1351,7 +1351,7 @@ if(obj.hasOwnProperty(p='MODULO_MODE')){v=obj[p];intCheck(v,0,9,p);MODULO_MODE=v
 // '[BigNumber Error] POW_PRECISION {not a primitive number|not an integer|out of range}: {v}'
 if(obj.hasOwnProperty(p='POW_PRECISION')){v=obj[p];intCheck(v,0,MAX,p);POW_PRECISION=v;}// FORMAT {object}
 // '[BigNumber Error] FORMAT not an object: {v}'
-if(obj.hasOwnProperty(p='FORMAT')){v=obj[p];if(typeof v=='object')FORMAT=v;else throw Error(bignumberError+p+' not an object: '+v);}// ALPHABET {string}
+if(obj.hasOwnProperty(p='FORMAT')){v=obj[p];if(_typeof(v)=='object')FORMAT=v;else throw Error(bignumberError+p+' not an object: '+v);}// ALPHABET {string}
 // '[BigNumber Error] ALPHABET invalid: {v}'
 if(obj.hasOwnProperty(p='ALPHABET')){v=obj[p];// Disallow if only one character,
 // or if it contains '+', '-', '.', whitespace, or a repeated character.
@@ -1414,21 +1414,21 @@ v=(a[i]&31)*0x1000000000000+a[i+1]*0x10000000000+a[i+2]*0x100000000+a[i+3]*0x100
 c.push(v%1e14);i+=7;}}i=k/7;}else{CRYPTO=false;throw Error(bignumberError+'crypto unavailable');}}// Use Math.random.
 if(!CRYPTO){for(;i<k;){v=random53bitInt();if(v<9e15)c[i++]=v%1e14;}}k=c[--i];dp%=LOG_BASE;// Convert trailing digits to zeros according to dp.
 if(k&&dp){v=POWS_TEN[LOG_BASE-dp];c[i]=mathfloor(k/v)*v;}// Remove trailing elements which are zero.
-for(;c[i]===0;c.pop(),i--);// Zero?
+for(;c[i]===0;c.pop(),i--){;}// Zero?
 if(i<0){c=[e=0];}else{// Remove leading elements which are zero and adjust exponent accordingly.
-for(e=-1;c[0]===0;c.splice(0,1),e-=LOG_BASE);// Count the digits of the first element of c to determine leading zeros, and...
-for(i=1,v=c[0];v>=10;v/=10,i++);// adjust the exponent accordingly.
+for(e=-1;c[0]===0;c.splice(0,1),e-=LOG_BASE){;}// Count the digits of the first element of c to determine leading zeros, and...
+for(i=1,v=c[0];v>=10;v/=10,i++){;}// adjust the exponent accordingly.
 if(i<LOG_BASE)e-=LOG_BASE-i;}rand.e=e;rand.c=c;return rand;};}();/*
      * Return a BigNumber whose value is the sum of the arguments.
      *
      * arguments {number|string|BigNumber}
-     */BigNumber.sum=function(){var i=1,args=arguments,sum=new BigNumber(args[0]);for(;i<args.length;)sum=sum.plus(args[i++]);return sum;};// PRIVATE FUNCTIONS
+     */BigNumber.sum=function(){var i=1,args=arguments,sum=new BigNumber(args[0]);for(;i<args.length;){sum=sum.plus(args[i++]);}return sum;};// PRIVATE FUNCTIONS
 // Called by BigNumber and BigNumber.prototype.toString.
 convertBase=function(){var decimal='0123456789';/*
        * Convert string of baseIn to an array of numbers of baseOut.
        * Eg. toBaseOut('255', 10, 16) returns [15, 15].
        * Eg. toBaseOut('ff', 16, 10) returns [2, 5, 5].
-       */function toBaseOut(str,baseIn,baseOut,alphabet){var j,arr=[0],arrL,i=0,len=str.length;for(;i<len;){for(arrL=arr.length;arrL--;arr[arrL]*=baseIn);arr[0]+=alphabet.indexOf(str.charAt(i++));for(j=0;j<arr.length;j++){if(arr[j]>baseOut-1){if(arr[j+1]==null)arr[j+1]=0;arr[j+1]+=arr[j]/baseOut|0;arr[j]%=baseOut;}}}return arr.reverse();}// Convert a numeric string of baseIn to a numeric string of baseOut.
+       */function toBaseOut(str,baseIn,baseOut,alphabet){var j,arr=[0],arrL,i=0,len=str.length;for(;i<len;){for(arrL=arr.length;arrL--;arr[arrL]*=baseIn){;}arr[0]+=alphabet.indexOf(str.charAt(i++));for(j=0;j<arr.length;j++){if(arr[j]>baseOut-1){if(arr[j+1]==null)arr[j+1]=0;arr[j+1]+=arr[j]/baseOut|0;arr[j]%=baseOut;}}}return arr.reverse();}// Convert a numeric string of baseIn to a numeric string of baseOut.
 // If the caller is toString, we are converting from base 10 to baseOut.
 // If the caller is BigNumber, we are converting from baseIn to base 10.
 return function(str,baseIn,baseOut,sign,callerIsToString){var alphabet,d,e,k,r,x,xc,y,i=str.indexOf('.'),dp=DECIMAL_PLACES,rm=ROUNDING_MODE;// Non-integer.
@@ -1438,7 +1438,7 @@ POW_PRECISION=0;str=str.replace('.','');y=new BigNumber(baseIn);x=y.pow(str.leng
 y.c=toBaseOut(toFixedPoint(coeffToString(x.c),x.e,'0'),10,baseOut,decimal);y.e=y.c.length;}// Convert the number as integer.
 xc=toBaseOut(str,baseIn,baseOut,callerIsToString?(alphabet=ALPHABET,decimal):(alphabet=decimal,ALPHABET));// xc now represents str as an integer and converted to baseOut. e is the exponent.
 e=k=xc.length;// Remove trailing zeros.
-for(;xc[--k]==0;xc.pop());// Zero?
+for(;xc[--k]==0;xc.pop()){;}// Zero?
 if(!xc[0])return alphabet.charAt(0);// Does str represent an integer? If so, no need for the division.
 if(i<0){--e;}else{x.c=xc;x.e=e;// The sign is needed for correct rounding.
 x.s=sign;x=div(x,y,dp,rm,baseOut);xc=x.c;r=x.r;e=x.e;}// xc now represents str converted to baseOut.
@@ -1453,24 +1453,24 @@ str=r?toFixedPoint(alphabet.charAt(1),-dp,alphabet.charAt(0)):alphabet.charAt(0)
 xc.length=d;// Round up?
 if(r){// Rounding up may mean the previous digit has to be rounded up and so on.
 for(--baseOut;++xc[--d]>baseOut;){xc[d]=0;if(!d){++e;xc=[1].concat(xc);}}}// Determine trailing zeros.
-for(k=xc.length;!xc[--k];);// E.g. [4, 11, 15] becomes 4bf.
-for(i=0,str='';i<=k;str+=alphabet.charAt(xc[i++]));// Add leading zeros, decimal point and trailing zeros as required.
+for(k=xc.length;!xc[--k];){;}// E.g. [4, 11, 15] becomes 4bf.
+for(i=0,str='';i<=k;str+=alphabet.charAt(xc[i++])){;}// Add leading zeros, decimal point and trailing zeros as required.
 str=toFixedPoint(str,e,alphabet.charAt(0));}// The caller will add the sign.
 return str;};}();// Perform division in the specified base. Called by div and convertBase.
 div=function(){// Assume non-zero x and k.
 function multiply(x,k,base){var m,temp,xlo,xhi,carry=0,i=x.length,klo=k%SQRT_BASE,khi=k/SQRT_BASE|0;for(x=x.slice();i--;){xlo=x[i]%SQRT_BASE;xhi=x[i]/SQRT_BASE|0;m=khi*xlo+xhi*klo;temp=klo*xlo+m%SQRT_BASE*SQRT_BASE+carry;carry=(temp/base|0)+(m/SQRT_BASE|0)+khi*xhi;x[i]=temp%base;}if(carry)x=[carry].concat(x);return x;}function compare(a,b,aL,bL){var i,cmp;if(aL!=bL){cmp=aL>bL?1:-1;}else{for(i=cmp=0;i<aL;i++){if(a[i]!=b[i]){cmp=a[i]>b[i]?1:-1;break;}}}return cmp;}function subtract(a,b,aL,base){var i=0;// Subtract b from a.
 for(;aL--;){a[aL]-=i;i=a[aL]<b[aL]?1:0;a[aL]=i*base+a[aL]-b[aL];}// Remove leading zeros.
-for(;!a[0]&&a.length>1;a.splice(0,1));}// x: dividend, y: divisor.
+for(;!a[0]&&a.length>1;a.splice(0,1)){;}}// x: dividend, y: divisor.
 return function(x,y,dp,rm,base){var cmp,e,i,more,n,prod,prodL,q,qc,rem,remL,rem0,xi,xL,yc0,yL,yz,s=x.s==y.s?1:-1,xc=x.c,yc=y.c;// Either NaN, Infinity or 0?
 if(!xc||!xc[0]||!yc||!yc[0]){return new BigNumber(// Return NaN if either NaN, or both Infinity or 0.
 !x.s||!y.s||(xc?yc&&xc[0]==yc[0]:!yc)?NaN:// Return ±0 if x is ±0 or y is ±Infinity, or return ±Infinity as y is ±0.
 xc&&xc[0]==0||!yc?s*0:s/0);}q=new BigNumber(s);qc=q.c=[];e=x.e-y.e;s=dp+e+1;if(!base){base=BASE;e=bitFloor(x.e/LOG_BASE)-bitFloor(y.e/LOG_BASE);s=s/LOG_BASE|0;}// Result exponent may be one less then the current value of e.
 // The coefficients of the BigNumbers from convertBase may have trailing zeros.
-for(i=0;yc[i]==(xc[i]||0);i++);if(yc[i]>(xc[i]||0))e--;if(s<0){qc.push(1);more=true;}else{xL=xc.length;yL=yc.length;i=0;s+=2;// Normalise xc and yc so highest order digit of yc is >= base / 2.
+for(i=0;yc[i]==(xc[i]||0);i++){;}if(yc[i]>(xc[i]||0))e--;if(s<0){qc.push(1);more=true;}else{xL=xc.length;yL=yc.length;i=0;s+=2;// Normalise xc and yc so highest order digit of yc is >= base / 2.
 n=mathfloor(base/(yc[0]+1));// Not necessary, but to handle odd bases where yc[0] == (base / 2) - 1.
 // if (n > 1 || n++ == 1 && yc[0] < base / 2) {
 if(n>1){yc=multiply(yc,n,base);xc=multiply(xc,n,base);yL=yc.length;xL=xc.length;}xi=yL;rem=xc.slice(0,yL);remL=rem.length;// Add zeros to make remainder as long as divisor.
-for(;remL<yL;rem[remL++]=0);yz=yc.slice();yz=[0].concat(yz);yc0=yc[0];if(yc[1]>=base/2)yc0++;// Not necessary, but to prevent trial digit n > base, when using base 3.
+for(;remL<yL;rem[remL++]=0){;}yz=yc.slice();yz=[0].concat(yz);yc0=yc[0];if(yc[1]>=base/2)yc0++;// Not necessary, but to prevent trial digit n > base, when using base 3.
 // else if (base == 3 && yc0 == 1) yc0 = 1 + 1e-15;
 do{n=0;// Compare divisor and remainder.
 cmp=compare(yc,rem,yL,remL);// If divisor < remainder.
@@ -1511,7 +1511,7 @@ subtract(rem,yL<remL?yz:yc,remL,base);remL=rem.length;}}}else if(cmp===0){n++;re
 qc[i++]=n;// Update the remainder.
 if(rem[0]){rem[remL++]=xc[xi]||0;}else{rem=[xc[xi]];remL=1;}}while((xi++<xL||rem[0]!=null)&&s--);more=rem[0]!=null;// Leading zero?
 if(!qc[0])qc.splice(0,1);}if(base==BASE){// To calculate q.e, first get the number of digits of qc[0].
-for(i=1,s=qc[0];s>=10;s/=10,i++);round(q,dp+(q.e=i+e*LOG_BASE-1)+1,rm,more);// Caller is convertBase.
+for(i=1,s=qc[0];s>=10;s/=10,i++){;}round(q,dp+(q.e=i+e*LOG_BASE-1)+1,rm,more);// Caller is convertBase.
 }else{q.e=e;q.r=+more;}return q;};}();/*
      * Return a string representing the value of BigNumber n in fixed-point or exponential
      * notation rounded to the specified decimal places or significant digits.
@@ -1526,16 +1526,16 @@ e=n.e;str=coeffToString(n.c);len=str.length;// toPrecision returns exponential n
 // part of the value in fixed-point notation.
 // Exponential notation.
 if(id==1||id==2&&(i<=e||e<=TO_EXP_NEG)){// Append zeros?
-for(;len<i;str+='0',len++);str=toExponential(str,e);// Fixed-point notation.
+for(;len<i;str+='0',len++){;}str=toExponential(str,e);// Fixed-point notation.
 }else{i-=ne;str=toFixedPoint(str,e,'0');// Append zeros?
-if(e+1>len){if(--i>0)for(str+='.';i--;str+='0');}else{i+=e-len;if(i>0){if(e+1==len)str+='.';for(;i--;str+='0');}}}}return n.s<0&&c0?'-'+str:str;}// Handle BigNumber.max and BigNumber.min.
+if(e+1>len){if(--i>0)for(str+='.';i--;str+='0'){;}}else{i+=e-len;if(i>0){if(e+1==len)str+='.';for(;i--;str+='0'){;}}}}}return n.s<0&&c0?'-'+str:str;}// Handle BigNumber.max and BigNumber.min.
 function maxOrMin(args,method){var n,i=1,m=new BigNumber(args[0]);for(;i<args.length;i++){n=new BigNumber(args[i]);// If any number is NaN, return NaN.
 if(!n.s){m=n;break;}else if(method.call(m,n)){m=n;}}return m;}/*
      * Strip trailing zeros, calculate base 10 exponent and check against MIN_EXP and MAX_EXP.
      * Called by minus, plus and times.
      */function normalise(n,c,e){var i=1,j=c.length;// Remove trailing zeros.
-for(;!c[--j];c.pop());// Calculate the base 10 exponent. First get the number of digits of c[0].
-for(j=c[0];j>=10;j/=10,i++);// Overflow?
+for(;!c[--j];c.pop()){;}// Calculate the base 10 exponent. First get the number of digits of c[0].
+for(j=c[0];j>=10;j/=10,i++){;}// Overflow?
 if((e=i+e*LOG_BASE-1)>MAX_EXP){// Infinity.
 n.c=n.e=null;// Underflow?
 }else if(e<MIN_EXP){// Zero.
@@ -1557,11 +1557,11 @@ if(xc){// rd is the rounding digit, i.e. the digit after the digit that may be r
 // i is the index of rd within n including leading zeros.
 // j is the actual index of rd within n (if < 0, rd is a leading zero).
 out:{// Get the number of digits of the first element of xc.
-for(d=1,k=xc[0];k>=10;k/=10,d++);i=sd-d;// If the rounding digit is in the first element of xc...
+for(d=1,k=xc[0];k>=10;k/=10,d++){;}i=sd-d;// If the rounding digit is in the first element of xc...
 if(i<0){i+=LOG_BASE;j=sd;n=xc[ni=0];// Get the rounding digit at index j of n.
 rd=n/pows10[d-j-1]%10|0;}else{ni=mathceil((i+1)/LOG_BASE);if(ni>=xc.length){if(r){// Needed by sqrt.
-for(;xc.length<=ni;xc.push(0));n=rd=0;d=1;i%=LOG_BASE;j=i-LOG_BASE+1;}else{break out;}}else{n=k=xc[ni];// Get the number of digits of n.
-for(d=1;k>=10;k/=10,d++);// Get the index of rd within n.
+for(;xc.length<=ni;xc.push(0)){;}n=rd=0;d=1;i%=LOG_BASE;j=i-LOG_BASE+1;}else{break out;}}else{n=k=xc[ni];// Get the number of digits of n.
+for(d=1;k>=10;k/=10,d++){;}// Get the index of rd within n.
 i%=LOG_BASE;// Get the index of rd within n, adjusted for leading zeros.
 // The number of leading zeros of n is given by LOG_BASE - d.
 j=i-LOG_BASE+d;// Get the rounding digit at index j of n.
@@ -1578,9 +1578,9 @@ if(i==0){xc.length=ni;k=1;ni--;}else{xc.length=ni+1;k=pows10[LOG_BASE-i];// E.g.
 xc[ni]=j>0?mathfloor(n/pows10[d-j]%pows10[j])*k:0;}// Round up?
 if(r){for(;;){// If the digit to be rounded up is in the first element of xc...
 if(ni==0){// i will be the length of xc[0] before k is added.
-for(i=1,j=xc[0];j>=10;j/=10,i++);j=xc[0]+=k;for(k=1;j>=10;j/=10,k++);// if i != k the length has increased.
+for(i=1,j=xc[0];j>=10;j/=10,i++){;}j=xc[0]+=k;for(k=1;j>=10;j/=10,k++){;}// if i != k the length has increased.
 if(i!=k){x.e++;if(xc[0]==BASE)xc[0]=1;}break;}else{xc[ni]+=k;if(xc[ni]!=BASE)break;xc[ni--]=0;k=1;}}}// Remove trailing zeros.
-for(i=xc.length;xc[--i]===0;xc.pop());}// Overflow? Infinity.
+for(i=xc.length;xc[--i]===0;xc.pop()){;}}// Overflow? Infinity.
 if(x.e>MAX_EXP){x.c=x.e=null;// Underflow? Zero.
 }else if(x.e<MIN_EXP){x.c=[x.e=0];}}return x;}function valueOf(n){var str,e=n.e;if(e===null)return n.toString();str=coeffToString(n.c);str=e<=TO_EXP_NEG||e>=TO_EXP_POS?toExponential(str,e):toFixedPoint(str,e,'0');return n.s<0?'-'+str:str;}// PROTOTYPE/INSTANCE METHODS
 /*
@@ -1604,7 +1604,7 @@ if(x.e>MAX_EXP){x.c=x.e=null;// Underflow? Zero.
      *
      * '[BigNumber Error] Argument {not a primitive number|not an integer|out of range}: {dp|rm}'
      */P.decimalPlaces=P.dp=function(dp,rm){var c,n,v,x=this;if(dp!=null){intCheck(dp,0,MAX);if(rm==null)rm=ROUNDING_MODE;else intCheck(rm,0,8);return round(new BigNumber(x),dp+x.e+1,rm);}if(!(c=x.c))return null;n=((v=c.length-1)-bitFloor(this.e/LOG_BASE))*LOG_BASE;// Subtract the number of trailing zeros of the last number.
-if(v=c[v])for(;v%10==0;v/=10,n--);if(n<0)n=0;return n;};/*
+if(v=c[v])for(;v%10==0;v/=10,n--){;}if(n<0)n=0;return n;};/*
      *  n / 0 = I
      *  n / N = N
      *  n / I = 0
@@ -1720,13 +1720,13 @@ if(!xc[0]||!yc[0]){// Return y if y is non-zero, x if x is non-zero, or zero if 
 return yc[0]?(y.s=-b,y):new BigNumber(xc[0]?x:// IEEE 754 (2008) 6.3: n - n = -0 when rounding to -Infinity
 ROUNDING_MODE==3?-0:0);}}xe=bitFloor(xe);ye=bitFloor(ye);xc=xc.slice();// Determine which is the bigger number.
 if(a=xe-ye){if(xLTy=a<0){a=-a;t=xc;}else{ye=xe;t=yc;}t.reverse();// Prepend zeros to equalise exponents.
-for(b=a;b--;t.push(0));t.reverse();}else{// Exponents equal. Check digit by digit.
+for(b=a;b--;t.push(0)){;}t.reverse();}else{// Exponents equal. Check digit by digit.
 j=(xLTy=(a=xc.length)<(b=yc.length))?a:b;for(a=b=0;b<j;b++){if(xc[b]!=yc[b]){xLTy=xc[b]<yc[b];break;}}}// x < y? Point xc to the array of the bigger number.
 if(xLTy)t=xc,xc=yc,yc=t,y.s=-y.s;b=(j=yc.length)-(i=xc.length);// Append zeros to xc if shorter.
 // No need to add zeros to yc if shorter as subtract only needs to start at yc.length.
-if(b>0)for(;b--;xc[i++]=0);b=BASE-1;// Subtract yc from xc.
-for(;j>a;){if(xc[--j]<yc[j]){for(i=j;i&&!xc[--i];xc[i]=b);--xc[i];xc[j]+=BASE;}xc[j]-=yc[j];}// Remove leading zeros and adjust exponent accordingly.
-for(;xc[0]==0;xc.splice(0,1),--ye);// Zero?
+if(b>0)for(;b--;xc[i++]=0){;}b=BASE-1;// Subtract yc from xc.
+for(;j>a;){if(xc[--j]<yc[j]){for(i=j;i&&!xc[--i];xc[i]=b){;}--xc[i];xc[j]+=BASE;}xc[j]-=yc[j];}// Remove leading zeros and adjust exponent accordingly.
+for(;xc[0]==0;xc.splice(0,1),--ye){;}// Zero?
 if(!xc[0]){// Following IEEE 754 (2008) 6.3,
 // n - n = +0  but  n - n = -0  when rounding towards -Infinity.
 y.s=ROUNDING_MODE==3?-1:1;y.c=[y.e=0];return y;}// No need to check for Infinity as +x - +y != Infinity && -x - -y != Infinity
@@ -1781,7 +1781,7 @@ if(!x.s||!y.s||xc&&!xc[0]&&!yc||yc&&!yc[0]&&!xc){y.c=y.e=y.s=null;}else{y.s*=x.s
 if(!xc||!yc){y.c=y.e=null;// Return ±0 if either is ±0.
 }else{y.c=[0];y.e=0;}}return y;}e=bitFloor(x.e/LOG_BASE)+bitFloor(y.e/LOG_BASE);y.s*=x.s;xcL=xc.length;ycL=yc.length;// Ensure xc points to longer array and xcL to its length.
 if(xcL<ycL)zc=xc,xc=yc,yc=zc,i=xcL,xcL=ycL,ycL=i;// Initialise the result array with zeros.
-for(i=xcL+ycL,zc=[];i--;zc.push(0));base=BASE;sqrtBase=SQRT_BASE;for(i=ycL;--i>=0;){c=0;ylo=yc[i]%sqrtBase;yhi=yc[i]/sqrtBase|0;for(k=xcL,j=i+k;j>i;){xlo=xc[--k]%sqrtBase;xhi=xc[k]/sqrtBase|0;m=yhi*xlo+xhi*ylo;xlo=ylo*xlo+m%sqrtBase*sqrtBase+zc[j]+c;c=(xlo/base|0)+(m/sqrtBase|0)+yhi*xhi;zc[j--]=xlo%base;}zc[j]=c;}if(c){++e;}else{zc.splice(0,1);}return normalise(y,zc,e);};/*
+for(i=xcL+ycL,zc=[];i--;zc.push(0)){;}base=BASE;sqrtBase=SQRT_BASE;for(i=ycL;--i>=0;){c=0;ylo=yc[i]%sqrtBase;yhi=yc[i]/sqrtBase|0;for(k=xcL,j=i+k;j>i;){xlo=xc[--k]%sqrtBase;xhi=xc[k]/sqrtBase|0;m=yhi*xlo+xhi*ylo;xlo=ylo*xlo+m%sqrtBase*sqrtBase+zc[j]+c;c=(xlo/base|0)+(m/sqrtBase|0)+yhi*xhi;zc[j--]=xlo%base;}zc[j]=c;}if(c){++e;}else{zc.splice(0,1);}return normalise(y,zc,e);};/*
      * Return a new BigNumber whose value is the value of this BigNumber negated,
      * i.e. multiplied by -1.
      */P.negated=function(){var x=new BigNumber(this);x.s=-x.s||null;return x;};/*
@@ -1809,7 +1809,7 @@ if(a!=b){y.s=-b;return x.minus(y);}var xe=x.e/LOG_BASE,ye=y.e/LOG_BASE,xc=x.c,yc
 if(!xc||!yc)return new BigNumber(a/0);// Either zero?
 // Return y if y is non-zero, x if x is non-zero, or zero if both are zero.
 if(!xc[0]||!yc[0])return yc[0]?y:new BigNumber(xc[0]?x:a*0);}xe=bitFloor(xe);ye=bitFloor(ye);xc=xc.slice();// Prepend zeros to equalise exponents. Faster to use reverse then do unshifts.
-if(a=xe-ye){if(a>0){ye=xe;t=yc;}else{a=-a;t=xc;}t.reverse();for(;a--;t.push(0));t.reverse();}a=xc.length;b=yc.length;// Point xc to the longer array, and b to the shorter length.
+if(a=xe-ye){if(a>0){ye=xe;t=yc;}else{a=-a;t=xc;}t.reverse();for(;a--;t.push(0)){;}t.reverse();}a=xc.length;b=yc.length;// Point xc to the longer array, and b to the shorter length.
 if(a-b<0)t=yc,yc=xc,xc=t,b=a;// Only start adding at yc.length - 1 as the further digits of xc can be ignored.
 for(a=0;b;){a=(xc[--b]=xc[b]+yc[b]+a)/BASE|0;xc[b]=BASE===xc[b]?0:xc[b]%BASE;}if(a){xc=[a].concat(xc);++ye;}// No need to check for zero, as +x + +y != 0 && -x + -y != 0
 // ye = MAX_EXP + 1 possible
@@ -1828,8 +1828,8 @@ return normalise(y,xc,ye);};/*
      *
      * '[BigNumber Error] Argument {not a primitive number|not an integer|out of range}: {sd|rm}'
      */P.precision=P.sd=function(sd,rm){var c,n,v,x=this;if(sd!=null&&sd!==!!sd){intCheck(sd,1,MAX);if(rm==null)rm=ROUNDING_MODE;else intCheck(rm,0,8);return round(new BigNumber(x),sd,rm);}if(!(c=x.c))return null;v=c.length-1;n=v*LOG_BASE+1;if(v=c[v]){// Subtract the number of trailing zeros of the last element.
-for(;v%10==0;v/=10,n--);// Add the number of digits of the first element.
-for(v=c[0];v>=10;v/=10,n++);}if(sd&&x.e+1>n)n=x.e+1;return n;};/*
+for(;v%10==0;v/=10,n--){;}// Add the number of digits of the first element.
+for(v=c[0];v>=10;v/=10,n++){;}}if(sd&&x.e+1>n)n=x.e+1;return n;};/*
      * Return a new BigNumber whose value is the value of this BigNumber shifted by k places
      * (powers of 10). Shift to the right if n > 0, and to the left if n < 0.
      *
@@ -1909,7 +1909,7 @@ round(r,r.e+DECIMAL_PLACES+2,1);m=!r.times(r).eq(x);}break;}}}}return round(r,r.
      *
      * '[BigNumber Error] Argument {not a primitive number|not an integer|out of range}: {dp|rm}'
      * '[BigNumber Error] Argument not an object: {format}'
-     */P.toFormat=function(dp,rm,format){var str,x=this;if(format==null){if(dp!=null&&rm&&typeof rm=='object'){format=rm;rm=null;}else if(dp&&typeof dp=='object'){format=dp;dp=rm=null;}else{format=FORMAT;}}else if(typeof format!='object'){throw Error(bignumberError+'Argument not an object: '+format);}str=x.toFixed(dp,rm);if(x.c){var i,arr=str.split('.'),g1=+format.groupSize,g2=+format.secondaryGroupSize,groupSeparator=format.groupSeparator||'',intPart=arr[0],fractionPart=arr[1],isNeg=x.s<0,intDigits=isNeg?intPart.slice(1):intPart,len=intDigits.length;if(g2)i=g1,g1=g2,g2=i,len-=i;if(g1>0&&len>0){i=len%g1||g1;intPart=intDigits.substr(0,i);for(;i<len;i+=g1)intPart+=groupSeparator+intDigits.substr(i,g1);if(g2>0)intPart+=groupSeparator+intDigits.slice(i);if(isNeg)intPart='-'+intPart;}str=fractionPart?intPart+(format.decimalSeparator||'')+((g2=+format.fractionGroupSize)?fractionPart.replace(new RegExp('\\d{'+g2+'}\\B','g'),'$&'+(format.fractionGroupSeparator||'')):fractionPart):intPart;}return(format.prefix||'')+str+(format.suffix||'');};/*
+     */P.toFormat=function(dp,rm,format){var str,x=this;if(format==null){if(dp!=null&&rm&&_typeof(rm)=='object'){format=rm;rm=null;}else if(dp&&_typeof(dp)=='object'){format=dp;dp=rm=null;}else{format=FORMAT;}}else if(_typeof(format)!='object'){throw Error(bignumberError+'Argument not an object: '+format);}str=x.toFixed(dp,rm);if(x.c){var i,arr=str.split('.'),g1=+format.groupSize,g2=+format.secondaryGroupSize,groupSeparator=format.groupSeparator||'',intPart=arr[0],fractionPart=arr[1],isNeg=x.s<0,intDigits=isNeg?intPart.slice(1):intPart,len=intDigits.length;if(g2)i=g1,g1=g2,g2=i,len-=i;if(g1>0&&len>0){i=len%g1||g1;intPart=intDigits.substr(0,i);for(;i<len;i+=g1){intPart+=groupSeparator+intDigits.substr(i,g1);}if(g2>0)intPart+=groupSeparator+intDigits.slice(i);if(isNeg)intPart='-'+intPart;}str=fractionPart?intPart+(format.decimalSeparator||'')+((g2=+format.fractionGroupSize)?fractionPart.replace(new RegExp('\\d{'+g2+'}\\B','g'),'$&'+(format.fractionGroupSeparator||'')):fractionPart):intPart;}return(format.prefix||'')+str+(format.suffix||'');};/*
      * Return an array of two BigNumbers representing the value of this BigNumber as a simple
      * fraction with an integer numerator and an integer denominator.
      * The denominator will be a positive non-zero value less than or equal to the specified
@@ -1954,23 +1954,23 @@ if(e===null){if(s){str='Infinity';if(s<0)str='-'+str;}else{str='NaN';}}else{if(b
 // These functions don't need access to variables,
 // e.g. DECIMAL_PLACES, in the scope of the `clone` function above.
 function bitFloor(n){var i=n|0;return n>0||n===i?i:i-1;}// Return a coefficient array as a string of base 10 digits.
-function coeffToString(a){var s,z,i=1,j=a.length,r=a[0]+'';for(;i<j;){s=a[i++]+'';z=LOG_BASE-s.length;for(;z--;s='0'+s);r+=s;}// Determine trailing zeros.
-for(j=r.length;r.charCodeAt(--j)===48;);return r.slice(0,j+1||1);}// Compare the value of BigNumbers x and y.
+function coeffToString(a){var s,z,i=1,j=a.length,r=a[0]+'';for(;i<j;){s=a[i++]+'';z=LOG_BASE-s.length;for(;z--;s='0'+s){;}r+=s;}// Determine trailing zeros.
+for(j=r.length;r.charCodeAt(--j)===48;){;}return r.slice(0,j+1||1);}// Compare the value of BigNumbers x and y.
 function compare(x,y){var a,b,xc=x.c,yc=y.c,i=x.s,j=y.s,k=x.e,l=y.e;// Either NaN?
 if(!i||!j)return null;a=xc&&!xc[0];b=yc&&!yc[0];// Either zero?
 if(a||b)return a?b?0:-j:i;// Signs differ?
 if(i!=j)return i;a=i<0;b=k==l;// Either Infinity?
 if(!xc||!yc)return b?0:!xc^a?1:-1;// Compare exponents.
 if(!b)return k>l^a?1:-1;j=(k=xc.length)<(l=yc.length)?k:l;// Compare digit by digit.
-for(i=0;i<j;i++)if(xc[i]!=yc[i])return xc[i]>yc[i]^a?1:-1;// Compare lengths.
+for(i=0;i<j;i++){if(xc[i]!=yc[i])return xc[i]>yc[i]^a?1:-1;}// Compare lengths.
 return k==l?0:k>l^a?1:-1;}/*
    * Check that n is a primitive number, an integer, and in range, otherwise throw.
    */function intCheck(n,min,max,name){if(n<min||n>max||n!==mathfloor(n)){throw Error(bignumberError+(name||'Argument')+(typeof n=='number'?n<min||n>max?' out of range: ':' not an integer: ':' not a primitive number: ')+String(n));}}// Assumes finite n.
 function isOdd(n){var k=n.c.length-1;return bitFloor(n.e/LOG_BASE)==k&&n.c[k]%2!=0;}function toExponential(str,e){return(str.length>1?str.charAt(0)+'.'+str.slice(1):str)+(e<0?'e':'e+')+e;}function toFixedPoint(str,e,z){var len,zs;// Negative exponent?
 if(e<0){// Prepend zeros.
-for(zs=z+'.';++e;zs+=z);str=zs+str;// Positive exponent
+for(zs=z+'.';++e;zs+=z){;}str=zs+str;// Positive exponent
 }else{len=str.length;// Append zeros.
-if(++e>len){for(zs=z,e-=len;--e;zs+=z);str+=zs;}else if(e<len){str=str.slice(0,e)+'.'+str.slice(e);}}return str;}// EXPORT
+if(++e>len){for(zs=z,e-=len;--e;zs+=z){;}str+=zs;}else if(e<len){str=str.slice(0,e)+'.'+str.slice(e);}}return str;}// EXPORT
 BigNumber=clone();BigNumber['default']=BigNumber.BigNumber=BigNumber;// AMD.
 if(typeof define=='function'&&define.amd){define(function(){return BigNumber;});// Node.js and other environments that support module.exports.
 }else if(typeof module!='undefined'&&module.exports){module.exports=BigNumber;// Browser.
@@ -1993,7 +1993,7 @@ if(typeof define=='function'&&define.amd){define(function(){return BigNumber;});
  * (See: https://bugzilla.mozilla.org/show_bug.cgi?id=695438). IE 10 lacks support
  * for __proto__ and has a buggy typed array implementation.
  */Buffer.TYPED_ARRAY_SUPPORT=typedArraySupport();if(!Buffer.TYPED_ARRAY_SUPPORT&&typeof console!=='undefined'&&typeof console.error==='function'){console.error('This browser lacks typed array (Uint8Array) support which is required by '+'`buffer` v5.x. Use `buffer` v4.x if you require old browser support.');}function typedArraySupport(){// Can typed array instances can be augmented?
-try{var arr=new Uint8Array(1);arr.__proto__={__proto__:Uint8Array.prototype,foo:function(){return 42;}};return arr.foo()===42;}catch(e){return false;}}Object.defineProperty(Buffer.prototype,'parent',{enumerable:true,get:function(){if(!Buffer.isBuffer(this))return undefined;return this.buffer;}});Object.defineProperty(Buffer.prototype,'offset',{enumerable:true,get:function(){if(!Buffer.isBuffer(this))return undefined;return this.byteOffset;}});function createBuffer(length){if(length>K_MAX_LENGTH){throw new RangeError('The value "'+length+'" is invalid for option "size"');}// Return an augmented `Uint8Array` instance
+try{var arr=new Uint8Array(1);arr.__proto__={__proto__:Uint8Array.prototype,foo:function foo(){return 42;}};return arr.foo()===42;}catch(e){return false;}}Object.defineProperty(Buffer.prototype,'parent',{enumerable:true,get:function get(){if(!Buffer.isBuffer(this))return undefined;return this.buffer;}});Object.defineProperty(Buffer.prototype,'offset',{enumerable:true,get:function get(){if(!Buffer.isBuffer(this))return undefined;return this.byteOffset;}});function createBuffer(length){if(length>K_MAX_LENGTH){throw new RangeError('The value "'+length+'" is invalid for option "size"');}// Return an augmented `Uint8Array` instance
 var buf=new Uint8Array(length);buf.__proto__=Buffer.prototype;return buf;}/**
  * The Buffer constructor returns instances of `Uint8Array` that have their
  * prototype changed to `Buffer.prototype`. Furthermore, `Buffer` is a subclass of
@@ -2005,7 +2005,7 @@ var buf=new Uint8Array(length);buf.__proto__=Buffer.prototype;return buf;}/**
  */function Buffer(arg,encodingOrOffset,length){// Common case.
 if(typeof arg==='number'){if(typeof encodingOrOffset==='string'){throw new TypeError('The "string" argument must be of type string. Received type number');}return allocUnsafe(arg);}return from(arg,encodingOrOffset,length);}// Fix subarray() in ES2016. See: https://github.com/feross/buffer/pull/97
 if(typeof Symbol!=='undefined'&&Symbol.species!=null&&Buffer[Symbol.species]===Buffer){Object.defineProperty(Buffer,Symbol.species,{value:null,configurable:true,enumerable:false,writable:false});}Buffer.poolSize=8192;// not used by this implementation
-function from(value,encodingOrOffset,length){if(typeof value==='string'){return fromString(value,encodingOrOffset);}if(ArrayBuffer.isView(value)){return fromArrayLike(value);}if(value==null){throw TypeError('The first argument must be one of type string, Buffer, ArrayBuffer, Array, '+'or Array-like Object. Received type '+typeof value);}if(isInstance(value,ArrayBuffer)||value&&isInstance(value.buffer,ArrayBuffer)){return fromArrayBuffer(value,encodingOrOffset,length);}if(typeof value==='number'){throw new TypeError('The "value" argument must not be of type number. Received type number');}var valueOf=value.valueOf&&value.valueOf();if(valueOf!=null&&valueOf!==value){return Buffer.from(valueOf,encodingOrOffset,length);}var b=fromObject(value);if(b)return b;if(typeof Symbol!=='undefined'&&Symbol.toPrimitive!=null&&typeof value[Symbol.toPrimitive]==='function'){return Buffer.from(value[Symbol.toPrimitive]('string'),encodingOrOffset,length);}throw new TypeError('The first argument must be one of type string, Buffer, ArrayBuffer, Array, '+'or Array-like Object. Received type '+typeof value);}/**
+function from(value,encodingOrOffset,length){if(typeof value==='string'){return fromString(value,encodingOrOffset);}if(ArrayBuffer.isView(value)){return fromArrayLike(value);}if(value==null){throw TypeError('The first argument must be one of type string, Buffer, ArrayBuffer, Array, '+'or Array-like Object. Received type '+_typeof(value));}if(isInstance(value,ArrayBuffer)||value&&isInstance(value.buffer,ArrayBuffer)){return fromArrayBuffer(value,encodingOrOffset,length);}if(typeof value==='number'){throw new TypeError('The "value" argument must not be of type number. Received type number');}var valueOf=value.valueOf&&value.valueOf();if(valueOf!=null&&valueOf!==value){return Buffer.from(valueOf,encodingOrOffset,length);}var b=fromObject(value);if(b)return b;if(typeof Symbol!=='undefined'&&Symbol.toPrimitive!=null&&typeof value[Symbol.toPrimitive]==='function'){return Buffer.from(value[Symbol.toPrimitive]('string'),encodingOrOffset,length);}throw new TypeError('The first argument must be one of type string, Buffer, ArrayBuffer, Array, '+'or Array-like Object. Received type '+_typeof(value));}/**
  * Functionally equivalent to Buffer(arg, encoding) but throws a TypeError
  * if value is a number.
  * Buffer.from(str[, encoding])
@@ -2032,7 +2032,7 @@ buf.__proto__=Buffer.prototype;return buf;}function fromObject(obj){if(Buffer.is
 // length is NaN (which is otherwise coerced to zero.)
 if(length>=K_MAX_LENGTH){throw new RangeError('Attempt to allocate Buffer larger than maximum '+'size: 0x'+K_MAX_LENGTH.toString(16)+' bytes');}return length|0;}function SlowBuffer(length){if(+length!=length){// eslint-disable-line eqeqeq
 length=0;}return Buffer.alloc(+length);}Buffer.isBuffer=function isBuffer(b){return b!=null&&b._isBuffer===true&&b!==Buffer.prototype;// so Buffer.isBuffer(Buffer.prototype) will be false
-};Buffer.compare=function compare(a,b){if(isInstance(a,Uint8Array))a=Buffer.from(a,a.offset,a.byteLength);if(isInstance(b,Uint8Array))b=Buffer.from(b,b.offset,b.byteLength);if(!Buffer.isBuffer(a)||!Buffer.isBuffer(b)){throw new TypeError('The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array');}if(a===b)return 0;var x=a.length;var y=b.length;for(var i=0,len=Math.min(x,y);i<len;++i){if(a[i]!==b[i]){x=a[i];y=b[i];break;}}if(x<y)return-1;if(y<x)return 1;return 0;};Buffer.isEncoding=function isEncoding(encoding){switch(String(encoding).toLowerCase()){case'hex':case'utf8':case'utf-8':case'ascii':case'latin1':case'binary':case'base64':case'ucs2':case'ucs-2':case'utf16le':case'utf-16le':return true;default:return false;}};Buffer.concat=function concat(list,length){if(!Array.isArray(list)){throw new TypeError('"list" argument must be an Array of Buffers');}if(list.length===0){return Buffer.alloc(0);}var i;if(length===undefined){length=0;for(i=0;i<list.length;++i){length+=list[i].length;}}var buffer=Buffer.allocUnsafe(length);var pos=0;for(i=0;i<list.length;++i){var buf=list[i];if(isInstance(buf,Uint8Array)){buf=Buffer.from(buf);}if(!Buffer.isBuffer(buf)){throw new TypeError('"list" argument must be an Array of Buffers');}buf.copy(buffer,pos);pos+=buf.length;}return buffer;};function byteLength(string,encoding){if(Buffer.isBuffer(string)){return string.length;}if(ArrayBuffer.isView(string)||isInstance(string,ArrayBuffer)){return string.byteLength;}if(typeof string!=='string'){throw new TypeError('The "string" argument must be one of type string, Buffer, or ArrayBuffer. '+'Received type '+typeof string);}var len=string.length;var mustMatch=arguments.length>2&&arguments[2]===true;if(!mustMatch&&len===0)return 0;// Use a for loop to avoid recursion
+};Buffer.compare=function compare(a,b){if(isInstance(a,Uint8Array))a=Buffer.from(a,a.offset,a.byteLength);if(isInstance(b,Uint8Array))b=Buffer.from(b,b.offset,b.byteLength);if(!Buffer.isBuffer(a)||!Buffer.isBuffer(b)){throw new TypeError('The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array');}if(a===b)return 0;var x=a.length;var y=b.length;for(var i=0,len=Math.min(x,y);i<len;++i){if(a[i]!==b[i]){x=a[i];y=b[i];break;}}if(x<y)return-1;if(y<x)return 1;return 0;};Buffer.isEncoding=function isEncoding(encoding){switch(String(encoding).toLowerCase()){case'hex':case'utf8':case'utf-8':case'ascii':case'latin1':case'binary':case'base64':case'ucs2':case'ucs-2':case'utf16le':case'utf-16le':return true;default:return false;}};Buffer.concat=function concat(list,length){if(!Array.isArray(list)){throw new TypeError('"list" argument must be an Array of Buffers');}if(list.length===0){return Buffer.alloc(0);}var i;if(length===undefined){length=0;for(i=0;i<list.length;++i){length+=list[i].length;}}var buffer=Buffer.allocUnsafe(length);var pos=0;for(i=0;i<list.length;++i){var buf=list[i];if(isInstance(buf,Uint8Array)){buf=Buffer.from(buf);}if(!Buffer.isBuffer(buf)){throw new TypeError('"list" argument must be an Array of Buffers');}buf.copy(buffer,pos);pos+=buf.length;}return buffer;};function byteLength(string,encoding){if(Buffer.isBuffer(string)){return string.length;}if(ArrayBuffer.isView(string)||isInstance(string,ArrayBuffer)){return string.byteLength;}if(typeof string!=='string'){throw new TypeError('The "string" argument must be one of type string, Buffer, or ArrayBuffer. '+'Received type '+_typeof(string));}var len=string.length;var mustMatch=arguments.length>2&&arguments[2]===true;if(!mustMatch&&len===0)return 0;// Use a for loop to avoid recursion
 var loweredCase=false;for(;;){switch(encoding){case'ascii':case'latin1':case'binary':return len;case'utf8':case'utf-8':return utf8ToBytes(string).length;case'ucs2':case'ucs-2':case'utf16le':case'utf-16le':return len*2;case'hex':return len>>>1;case'base64':return base64ToBytes(string).length;default:if(loweredCase){return mustMatch?-1:utf8ToBytes(string).length;// assume utf8
 }encoding=(''+encoding).toLowerCase();loweredCase=true;}}}Buffer.byteLength=byteLength;function slowToString(encoding,start,end){var loweredCase=false;// No need to verify that "this.length <= MAX_UINT32" since it's a read-only
 // property of a typed array.
@@ -2049,7 +2049,7 @@ end>>>=0;start>>>=0;if(end<=start){return'';}if(!encoding)encoding='utf8';while(
 // copies of the 'buffer' package in use. This method works even for Buffer
 // instances that were created from another copy of the `buffer` package.
 // See: https://github.com/feross/buffer/issues/154
-Buffer.prototype._isBuffer=true;function swap(b,n,m){var i=b[n];b[n]=b[m];b[m]=i;}Buffer.prototype.swap16=function swap16(){var len=this.length;if(len%2!==0){throw new RangeError('Buffer size must be a multiple of 16-bits');}for(var i=0;i<len;i+=2){swap(this,i,i+1);}return this;};Buffer.prototype.swap32=function swap32(){var len=this.length;if(len%4!==0){throw new RangeError('Buffer size must be a multiple of 32-bits');}for(var i=0;i<len;i+=4){swap(this,i,i+3);swap(this,i+1,i+2);}return this;};Buffer.prototype.swap64=function swap64(){var len=this.length;if(len%8!==0){throw new RangeError('Buffer size must be a multiple of 64-bits');}for(var i=0;i<len;i+=8){swap(this,i,i+7);swap(this,i+1,i+6);swap(this,i+2,i+5);swap(this,i+3,i+4);}return this;};Buffer.prototype.toString=function toString(){var length=this.length;if(length===0)return'';if(arguments.length===0)return utf8Slice(this,0,length);return slowToString.apply(this,arguments);};Buffer.prototype.toLocaleString=Buffer.prototype.toString;Buffer.prototype.equals=function equals(b){if(!Buffer.isBuffer(b))throw new TypeError('Argument must be a Buffer');if(this===b)return true;return Buffer.compare(this,b)===0;};Buffer.prototype.inspect=function inspect(){var str='';var max=exports.INSPECT_MAX_BYTES;str=this.toString('hex',0,max).replace(/(.{2})/g,'$1 ').trim();if(this.length>max)str+=' ... ';return'<Buffer '+str+'>';};Buffer.prototype.compare=function compare(target,start,end,thisStart,thisEnd){if(isInstance(target,Uint8Array)){target=Buffer.from(target,target.offset,target.byteLength);}if(!Buffer.isBuffer(target)){throw new TypeError('The "target" argument must be one of type Buffer or Uint8Array. '+'Received type '+typeof target);}if(start===undefined){start=0;}if(end===undefined){end=target?target.length:0;}if(thisStart===undefined){thisStart=0;}if(thisEnd===undefined){thisEnd=this.length;}if(start<0||end>target.length||thisStart<0||thisEnd>this.length){throw new RangeError('out of range index');}if(thisStart>=thisEnd&&start>=end){return 0;}if(thisStart>=thisEnd){return-1;}if(start>=end){return 1;}start>>>=0;end>>>=0;thisStart>>>=0;thisEnd>>>=0;if(this===target)return 0;var x=thisEnd-thisStart;var y=end-start;var len=Math.min(x,y);var thisCopy=this.slice(thisStart,thisEnd);var targetCopy=target.slice(start,end);for(var i=0;i<len;++i){if(thisCopy[i]!==targetCopy[i]){x=thisCopy[i];y=targetCopy[i];break;}}if(x<y)return-1;if(y<x)return 1;return 0;};// Finds either the first index of `val` in `buffer` at offset >= `byteOffset`,
+Buffer.prototype._isBuffer=true;function swap(b,n,m){var i=b[n];b[n]=b[m];b[m]=i;}Buffer.prototype.swap16=function swap16(){var len=this.length;if(len%2!==0){throw new RangeError('Buffer size must be a multiple of 16-bits');}for(var i=0;i<len;i+=2){swap(this,i,i+1);}return this;};Buffer.prototype.swap32=function swap32(){var len=this.length;if(len%4!==0){throw new RangeError('Buffer size must be a multiple of 32-bits');}for(var i=0;i<len;i+=4){swap(this,i,i+3);swap(this,i+1,i+2);}return this;};Buffer.prototype.swap64=function swap64(){var len=this.length;if(len%8!==0){throw new RangeError('Buffer size must be a multiple of 64-bits');}for(var i=0;i<len;i+=8){swap(this,i,i+7);swap(this,i+1,i+6);swap(this,i+2,i+5);swap(this,i+3,i+4);}return this;};Buffer.prototype.toString=function toString(){var length=this.length;if(length===0)return'';if(arguments.length===0)return utf8Slice(this,0,length);return slowToString.apply(this,arguments);};Buffer.prototype.toLocaleString=Buffer.prototype.toString;Buffer.prototype.equals=function equals(b){if(!Buffer.isBuffer(b))throw new TypeError('Argument must be a Buffer');if(this===b)return true;return Buffer.compare(this,b)===0;};Buffer.prototype.inspect=function inspect(){var str='';var max=exports.INSPECT_MAX_BYTES;str=this.toString('hex',0,max).replace(/(.{2})/g,'$1 ').trim();if(this.length>max)str+=' ... ';return'<Buffer '+str+'>';};Buffer.prototype.compare=function compare(target,start,end,thisStart,thisEnd){if(isInstance(target,Uint8Array)){target=Buffer.from(target,target.offset,target.byteLength);}if(!Buffer.isBuffer(target)){throw new TypeError('The "target" argument must be one of type Buffer or Uint8Array. '+'Received type '+_typeof(target));}if(start===undefined){start=0;}if(end===undefined){end=target?target.length:0;}if(thisStart===undefined){thisStart=0;}if(thisEnd===undefined){thisEnd=this.length;}if(start<0||end>target.length||thisStart<0||thisEnd>this.length){throw new RangeError('out of range index');}if(thisStart>=thisEnd&&start>=end){return 0;}if(thisStart>=thisEnd){return-1;}if(start>=end){return 1;}start>>>=0;end>>>=0;thisStart>>>=0;thisEnd>>>=0;if(this===target)return 0;var x=thisEnd-thisStart;var y=end-start;var len=Math.min(x,y);var thisCopy=this.slice(thisStart,thisEnd);var targetCopy=target.slice(start,end);for(var i=0;i<len;++i){if(thisCopy[i]!==targetCopy[i]){x=thisCopy[i];y=targetCopy[i];break;}}if(x<y)return-1;if(y<x)return 1;return 0;};// Finds either the first index of `val` in `buffer` at offset >= `byteOffset`,
 // OR the last index of `val` in `buffer` at offset <= `byteOffset`.
 //
 // Arguments:
@@ -2139,7 +2139,7 @@ return obj!==obj;// eslint-disable-line no-self-compare
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 // NOTE: These type checking functions intentionally don't use `instanceof`
 // because it is fragile and can be easily faked with `Object.create()`.
-function isArray(arg){if(Array.isArray){return Array.isArray(arg);}return objectToString(arg)==='[object Array]';}exports.isArray=isArray;function isBoolean(arg){return typeof arg==='boolean';}exports.isBoolean=isBoolean;function isNull(arg){return arg===null;}exports.isNull=isNull;function isNullOrUndefined(arg){return arg==null;}exports.isNullOrUndefined=isNullOrUndefined;function isNumber(arg){return typeof arg==='number';}exports.isNumber=isNumber;function isString(arg){return typeof arg==='string';}exports.isString=isString;function isSymbol(arg){return typeof arg==='symbol';}exports.isSymbol=isSymbol;function isUndefined(arg){return arg===void 0;}exports.isUndefined=isUndefined;function isRegExp(re){return objectToString(re)==='[object RegExp]';}exports.isRegExp=isRegExp;function isObject(arg){return typeof arg==='object'&&arg!==null;}exports.isObject=isObject;function isDate(d){return objectToString(d)==='[object Date]';}exports.isDate=isDate;function isError(e){return objectToString(e)==='[object Error]'||e instanceof Error;}exports.isError=isError;function isFunction(arg){return typeof arg==='function';}exports.isFunction=isFunction;function isPrimitive(arg){return arg===null||typeof arg==='boolean'||typeof arg==='number'||typeof arg==='string'||typeof arg==='symbol'||// ES6 symbol
+function isArray(arg){if(Array.isArray){return Array.isArray(arg);}return objectToString(arg)==='[object Array]';}exports.isArray=isArray;function isBoolean(arg){return typeof arg==='boolean';}exports.isBoolean=isBoolean;function isNull(arg){return arg===null;}exports.isNull=isNull;function isNullOrUndefined(arg){return arg==null;}exports.isNullOrUndefined=isNullOrUndefined;function isNumber(arg){return typeof arg==='number';}exports.isNumber=isNumber;function isString(arg){return typeof arg==='string';}exports.isString=isString;function isSymbol(arg){return _typeof(arg)==='symbol';}exports.isSymbol=isSymbol;function isUndefined(arg){return arg===void 0;}exports.isUndefined=isUndefined;function isRegExp(re){return objectToString(re)==='[object RegExp]';}exports.isRegExp=isRegExp;function isObject(arg){return _typeof(arg)==='object'&&arg!==null;}exports.isObject=isObject;function isDate(d){return objectToString(d)==='[object Date]';}exports.isDate=isDate;function isError(e){return objectToString(e)==='[object Error]'||e instanceof Error;}exports.isError=isError;function isFunction(arg){return typeof arg==='function';}exports.isFunction=isFunction;function isPrimitive(arg){return arg===null||typeof arg==='boolean'||typeof arg==='number'||typeof arg==='string'||_typeof(arg)==='symbol'||// ES6 symbol
 typeof arg==='undefined';}exports.isPrimitive=isPrimitive;exports.isBuffer=Buffer.isBuffer;function objectToString(o){return Object.prototype.toString.call(o);}}).call(this,{"isBuffer":require("../../is-buffer/index.js")});},{"../../is-buffer/index.js":42}],35:[function(require,module,exports){// Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2163,7 +2163,7 @@ typeof arg==='undefined';}exports.isPrimitive=isPrimitive;exports.isBuffer=Buffe
 var objectCreate=Object.create||objectCreatePolyfill;var objectKeys=Object.keys||objectKeysPolyfill;var bind=Function.prototype.bind||functionBindPolyfill;function EventEmitter(){if(!this._events||!Object.prototype.hasOwnProperty.call(this,'_events')){this._events=objectCreate(null);this._eventsCount=0;}this._maxListeners=this._maxListeners||undefined;}module.exports=EventEmitter;// Backwards-compat with node 0.10.x
 EventEmitter.EventEmitter=EventEmitter;EventEmitter.prototype._events=undefined;EventEmitter.prototype._maxListeners=undefined;// By default EventEmitters will print a warning if more than 10 listeners are
 // added to it. This is a useful default which helps finding memory leaks.
-var defaultMaxListeners=10;var hasDefineProperty;try{var o={};if(Object.defineProperty)Object.defineProperty(o,'x',{value:0});hasDefineProperty=o.x===0;}catch(err){hasDefineProperty=false;}if(hasDefineProperty){Object.defineProperty(EventEmitter,'defaultMaxListeners',{enumerable:true,get:function(){return defaultMaxListeners;},set:function(arg){// check whether the input is a positive number (whose value is zero or
+var defaultMaxListeners=10;var hasDefineProperty;try{var o={};if(Object.defineProperty)Object.defineProperty(o,'x',{value:0});hasDefineProperty=o.x===0;}catch(err){hasDefineProperty=false;}if(hasDefineProperty){Object.defineProperty(EventEmitter,'defaultMaxListeners',{enumerable:true,get:function get(){return defaultMaxListeners;},set:function set(arg){// check whether the input is a positive number (whose value is zero or
 // greater and not a NaN).
 if(typeof arg!=='number'||arg<0||arg!==arg)throw new TypeError('"defaultMaxListeners" must be a positive number');defaultMaxListeners=arg;}});}else{EventEmitter.defaultMaxListeners=defaultMaxListeners;}// Obviously not all Emitters should be limited to 10. This function allows
 // that to be increased. Set to zero for unlimited.
@@ -2172,12 +2172,12 @@ EventEmitter.prototype.setMaxListeners=function setMaxListeners(n){if(typeof n!=
 // arguments and can be deoptimized because of that. These functions always have
 // the same number of arguments and thus do not get deoptimized, so the code
 // inside them can execute faster.
-function emitNone(handler,isFn,self){if(isFn)handler.call(self);else{var len=handler.length;var listeners=arrayClone(handler,len);for(var i=0;i<len;++i)listeners[i].call(self);}}function emitOne(handler,isFn,self,arg1){if(isFn)handler.call(self,arg1);else{var len=handler.length;var listeners=arrayClone(handler,len);for(var i=0;i<len;++i)listeners[i].call(self,arg1);}}function emitTwo(handler,isFn,self,arg1,arg2){if(isFn)handler.call(self,arg1,arg2);else{var len=handler.length;var listeners=arrayClone(handler,len);for(var i=0;i<len;++i)listeners[i].call(self,arg1,arg2);}}function emitThree(handler,isFn,self,arg1,arg2,arg3){if(isFn)handler.call(self,arg1,arg2,arg3);else{var len=handler.length;var listeners=arrayClone(handler,len);for(var i=0;i<len;++i)listeners[i].call(self,arg1,arg2,arg3);}}function emitMany(handler,isFn,self,args){if(isFn)handler.apply(self,args);else{var len=handler.length;var listeners=arrayClone(handler,len);for(var i=0;i<len;++i)listeners[i].apply(self,args);}}EventEmitter.prototype.emit=function emit(type){var er,handler,len,args,i,events;var doError=type==='error';events=this._events;if(events)doError=doError&&events.error==null;else if(!doError)return false;// If there is no 'error' event listener then throw.
+function emitNone(handler,isFn,self){if(isFn)handler.call(self);else{var len=handler.length;var listeners=arrayClone(handler,len);for(var i=0;i<len;++i){listeners[i].call(self);}}}function emitOne(handler,isFn,self,arg1){if(isFn)handler.call(self,arg1);else{var len=handler.length;var listeners=arrayClone(handler,len);for(var i=0;i<len;++i){listeners[i].call(self,arg1);}}}function emitTwo(handler,isFn,self,arg1,arg2){if(isFn)handler.call(self,arg1,arg2);else{var len=handler.length;var listeners=arrayClone(handler,len);for(var i=0;i<len;++i){listeners[i].call(self,arg1,arg2);}}}function emitThree(handler,isFn,self,arg1,arg2,arg3){if(isFn)handler.call(self,arg1,arg2,arg3);else{var len=handler.length;var listeners=arrayClone(handler,len);for(var i=0;i<len;++i){listeners[i].call(self,arg1,arg2,arg3);}}}function emitMany(handler,isFn,self,args){if(isFn)handler.apply(self,args);else{var len=handler.length;var listeners=arrayClone(handler,len);for(var i=0;i<len;++i){listeners[i].apply(self,args);}}}EventEmitter.prototype.emit=function emit(type){var er,handler,len,args,i,events;var doError=type==='error';events=this._events;if(events)doError=doError&&events.error==null;else if(!doError)return false;// If there is no 'error' event listener then throw.
 if(doError){if(arguments.length>1)er=arguments[1];if(er instanceof Error){throw er;// Unhandled 'error' event
 }else{// At least give some kind of context to the user
 var err=new Error('Unhandled "error" event. ('+er+')');err.context=er;throw err;}return false;}handler=events[type];if(!handler)return false;var isFn=typeof handler==='function';len=arguments.length;switch(len){// fast cases
 case 1:emitNone(handler,isFn,this);break;case 2:emitOne(handler,isFn,this,arguments[1]);break;case 3:emitTwo(handler,isFn,this,arguments[1],arguments[2]);break;case 4:emitThree(handler,isFn,this,arguments[1],arguments[2],arguments[3]);break;// slower
-default:args=new Array(len-1);for(i=1;i<len;i++)args[i-1]=arguments[i];emitMany(handler,isFn,this,args);}return true;};function _addListener(target,type,listener,prepend){var m;var events;var existing;if(typeof listener!=='function')throw new TypeError('"listener" argument must be a function');events=target._events;if(!events){events=target._events=objectCreate(null);target._eventsCount=0;}else{// To avoid recursion in the case that type === "newListener"! Before
+default:args=new Array(len-1);for(i=1;i<len;i++){args[i-1]=arguments[i];}emitMany(handler,isFn,this,args);}return true;};function _addListener(target,type,listener,prepend){var m;var events;var existing;if(typeof listener!=='function')throw new TypeError('"listener" argument must be a function');events=target._events;if(!events){events=target._events=objectCreate(null);target._eventsCount=0;}else{// To avoid recursion in the case that type === "newListener"! Before
 // adding it to the listeners, first emit "newListener".
 if(events.newListener){target.emit('newListener',type,listener.listener?listener.listener:listener);// Re-assign `events` because a newListener handler could have caused the
 // this._events to be assigned to a new object
@@ -2185,23 +2185,23 @@ events=target._events;}existing=events[type];}if(!existing){// Optimize the case
 existing=events[type]=listener;++target._eventsCount;}else{if(typeof existing==='function'){// Adding the second element, need to change to array.
 existing=events[type]=prepend?[listener,existing]:[existing,listener];}else{// If we've already got an array, just append.
 if(prepend){existing.unshift(listener);}else{existing.push(listener);}}// Check for listener leak
-if(!existing.warned){m=$getMaxListeners(target);if(m&&m>0&&existing.length>m){existing.warned=true;var w=new Error('Possible EventEmitter memory leak detected. '+existing.length+' "'+String(type)+'" listeners '+'added. Use emitter.setMaxListeners() to '+'increase limit.');w.name='MaxListenersExceededWarning';w.emitter=target;w.type=type;w.count=existing.length;if(typeof console==='object'&&console.warn){console.warn('%s: %s',w.name,w.message);}}}}return target;}EventEmitter.prototype.addListener=function addListener(type,listener){return _addListener(this,type,listener,false);};EventEmitter.prototype.on=EventEmitter.prototype.addListener;EventEmitter.prototype.prependListener=function prependListener(type,listener){return _addListener(this,type,listener,true);};function onceWrapper(){if(!this.fired){this.target.removeListener(this.type,this.wrapFn);this.fired=true;switch(arguments.length){case 0:return this.listener.call(this.target);case 1:return this.listener.call(this.target,arguments[0]);case 2:return this.listener.call(this.target,arguments[0],arguments[1]);case 3:return this.listener.call(this.target,arguments[0],arguments[1],arguments[2]);default:var args=new Array(arguments.length);for(var i=0;i<args.length;++i)args[i]=arguments[i];this.listener.apply(this.target,args);}}}function _onceWrap(target,type,listener){var state={fired:false,wrapFn:undefined,target:target,type:type,listener:listener};var wrapped=bind.call(onceWrapper,state);wrapped.listener=listener;state.wrapFn=wrapped;return wrapped;}EventEmitter.prototype.once=function once(type,listener){if(typeof listener!=='function')throw new TypeError('"listener" argument must be a function');this.on(type,_onceWrap(this,type,listener));return this;};EventEmitter.prototype.prependOnceListener=function prependOnceListener(type,listener){if(typeof listener!=='function')throw new TypeError('"listener" argument must be a function');this.prependListener(type,_onceWrap(this,type,listener));return this;};// Emits a 'removeListener' event if and only if the listener was removed.
+if(!existing.warned){m=$getMaxListeners(target);if(m&&m>0&&existing.length>m){existing.warned=true;var w=new Error('Possible EventEmitter memory leak detected. '+existing.length+' "'+String(type)+'" listeners '+'added. Use emitter.setMaxListeners() to '+'increase limit.');w.name='MaxListenersExceededWarning';w.emitter=target;w.type=type;w.count=existing.length;if((typeof console==="undefined"?"undefined":_typeof(console))==='object'&&console.warn){console.warn('%s: %s',w.name,w.message);}}}}return target;}EventEmitter.prototype.addListener=function addListener(type,listener){return _addListener(this,type,listener,false);};EventEmitter.prototype.on=EventEmitter.prototype.addListener;EventEmitter.prototype.prependListener=function prependListener(type,listener){return _addListener(this,type,listener,true);};function onceWrapper(){if(!this.fired){this.target.removeListener(this.type,this.wrapFn);this.fired=true;switch(arguments.length){case 0:return this.listener.call(this.target);case 1:return this.listener.call(this.target,arguments[0]);case 2:return this.listener.call(this.target,arguments[0],arguments[1]);case 3:return this.listener.call(this.target,arguments[0],arguments[1],arguments[2]);default:var args=new Array(arguments.length);for(var i=0;i<args.length;++i){args[i]=arguments[i];}this.listener.apply(this.target,args);}}}function _onceWrap(target,type,listener){var state={fired:false,wrapFn:undefined,target:target,type:type,listener:listener};var wrapped=bind.call(onceWrapper,state);wrapped.listener=listener;state.wrapFn=wrapped;return wrapped;}EventEmitter.prototype.once=function once(type,listener){if(typeof listener!=='function')throw new TypeError('"listener" argument must be a function');this.on(type,_onceWrap(this,type,listener));return this;};EventEmitter.prototype.prependOnceListener=function prependOnceListener(type,listener){if(typeof listener!=='function')throw new TypeError('"listener" argument must be a function');this.prependListener(type,_onceWrap(this,type,listener));return this;};// Emits a 'removeListener' event if and only if the listener was removed.
 EventEmitter.prototype.removeListener=function removeListener(type,listener){var list,events,position,i,originalListener;if(typeof listener!=='function')throw new TypeError('"listener" argument must be a function');events=this._events;if(!events)return this;list=events[type];if(!list)return this;if(list===listener||list.listener===listener){if(--this._eventsCount===0)this._events=objectCreate(null);else{delete events[type];if(events.removeListener)this.emit('removeListener',type,list.listener||listener);}}else if(typeof list!=='function'){position=-1;for(i=list.length-1;i>=0;i--){if(list[i]===listener||list[i].listener===listener){originalListener=list[i].listener;position=i;break;}}if(position<0)return this;if(position===0)list.shift();else spliceOne(list,position);if(list.length===1)events[type]=list[0];if(events.removeListener)this.emit('removeListener',type,originalListener||listener);}return this;};EventEmitter.prototype.removeAllListeners=function removeAllListeners(type){var listeners,events,i;events=this._events;if(!events)return this;// not listening for removeListener, no need to emit
 if(!events.removeListener){if(arguments.length===0){this._events=objectCreate(null);this._eventsCount=0;}else if(events[type]){if(--this._eventsCount===0)this._events=objectCreate(null);else delete events[type];}return this;}// emit removeListener for all listeners on all events
 if(arguments.length===0){var keys=objectKeys(events);var key;for(i=0;i<keys.length;++i){key=keys[i];if(key==='removeListener')continue;this.removeAllListeners(key);}this.removeAllListeners('removeListener');this._events=objectCreate(null);this._eventsCount=0;return this;}listeners=events[type];if(typeof listeners==='function'){this.removeListener(type,listeners);}else if(listeners){// LIFO order
 for(i=listeners.length-1;i>=0;i--){this.removeListener(type,listeners[i]);}}return this;};function _listeners(target,type,unwrap){var events=target._events;if(!events)return[];var evlistener=events[type];if(!evlistener)return[];if(typeof evlistener==='function')return unwrap?[evlistener.listener||evlistener]:[evlistener];return unwrap?unwrapListeners(evlistener):arrayClone(evlistener,evlistener.length);}EventEmitter.prototype.listeners=function listeners(type){return _listeners(this,type,true);};EventEmitter.prototype.rawListeners=function rawListeners(type){return _listeners(this,type,false);};EventEmitter.listenerCount=function(emitter,type){if(typeof emitter.listenerCount==='function'){return emitter.listenerCount(type);}else{return listenerCount.call(emitter,type);}};EventEmitter.prototype.listenerCount=listenerCount;function listenerCount(type){var events=this._events;if(events){var evlistener=events[type];if(typeof evlistener==='function'){return 1;}else if(evlistener){return evlistener.length;}}return 0;}EventEmitter.prototype.eventNames=function eventNames(){return this._eventsCount>0?Reflect.ownKeys(this._events):[];};// About 1.5x faster than the two-arg version of Array#splice().
-function spliceOne(list,index){for(var i=index,k=i+1,n=list.length;k<n;i+=1,k+=1)list[i]=list[k];list.pop();}function arrayClone(arr,n){var copy=new Array(n);for(var i=0;i<n;++i)copy[i]=arr[i];return copy;}function unwrapListeners(arr){var ret=new Array(arr.length);for(var i=0;i<ret.length;++i){ret[i]=arr[i].listener||arr[i];}return ret;}function objectCreatePolyfill(proto){var F=function(){};F.prototype=proto;return new F();}function objectKeysPolyfill(obj){var keys=[];for(var k in obj)if(Object.prototype.hasOwnProperty.call(obj,k)){keys.push(k);}return k;}function functionBindPolyfill(context){var fn=this;return function(){return fn.apply(context,arguments);};}},{}],36:[function(require,module,exports){'use strict';module.exports=clone;function clone(obj){if(obj===null||typeof obj!=='object')return obj;if(obj instanceof Object)var copy={__proto__:obj.__proto__};else var copy=Object.create(null);Object.getOwnPropertyNames(obj).forEach(function(key){Object.defineProperty(copy,key,Object.getOwnPropertyDescriptor(obj,key));});return copy;}},{}],37:[function(require,module,exports){(function(process,global){var fs=require('fs');var polyfills=require('./polyfills.js');var legacy=require('./legacy-streams.js');var clone=require('./clone.js');var util=require('util');/* istanbul ignore next - node 0.x polyfill */var gracefulQueue;var previousSymbol;/* istanbul ignore else - node 0.x polyfill */if(typeof Symbol==='function'&&typeof Symbol.for==='function'){gracefulQueue=Symbol.for('graceful-fs.queue');// This is used in testing by future versions
-previousSymbol=Symbol.for('graceful-fs.previous');}else{gracefulQueue='___graceful-fs.queue';previousSymbol='___graceful-fs.previous';}function noop(){}var debug=noop;if(util.debuglog)debug=util.debuglog('gfs4');else if(/\bgfs4\b/i.test(process.env.NODE_DEBUG||''))debug=function(){var m=util.format.apply(util,arguments);m='GFS4: '+m.split(/\n/).join('\nGFS4: ');console.error(m);};// Once time initialization
+function spliceOne(list,index){for(var i=index,k=i+1,n=list.length;k<n;i+=1,k+=1){list[i]=list[k];}list.pop();}function arrayClone(arr,n){var copy=new Array(n);for(var i=0;i<n;++i){copy[i]=arr[i];}return copy;}function unwrapListeners(arr){var ret=new Array(arr.length);for(var i=0;i<ret.length;++i){ret[i]=arr[i].listener||arr[i];}return ret;}function objectCreatePolyfill(proto){var F=function F(){};F.prototype=proto;return new F();}function objectKeysPolyfill(obj){var keys=[];for(var k in obj){if(Object.prototype.hasOwnProperty.call(obj,k)){keys.push(k);}}return k;}function functionBindPolyfill(context){var fn=this;return function(){return fn.apply(context,arguments);};}},{}],36:[function(require,module,exports){'use strict';module.exports=clone;function clone(obj){if(obj===null||_typeof(obj)!=='object')return obj;if(obj instanceof Object)var copy={__proto__:obj.__proto__};else var copy=Object.create(null);Object.getOwnPropertyNames(obj).forEach(function(key){Object.defineProperty(copy,key,Object.getOwnPropertyDescriptor(obj,key));});return copy;}},{}],37:[function(require,module,exports){(function(process,global){var fs=require('fs');var polyfills=require('./polyfills.js');var legacy=require('./legacy-streams.js');var clone=require('./clone.js');var util=require('util');/* istanbul ignore next - node 0.x polyfill */var gracefulQueue;var previousSymbol;/* istanbul ignore else - node 0.x polyfill */if(typeof Symbol==='function'&&typeof Symbol["for"]==='function'){gracefulQueue=Symbol["for"]('graceful-fs.queue');// This is used in testing by future versions
+previousSymbol=Symbol["for"]('graceful-fs.previous');}else{gracefulQueue='___graceful-fs.queue';previousSymbol='___graceful-fs.previous';}function noop(){}var debug=noop;if(util.debuglog)debug=util.debuglog('gfs4');else if(/\bgfs4\b/i.test(process.env.NODE_DEBUG||''))debug=function debug(){var m=util.format.apply(util,arguments);m='GFS4: '+m.split(/\n/).join('\nGFS4: ');console.error(m);};// Once time initialization
 if(!global[gracefulQueue]){// This queue can be shared by multiple loaded instances
-var queue=[];Object.defineProperty(global,gracefulQueue,{get:function(){return queue;}});// Patch fs.close/closeSync to shared queue version, because we need
+var queue=[];Object.defineProperty(global,gracefulQueue,{get:function get(){return queue;}});// Patch fs.close/closeSync to shared queue version, because we need
 // to retry() whenever a close happens *anywhere* in the program.
 // This is essential when multiple graceful-fs instances are
 // in play at the same time.
 fs.close=function(fs$close){function close(fd,cb){return fs$close.call(fs,fd,function(err){// This function uses the graceful-fs shared queue
 if(!err){retry();}if(typeof cb==='function')cb.apply(this,arguments);});}Object.defineProperty(close,previousSymbol,{value:fs$close});return close;}(fs.close);fs.closeSync=function(fs$closeSync){function closeSync(fd){// This function uses the graceful-fs shared queue
 fs$closeSync.apply(fs,arguments);retry();}Object.defineProperty(closeSync,previousSymbol,{value:fs$closeSync});return closeSync;}(fs.closeSync);if(/\bgfs4\b/i.test(process.env.NODE_DEBUG||'')){process.on('exit',function(){debug(global[gracefulQueue]);require('assert').equal(global[gracefulQueue].length,0);});}}module.exports=patch(clone(fs));if(process.env.TEST_GRACEFUL_FS_GLOBAL_PATCH&&!fs.__patched){module.exports=patch(fs);fs.__patched=true;}function patch(fs){// Everything that references the open() function needs to be in here
-polyfills(fs);fs.gracefulify=patch;fs.createReadStream=createReadStream;fs.createWriteStream=createWriteStream;var fs$readFile=fs.readFile;fs.readFile=readFile;function readFile(path,options,cb){if(typeof options==='function')cb=options,options=null;return go$readFile(path,options,cb);function go$readFile(path,options,cb){return fs$readFile(path,options,function(err){if(err&&(err.code==='EMFILE'||err.code==='ENFILE'))enqueue([go$readFile,[path,options,cb]]);else{if(typeof cb==='function')cb.apply(this,arguments);retry();}});}}var fs$writeFile=fs.writeFile;fs.writeFile=writeFile;function writeFile(path,data,options,cb){if(typeof options==='function')cb=options,options=null;return go$writeFile(path,data,options,cb);function go$writeFile(path,data,options,cb){return fs$writeFile(path,data,options,function(err){if(err&&(err.code==='EMFILE'||err.code==='ENFILE'))enqueue([go$writeFile,[path,data,options,cb]]);else{if(typeof cb==='function')cb.apply(this,arguments);retry();}});}}var fs$appendFile=fs.appendFile;if(fs$appendFile)fs.appendFile=appendFile;function appendFile(path,data,options,cb){if(typeof options==='function')cb=options,options=null;return go$appendFile(path,data,options,cb);function go$appendFile(path,data,options,cb){return fs$appendFile(path,data,options,function(err){if(err&&(err.code==='EMFILE'||err.code==='ENFILE'))enqueue([go$appendFile,[path,data,options,cb]]);else{if(typeof cb==='function')cb.apply(this,arguments);retry();}});}}var fs$readdir=fs.readdir;fs.readdir=readdir;function readdir(path,options,cb){var args=[path];if(typeof options!=='function'){args.push(options);}else{cb=options;}args.push(go$readdir$cb);return go$readdir(args);function go$readdir$cb(err,files){if(files&&files.sort)files.sort();if(err&&(err.code==='EMFILE'||err.code==='ENFILE'))enqueue([go$readdir,[args]]);else{if(typeof cb==='function')cb.apply(this,arguments);retry();}}}function go$readdir(args){return fs$readdir.apply(fs,args);}if(process.version.substr(0,4)==='v0.8'){var legStreams=legacy(fs);ReadStream=legStreams.ReadStream;WriteStream=legStreams.WriteStream;}var fs$ReadStream=fs.ReadStream;if(fs$ReadStream){ReadStream.prototype=Object.create(fs$ReadStream.prototype);ReadStream.prototype.open=ReadStream$open;}var fs$WriteStream=fs.WriteStream;if(fs$WriteStream){WriteStream.prototype=Object.create(fs$WriteStream.prototype);WriteStream.prototype.open=WriteStream$open;}Object.defineProperty(fs,'ReadStream',{get:function(){return ReadStream;},set:function(val){ReadStream=val;},enumerable:true,configurable:true});Object.defineProperty(fs,'WriteStream',{get:function(){return WriteStream;},set:function(val){WriteStream=val;},enumerable:true,configurable:true});// legacy names
-var FileReadStream=ReadStream;Object.defineProperty(fs,'FileReadStream',{get:function(){return FileReadStream;},set:function(val){FileReadStream=val;},enumerable:true,configurable:true});var FileWriteStream=WriteStream;Object.defineProperty(fs,'FileWriteStream',{get:function(){return FileWriteStream;},set:function(val){FileWriteStream=val;},enumerable:true,configurable:true});function ReadStream(path,options){if(this instanceof ReadStream)return fs$ReadStream.apply(this,arguments),this;else return ReadStream.apply(Object.create(ReadStream.prototype),arguments);}function ReadStream$open(){var that=this;open(that.path,that.flags,that.mode,function(err,fd){if(err){if(that.autoClose)that.destroy();that.emit('error',err);}else{that.fd=fd;that.emit('open',fd);that.read();}});}function WriteStream(path,options){if(this instanceof WriteStream)return fs$WriteStream.apply(this,arguments),this;else return WriteStream.apply(Object.create(WriteStream.prototype),arguments);}function WriteStream$open(){var that=this;open(that.path,that.flags,that.mode,function(err,fd){if(err){that.destroy();that.emit('error',err);}else{that.fd=fd;that.emit('open',fd);}});}function createReadStream(path,options){return new fs.ReadStream(path,options);}function createWriteStream(path,options){return new fs.WriteStream(path,options);}var fs$open=fs.open;fs.open=open;function open(path,flags,mode,cb){if(typeof mode==='function')cb=mode,mode=null;return go$open(path,flags,mode,cb);function go$open(path,flags,mode,cb){return fs$open(path,flags,mode,function(err,fd){if(err&&(err.code==='EMFILE'||err.code==='ENFILE'))enqueue([go$open,[path,flags,mode,cb]]);else{if(typeof cb==='function')cb.apply(this,arguments);retry();}});}}return fs;}function enqueue(elem){debug('ENQUEUE',elem[0].name,elem[1]);global[gracefulQueue].push(elem);}function retry(){var elem=global[gracefulQueue].shift();if(elem){debug('RETRY',elem[0].name,elem[1]);elem[0].apply(null,elem[1]);}}}).call(this,require('_process'),typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});},{"./clone.js":36,"./legacy-streams.js":38,"./polyfills.js":39,"_process":47,"assert":24,"fs":31,"util":77}],38:[function(require,module,exports){(function(process){var Stream=require('stream').Stream;module.exports=legacy;function legacy(fs){return{ReadStream:ReadStream,WriteStream:WriteStream};function ReadStream(path,options){if(!(this instanceof ReadStream))return new ReadStream(path,options);Stream.call(this);var self=this;this.path=path;this.fd=null;this.readable=true;this.paused=false;this.flags='r';this.mode=438;/*=0666*/this.bufferSize=64*1024;options=options||{};// Mixin options into this
+polyfills(fs);fs.gracefulify=patch;fs.createReadStream=createReadStream;fs.createWriteStream=createWriteStream;var fs$readFile=fs.readFile;fs.readFile=readFile;function readFile(path,options,cb){if(typeof options==='function')cb=options,options=null;return go$readFile(path,options,cb);function go$readFile(path,options,cb){return fs$readFile(path,options,function(err){if(err&&(err.code==='EMFILE'||err.code==='ENFILE'))enqueue([go$readFile,[path,options,cb]]);else{if(typeof cb==='function')cb.apply(this,arguments);retry();}});}}var fs$writeFile=fs.writeFile;fs.writeFile=writeFile;function writeFile(path,data,options,cb){if(typeof options==='function')cb=options,options=null;return go$writeFile(path,data,options,cb);function go$writeFile(path,data,options,cb){return fs$writeFile(path,data,options,function(err){if(err&&(err.code==='EMFILE'||err.code==='ENFILE'))enqueue([go$writeFile,[path,data,options,cb]]);else{if(typeof cb==='function')cb.apply(this,arguments);retry();}});}}var fs$appendFile=fs.appendFile;if(fs$appendFile)fs.appendFile=appendFile;function appendFile(path,data,options,cb){if(typeof options==='function')cb=options,options=null;return go$appendFile(path,data,options,cb);function go$appendFile(path,data,options,cb){return fs$appendFile(path,data,options,function(err){if(err&&(err.code==='EMFILE'||err.code==='ENFILE'))enqueue([go$appendFile,[path,data,options,cb]]);else{if(typeof cb==='function')cb.apply(this,arguments);retry();}});}}var fs$readdir=fs.readdir;fs.readdir=readdir;function readdir(path,options,cb){var args=[path];if(typeof options!=='function'){args.push(options);}else{cb=options;}args.push(go$readdir$cb);return go$readdir(args);function go$readdir$cb(err,files){if(files&&files.sort)files.sort();if(err&&(err.code==='EMFILE'||err.code==='ENFILE'))enqueue([go$readdir,[args]]);else{if(typeof cb==='function')cb.apply(this,arguments);retry();}}}function go$readdir(args){return fs$readdir.apply(fs,args);}if(process.version.substr(0,4)==='v0.8'){var legStreams=legacy(fs);ReadStream=legStreams.ReadStream;WriteStream=legStreams.WriteStream;}var fs$ReadStream=fs.ReadStream;if(fs$ReadStream){ReadStream.prototype=Object.create(fs$ReadStream.prototype);ReadStream.prototype.open=ReadStream$open;}var fs$WriteStream=fs.WriteStream;if(fs$WriteStream){WriteStream.prototype=Object.create(fs$WriteStream.prototype);WriteStream.prototype.open=WriteStream$open;}Object.defineProperty(fs,'ReadStream',{get:function get(){return ReadStream;},set:function set(val){ReadStream=val;},enumerable:true,configurable:true});Object.defineProperty(fs,'WriteStream',{get:function get(){return WriteStream;},set:function set(val){WriteStream=val;},enumerable:true,configurable:true});// legacy names
+var FileReadStream=ReadStream;Object.defineProperty(fs,'FileReadStream',{get:function get(){return FileReadStream;},set:function set(val){FileReadStream=val;},enumerable:true,configurable:true});var FileWriteStream=WriteStream;Object.defineProperty(fs,'FileWriteStream',{get:function get(){return FileWriteStream;},set:function set(val){FileWriteStream=val;},enumerable:true,configurable:true});function ReadStream(path,options){if(this instanceof ReadStream)return fs$ReadStream.apply(this,arguments),this;else return ReadStream.apply(Object.create(ReadStream.prototype),arguments);}function ReadStream$open(){var that=this;open(that.path,that.flags,that.mode,function(err,fd){if(err){if(that.autoClose)that.destroy();that.emit('error',err);}else{that.fd=fd;that.emit('open',fd);that.read();}});}function WriteStream(path,options){if(this instanceof WriteStream)return fs$WriteStream.apply(this,arguments),this;else return WriteStream.apply(Object.create(WriteStream.prototype),arguments);}function WriteStream$open(){var that=this;open(that.path,that.flags,that.mode,function(err,fd){if(err){that.destroy();that.emit('error',err);}else{that.fd=fd;that.emit('open',fd);}});}function createReadStream(path,options){return new fs.ReadStream(path,options);}function createWriteStream(path,options){return new fs.WriteStream(path,options);}var fs$open=fs.open;fs.open=open;function open(path,flags,mode,cb){if(typeof mode==='function')cb=mode,mode=null;return go$open(path,flags,mode,cb);function go$open(path,flags,mode,cb){return fs$open(path,flags,mode,function(err,fd){if(err&&(err.code==='EMFILE'||err.code==='ENFILE'))enqueue([go$open,[path,flags,mode,cb]]);else{if(typeof cb==='function')cb.apply(this,arguments);retry();}});}}return fs;}function enqueue(elem){debug('ENQUEUE',elem[0].name,elem[1]);global[gracefulQueue].push(elem);}function retry(){var elem=global[gracefulQueue].shift();if(elem){debug('RETRY',elem[0].name,elem[1]);elem[0].apply(null,elem[1]);}}}).call(this,require('_process'),typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});},{"./clone.js":36,"./legacy-streams.js":38,"./polyfills.js":39,"_process":47,"assert":24,"fs":31,"util":77}],38:[function(require,module,exports){(function(process){var Stream=require('stream').Stream;module.exports=legacy;function legacy(fs){return{ReadStream:ReadStream,WriteStream:WriteStream};function ReadStream(path,options){if(!(this instanceof ReadStream))return new ReadStream(path,options);Stream.call(this);var self=this;this.path=path;this.fd=null;this.readable=true;this.paused=false;this.flags='r';this.mode=438;/*=0666*/this.bufferSize=64*1024;options=options||{};// Mixin options into this
 var keys=Object.keys(options);for(var index=0,length=keys.length;index<length;index++){var key=keys[index];this[key]=options[key];}if(this.encoding)this.setEncoding(this.encoding);if(this.start!==undefined){if('number'!==typeof this.start){throw TypeError('start must be a Number');}if(this.end===undefined){this.end=Infinity;}else if('number'!==typeof this.end){throw TypeError('end must be a Number');}if(this.start>this.end){throw new Error('start must be <= end');}this.pos=this.start;}if(this.fd!==null){process.nextTick(function(){self._read();});return;}fs.open(this.path,this.flags,this.mode,function(err,fd){if(err){self.emit('error',err);self.readable=false;return;}self.fd=fd;self.emit('open',fd);self._read();});}function WriteStream(path,options){if(!(this instanceof WriteStream))return new WriteStream(path,options);Stream.call(this);this.path=path;this.fd=null;this.writable=true;this.flags='w';this.encoding='binary';this.mode=438;/*=0666*/this.bytesWritten=0;options=options||{};// Mixin options into this
 var keys=Object.keys(options);for(var index=0,length=keys.length;index<length;index++){var key=keys[index];this[key]=options[key];}if(this.start!==undefined){if('number'!==typeof this.start){throw TypeError('start must be a Number');}if(this.start<0){throw new Error('start must be >= zero');}this.pos=this.start;}this.busy=false;this._queue=[];if(this.fd===null){this._open=fs.open;this._queue.push([this._open,this.path,this.flags,this.mode,undefined]);this.flush();}}}}).call(this,require('_process'));},{"_process":47,"stream":71}],39:[function(require,module,exports){(function(process){var constants=require('constants');var origCwd=process.cwd;var cwd=null;var platform=process.env.GRACEFUL_FS_PLATFORM||process.platform;process.cwd=function(){if(!cwd)cwd=origCwd.call(process);return cwd;};try{process.cwd();}catch(er){}var chdir=process.chdir;process.chdir=function(d){cwd=null;chdir.call(process,d);};module.exports=patch;function patch(fs){// (re-)implement some things that are known busted or missing.
 // lchmod, broken prior to 0.6.2
@@ -2221,7 +2221,7 @@ if(!fs.lchmod){fs.lchmod=function(path,mode,cb){if(cb)process.nextTick(cb);};fs.
 // CPU to a busy looping process, which can cause the program causing the lock
 // contention to be starved of CPU by node, so the contention doesn't resolve.
 if(platform==="win32"){fs.rename=function(fs$rename){return function(from,to,cb){var start=Date.now();var backoff=0;fs$rename(from,to,function CB(er){if(er&&(er.code==="EACCES"||er.code==="EPERM")&&Date.now()-start<60000){setTimeout(function(){fs.stat(to,function(stater,st){if(stater&&stater.code==="ENOENT")fs$rename(from,to,CB);else cb(er);});},backoff);if(backoff<100)backoff+=10;return;}if(cb)cb(er);});};}(fs.rename);}// if read() returns EAGAIN, then just try it again.
-fs.read=function(fs$read){function read(fd,buffer,offset,length,position,callback_){var callback;if(callback_&&typeof callback_==='function'){var eagCounter=0;callback=function(er,_,__){if(er&&er.code==='EAGAIN'&&eagCounter<10){eagCounter++;return fs$read.call(fs,fd,buffer,offset,length,position,callback);}callback_.apply(this,arguments);};}return fs$read.call(fs,fd,buffer,offset,length,position,callback);}// This ensures `util.promisify` works as it does for native `fs.read`.
+fs.read=function(fs$read){function read(fd,buffer,offset,length,position,callback_){var _callback;if(callback_&&typeof callback_==='function'){var eagCounter=0;_callback=function callback(er,_,__){if(er&&er.code==='EAGAIN'&&eagCounter<10){eagCounter++;return fs$read.call(fs,fd,buffer,offset,length,position,_callback);}callback_.apply(this,arguments);};}return fs$read.call(fs,fd,buffer,offset,length,position,_callback);}// This ensures `util.promisify` works as it does for native `fs.read`.
 read.__proto__=fs$read;return read;}(fs.read);fs.readSync=function(fs$readSync){return function(fd,buffer,offset,length,position){var eagCounter=0;while(true){try{return fs$readSync.call(fs,fd,buffer,offset,length,position);}catch(er){if(er.code==='EAGAIN'&&eagCounter<10){eagCounter++;continue;}throw er;}}};}(fs.readSync);function patchLchmod(fs){fs.lchmod=function(path,mode,callback){fs.open(path,constants.O_WRONLY|constants.O_SYMLINK,mode,function(err,fd){if(err){if(callback)callback(err);return;}// prefer to return the chmod error, if one occurs,
 // but still try to close, and report closing errors if they occur.
 fs.fchmod(fd,mode,function(err){fs.close(fd,function(err2){if(callback)callback(err||err2);});});});};fs.lchmodSync=function(path,mode){var fd=fs.openSync(path,constants.O_WRONLY|constants.O_SYMLINK,mode);// prefer to return the chmod error, if one occurs,
@@ -2244,7 +2244,7 @@ return function(target,options){var stats=options?orig.call(fs,target,options):o
 // encountered, then it's strict.
 function chownErOk(er){if(!er)return true;if(er.code==="ENOSYS")return true;var nonroot=!process.getuid||process.getuid()!==0;if(nonroot){if(er.code==="EINVAL"||er.code==="EPERM")return true;}return false;}}}).call(this,require('_process'));},{"_process":47,"constants":33}],40:[function(require,module,exports){exports.read=function(buffer,offset,isLE,mLen,nBytes){var e,m;var eLen=nBytes*8-mLen-1;var eMax=(1<<eLen)-1;var eBias=eMax>>1;var nBits=-7;var i=isLE?nBytes-1:0;var d=isLE?-1:1;var s=buffer[offset+i];i+=d;e=s&(1<<-nBits)-1;s>>=-nBits;nBits+=eLen;for(;nBits>0;e=e*256+buffer[offset+i],i+=d,nBits-=8){}m=e&(1<<-nBits)-1;e>>=-nBits;nBits+=mLen;for(;nBits>0;m=m*256+buffer[offset+i],i+=d,nBits-=8){}if(e===0){e=1-eBias;}else if(e===eMax){return m?NaN:(s?-1:1)*Infinity;}else{m=m+Math.pow(2,mLen);e=e-eBias;}return(s?-1:1)*m*Math.pow(2,e-mLen);};exports.write=function(buffer,value,offset,isLE,mLen,nBytes){var e,m,c;var eLen=nBytes*8-mLen-1;var eMax=(1<<eLen)-1;var eBias=eMax>>1;var rt=mLen===23?Math.pow(2,-24)-Math.pow(2,-77):0;var i=isLE?0:nBytes-1;var d=isLE?1:-1;var s=value<0||value===0&&1/value<0?1:0;value=Math.abs(value);if(isNaN(value)||value===Infinity){m=isNaN(value)?1:0;e=eMax;}else{e=Math.floor(Math.log(value)/Math.LN2);if(value*(c=Math.pow(2,-e))<1){e--;c*=2;}if(e+eBias>=1){value+=rt/c;}else{value+=rt*Math.pow(2,1-eBias);}if(value*c>=2){e++;c/=2;}if(e+eBias>=eMax){m=0;e=eMax;}else if(e+eBias>=1){m=(value*c-1)*Math.pow(2,mLen);e=e+eBias;}else{m=value*Math.pow(2,eBias-1)*Math.pow(2,mLen);e=0;}}for(;mLen>=8;buffer[offset+i]=m&0xff,i+=d,m/=256,mLen-=8){}e=e<<mLen|m;eLen+=mLen;for(;eLen>0;buffer[offset+i]=e&0xff,i+=d,e/=256,eLen-=8){}buffer[offset+i-d]|=s*128;};},{}],41:[function(require,module,exports){if(typeof Object.create==='function'){// implementation from standard node.js 'util' module
 module.exports=function inherits(ctor,superCtor){if(superCtor){ctor.super_=superCtor;ctor.prototype=Object.create(superCtor.prototype,{constructor:{value:ctor,enumerable:false,writable:true,configurable:true}});}};}else{// old school shim for old browsers
-module.exports=function inherits(ctor,superCtor){if(superCtor){ctor.super_=superCtor;var TempCtor=function(){};TempCtor.prototype=superCtor.prototype;ctor.prototype=new TempCtor();ctor.prototype.constructor=ctor;}};}},{}],42:[function(require,module,exports){/*!
+module.exports=function inherits(ctor,superCtor){if(superCtor){ctor.super_=superCtor;var TempCtor=function TempCtor(){};TempCtor.prototype=superCtor.prototype;ctor.prototype=new TempCtor();ctor.prototype.constructor=ctor;}};}},{}],42:[function(require,module,exports){/*!
  * Determine if an object is a Buffer
  *
  * @author   Feross Aboukhadijeh <https://feross.org>
@@ -2252,9 +2252,9 @@ module.exports=function inherits(ctor,superCtor){if(superCtor){ctor.super_=super
  */ // The _isBuffer check is for Safari 5-7 support, because it's missing
 // Object.prototype.constructor. Remove this eventually
 module.exports=function(obj){return obj!=null&&(isBuffer(obj)||isSlowBuffer(obj)||!!obj._isBuffer);};function isBuffer(obj){return!!obj.constructor&&typeof obj.constructor.isBuffer==='function'&&obj.constructor.isBuffer(obj);}// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer(obj){return typeof obj.readFloatLE==='function'&&typeof obj.slice==='function'&&isBuffer(obj.slice(0,0));}},{}],43:[function(require,module,exports){var toString={}.toString;module.exports=Array.isArray||function(arr){return toString.call(arr)=='[object Array]';};},{}],44:[function(require,module,exports){(function(Buffer){let _fs;try{_fs=require('graceful-fs');}catch(_){_fs=require('fs');}const universalify=require('universalify');function readFileWithCallback(file,options,callback){if(callback==null){callback=options;options={};}if(typeof options==='string'){options={encoding:options};}options=options||{};const fs=options.fs||_fs;let shouldThrow=true;if('throws'in options){shouldThrow=options.throws;}fs.readFile(file,options,(err,data)=>{if(err)return callback(err);data=stripBom(data);let obj;try{obj=JSON.parse(data,options?options.reviver:null);}catch(err2){if(shouldThrow){err2.message=`${file}: ${err2.message}`;return callback(err2);}else{return callback(null,null);}}callback(null,obj);});}const readFile=universalify.fromCallback(readFileWithCallback);function readFileSync(file,options){options=options||{};if(typeof options==='string'){options={encoding:options};}const fs=options.fs||_fs;let shouldThrow=true;if('throws'in options){shouldThrow=options.throws;}try{let content=fs.readFileSync(file,options);content=stripBom(content);return JSON.parse(content,options.reviver);}catch(err){if(shouldThrow){err.message=`${file}: ${err.message}`;throw err;}else{return null;}}}function stringify(obj,options){let spaces;let EOL='\n';if(typeof options==='object'&&options!==null){if(options.spaces){spaces=options.spaces;}if(options.EOL){EOL=options.EOL;}}const str=JSON.stringify(obj,options?options.replacer:null,spaces);return str.replace(/\n/g,EOL)+EOL;}function writeFileWithCallback(file,obj,options,callback){if(callback==null){callback=options;options={};}options=options||{};const fs=options.fs||_fs;let str='';try{str=stringify(obj,options);}catch(err){return callback(err,null);}fs.writeFile(file,str,options,callback);}const writeFile=universalify.fromCallback(writeFileWithCallback);function writeFileSync(file,obj,options){options=options||{};const fs=options.fs||_fs;const str=stringify(obj,options);// not sure if fs.writeFileSync returns anything, but just in case
+function isSlowBuffer(obj){return typeof obj.readFloatLE==='function'&&typeof obj.slice==='function'&&isBuffer(obj.slice(0,0));}},{}],43:[function(require,module,exports){var toString={}.toString;module.exports=Array.isArray||function(arr){return toString.call(arr)=='[object Array]';};},{}],44:[function(require,module,exports){(function(Buffer){var _fs;try{_fs=require('graceful-fs');}catch(_){_fs=require('fs');}var universalify=require('universalify');function readFileWithCallback(file,options,callback){if(callback==null){callback=options;options={};}if(typeof options==='string'){options={encoding:options};}options=options||{};var fs=options.fs||_fs;var shouldThrow=true;if('throws'in options){shouldThrow=options["throws"];}fs.readFile(file,options,function(err,data){if(err)return callback(err);data=stripBom(data);var obj;try{obj=JSON.parse(data,options?options.reviver:null);}catch(err2){if(shouldThrow){err2.message="".concat(file,": ").concat(err2.message);return callback(err2);}else{return callback(null,null);}}callback(null,obj);});}var readFile=universalify.fromCallback(readFileWithCallback);function readFileSync(file,options){options=options||{};if(typeof options==='string'){options={encoding:options};}var fs=options.fs||_fs;var shouldThrow=true;if('throws'in options){shouldThrow=options["throws"];}try{var content=fs.readFileSync(file,options);content=stripBom(content);return JSON.parse(content,options.reviver);}catch(err){if(shouldThrow){err.message="".concat(file,": ").concat(err.message);throw err;}else{return null;}}}function stringify(obj,options){var spaces;var EOL='\n';if(_typeof(options)==='object'&&options!==null){if(options.spaces){spaces=options.spaces;}if(options.EOL){EOL=options.EOL;}}var str=JSON.stringify(obj,options?options.replacer:null,spaces);return str.replace(/\n/g,EOL)+EOL;}function writeFileWithCallback(file,obj,options,callback){if(callback==null){callback=options;options={};}options=options||{};var fs=options.fs||_fs;var str='';try{str=stringify(obj,options);}catch(err){return callback(err,null);}fs.writeFile(file,str,options,callback);}var writeFile=universalify.fromCallback(writeFileWithCallback);function writeFileSync(file,obj,options){options=options||{};var fs=options.fs||_fs;var str=stringify(obj,options);// not sure if fs.writeFileSync returns anything, but just in case
 return fs.writeFileSync(file,str,options);}function stripBom(content){// we do this because JSON.parse would convert it to a utf8 string if encoding wasn't specified
-if(Buffer.isBuffer(content))content=content.toString('utf8');content=content.replace(/^\uFEFF/,'');return content;}const jsonfile={readFile,readFileSync,writeFile,writeFileSync};module.exports=jsonfile;}).call(this,{"isBuffer":require("../is-buffer/index.js")});},{"../is-buffer/index.js":42,"fs":31,"graceful-fs":37,"universalify":73}],45:[function(require,module,exports){/*
+if(Buffer.isBuffer(content))content=content.toString('utf8');content=content.replace(/^\uFEFF/,'');return content;}var jsonfile={readFile:readFile,readFileSync:readFileSync,writeFile:writeFile,writeFileSync:writeFileSync};module.exports=jsonfile;}).call(this,{"isBuffer":require("../is-buffer/index.js")});},{"../is-buffer/index.js":42,"fs":31,"graceful-fs":37,"universalify":73}],45:[function(require,module,exports){/*
 object-assign
 (c) Sindre Sorhus
 @license MIT
@@ -2310,12 +2310,12 @@ process.versions={};function noop(){}process.on=noop;process.addListener=noop;pr
 var keys=objectKeys(Writable.prototype);for(var v=0;v<keys.length;v++){var method=keys[v];if(!Duplex.prototype[method])Duplex.prototype[method]=Writable.prototype[method];}}function Duplex(options){if(!(this instanceof Duplex))return new Duplex(options);Readable.call(this,options);Writable.call(this,options);if(options&&options.readable===false)this.readable=false;if(options&&options.writable===false)this.writable=false;this.allowHalfOpen=true;if(options&&options.allowHalfOpen===false)this.allowHalfOpen=false;this.once('end',onend);}Object.defineProperty(Duplex.prototype,'writableHighWaterMark',{// making it explicit this property is not enumerable
 // because otherwise some prototype manipulation in
 // userland will fail
-enumerable:false,get:function(){return this._writableState.highWaterMark;}});// the no-half-open enforcer
+enumerable:false,get:function get(){return this._writableState.highWaterMark;}});// the no-half-open enforcer
 function onend(){// if we allow half-open state, or if the writable side ended,
 // then we're ok.
 if(this.allowHalfOpen||this._writableState.ended)return;// no more data can be written.
 // But allow more writes to happen in this tick.
-pna.nextTick(onEndNT,this);}function onEndNT(self){self.end();}Object.defineProperty(Duplex.prototype,'destroyed',{get:function(){if(this._readableState===undefined||this._writableState===undefined){return false;}return this._readableState.destroyed&&this._writableState.destroyed;},set:function(value){// we ignore the value if the stream
+pna.nextTick(onEndNT,this);}function onEndNT(self){self.end();}Object.defineProperty(Duplex.prototype,'destroyed',{get:function get(){if(this._readableState===undefined||this._writableState===undefined){return false;}return this._readableState.destroyed&&this._writableState.destroyed;},set:function set(value){// we ignore the value if the stream
 // has not been initialized yet
 if(this._readableState===undefined||this._writableState===undefined){return;}// backward compatibility, the user is explicitly
 // managing destroyed
@@ -2362,7 +2362,7 @@ this._readableState.destroyed=value;this._writableState.destroyed=value;}});Dupl
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
-'use strict';/*<replacement>*/var pna=require('process-nextick-args');/*</replacement>*/module.exports=Readable;/*<replacement>*/var isArray=require('isarray');/*</replacement>*/ /*<replacement>*/var Duplex;/*</replacement>*/Readable.ReadableState=ReadableState;/*<replacement>*/var EE=require('events').EventEmitter;var EElistenerCount=function(emitter,type){return emitter.listeners(type).length;};/*</replacement>*/ /*<replacement>*/var Stream=require('./internal/streams/stream');/*</replacement>*/ /*<replacement>*/var Buffer=require('safe-buffer').Buffer;var OurUint8Array=global.Uint8Array||function(){};function _uint8ArrayToBuffer(chunk){return Buffer.from(chunk);}function _isUint8Array(obj){return Buffer.isBuffer(obj)||obj instanceof OurUint8Array;}/*</replacement>*/ /*<replacement>*/var util=Object.create(require('core-util-is'));util.inherits=require('inherits');/*</replacement>*/ /*<replacement>*/var debugUtil=require('util');var debug=void 0;if(debugUtil&&debugUtil.debuglog){debug=debugUtil.debuglog('stream');}else{debug=function(){};}/*</replacement>*/var BufferList=require('./internal/streams/BufferList');var destroyImpl=require('./internal/streams/destroy');var StringDecoder;util.inherits(Readable,Stream);var kProxyEvents=['error','close','destroy','pause','resume'];function prependListener(emitter,event,fn){// Sadly this is not cacheable as some libraries bundle their own
+'use strict';/*<replacement>*/var pna=require('process-nextick-args');/*</replacement>*/module.exports=Readable;/*<replacement>*/var isArray=require('isarray');/*</replacement>*/ /*<replacement>*/var Duplex;/*</replacement>*/Readable.ReadableState=ReadableState;/*<replacement>*/var EE=require('events').EventEmitter;var EElistenerCount=function EElistenerCount(emitter,type){return emitter.listeners(type).length;};/*</replacement>*/ /*<replacement>*/var Stream=require('./internal/streams/stream');/*</replacement>*/ /*<replacement>*/var Buffer=require('safe-buffer').Buffer;var OurUint8Array=global.Uint8Array||function(){};function _uint8ArrayToBuffer(chunk){return Buffer.from(chunk);}function _isUint8Array(obj){return Buffer.isBuffer(obj)||obj instanceof OurUint8Array;}/*</replacement>*/ /*<replacement>*/var util=Object.create(require('core-util-is'));util.inherits=require('inherits');/*</replacement>*/ /*<replacement>*/var debugUtil=require('util');var debug=void 0;if(debugUtil&&debugUtil.debuglog){debug=debugUtil.debuglog('stream');}else{debug=function debug(){};}/*</replacement>*/var BufferList=require('./internal/streams/BufferList');var destroyImpl=require('./internal/streams/destroy');var StringDecoder;util.inherits(Readable,Stream);var kProxyEvents=['error','close','destroy','pause','resume'];function prependListener(emitter,event,fn){// Sadly this is not cacheable as some libraries bundle their own
 // event emitter implementation with them.
 if(typeof emitter.prependListener==='function')return emitter.prependListener(event,fn);// This is a hack to make sure that our error handler is attached before any
 // userland ones.  NEVER DO THIS. This is here only because this code needs
@@ -2394,7 +2394,7 @@ this.destroyed=false;// Crypto is kind of old and crusty.  Historically, its def
 this.defaultEncoding=options.defaultEncoding||'utf8';// the number of writers that are awaiting a drain event in .pipe()s
 this.awaitDrain=0;// if true, a maybeReadMore has been scheduled
 this.readingMore=false;this.decoder=null;this.encoding=null;if(options.encoding){if(!StringDecoder)StringDecoder=require('string_decoder/').StringDecoder;this.decoder=new StringDecoder(options.encoding);this.encoding=options.encoding;}}function Readable(options){Duplex=Duplex||require('./_stream_duplex');if(!(this instanceof Readable))return new Readable(options);this._readableState=new ReadableState(options,this);// legacy
-this.readable=true;if(options){if(typeof options.read==='function')this._read=options.read;if(typeof options.destroy==='function')this._destroy=options.destroy;}Stream.call(this);}Object.defineProperty(Readable.prototype,'destroyed',{get:function(){if(this._readableState===undefined){return false;}return this._readableState.destroyed;},set:function(value){// we ignore the value if the stream
+this.readable=true;if(options){if(typeof options.read==='function')this._read=options.read;if(typeof options.destroy==='function')this._destroy=options.destroy;}Stream.call(this);}Object.defineProperty(Readable.prototype,'destroyed',{get:function get(){if(this._readableState===undefined){return false;}return this._readableState.destroyed;},set:function set(value){// we ignore the value if the stream
 // has not been initialized yet
 if(!this._readableState){return;}// backward compatibility, the user is explicitly
 // managing destroyed
@@ -2520,7 +2520,7 @@ for(var n=0;n<kProxyEvents.length;n++){stream.on(kProxyEvents[n],this.emit.bind(
 this._read=function(n){debug('wrapped _read',n);if(paused){paused=false;stream.resume();}};return this;};Object.defineProperty(Readable.prototype,'readableHighWaterMark',{// making it explicit this property is not enumerable
 // because otherwise some prototype manipulation in
 // userland will fail
-enumerable:false,get:function(){return this._readableState.highWaterMark;}});// exposed for testing purposes only.
+enumerable:false,get:function get(){return this._readableState.highWaterMark;}});// exposed for testing purposes only.
 Readable._fromList=fromList;// Pluck off n bytes from an array of buffers.
 // Length is the combined lengths of all the buffers in the list.
 // This function is designed to be inlinable, so please take care when making
@@ -2702,14 +2702,14 @@ this.bufferedRequestCount=0;// allocate the first CorkedRequest, there is always
 // one allocated and free to use, and we maintain at most two
 this.corkedRequestsFree=new CorkedRequest(this);}WritableState.prototype.getBuffer=function getBuffer(){var current=this.bufferedRequest;var out=[];while(current){out.push(current);current=current.next;}return out;};(function(){try{Object.defineProperty(WritableState.prototype,'buffer',{get:internalUtil.deprecate(function(){return this.getBuffer();},'_writableState.buffer is deprecated. Use _writableState.getBuffer '+'instead.','DEP0003')});}catch(_){}})();// Test _writableState for inheritance to account for Duplex streams,
 // whose prototype chain only points to Readable.
-var realHasInstance;if(typeof Symbol==='function'&&Symbol.hasInstance&&typeof Function.prototype[Symbol.hasInstance]==='function'){realHasInstance=Function.prototype[Symbol.hasInstance];Object.defineProperty(Writable,Symbol.hasInstance,{value:function(object){if(realHasInstance.call(this,object))return true;if(this!==Writable)return false;return object&&object._writableState instanceof WritableState;}});}else{realHasInstance=function(object){return object instanceof this;};}function Writable(options){Duplex=Duplex||require('./_stream_duplex');// Writable ctor is applied to Duplexes, too.
+var realHasInstance;if(typeof Symbol==='function'&&Symbol.hasInstance&&typeof Function.prototype[Symbol.hasInstance]==='function'){realHasInstance=Function.prototype[Symbol.hasInstance];Object.defineProperty(Writable,Symbol.hasInstance,{value:function value(object){if(realHasInstance.call(this,object))return true;if(this!==Writable)return false;return object&&object._writableState instanceof WritableState;}});}else{realHasInstance=function realHasInstance(object){return object instanceof this;};}function Writable(options){Duplex=Duplex||require('./_stream_duplex');// Writable ctor is applied to Duplexes, too.
 // `realHasInstance` is necessary because using plain `instanceof`
 // would return false, as no `_writableState` property is attached.
 // Trying to use the custom `instanceof` for Writable here will also break the
 // Node.js LazyTransform implementation, which has a non-trivial getter for
 // `_writableState` that would lead to infinite recursion.
 if(!realHasInstance.call(Writable,this)&&!(this instanceof Duplex)){return new Writable(options);}this._writableState=new WritableState(options,this);// legacy.
-this.writable=true;if(options){if(typeof options.write==='function')this._write=options.write;if(typeof options.writev==='function')this._writev=options.writev;if(typeof options.destroy==='function')this._destroy=options.destroy;if(typeof options.final==='function')this._final=options.final;}Stream.call(this);}// Otherwise people can pipe Writable streams, which is just wrong.
+this.writable=true;if(options){if(typeof options.write==='function')this._write=options.write;if(typeof options.writev==='function')this._writev=options.writev;if(typeof options.destroy==='function')this._destroy=options.destroy;if(typeof options["final"]==='function')this._final=options["final"];}Stream.call(this);}// Otherwise people can pipe Writable streams, which is just wrong.
 Writable.prototype.pipe=function(){this.emit('error',new Error('Cannot pipe, not readable'));};function writeAfterEnd(stream,cb){var er=new Error('write after end');// TODO: defer error events consistently everywhere, not just the cb
 stream.emit('error',er);pna.nextTick(cb,er);}// Checks that a user-supplied chunk is valid, especially for the particular
 // mode the stream is in. Currently this means that `null` is never accepted
@@ -2718,7 +2718,7 @@ function validChunk(stream,state,chunk,cb){var valid=true;var er=false;if(chunk=
 if(typeof encoding==='string')encoding=encoding.toLowerCase();if(!(['hex','utf8','utf-8','ascii','binary','base64','ucs2','ucs-2','utf16le','utf-16le','raw'].indexOf((encoding+'').toLowerCase())>-1))throw new TypeError('Unknown encoding: '+encoding);this._writableState.defaultEncoding=encoding;return this;};function decodeChunk(state,chunk,encoding){if(!state.objectMode&&state.decodeStrings!==false&&typeof chunk==='string'){chunk=Buffer.from(chunk,encoding);}return chunk;}Object.defineProperty(Writable.prototype,'writableHighWaterMark',{// making it explicit this property is not enumerable
 // because otherwise some prototype manipulation in
 // userland will fail
-enumerable:false,get:function(){return this._writableState.highWaterMark;}});// if we're already writing something, then just put this
+enumerable:false,get:function get(){return this._writableState.highWaterMark;}});// if we're already writing something, then just put this
 // in the queue, and wait our turn.  Otherwise, call _write
 // If we return false, then we need a drain event, so set that flag.
 function writeOrBuffer(stream,state,isBuf,chunk,encoding,cb){if(!isBuf){var newChunk=decodeChunk(state,chunk,encoding);if(chunk!==newChunk){isBuf=true;encoding='buffer';chunk=newChunk;}}var len=state.objectMode?1:chunk.length;state.length+=len;var ret=state.length<state.highWaterMark;// we must ensure that previous needDrain will not be reset to false.
@@ -2745,7 +2745,7 @@ while(entry){var chunk=entry.chunk;var encoding=entry.encoding;var cb=entry.call
 // being processed, so move the buffer counter past them.
 if(state.writing){break;}}if(entry===null)state.lastBufferedRequest=null;}state.bufferedRequest=entry;state.bufferProcessing=false;}Writable.prototype._write=function(chunk,encoding,cb){cb(new Error('_write() is not implemented'));};Writable.prototype._writev=null;Writable.prototype.end=function(chunk,encoding,cb){var state=this._writableState;if(typeof chunk==='function'){cb=chunk;chunk=null;encoding=null;}else if(typeof encoding==='function'){cb=encoding;encoding=null;}if(chunk!==null&&chunk!==undefined)this.write(chunk,encoding);// .end() fully uncorks
 if(state.corked){state.corked=1;this.uncork();}// ignore unnecessary end() calls.
-if(!state.ending&&!state.finished)endWritable(this,state,cb);};function needFinish(state){return state.ending&&state.length===0&&state.bufferedRequest===null&&!state.finished&&!state.writing;}function callFinal(stream,state){stream._final(function(err){state.pendingcb--;if(err){stream.emit('error',err);}state.prefinished=true;stream.emit('prefinish');finishMaybe(stream,state);});}function prefinish(stream,state){if(!state.prefinished&&!state.finalCalled){if(typeof stream._final==='function'){state.pendingcb++;state.finalCalled=true;pna.nextTick(callFinal,stream,state);}else{state.prefinished=true;stream.emit('prefinish');}}}function finishMaybe(stream,state){var need=needFinish(state);if(need){prefinish(stream,state);if(state.pendingcb===0){state.finished=true;stream.emit('finish');}}return need;}function endWritable(stream,state,cb){state.ending=true;finishMaybe(stream,state);if(cb){if(state.finished)pna.nextTick(cb);else stream.once('finish',cb);}state.ended=true;stream.writable=false;}function onCorkedFinish(corkReq,state,err){var entry=corkReq.entry;corkReq.entry=null;while(entry){var cb=entry.callback;state.pendingcb--;cb(err);entry=entry.next;}if(state.corkedRequestsFree){state.corkedRequestsFree.next=corkReq;}else{state.corkedRequestsFree=corkReq;}}Object.defineProperty(Writable.prototype,'destroyed',{get:function(){if(this._writableState===undefined){return false;}return this._writableState.destroyed;},set:function(value){// we ignore the value if the stream
+if(!state.ending&&!state.finished)endWritable(this,state,cb);};function needFinish(state){return state.ending&&state.length===0&&state.bufferedRequest===null&&!state.finished&&!state.writing;}function callFinal(stream,state){stream._final(function(err){state.pendingcb--;if(err){stream.emit('error',err);}state.prefinished=true;stream.emit('prefinish');finishMaybe(stream,state);});}function prefinish(stream,state){if(!state.prefinished&&!state.finalCalled){if(typeof stream._final==='function'){state.pendingcb++;state.finalCalled=true;pna.nextTick(callFinal,stream,state);}else{state.prefinished=true;stream.emit('prefinish');}}}function finishMaybe(stream,state){var need=needFinish(state);if(need){prefinish(stream,state);if(state.pendingcb===0){state.finished=true;stream.emit('finish');}}return need;}function endWritable(stream,state,cb){state.ending=true;finishMaybe(stream,state);if(cb){if(state.finished)pna.nextTick(cb);else stream.once('finish',cb);}state.ended=true;stream.writable=false;}function onCorkedFinish(corkReq,state,err){var entry=corkReq.entry;corkReq.entry=null;while(entry){var cb=entry.callback;state.pendingcb--;cb(err);entry=entry.next;}if(state.corkedRequestsFree){state.corkedRequestsFree.next=corkReq;}else{state.corkedRequestsFree=corkReq;}}Object.defineProperty(Writable.prototype,'destroyed',{get:function get(){if(this._writableState===undefined){return false;}return this._writableState.destroyed;},set:function set(value){// we ignore the value if the stream
 // has not been initialized yet
 if(!this._writableState){return;}// backward compatibility, the user is explicitly
 // managing destroyed
@@ -2786,7 +2786,7 @@ exports.StringDecoder=StringDecoder;function StringDecoder(encoding){this.encodi
 StringDecoder.prototype.text=utf8Text;// Attempts to complete a partial non-UTF-8 character using bytes from a Buffer
 StringDecoder.prototype.fillLast=function(buf){if(this.lastNeed<=buf.length){buf.copy(this.lastChar,this.lastTotal-this.lastNeed,0,this.lastNeed);return this.lastChar.toString(this.encoding,0,this.lastTotal);}buf.copy(this.lastChar,this.lastTotal-this.lastNeed,0,buf.length);this.lastNeed-=buf.length;};// Checks the type of a UTF-8 byte, whether it's ASCII, a leading byte, or a
 // continuation byte. If an invalid byte is detected, -2 is returned.
-function utf8CheckByte(byte){if(byte<=0x7F)return 0;else if(byte>>5===0x06)return 2;else if(byte>>4===0x0E)return 3;else if(byte>>3===0x1E)return 4;return byte>>6===0x02?-1:-2;}// Checks at most 3 bytes at the end of a Buffer in order to detect an
+function utf8CheckByte(_byte){if(_byte<=0x7F)return 0;else if(_byte>>5===0x06)return 2;else if(_byte>>4===0x0E)return 3;else if(_byte>>3===0x1E)return 4;return _byte>>6===0x02?-1:-2;}// Checks at most 3 bytes at the end of a Buffer in order to detect an
 // incomplete multi-byte UTF-8 character. The total number of bytes (2, 3, or 4)
 // needed to complete the UTF-8 character (if applicable) are returned.
 function utf8CheckIncomplete(self,buf,i){var j=buf.length-1;if(j<i)return 0;var nb=utf8CheckByte(buf[j]);if(nb>=0){if(nb>0)self.lastNeed=nb-1;return nb;}if(--j<i||nb===-2)return 0;nb=utf8CheckByte(buf[j]);if(nb>=0){if(nb>0)self.lastNeed=nb-2;return nb;}if(--j<i||nb===-2)return 0;nb=utf8CheckByte(buf[j]);if(nb>=0){if(nb>0){if(nb===2)nb=0;else self.lastNeed=nb-3;}return nb;}return 0;}// Validates as many continuation bytes for a multi-byte UTF-8 character as
@@ -2797,13 +2797,13 @@ function utf8CheckIncomplete(self,buf,i){var j=buf.length-1;if(j<i)return 0;var 
 // where all of the continuation bytes for a character exist in the same buffer.
 // It is also done this way as a slight performance increase instead of using a
 // loop.
-function utf8CheckExtraBytes(self,buf,p){if((buf[0]&0xC0)!==0x80){self.lastNeed=0;return'\ufffd';}if(self.lastNeed>1&&buf.length>1){if((buf[1]&0xC0)!==0x80){self.lastNeed=1;return'\ufffd';}if(self.lastNeed>2&&buf.length>2){if((buf[2]&0xC0)!==0x80){self.lastNeed=2;return'\ufffd';}}}}// Attempts to complete a multi-byte UTF-8 character using bytes from a Buffer.
+function utf8CheckExtraBytes(self,buf,p){if((buf[0]&0xC0)!==0x80){self.lastNeed=0;return"\uFFFD";}if(self.lastNeed>1&&buf.length>1){if((buf[1]&0xC0)!==0x80){self.lastNeed=1;return"\uFFFD";}if(self.lastNeed>2&&buf.length>2){if((buf[2]&0xC0)!==0x80){self.lastNeed=2;return"\uFFFD";}}}}// Attempts to complete a multi-byte UTF-8 character using bytes from a Buffer.
 function utf8FillLast(buf){var p=this.lastTotal-this.lastNeed;var r=utf8CheckExtraBytes(this,buf,p);if(r!==undefined)return r;if(this.lastNeed<=buf.length){buf.copy(this.lastChar,p,0,this.lastNeed);return this.lastChar.toString(this.encoding,0,this.lastTotal);}buf.copy(this.lastChar,p,0,buf.length);this.lastNeed-=buf.length;}// Returns all complete UTF-8 characters in a Buffer. If the Buffer ended on a
 // partial character, the character's bytes are buffered until the required
 // number of bytes are available.
 function utf8Text(buf,i){var total=utf8CheckIncomplete(this,buf,i);if(!this.lastNeed)return buf.toString('utf8',i);this.lastTotal=total;var end=buf.length-(total-this.lastNeed);buf.copy(this.lastChar,0,end);return buf.toString('utf8',i,end);}// For UTF-8, a replacement character is added when ending on a partial
 // character.
-function utf8End(buf){var r=buf&&buf.length?this.write(buf):'';if(this.lastNeed)return r+'\ufffd';return r;}// UTF-16LE typically needs two bytes per character, but even if we have an even
+function utf8End(buf){var r=buf&&buf.length?this.write(buf):'';if(this.lastNeed)return r+"\uFFFD";return r;}// UTF-16LE typically needs two bytes per character, but even if we have an even
 // number of bytes available, we need to check if we end on a leading/high
 // surrogate. In that case, we need to wait for the next two bytes in order to
 // decode the last character properly.
@@ -2872,10 +2872,10 @@ var sr=require('./seedrandom');sr.alea=alea;sr.xor128=xor128;sr.xorwow=xorwow;sr
 // THE SOFTWARE.
 (function(global,module,define){function Alea(seed){var me=this,mash=Mash();me.next=function(){var t=2091639*me.s0+me.c*2.3283064365386963e-10;// 2^-32
 me.s0=me.s1;me.s1=me.s2;return me.s2=t-(me.c=t|0);};// Apply the seeding algorithm from Baagoe.
-me.c=1;me.s0=mash(' ');me.s1=mash(' ');me.s2=mash(' ');me.s0-=mash(seed);if(me.s0<0){me.s0+=1;}me.s1-=mash(seed);if(me.s1<0){me.s1+=1;}me.s2-=mash(seed);if(me.s2<0){me.s2+=1;}mash=null;}function copy(f,t){t.c=f.c;t.s0=f.s0;t.s1=f.s1;t.s2=f.s2;return t;}function impl(seed,opts){var xg=new Alea(seed),state=opts&&opts.state,prng=xg.next;prng.int32=function(){return xg.next()*0x100000000|0;};prng.double=function(){return prng()+(prng()*0x200000|0)*1.1102230246251565e-16;// 2^-53
-};prng.quick=prng;if(state){if(typeof state=='object')copy(state,xg);prng.state=function(){return copy(xg,{});};}return prng;}function Mash(){var n=0xefc8249d;var mash=function(data){data=String(data);for(var i=0;i<data.length;i++){n+=data.charCodeAt(i);var h=0.02519603282416938*n;n=h>>>0;h-=n;h*=n;n=h>>>0;h-=n;n+=h*0x100000000;// 2^32
+me.c=1;me.s0=mash(' ');me.s1=mash(' ');me.s2=mash(' ');me.s0-=mash(seed);if(me.s0<0){me.s0+=1;}me.s1-=mash(seed);if(me.s1<0){me.s1+=1;}me.s2-=mash(seed);if(me.s2<0){me.s2+=1;}mash=null;}function copy(f,t){t.c=f.c;t.s0=f.s0;t.s1=f.s1;t.s2=f.s2;return t;}function impl(seed,opts){var xg=new Alea(seed),state=opts&&opts.state,prng=xg.next;prng.int32=function(){return xg.next()*0x100000000|0;};prng["double"]=function(){return prng()+(prng()*0x200000|0)*1.1102230246251565e-16;// 2^-53
+};prng.quick=prng;if(state){if(_typeof(state)=='object')copy(state,xg);prng.state=function(){return copy(xg,{});};}return prng;}function Mash(){var n=0xefc8249d;var mash=function mash(data){data=String(data);for(var i=0;i<data.length;i++){n+=data.charCodeAt(i);var h=0.02519603282416938*n;n=h>>>0;h-=n;h*=n;n=h>>>0;h-=n;n+=h*0x100000000;// 2^32
 }return(n>>>0)*2.3283064365386963e-10;// 2^-32
-};return mash;}if(module&&module.exports){module.exports=impl;}else if(define&&define.amd){define(function(){return impl;});}else{this.alea=impl;}})(this,typeof module=='object'&&module,// present in node.js
+};return mash;}if(module&&module.exports){module.exports=impl;}else if(define&&define.amd){define(function(){return impl;});}else{this.alea=impl;}})(this,_typeof(module)=='object'&&module,// present in node.js
 typeof define=='function'&&define// present with an AMD loader
 );},{}],65:[function(require,module,exports){// A Javascript implementaion of the "Tyche-i" prng algorithm by
 // Samuel Neves and Filipe Araujo.
@@ -2898,7 +2898,7 @@ me.next=function(){var b=me.b,c=me.c,d=me.d,a=me.a;b=b<<25^b>>>7^c;c=c-d|0;d=d<<
   */me.a=0;me.b=0;me.c=2654435769|0;me.d=1367130551;if(seed===Math.floor(seed)){// Integer seed.
 me.a=seed/0x100000000|0;me.b=seed|0;}else{// String seed.
 strseed+=seed;}// Mix in string seed, then discard an initial batch of 64 values.
-for(var k=0;k<strseed.length+20;k++){me.b^=strseed.charCodeAt(k)|0;me.next();}}function copy(f,t){t.a=f.a;t.b=f.b;t.c=f.c;t.d=f.d;return t;};function impl(seed,opts){var xg=new XorGen(seed),state=opts&&opts.state,prng=function(){return(xg.next()>>>0)/0x100000000;};prng.double=function(){do{var top=xg.next()>>>11,bot=(xg.next()>>>0)/0x100000000,result=(top+bot)/(1<<21);}while(result===0);return result;};prng.int32=xg.next;prng.quick=prng;if(state){if(typeof state=='object')copy(state,xg);prng.state=function(){return copy(xg,{});};}return prng;}if(module&&module.exports){module.exports=impl;}else if(define&&define.amd){define(function(){return impl;});}else{this.tychei=impl;}})(this,typeof module=='object'&&module,// present in node.js
+for(var k=0;k<strseed.length+20;k++){me.b^=strseed.charCodeAt(k)|0;me.next();}}function copy(f,t){t.a=f.a;t.b=f.b;t.c=f.c;t.d=f.d;return t;};function impl(seed,opts){var xg=new XorGen(seed),state=opts&&opts.state,prng=function prng(){return(xg.next()>>>0)/0x100000000;};prng["double"]=function(){do{var top=xg.next()>>>11,bot=(xg.next()>>>0)/0x100000000,result=(top+bot)/(1<<21);}while(result===0);return result;};prng.int32=xg.next;prng.quick=prng;if(state){if(_typeof(state)=='object')copy(state,xg);prng.state=function(){return copy(xg,{});};}return prng;}if(module&&module.exports){module.exports=impl;}else if(define&&define.amd){define(function(){return impl;});}else{this.tychei=impl;}})(this,_typeof(module)=='object'&&module,// present in node.js
 typeof define=='function'&&define// present with an AMD loader
 );},{}],66:[function(require,module,exports){// A Javascript implementaion of the "xor128" prng algorithm by
 // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
@@ -2906,7 +2906,7 @@ typeof define=='function'&&define// present with an AMD loader
 me.next=function(){var t=me.x^me.x<<11;me.x=me.y;me.y=me.z;me.z=me.w;return me.w^=me.w>>>19^t^t>>>8;};if(seed===(seed|0)){// Integer seed.
 me.x=seed;}else{// String seed.
 strseed+=seed;}// Mix in string seed, then discard an initial batch of 64 values.
-for(var k=0;k<strseed.length+64;k++){me.x^=strseed.charCodeAt(k)|0;me.next();}}function copy(f,t){t.x=f.x;t.y=f.y;t.z=f.z;t.w=f.w;return t;}function impl(seed,opts){var xg=new XorGen(seed),state=opts&&opts.state,prng=function(){return(xg.next()>>>0)/0x100000000;};prng.double=function(){do{var top=xg.next()>>>11,bot=(xg.next()>>>0)/0x100000000,result=(top+bot)/(1<<21);}while(result===0);return result;};prng.int32=xg.next;prng.quick=prng;if(state){if(typeof state=='object')copy(state,xg);prng.state=function(){return copy(xg,{});};}return prng;}if(module&&module.exports){module.exports=impl;}else if(define&&define.amd){define(function(){return impl;});}else{this.xor128=impl;}})(this,typeof module=='object'&&module,// present in node.js
+for(var k=0;k<strseed.length+64;k++){me.x^=strseed.charCodeAt(k)|0;me.next();}}function copy(f,t){t.x=f.x;t.y=f.y;t.z=f.z;t.w=f.w;return t;}function impl(seed,opts){var xg=new XorGen(seed),state=opts&&opts.state,prng=function prng(){return(xg.next()>>>0)/0x100000000;};prng["double"]=function(){do{var top=xg.next()>>>11,bot=(xg.next()>>>0)/0x100000000,result=(top+bot)/(1<<21);}while(result===0);return result;};prng.int32=xg.next;prng.quick=prng;if(state){if(_typeof(state)=='object')copy(state,xg);prng.state=function(){return copy(xg,{});};}return prng;}if(module&&module.exports){module.exports=impl;}else if(define&&define.amd){define(function(){return impl;});}else{this.xor128=impl;}})(this,_typeof(module)=='object'&&module,// present in node.js
 typeof define=='function'&&define// present with an AMD loader
 );},{}],67:[function(require,module,exports){// A Javascript implementaion of Richard Brent's Xorgens xor4096 algorithm.
 //
@@ -2950,8 +2950,8 @@ if(i>=128){X[(seed&&seed.length||0)&127]=-1;}// Run the generator 512 times to f
 // Factoring this as a function slows the main generator, so it is just
 // unrolled here.  The weyl generator is not advanced while warming up.
 i=127;for(j=4*128;j>0;--j){v=X[i+34&127];t=X[i=i+1&127];v^=v<<13;t^=t<<17;v^=v>>>15;t^=t>>>12;X[i]=v^t;}// Storing state as object members is faster than using closure variables.
-me.w=w;me.X=X;me.i=i;}init(me,seed);}function copy(f,t){t.i=f.i;t.w=f.w;t.X=f.X.slice();return t;};function impl(seed,opts){if(seed==null)seed=+new Date();var xg=new XorGen(seed),state=opts&&opts.state,prng=function(){return(xg.next()>>>0)/0x100000000;};prng.double=function(){do{var top=xg.next()>>>11,bot=(xg.next()>>>0)/0x100000000,result=(top+bot)/(1<<21);}while(result===0);return result;};prng.int32=xg.next;prng.quick=prng;if(state){if(state.X)copy(state,xg);prng.state=function(){return copy(xg,{});};}return prng;}if(module&&module.exports){module.exports=impl;}else if(define&&define.amd){define(function(){return impl;});}else{this.xor4096=impl;}})(this,// window object or global
-typeof module=='object'&&module,// present in node.js
+me.w=w;me.X=X;me.i=i;}init(me,seed);}function copy(f,t){t.i=f.i;t.w=f.w;t.X=f.X.slice();return t;};function impl(seed,opts){if(seed==null)seed=+new Date();var xg=new XorGen(seed),state=opts&&opts.state,prng=function prng(){return(xg.next()>>>0)/0x100000000;};prng["double"]=function(){do{var top=xg.next()>>>11,bot=(xg.next()>>>0)/0x100000000,result=(top+bot)/(1<<21);}while(result===0);return result;};prng.int32=xg.next;prng.quick=prng;if(state){if(state.X)copy(state,xg);prng.state=function(){return copy(xg,{});};}return prng;}if(module&&module.exports){module.exports=impl;}else if(define&&define.amd){define(function(){return impl;});}else{this.xor4096=impl;}})(this,// window object or global
+_typeof(module)=='object'&&module,// present in node.js
 typeof define=='function'&&define// present with an AMD loader
 );},{}],68:[function(require,module,exports){// A Javascript implementaion of the "xorshift7" algorithm by
 // François Panneton and Pierre L'ecuyer:
@@ -2962,8 +2962,8 @@ me.next=function(){// Update xor generator.
 var X=me.x,i=me.i,t,v,w;t=X[i];t^=t>>>7;v=t^t<<24;t=X[i+1&7];v^=t^t>>>10;t=X[i+3&7];v^=t^t>>>3;t=X[i+4&7];v^=t^t<<7;t=X[i+7&7];t=t^t<<13;v^=t^t<<9;X[i]=v;me.i=i+1&7;return v;};function init(me,seed){var j,w,X=[];if(seed===(seed|0)){// Seed state array using a 32-bit integer.
 w=X[0]=seed;}else{// Seed state using a string.
 seed=''+seed;for(j=0;j<seed.length;++j){X[j&7]=X[j&7]<<15^seed.charCodeAt(j)+X[j+1&7]<<13;}}// Enforce an array length of 8, not all zeroes.
-while(X.length<8)X.push(0);for(j=0;j<8&&X[j]===0;++j);if(j==8)w=X[7]=-1;else w=X[j];me.x=X;me.i=0;// Discard an initial 256 values.
-for(j=256;j>0;--j){me.next();}}init(me,seed);}function copy(f,t){t.x=f.x.slice();t.i=f.i;return t;}function impl(seed,opts){if(seed==null)seed=+new Date();var xg=new XorGen(seed),state=opts&&opts.state,prng=function(){return(xg.next()>>>0)/0x100000000;};prng.double=function(){do{var top=xg.next()>>>11,bot=(xg.next()>>>0)/0x100000000,result=(top+bot)/(1<<21);}while(result===0);return result;};prng.int32=xg.next;prng.quick=prng;if(state){if(state.x)copy(state,xg);prng.state=function(){return copy(xg,{});};}return prng;}if(module&&module.exports){module.exports=impl;}else if(define&&define.amd){define(function(){return impl;});}else{this.xorshift7=impl;}})(this,typeof module=='object'&&module,// present in node.js
+while(X.length<8){X.push(0);}for(j=0;j<8&&X[j]===0;++j){;}if(j==8)w=X[7]=-1;else w=X[j];me.x=X;me.i=0;// Discard an initial 256 values.
+for(j=256;j>0;--j){me.next();}}init(me,seed);}function copy(f,t){t.x=f.x.slice();t.i=f.i;return t;}function impl(seed,opts){if(seed==null)seed=+new Date();var xg=new XorGen(seed),state=opts&&opts.state,prng=function prng(){return(xg.next()>>>0)/0x100000000;};prng["double"]=function(){do{var top=xg.next()>>>11,bot=(xg.next()>>>0)/0x100000000,result=(top+bot)/(1<<21);}while(result===0);return result;};prng.int32=xg.next;prng.quick=prng;if(state){if(state.x)copy(state,xg);prng.state=function(){return copy(xg,{});};}return prng;}if(module&&module.exports){module.exports=impl;}else if(define&&define.amd){define(function(){return impl;});}else{this.xorshift7=impl;}})(this,_typeof(module)=='object'&&module,// present in node.js
 typeof define=='function'&&define// present with an AMD loader
 );},{}],69:[function(require,module,exports){// A Javascript implementaion of the "xorwow" prng algorithm by
 // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
@@ -2971,7 +2971,7 @@ typeof define=='function'&&define// present with an AMD loader
 me.next=function(){var t=me.x^me.x>>>2;me.x=me.y;me.y=me.z;me.z=me.w;me.w=me.v;return(me.d=me.d+362437|0)+(me.v=me.v^me.v<<4^(t^t<<1))|0;};me.x=0;me.y=0;me.z=0;me.w=0;me.v=0;if(seed===(seed|0)){// Integer seed.
 me.x=seed;}else{// String seed.
 strseed+=seed;}// Mix in string seed, then discard an initial batch of 64 values.
-for(var k=0;k<strseed.length+64;k++){me.x^=strseed.charCodeAt(k)|0;if(k==strseed.length){me.d=me.x<<10^me.x>>>4;}me.next();}}function copy(f,t){t.x=f.x;t.y=f.y;t.z=f.z;t.w=f.w;t.v=f.v;t.d=f.d;return t;}function impl(seed,opts){var xg=new XorGen(seed),state=opts&&opts.state,prng=function(){return(xg.next()>>>0)/0x100000000;};prng.double=function(){do{var top=xg.next()>>>11,bot=(xg.next()>>>0)/0x100000000,result=(top+bot)/(1<<21);}while(result===0);return result;};prng.int32=xg.next;prng.quick=prng;if(state){if(typeof state=='object')copy(state,xg);prng.state=function(){return copy(xg,{});};}return prng;}if(module&&module.exports){module.exports=impl;}else if(define&&define.amd){define(function(){return impl;});}else{this.xorwow=impl;}})(this,typeof module=='object'&&module,// present in node.js
+for(var k=0;k<strseed.length+64;k++){me.x^=strseed.charCodeAt(k)|0;if(k==strseed.length){me.d=me.x<<10^me.x>>>4;}me.next();}}function copy(f,t){t.x=f.x;t.y=f.y;t.z=f.z;t.w=f.w;t.v=f.v;t.d=f.d;return t;}function impl(seed,opts){var xg=new XorGen(seed),state=opts&&opts.state,prng=function prng(){return(xg.next()>>>0)/0x100000000;};prng["double"]=function(){do{var top=xg.next()>>>11,bot=(xg.next()>>>0)/0x100000000,result=(top+bot)/(1<<21);}while(result===0);return result;};prng.int32=xg.next;prng.quick=prng;if(state){if(_typeof(state)=='object')copy(state,xg);prng.state=function(){return copy(xg,{});};}return prng;}if(module&&module.exports){module.exports=impl;}else if(define&&define.amd){define(function(){return impl;});}else{this.xorwow=impl;}})(this,_typeof(module)=='object'&&module,// present in node.js
 typeof define=='function'&&define// present with an AMD loader
 );},{}],70:[function(require,module,exports){/*
 Copyright 2019 David Bau.
@@ -3011,7 +3011,7 @@ function seedrandom(seed,options,callback){var key=[];options=options==true?{ent
 var shortseed=mixkey(flatten(options.entropy?[seed,tostring(pool)]:seed==null?autoseed():seed,3),key);// Use the seed to initialize an ARC4 generator.
 var arc4=new ARC4(key);// This function returns a random double in [0, 1) that contains
 // randomness in every bit of the mantissa of the IEEE 754 value.
-var prng=function(){var n=arc4.g(chunks),// Start with a numerator n < 2 ^ 48
+var prng=function prng(){var n=arc4.g(chunks),// Start with a numerator n < 2 ^ 48
 d=startdenom,//   and denominator d = 2 ^ 48.
 x=0;//   and no 'extra last byte'.
 while(n<significance){// Fill up all significant digits by
@@ -3023,7 +3023,7 @@ n/=2;//   last byte, shift everything
 d/=2;//   right using integer math until
 x>>>=1;//   we have exactly the desired bits.
 }return(n+x)/d;// Form the number within [0, 1).
-};prng.int32=function(){return arc4.g(4)|0;};prng.quick=function(){return arc4.g(4)/0x100000000;};prng.double=prng;// Mix the randomness into accumulated entropy.
+};prng.int32=function(){return arc4.g(4)|0;};prng.quick=function(){return arc4.g(4)/0x100000000;};prng["double"]=prng;// Mix the randomness into accumulated entropy.
 mixkey(tostring(arc4.S),pool);// Calling convention: what to return as a function of prng, seed, is_math.
 return(options.pass||callback||function(prng,seed,is_math_call,state){if(state){// Load the arc4 state from the given state if it has an S array.
 if(state.S){copy(state,arc4);}// Only provide the .state method if requested via options.state.
@@ -3056,7 +3056,7 @@ function copy(f,t){t.i=f.i;t.j=f.j;t.S=f.S.slice();return t;};//
 // flatten()
 // Converts an object tree to nested arrays of strings.
 //
-function flatten(obj,depth){var result=[],typ=typeof obj,prop;if(depth&&typ=='object'){for(prop in obj){try{result.push(flatten(obj[prop],depth-1));}catch(e){}}}return result.length?result:typ=='string'?obj:obj+'\0';}//
+function flatten(obj,depth){var result=[],typ=_typeof(obj),prop;if(depth&&typ=='object'){for(prop in obj){try{result.push(flatten(obj[prop],depth-1));}catch(e){}}}return result.length?result:typ=='string'?obj:obj+'\0';}//
 // mixkey()
 // Mixes a string seed into a key that is an array of integers, and
 // returns a shortened string seed that is equivalent to the result key.
@@ -3082,7 +3082,7 @@ mixkey(math.random(),pool);//
 // Nodejs and AMD support: export the implementation as a module using
 // either convention.
 //
-if(typeof module=='object'&&module.exports){module.exports=seedrandom;// When in node.js, try using crypto package for autoseeding.
+if(_typeof(module)=='object'&&module.exports){module.exports=seedrandom;// When in node.js, try using crypto package for autoseeding.
 try{nodecrypto=require('crypto');}catch(ex){}}else if(typeof define=='function'&&define.amd){define(function(){return seedrandom;});}else{// When included as a plain script, set up Math.seedrandom global.
 math['seed'+rngname]=seedrandom;}// End anonymous scope, and pass initial values.
 })(// global: `self` in browsers (including strict mode and web workers),
@@ -3124,7 +3124,7 @@ exports.enroll=function(item,msecs){clearTimeout(item._idleTimeoutId);item._idle
 exports.setImmediate=typeof setImmediate==="function"?setImmediate:function(fn){var id=nextImmediateId++;var args=arguments.length<2?false:slice.call(arguments,1);immediateIds[id]=true;nextTick(function onNextTick(){if(immediateIds[id]){// fn.call() is faster so we optimize for the common use-case
 // @see http://jsperf.com/call-apply-segu
 if(args){fn.apply(null,args);}else{fn.call(null);}// Prevent ids from leaking
-exports.clearImmediate(id);}});return id;};exports.clearImmediate=typeof clearImmediate==="function"?clearImmediate:function(id){delete immediateIds[id];};}).call(this,require("timers").setImmediate,require("timers").clearImmediate);},{"process/browser.js":47,"timers":72}],73:[function(require,module,exports){'use strict';exports.fromCallback=function(fn){return Object.defineProperty(function(){if(typeof arguments[arguments.length-1]==='function')fn.apply(this,arguments);else{return new Promise((resolve,reject)=>{arguments[arguments.length]=(err,res)=>{if(err)return reject(err);resolve(res);};arguments.length++;fn.apply(this,arguments);});}},'name',{value:fn.name});};exports.fromPromise=function(fn){return Object.defineProperty(function(){const cb=arguments[arguments.length-1];if(typeof cb!=='function')return fn.apply(this,arguments);else fn.apply(this,arguments).then(r=>cb(null,r),cb);},'name',{value:fn.name});};},{}],74:[function(require,module,exports){(function(global){/**
+exports.clearImmediate(id);}});return id;};exports.clearImmediate=typeof clearImmediate==="function"?clearImmediate:function(id){delete immediateIds[id];};}).call(this,require("timers").setImmediate,require("timers").clearImmediate);},{"process/browser.js":47,"timers":72}],73:[function(require,module,exports){'use strict';exports.fromCallback=function(fn){return Object.defineProperty(function(){var _arguments=arguments,_this3=this;if(typeof arguments[arguments.length-1]==='function')fn.apply(this,arguments);else{return new Promise(function(resolve,reject){_arguments[_arguments.length]=function(err,res){if(err)return reject(err);resolve(res);};_arguments.length++;fn.apply(_this3,_arguments);});}},'name',{value:fn.name});};exports.fromPromise=function(fn){return Object.defineProperty(function(){var cb=arguments[arguments.length-1];if(typeof cb!=='function')return fn.apply(this,arguments);else fn.apply(this,arguments).then(function(r){return cb(null,r);},cb);},'name',{value:fn.name});};},{}],74:[function(require,module,exports){(function(global){/**
  * Module exports.
  */module.exports=deprecate;/**
  * Mark that a method should not be used.
@@ -3161,72 +3161,72 @@ try{if(!global.localStorage)return false;}catch(_){return false;}var val=global.
 // credits:
 // - spread-methods inspired by Max8's MC functions spread and spreadinclusive
 //==============================================================================
-const Util=require('./utility.js');// Generate a list of n-length starting at one value
+var Util=require('./utility.js');// Generate a list of n-length starting at one value
 // up untill (but excluding) the 3th argument. 
 // Evenly spaced values in between in floating-point
 // 
 // @params {array-length, low-output, high-output}
 // @return {Array}
 //
-function spreadFloat(len=1,lo=len,hi=0){// swap if lo > hi
+function spreadFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// len is positive and minimum of 1
 len=Math.max(1,Math.abs(len));// generate array
-var arr=new Array(len);for(var i=0;i<len;i++){arr[i]=i/len*(hi-lo)+lo;}return arr;}exports.spreadFloat=spreadFloat;// Generate a list of n-length starting at one value
+var arr=new Array(len);for(var i=0;i<len;i++){arr[i]=i/len*(hi-lo)+lo;}return arr;}(lo,hi);}exports.spreadFloat=spreadFloat;// Generate a list of n-length starting at one value
 // up untill (but excluding) the 3th argument. 
 // Set an exponential curve in the spacing of the values.
 // 
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadFloatExp(len=1,lo=len,hi=0,exp=1){// swap if lo > hi
+function spreadFloatExp(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// len is positive and minimum of 1
 len=Math.max(1,Math.abs(len));// generate array
-var arr=new Array(len);for(var i=0;i<len;i++){arr[i]=Math.pow(i/len,exp)*(hi-lo)+lo;}return arr;}exports.spreadFloatExp=spreadFloatExp;// Spread function rounded to integers
+var arr=new Array(len);for(var i=0;i<len;i++){arr[i]=Math.pow(i/len,exp)*(hi-lo)+lo;}return arr;}(lo,hi);}exports.spreadFloatExp=spreadFloatExp;// Spread function rounded to integers
 // 
 // @params {length, low-output, high-output}
 // @return {Array}
 //
-function spread(len,lo,hi){var arr=spreadFloat(len,lo,hi);return arr.map(v=>Math.floor(v));}exports.spread=spread;// Spread function floored to integers
+function spread(len,lo,hi){var arr=spreadFloat(len,lo,hi);return arr.map(function(v){return Math.floor(v);});}exports.spread=spread;// Spread function floored to integers
 // 
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadExp(len,lo,hi,exp){var arr=spreadFloatExp(len,lo,hi,exp);return arr.map(v=>Math.floor(v));}exports.spreadExp=spreadExp;// Generate a list of n-length starting at one value
+function spreadExp(len,lo,hi,exp){var arr=spreadFloatExp(len,lo,hi,exp);return arr.map(function(v){return Math.floor(v);});}exports.spreadExp=spreadExp;// Generate a list of n-length starting at one value
 // ending at the 3th argument.
 // Evenly spaced values in between in floating-point
 // 
 // @params {length, low-output, high-output}
 // @return {Array}
 //
-function spreadInclusiveFloat(len=1,lo=len,hi=0){// swap if lo > hi
+function spreadInclusiveFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// generate array
-var arr=new Array(len);for(var i=0;i<len;i++){arr[i]=i/(len-1)*(hi-lo)+lo;}return arr;}exports.spreadInclusiveFloat=spreadInclusiveFloat;// Generate a list of n-length starting at one value
+var arr=new Array(len);for(var i=0;i<len;i++){arr[i]=i/(len-1)*(hi-lo)+lo;}return arr;}(lo,hi);}exports.spreadInclusiveFloat=spreadInclusiveFloat;// Generate a list of n-length starting at one value
 // ending at the 3th argument.
 // Set an exponential curve in the spacing of the values.
 // 
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadInclusiveFloatExp(len=1,lo=len,hi=0,exp=1){// swap if lo > hi
+function spreadInclusiveFloatExp(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// generate array
-var arr=new Array(len);for(var i=0;i<len;i++){arr[i]=Math.pow(i/(len-1),exp)*(hi-lo)+lo;}return arr;}exports.spreadInclusiveFloatExp=spreadInclusiveFloatExp;// spreadinclusiveFloat function floored to integers
+var arr=new Array(len);for(var i=0;i<len;i++){arr[i]=Math.pow(i/(len-1),exp)*(hi-lo)+lo;}return arr;}(lo,hi);}exports.spreadInclusiveFloatExp=spreadInclusiveFloatExp;// spreadinclusiveFloat function floored to integers
 // 
 // @params {length, low-output, high-output}
 // @return {Array}
 //
-function spreadInclusive(len,lo,hi){var arr=spreadInclusiveFloat(len,lo,hi);return arr.map(v=>Math.floor(v));}exports.spreadInclusive=spreadInclusive;// spreadinclusiveFloatExp function floored to integers
+function spreadInclusive(len,lo,hi){var arr=spreadInclusiveFloat(len,lo,hi);return arr.map(function(v){return Math.floor(v);});}exports.spreadInclusive=spreadInclusive;// spreadinclusiveFloatExp function floored to integers
 // 
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadInclusiveExp(len,lo,hi,exp){var arr=spreadInclusiveFloatExp(len,lo,hi,exp);return arr.map(v=>Math.floor(v));}exports.spreadInclusiveExp=spreadInclusiveExp;// fill an array with values. Arguments are pairs.
+function spreadInclusiveExp(len,lo,hi,exp){var arr=spreadInclusiveFloatExp(len,lo,hi,exp);return arr.map(function(v){return Math.floor(v);});}exports.spreadInclusiveExp=spreadInclusiveExp;// fill an array with values. Arguments are pairs.
 // Every pair consists of <value, amount>
 // The value is repeated n-amount times in the list
 // 
 // @params {value0, amount0, value1, amount1, ... value-n, amount-n}
 // @return {Array}
 // 
-function fill(...args){if(!args.length){return[0];}if(args.length%2){args.pop();}var arr=[];for(var i=0;i<args.length/2;i++){for(var k=0;k<Math.abs(args[i*2+1]);k++){arr.push(args[i*2]);}}return arr;}exports.fill=fill;// Generate an array with n-periods of a sine function
+function fill(){for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}if(!args.length){return[0];}if(args.length%2){args.pop();}var arr=[];for(var i=0;i<args.length/2;i++){for(var k=0;k<Math.abs(args[i*2+1]);k++){arr.push(args[i*2]);}}return arr;}exports.fill=fill;// Generate an array with n-periods of a sine function
 // Optional last arguments set lo and hi range
 // Only setting first range argument sets the low-range to 0
 // 
@@ -3237,10 +3237,10 @@ function fill(...args){if(!args.length){return[0];}if(args.length%2){args.pop();
 // @param {Number} -> Phase offset (optional, default=0)
 // @return {Array} -> Sine function
 // 
-function sineFloat(len=1,periods=1,lo,hi=0,phase=0){// if no range specified
+function sineFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;return function(lo,hi){// if no range specified
 if(lo===undefined){lo=-1;hi=1;}// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// clip array length
-len=Math.max(1,len);var arr=new Array(len);var a=Math.PI*2.0*periods/len;var p=Math.PI*phase;for(var i=0;i<len;i++){arr[i]=Math.sin(a*i+p);}return Util.map(arr,-1,1,lo,hi);}exports.sineFloat=sineFloat;// Generate an integer array with n-periods of a sine function
+len=Math.max(1,len);var arr=new Array(len);var a=Math.PI*2.0*periods/len;var p=Math.PI*phase;for(var i=0;i<len;i++){arr[i]=Math.sin(a*i+p);}return Util.map(arr,-1,1,lo,hi);}(lo,hi);}exports.sineFloat=sineFloat;// Generate an integer array with n-periods of a sine function
 // Optional last arguments set lo and hi range
 // 
 // @param {Int} -> Length of output array
@@ -3249,13 +3249,13 @@ len=Math.max(1,len);var arr=new Array(len);var a=Math.PI*2.0*periods/len;var p=M
 // @param {Number} -> High range of values (optional, default = 12)
 // @return {Array} -> Sine function
 // 
-function sine(len=1,periods=1,lo=12,hi,phase){var arr=sineFloat(len,periods,lo,hi,phase);return arr.map(v=>Math.trunc(v));}exports.sine=sine;// Generate an array with n-periods of a cosine function
+function sine(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4?arguments[4]:undefined;var arr=sineFloat(len,periods,lo,hi,phase);return arr.map(function(v){return Math.trunc(v);});}exports.sine=sine;// Generate an array with n-periods of a cosine function
 // See sinFloat() for details
 //
-function cosineFloat(len=1,periods=1,lo,hi,phase=0){return sineFloat(len,periods,lo,hi,phase+0.5);}exports.cosineFloat=cosineFloat;// Generate an integer array with n-periods of a cosine function
+function cosineFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;return sineFloat(len,periods,lo,hi,phase+0.5);}exports.cosineFloat=cosineFloat;// Generate an integer array with n-periods of a cosine function
 // See sin() for details
 // 
-function cosine(len=1,periods=1,lo=12,hi,phase=0){var arr=sineFloat(len,periods,lo,hi,phase+0.5);return arr.map(v=>Math.trunc(v));}exports.cosine=cosine;},{"./utility.js":83}],79:[function(require,module,exports){//==============================================================================
+function cosine(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var arr=sineFloat(len,periods,lo,hi,phase+0.5);return arr.map(function(v){return Math.trunc(v);});}exports.cosine=cosine;},{"./utility.js":83}],79:[function(require,module,exports){//==============================================================================
 // gen-complex.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -3277,14 +3277,14 @@ function cosine(len=1,periods=1,lo=12,hi,phase=0){var arr=sineFloat(len,periods,
 // reading in README.md. Also inspired by Numberphile videos on 
 // pisano period on youtube.
 //==============================================================================
-const Transform=require('./transform.js');const BigNumber=require('bignumber.js');const JSON=require('jsonfile');// configure the bignumber settings
+var Transform=require('./transform.js');var BigNumber=require('bignumber.js');var JSON=require('jsonfile');// configure the bignumber settings
 BigNumber.config({DECIMAL_PLACES:20,EXPONENTIAL_AT:[-7,20]});// A hexadecimal rhythm generator. Generates values of 0 and 1
 // based on the input of a hexadecimal character string
 //
 // @param {String} -> hexadecimal characters (0 t/m f)
 // @return {Array} -> rhythm
 // 
-function hexBeat(hex="8"){if(!hex.isNaN){hex=hex.toString();}var a=[];for(let i in hex){var binary=parseInt("0x"+hex[i]).toString(2);binary=isNaN(binary)?'0000':binary;var padding=binary.padStart(4,'0');a=a.concat(padding.split('').map(x=>Number(x)));}return a;}exports.hexBeat=hexBeat;// A euclidean rhythm generator. Generates values of 0 and 1
+function hexBeat(){var hex=arguments.length>0&&arguments[0]!==undefined?arguments[0]:"8";if(!hex.isNaN){hex=hex.toString();}var a=[];for(var i in hex){var binary=parseInt("0x"+hex[i]).toString(2);binary=isNaN(binary)?'0000':binary;var padding=binary.padStart(4,'0');a=a.concat(padding.split('').map(function(x){return Number(x);}));}return a;}exports.hexBeat=hexBeat;// A euclidean rhythm generator. Generates values of 0 and 1
 // distributed based on the common denominator after division
 //
 // @param {Int} steps
@@ -3292,7 +3292,7 @@ function hexBeat(hex="8"){if(!hex.isNaN){hex=hex.toString();}var a=[];for(let i 
 // @param {Int} rotate
 // @return {Array}
 // 
-var pattern,counts,remainders;function euclid(steps=8,beats=4,rot=0){pattern=[];counts=[];remainders=[];var level=0;var divisor=steps-beats;remainders.push(beats);while(remainders[level]>1){counts.push(Math.floor(divisor/remainders[level]));remainders.push(divisor%remainders[level]);divisor=remainders[level];level++;}counts.push(divisor);build(level);return Transform.rotate(pattern,rot+pattern.indexOf(1));}exports.euclid=euclid;function build(l){var level=l;if(level==-1){pattern.push(0);}else if(level==-2){pattern.push(1);}else{for(var i=0;i<counts[level];i++){build(level-1);}if(remainders[level]!=0){build(level-2);}}}// Lindemayer String expansion
+var pattern,counts,remainders;function euclid(){var steps=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var rot=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;pattern=[];counts=[];remainders=[];var level=0;var divisor=steps-beats;remainders.push(beats);while(remainders[level]>1){counts.push(Math.floor(divisor/remainders[level]));remainders.push(divisor%remainders[level]);divisor=remainders[level];level++;}counts.push(divisor);build(level);return Transform.rotate(pattern,rot+pattern.indexOf(1));}exports.euclid=euclid;function build(l){var level=l;if(level==-1){pattern.push(0);}else if(level==-2){pattern.push(1);}else{for(var i=0;i<counts[level];i++){build(level-1);}if(remainders[level]!=0){build(level-2);}}}// Lindemayer String expansion
 // a recursive fractal algorithm to generate botanic (and more)
 // Default rule is 1 -> 10, 0 -> 1, where 1=A and 0=B
 // Rules are specified as a JS object consisting of strings or arrays
@@ -3302,7 +3302,7 @@ var pattern,counts,remainders;function euclid(steps=8,beats=4,rot=0){pattern=[];
 // @param {Object} -> production rules
 // @return {String/Array} -> axiom determins string or array output
 // 
-function linden(axiom=[1],iteration=3,rules={1:[1,0],0:[1]}){axiom=typeof axiom==='number'?[axiom]:axiom;let asString=typeof axiom==='string';let res;for(let n=0;n<iteration;n++){res=asString?"":[];for(let ch in axiom){let char=axiom[ch];let rule=rules[char];if(rule){res=asString?res+rule:res.concat(rule);}else{res=asString?res+char:res.concat(char);}}axiom=res;}return res;}exports.linden=linden;// Generate any n-bonacci sequence as an array of BigNumber objects
+function linden(){var axiom=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];var iteration=arguments.length>1&&arguments[1]!==undefined?arguments[1]:3;var rules=arguments.length>2&&arguments[2]!==undefined?arguments[2]:{1:[1,0],0:[1]};axiom=typeof axiom==='number'?[axiom]:axiom;var asString=typeof axiom==='string';var res;for(var n=0;n<iteration;n++){res=asString?"":[];for(var ch in axiom){var _char=axiom[ch];var rule=rules[_char];if(rule){res=asString?res+rule:res.concat(rule);}else{res=asString?res+_char:res.concat(_char);}}axiom=res;}return res;}exports.linden=linden;// Generate any n-bonacci sequence as an array of BigNumber objects
 // F(n) = t * F(n-1) + F(n-2). This possibly generatres various 
 // integer sequences: fibonacci, pell, tribonacci
 // 
@@ -3312,7 +3312,7 @@ function linden(axiom=[1],iteration=3,rules={1:[1,0],0:[1]}){axiom=typeof axiom=
 // @param {Int} -> start value 2
 // @return {Array} -> array of BigNumber objects
 // 
-function numBonacci(len=1,s1=0,s2=1,t=1){var n1=new BigNumber(s2);//startvalue n-1
+function numBonacci(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var s1=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var s2=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var t=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;var n1=new BigNumber(s2);//startvalue n-1
 var n2=new BigNumber(s1);//startvalue n-2
 len=Math.max(1,len-2);var cur=0,arr=[n2,n1];if(len<2){return arr.slice(0,len);}else{for(var i=0;i<len;i++){// general method for nbonacci sequences
 // Fn = t * Fn-1 + Fn-2
@@ -3324,7 +3324,7 @@ arr.push(cur);// store BigNumber in array
 // 
 // @return {String-Array} -> array of bignumbers as strings
 // 
-function nbonacci(len=1,s1=0,s2=1,t=1){return numBonacci(len,s1,s2,t).map(x=>x.toFixed());}exports.nbonacci=nbonacci;// Generate the Fibonacci sequence as an array of BigNumber objects
+function nbonacci(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var s1=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var s2=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var t=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return numBonacci(len,s1,s2,t).map(function(x){return x.toFixed();});}exports.nbonacci=nbonacci;// Generate the Fibonacci sequence as an array of BigNumber objects
 // F(n) = F(n-1) + F(n-2). The ratio between consecutive numbers in 
 // the fibonacci sequence tends towards the Golden Ratio (1+√5)/2
 // OEIS: A000045 (Online Encyclopedia of Integer Sequences)
@@ -3332,7 +3332,7 @@ function nbonacci(len=1,s1=0,s2=1,t=1){return numBonacci(len,s1,s2,t).map(x=>x.t
 // @param {Int} -> output length of array
 // @return {String-Array} -> array of bignumbers as strings
 // 
-function fibonacci(len=1,offset=0){var f=numBonacci(len+offset,0,1,1).map(x=>x.toFixed());if(offset>0){return f.slice(offset,offset+len);}return f;}exports.fibonacci=fibonacci;// Generate the Pisano period sequence as an array of BigNumber objects
+function fibonacci(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var offset=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var f=numBonacci(len+offset,0,1,1).map(function(x){return x.toFixed();});if(offset>0){return f.slice(offset,offset+len);}return f;}exports.fibonacci=fibonacci;// Generate the Pisano period sequence as an array of BigNumber objects
 // Returns array of [0] if no period is found within the default length
 // of fibonacci numbers (256). In that case 
 // 
@@ -3342,8 +3342,8 @@ function fibonacci(len=1,offset=0){var f=numBonacci(len+offset,0,1,1).map(x=>x.t
 // @param {Int} -> modulus for pisano period
 // @return {Int-Array} -> array of integers
 // 
-function pisano(mod=12,len=-1){mod=mod<1?1:mod;if(len<1){return pisanoPeriod(mod);}else{return numBonacci(len,0,1,1).map(x=>x.mod(mod).toNumber());}}exports.pisano=pisano;function pisanoPeriod(mod=2,length=64){// console.log('pisano', '@mod', mod, '@length', length);
-var seq=numBonacci(length,0,1,1).map(x=>x.mod(mod).toNumber());var p=[],l=0;for(var i=0;i<seq.length;i++){p.push(seq[i]);if(p.length>2){var c=[0,1,1];var equals=0;for(let k in p){equals+=p[k]===c[k];}if(equals===3&&l>3){return seq.slice(0,l);// return { 'length' : l };
+function pisano(){var mod=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:-1;mod=mod<1?1:mod;if(len<1){return pisanoPeriod(mod);}else{return numBonacci(len,0,1,1).map(function(x){return x.mod(mod).toNumber();});}}exports.pisano=pisano;function pisanoPeriod(){var mod=arguments.length>0&&arguments[0]!==undefined?arguments[0]:2;var length=arguments.length>1&&arguments[1]!==undefined?arguments[1]:64;// console.log('pisano', '@mod', mod, '@length', length);
+var seq=numBonacci(length,0,1,1).map(function(x){return x.mod(mod).toNumber();});var p=[],l=0;for(var i=0;i<seq.length;i++){p.push(seq[i]);if(p.length>2){var c=[0,1,1];var equals=0;for(var k in p){equals+=p[k]===c[k];}if(equals===3&&l>3){return seq.slice(0,l);// return { 'length' : l };
 }p=p.slice(1,3);l++;}}// console.log('no period, next iteration');
 return pisanoPeriod(mod,length*2);}// Generate the Pell numbers as an array of BigNumber objects
 // F(n) = 2 * F(n-1) + F(n-2). The ratio between consecutive numbers 
@@ -3353,7 +3353,7 @@ return pisanoPeriod(mod,length*2);}// Generate the Pell numbers as an array of B
 // @param {Int} -> output length of array
 // @return {String-Array} -> array of bignumbers as strings
 // 
-function pell(len=1){return numBonacci(len,0,1,2).map(x=>x.toFixed());}exports.pell=pell;// Generate the Tribonacci numbers as an array of BigNumber objects
+function pell(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;return numBonacci(len,0,1,2).map(function(x){return x.toFixed();});}exports.pell=pell;// Generate the Tribonacci numbers as an array of BigNumber objects
 // F(n) = 2 * F(n-1) + F(n-2). The ratio between consecutive numbers in 
 // the 3-bonacci sequence tends towards the Bronze Ratio (3 + √13) / 2.
 // OEIS: A000129 (Online Encyclopedia of Integer Sequences)
@@ -3361,16 +3361,16 @@ function pell(len=1){return numBonacci(len,0,1,2).map(x=>x.toFixed());}exports.p
 // @param {Int} -> output length of array
 // @return {String-Array} -> array of bignumbers as strings
 // 
-function threeFibonacci(len=1){return numBonacci(len,0,1,3).map(x=>x.toFixed());}exports.threeFibonacci=threeFibonacci;// Generate the Lucas numbers as an array of BigNumber objects
+function threeFibonacci(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;return numBonacci(len,0,1,3).map(function(x){return x.toFixed();});}exports.threeFibonacci=threeFibonacci;// Generate the Lucas numbers as an array of BigNumber objects
 // F(n) = F(n-1) + F(n-2), with F0=2 and F1=1.
 // OEIS: A000032 (Online Encyclopedia of Integer Sequences)
 // 
 // @param {Int} -> output length of array
 // @return {String-Array} -> array of bignumbers as strings
 // 
-function lucas(len=1){return numBonacci(len,2,1,1).map(x=>x.toFixed());}exports.lucas=lucas;// build the integer sequences dataset for quick access
+function lucas(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;return numBonacci(len,2,1,1).map(function(x){return x.toFixed();});}exports.lucas=lucas;// build the integer sequences dataset for quick access
 // buildDataSet();
-function buildDataSet(){const file='./data/fibonacci.json';let data={"fibonacci":[],"pell":[],"tribonacci":[]};data.fibonacci=fibonacci(1024);data.pell=pell(1024);data.tribonacci=tribonacci(1024);JSON.writeFile(file,data,{spaces:2,EOL:'\r\n'},function(err){if(err){console.error(err);}else{console.log("//=> Integer Sequences dataset generated");}});}exports.buildDataSet=buildDataSet;},{"./transform.js":81,"bignumber.js":29,"jsonfile":44}],80:[function(require,module,exports){//==============================================================================
+function buildDataSet(){var file='./data/fibonacci.json';var data={"fibonacci":[],"pell":[],"tribonacci":[]};data.fibonacci=fibonacci(1024);data.pell=pell(1024);data.tribonacci=tribonacci(1024);JSON.writeFile(file,data,{spaces:2,EOL:'\r\n'},function(err){if(err){console.error(err);}else{console.log("//=> Integer Sequences dataset generated");}});}exports.buildDataSet=buildDataSet;},{"./transform.js":81,"bignumber.js":29,"jsonfile":44}],80:[function(require,module,exports){//==============================================================================
 // gen-stochastic.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -3383,7 +3383,7 @@ function buildDataSet(){const file='./data/fibonacci.json';let data={"fibonacci"
 // - Gratefully using the seedrandom package by David Bau
 //==============================================================================
 // require Generative methods
-const Gen=require('./gen-basic.js');// require seedrandom package
+var Gen=require('./gen-basic.js');// require seedrandom package
 var seedrandom=require('seedrandom');// local pseudorandom number generator
 var rng=seedrandom();// Set the seed for all the Random Number Generators. 
 // 0 sets to unpredictable seeding
@@ -3391,7 +3391,7 @@ var rng=seedrandom();// Set the seed for all the Random Number Generators.
 // @param {Number/String} -> the seed
 // @return {Void}
 // 
-function seed(v=0){if(v===0||v===null){rng=seedrandom();}else{rng=seedrandom(v);}}exports.seed=seed;// generate a list of random float values 
+function seed(){var v=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;if(v===0||v===null){rng=seedrandom();}else{rng=seedrandom(v);}}exports.seed=seed;// generate a list of random float values 
 // between a certain specified range (excluding high val)
 // 
 // @param {Int} -> number of values to output
@@ -3399,9 +3399,9 @@ function seed(v=0){if(v===0||v===null){rng=seedrandom();}else{rng=seedrandom(v);
 // @param {Number} -> maximum range (optional, defautl=1)
 // @return {Array}
 // 
-function randomFloat(len=1,lo=1,hi=0){// swap if lo > hi
+function randomFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// len is positive and minimum of 1
-len=Math.max(1,Math.abs(len));var arr=new Array(len);for(var i=0;i<len;i++){arr[i]=rng()*(hi-lo)+lo;}return arr;}exports.randomFloat=randomFloat;// generate a list of random integer values 
+len=Math.max(1,Math.abs(len));var arr=new Array(len);for(var i=0;i<len;i++){arr[i]=rng()*(hi-lo)+lo;}return arr;}(lo,hi);}exports.randomFloat=randomFloat;// generate a list of random integer values 
 // between a certain specified range (excluding high val)
 // 
 // @param {Int} -> number of values to output
@@ -3409,7 +3409,7 @@ len=Math.max(1,Math.abs(len));var arr=new Array(len);for(var i=0;i<len;i++){arr[
 // @param {Number} -> maximum range (optional, defautl=2)
 // @return {Array}
 // 
-function random(len=1,lo=2,hi=0){var arr=randomFloat(len,lo,hi);return arr.map(v=>Math.floor(v));}exports.random=random;/* WORK IN PROGRESS
+function random(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var arr=randomFloat(len,lo,hi);return arr.map(function(v){return Math.floor(v);});}exports.random=random;/* WORK IN PROGRESS
 // generate a list of random integer values
 // but the next random value is within a limited range of the 
 // previous value generating a random "drunk" walk
@@ -3436,21 +3436,21 @@ WORK IN PROGRESS */ // generate a list of random integer values 0 or 1
 // @param {Int} -> number of tosses to output
 // @return {Array}
 // 
-function coin(len=1){var arr=randomFloat(len,0,2);return arr.map(v=>Math.floor(v));}exports.coin=coin;// generate a list of random integer values 1 to 6
+function coin(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var arr=randomFloat(len,0,2);return arr.map(function(v){return Math.floor(v);});}exports.coin=coin;// generate a list of random integer values 1 to 6
 // like the roll of a dice
 // 
 // @param {Int} -> number of tosses to output
 // @param {Int} -> sides of the die (optional, default=6)
 // @return {Array}
 // 
-function dice(len=1,sides=6){var arr=randomFloat(len,1,sides+1);return arr.map(v=>Math.floor(v));}exports.dice=dice;// shuffle a list, based on the Fisher-Yates shuffle algorithm
+function dice(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var sides=arguments.length>1&&arguments[1]!==undefined?arguments[1]:6;var arr=randomFloat(len,1,sides+1);return arr.map(function(v){return Math.floor(v);});}exports.dice=dice;// shuffle a list, based on the Fisher-Yates shuffle algorithm
 // by Ronald Fisher and Frank Yates in 1938
 // The algorithm has run time complexity of O(n)
 // 
 // @param {Array} -> array to shuffle
 // @return {Array}
 // 
-function shuffle(a=[0]){var arr=a.slice();for(var i=arr.length-1;i>0;i-=1){var j=Math.floor(rng()*(i+1));var t=arr[i];arr[i]=arr[j];arr[j]=t;}return arr;}exports.shuffle=shuffle;// Generate a list of 12 semitones
+function shuffle(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var arr=a.slice();for(var i=arr.length-1;i>0;i-=1){var j=Math.floor(rng()*(i+1));var t=arr[i];arr[i]=arr[j];arr[j]=t;}return arr;}exports.shuffle=shuffle;// Generate a list of 12 semitones
 // then shuffle the list based on a random seed
 // 
 // @return {Array} -> twelve-tone series
@@ -3467,16 +3467,16 @@ function twelveTone(){return shuffle(Gen.spread(12));}exports.twelveTone=twelveT
 // @param {Number} -> minimum range (optional, defautl=0)
 // @return {Array} -> random values
 // 
-function urn(len=1,hi=12,lo=0){// swap if lo > hi
+function urn(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var hi=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(hi,lo){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// generate array with values and pick
-return pick(len,Gen.spread(hi-lo,lo,hi));}exports.urn=urn;// Choose random items from an array provided
+return pick(len,Gen.spread(hi-lo,lo,hi));}(hi,lo);}exports.urn=urn;// Choose random items from an array provided
 // The default array is an array of 0 and 1
 // 
 // @param {Int} -> output length
 // @param {Array} -> items to choose from
 // @return {Array} -> randomly selected items
 // 
-function choose(len=1,a=[0,1]){// if a is no Array make it an array
+function choose(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var a=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0,1];// if a is no Array make it an array
 a=!Array.isArray(a)?[a]:a;var arr=[];for(var i=0;i<Math.max(1,len);i++){arr.push(a[Math.floor(rng()*a.length)]);}return arr;}exports.choose=choose;// Pick random items from an array provided
 // An 'urn' is filled with values and when one is picked it is removed 
 // from the urn. If the outputlist is longer then the range, the urn 
@@ -3487,7 +3487,7 @@ a=!Array.isArray(a)?[a]:a;var arr=[];for(var i=0;i<Math.max(1,len);i++){arr.push
 // @param {Array} -> items to choose from
 // @return {Array} -> randomly selected items
 // 
-function pick(len=1,a=[0,1]){// fill the jar with the input
+function pick(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var a=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0,1];// fill the jar with the input
 var jar=!Array.isArray(a)?[a]:a;// shuffle the jar
 var s=shuffle(jar);// value, previous, output-array
 var v,p,arr=[];for(var i=0;i<Math.max(1,len);i++){v=s.pop();if(v===undefined){s=shuffle(jar);v=s.pop();if(v===p){v=s.pop();s.push(p);}}arr[i]=v;p=v;}return arr;}exports.pick=pick;},{"./gen-basic.js":78,"seedrandom":63}],81:[function(require,module,exports){//==============================================================================
@@ -3507,24 +3507,24 @@ var v,p,arr=[];for(var i=0;i<Math.max(1,len);i++){v=s.pop();if(v===undefined){s=
 // manipulations.", in Manipulation of Musical Patterns (1981)
 //==============================================================================
 // require the Utility methods
-const Rand=require('./gen-stochastic.js');const Util=require('./utility.js');// duplicate an array, but add an offset to every value
+var Rand=require('./gen-stochastic.js');var Util=require('./utility.js');// duplicate an array, but add an offset to every value
 // 
 // @param {Array} -> array to clone
 // @param {Int, Int2, ... Int-n} -> amount of clones with integer offset
 // 
-function clone(a=[0],...c){if(!c.length){c=[0,0];}var arr=[];for(var i=0;i<c.length;i++){arr=arr.concat(a.map(v=>v+c[i]));}return arr;}exports.clone=clone;// combine arrays into one array
+function clone(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];for(var _len2=arguments.length,c=new Array(_len2>1?_len2-1:0),_key2=1;_key2<_len2;_key2++){c[_key2-1]=arguments[_key2];}if(!c.length){c=[0,0];}var arr=[];for(var i=0;i<c.length;i++){arr=arr.concat(a.map(function(v){return v+c[i];}));}return arr;}exports.clone=clone;// combine arrays into one array
 // multiple arrays as arguments possible
 // 
 // @params {Array0, Array1, ..., Array-n} -> Arrays to join
 // @return {Array}
 // 
-function combine(...args){if(!args.length){return[0];}var arr=[];for(var i=0;i<args.length;i++){arr=arr.concat(args[i]);}return arr;}exports.combine=combine;// duplicate an array a certain amount of times
+function combine(){if(!arguments.length){return[0];}var arr=[];for(var i=0;i<arguments.length;i++){arr=arr.concat(i<0||arguments.length<=i?undefined:arguments[i]);}return arr;}exports.combine=combine;// duplicate an array a certain amount of times
 // 
 // @param {Array} -> array to duplicate
 // @param {Int} -> amount of output duplicates (optional, default=2)
 // @return {Array}
 // 
-function duplicate(a=[0],d=2){var arr=[];for(var i=0;i<Math.max(1,d);i++){arr=arr.concat(a);}return arr;}exports.duplicate=duplicate;// add zeroes to an array with a rhythmic sequence
+function duplicate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;var arr=[];for(var i=0;i<Math.max(1,d);i++){arr=arr.concat(a);}return arr;}exports.duplicate=duplicate;// add zeroes to an array with a rhythmic sequence
 // the division determins the amount of values per bar
 // total length = bars * div
 // 
@@ -3533,7 +3533,7 @@ function duplicate(a=[0],d=2){var arr=[];for(var i=0;i<Math.max(1,d);i++){arr=ar
 // param {Int} -> amount of values per bar
 // return {Array}
 // 
-function every(a=[0],bars=4,div=16,shift=0){let len=Math.floor(bars*div)-a.length;if(len<1){return a;}else{arr=new Array(len).fill(0);return rotate(a.concat(arr),Math.floor(shift*div));}}exports.every=every;// invert a list of values by mapping the lowest value
+function every(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var bars=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var div=arguments.length>2&&arguments[2]!==undefined?arguments[2]:16;var shift=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var len=Math.floor(bars*div)-a.length;if(len<1){return a;}else{var arr=new Array(len).fill(0);return rotate(a.concat(arr),Math.floor(shift*div));}}exports.every=every;// invert a list of values by mapping the lowest value
 // to the highest value and vice versa, flipping everything
 // in between. 
 // Second optional argument sets the center to flip values against. 
@@ -3544,37 +3544,37 @@ function every(a=[0],bars=4,div=16,shift=0){let len=Math.floor(bars*div)-a.lengt
 // @param {Int} -> high range (optional)
 // @return {Array}
 // 
-function invert(arr=[0],lo,hi){if(lo===undefined){hi=Math.max(...arr);lo=Math.min(...arr);}else if(hi===undefined){hi=lo;}return arr.slice().map(v=>hi-v+lo);}exports.invert=invert;// interleave two or more arrays
+function invert(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var lo=arguments.length>1?arguments[1]:undefined;var hi=arguments.length>2?arguments[2]:undefined;if(lo===undefined){hi=Math.max.apply(Math,_toConsumableArray(arr));lo=Math.min.apply(Math,_toConsumableArray(arr));}else if(hi===undefined){hi=lo;}return arr.slice().map(function(v){return hi-v+lo;});}exports.invert=invert;// interleave two or more arrays
 // 
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array}
 //  
-function lace(...args){if(!args.length){return[0];}var l=0;for(let i in args){l=Math.max(args[i].length,l);}var arr=[];for(var i=0;i<l;i++){for(var k in args){v=args[k][i];if(v!=undefined){arr.push(v);}}}return arr;}exports.lace=lace;// merge all values of two arrays on the same index
+function lace(){for(var _len3=arguments.length,args=new Array(_len3),_key3=0;_key3<_len3;_key3++){args[_key3]=arguments[_key3];}if(!args.length){return[0];}var l=0;for(var _i2 in args){l=Math.max(args[_i2].length,l);}var arr=[];for(var i=0;i<l;i++){for(var k in args){var v=args[k][i];if(v!=undefined){arr.push(v);}}}return arr;}exports.lace=lace;// merge all values of two arrays on the same index
 // into a 2D array. preserves length of longest list
 // 
 // @params {Array0, Array1, ..., Array-n} -> Arrays to merge
 // @return {Array}
 // 
-function merge(...args){if(!args.length){return[0];}var l=0;for(let i in args){l=Math.max(args[i].length,l);}var arr=[];for(var i=0;i<l;i++){var a=[];for(var k in args){v=args[k][i];if(v!=undefined){a.push(v);}}arr[i]=a;}return arr;}exports.merge=merge;// reverse an array and concatenate to the input
+function merge(){for(var _len4=arguments.length,args=new Array(_len4),_key4=0;_key4<_len4;_key4++){args[_key4]=arguments[_key4];}if(!args.length){return[0];}var l=0;for(var _i3 in args){l=Math.max(args[_i3].length,l);}var arr=[];for(var i=0;i<l;i++){var a=[];for(var k in args){var v=args[k][i];if(v!=undefined){a.push(v);}}arr[i]=a;}return arr;}exports.merge=merge;// reverse an array and concatenate to the input
 // creating a palindrome of the array
 // 
 // @param {Array} -> array to make palindrome of
 // @param {Bool} -> no-double flag (optional, default=false)
 // @return {Array}
 // 
-function palindrome(arr=[0],noDouble=false){var rev=arr.slice().reverse();if(noDouble){rev=rev.slice(1,rev.length-1);}return arr.concat(rev);}exports.palindrome=palindrome;// reverse the order of items in an Array
+function palindrome(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var noDouble=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;var rev=arr.slice().reverse();if(noDouble){rev=rev.slice(1,rev.length-1);}return arr.concat(rev);}exports.palindrome=palindrome;// reverse the order of items in an Array
 // 
 // @param {Array} -> array to reverse
 // @return {Array}
 // 
-function reverse(a=[0]){return a.slice().reverse();}exports.reverse=reverse;// rotate the position of items in an array 
+function reverse(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];return a.slice().reverse();}exports.reverse=reverse;// rotate the position of items in an array 
 // 1 = direction right, -1 = direction left
 // 
 // @param {Array} -> array to rotate
 // @param {Int} -> steps to rotate (optional, default=0)
 // @return {Array}
 // 
-function rotate(a=[0],r=0){var l=a.length;var arr=[];for(var i=0;i<l;i++){arr[i]=a[Util.mod(i-r,l)];}return arr;}exports.rotate=rotate;// spray the values of one array on the 
+function rotate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var r=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var l=a.length;var arr=[];for(var i=0;i<l;i++){arr[i]=a[Util.mod(i-r,l)];}return arr;}exports.rotate=rotate;// spray the values of one array on the 
 // places of values of another array if 
 // the value is greater than 0
 // 
@@ -3582,13 +3582,13 @@ function rotate(a=[0],r=0){var l=a.length;var arr=[];for(var i=0;i<l;i++){arr[i]
 // param {Array} -> positions to spread to
 // return {Array}
 // 
-function spray(values=[0],beats=[0]){var arr=beats.slice();var c=0;for(let i in beats){if(beats[i]>0){arr[i]=values[c++%values.length];}}return arr;}exports.spray=spray;// filter duplicate items from an array
+function spray(){var values=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];var arr=beats.slice();var c=0;for(var i in beats){if(beats[i]>0){arr[i]=values[c++%values.length];}}return arr;}exports.spray=spray;// filter duplicate items from an array
 // does not account for 2-dimensional arrays in the array
 // 
 // @param {Array} -> array to filter
 // @return {Array}
 // 
-function unique(a=[0]){return[...new Set(a)];}exports.unique=unique;},{"./gen-stochastic.js":80,"./utility.js":83}],82:[function(require,module,exports){//==============================================================================
+function unique(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];return _toConsumableArray(new Set(a));}exports.unique=unique;},{"./gen-stochastic.js":80,"./utility.js":83}],82:[function(require,module,exports){//==============================================================================
 // translate.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -3600,20 +3600,20 @@ function unique(a=[0]){return[...new Set(a)];}exports.unique=unique;},{"./gen-st
 // - Using the amazing Tonal.js package by @danigb for various functions
 //==============================================================================
 // require API's
-const{Note}=require('@tonaljs/tonal');// require Scale Mappings
-const Scales=require('../data/scales.json');const ToneSet=require('../data/tones.json');// global settings stored in object
+var _require=require('@tonaljs/tonal'),Note=_require.Note;// require Scale Mappings
+var Scales=require('../data/scales.json');var ToneSet=require('../data/tones.json');// global settings stored in object
 var notation={"scale":"chromatic","root":"c","rootInt":0,"map":Scales["chromatic"],"bpm":120,"measureInMs":2000};// Return a dictionary with all the notational preferences:
 // scale, root, map, bpm, measureInMs
 // 
 // @return -> Dictionary object
 // 
-function getSettings(){return{...notation};}exports.getSettings=getSettings;// Set the tempo to use for translating between values, default = 100. 
+function getSettings(){return _objectSpread({},notation);}exports.getSettings=getSettings;// Set the tempo to use for translating between values, default = 100. 
 // Also calculates the length of a 4/4 measure in milliseconds
 // 
 // @param {Number} -> the tempo in Beats/Minute (BPM)
 // @return {Void}
 // 
-function setTempo(t=100){if(Array.isArray(t)){t=t[0];}notation.bpm=Math.max(1,Number(t));notation.measureInMs=60000.0/notation.bpm*4;}exports.setTempo=setTempo;exports.setBPM=setTempo;// Get the current used tempo
+function setTempo(){var t=arguments.length>0&&arguments[0]!==undefined?arguments[0]:100;if(Array.isArray(t)){t=t[0];}notation.bpm=Math.max(1,Number(t));notation.measureInMs=60000.0/notation.bpm*4;}exports.setTempo=setTempo;exports.setBPM=setTempo;// Get the current used tempo
 // 
 // @return -> tempo in Beats/Minute (BPM)
 // 
@@ -3623,7 +3623,7 @@ function getTempo(){return getSettings().bpm;}exports.getTempo=getTempo;exports.
 // @param {Int/String} -> root of the scale (optional, default=c)
 // @return {Void}
 // 
-function setScale(s="chromatic",r){if(Scales[s]){notation.scale=s;if(r!==undefined){setRoot(r);}notation.map=Scales[s];}}exports.setScale=setScale;// returns the scale and root as object
+function setScale(){var s=arguments.length>0&&arguments[0]!==undefined?arguments[0]:"chromatic";var r=arguments.length>1?arguments[1]:undefined;if(Scales[s]){notation.scale=s;if(r!==undefined){setRoot(r);}notation.map=Scales[s];}}exports.setScale=setScale;// returns the scale and root as object
 // 
 // @return {Object} -> the scale, root and rootInt
 // @return {Void}
@@ -3633,7 +3633,7 @@ function getScale(){return{"scale":getSettings().scale,"root":getSettings().root
 // @param {Int/String} -> root of the scale (optional, default=c)
 // @return {Void}
 // 
-function setRoot(r='c'){if(!isNaN(Number(r))){notation.rootInt=Math.floor(r);notation.root=Note.pitchClass(Note.fromMidi(notation.rootInt));}else if(r in ToneSet){notation.rootInt=ToneSet[r];notation.root=r;}else{console.log('not a valid root');}}exports.setRoot=setRoot;// returns the root of the scale as String and integer
+function setRoot(){var r=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'c';if(!isNaN(Number(r))){notation.rootInt=Math.floor(r);notation.root=Note.pitchClass(Note.fromMidi(notation.rootInt));}else if(r in ToneSet){notation.rootInt=ToneSet[r];notation.root=r;}else{console.log('not a valid root');}}exports.setRoot=setRoot;// returns the root of the scale as String and integer
 // 
 // @return {Object} -> the scale and root
 // @return {Void}
@@ -3684,52 +3684,52 @@ exports.searchScales = searchScales;*/ // Convert a midi value to a note name (6
 // @param {Number/Array} -> midi values to convert
 // @return {String/Array} -> note name
 // 
-function midiToNote(a=48){if(!Array.isArray(a)){return Note.fromMidi(a);}return a.map(x=>Note.fromMidi(x));}exports.midiToNote=midiToNote;exports.mton=midiToNote;// Convert a midi value to a frequency (60 => 261.63 Hz)
+function midiToNote(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:48;if(!Array.isArray(a)){return Note.fromMidi(a);}return a.map(function(x){return Note.fromMidi(x);});}exports.midiToNote=midiToNote;exports.mton=midiToNote;// Convert a midi value to a frequency (60 => 261.63 Hz)
 // With default equal temperament tuning A4 = 440 Hz
 // 
 // @param {Number/Array} -> midi values to convert
 // @return {Number/Array} -> frequency in Hz
 // 
-function midiToFreq(a=48){if(!Array.isArray(a)){return Note.freq(Note.fromMidi(a));}return a.map(x=>Note.freq(Note.fromMidi(x)));}exports.midiToFreq=midiToFreq;exports.mtof=midiToFreq;// Convert a pitch name to a midi value (C4 => 60)
+function midiToFreq(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:48;if(!Array.isArray(a)){return Note.freq(Note.fromMidi(a));}return a.map(function(x){return Note.freq(Note.fromMidi(x));});}exports.midiToFreq=midiToFreq;exports.mtof=midiToFreq;// Convert a pitch name to a midi value (C4 => 60)
 // 
 // @param {String/Array} -> pitch name to convert
 // @return {Number/Array} -> midi value
 // 
-function noteToMidi(a='c4'){if(!Array.isArray(a)){return Note.midi(a);}return a.map(x=>Note.midi(x));}exports.noteToMidi=noteToMidi;exports.ntom=noteToMidi;// Convert a pitch name to a frequency (C4 => 261.63 Hz)
+function noteToMidi(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'c4';if(!Array.isArray(a)){return Note.midi(a);}return a.map(function(x){return Note.midi(x);});}exports.noteToMidi=noteToMidi;exports.ntom=noteToMidi;// Convert a pitch name to a frequency (C4 => 261.63 Hz)
 // With default equal temperament tuning A4 = 440 Hz
 // 
 // @param {String/Array} -> pitch name to convert
 // @return {Number/Array} -> frequency in Hz
 // 
-function noteToFreq(a='c4'){if(!Array.isArray(a)){return Note.freq(a);}return a.map(x=>Note.freq(x));}exports.noteToFreq=noteToFreq;exports.ntof=noteToFreq;// Convert a list of relative semitone intervals to midi
+function noteToFreq(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'c4';if(!Array.isArray(a)){return Note.freq(a);}return a.map(function(x){return Note.freq(x);});}exports.noteToFreq=noteToFreq;exports.ntof=noteToFreq;// Convert a list of relative semitone intervals to midi
 // provide octave offset
 // 
 // @param {Number/Array} -> relative
 // @param {Number/String} -> octave (optional, default=4)
 // @return {Number/Array}
 // 
-function relativeToMidi(a=0,o=4){o=typeof o==='string'?Note.midi(o):o*12;if(!Array.isArray(a)){return a+o;}return a.map(x=>x+o);}exports.relativeToMidi=relativeToMidi;exports.rtom=relativeToMidi;// Convert a list of semitone intervals to frequency
+function relativeToMidi(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;o=typeof o==='string'?Note.midi(o):o*12;if(!Array.isArray(a)){return a+o;}return a.map(function(x){return x+o;});}exports.relativeToMidi=relativeToMidi;exports.rtom=relativeToMidi;// Convert a list of semitone intervals to frequency
 // provide octave offset
 // 
 // @param {Number/Array} -> semitones
 // @param {Number} -> octave (optional, default=4)
 // @return {Number/Array}
 // 
-function relativeToFreq(a=0,o=4){o=typeof o==='string'?Note.midi(o):o*12;if(!Array.isArray(a)){console.log(Note.freq(Note.fromMidi(a+o)));return Note.freq(a+o);}return a.map(x=>Note.freq(Note.fromMidi(x+o)));}exports.relativeToFreq=relativeToFreq;exports.rtof=relativeToFreq;// Map a list of relative semitone values to the selected
+function relativeToFreq(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;o=typeof o==='string'?Note.midi(o):o*12;if(!Array.isArray(a)){console.log(Note.freq(Note.fromMidi(a+o)));return Note.freq(a+o);}return a.map(function(x){return Note.freq(Note.fromMidi(x+o));});}exports.relativeToFreq=relativeToFreq;exports.rtof=relativeToFreq;// Map a list of relative semitone values to the selected
 // scale set with setScale(). Preserves detuning when a 
 // midi floating point value is used
 // 
 // @params {Array/Number} -> Array of relative semitones
 // @return {Array/Number} -> mapped to scale
 // 
-function mapToScale(a=[0]){if(!Array.isArray(a))return mapScale(a);return a.map(x=>mapScale(x));}exports.mapToScale=mapToScale;exports.toScale=mapToScale;function mapScale(a){let d=a-Math.floor(a);let s=Math.floor((a%12+12)%12);let o=Math.floor(a/12);return notation.map[s]+o*12+d;}// Map an array of reletive semitone intervals to scale and 
+function mapToScale(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a))return mapScale(a);return a.map(function(x){return mapScale(x);});}exports.mapToScale=mapToScale;exports.toScale=mapToScale;function mapScale(a){var d=a-Math.floor(a);var s=Math.floor((a%12+12)%12);var o=Math.floor(a/12);return notation.map[s]+o*12+d;}// Map an array of reletive semitone intervals to scale and 
 // output in specified octave as midi value
 // 
 // @param {Array/Int} -> 
 // @param {Int/String} -> octave 
 // @return {Array/Int} -> mapped midi values
 // 
-function mapToMidi(a=[0],o=4){o=typeof o==='string'?Note.midi(o):o*12+notation.rootInt;if(!Array.isArray(a))return a+o;return a.map(x=>mapScale(x)+o);}exports.mapToMidi=mapToMidi;exports.toMidi=mapToMidi;/* WORK IN PROGRESS
+function mapToMidi(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;o=typeof o==='string'?Note.midi(o):o*12+notation.rootInt;if(!Array.isArray(a))return a+o;return a.map(function(x){return mapScale(x)+o;});}exports.mapToMidi=mapToMidi;exports.toMidi=mapToMidi;/* WORK IN PROGRESS
 // Convert a midi value to semitone intervals
 // provide octave offset
 // 
@@ -3781,7 +3781,7 @@ exports.divisionToMs = divisionToMs;
 // @param {Int} -> divisor
 // @return {Int/Array} -> remainder after division
 // 
-function mod(a,mod){if(!Array.isArray(a)){return(a%mod+mod)%mod;}return a.map(x=>(x%mod+mod)%mod);}exports.mod=mod;// Constrain a value between a low
+function mod(a,mod){if(!Array.isArray(a)){return(a%mod+mod)%mod;}return a.map(function(x){return(x%mod+mod)%mod;});}exports.mod=mod;// Constrain a value between a low
 // and high range
 // 
 // @param {Number} -> number to constrain
@@ -3789,7 +3789,7 @@ function mod(a,mod){if(!Array.isArray(a)){return(a%mod+mod)%mod;}return a.map(x=
 // @param {Number} -> maximum value
 // @return {Number} -> constrained value
 // 
-function constrain(a,min,max){if(!Array.isArray(a)){return Math.min(max,Math.max(min,a));}return a.map(x=>Math.min(max,Math.max(min,x)));}exports.constrain=constrain;exports.bound=constrain;// Map a value or array from one input-range 
+function constrain(a,min,max){if(!Array.isArray(a)){return Math.min(max,Math.max(min,a));}return a.map(function(x){return Math.min(max,Math.max(min,x));});}exports.constrain=constrain;exports.bound=constrain;// Map a value or array from one input-range 
 // to a given output-range
 // 
 // @param {Number/Array} -> value to be scaled
@@ -3800,7 +3800,7 @@ function constrain(a,min,max){if(!Array.isArray(a)){return Math.min(max,Math.max
 // @param {Number} -> exponent (optional, default=1)
 // @return {Number/Array}
 // 
-function map(a,...params){if(!Array.isArray(a)){return _map(a,...params);}return a.map(x=>_map(x,...params));}exports.map=map;function _map(a,inLo=0,inHi=1,outLo=0,outHi=1,exp=1){a=(a-inLo)/(inHi-inLo);if(exp!=1){var sign=a>=0.0?1:-1;a=Math.pow(Math.abs(a),exp)*sign;}return a*(outHi-outLo)+outLo;}// add 1 or more values to an array, 
+function map(a){for(var _len5=arguments.length,params=new Array(_len5>1?_len5-1:0),_key5=1;_key5<_len5;_key5++){params[_key5-1]=arguments[_key5];}if(!Array.isArray(a)){return _map.apply(void 0,[a].concat(params));}return a.map(function(x){return _map.apply(void 0,[x].concat(params));});}exports.map=map;function _map(a){var inLo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var inHi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var outLo=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var outHi=arguments.length>4&&arguments[4]!==undefined?arguments[4]:1;var exp=arguments.length>5&&arguments[5]!==undefined?arguments[5]:1;a=(a-inLo)/(inHi-inLo);if(exp!=1){var sign=a>=0.0?1:-1;a=Math.pow(Math.abs(a),exp)*sign;}return a*(outHi-outLo)+outLo;}// add 1 or more values to an array, 
 // preserves listlength of first argument
 // arguments are applied sequentially
 // 
@@ -3808,7 +3808,7 @@ function map(a,...params){if(!Array.isArray(a)){return _map(a,...params);}return
 // @param {Number/Array} -> value to add
 // @return {Number/Array}
 // 
-function add(a=[0],v=0){if(!Array.isArray(a)){return a+v;}if(Array.isArray(v)){for(let i in a){a[i]=a[i]+v[i%v.length];}return a;}return a.map(x=>x+v);}exports.add=add;// subtract 1 or more values from an array
+function add(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;if(!Array.isArray(a)){return a+v;}if(Array.isArray(v)){for(var i in a){a[i]=a[i]+v[i%v.length];}return a;}return a.map(function(x){return x+v;});}exports.add=add;// subtract 1 or more values from an array
 // preserves listlength of first argument
 // arguments are applied sequentially
 // 
@@ -3816,7 +3816,7 @@ function add(a=[0],v=0){if(!Array.isArray(a)){return a+v;}if(Array.isArray(v)){f
 // @param {Number/Array} -> value to subtract
 // @return {Number/Array}
 // 
-function subtract(a=[0],v=0){if(!Array.isArray(a)){return a-v;}if(Array.isArray(v)){for(let i in a){a[i]=a[i]-v[i%v.length];}return a;}return a.map(x=>x-v);}exports.subtract=subtract;exports.sub=subtract;// multiply 1 or more values from an array
+function subtract(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;if(!Array.isArray(a)){return a-v;}if(Array.isArray(v)){for(var i in a){a[i]=a[i]-v[i%v.length];}return a;}return a.map(function(x){return x-v;});}exports.subtract=subtract;exports.sub=subtract;// multiply 1 or more values from an array
 // preserves listlength of first argument
 // arguments are applied sequentially
 // 
@@ -3824,7 +3824,7 @@ function subtract(a=[0],v=0){if(!Array.isArray(a)){return a-v;}if(Array.isArray(
 // @param {Number/Array} -> value to multiply with
 // @return {Number/Array}
 // 
-function multiply(a=[0],v=0){if(!Array.isArray(a)){return a*v;}if(Array.isArray(v)){for(let i in a){a[i]=a[i]*v[i%v.length];}return a;}return a.map(x=>x*v);}exports.multiply=multiply;exports.mul=multiply;// divide 1 or more values from an array
+function multiply(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;if(!Array.isArray(a)){return a*v;}if(Array.isArray(v)){for(var i in a){a[i]=a[i]*v[i%v.length];}return a;}return a.map(function(x){return x*v;});}exports.multiply=multiply;exports.mul=multiply;// divide 1 or more values from an array
 // preserves listlength of first argument
 // arguments are applied sequentially
 // 
@@ -3832,4 +3832,4 @@ function multiply(a=[0],v=0){if(!Array.isArray(a)){return a*v;}if(Array.isArray(
 // @param {Number/Array} -> value to divide with
 // @return {Number/Array}
 // 
-function divide(a=[0],v=0){if(!Array.isArray(a)){return a/v;}if(Array.isArray(v)){for(let i in a){a[i]=a[i]/v[i%v.length];}return a;}return a.map(x=>x/v);}exports.divide=divide;exports.div=divide;},{}]},{},[3])(3);});
+function divide(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;if(!Array.isArray(a)){return a/v;}if(Array.isArray(v)){for(var i in a){a[i]=a[i]/v[i%v.length];}return a;}return a.map(function(x){return x/v;});}exports.divide=divide;exports.div=divide;},{}]},{},[3])(3);});

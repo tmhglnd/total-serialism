@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node test/serialism.test.js",
-    "build": "npm run clean && npm run bundle && npm run build-es5",
+    "build": "npm run clean && npm run bundle && npm run build-es5 && npm run build-min",
     "clean": "rm -rf build",
     "bundle": "mkdir build && browserify --standalone Bundle index.js > build/ts.bundle.js",
     "build-es5": "babel build/ts.bundle.js -o build/ts.es5.js",
