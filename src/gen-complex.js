@@ -23,7 +23,6 @@
 
 const Transform = require('./transform.js');
 const BigNumber = require('bignumber.js');
-const JSON = require('jsonfile');
 
 // configure the bignumber settings
 BigNumber.config({
@@ -274,26 +273,3 @@ function lucas(len=1){
 	return numBonacci(len, 2, 1, 1).map(x => x.toFixed());
 }
 exports.lucas = lucas;
-
-// build the integer sequences dataset for quick access
-// buildDataSet();
-function buildDataSet(){
-	const file = './data/fibonacci.json';
-	let data = { 
-		"fibonacci" : [], 
-		"pell" : [],
-		"tribonacci" : []
-	}
-	data.fibonacci = fibonacci(1024);
-	data.pell = pell(1024);
-	data.tribonacci = tribonacci(1024);
-
-	JSON.writeFile(file, data, { spaces: 2, EOL: '\r\n' }, function (err) {
-		if (err) { 
-			console.error(err); 
-		} else {
-			console.log("//=> Integer Sequences dataset generated");
-		}
-	});
-}
-exports.buildDataSet = buildDataSet;
