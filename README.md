@@ -100,8 +100,6 @@ const Rand = require('total-serialism').Stochastic;
 const Util = require('total-serialism').Utility;
 ```
 
-# Examples
-
 ## Generative Methods
 
 ```js
