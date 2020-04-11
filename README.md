@@ -4,6 +4,45 @@
 
 *This library is a work in progress, and I'm always interested in receiving inspiration, suggestions, enhancements, literature and more. Feel free to file an [issue here](https://github.com/tmhglnd/total-serialism/issues) or make a pull request and I will gladly look into it!*
 
+# Install
+
+Install in node_modules:
+
+```
+$ npm install total-serialism
+```
+
+```js
+// entire package
+const Srl = require('total-serialism');
+// subset of library
+const Gen = require('total-serialism').Generative;
+```
+
+Import es5 version
+
+```js
+// entire package
+const Srl = require('total-serialism/build/ts.es5.js');
+// subset of library
+const Algo = require('total-serialism/build/ts.es5.js').Algorithmic;
+```
+
+Include bundled minified es5 through url in index.html:
+
+```html
+<script src="https://unpkg.com/total-serialism@1.6.8/build/ts.es5.min.js"></script>
+```
+
+```js
+// entire package
+const Srl = TotalSerialism;
+// subset of library
+const Rand = TotalSerialism.Stochastic;
+```
+
+# Table of Content
+
 - [Content](#content)
 - [Install](#install)
 - [Usage](#usage)
@@ -75,12 +114,6 @@ Get fibonacci values as strings (to preserve the big numbers)
 ```js 
 Algo.fibonacci(2, 100);
 //=> [ '354224848179261915075', '573147844013817084101' ] 
-```
-
-# Install
-
-```
-$ npm install total-serialism
 ```
 
 # Usage
