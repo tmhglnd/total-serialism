@@ -8173,9 +8173,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       exports.hexBeat = hexBeat; // A euclidean rhythm generator. Generates values of 0 and 1
       // distributed based on the common denominator after division
       //
-      // @param {Int} steps
-      // @param {Int} beats
-      // @param {Int} rotate
+      // @param {Int} -> steps (optional, default=8)
+      // @param {Int} -> beats (optional, default=4)
+      // @param {Int} -> rotate (optional, default=0)
       // @return {Array}
       // 
 
@@ -9419,28 +9419,53 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
       exports.midiToSemi = midiToSemi;
       exports.mtos = midiToSemi;
-      
-      // Convert a division value to milliseconds based on set BPM
+      */
+      // Convert a beat division value to milliseconds based on the global BPM
       // eg. ['1/4', 1/8', '1/16'] => [500, 250, 125] @ BPM = 120
       // 
-      // @param {Number/String/Array}
+      // @param {Number/String/Array} -> beat division or ratio array
+      // @param {Number} -> set the BPM (optional, default=globalBPM)
       // @return {Number/Array}
       //
-      function divisionToMs(a='1'){
-      	// console.log('divisionToMs', a);
-      	// var arr = [];
-      	// for (let i in a){
-      	// 	// console.log(eval(a[i]));
-      	// 	arr.push(eval(a[i]) * notation.measureInMs);
-      	// }
-      	return a.map(x => {
-      		x = (typeof x === 'string')? eval(x) : x;
-      		return x * notation.measureInMs
-      	});
-      	// return arr;
+
+      function divisionToMs() {
+        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['1'];
+        var bpm = arguments.length > 1 ? arguments[1] : undefined;
+        var measureMs = notation.measureInMs;
+
+        if (bpm !== undefined) {
+          measureMs = 60000.0 / Math.max(1, Number(bpm)) * 4;
+        }
+
+        var v = !Array.isArray(a) ? [a] : a;
+        return v.map(function (x) {
+          // match all division symbols: eg. 1/4, 5/16
+          d = /^\d+(\/\d+)?$/;
+          x = typeof x === 'string' && d.test(x) ? eval(x) : x;
+          return x * measureMs;
+        });
       }
+
       exports.divisionToMs = divisionToMs;
-      */
+      exports.dtoms = divisionToMs; // Convert a beat ratio value to milliseconds based on the BPM
+      // eg. [0.25, 0.125, 0.0625] => [500, 250, 125] @ BPM = 120
+      // 
+      // @param {Number/String/Array} -> beat ratio array
+      // @return {Number/Array}
+      //
+
+      function divisionToRatio() {
+        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['1'];
+        var v = !Array.isArray(a) ? [a] : a;
+        return v.map(function (x) {
+          // match all division symbols: eg. 1/4, 5/16
+          d = /^\d+(\/\d+)?$/;
+          return typeof x === 'string' && d.test(x) ? eval(x) : x;
+        });
+      }
+
+      exports.divisionToRatio = divisionToRatio;
+      exports.dtor = divisionToRatio;
     }, {
       "../data/scales.json": 1,
       "../data/tones.json": 2,

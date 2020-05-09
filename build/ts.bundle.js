@@ -1,24 +1,24 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.TotalSerialism = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 module.exports={
-	"chromatic" :				[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-	"major" :					[0, 0, 2, 2, 4, 5, 5, 7, 7, 9, 9,  11],
-	"minor" :					[0, 0, 2, 3, 3, 5, 7, 7, 8, 8, 10, 10],
-	"minor_melodic" : 			[0, 0, 2, 3, 3, 5, 7, 7, 9, 9, 11, 11],
-	"minor_harmonic" :			[0, 0, 2, 3, 3, 5, 7, 7, 8, 8, 11, 11],
-	"dorian" : 					[0, 0, 2, 3, 3, 5, 5, 7, 7, 9, 10, 10],
-	"phrygian" : 				[0, 1, 1, 3, 3, 5, 7, 7, 8, 8, 10, 10],
-	"lydian" : 					[0, 0, 2, 4, 4, 6, 6, 7, 7, 9, 11, 11],
-	"myxolydian" : 				[0, 0, 2, 4, 4, 5, 5, 7, 7, 9, 10, 10],
-	"locrian" : 				[0, 1, 1, 3, 3, 5, 6, 6, 8, 8, 10, 10],
-	"hungarian" : 				[0, 0, 2, 3, 3, 6, 6, 7, 8, 8, 11, 11],
-	"gypsy" :		 			[0, 1, 1, 4, 4, 5, 5, 7, 8, 8, 11, 11],
-	"major_neapolitan" :		[0, 1, 1, 3, 3, 5, 7, 7, 8, 8, 11, 11],
-	"minor_neapolitan" :		[0, 1, 1, 3, 3, 5, 7, 7, 9, 9, 11, 11],
-	"hexatonic" :	 			[0, 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10],
-	"hexatonic_blues" :			[0, 0, 2, 2, 4, 4, 6, 6, 7, 7, 10, 10],
-	"hexatonic_prometheus" :	[0, 0, 2, 2, 4, 4, 6, 6, 9, 9, 10, 10],
-	"major_pentatonic" :		[0, 0, 2, 2, 4, 4, 7, 7, 7, 9, 9,  9],
-	"minor_pentatonic" :		[0, 0, 3, 3, 3, 5, 5, 7, 7, 10, 10, 10]
+    "chromatic" :				[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    "major" :					[0, 0, 2, 2, 4, 5, 5, 7, 7, 9, 9,  11],
+    "minor" :					[0, 0, 2, 3, 3, 5, 7, 7, 8, 8, 10, 10],
+    "minor_melodic" : 			[0, 0, 2, 3, 3, 5, 7, 7, 9, 9, 11, 11],
+    "minor_harmonic" :			[0, 0, 2, 3, 3, 5, 7, 7, 8, 8, 11, 11],
+    "dorian" : 					[0, 0, 2, 3, 3, 5, 5, 7, 7, 9, 10, 10],
+    "phrygian" : 				[0, 1, 1, 3, 3, 5, 7, 7, 8, 8, 10, 10],
+    "lydian" : 					[0, 0, 2, 4, 4, 6, 6, 7, 7, 9, 11, 11],
+    "myxolydian" : 				[0, 0, 2, 4, 4, 5, 5, 7, 7, 9, 10, 10],
+    "locrian" : 				[0, 1, 1, 3, 3, 5, 6, 6, 8, 8, 10, 10],
+    "hungarian" : 				[0, 0, 2, 3, 3, 6, 6, 7, 8, 8, 11, 11],
+    "gypsy" :		 			[0, 1, 1, 4, 4, 5, 5, 7, 8, 8, 11, 11],
+    "major_neapolitan" :		[0, 1, 1, 3, 3, 5, 7, 7, 8, 8, 11, 11],
+    "minor_neapolitan" :		[0, 1, 1, 3, 3, 5, 7, 7, 9, 9, 11, 11],
+    "hexatonic" :	 			[0, 0, 2, 2, 4, 4, 6, 6, 8, 8, 10, 10],
+    "hexatonic_blues" :			[0, 0, 2, 2, 4, 4, 6, 6, 7, 7, 10, 10],
+    "hexatonic_prometheus" :	[0, 0, 2, 2, 4, 4, 6, 6, 9, 9, 10, 10],
+    "major_pentatonic" :		[0, 0, 2, 2, 4, 4, 7, 7, 7, 9, 9,  9],
+    "minor_pentatonic" :		[0, 0, 3, 3, 3, 5, 5, 7, 7, 10, 10, 10]
 }
 },{}],2:[function(require,module,exports){
 module.exports={
@@ -7571,9 +7571,9 @@ exports.hexBeat = hexBeat;
 // A euclidean rhythm generator. Generates values of 0 and 1
 // distributed based on the common denominator after division
 //
-// @param {Int} steps
-// @param {Int} beats
-// @param {Int} rotate
+// @param {Int} -> steps (optional, default=8)
+// @param {Int} -> beats (optional, default=4)
+// @param {Int} -> rotate (optional, default=0)
 // @return {Array}
 // 
 var pattern, counts, remainders;
@@ -8562,28 +8562,47 @@ function midiToSemi(a=0, o=4){
 }
 exports.midiToSemi = midiToSemi;
 exports.mtos = midiToSemi;
+*/
 
-// Convert a division value to milliseconds based on set BPM
+// Convert a beat division value to milliseconds based on the global BPM
 // eg. ['1/4', 1/8', '1/16'] => [500, 250, 125] @ BPM = 120
 // 
-// @param {Number/String/Array}
+// @param {Number/String/Array} -> beat division or ratio array
+// @param {Number} -> set the BPM (optional, default=globalBPM)
 // @return {Number/Array}
 //
-function divisionToMs(a='1'){
-	// console.log('divisionToMs', a);
-	// var arr = [];
-	// for (let i in a){
-	// 	// console.log(eval(a[i]));
-	// 	arr.push(eval(a[i]) * notation.measureInMs);
-	// }
-	return a.map(x => {
-		x = (typeof x === 'string')? eval(x) : x;
-		return x * notation.measureInMs
+function divisionToMs(a=['1'], bpm){
+	var measureMs = notation.measureInMs;
+	if (bpm !== undefined) {
+		measureMs = 60000.0 / Math.max(1, Number(bpm)) * 4;
+	}
+	var v = (!Array.isArray(a))? [a] : a; 
+	return v.map(x => {
+		// match all division symbols: eg. 1/4, 5/16
+		d = /^\d+(\/\d+)?$/;
+		x = (typeof x === 'string' && d.test(x))? eval(x) : x;
+		return x * measureMs;
 	});
-	// return arr;
 }
 exports.divisionToMs = divisionToMs;
-*/
+exports.dtoms = divisionToMs;
+
+// Convert a beat ratio value to milliseconds based on the BPM
+// eg. [0.25, 0.125, 0.0625] => [500, 250, 125] @ BPM = 120
+// 
+// @param {Number/String/Array} -> beat ratio array
+// @return {Number/Array}
+//
+function divisionToRatio(a=['1']){
+	var v = (!Array.isArray(a))? [a] : a; 
+	return v.map(x => {
+		// match all division symbols: eg. 1/4, 5/16
+		d = /^\d+(\/\d+)?$/;
+		return (typeof x === 'string' && d.test(x))? eval(x) : x;
+	});
+}
+exports.divisionToRatio = divisionToRatio;
+exports.dtor = divisionToRatio;
 },{"../data/scales.json":1,"../data/tones.json":2,"@tonaljs/tonal":23}],39:[function(require,module,exports){
 //==============================================================================
 // utility.js
