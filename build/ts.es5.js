@@ -9440,7 +9440,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         var v = !Array.isArray(a) ? [a] : a;
         return v.map(function (x) {
           // match all division symbols: eg. 1/4, 5/16
-          d = /^\d+(\/\d+)?$/;
+          var d = /^\d+(\/\d+)?$/;
           x = typeof x === 'string' && d.test(x) ? eval(x) : x;
           return x * measureMs;
         });
@@ -9459,7 +9459,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         var v = !Array.isArray(a) ? [a] : a;
         return v.map(function (x) {
           // match all division symbols: eg. 1/4, 5/16
-          d = /^\d+(\/\d+)?$/;
+          var d = /^\d+(\/\d+)?$/;
           return typeof x === 'string' && d.test(x) ? eval(x) : x;
         });
       }

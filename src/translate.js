@@ -323,14 +323,14 @@ exports.mtos = midiToSemi;
 // @return {Number/Array}
 //
 function divisionToMs(a=['1'], bpm){
-	var measureMs = notation.measureInMs;
+	let measureMs = notation.measureInMs;
 	if (bpm !== undefined) {
 		measureMs = 60000.0 / Math.max(1, Number(bpm)) * 4;
 	}
-	var v = (!Array.isArray(a))? [a] : a; 
+	let v = (!Array.isArray(a))? [a] : a; 
 	return v.map(x => {
 		// match all division symbols: eg. 1/4, 5/16
-		d = /^\d+(\/\d+)?$/;
+		let d = /^\d+(\/\d+)?$/;
 		x = (typeof x === 'string' && d.test(x))? eval(x) : x;
 		return x * measureMs;
 	});
@@ -345,10 +345,10 @@ exports.dtoms = divisionToMs;
 // @return {Number/Array}
 //
 function divisionToRatio(a=['1']){
-	var v = (!Array.isArray(a))? [a] : a; 
+	let v = (!Array.isArray(a))? [a] : a; 
 	return v.map(x => {
 		// match all division symbols: eg. 1/4, 5/16
-		d = /^\d+(\/\d+)?$/;
+		let d = /^\d+(\/\d+)?$/;
 		return (typeof x === 'string' && d.test(x))? eval(x) : x;
 	});
 }
