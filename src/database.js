@@ -13,8 +13,8 @@
 //==============================================================================
 
 const fs = require('fs-extra');
-const { Note } = require('@tonaljs/tonal');
 const Algo = require('./gen-complex');
+const { Note } = require('@tonaljs/tonal');
 
 // Build the databases
 buildNoteSet();

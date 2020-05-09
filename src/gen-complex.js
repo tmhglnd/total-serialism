@@ -52,9 +52,9 @@ exports.hexBeat = hexBeat;
 // A euclidean rhythm generator. Generates values of 0 and 1
 // distributed based on the common denominator after division
 //
-// @param {Int} steps
-// @param {Int} beats
-// @param {Int} rotate
+// @param {Int} -> steps (optional, default=8)
+// @param {Int} -> beats (optional, default=4)
+// @param {Int} -> rotate (optional, default=0)
 // @return {Array}
 // 
 var pattern, counts, remainders;
