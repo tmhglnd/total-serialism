@@ -147,19 +147,26 @@ Gen.spread(7);
 // generate an array of 5 floats between range 0-1
 Gen.spreadFloat(5); 
 //=> [ 0, 0.2, 0.4, 0.6, 0.8 ]
+// Alternative: Gen.spreadF()
 
 // generate an array of 5 ints between range 7-19 (19 inclusive)
 Gen.spreadInclusive(5, 7, 19); 
-//=> [ 7, 9, 11, 14, 16 ]
+//=> [ 7, 10, 13, 16, 19 ] 
+// Alternative: Gen.spreadInc()
 
 // generate an array of 9 floats between -1 - 1 (inclusive)
 Gen.spreadInclusiveFloat(9, -1, 1); 
 //=> [ -1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1 ]
+// Alternative: Gen.spreadIncF()
+```
 
+```js
 // fill an array with duplicates of a value
 Gen.fill(10, 2, 15, 3, 20, 4); 
 //=> [ 10, 10, 15, 15, 15, 20, 20, 20, 20 ]
+```
 
+```js
 // generate 10 ints with 1 period of a sine function
 // between a default range of 0-12
 Gen.sine(10);
@@ -174,8 +181,14 @@ Gen.cosine(7, 1.5);
 //=> [ 12, 7, 0, 2, 9, 11, 4 ] 
 
 // generate 8 floats with 1 period of a cosine function
+Gen.sineFloat(8);
+//=> [ 0.000, -0.707, -1, -0.707, -0.000, 0.707, 1, 0.707 ] 
+// Alternative: Gen.sin();
+
+// generate 8 floats with 1 period of a cosine function
 Gen.cosineFloat(8);
 //=> [ 1, 0.707, 0.000, -0.707, -1, -0.707, -0.000, 0.707 ] 
+// Alternative: Gen.cos();
 ```
 
 ## Algorithmic Methods
@@ -313,6 +326,7 @@ Rand.seed(19374);
 // generate an array of random floats in range -1 to 1
 Rand.randomFloat(3, -1, 1); 
 //=> [ 0.6291111850577886, 0.15153786227276944, 0.32814801081039646 ]
+// Alternative Rand.randomF();
 
 // generate an array of random integers in range
 Rand.random(5, 0, 12); 
@@ -383,12 +397,14 @@ Mod.clone([0, 5, 7], 0, 12, -12);
 //=> [ 0, 5, 7, 12, 17, 19, -12, -7, -5 ] 
 
 // combine multiple numbers/arrays into one
-Mod.combine([0, 5], 12, [7, 3]); 
+Mod.join([0, 5], 12, [7, 3]); 
 //=> [ 0, 5, 12, 7, 3 ] 
+// Alternative: Mod.combine()
 
 // duplicate an array certain amount of times
-Mod.duplicate([0, 5, 7], 3); 
+Mod.copy([0, 5, 7], 3); 
 //=> [ 0, 5, 7, 0, 5, 7, 0, 5, 7 ]
+// Alternative: Mod.duplicate()
 
 // add zeroes to a rhythm to make it play once over a certain amount of bars
 Mod.every([1, 0, 1, 0, 1, 1, 0, 1], 2, 8)); 
@@ -407,8 +423,9 @@ Mod.merge([0, 3, 7], [3, 12], [12, -1, 19, 5]);
 //=> [ [0, 3, 12], [3, 12, -1], [7, 19], [5] ]
 
 // generate a palindrome of an array
-Mod.palindrome([0, 3, 5, 7]); 
+Mod.mirror([0, 3, 5, 7]); 
 //=> [ 0, 3, 5, 7, 7, 5, 3, 0 ]
+// Alternative Mod.palindrome()
 
 // rotate an array in positive or negative direction
 Mod.rotate([0, 5, 7, 12], -1); 
@@ -447,22 +464,27 @@ Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11], -1);
 // Sort a mixed array of strings and numbers
 Stat.sort([10, 3.14, 'snare', 'kick', 5, -6, 'hat']);
 //=> [ -6, 10, 3.14, 5, 'hat', 'kick', 'snare' ] 
+```
 
-// Get the average (mean) value from an array
+Measures of central tendencies (Mean, Median, Mode)
+
+```js
+// Get the average (artihmetic mean) value from an array
 Stat.average([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 //=> 5
+// Alternative: Stat.mean()
 
-// Works with "official" statistics terminology
-Stat.mean([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3]);
+Stat.average([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3]);
 //=> -0.0833
 
 // Return the center value (median) from an array
 Stat.center([1, 5, 6, 9, 13]);
 //=> 6 
+// Alternative: Stat.median()
 
 // Returns average of 2 middle values for even listlengths
 // works with "official" statistics terminology
-Stat.median([1, 7, 4, 2, 9, 5]);
+Stat.center([1, 7, 4, 2, 9, 5]);
 //=> 4.5
 ```
 
@@ -483,32 +505,32 @@ Convert easily between relative-semitones, midinotes, notenames and frequencies 
 // Convert Array or Int as midi-number to midi-notenames
 TL.midiToNote([60, 67, 70]);
 //=> [ 'C4', 'G4', 'Bb4' ]
-// alternative: TL.mton()
+// Alternative: TL.mton()
 
 // Convert Array of String as midi-notenames to midi-pitch
 TL.noteToMidi(['c2','d2','f#2']);
 //=> [ 36, 38, 42 ] 
-// alternative: TL.ntom()
+// Alternative: TL.ntom()
 
 // Convert midi-pitches to frequency (A4 = 440 Hz)
 TL.midiToFrequency([60, 67, 72]);
 //=> [ 261.6255653005986, 391.99543598174927, 523.2511306011972 ] 
-// alternative: TL.mtof()
+// Alternative: TL.mtof()
 
 // Convert midi-notenames to frequency (A4 = 440 Hz)
-TL.noteToFreq(['c2','d2','f#2']);
+TL.noteToFrequency(['c2','d2','f#2']);
 //=> [ 65.40639132514966, 73.41619197935188, 92.4986056779086 ] 
-// alternative: TL.ntof()
+// Alternative: TL.ntof()
 
 // Convert relative semitone values to midi-numbers
 // specify the octave as second argument (default = 'C3' = 4 => 48)
 TL.relativeToMidi([-12, 0, 7, 12], 4);
 //=> [ 36, 48, 55, 60 ] 
-// alternative: TL.rtom()
+// Alternative: TL.rtom()
 
 // Convert relative semitone values to frequency (A4 = 440 Hz)
 // specify the octave as second argument (default = 'C3' = 4 => 48)
-TL.rtof([-12, 0, 7, 12], 4);
+TL.relativeToFrequency([-12, 0, 7, 12], 4);
 //=> [ 65.40639132514966,
 //   130.8127826502993,
 //   195.99771799087463,
@@ -525,9 +547,10 @@ TL.setTempo(120);
 // convert beat division strings to milliseconds use bpm from global settings
 TL.divisionToMs(['1/4', '1/8', '3/16', '1/4', '1/6', '2']);
 //=> [ 500, 250, 375, 500, 333.33, 4000 ] 
+// Alternative: TL.dtoms()
 
 // optional second argument sets bpm
-TL.dtoms(['1/4', '1/8', '3/16', '1/4', '1/6', '2'], 100);
+TL.divisionToMs(['1/4', '1/8', '3/16', '1/4', '1/6', '2'], 100);
 //=> [ 600, 300, 450, 600, 400, 4800 ] 
 
 // convert beat ratio floats to milliseconds
@@ -537,6 +560,7 @@ TL.divisionToMs([0.25, 0.125, 0.1875, 0.25, 0.16667, 2]);
 // convert beat division strings to beat ratio floats
 TL.divisionToRatio(['1/4', '1/8', '3/16', '1/4', '1/6', '2']);
 //=> [ 0.25, 0.125, 0.1875, 0.25, 0.1667, 2 ] 
+// Alternative: TL.dtor()
 ```
 
 ### Working with predefined scale and root

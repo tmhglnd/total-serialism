@@ -1,8 +1,8 @@
 
-const entryPoint = "../index";
-// const entryPoint = "../build/ts.bundle.js";
-// const entryPoint = "../build/ts.es5.js";
-// const entryPoint = "../build/ts.es5.min.js";
+let entryPoint = "../index";
+// entryPoint = "../build/ts.bundle.js";
+// entryPoint = "../build/ts.es5.js";
+// entryPoint = "../build/ts.es5.min.js";
 
 const Srl = require(entryPoint);
 
@@ -31,12 +31,12 @@ fullTest();
 
 function fullTest(){
 	console.time('Total Time');
-	// testSerial();
-	// testGen();
-	// testAlgo();
-	// testRand();
-	testMod();
-	testStat();
+	testSerial();
+	testGen();
+	testAlgo();
+	testRand();
+	// testMod();
+	// testStat();
 	// testTranslate();
 	// testUtil();
 
@@ -67,11 +67,19 @@ function testGen(){
 
 	test("Gen.spread()");
 	test("Gen.spreadFloat(7)");
+
 	test("Gen.spread(5, 7, 19)");
 	test("Gen.spread(4, 10, 2)");
+
+	test("Gen.spreadInclusive(5, 7, 19)");
+	test("Gen.spreadInc(4, 10, 2)");
+	
 	test("Gen.spreadFloat(5, 2, 11)");
 	test("Gen.spreadFloat(4, -1, 1)");
+	test("Gen.spreadF(4, -2, 2)");
+	
 	test("Gen.spreadInclusiveFloat(9, -1, 1)");
+	test("Gen.spreadIncF(9, -1, 1)");
 	test("Gen.spreadInclusiveFloatExp(5, 0, 1, 2)");
 	
 	test("Gen.fill()");
@@ -79,7 +87,9 @@ function testGen(){
 
 	test("Gen.sineFloat()");
 	test("Gen.sineFloat(10, 1, -1, 1, 0.5)");
+	test("Gen.sin(8)");
 	test("Gen.cosineFloat(8)");
+	test("Gen.cos(8)");
 
 	test("Gen.sine(10)");
 	test("Gen.sine(12, 1, -1, 1)");
@@ -149,7 +159,7 @@ function testRand(){
 
 	test("Rand.seed(19374)");
 	test("Rand.randomFloat(3, -1, 1)");
-	test("Rand.randomFloat(3, 0.2, 0.5)");
+	test("Rand.randomF(3, 0.2, 0.5)");
 
 	test("Rand.seed(4827)");
 	test("Rand.random(5, 2)");

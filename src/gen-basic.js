@@ -1,4 +1,4 @@
-//==============================================================================
+//==========================================================================
 // gen-basic.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -9,7 +9,7 @@
 // 
 // credits:
 // - spread-methods inspired by Max8's MC functions spread and spreadinclusive
-//==============================================================================
+//==========================================================================
 
 const Util = require('./utility.js');
 
@@ -33,6 +33,7 @@ function spreadFloat(len=1, lo=len, hi=0){
 	return arr;
 }
 exports.spreadFloat = spreadFloat;
+exports.spreadF = spreadFloat;
 
 // Generate a list of n-length starting at one value
 // up untill (but excluding) the 3th argument. 
@@ -95,6 +96,7 @@ function spreadInclusiveFloat(len=1, lo=len, hi=0){
 	return arr;
 }
 exports.spreadInclusiveFloat = spreadInclusiveFloat;
+exports.spreadIncF = spreadInclusiveFloat;
 
 // Generate a list of n-length starting at one value
 // ending at the 3th argument.
@@ -125,6 +127,7 @@ function spreadInclusive(len, lo, hi){
 	return arr.map(v => Math.floor(v));
 }
 exports.spreadInclusive = spreadInclusive;
+exports.spreadInc = spreadInclusive;
 
 // spreadinclusiveFloatExp function floored to integers
 // 
@@ -186,6 +189,7 @@ function sineFloat(len=1, periods=1, lo, hi=0, phase=0){
 	return Util.map(arr, -1, 1, lo, hi);
 }
 exports.sineFloat = sineFloat;
+exports.sin = sineFloat;
 
 // Generate an integer array with n-periods of a sine function
 // Optional last arguments set lo and hi range
@@ -209,6 +213,7 @@ function cosineFloat(len=1, periods=1, lo, hi, phase=0){
 	return sineFloat(len, periods, lo, hi, phase+0.5);
 }
 exports.cosineFloat = cosineFloat;
+exports.cos = cosineFloat;
 
 // Generate an integer array with n-periods of a cosine function
 // See sin() for details

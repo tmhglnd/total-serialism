@@ -187,7 +187,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       };
     }, {}],
     3: [function (require, module, exports) {
-      //==============================================================================
+      //=======================================================================
       // index.js
       // main of 'total-serialism' Package
       // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -196,7 +196,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // total-serialism is a set of methods for the generation and 
       // transformation of number sequences designed with algorithmic 
       // composition for music in mind.
-      //==============================================================================
+      //=======================================================================
       // require the various libraries
       var Generative = require('./src/gen-basic.js');
 
@@ -205,6 +205,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       var Stochastic = require('./src/gen-stochastic.js');
 
       var Transform = require('./src/transform.js');
+
+      var Statistic = require('./src/statistic.js');
 
       var Translate = require('./src/translate.js');
 
@@ -215,6 +217,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       exports.Algorithmic = Algorithmic;
       exports.Stochastic = Stochastic;
       exports.Transform = Transform;
+      exports.Statistic = Statistic;
       exports.Translate = Translate;
       exports.Utility = Utility; // Methods exposed to global scope
 
@@ -231,9 +234,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       "./src/gen-basic.js": 34,
       "./src/gen-complex.js": 35,
       "./src/gen-stochastic.js": 36,
-      "./src/transform.js": 37,
-      "./src/translate.js": 38,
-      "./src/utility.js": 39
+      "./src/statistic.js": 37,
+      "./src/transform.js": 38,
+      "./src/translate.js": 39,
+      "./src/utility.js": 40
     }],
     4: [function (require, module, exports) {
       (function (global, factory) {
@@ -8109,7 +8113,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       exports.cosine = cosine;
     }, {
-      "./utility.js": 39
+      "./utility.js": 40
     }],
     35: [function (require, module, exports) {
       //==============================================================================
@@ -8457,22 +8461,23 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       exports.lucas = lucas;
     }, {
-      "./transform.js": 37,
+      "./transform.js": 38,
       "bignumber.js": 24
     }],
     36: [function (require, module, exports) {
-      //==============================================================================
+      //=======================================================================
       // gen-stochastic.js
       // part of 'total-serialism' Package
       // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
       // MIT License
       //
-      // Stochastic algorithms to generate various forms of random 
+      // Stochastic and Probablity Theory algorithms to generate 
+      // various forms of random 
       // number sequences
       // 
       // credits:
       // - Gratefully using the seedrandom package by David Bau
-      //==============================================================================
+      //=======================================================================
       // require Generative methods
       var Gen = require('./gen-basic.js'); // require seedrandom package
 
@@ -8737,7 +8742,115 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       "seedrandom": 26
     }],
     37: [function (require, module, exports) {
-      //==============================================================================
+      //=======================================================================
+      // statistic.js
+      // part of 'total-serialism' Package
+      // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
+      // MIT License
+      //
+      // Statistical related methods and algorithms that can be helpful in
+      // analysis of number sequences, melodies, rhythms and more
+      // 
+      //=======================================================================
+      // sort an array of numbers or strings. sorts ascending
+      // or descending in numerical and alphabetical order
+      // 
+      // @param {Array} -> array to sort
+      // @param {Int} -> sort direction (positive value is ascending)
+      // @return {Array} -> sorted array, object includes order-indeces
+      // 
+      function sort() {
+        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [0];
+        var d = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+        if (!Array.isArray(a)) {
+          return a;
+        }
+
+        var arr;
+
+        if (a.map(function (x) {
+          return _typeof(x);
+        }).includes('string')) {
+          arr = a.slice().sort();
+        } else {
+          arr = a.slice().sort(function (a, b) {
+            return a - b;
+          });
+        }
+
+        if (d < 0) {
+          return arr.reverse();
+        }
+
+        return arr;
+      }
+
+      exports.sort = sort; // Return the average (artihmetic mean) value in an array
+      // The mean is a measure of central tendency
+      // 
+      // @param {NumberArray} -> input array of n-numbers
+      // @return {Number} -> mean
+      // 
+
+      function mean() {
+        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [0];
+
+        if (!Array.isArray(a)) {
+          return a;
+        }
+
+        var s = 0;
+
+        for (var i in a) {
+          s += a[i];
+        }
+
+        return s / a.length;
+      }
+
+      exports.mean = mean;
+      exports.average = mean; // Return the median (center) value from an array
+      // The median is a measure of central tendency
+      // If array is even number of values the median is the
+      // average of the two center values
+      // 
+      // @param {NumberArray} -> input array of n-numbers
+      // @return {Number} -> median
+      // 
+
+      function median() {
+        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [0];
+
+        if (!Array.isArray(a)) {
+          return a;
+        }
+
+        if (a.map(function (x) {
+          return _typeof(x);
+        }).includes('string')) {
+          console.error('Expected array of numbers but got also strings');
+          return 0;
+        }
+
+        var arr = a.slice().sort(function (a, b) {
+          return a - b;
+        });
+        var c = Math.floor(arr.length / 2);
+
+        if (!(arr.length % 2)) {
+          return (arr[c] + arr[c - 1]) / 2;
+        }
+
+        return arr[c];
+      }
+
+      exports.median = median;
+      exports.center = median; // exports.mode = mode;
+      // exports.common = mode;
+    }, {}],
+    38: [function (require, module, exports) {
+      //=======================================================================
       // transform.js
       // part of 'total-serialism' Package
       // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -8752,11 +8865,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // transformations which have consistently been successfully used on 
       // musical patterns, a basic group of "tried-and-true" musical 
       // manipulations.", in Manipulation of Musical Patterns (1981)
-      //==============================================================================
+      //=======================================================================
       // require the Utility methods
-      var Rand = require('./gen-stochastic.js');
+      // const Rand = require('./gen-stochastic');
+      var Stat = require('./statistic');
 
-      var Util = require('./utility.js'); // duplicate an array, but add an offset to every value
+      var Util = require('./utility'); // duplicate an array, but add an offset to every value
       // 
       // @param {Array} -> array to clone
       // @param {Int, Int2, ... Int-n} -> amount of clones with integer offset
@@ -9008,7 +9122,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         return arr;
       }
 
-      exports.rotate = rotate; // spray the values of one array on the 
+      exports.rotate = rotate; // placeholder for the sort() method found in 
+      // statistic.js
+      // 
+
+      exports.sort = Stat.sort; // spray the values of one array on the 
       // places of values of another array if 
       // the value is greater than 0
       // 
@@ -9046,10 +9164,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       exports.unique = unique;
     }, {
-      "./gen-stochastic.js": 36,
-      "./utility.js": 39
+      "./statistic": 37,
+      "./utility": 40
     }],
-    38: [function (require, module, exports) {
+    39: [function (require, module, exports) {
       //==============================================================================
       // translate.js
       // part of 'total-serialism' Package
@@ -9474,15 +9592,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       "../data/tones.json": 2,
       "@tonaljs/tonal": 23
     }],
-    39: [function (require, module, exports) {
-      //==============================================================================
+    40: [function (require, module, exports) {
+      //=======================================================================
       // utility.js
       // part of 'total-serialism' Package
       // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
       // MIT License
       //
       // Utility functions
-      //==============================================================================
+      //=======================================================================
       // Return the remainder after division
       // works also in the negative direction
       // 

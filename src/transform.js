@@ -50,6 +50,7 @@ function combine(...args){
 	return arr;
 }
 exports.combine = combine;
+exports.join = combine;
 
 // duplicate an array a certain amount of times
 // 
@@ -65,6 +66,7 @@ function duplicate(a=[0], d=2){
 	return arr;
 }
 exports.duplicate = duplicate;
+exports.copy = duplicate;
 
 // add zeroes to an array with a rhythmic sequence
 // the division determins the amount of values per bar
@@ -171,6 +173,7 @@ function palindrome(arr=[0], noDouble=false){
 	return arr.concat(rev);
 }
 exports.palindrome = palindrome;
+exports.mirror = palindrome;
 
 // reverse the order of items in an Array
 // 

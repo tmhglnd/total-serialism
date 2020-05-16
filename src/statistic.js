@@ -31,7 +31,8 @@ function sort(a=[0], d=1){
 }
 exports.sort = sort;
 
-// Return the mean/average value from an array
+// Return the average (artihmetic mean) value in an array
+// The mean is a measure of central tendency
 // 
 // @param {NumberArray} -> input array of n-numbers
 // @return {Number} -> mean
@@ -48,7 +49,7 @@ exports.mean = mean;
 exports.average = mean;
 
 // Return the median (center) value from an array
-// The median is the center value
+// The median is a measure of central tendency
 // If array is even number of values the median is the
 // average of the two center values
 // 
@@ -63,7 +64,7 @@ function median(a=[0]){
 	}
 	let arr = a.slice().sort((a,b) => { return a-b; });
 	let c = Math.floor(arr.length/2);
-	
+
 	if (!(arr.length % 2)){
 		return (arr[c] + arr[c-1]) / 2;
 	}

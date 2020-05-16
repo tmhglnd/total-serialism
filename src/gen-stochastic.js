@@ -56,6 +56,7 @@ function randomFloat(len=1, lo=1, hi=0){
 	return arr;
 }
 exports.randomFloat = randomFloat;
+exports.randomF = randomFloat;
 
 // generate a list of random integer values 
 // between a certain specified range (excluding high val)
