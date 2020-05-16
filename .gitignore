@@ -1,0 +1,5 @@
+# Ignore local files
+.DS_Store
+
+# Ignore the NodeJS Modules
+node_modules/
