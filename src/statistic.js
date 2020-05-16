@@ -10,7 +10,7 @@
 //=======================================================================
 
 // sort an array of numbers or strings. sorts ascending
-//  or descending in numerical and alphabetical order
+// or descending in numerical and alphabetical order
 // 
 // @param {Array} -> array to sort
 // @param {Int} -> sort direction (positive value is ascending)
@@ -24,7 +24,6 @@ function sort(a=[0], d=1){
 	} else {
 		arr = a.slice().sort((a,b) => { return a-b; })
 	}
-	// let arr = a.slice().sort();
 	if (d < 0){
 		return arr.reverse();
 	}
@@ -48,7 +47,7 @@ function mean(a=[0]){
 exports.mean = mean;
 exports.average = mean;
 
-// Return the median value from an array
+// Return the median (center) value from an array
 // The median is the center value
 // If array is even number of values the median is the
 // average of the two center values
@@ -57,18 +56,21 @@ exports.average = mean;
 // @return {Number} -> median
 // 
 function median(a=[0]){
-	console.log('median()', a);
 	if (!Array.isArray(a)) { return a; }
-	let arr = sort(a.slice());	
-	console.log('sort()', arr);
-	
-	if (arr.length % 2 == 1){
-		console.log(Math.floor(arr.length/2), arr.length, arr);
-		return arr[Math.floor(arr.length/2)];
-	} else {
-		let v1 = arr[Math.floor(arr.length/2)];
-		return v1 + arr[Math.ceil(arr.length/2)] / 2;
+	if (a.map(x => typeof x).includes('string')) { 
+		console.error('Expected array of numbers but got also strings');
+		return 0; 
 	}
+	let arr = a.slice().sort((a,b) => { return a-b; });
+	let c = Math.floor(arr.length/2);
+	
+	if (!(arr.length % 2)){
+		return (arr[c] + arr[c-1]) / 2;
+	}
+	return arr[c];
 }
 exports.median = median;
 exports.center = median;
+
+// exports.mode = mode;
+// exports.common = mode;

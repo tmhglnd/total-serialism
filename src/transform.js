@@ -1,4 +1,4 @@
-//==============================================================================
+//=======================================================================
 // transform.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -13,11 +13,12 @@
 // transformations which have consistently been successfully used on 
 // musical patterns, a basic group of "tried-and-true" musical 
 // manipulations.", in Manipulation of Musical Patterns (1981)
-//==============================================================================
+//=======================================================================
 
 // require the Utility methods
-const Rand = require('./gen-stochastic.js');
-const Util = require('./utility.js');
+// const Rand = require('./gen-stochastic');
+const Stat = require('./statistic');
+const Util = require('./utility');
 
 // duplicate an array, but add an offset to every value
 // 
@@ -197,6 +198,11 @@ function rotate(a=[0], r=0){
 	return arr;
 }
 exports.rotate = rotate;
+
+// placeholder for the sort() method found in 
+// statistic.js
+// 
+exports.sort = Stat.sort;
 
 // spray the values of one array on the 
 // places of values of another array if 

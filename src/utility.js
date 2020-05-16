@@ -7,8 +7,6 @@
 // Utility functions
 //=======================================================================
 
-const Mod = require('./transform');
-
 // Return the remainder after division
 // works also in the negative direction
 // 

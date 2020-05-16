@@ -27,23 +27,29 @@ console.log();
 	- test for strings vs numbers
 */
 
-// let arr = Gen.spreadInclusive(10, -12, 12);
+// let arr = Rand.random(12, -12, 12);
 // console.log(arr);
-// console.log(Util.mean(arr));
+// console.log(Stat.mean(arr));
 // console.log(Util.average(arr));
 // console.log(Rand.random(10, -12, 12));
 
-// let arr = [13, 2, 9, 6, 1];
-// console.log(arr.sort());
-// let arr2 = [3, 2, 9];
-// console.log(Util.median(arr));
+let arr = [1, 5, 6, 9, 13];
+console.log(Stat.median(arr));
+
+arr = [1, 5, 11];
+console.log(Stat.median(arr));
+
+arr = [1, 7, 4, 2, 9, 5];
+console.log(Stat.median(arr));
+
+arr = [1, 7, 4, 2, 9, 5, 'hat', 'kick'];
+console.log(Stat.median(arr));
 
 // let arr = Rand.random(10, 0, 20);
-
 // console.log(TL.scaleName());
 // TL.searchScales(['1P', '2M', '3m', '4P', '6m', '7M']);
 
-fullTest();
+// fullTest();
 
 function fullTest(){
 	console.time('Total Time');
@@ -51,7 +57,7 @@ function fullTest(){
 	// testGen();
 	// testAlgo();
 	// testRand();
-	// testMod();
+	testMod();
 	testStat();
 	// testTranslate();
 	// testUtil();
@@ -295,6 +301,10 @@ function testMod(){
 	test("Mod.rotate([0, 5, 7, 12], -1)");
 	test("Mod.rotate([0, [11, 12], 2, 3], 1)");
 
+	test("Mod.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11], -1)");
+	test("Mod.sort([10, 3.14, 'snare', 'kick', 5, -6, 'hat'])");
+	test("Mod.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11])");
+
 	// var sprArr1 = [12, 19, 24];
 	// var sprArr2 = [1, 0, 0, 1, 1, 0, 1, 0, 0.2];
 	// console.log(Mod.spray(sprArr1, sprArr2));
@@ -310,9 +320,16 @@ function testMod(){
 }
 
 function testStat(){
+	pagebreak("Statistic");
+
 	test("Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11], -1)");
 	test("Stat.sort([10, 3.14, 'snare', 'kick', 5, -6, 'hat'])");
 	test("Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11])");
+
+	test("Stat.mean([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3])");
+	test("Stat.average([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3])");
+
+	test("Stat.median()");
 }
 
 function testTranslate(){
