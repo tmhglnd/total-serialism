@@ -1,4 +1,4 @@
-//==============================================================================
+//=======================================================================
 // gen-stochastic.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -9,7 +9,7 @@
 // 
 // credits:
 // - Gratefully using the seedrandom package by David Bau
-//==============================================================================
+//=======================================================================
 
 // require Generative methods
 const Gen = require('./gen-basic.js');

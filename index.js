@@ -1,4 +1,4 @@
-//==============================================================================
+//=======================================================================
 // index.js
 // main of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -7,7 +7,7 @@
 // total-serialism is a set of methods for the generation and 
 // transformation of number sequences designed with algorithmic 
 // composition for music in mind.
-//==============================================================================
+//=======================================================================
 
 // require the various libraries
 const Generative    = require('./src/gen-basic.js');

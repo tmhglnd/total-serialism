@@ -1,10 +1,11 @@
 
-// const entryPoint = "../index";
+const entryPoint = "../index";
 // const entryPoint = "../build/ts.bundle.js";
 // const entryPoint = "../build/ts.es5.js";
-const entryPoint = "../build/ts.es5.min.js";
+// const entryPoint = "../build/ts.es5.min.js";
 
 const Srl = require(entryPoint);
+
 const Gen = Srl.Generative;
 const Algo = Srl.Algorithmic;
 const Mod = Srl.Transform;
@@ -21,10 +22,13 @@ const Util = Srl.Utility;
 	- test for strings vs numbers
 */
 
+// let arr = Gen.spreadInclusive(10, -12, 12);
+// console.log(arr);
+// console.log(Util.mean(arr));
+// console.log(Util.average(arr));
+
 // console.log(TL.scaleName());
 // TL.searchScales(['1P', '2M', '3m', '4P', '6m', '7M']);
-
-// console.log(Algo.pisano(0));
 
 fullTest();
 
@@ -273,6 +277,10 @@ function testMod(){
 	test("Mod.rotate([0, 1, 2, 3], 1)");
 	test("Mod.rotate([0, 5, 7, 12], -1)");
 	test("Mod.rotate([0, [11, 12], 2, 3], 1)");
+
+	test("Mod.sort([-2, -8, -9, 0, 10, 2, 4, 5, 5, 8])");
+	test("Mod.sort([-2, -8, -9, 0, 10, 2, 4, 5, 5, 8], -1)");
+	test("Mod.sort([10, 3.14, 'snare', 'kick', 5, 'tabla', -6, 'hat'])");
 
 	// var sprArr1 = [12, 19, 24];
 	// var sprArr2 = [1, 0, 0, 1, 1, 0, 1, 0, 0.2];
