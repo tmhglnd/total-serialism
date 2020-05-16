@@ -27,29 +27,7 @@ console.log();
 	- test for strings vs numbers
 */
 
-// let arr = Rand.random(12, -12, 12);
-// console.log(arr);
-// console.log(Stat.mean(arr));
-// console.log(Util.average(arr));
-// console.log(Rand.random(10, -12, 12));
-
-let arr = [1, 5, 6, 9, 13];
-console.log(Stat.median(arr));
-
-arr = [1, 5, 11];
-console.log(Stat.median(arr));
-
-arr = [1, 7, 4, 2, 9, 5];
-console.log(Stat.median(arr));
-
-arr = [1, 7, 4, 2, 9, 5, 'hat', 'kick'];
-console.log(Stat.median(arr));
-
-// let arr = Rand.random(10, 0, 20);
-// console.log(TL.scaleName());
-// TL.searchScales(['1P', '2M', '3m', '4P', '6m', '7M']);
-
-// fullTest();
+fullTest();
 
 function fullTest(){
 	console.time('Total Time');
@@ -327,9 +305,14 @@ function testStat(){
 	test("Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11])");
 
 	test("Stat.mean([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3])");
+	test("Stat.average([1, 2, 3, 4, 5, 6, 7, 8, 9])");
 	test("Stat.average([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3])");
 
 	test("Stat.median()");
+	test("Stat.median([1, 5, 6, 9, 13])");
+	test("Stat.center([1, 5, 11])");
+	test("Stat.center([1, 7, 4, 2, 9, 5])");
+	test("Stat.center([1, 7, 4, 2, 9, 5, 'hat', 'kick'])");
 }
 
 function testTranslate(){

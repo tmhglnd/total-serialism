@@ -54,6 +54,7 @@ const Rand = TotalSerialism.Stochastic;
 		- [Fibonacci Sequence](#fibonacci-sequence)
 	- [Stochastic Methods](#stochastic-methods)
 	- [Transformative Methods](#transformative-methods)
+	- [Statistic Methods](#statistic-methods)
 	- [Translate Methods](#translate-methods)
 - [Examples](#examples)
 - [Inspiration & Further Reading](#inspiration--further-reading)
@@ -424,6 +425,45 @@ Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0]);
 // remove duplicates from an array, leave order of appearance intact
 Mod.unique([5, 7, 5, 0, 12, 7, 5]); 
 //=> [ 5, 7, 0, 12 ] 
+```
+
+## Statistic Methods
+
+A set of methods from Statistics and Probability Theory that allow for analysis of number sequences for statistical purposes.
+
+```js
+const Stat = require('total-serialism').Statistic;
+```
+
+```js
+// Sort an array of numbers ascending 
+Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11]);
+//=> [ -12, -10, -7, -6, 2, 3, 4, 6, 8, 11 ] 
+
+// Sort an array of numbers descending with negative second argument
+Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11], -1);
+//=> [ 11, 8, 6, 4, 3, 2, -6, -7, -10, -12 ]
+
+// Sort a mixed array of strings and numbers
+Stat.sort([10, 3.14, 'snare', 'kick', 5, -6, 'hat']);
+//=> [ -6, 10, 3.14, 5, 'hat', 'kick', 'snare' ] 
+
+// Get the average (mean) value from an array
+Stat.average([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+//=> 5
+
+// Works with "official" statistics terminology
+Stat.mean([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3]);
+//=> -0.0833
+
+// Return the center value (median) from an array
+Stat.center([1, 5, 6, 9, 13]);
+//=> 6 
+
+// Returns average of 2 middle values for even listlengths
+// works with "official" statistics terminology
+Stat.median([1, 7, 4, 2, 9, 5]);
+//=> 4.5
 ```
 
 ## Translate Methods
