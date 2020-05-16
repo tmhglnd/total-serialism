@@ -4,7 +4,7 @@
   "description": "A set of methods for the generation and transformation of number sequences useful in algorithmic composition",
   "main": "index.js",
   "scripts": {
-    "test": "node test/serialism.test.js",
+    "test": "nodemon test/serialism.test.js",
     "build": "npm run database && npm run clean && npm run bundle && npm run build-es5 && npm run build-min",
     "clean": "rm -rf build",
     "bundle": "mkdir build && browserify --standalone TotalSerialism index.js > build/ts.bundle.js",
@@ -60,6 +60,7 @@
     "@babel/preset-env": "^7.9.0",
     "browserify": "^16.5.1",
     "fs-extra": "^9.0.0",
+    "nodemon": "^2.0.4",
     "uglify-js": "^3.8.1"
   }
 }

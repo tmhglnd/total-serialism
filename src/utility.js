@@ -1,11 +1,13 @@
-//==============================================================================
+//=======================================================================
 // utility.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
 // MIT License
 //
 // Utility functions
-//==============================================================================
+//=======================================================================
+
+const Mod = require('./transform');
 
 // Return the remainder after division
 // works also in the negative direction
@@ -158,31 +160,3 @@ function divide(a=[0], v=0){
 }
 exports.divide = divide;
 exports.div = divide;
-
-// Return the mean/average value from an array
-// 
-// @param {NumberArray} -> input array of n-numbers
-// @return {Number} -> mean
-// 
-function mean(a=[0]){
-	if (!Array.isArray(a)) { return a; }
-	let s = 0;
-	for (let i in a){
-		s += a[i];
-	}
-	return s / a.length;
-}
-exports.mean = mean;
-exports.average = mean;
-
-// Return the median value from an array
-// The median is the center value
-// If array is even number of values the median is the
-// average of the two center values
-// 
-// @param {NumberArray} -> input array of n-numbers
-// @return {Number} -> median
-// 
-function median(){
-	
-}

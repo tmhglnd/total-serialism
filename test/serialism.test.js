@@ -10,8 +10,13 @@ const Gen = Srl.Generative;
 const Algo = Srl.Algorithmic;
 const Mod = Srl.Transform;
 const Rand = Srl.Stochastic;
+const Stat = Srl.Statistic;
 const TL = Srl.Translate;
 const Util = Srl.Utility;
+
+console.time('requires load');
+console.timeEnd('requires load');
+console.log();
 
 /*
 	Test criteria:
@@ -26,6 +31,14 @@ const Util = Srl.Utility;
 // console.log(arr);
 // console.log(Util.mean(arr));
 // console.log(Util.average(arr));
+// console.log(Rand.random(10, -12, 12));
+
+// let arr = [13, 2, 9, 6, 1];
+// console.log(arr.sort());
+// let arr2 = [3, 2, 9];
+// console.log(Util.median(arr));
+
+// let arr = Rand.random(10, 0, 20);
 
 // console.log(TL.scaleName());
 // TL.searchScales(['1P', '2M', '3m', '4P', '6m', '7M']);
@@ -33,14 +46,18 @@ const Util = Srl.Utility;
 fullTest();
 
 function fullTest(){
-	testSerial();
-	testGen();
-	testAlgo();
-	testRand();
-	testMod();
-	testTranslate();
-	testUtil();
+	console.time('Total Time');
+	// testSerial();
+	// testGen();
+	// testAlgo();
+	// testRand();
+	// testMod();
+	testStat();
+	// testTranslate();
+	// testUtil();
+
 	pagebreak("Test Passed");
+	console.timeEnd('Total Time');
 }
 
 // Global vars for tests
@@ -278,10 +295,6 @@ function testMod(){
 	test("Mod.rotate([0, 5, 7, 12], -1)");
 	test("Mod.rotate([0, [11, 12], 2, 3], 1)");
 
-	test("Mod.sort([-2, -8, -9, 0, 10, 2, 4, 5, 5, 8])");
-	test("Mod.sort([-2, -8, -9, 0, 10, 2, 4, 5, 5, 8], -1)");
-	test("Mod.sort([10, 3.14, 'snare', 'kick', 5, 'tabla', -6, 'hat'])");
-
 	// var sprArr1 = [12, 19, 24];
 	// var sprArr2 = [1, 0, 0, 1, 1, 0, 1, 0, 0.2];
 	// console.log(Mod.spray(sprArr1, sprArr2));
@@ -294,6 +307,12 @@ function testMod(){
 	// console.log(unArr);
 	test("Mod.unique()");
 	test("Mod.unique([5, 7, 5, 0, 12, 7, 5])");
+}
+
+function testStat(){
+	test("Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11], -1)");
+	test("Stat.sort([10, 3.14, 'snare', 'kick', 5, -6, 'hat'])");
+	test("Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11])");
 }
 
 function testTranslate(){
@@ -391,6 +410,16 @@ function test(f){
 		r = "void return";
 	}
 	console.log("//=>", r, "\n");
+}
+
+function benchMark(f, iterations=10000){
+	console.time('benchmark time');
+	console.log(f+";");
+
+	for (var i in iterations){
+		eval(f);
+	}
+	console.timeEnd('benchmark time');
 }
 
 function pagebreak(n){

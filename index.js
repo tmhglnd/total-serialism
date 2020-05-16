@@ -14,6 +14,7 @@ const Generative    = require('./src/gen-basic.js');
 const Algorithmic   = require('./src/gen-complex.js');
 const Stochastic    = require('./src/gen-stochastic.js');
 const Transform     = require('./src/transform.js');
+const Statistic     = require('./src/statistic.js')
 const Translate     = require('./src/translate.js');
 const Utility       = require('./src/utility.js');
 
@@ -22,6 +23,7 @@ exports.Generative  = Generative;
 exports.Algorithmic = Algorithmic;
 exports.Stochastic  = Stochastic;
 exports.Transform   = Transform;
+exports.Statistic   = Statistic;
 exports.Translate   = Translate;
 exports.Utility     = Utility;
 

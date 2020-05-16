@@ -4,7 +4,8 @@
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
 // MIT License
 //
-// Stochastic algorithms to generate various forms of random 
+// Stochastic and Probablity Theory algorithms to generate 
+// various forms of random 
 // number sequences
 // 
 // credits:

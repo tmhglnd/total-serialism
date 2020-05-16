@@ -218,23 +218,6 @@ function spray(values=[0], beats=[0]){
 }
 exports.spray = spray;
 
-// sort an array of numbers or strings. sorts ascending
-//  or descending in numerical and alphabetical order
-// 
-// @param {Array} -> array to sort
-// @param {Int} -> sort direction (positive value is ascending)
-// @return {Array} -> sorted array, object includes order-indeces
-// 
-function sort(a=[0], d=1){
-	if (!Array.isArray(a)) { return a; }
-	if (d < 0){
-		return a.slice().sort().reverse();
-	} else {
-		return a.slice().sort();
-	}
-}
-exports.sort = sort;
-
 // filter duplicate items from an array
 // does not account for 2-dimensional arrays in the array
 // 
