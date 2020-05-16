@@ -1,5 +1,5 @@
-# Ignore local files
+# MacOS files
 .DS_Store
 
-# Ignore the NodeJS Modules
+# Node Modules (download with npm install)
 node_modules/
