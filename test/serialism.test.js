@@ -31,12 +31,12 @@ fullTest();
 
 function fullTest(){
 	console.time('Total Time');
-	testSerial();
-	testGen();
-	testAlgo();
-	testRand();
+	// testSerial();
+	// testGen();
+	// testAlgo();
+	// testRand();
 	// testMod();
-	// testStat();
+	testStat();
 	// testTranslate();
 	// testUtil();
 
@@ -323,6 +323,9 @@ function testStat(){
 	test("Stat.center([1, 5, 11])");
 	test("Stat.center([1, 7, 4, 2, 9, 5])");
 	test("Stat.center([1, 7, 4, 2, 9, 5, 'hat', 'kick'])");
+
+	test("Stat.maximum([-38, -53, -6, 33, 88, 32, -8, 73])");
+	test("Stat.minimum([-38, -53, -6, 33, 88, 32, -8, 73])");
 }
 
 function testTranslate(){

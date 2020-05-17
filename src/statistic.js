@@ -31,7 +31,39 @@ function sort(a=[0], d=1){
 }
 exports.sort = sort;
 
-// Return the average (artihmetic mean) value in an array
+// Return the biggest value from an array
+// 
+// @param {NumberArray} -> input array
+// @return {Number} -> biggest value
+// 
+function maximum(a=[0]){
+	if (!Array.isArray(a)) { return a; }
+	let m = -Infinity;
+	for (let i in a){
+		m = (a[i] > Number(m))? a[i] : m;
+	}
+	return m;
+}
+exports.maximum = maximum;
+exports.max = maximum;
+
+// Return the lowest value from an array
+// 
+// @param {NumberArray} -> input array
+// @return {Number} -> lowest value
+// 
+function minimum(a=[0]){
+	if (!Array.isArray(a)) { return a; }
+	let m = Infinity;
+	for (let i in a){
+		m = (a[i] < Number(m))? a[i] : m;
+	}
+	return m;
+}
+exports.minimum = minimum;
+exports.min = minimum;
+
+// Return the average (artihmetic mean value) from an array
 // The mean is a measure of central tendency
 // 
 // @param {NumberArray} -> input array of n-numbers
@@ -48,7 +80,7 @@ function mean(a=[0]){
 exports.mean = mean;
 exports.average = mean;
 
-// Return the median (center) value from an array
+// Return the median (center value) from an array
 // The median is a measure of central tendency
 // If array is even number of values the median is the
 // average of the two center values
@@ -73,5 +105,15 @@ function median(a=[0]){
 exports.median = median;
 exports.center = median;
 
+// Returns the mode (most common value) from an array
+// The mode is a measure of central tendency
+// Returns an array when multi-modal system
+// 
+// @param {NumberArray} -> input array of n-numbers
+// @return {Number/Array} -> the mode or modes
+// 
+function mode(a=[0]){
+	return a;
+}
 // exports.mode = mode;
 // exports.common = mode;
