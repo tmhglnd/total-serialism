@@ -31,14 +31,14 @@ fullTest();
 
 function fullTest(){
 	console.time('Total Time');
-	testSerial();
-	testGen();
-	testAlgo();
-	testRand();
-	testMod();
+	// testSerial();
+	// testGen();
+	// testAlgo();
+	// testRand();
+	// testMod();
 	testStat();
-	testTranslate();
-	testUtil();
+	// testTranslate();
+	// testUtil();
 
 	pagebreak("Test Passed");
 	console.timeEnd('Total Time');
@@ -326,10 +326,10 @@ function testStat(){
 
 	test("Stat.median()");
 	test("Stat.median([1, 5, 6, 9, 13])");
-	test("Stat.median([1, 5, 6, 'foo', 'bar', 13])");
+	test("Stat.median([1, 5, 6, 'foo', 'bar', 13,])");
 	test("Stat.center([1, 5, 11])");
 	test("Stat.center([1, 7, 4, 2, 9, 5])");
-	test("Stat.center([1, 7, 4, 2, 9, 5, 'foo', 'bar'])");
+	test("Stat.center([1, 7, 4, 2, 9, 5, 'foo', 'bar', true, true])");
 
 	test("Stat.maximum([-38, -53, -6, 33, 88, 32, -8, 73])");
 	test("Stat.minimum([-38, -53, -6, 33, 88, 32, -8, 73])");

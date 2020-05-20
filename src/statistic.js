@@ -9,6 +9,8 @@
 // 
 //=======================================================================
 
+const Mod = require('./transform');
+
 // sort an array of numbers or strings. sorts ascending
 // or descending in numerical and alphabetical order
 // 
@@ -84,17 +86,18 @@ exports.average = mean;
 // The median is a measure of central tendency
 // If array is even number of values the median is the
 // average of the two center values
+// Ignores other datatypes then Number and Boolean
 // 
 // @param {NumberArray} -> input array of n-numbers
 // @return {Number} -> median
 // 
 function median(a=[0]){
 	if (!Array.isArray(a)) { return a; }
-	if (a.map(x => typeof x).includes('string')) { 
-		console.error('Expected array of numbers but got also strings');
-		return 0; 
+	let arr = a.slice();
+	if (arr.map(x => typeof x).includes('string')) { 
+		arr = Mod.filterType(arr, ['number', 'boolean']);
 	}
-	let arr = a.slice().sort((a,b) => { return a-b; });
+	arr = arr.sort((a,b) => { return a-b; });
 	let c = Math.floor(arr.length/2);
 
 	if (!(arr.length % 2)){
