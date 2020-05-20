@@ -6,7 +6,7 @@
 
 # Install
 
-Install in node_modules:
+## Install in node_modules:
 
 ```
 $ npm install total-serialism
@@ -19,7 +19,7 @@ const Srl = require('total-serialism');
 const Gen = require('total-serialism').Generative;
 ```
 
-Import es5 version
+## Import es5 version
 
 ```js
 // entire package
@@ -31,7 +31,13 @@ const Algo = require('total-serialism/build/ts.es5.js').Algorithmic;
 Include bundled minified es5 through url in index.html:
 
 ```html
-<script src="https://unpkg.com/total-serialism@1.6.8/build/ts.es5.min.js"></script>
+<script src="https://unpkg.com/total-serialism/build/ts.es5.min.js"></script>
+```
+
+or a specific version with eg. `@1.6.12`
+
+```html
+<script src="https://unpkg.com/total-serialism@1.6.12/build/ts.es5.min.js"></script>
 ```
 
 ```js
