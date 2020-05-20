@@ -7298,7 +7298,7 @@ if ((typeof module) == 'object' && module.exports) {
 );
 
 },{"crypto":25}],34:[function(require,module,exports){
-//==============================================================================
+//==========================================================================
 // gen-basic.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -7309,7 +7309,7 @@ if ((typeof module) == 'object' && module.exports) {
 // 
 // credits:
 // - spread-methods inspired by Max8's MC functions spread and spreadinclusive
-//==============================================================================
+//==========================================================================
 
 const Util = require('./utility.js');
 
@@ -7333,6 +7333,7 @@ function spreadFloat(len=1, lo=len, hi=0){
 	return arr;
 }
 exports.spreadFloat = spreadFloat;
+exports.spreadF = spreadFloat;
 
 // Generate a list of n-length starting at one value
 // up untill (but excluding) the 3th argument. 
@@ -7395,6 +7396,7 @@ function spreadInclusiveFloat(len=1, lo=len, hi=0){
 	return arr;
 }
 exports.spreadInclusiveFloat = spreadInclusiveFloat;
+exports.spreadIncF = spreadInclusiveFloat;
 
 // Generate a list of n-length starting at one value
 // ending at the 3th argument.
@@ -7425,6 +7427,7 @@ function spreadInclusive(len, lo, hi){
 	return arr.map(v => Math.floor(v));
 }
 exports.spreadInclusive = spreadInclusive;
+exports.spreadInc = spreadInclusive;
 
 // spreadinclusiveFloatExp function floored to integers
 // 
@@ -7486,6 +7489,7 @@ function sineFloat(len=1, periods=1, lo, hi=0, phase=0){
 	return Util.map(arr, -1, 1, lo, hi);
 }
 exports.sineFloat = sineFloat;
+exports.sin = sineFloat;
 
 // Generate an integer array with n-periods of a sine function
 // Optional last arguments set lo and hi range
@@ -7509,6 +7513,7 @@ function cosineFloat(len=1, periods=1, lo, hi, phase=0){
 	return sineFloat(len, periods, lo, hi, phase+0.5);
 }
 exports.cosineFloat = cosineFloat;
+exports.cos = cosineFloat;
 
 // Generate an integer array with n-periods of a cosine function
 // See sin() for details
@@ -7854,6 +7859,7 @@ function randomFloat(len=1, lo=1, hi=0){
 	return arr;
 }
 exports.randomFloat = randomFloat;
+exports.randomF = randomFloat;
 
 // generate a list of random integer values 
 // between a certain specified range (excluding high val)
@@ -8052,7 +8058,39 @@ function sort(a=[0], d=1){
 }
 exports.sort = sort;
 
-// Return the average (artihmetic mean) value in an array
+// Return the biggest value from an array
+// 
+// @param {NumberArray} -> input array
+// @return {Number} -> biggest value
+// 
+function maximum(a=[0]){
+	if (!Array.isArray(a)) { return a; }
+	let m = -Infinity;
+	for (let i in a){
+		m = (a[i] > Number(m))? a[i] : m;
+	}
+	return m;
+}
+exports.maximum = maximum;
+exports.max = maximum;
+
+// Return the lowest value from an array
+// 
+// @param {NumberArray} -> input array
+// @return {Number} -> lowest value
+// 
+function minimum(a=[0]){
+	if (!Array.isArray(a)) { return a; }
+	let m = Infinity;
+	for (let i in a){
+		m = (a[i] < Number(m))? a[i] : m;
+	}
+	return m;
+}
+exports.minimum = minimum;
+exports.min = minimum;
+
+// Return the average (artihmetic mean value) from an array
 // The mean is a measure of central tendency
 // 
 // @param {NumberArray} -> input array of n-numbers
@@ -8069,7 +8107,7 @@ function mean(a=[0]){
 exports.mean = mean;
 exports.average = mean;
 
-// Return the median (center) value from an array
+// Return the median (center value) from an array
 // The median is a measure of central tendency
 // If array is even number of values the median is the
 // average of the two center values
@@ -8094,6 +8132,16 @@ function median(a=[0]){
 exports.median = median;
 exports.center = median;
 
+// Returns the mode (most common value) from an array
+// The mode is a measure of central tendency
+// Returns an array when multi-modal system
+// 
+// @param {NumberArray} -> input array of n-numbers
+// @return {Number/Array} -> the mode or modes
+// 
+function mode(a=[0]){
+	return a;
+}
 // exports.mode = mode;
 // exports.common = mode;
 },{}],38:[function(require,module,exports){
@@ -8149,6 +8197,7 @@ function combine(...args){
 	return arr;
 }
 exports.combine = combine;
+exports.join = combine;
 
 // duplicate an array a certain amount of times
 // 
@@ -8164,6 +8213,7 @@ function duplicate(a=[0], d=2){
 	return arr;
 }
 exports.duplicate = duplicate;
+exports.copy = duplicate;
 
 // add zeroes to an array with a rhythmic sequence
 // the division determins the amount of values per bar
@@ -8184,6 +8234,53 @@ function every(a=[0], bars=4, div=16, shift=0){
 	}
 }
 exports.every = every;
+
+// filter one or multiple values from an array
+// 
+// @param {Array} -> array to filter
+// @param {Number/String/Array} -> values to filter
+// @return (Array} -> filtered array
+// 
+function filter(a=[0], f){
+	let arr = (Array.isArray(a))? a.slice() : [a];
+	f = (Array.isArray(f))? f : [f];
+
+	for (let i in f){
+		let index = arr.indexOf(f[i]);
+		while (index >= 0){
+			arr.splice(index, 1);
+			index = arr.indexOf(f[i]);
+		}
+	}
+	return arr;
+}
+exports.filter = filter;
+
+// filter one or multiple datatypes from an array
+// In this case the input type is the type that is output
+// 
+// @param {Array} -> array to filter
+// @param {String/Array} -> types to filter
+// @return (Array} -> filtered array
+// 
+function filterType(a=[0], t){
+	a = (Array.isArray(a))? a.slice() : [a];
+	t = (Array.isArray(t))? t : [t];
+
+	let types = a.map(x => typeof x);	
+	let arr = [];
+	for (let i in t){
+		let index = types.indexOf(t[i]);
+		while (index >= 0){
+			arr.push(a[index]);
+			a.splice(index, 1);
+			types.splice(index, 1);
+			index = types.indexOf(t[i]);
+		}
+	}
+	return arr;
+}
+exports.filterType = filterType;
 
 // invert a list of values by mapping the lowest value
 // to the highest value and vice versa, flipping everything
@@ -8270,6 +8367,7 @@ function palindrome(arr=[0], noDouble=false){
 	return arr.concat(rev);
 }
 exports.palindrome = palindrome;
+exports.mirror = palindrome;
 
 // reverse the order of items in an Array
 // 
