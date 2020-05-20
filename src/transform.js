@@ -88,6 +88,53 @@ function every(a=[0], bars=4, div=16, shift=0){
 }
 exports.every = every;
 
+// filter one or multiple values from an array
+// 
+// @param {Array} -> array to filter
+// @param {Number/String/Array} -> values to filter
+// @return (Array} -> filtered array
+// 
+function filter(a=[0], f){
+	let arr = (Array.isArray(a))? a.slice() : [a];
+	f = (Array.isArray(f))? f : [f];
+
+	for (let i in f){
+		let index = arr.indexOf(f[i]);
+		while (index >= 0){
+			arr.splice(index, 1);
+			index = arr.indexOf(f[i]);
+		}
+	}
+	return arr;
+}
+exports.filter = filter;
+
+// filter one or multiple datatypes from an array
+// In this case the input type is the type that is output
+// 
+// @param {Array} -> array to filter
+// @param {String/Array} -> types to filter
+// @return (Array} -> filtered array
+// 
+function filterType(a=[0], t){
+	a = (Array.isArray(a))? a.slice() : [a];
+	t = (Array.isArray(t))? t : [t];
+
+	let types = a.map(x => typeof x);	
+	let arr = [];
+	for (let i in t){
+		let index = types.indexOf(t[i]);
+		while (index >= 0){
+			arr.push(a[index]);
+			a.splice(index, 1);
+			types.splice(index, 1);
+			index = types.indexOf(t[i]);
+		}
+	}
+	return arr;
+}
+exports.filterType = filterType;
+
 // invert a list of values by mapping the lowest value
 // to the highest value and vice versa, flipping everything
 // in between. 

@@ -31,14 +31,14 @@ fullTest();
 
 function fullTest(){
 	console.time('Total Time');
-	// testSerial();
-	// testGen();
-	// testAlgo();
-	// testRand();
-	// testMod();
+	testSerial();
+	testGen();
+	testAlgo();
+	testRand();
+	testMod();
 	testStat();
-	// testTranslate();
-	// testUtil();
+	testTranslate();
+	testUtil();
 
 	pagebreak("Test Passed");
 	console.timeEnd('Total Time');
@@ -239,6 +239,12 @@ function testMod(){
 	test("Mod.every([1, 1, 0, 1], 4, 5, -1)");
 	test("Mod.every([1,0,0,1,1], 0.5, 8, 0)");
 	test("Mod.every([1,0,0,1,1], 1.5, 8, 0.5)");
+	
+	test("Mod.filter([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [3, 8, 10])");
+	test("Mod.filter([0, 1.618, 2, 3.14, 4], 3.14)");
+	test("Mod.filter([0, 1, 'foo', 'bar', 2, 3], ['1', 'foo'])");
+	
+	test("Mod.filterType([0, 1, [1, 2], 'foo', 2, null, true, {bar: 5}, 3.14, undefined], 'number')");
 
 	// var invArr = [0, 2, 5, 10, 13];
 	// console.log(Mod.invert(invArr, 5));
@@ -311,7 +317,7 @@ function testStat(){
 	pagebreak("Statistic");
 
 	test("Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11], -1)");
-	test("Stat.sort([10, 3.14, 'snare', 'kick', 5, -6, 'hat'])");
+	test("Stat.sort([10, 3.14, 'foo', 'bar', 5, -6, 'foobar'])");
 	test("Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11])");
 
 	test("Stat.mean([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3])");
@@ -320,12 +326,14 @@ function testStat(){
 
 	test("Stat.median()");
 	test("Stat.median([1, 5, 6, 9, 13])");
+	test("Stat.median([1, 5, 6, 'foo', 'bar', 13])");
 	test("Stat.center([1, 5, 11])");
 	test("Stat.center([1, 7, 4, 2, 9, 5])");
-	test("Stat.center([1, 7, 4, 2, 9, 5, 'hat', 'kick'])");
+	test("Stat.center([1, 7, 4, 2, 9, 5, 'foo', 'bar'])");
 
 	test("Stat.maximum([-38, -53, -6, 33, 88, 32, -8, 73])");
 	test("Stat.minimum([-38, -53, -6, 33, 88, 32, -8, 73])");
+	test("Stat.minimum([-38, -53, -6, 'foo', 33, 'bar'])");
 }
 
 function testTranslate(){

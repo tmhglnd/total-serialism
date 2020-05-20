@@ -410,6 +410,14 @@ Mod.copy([0, 5, 7], 3);
 Mod.every([1, 0, 1, 0, 1, 1, 0, 1], 2, 8)); 
 //=> [ 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ]
 
+// remove values from an array
+Mod.filter([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [3, 8, 10]);
+//=> [ 0, 1, 2, 4, 5, 6, 7, 9 ] 
+
+// return only a specific datatype (in this case you specify the type to return)
+Mod.filterType([0, 1, [1, 2], 'foo', 2, null, true, {bar: 5}, 3.14, undefined], 'number');
+//=> [ 0, 1, 2, 3.14 ] 
+
 // invert an array around a center point
 Mod.invert([0, 2, 5, 10, 13], 5); 
 //=> [ 10, 8, 5, 0, -3 ]
@@ -486,6 +494,18 @@ Stat.center([1, 5, 6, 9, 13]);
 // works with "official" statistics terminology
 Stat.center([1, 7, 4, 2, 9, 5]);
 //=> 4.5
+```
+
+```js
+// Return the maximum value from an array
+Stat.maximum([-38, -53, -6, 33, 88, 32, -8, 73]);
+//=> 88 
+// Alternative: Stat.max()
+
+// Return the minimum value from an array
+Stat.minimum([-38, -53, -6, 33, 88, 32, -8, 73]);
+//=> -53 
+// Alternative: Stat.min()
 ```
 
 ## Translate Methods
