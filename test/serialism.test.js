@@ -27,18 +27,23 @@ console.log();
 	- test for strings vs numbers
 */
 
-fullTest();
+console.log(Stat.common([1,2,3,4,5,6,7,7]));
+console.log(Stat.common([1,1,1,4,5,6,7,7]));
+console.log(Stat.common([1,2,3,3,3,6,3,7]));
+console.log(Stat.common([1,3,3,4,5,2,2,1]));
+
+// fullTest();
 
 function fullTest(){
 	console.time('Total Time');
-	// testSerial();
-	// testGen();
-	// testAlgo();
-	// testRand();
-	// testMod();
+	testSerial();
+	testGen();
+	testAlgo();
+	testRand();
+	testMod();
 	testStat();
-	// testTranslate();
-	// testUtil();
+	testTranslate();
+	testUtil();
 
 	pagebreak("Test Passed");
 	console.timeEnd('Total Time');
