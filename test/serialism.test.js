@@ -27,12 +27,7 @@ console.log();
 	- test for strings vs numbers
 */
 
-console.log(Stat.common([1,2,3,4,5,6,7,7]));
-console.log(Stat.common([1,1,1,4,5,6,7,7]));
-console.log(Stat.common([1,2,3,3,3,6,3,7]));
-console.log(Stat.common([1,3,3,4,5,2,2,1]));
-
-// fullTest();
+fullTest();
 
 function fullTest(){
 	console.time('Total Time');
@@ -332,9 +327,14 @@ function testStat(){
 	test("Stat.median()");
 	test("Stat.median([1, 5, 6, 9, 13])");
 	test("Stat.median([1, 5, 6, 'foo', 'bar', 13,])");
+	
 	test("Stat.center([1, 5, 11])");
 	test("Stat.center([1, 7, 4, 2, 9, 5])");
 	test("Stat.center([1, 7, 4, 2, 9, 5, 'foo', 'bar', true, true])");
+	
+	test("Stat.common([8, 4, 3, 11, 9, 0, 11, 2, 10, 5, 11, 0])");
+	test("Stat.common([8, 4, 3, 9, 9, 0, 2, 10, 5, 11, 0, 11])");
+	test("Stat.common([8, 4, 3, 'foo', 'foo', 0, 2, 10, 5, 11, 0, 11])");
 
 	test("Stat.maximum([-38, -53, -6, 33, 88, 32, -8, 73])");
 	test("Stat.minimum([-38, -53, -6, 33, 88, 32, -8, 73])");

@@ -8758,13 +8758,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // analysis of number sequences, melodies, rhythms and more
       // 
       //=======================================================================
-      // sort an array of numbers or strings. sorts ascending
+      var Mod = require('./transform'); // sort an array of numbers or strings. sorts ascending
       // or descending in numerical and alphabetical order
       // 
       // @param {Array} -> array to sort
       // @param {Int} -> sort direction (positive value is ascending)
       // @return {Array} -> sorted array, object includes order-indeces
       // 
+
+
       function sort() {
         var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [0];
         var d = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
@@ -8866,6 +8868,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // The median is a measure of central tendency
       // If array is even number of values the median is the
       // average of the two center values
+      // Ignores other datatypes then Number and Boolean
       // 
       // @param {NumberArray} -> input array of n-numbers
       // @return {Number} -> median
@@ -8878,14 +8881,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           return a;
         }
 
-        if (a.map(function (x) {
+        var arr = a.slice();
+
+        if (arr.map(function (x) {
           return _typeof(x);
         }).includes('string')) {
-          console.error('Expected array of numbers but got also strings');
-          return 0;
+          arr = Mod.filterType(arr, ['number', 'boolean']);
         }
 
-        var arr = a.slice().sort(function (a, b) {
+        arr = arr.sort(function (a, b) {
           return a - b;
         });
         var c = Math.floor(arr.length / 2);
@@ -8898,21 +8902,51 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
 
       exports.median = median;
-      exports.center = median; // Returns the mode (most common value) from an array
+      exports.center = median; // Returns the mode(s) (most common value) from an array
       // The mode is a measure of central tendency
       // Returns an array when multi-modal system
       // 
       // @param {NumberArray} -> input array of n-numbers
       // @return {Number/Array} -> the mode or modes
-      // 
+      //
 
       function mode() {
         var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [0];
-        return a;
-      } // exports.mode = mode;
-      // exports.common = mode;
 
-    }, {}],
+        if (!Array.isArray(a)) {
+          return a;
+        }
+
+        var arr = a.slice().sort(function (a, b) {
+          return a - b;
+        });
+        var amount = 1;
+        var streak = 0;
+        var modes = [];
+
+        for (var i = 1; i < arr.length; i++) {
+          if (arr[i - 1] != arr[i]) {
+            amount = 0;
+          }
+
+          amount++;
+
+          if (amount > streak) {
+            streak = amount;
+            modes = [arr[i]];
+          } else if (amount == streak) {
+            modes.push(arr[i]);
+          }
+        }
+
+        return modes;
+      }
+
+      exports.mode = mode;
+      exports.common = mode;
+    }, {
+      "./transform": 38
+    }],
     38: [function (require, module, exports) {
       //=======================================================================
       // transform.js

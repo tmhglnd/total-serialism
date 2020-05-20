@@ -114,31 +114,26 @@ exports.center = median;
 // 
 // @param {NumberArray} -> input array of n-numbers
 // @return {Number/Array} -> the mode or modes
-// 
+//
 function mode(a=[0]){
-	// console.log('mode()', a);
 	if (!Array.isArray(a)) { return a; }
 	let arr = a.slice().sort((a,b) => { return a-b; });
-	
+
 	let amount = 1;
 	let streak = 0;
 	let modes = [];
-	// console.log(arr);
+
 	for (let i=1; i<arr.length; i++){
-		// console.log('compare', arr[i-1], arr[i]);
 		if (arr[i-1] != arr[i]){
 			amount = 0;
 		}
 		amount++;
-		// console.log('streak', streak);
 		if (amount > streak){
 			streak = amount;
 			modes = [arr[i]];
 		} else if (amount == streak){
 			modes.push(arr[i]);
 		}
-		// console.log('best', best);
-		// console.log('number', num);
 	}
 	return modes;
 }

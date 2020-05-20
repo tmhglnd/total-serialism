@@ -82,15 +82,27 @@ The library consists of a few subsets:
 
 # Newest features
 
+A libary of statistical methods is now included, featuring methods for returning the mean, median and mode from an array
+
+```js
+// Get the average (artihmetic mean) value from an array
+Stat.average([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+//=> 5
+
+// Return the center value (median) from an array
+Stat.center([1, 5, 6, 9, 13]);
+//=> 6 
+
+// Returns the most common value (mode) from an array as an array
+Stat.common([8, 4, 3, 11, 9, 0, 11, 2, 10, 5, 11, 0]);
+//=> [ 11 ]
+```
+
 Set a global scale and map relative values to that scale to stay in tune
 
 ```js
 // Set the global scale used with toScale() and toMidi() methods
 TL.setScale('minor_harmonic', 'c');
-
-// Map relative numbers to a specified scale class (excluding root)
-TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);;
-//=> [ 0, 0, 2, 3, 3, 5, 7, 7, 8, 8, 11, 11 ] 
 
 // Map relative numbers to a specified scale class (including root)
 // output as midi value. Specify an octave (default = 'C3' = 4 => 48)
@@ -106,23 +118,12 @@ Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]});
 //=> [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1 ]
 ```
 
-Pick random values from an urn filled with a range of integers
-```js
-// with default range 0 to 12 (exclusive), influenced by the random seed
-Rand.urn(5);
-//=>  [ 3, 6, 2, 8, 7 ] 
-```
-
-Generate Pisano periods from Fibonacci sequences
+Generate Pisano periods and Fibonacci sequences
 
 ```js 
 Algo.pisano(7);
 //=> [ 0, 1, 1, 2, 3, 5, 1, 6, 0, 6, 6, 5, 4, 2, 6, 1 ]
-```
 
-Get fibonacci values as strings (to preserve the big numbers)
-
-```js 
 Algo.fibonacci(2, 100);
 //=> [ '354224848179261915075', '573147844013817084101' ] 
 ```
@@ -504,6 +505,14 @@ Stat.center([1, 5, 6, 9, 13]);
 // works with "official" statistics terminology
 Stat.center([1, 7, 4, 2, 9, 5]);
 //=> 4.5
+
+// Returns the most common value (mode) from an array as an array
+Stat.common([8, 4, 3, 11, 9, 0, 11, 2, 10, 5, 11, 0]);
+//=> [ 11 ] 
+
+// In the case of a multi-modal system the array contains all common values
+Stat.common([8, 4, 3, 9, 9, 0, 2, 10, 5, 11, 0, 11]);
+//=> [ 0, 9, 11 ] 
 ```
 
 ```js
