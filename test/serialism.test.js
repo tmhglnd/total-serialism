@@ -27,7 +27,18 @@ console.log();
 	- test for strings vs numbers
 */
 
-fullTest();
+var markov = new Rand.MarkovChain();
+
+markov.train([0, 1, 1, 2, 1, 3, 2, 3, 1, 3, 0]);
+console.log(markov.chain);
+
+markov.train([0, 7, 5, 7, 7, 9, 3, 3, 5, 0, 0, 1]);
+console.log(markov.chain);
+
+markov.clear();
+console.log(markov.chain);
+
+// fullTest();
 
 function fullTest(){
 	console.time('Total Time');

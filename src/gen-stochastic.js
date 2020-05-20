@@ -221,3 +221,35 @@ function pick(len=1, a=[0, 1]){
 	return arr;
 }
 exports.pick = pick;
+
+
+// Initialize a Markov Chain Model (One of the simpelest forms of ML)
+// A Markov chain is a stochastic model describing a sequence 
+// of possible events in which the probability of each event depends 
+// only on the state of the previous (multiple) events.
+// 
+// @method chain() -> return transition table from Markov
+// @method clear() -> erase the transition table
+// @method train() -> train the markov model
+// 
+class MarkovChain {
+	constructor() {
+		this.table = {};
+	}
+	get chain(){
+		return this.table;
+	}
+	clear(){
+		this.table = {};
+	}
+	train(a){
+		for (let i=1; i<a.length; i++){
+			if (!this.table[a[i-1]]) {
+				this.table[a[i-1]] = [a[i]];
+			} else {
+				this.table[a[i-1]].push(a[i]);
+			}
+		}
+	}
+}
+exports.MarkovChain = MarkovChain;
