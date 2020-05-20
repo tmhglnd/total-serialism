@@ -63,9 +63,10 @@ const Rand = TotalSerialism.Stochastic;
 		- [Lindenmayer System](#lindenmayer-string-expansion-l-system)
 		- [Fibonacci Sequence](#fibonacci-sequence)
 	- [Stochastic Methods](#stochastic-methods)
-	- [Transformative Methods](#transformative-methods)
+	- [Transform Methods](#transform-methods)
 	- [Statistic Methods](#statistic-methods)
 	- [Translate Methods](#translate-methods)
+	- [Utility Methods](#utility-methods)
 - [Examples](#examples)
 - [Inspiration & Further Reading](#inspiration--further-reading)
 - [License](#license)
@@ -73,12 +74,13 @@ const Rand = TotalSerialism.Stochastic;
 # Content
 
 The library consists of a few subsets:
-- `Generative` : Basic methods that generate arrays of number sequences, such as methods that generate an ascending array of numbers evenly spread between a low and high value.
-- `Algorithmic` : These are also generative methods, but are in general more complex algorithms, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci sequence, pisano periods and more.
-- `Transform` : Methods that transform the array in some fashion. Think of methods such as reversing, palindrome, duplicating, inversing, interleaving and more.
-- `Stochastic` : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more.
-- `Translate` : Translate between different notation systems. For example convert midi values to frequency, or note names to midi integers. Or use a relative semitone notation system and convert to midi. Map values in an Array to a specified scale, and output the relative values in the specified scale, root and octave.
-- `Utility` : Methods necessary to run functions in the libraries above. But can also be of help in your own algorithmic processes.
+- [`Generative`](#generative-methods) : Basic methods that generate arrays of number sequences, such as methods that generate an ascending array of numbers evenly spread between a low and high value.
+- [`Algorithmic`](#algorithmic-methods) : These are also generative methods, but are in general more complex algorithms, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci sequence, pisano periods and more.
+- [`Stochastic`](#stochastic-methods) : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more.
+- [`Transform`](#transform-methods) : Methods that transform the array in some fashion. Think of methods such as reversing, palindrome, duplicating, inversing, interleaving and more.
+- [`Statistic`](#statistic-methods) : Some methods useful for analysis of arrays. For example getting the average value or the most common value from an array.
+- [`Translate`](#translate-methods) : Translate between different notation systems. For example convert midi values to frequency, or note names to midi integers. Or use a relative semitone notation system and convert to midi. Map values in an Array to a specified scale, and output the relative values in the specified scale, root and octave.
+- [`Utility`](#utility-methods) : Basic arithmetic and methods necessary to run functions in the libraries above. But can also be of help in your own algorithmic processes.
 
 # Newest features
 
@@ -397,7 +399,7 @@ Rand.pick(5, ['c', 'e', ['g', 'd']]);
 //=> [ 'e', [ 'g', 'd' ], 'c', [ 'g', 'd' ], 'e' ] 
 ```
 
-## Transformative Methods
+## Transform Methods
 
 ```js
 const Mod = require('total-serialism').Transform;
@@ -648,6 +650,44 @@ TL.toMidi([8, 14, -2, 22, -7, 22, -2, 14], 4);
 // Preserves floating point for detune/microtonality
 TL.toMidi([0, 4.1, 6.5, 7.1, 9.25], 'c3');
 //=> [ 48, 51.1, 55.5, 55.1, 56.25 ] 
+```
+
+# Utility Methods
+
+Mapping and scaling methods
+
+```js
+// Apply modulus (%) operation to an array
+Util.mod([-2, 4, 3, 7], 5);
+//=> [ 3, 4, 3, 2 ] 
+
+// Constrain an array between low and high values
+Util.bound([-2, 4, 3, 7], 1, 5);
+//=> [ 1, 4, 3, 5 ] 
+
+// Scale values from an input range to output range
+Util.map([0, 1, 2, 3, 4], 0, 4, -1, 1);
+//=> [ -1, -0.5, 0, 0.5, 1 ] 
+```
+
+Basic arithmetic methods that accept arrays in both arguments. Outputlength is always the length of the longest list. 
+
+```js
+// Add two arrays sequentially
+Util.add([1, 2, 3, 4], [1, 2, 3]);
+//=> [ 2, 4, 6, 5 ] 
+
+// Subtract two arrays sequentially
+Util.subtract([1, 2, 3, 4], [1, 2, 3]);
+//=> [ 0, 0, 0, 3 ] 
+
+// Multiply two arrays sequentially
+Util.multiply([1, 2, 3, 4], [1, 2, 3]);
+//=> [ 1, 4, 9, 4 ] 
+
+// Divide two arrays sequentially
+Util.divide([1, 2, 3, 4], [1, 2, 3]);
+//=> [ 1, 1, 1, 4 ] 
 ```
 
 # Examples
