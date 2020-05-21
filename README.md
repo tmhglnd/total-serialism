@@ -30,15 +30,11 @@ const Algo = require('total-serialism/build/ts.es5.js').Algorithmic;
 
 ## Include in html
 
-Include bundled minified es5 through url in index.html
+Include latest or specific version of bundled minified es5 through url in index.html 
 
 ```html
 <script src="https://unpkg.com/total-serialism/build/ts.es5.min.js"></script>
-```
 
-or a specific version with eg. `@1.6.12`
-
-```html
 <script src="https://unpkg.com/total-serialism@1.6.12/build/ts.es5.min.js"></script>
 ```
 
@@ -63,6 +59,7 @@ const Rand = TotalSerialism.Stochastic;
 		- [Lindenmayer System](#lindenmayer-string-expansion-l-system)
 		- [Fibonacci Sequence](#fibonacci-sequence)
 	- [Stochastic Methods](#stochastic-methods)
+		- [Markov Chain](#markov-chain)
 	- [Transform Methods](#transform-methods)
 	- [Statistic Methods](#statistic-methods)
 	- [Translate Methods](#translate-methods)
@@ -76,7 +73,7 @@ const Rand = TotalSerialism.Stochastic;
 The library consists of a few subsets:
 - [`Generative`](#generative-methods) : Basic methods that generate arrays of number sequences, such as methods that generate an ascending array of numbers evenly spread between a low and high value.
 - [`Algorithmic`](#algorithmic-methods) : These are also generative methods, but are in general more complex algorithms, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci sequence, pisano periods and more.
-- [`Stochastic`](#stochastic-methods) : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more.
+- [`Stochastic`](#stochastic-methods) : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more. Also includes Markov Chain.
 - [`Transform`](#transform-methods) : Methods that transform the array in some fashion. Think of methods such as reversing, palindrome, duplicating, inversing, interleaving and more.
 - [`Statistic`](#statistic-methods) : Some methods useful for analysis of arrays. For example getting the average value or the most common value from an array.
 - [`Translate`](#translate-methods) : Translate between different notation systems. For example convert midi values to frequency, or note names to midi integers. Or use a relative semitone notation system and convert to midi. Map values in an Array to a specified scale, and output the relative values in the specified scale, root and octave.
@@ -332,6 +329,9 @@ Algo.nbonacci(10, 0, 1, 1);
 ```js
 const Rand = require('total-serialism').Stochastic;
 ```
+
+General randomness
+
 ```js
 // set the random number generator seed
 Rand.seed(19374);
@@ -363,6 +363,8 @@ Rand.twelveTone();
 //=> [ 11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10 ]
 ```
 
+Pick values from a range of whole numbers randomly
+
 ```js
 // generate an array with random values picked from an urn
 // with default range 0 to 12 (exclusive)
@@ -379,6 +381,8 @@ Rand.urn(10, 7);
 Rand.urn(12, -3, 3);
 //=> [ -3, 1, -1, 2, 0, -2, 2, -2, 0, -1, -3, 1 ]
 ```
+
+Make a new array by randomly choosing values from another array
 
 ```js
 // Choose random items from an array provided, uniform distribution
@@ -397,6 +401,49 @@ Rand.pick(5, [0, 1, 2, 3, 5, 8, 13]);
 // Array can have any datatype
 Rand.pick(5, ['c', 'e', ['g', 'd']]);
 //=> [ 'e', [ 'g', 'd' ], 'c', [ 'g', 'd' ], 'e' ] 
+```
+
+### Markov Chain
+
+Build a Markov Chain from a set of data and use it to generate new values or an array of values based on the probabilities of the transitions in the provided training dataset. A Markov Chain is a model that describes possible next events based on a current state (first order) and sometimes previous states (2nd, 3rd, ... n-order). The Markov Chain is a broadly used method in algorithmic music to generate new material (melodies, rhythms, but even words) based on a set of provided material.
+
+```js
+const Rand = require('total-serialism').Stochastic;
+
+var melody = ['c', 'e', 'f', 'e', 'g', 'f', 'a', 'c'];
+// make a MarkovChain instance and optionally train with array
+let markov = new Rand.MarkovChain(melody);
+
+// add more to the training
+var melody2 = ['g', 'a', 'b', 'g', 'a', 'f', 'd', 'e'];
+markov.train(melody2);
+
+// view the transition table (stored as dictionary)
+console.log(markov.table);
+// { c: [ 'e' ],
+//   e: [ 'f', 'g' ],
+//   f: [ 'e', 'a', 'd' ],
+//   g: [ 'f', 'a', 'a' ],
+//   a: [ 'c', 'b', 'f' ],
+//   b: [ 'g' ],
+//   d: [ 'e' ] }
+
+// set the state of the model used as initial value
+markov.state('c');
+
+// set the seed for the scoped random number generator
+markov.seed(31415);
+
+// go to the next state based on the model probabilities
+markov.next();
+// => 'e'
+
+// generate an array of 10 values 
+markov.chain(10);
+// => [ 'f', 'd', 'e', 'g', 'a', 'b', 'g', 'a', 'c', 'e' ]
+
+// clear the model
+markov.clear();
 ```
 
 ## Transform Methods
@@ -755,6 +802,8 @@ Some methods from the Transformational and Stochastic library are inspired by ob
 - [Online Encyclopedia of Integer Sequences](https://oeis.org/A000045)
 
 - [Pisano Periods explained on Numberphile](https://www.youtube.com/watch?v=Nu-lW-Ifyec)
+
+- [Markov Chain on wikipedia](https://en.wikipedia.org/wiki/Markov_chain)	
 
 # Missing Something?
 

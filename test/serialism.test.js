@@ -29,33 +29,31 @@ console.log();
 
 var markov = new Rand.MarkovChain();
 
-markov.train([0, 1, 1, 2, 1, 3, 2, 3, 1, 3, 0]);
-// console.log(markov.chain);
+var set = [0, 1, 1, 2, 1, 3, 2, 3, 1, 3, 0];
+var set2 = [0, 7, 5, 7, 7, 9, 3, 3, 5, 0, 0, 1];
 
-markov.train([0, 7, 5, 7, 7, 9, 3, 3, 5, 0, 0, 1]);
-// console.log(markov.chain);
+var melody = ['c', 'e', 'f', 'e', 'g', 'f', 'a', 'c'];
+var melody2 = ['g', 'a', 'b', 'g', 'a', 'f', 'd', 'e'];
 
-var mark2 = new Rand.MarkovChain(markov.table);
-console.log('chain 2', mark2.table);
+// train with an array of values
+markov.train(melody);
+
+// add more to the training
+markov.train(melody2);
+
+console.log(markov.table);
+
+// var mark2 = new Rand.MarkovChain(markov.table);
+// console.log('chain 2', mark2.table);
 
 // markov.state(2);
-markov.state(2);
+markov.state('c');
 // markov.seed(58392);
-markov.seed(31463);
-let m = [];
-for (var i=0; i<10; i++){
-	m.push(markov.next());
-}
-console.log('result', m);
+markov.seed(31415);
 
-// var tableCopy = markov.table;
-// tableCopy[0] = undefined;
-// console.log('copy', tableCopy);
-// console.log('original', markov.table);
+console.log(JSON.stringify(markov.table));
 
-markov.state(2);
-markov.seed(58392);
-markov.seed(31463);
+console.log(markov.next());
 console.log('result', markov.chain(10))
 
 markov.clear();

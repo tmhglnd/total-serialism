@@ -7830,7 +7830,7 @@ var rng = seedrandom();
 // @return {Void}
 // 
 function seed(v=0){
-	if (v === 0 || v === null){
+	if (v === 0 || v === null || v === undefined){
 		rng = seedrandom();
 	} else {
 		rng = seedrandom(v);
@@ -8024,6 +8024,91 @@ function pick(len=1, a=[0, 1]){
 	return arr;
 }
 exports.pick = pick;
+
+
+// Initialize a Markov Chain Model (One of the simpelest forms of ML)
+// A Markov chain is a stochastic model describing a sequence 
+// of possible events in which the probability of each event depends 
+// only on the state of the previous (multiple) events.
+// 
+// @get chain -> return transition table from Markov
+// @method clear() -> erase the transition table
+// @method train() -> train the markov model
+// @method seed() -> seed the random number generator (scoped RNG)
+// @method axiom() -> set the initial value to start the chain
+// @method next() -> generate the next value based state or set axiom
+// @method chain() -> generate an array of values
+// 
+class MarkovChain {
+	constructor(data){
+		// transition probabilities table
+		this._table = {};
+		// train if dataset is provided
+		if (data) { this.train(data) };
+		// current state of markov chain
+		this._state;
+		// scoped random number generator
+		this.rng = seedrandom();
+	}
+	get table(){
+		// return copy of object
+		return { ...this._table };
+	}
+	clear(){
+		// empty the transition probabilities
+		this._table = {};
+	}
+	train(a){
+		if (!Array.isArray(a)){ 
+			return console.error('Error: train() expected array but received:', typeof a);
+		}
+		// build a transition table from array of values
+		for (let i=1; i<a.length; i++){
+			if (!this._table[a[i-1]]) {
+				this._table[a[i-1]] = [a[i]];
+			} else {
+				this._table[a[i-1]].push(a[i]);
+			}
+		}
+	}
+	seed(s){
+		// set unpredictable seed if 0, null or undefined
+		if (s === 0 || s === null || s === undefined){
+			rng = seedrandom();
+		} else {
+			rng = seedrandom(s);
+		}
+	}
+	state(a){
+		// set the state
+		if (!this._table[a]){
+            console.error('Warning: state() value is not part of transition table');
+		}
+		this._state = a;
+	}
+	next(){
+        // if the state is undefined or has no transition in table
+        // randomly choose from all
+		if (this._state === undefined || !this._table[this._state]){
+			let states = Object.keys(this._table);
+			this._state = states[Math.floor(rng() * states.length)]
+		}
+		// get probabilities based on state
+		let probs = this._table[this._state];
+		// select pseudorandomly next value
+		this._state = probs[Math.floor(rng() * probs.length)];
+		return this._state;
+	}
+	chain(l){
+		// return an array of values generated with next()
+		let c = [];
+		for (let i=0; i<l; i++){
+			c.push(this.next());
+		}
+		return c;
+	}
+}
+exports.MarkovChain = MarkovChain;
 },{"./gen-basic.js":34,"seedrandom":26}],37:[function(require,module,exports){
 //=======================================================================
 // statistic.js

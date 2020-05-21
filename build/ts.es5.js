@@ -1,11 +1,5 @@
 "use strict";
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -17,6 +11,18 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.it
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -8500,7 +8506,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       function seed() {
         var v = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
-        if (v === 0 || v === null) {
+        if (v === 0 || v === null || v === undefined) {
           rng = seedrandom();
         } else {
           rng = seedrandom(v);
@@ -8742,7 +8748,120 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         return arr;
       }
 
-      exports.pick = pick;
+      exports.pick = pick; // Initialize a Markov Chain Model (One of the simpelest forms of ML)
+      // A Markov chain is a stochastic model describing a sequence 
+      // of possible events in which the probability of each event depends 
+      // only on the state of the previous (multiple) events.
+      // 
+      // @get chain -> return transition table from Markov
+      // @method clear() -> erase the transition table
+      // @method train() -> train the markov model
+      // @method seed() -> seed the random number generator (scoped RNG)
+      // @method axiom() -> set the initial value to start the chain
+      // @method next() -> generate the next value based state or set axiom
+      // @method chain() -> generate an array of values
+      // 
+
+      var MarkovChain = /*#__PURE__*/function () {
+        function MarkovChain(data) {
+          _classCallCheck(this, MarkovChain);
+
+          // transition probabilities table
+          this._table = {}; // train if dataset is provided
+
+          if (data) {
+            this.train(data);
+          }
+
+          ; // current state of markov chain
+
+          this._state; // scoped random number generator
+
+          this.rng = seedrandom();
+        }
+
+        _createClass(MarkovChain, [{
+          key: "clear",
+          value: function clear() {
+            // empty the transition probabilities
+            this._table = {};
+          }
+        }, {
+          key: "train",
+          value: function train(a) {
+            if (!Array.isArray(a)) {
+              return console.error('Error: train() expected array but received:', _typeof(a));
+            } // build a transition table from array of values
+
+
+            for (var i = 1; i < a.length; i++) {
+              if (!this._table[a[i - 1]]) {
+                this._table[a[i - 1]] = [a[i]];
+              } else {
+                this._table[a[i - 1]].push(a[i]);
+              }
+            }
+          }
+        }, {
+          key: "seed",
+          value: function seed(s) {
+            // set unpredictable seed if 0, null or undefined
+            if (s === 0 || s === null || s === undefined) {
+              rng = seedrandom();
+            } else {
+              rng = seedrandom(s);
+            }
+          }
+        }, {
+          key: "state",
+          value: function state(a) {
+            // set the state
+            if (!this._table[a]) {
+              console.error('Warning: state() value is not part of transition table');
+            }
+
+            this._state = a;
+          }
+        }, {
+          key: "next",
+          value: function next() {
+            // if the state is undefined or has no transition in table
+            // randomly choose from all
+            if (this._state === undefined || !this._table[this._state]) {
+              var states = Object.keys(this._table);
+              this._state = states[Math.floor(rng() * states.length)];
+            } // get probabilities based on state
+
+
+            var probs = this._table[this._state]; // select pseudorandomly next value
+
+            this._state = probs[Math.floor(rng() * probs.length)];
+            return this._state;
+          }
+        }, {
+          key: "chain",
+          value: function chain(l) {
+            // return an array of values generated with next()
+            var c = [];
+
+            for (var i = 0; i < l; i++) {
+              c.push(this.next());
+            }
+
+            return c;
+          }
+        }, {
+          key: "table",
+          get: function get() {
+            // return copy of object
+            return _objectSpread({}, this._table);
+          }
+        }]);
+
+        return MarkovChain;
+      }();
+
+      exports.MarkovChain = MarkovChain;
     }, {
       "./gen-basic.js": 34,
       "seedrandom": 26
