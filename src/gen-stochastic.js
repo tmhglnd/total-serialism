@@ -234,11 +234,14 @@ exports.pick = pick;
 // @method seed() -> seed the random number generator (scoped RNG)
 // @method axiom() -> set the initial value to start the chain
 // @method next() -> generate the next value based state or set axiom
+// @method chain() -> generate an array of values
 // 
 class MarkovChain {
-	constructor(){
+	constructor(data){
 		// transition probabilities table
 		this._table = {};
+		// train if dataset is provided
+		if (data) { this.train(data) };
 		// current state of markov chain
 		this._state;
 		// scoped random number generator
@@ -253,6 +256,9 @@ class MarkovChain {
 		this._table = {};
 	}
 	train(a){
+		if (!Array.isArray(a)){ 
+			return console.error('Error: train() expected array but received:', typeof a);
+		}
 		// build a transition table from array of values
 		for (let i=1; i<a.length; i++){
 			if (!this._table[a[i-1]]) {
@@ -272,14 +278,17 @@ class MarkovChain {
 	}
 	state(a){
 		// set the state
+		if (!this._table[a]){
+            console.error('Warning: state() value is not part of transition table');
+		}
 		this._state = a;
-		console.log('axiom', this._state);
 	}
 	next(){
-		// if the state is undefined randomly choose from all
-		if (this._state === undefined){
+        // if the state is undefined or has no transition in table
+        // randomly choose from all
+		if (this._state === undefined || !this._table[this._state]){
 			let states = Object.keys(this._table);
-			this._state = states[Math.floor(Math.random() * states.length)]
+			this._state = states[Math.floor(rng() * states.length)]
 		}
 		// get probabilities based on state
 		let probs = this._table[this._state];

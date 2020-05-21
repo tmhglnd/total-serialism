@@ -35,8 +35,13 @@ markov.train([0, 1, 1, 2, 1, 3, 2, 3, 1, 3, 0]);
 markov.train([0, 7, 5, 7, 7, 9, 3, 3, 5, 0, 0, 1]);
 // console.log(markov.chain);
 
+var mark2 = new Rand.MarkovChain(markov.table);
+console.log('chain 2', mark2.table);
+
+// markov.state(2);
 markov.state(2);
-markov.seed(58392);
+// markov.seed(58392);
+markov.seed(31463);
 let m = [];
 for (var i=0; i<10; i++){
 	m.push(markov.next());
@@ -50,10 +55,12 @@ console.log('result', m);
 
 markov.state(2);
 markov.seed(58392);
+markov.seed(31463);
 console.log('result', markov.chain(10))
 
 markov.clear();
 console.log(markov.table);
+
 // fullTest();
 
 function fullTest(){
