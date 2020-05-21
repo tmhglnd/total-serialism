@@ -27,7 +27,7 @@ var rng = seedrandom();
 // @return {Void}
 // 
 function seed(v=0){
-	if (v === 0 || v === null){
+	if (v === 0 || v === null || v === undefined){
 		rng = seedrandom();
 	} else {
 		rng = seedrandom(v);
@@ -228,28 +228,72 @@ exports.pick = pick;
 // of possible events in which the probability of each event depends 
 // only on the state of the previous (multiple) events.
 // 
-// @method chain() -> return transition table from Markov
+// @get chain -> return transition table from Markov
 // @method clear() -> erase the transition table
 // @method train() -> train the markov model
+// @method seed() -> seed the random number generator (scoped RNG)
+// @method axiom() -> set the initial value to start the chain
+// @method next() -> generate the next value based state or set axiom
 // 
 class MarkovChain {
-	constructor() {
-		this.table = {};
+	constructor(){
+		// transition probabilities table
+		this._table = {};
+		// current state of markov chain
+		this._state;
+		// scoped random number generator
+		this.rng = seedrandom();
 	}
-	get chain(){
-		return this.table;
+	get table(){
+		// return copy of object
+		return { ...this._table };
 	}
 	clear(){
-		this.table = {};
+		// empty the transition probabilities
+		this._table = {};
 	}
 	train(a){
+		// build a transition table from array of values
 		for (let i=1; i<a.length; i++){
-			if (!this.table[a[i-1]]) {
-				this.table[a[i-1]] = [a[i]];
+			if (!this._table[a[i-1]]) {
+				this._table[a[i-1]] = [a[i]];
 			} else {
-				this.table[a[i-1]].push(a[i]);
+				this._table[a[i-1]].push(a[i]);
 			}
 		}
+	}
+	seed(s){
+		// set unpredictable seed if 0, null or undefined
+		if (s === 0 || s === null || s === undefined){
+			rng = seedrandom();
+		} else {
+			rng = seedrandom(s);
+		}
+	}
+	state(a){
+		// set the state
+		this._state = a;
+		console.log('axiom', this._state);
+	}
+	next(){
+		// if the state is undefined randomly choose from all
+		if (this._state === undefined){
+			let states = Object.keys(this._table);
+			this._state = states[Math.floor(Math.random() * states.length)]
+		}
+		// get probabilities based on state
+		let probs = this._table[this._state];
+		// select pseudorandomly next value
+		this._state = probs[Math.floor(rng() * probs.length)];
+		return this._state;
+	}
+	chain(l){
+		// return an array of values generated with next()
+		let c = [];
+		for (let i=0; i<l; i++){
+			c.push(this.next());
+		}
+		return c;
 	}
 }
 exports.MarkovChain = MarkovChain;
