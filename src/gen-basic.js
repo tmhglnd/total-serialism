@@ -50,7 +50,7 @@ function spreadFloatExp(len=1, lo=len, hi=0, exp=1){
 	// generate array
 	var arr = new Array(len);
 	for (var i=0; i<len; i++){
-		arr[i] = Math.pow((i * (1/len)), exp) * (hi - lo) + lo;
+		arr[i] = Math.pow((i / len), exp) * (hi - lo) + lo;
 	}
 	return arr;
 }
