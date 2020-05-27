@@ -7391,7 +7391,7 @@ function spreadInclusiveFloat(len=1, lo=len, hi=0){
 	// generate array
 	var arr = new Array(len);
 	for (var i = 0; i < len; i++){
-		arr[i] = (i / (1/(len-1))) * (hi - lo) + lo;
+		arr[i] = (i / (len-1)) * (hi - lo) + lo;
 	}
 	return arr;
 }
@@ -7411,7 +7411,7 @@ function spreadInclusiveFloatExp(len=1, lo=len, hi=0, exp=1){
 	// generate array
 	var arr = new Array(len);
 	for (var i = 0; i < len; i++){
-		arr[i] = Math.pow(i / (1/(len-1)), exp) * (hi - lo) + lo;
+		arr[i] = Math.pow((i / (len-1)), exp) * (hi - lo) + lo;
 	}
 	return arr;
 }

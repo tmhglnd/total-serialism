@@ -7924,7 +7924,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           var arr = new Array(len);
 
           for (var i = 0; i < len; i++) {
-            arr[i] = i / (1 / (len - 1)) * (hi - lo) + lo;
+            arr[i] = i / (len - 1) * (hi - lo) + lo;
           }
 
           return arr;
@@ -7957,7 +7957,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           var arr = new Array(len);
 
           for (var i = 0; i < len; i++) {
-            arr[i] = Math.pow(i / (1 / (len - 1)), exp) * (hi - lo) + lo;
+            arr[i] = Math.pow(i / (len - 1), exp) * (hi - lo) + lo;
           }
 
           return arr;
