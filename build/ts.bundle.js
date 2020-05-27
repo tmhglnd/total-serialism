@@ -7328,7 +7328,7 @@ function spreadFloat(len=1, lo=len, hi=0){
 	// generate array
 	var arr = new Array(len);
 	for (var i=0; i<len; i++){
-		arr[i] = (i * (1/len)) * (hi - lo) + lo;
+		arr[i] = (i / len) * (hi - lo) + lo;
 	}
 	return arr;
 }
@@ -7363,7 +7363,7 @@ exports.spreadFloatExp = spreadFloatExp;
 //
 function spread(len, lo, hi){
 	var arr = spreadFloat(len, lo, hi);
-	return arr.map(v => Math.floor(v));
+	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
 exports.spread = spread;
 
@@ -7374,7 +7374,7 @@ exports.spread = spread;
 //
 function spreadExp(len, lo, hi, exp){
 	var arr = spreadFloatExp(len, lo, hi, exp);
-	return arr.map(v => Math.floor(v));
+	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
 exports.spreadExp = spreadExp;
 
@@ -7424,7 +7424,7 @@ exports.spreadInclusiveFloatExp = spreadInclusiveFloatExp;
 //
 function spreadInclusive(len, lo, hi){
 	var arr = spreadInclusiveFloat(len, lo, hi);
-	return arr.map(v => Math.floor(v));
+	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
 exports.spreadInclusive = spreadInclusive;
 exports.spreadInc = spreadInclusive;
@@ -7436,7 +7436,7 @@ exports.spreadInc = spreadInclusive;
 //
 function spreadInclusiveExp(len, lo, hi, exp){
 	var arr = spreadInclusiveFloatExp(len, lo, hi, exp);
-	return arr.map(v => Math.floor(v));
+	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
 exports.spreadInclusiveExp = spreadInclusiveExp;
 

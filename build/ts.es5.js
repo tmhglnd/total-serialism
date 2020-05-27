@@ -7832,7 +7832,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           var arr = new Array(len);
 
           for (var i = 0; i < len; i++) {
-            arr[i] = i * (1 / len) * (hi - lo) + lo;
+            arr[i] = i / len * (hi - lo) + lo;
           }
 
           return arr;
@@ -7883,7 +7883,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       function spread(len, lo, hi) {
         var arr = spreadFloat(len, lo, hi);
         return arr.map(function (v) {
-          return Math.floor(v);
+          return Math.floor(Number(v.toPrecision(15)));
         });
       }
 
@@ -7896,7 +7896,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       function spreadExp(len, lo, hi, exp) {
         var arr = spreadFloatExp(len, lo, hi, exp);
         return arr.map(function (v) {
-          return Math.floor(v);
+          return Math.floor(Number(v.toPrecision(15)));
         });
       }
 
@@ -7973,7 +7973,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       function spreadInclusive(len, lo, hi) {
         var arr = spreadInclusiveFloat(len, lo, hi);
         return arr.map(function (v) {
-          return Math.floor(v);
+          return Math.floor(Number(v.toPrecision(15)));
         });
       }
 
@@ -7987,7 +7987,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       function spreadInclusiveExp(len, lo, hi, exp) {
         var arr = spreadInclusiveFloatExp(len, lo, hi, exp);
         return arr.map(function (v) {
-          return Math.floor(v);
+          return Math.floor(Number(v.toPrecision(15)));
         });
       }
 
