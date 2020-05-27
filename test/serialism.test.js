@@ -27,6 +27,7 @@ console.log();
 	- test for strings vs numbers
 */
 
+/*
 var markov = new Rand.MarkovChain();
 
 var set = [0, 1, 1, 2, 1, 3, 2, 3, 1, 3, 0];
@@ -58,8 +59,9 @@ console.log('result', markov.chain(10))
 
 markov.clear();
 console.log(markov.table);
+*/
 
-// fullTest();
+fullTest();
 
 function fullTest(){
 	console.time('Total Time');
