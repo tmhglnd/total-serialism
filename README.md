@@ -158,7 +158,11 @@ Gen.spread(7);
 Gen.spreadFloat(5); 
 //=> [ 0, 0.2, 0.4, 0.6, 0.8 ]
 // Alternative: Gen.spreadF()
+```
 
+<iframe src="https://editor.p5js.org/tmhglnd/embed/TT6XGijrR"></iframe>
+
+```js
 // generate an array of 5 ints between range 7-19 (19 inclusive)
 Gen.spreadInclusive(5, 7, 19); 
 //=> [ 7, 10, 13, 16, 19 ] 
