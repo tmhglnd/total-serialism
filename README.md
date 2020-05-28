@@ -144,7 +144,7 @@ const Mod  = require('total-serialism').Transform;
 const Rand = require('total-serialism').Stochastic;
 const Util = require('total-serialism').Utility;
 ```
-
+<!--
 ## Generative Methods
 
 ```js
@@ -583,9 +583,6 @@ Stat.minimum([-38, -53, -6, 33, 88, 32, -8, 73]);
 const TL = require('total-serialism').Translate;
 ```
 
-<!-- // Specify the Beats Per Minute used duration <> ms translation
-TL.setTempo(110); -->
-
 ### Conversion between units
 
 Convert easily between relative-semitones, midinotes, notenames and frequencies with the methods below. Thankfully using the amazing `Tonal.js` package by `@danigb` for various functions.
@@ -737,6 +734,8 @@ Util.multiply([1, 2, 3, 4], [1, 2, 3]);
 Util.divide([1, 2, 3, 4], [1, 2, 3]);
 //=> [ 1, 1, 1, 4 ] 
 ```
+
+-->
 
 # Examples
 
