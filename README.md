@@ -22,7 +22,7 @@
 	- [Statistic Methods](docs/statistic-methods.md)
 	- [Translate Methods](docs/translate-methods.md)
 	- [Utility Methods](docs/utility-methods.md)
-- [Examples](#examples)
+- [In Action](#in-action)
 - [Inspiration & Further Reading](#inspiration--further-reading)
 - [License](#license)
 
@@ -737,7 +737,7 @@ Util.divide([1, 2, 3, 4], [1, 2, 3]);
 
 -->
 
-# Examples
+# In Action
 
 The following links redirect to p5.js sketches coded in the p5 browser editor. These sketches demonstrate some of the methods from this library, used in both sound (for algorithmic composing) and visuals. The sketches use the ts.es5.min.js bundled minified version of this package. See [install](#install) for instructions on how to include the minified version in the index.html and script.
 
@@ -808,6 +808,13 @@ Some methods from the Transformational and Stochastic library are inspired by ob
 # Missing Something?
 
 This library is a work in progress, and I'm always interested to receive inspiration, suggestions, enhancements, literature and more. Feel free to file an [issue here](https://github.com/tmhglnd/total-serialism/issues) and I will gladly look into it!
+
+## Powered By
+
+Total Serialism is a result of research in algorithmic composition with the Mercury livecoding environment. 
+
+- Mercury has been granted funding from [**Creative Industries Fund NL**](https://stimuleringsfonds.nl/en/)
+- Mercury has been granted in-kind funding from [**Creative Coding Utrecht**](https://creativecodingutrecht.nl/)
 
 # License
 
