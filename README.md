@@ -4,6 +4,28 @@
 
 *This library is a work in progress, and I'm always interested in receiving inspiration, suggestions, enhancements, literature and more. Feel free to file an [issue here](https://github.com/tmhglnd/total-serialism/issues) or make a pull request and I will gladly look into it!*
 
+# Table of Content
+
+- [Install](#install)
+- [Content](#content)
+- [Usage](#usage)
+	- [Generative Methods](docs/generative-methods.md)
+	- [Algorithmic Methods](docs/algorithmic-methods.md)
+		- [Euclidean Rhythm](docs/algorithmic-methods.md#euclid)
+		- [Hexadecimal Rhythm](docs/algorithmic-methods.md#hexBeat)
+		- [Lindenmayer System](docs/algorithmic-methods.md#linden)
+		- [Fibonacci Sequence](docs/algorithmic-methods.md#fibonacci)
+		- [Pisano Period](docs/algorithmic-methods.md#pisano)
+	- [Stochastic Methods](docs/stochastic-methods.md)
+		- [Markov Chain](docs/stochastic-methods.md#markov-chain)
+	- [Transform Methods](docs/transform-methods.md)
+	- [Statistic Methods](docs/statistic-methods.md)
+	- [Translate Methods](docs/translate-methods.md)
+	- [Utility Methods](docs/utility-methods.md)
+- [Examples](#examples)
+- [Inspiration & Further Reading](#inspiration--further-reading)
+- [License](#license)
+
 # Install
 
 ## Install in node_modules
@@ -47,37 +69,16 @@ const Srl = TotalSerialism;
 const Rand = TotalSerialism.Stochastic;
 ```
 
-# Table of Content
-
-- [Content](#content)
-- [Install](#install)
-- [Usage](#usage)
-	- [Generative Methods](#generative-methods)
-	- [Algorithmic Methods](#algorithmic-methods)
-		- [Euclidean Rhythm](#euclidean-rhythm-generator)
-		- [Hexadecimal Rhythm](#hexadecimal-rhythm-generator)
-		- [Lindenmayer System](#lindenmayer-string-expansion-l-system)
-		- [Fibonacci Sequence](#fibonacci-sequence)
-	- [Stochastic Methods](#stochastic-methods)
-		- [Markov Chain](#markov-chain)
-	- [Transform Methods](#transform-methods)
-	- [Statistic Methods](#statistic-methods)
-	- [Translate Methods](#translate-methods)
-	- [Utility Methods](#utility-methods)
-- [Examples](#examples)
-- [Inspiration & Further Reading](#inspiration--further-reading)
-- [License](#license)
-
 # Content
 
 The library consists of a few subsets:
-- [`Generative`](#generative-methods) : Basic methods that generate arrays of number sequences, such as methods that generate an ascending array of numbers evenly spread between a low and high value.
-- [`Algorithmic`](#algorithmic-methods) : These are also generative methods, but are in general more complex algorithms, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci sequence, pisano periods and more.
-- [`Stochastic`](#stochastic-methods) : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more. Also includes Markov Chain.
-- [`Transform`](#transform-methods) : Methods that transform the array in some fashion. Think of methods such as reversing, palindrome, duplicating, inversing, interleaving and more.
-- [`Statistic`](#statistic-methods) : Some methods useful for analysis of arrays. For example getting the average value or the most common value from an array.
-- [`Translate`](#translate-methods) : Translate between different notation systems. For example convert midi values to frequency, or note names to midi integers. Or use a relative semitone notation system and convert to midi. Map values in an Array to a specified scale, and output the relative values in the specified scale, root and octave.
-- [`Utility`](#utility-methods) : Basic arithmetic and methods necessary to run functions in the libraries above. But can also be of help in your own algorithmic processes.
+- [`Generative`](docs/generative-methods.md) : Basic methods that generate arrays of number sequences, such as methods that generate an ascending array of numbers evenly spread between a low and high value.
+- [`Algorithmic`](docs/algorithmic-methods.md) : These are also generative methods, but are in general more complex algorithms, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci sequence, pisano periods and more.
+- [`Stochastic`](docs/stochastic-methods.md) : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more. Also includes Markov Chain.
+- [`Transform`](docs/transform-methods.md) : Methods that transform the array in some fashion. Think of methods such as reversing, palindrome, duplicating, inversing, interleaving and more.
+- [`Statistic`](docs/statistic-methods.md) : A set of methods from Statistics and Probability Theory that allow for analysis of number sequences for statistical purposes. For example getting the average value or the most common value from an array.
+- [`Translate`](docs/translate-methods.md) : Translate between different notation systems. For example convert midi values to frequency, or note names to midi integers. Or use a relative semitone notation system and convert to midi. Map values in an Array to a specified scale, and output the relative values in the specified scale, root and octave.
+- [`Utility`](docs/utility-methods.md) : Basic arithmetic and methods necessary to run functions in the libraries above. But can also be of help in your own algorithmic processes.
 
 # Newest features
 
