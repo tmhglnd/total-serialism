@@ -148,7 +148,7 @@ exports.setScale    = Translate.setScale;
 exports.getScale    = Translate.getScale;
 exports.setRoot     = Translate.setRoot;
 exports.getRoot     = Translate.getRoot;
-},{"./src/gen-basic.js":34,"./src/gen-complex.js":35,"./src/gen-stochastic.js":36,"./src/statistic.js":37,"./src/transform.js":38,"./src/translate.js":39,"./src/utility.js":40}],4:[function(require,module,exports){
+},{"./src/gen-basic.js":35,"./src/gen-complex.js":36,"./src/gen-stochastic.js":37,"./src/statistic.js":38,"./src/transform.js":39,"./src/translate.js":40,"./src/utility.js":41}],4:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/core')) :
   typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/core'], factory) :
@@ -218,7 +218,7 @@ exports.getRoot     = Translate.getRoot;
       scientificToAbcNotation: scientificToAbcNotation,
       tokenize: tokenize,
       transpose: transpose,
-      distance: distance
+      distance: distance,
   };
 
   exports.abcToScientificNotation = abcToScientificNotation;
@@ -463,18 +463,18 @@ exports.getRoot     = Translate.getRoot;
 }(this, (function (exports, core, pcset) { 'use strict';
 
     /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
+    Copyright (c) Microsoft Corporation.
 
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
+    Permission to use, copy, modify, and/or distribute this software for any
+    purpose with or without fee is hereby granted.
 
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+    PERFORMANCE OF THIS SOFTWARE.
     ***************************************************************************** */
 
     var __assign = function() {
@@ -503,12 +503,12 @@ exports.getRoot     = Translate.getRoot;
         ["1P 3M 5P 6M", "sixth", "6 add6 add13 M6"],
         ["1P 3M 5P 6M 9M", "sixth/ninth", "6/9 69"],
         ["1P 3M 5P 7M 11A", "lydian", "maj#4 Δ#4 Δ#11"],
-        ["1P 3M 6m 7M", "major seventh b6", "M7b6"],
+        ["1P 3M 6m 7M", "major seventh flat sixth", "M7b6"],
         // ==Minor==
         // '''Normal'''
         ["1P 3m 5P", "minor", "m min -"],
         ["1P 3m 5P 7m", "minor seventh", "m7 min7 mi7 -7"],
-        ["1P 3m 5P 7M", "minor/major seventh", "m/ma7 m/maj7 mM7 m/M7 -Δ7 mΔ"],
+        ["1P 3m 5P 7M", "minor/major seventh", "m/ma7 m/maj7 mM7 mMaj7 m/M7 -Δ7 mΔ"],
         ["1P 3m 5P 6M", "minor sixth", "m6"],
         ["1P 3m 5P 7m 9M", "minor ninth", "m9"],
         ["1P 3m 5P 7m 9M 11P", "minor eleventh", "m11"],
@@ -524,20 +524,20 @@ exports.getRoot     = Translate.getRoot;
         ["1P 3M 5P 7m 9M 13M", "dominant thirteenth", "13"],
         ["1P 3M 5P 7m 11A", "lydian dominant seventh", "7#11 7#4"],
         // '''Altered'''
-        ["1P 3M 5P 7m 9m", "dominant b9", "7b9"],
-        ["1P 3M 5P 7m 9A", "dominant #9", "7#9"],
+        ["1P 3M 5P 7m 9m", "dominant flat ninth", "7b9"],
+        ["1P 3M 5P 7m 9A", "dominant sharp ninth", "7#9"],
         ["1P 3M 7m 9m", "altered", "alt7"],
         // '''Suspended'''
-        ["1P 4P 5P", "suspended 4th", "sus4"],
-        ["1P 2M 5P", "suspended 2nd", "sus2"],
-        ["1P 4P 5P 7m", "suspended 4th seventh", "7sus4"],
+        ["1P 4P 5P", "suspended fourth", "sus4"],
+        ["1P 2M 5P", "suspended second", "sus2"],
+        ["1P 4P 5P 7m", "suspended fourth seventh", "7sus4"],
         ["1P 5P 7m 9M 11P", "eleventh", "11"],
-        ["1P 4P 5P 7m 9m", "suspended 4th b9", "b9sus phryg"],
+        ["1P 4P 5P 7m 9m", "suspended fourth flat ninth", "b9sus phryg"],
         // ==Other==
         ["1P 5P", "fifth", "5"],
         ["1P 3M 5A", "augmented", "aug + +5"],
-        ["1P 3M 5A 7M", "augmented seventh", "maj7#5 maj7+5"],
-        ["1P 3M 5P 7M 9M 11A", "major #11 (lydian)", "maj9#11 Δ9#11"],
+        ["1P 3M 5A 7M", "augmented seventh", "maj7#5 maj7+5 +maj7"],
+        ["1P 3M 5P 7M 9M 11A", "major sharp eleventh (lydian)", "maj9#11 Δ9#11"],
         // ==Legacy==
         ["1P 2M 4P 5P", "", "sus24 sus4add9"],
         ["1P 3M 13m", "", "Mb6"],
@@ -601,8 +601,7 @@ exports.getRoot     = Translate.getRoot;
         ["1P 3m 6m 7m 9M", "", "m9#5"],
         ["1P 3m 6m 7m 9M 11P", "", "m11A"],
         ["1P 3m 6m 9m", "", "mb6b9"],
-        ["1P 3m 7m 12d 2M", "", "m9b5 h9"],
-        ["1P 3m 7m 12d 2M 4P", "", "m11b5 h11"],
+        ["1P 2M 3m 5d 7m", "", "m9b5"],
         ["1P 4P 5A 7M", "", "M7#5sus4"],
         ["1P 4P 5A 7M 9M", "", "M9#5sus4"],
         ["1P 4P 5A 7m", "", "7#5sus4"],
@@ -612,7 +611,7 @@ exports.getRoot     = Translate.getRoot;
         ["1P 4P 5P 7m 9M 13M", "", "13sus4 13sus"],
         ["1P 4P 5P 7m 9m 13m", "", "7sus4b9b13 7b9b13sus4"],
         ["1P 4P 7m 10m", "", "4 quartal"],
-        ["1P 5P 7m 9m 11P", "", "11b9"]
+        ["1P 5P 7m 9m 11P", "", "11b9"],
     ];
 
     var NoChordType = __assign(__assign({}, pcset.EmptyPcset), { name: "", quality: "Unknown", intervals: [], aliases: [] });
@@ -710,7 +709,7 @@ exports.getRoot     = Translate.getRoot;
         keys: keys,
         // deprecated
         entries: entries,
-        chordType: chordType
+        chordType: chordType,
     };
 
     exports.add = add;
@@ -738,18 +737,18 @@ exports.getRoot     = Translate.getRoot;
 }(this, (function (exports, chordDetect, chordType, core, pcset, scaleType) { 'use strict';
 
     /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
+    Copyright (c) Microsoft Corporation.
 
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
+    Permission to use, copy, modify, and/or distribute this software for any
+    purpose with or without fee is hereby granted.
 
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+    PERFORMANCE OF THIS SOFTWARE.
     ***************************************************************************** */
 
     var __assign = function() {
@@ -766,6 +765,9 @@ exports.getRoot     = Translate.getRoot;
     var NoChord = {
         empty: true,
         name: "",
+        symbol: "",
+        root: "",
+        rootDegree: 0,
         type: "",
         tonic: null,
         setNum: NaN,
@@ -774,7 +776,7 @@ exports.getRoot     = Translate.getRoot;
         normalized: "",
         aliases: [],
         notes: [],
-        intervals: []
+        intervals: [],
     };
     // 6, 64, 7, 9, 11 and 13 are consider part of the chord
     // (see https://github.com/danigb/tonal/issues/55)
@@ -819,34 +821,49 @@ exports.getRoot     = Translate.getRoot;
      * Get a Chord from a chord name.
      */
     function get(src) {
-        var _a = findChord(src), type = _a.type, tonic = _a.tonic;
-        if (!type || type.empty) {
+        if (src === "") {
             return NoChord;
         }
-        var notes = tonic
-            ? type.intervals.map(function (i) { return core.transpose(tonic, i); })
-            : [];
-        var name = tonic ? tonic + " " + type.name : type.name;
-        return __assign(__assign({}, type), { name: name, type: type.name, tonic: tonic || "", notes: notes });
-    }
-    var chord = core.deprecate("Chord.chord", "Chord.get", get);
-    function findChord(src) {
-        if (!src || !src.length) {
-            return {};
-        }
-        var tokens = Array.isArray(src) ? src : tokenize(src);
-        var tonic = core.note(tokens[0]).name;
-        var type = chordType.get(tokens[1]);
-        if (!type.empty) {
-            return { tonic: tonic, type: type };
-        }
-        else if (tonic && typeof src === "string") {
-            return { tonic: "", type: chordType.get(src) };
+        if (Array.isArray(src) && src.length === 2) {
+            return getChord(src[1], src[0]);
         }
         else {
-            return {};
+            var _a = tokenize(src), tonic = _a[0], type = _a[1];
+            var chord_1 = getChord(type, tonic);
+            return chord_1.empty ? getChord(src) : chord_1;
         }
     }
+    /**
+     * Get chord properties
+     *
+     * @param typeName - the chord type name
+     * @param [tonic] - Optional tonic
+     * @param [root]  - Optional root (requires a tonic)
+     */
+    function getChord(typeName, optionalTonic, optionalRoot) {
+        var type = chordType.get(typeName);
+        var tonic = core.note(optionalTonic || "");
+        var root = core.note(optionalRoot || "");
+        if (type.empty ||
+            (optionalTonic && tonic.empty) ||
+            (optionalRoot && root.empty)) {
+            return NoChord;
+        }
+        var rootInterval = core.distance(tonic.pc, root.pc);
+        var rootDegree = type.intervals.indexOf(rootInterval) + 1;
+        if (!root.empty && !rootDegree) {
+            return NoChord;
+        }
+        var notes = tonic.empty
+            ? []
+            : type.intervals.map(function (i) { return core.transpose(tonic, i); });
+        typeName = type.aliases.indexOf(typeName) !== -1 ? typeName : type.aliases[0];
+        var symbol = "" + (tonic.empty ? "" : tonic.pc) + typeName + (root.empty ? "" : "/" + root.pc);
+        var name = "" + (optionalTonic ? tonic.pc + " " : "") + type.name + (optionalRoot ? " over " + root.pc : "");
+        return __assign(__assign({}, type), { name: name,
+            symbol: symbol, type: type.name, root: root.name, rootDegree: rootDegree, tonic: tonic.name, notes: notes });
+    }
+    var chord = core.deprecate("Chord.chord", "Chord.get", get);
     /**
      * Transpose a chord name
      *
@@ -859,7 +876,7 @@ exports.getRoot     = Translate.getRoot;
     function transpose(chordName, interval) {
         var _a = tokenize(chordName), tonic = _a[0], type = _a[1];
         if (!tonic) {
-            return name;
+            return chordName;
         }
         return core.transpose(tonic, interval) + type;
     }
@@ -907,6 +924,7 @@ exports.getRoot     = Translate.getRoot;
             .map(function (chord) { return s.tonic + chord.aliases[0]; });
     }
     var index = {
+        getChord: getChord,
         get: get,
         detect: chordDetect.detect,
         chordScales: chordScales,
@@ -915,7 +933,7 @@ exports.getRoot     = Translate.getRoot;
         tokenize: tokenize,
         transpose: transpose,
         // deprecate
-        chord: chord
+        chord: chord,
     };
 
     Object.defineProperty(exports, 'detect', {
@@ -929,6 +947,7 @@ exports.getRoot     = Translate.getRoot;
     exports.default = index;
     exports.extended = extended;
     exports.get = get;
+    exports.getChord = getChord;
     exports.reduced = reduced;
     exports.tokenize = tokenize;
     exports.transpose = transpose;
@@ -1059,7 +1078,7 @@ exports.getRoot     = Translate.getRoot;
       permutations: permutations,
       range: range,
       rotate: rotate,
-      shuffle: shuffle
+      shuffle: shuffle,
   };
 
   exports.compact = compact;
@@ -1193,6 +1212,7 @@ exports.getRoot     = Translate.getRoot;
   function coordToNote(noteCoord) {
       return note(decode(noteCoord));
   }
+  var mod = function (n, m) { return ((n % m) + m) % m; };
   var SEMI = [0, 2, 4, 5, 7, 9, 11];
   function parse(noteName) {
       var tokens = tokenizeNote(noteName);
@@ -1209,8 +1229,9 @@ exports.getRoot     = Translate.getRoot;
       var name = letter + acc + octStr;
       var pc = letter + acc;
       var chroma = (SEMI[step] + alt + 120) % 12;
-      var o = oct === undefined ? -100 : oct;
-      var height = SEMI[step] + alt + 12 * (o + 1);
+      var height = oct === undefined
+          ? mod(SEMI[step] + alt, 12) - 12 * 99
+          : SEMI[step] + alt + 12 * (oct + 1);
       var midi = height >= 0 && height <= 127 ? height : null;
       var freq = oct === undefined ? null : Math.pow(2, (height - 69) / 12) * 440;
       return {
@@ -1226,7 +1247,7 @@ exports.getRoot     = Translate.getRoot;
           name: name,
           oct: oct,
           pc: pc,
-          step: step
+          step: step,
       };
   }
   function pitchName(props) {
@@ -1321,7 +1342,7 @@ exports.getRoot     = Translate.getRoot;
           semitones: semitones,
           chroma: chroma,
           coord: coord,
-          oct: oct
+          oct: oct,
       };
   }
   /**
@@ -1484,7 +1505,7 @@ exports.getRoot     = Translate.getRoot;
         [
             0.125,
             "dl",
-            ["large", "duplex longa", "maxima", "octuple", "octuple whole"]
+            ["large", "duplex longa", "maxima", "octuple", "octuple whole"],
         ],
         [0.25, "l", ["long", "longa"]],
         [0.5, "d", ["double whole", "double", "breve"]],
@@ -1496,7 +1517,7 @@ exports.getRoot     = Translate.getRoot;
         [32, "t", ["thirty-second", "demisemiquaver"]],
         [64, "sf", ["sixty-fourth", "hemidemisemiquaver"]],
         [128, "h", ["hundred twenty-eighth"]],
-        [256, "th", ["two hundred fifty-sixth"]]
+        [256, "th", ["two hundred fifty-sixth"]],
     ];
 
     var VALUES = [];
@@ -1511,7 +1532,7 @@ exports.getRoot     = Translate.getRoot;
         fraction: [0, 0],
         shorthand: "",
         dots: "",
-        names: []
+        names: [],
     };
     function names() {
         return VALUES.reduce(function (names, duration) {
@@ -1545,7 +1566,7 @@ exports.getRoot     = Translate.getRoot;
             value: 1 / denominator,
             fraction: denominator < 1 ? [1 / denominator, 1] : [1, denominator],
             shorthand: shorthand,
-            names: names
+            names: names,
         });
     }
     function calcDots(fraction, dots) {
@@ -1743,7 +1764,7 @@ exports.getRoot     = Translate.getRoot;
       simplify: simplify,
       add: add,
       addTo: addTo,
-      substract: substract
+      substract: substract,
   };
   function combinator(fn) {
       return function (a, b) {
@@ -1828,7 +1849,7 @@ exports.getRoot     = Translate.getRoot;
                 scale: scale,
                 chords: map(chordsLiteral.split(" ")),
                 chordsHarmonicFunction: hfLiteral.split(" "),
-                chordScales: map(chordScalesLiteral.split(","), " ")
+                chordScales: map(chordScalesLiteral.split(","), " "),
             };
         };
     }
@@ -1865,7 +1886,7 @@ exports.getRoot     = Translate.getRoot;
             keySignature: core.altToAcc(alteration),
             natural: NaturalScale(tonic),
             harmonic: HarmonicScale(tonic),
-            melodic: MelodicScale(tonic)
+            melodic: MelodicScale(tonic),
         };
     }
     /**
@@ -1980,6 +2001,8 @@ exports.getRoot     = Translate.getRoot;
    */
   function midiToNoteName(midi, options) {
       if (options === void 0) { options = {}; }
+      if (isNaN(midi) || midi === -Infinity || midi === Infinity)
+          return "";
       midi = Math.round(midi);
       var pcs = options.sharps === true ? SHARPS : FLATS;
       var pc = pcs[midi % 12];
@@ -2011,18 +2034,18 @@ exports.getRoot     = Translate.getRoot;
 }(this, (function (exports, core, pcset) { 'use strict';
 
     /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
+    Copyright (c) Microsoft Corporation.
 
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
+    Permission to use, copy, modify, and/or distribute this software for any
+    purpose with or without fee is hereby granted.
 
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+    PERFORMANCE OF THIS SOFTWARE.
     ***************************************************************************** */
 
     var __assign = function() {
@@ -2043,7 +2066,7 @@ exports.getRoot     = Translate.getRoot;
         [3, 2741, -1, "lydian", "", "Maj7"],
         [4, 2774, 1, "mixolydian", "", "7"],
         [5, 2906, 3, "aeolian", "m", "m7", "minor"],
-        [6, 3434, 5, "locrian", "dim", "m7b5"]
+        [6, 3434, 5, "locrian", "dim", "m7b5"],
     ];
 
     var NoMode = __assign(__assign({}, pcset.EmptyPcset), { name: "", alt: 0, modeNum: NaN, triad: "", seventh: "", aliases: [] });
@@ -2111,7 +2134,7 @@ exports.getRoot     = Translate.getRoot;
             alt: alt,
             triad: triad,
             seventh: seventh,
-            aliases: aliases
+            aliases: aliases,
         };
     }
     var index$1 = {
@@ -2120,7 +2143,7 @@ exports.getRoot     = Translate.getRoot;
         all: all,
         // deprecated
         entries: entries,
-        mode: mode
+        mode: mode,
     };
 
     exports.all = all;
@@ -2222,6 +2245,18 @@ exports.getRoot     = Translate.getRoot;
   }
   /**
    * Given a midi number, returns a note name. Uses flats for altered notes.
+   */
+  function fromFreq(freq) {
+      return midi$1.midiToNoteName(midi$1.freqToMidi(freq));
+  }
+  /**
+   * Given a midi number, returns a note name. Uses flats for altered notes.
+   */
+  function fromFreqSharps(freq) {
+      return midi$1.midiToNoteName(midi$1.freqToMidi(freq), { sharps: true });
+  }
+  /**
+   * Given a midi number, returns a note name. Uses flats for altered notes.
    *
    * @function
    * @param {number} midi - the midi note number
@@ -2291,9 +2326,7 @@ exports.getRoot     = Translate.getRoot;
   var descending = function (a, b) { return b.height - a.height; };
   function sortedNames(notes, comparator) {
       comparator = comparator || ascending;
-      return onlyNotes(notes)
-          .sort(comparator)
-          .map(toName);
+      return onlyNotes(notes).sort(comparator).map(toName);
   }
   function sortedUniqNames(notes) {
       return sortedNames(notes, ascending).filter(function (n, i, a) { return i === 0 || n !== a[i - 1]; });
@@ -2349,6 +2382,8 @@ exports.getRoot     = Translate.getRoot;
       fromMidi: fromMidi,
       fromMidiSharps: fromMidiSharps,
       freq: freq,
+      fromFreq: fromFreq,
+      fromFreqSharps: fromFreqSharps,
       chroma: chroma,
       transpose: transpose,
       tr: tr,
@@ -2359,7 +2394,7 @@ exports.getRoot     = Translate.getRoot;
       transposeFifths: transposeFifths,
       trFifths: trFifths,
       simplify: simplify,
-      enharmonic: enharmonic
+      enharmonic: enharmonic,
   };
 
   exports.accidentals = accidentals;
@@ -2369,6 +2404,8 @@ exports.getRoot     = Translate.getRoot;
   exports.descending = descending;
   exports.enharmonic = enharmonic;
   exports.freq = freq;
+  exports.fromFreq = fromFreq;
+  exports.fromFreqSharps = fromFreqSharps;
   exports.fromMidi = fromMidi;
   exports.fromMidiSharps = fromMidiSharps;
   exports.get = get;
@@ -2408,7 +2445,7 @@ exports.getRoot     = Translate.getRoot;
       setNum: 0,
       chroma: "000000000000",
       normalized: "000000000000",
-      intervals: []
+      intervals: [],
   };
   // UTILITIES
   var setNumToChroma = function (num) { return Number(num).toString(2); };
@@ -2476,7 +2513,7 @@ exports.getRoot     = Translate.getRoot;
       "6m",
       "6M",
       "7m",
-      "7M"
+      "7M",
   ];
   /**
    * @private
@@ -2636,7 +2673,7 @@ exports.getRoot     = Translate.getRoot;
       filter: filter,
       modes: modes,
       // deprecated
-      pcset: pcset
+      pcset: pcset,
   };
   //// PRIVATE ////
   function chromaRotations(chroma) {
@@ -2657,7 +2694,7 @@ exports.getRoot     = Translate.getRoot;
           setNum: setNum,
           chroma: chroma,
           normalized: normalized,
-          intervals: intervals
+          intervals: intervals,
       };
   }
   function listToChroma(set) {
@@ -2879,14 +2916,14 @@ exports.getRoot     = Translate.getRoot;
           step: step,
           major: roman === upperRoman,
           oct: 0,
-          dir: dir
+          dir: dir,
       };
   }
   var index = {
       names: names,
       get: get,
       // deprecated
-      romanNumeral: romanNumeral
+      romanNumeral: romanNumeral,
   };
 
   exports.default = index;
@@ -2907,18 +2944,18 @@ exports.getRoot     = Translate.getRoot;
 }(this, (function (exports, core, pcset) { 'use strict';
 
     /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
+    Copyright (c) Microsoft Corporation.
 
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
+    Permission to use, copy, modify, and/or distribute this software for any
+    purpose with or without fee is hereby granted.
 
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+    PERFORMANCE OF THIS SOFTWARE.
     ***************************************************************************** */
 
     var __assign = function() {
@@ -2964,14 +3001,15 @@ exports.getRoot     = Translate.getRoot;
         // 6-note scales
         ["1P 2M 3m 4P 5P 7M", "minor hexatonic"],
         ["1P 2A 3M 5P 5A 7M", "augmented"],
-        ["1P 3m 4P 5d 5P 7m", "minor blues", "blues"],
         ["1P 2M 3m 3M 5P 6M", "major blues"],
         ["1P 2M 4P 5P 6M 7m", "piongio"],
         ["1P 2m 3M 4A 6M 7m", "prometheus neopolitan"],
         ["1P 2M 3M 4A 6M 7m", "prometheus"],
         ["1P 2m 3M 5d 6m 7m", "mystery #1"],
         ["1P 2m 3M 4P 5A 6M", "six tone symmetric"],
-        ["1P 2M 3M 4A 5A 7m", "whole tone"],
+        ["1P 2M 3M 4A 5A 7m", "whole tone", "messiaen's mode #1"],
+        ["1P 2m 4P 4A 5P 7M", "messiaen's mode #5"],
+        ["1P 3m 4P 5d 5P 7m", "minor blues", "blues"],
         // 7-note scales
         ["1P 2M 3M 4P 5d 6m 7m", "locrian major", "arabian"],
         ["1P 2m 3M 4A 5P 6m 7M", "double harmonic lydian"],
@@ -2981,14 +3019,14 @@ exports.getRoot     = Translate.getRoot;
             "altered",
             "super locrian",
             "diminished whole tone",
-            "pomeroy"
+            "pomeroy",
         ],
-        ["1P 2M 3m 4P 5d 6m 7m", "locrian #2", "half-diminished", '"aeolian b5'],
+        ["1P 2M 3m 4P 5d 6m 7m", "locrian #2", "half-diminished", "aeolian b5"],
         [
             "1P 2M 3M 4P 5P 6m 7m",
             "mixolydian b6",
             "melodic minor fifth mode",
-            "hindu"
+            "hindu",
         ],
         ["1P 2M 3M 4A 5P 6M 7m", "lydian dominant", "lydian b7", "overtone"],
         ["1P 2M 3M 4A 5P 6M 7M", "lydian"],
@@ -2997,7 +3035,7 @@ exports.getRoot     = Translate.getRoot;
             "1P 2m 3m 4P 5P 6M 7m",
             "dorian b2",
             "phrygian #6",
-            "melodic minor second mode"
+            "melodic minor second mode",
         ],
         ["1P 2M 3m 4P 5P 6M 7M", "melodic minor"],
         ["1P 2m 3m 4P 5d 6m 7m", "locrian"],
@@ -3005,7 +3043,7 @@ exports.getRoot     = Translate.getRoot;
             "1P 2m 3m 4d 5d 6m 7d",
             "ultralocrian",
             "superlocrian bb7",
-            "·superlocrian diminished"
+            "·superlocrian diminished",
         ],
         ["1P 2m 3m 4P 5d 6M 7m", "locrian 6", "locrian natural 6", "locrian sharp 6"],
         ["1P 2A 3M 4P 5P 5A 7M", "augmented heptatonic"],
@@ -3036,10 +3074,11 @@ exports.getRoot     = Translate.getRoot;
             "major augmented",
             "major #5",
             "ionian augmented",
-            "ionian #5"
+            "ionian #5",
         ],
         ["1P 2A 3M 4A 5P 6M 7M", "lydian #9"],
         // 8-note scales
+        ["1P 2m 2M 4P 4A 5P 6m 7M", "messiaen's mode #4"],
         ["1P 2m 3M 4P 4A 5P 6m 7M", "purvi raga"],
         ["1P 2m 3m 3M 4P 5P 6m 7m", "spanish heptatonic"],
         ["1P 2M 3M 4P 5P 6M 7m 7M", "bebop"],
@@ -3050,12 +3089,16 @@ exports.getRoot     = Translate.getRoot;
         ["1P 2M 3m 4P 5d 6m 6M 7M", "diminished", "whole-half diminished"],
         ["1P 2M 3M 4P 5d 5P 6M 7M", "ichikosucho"],
         ["1P 2M 3m 4P 5P 6m 6M 7M", "minor six diminished"],
-        ["1P 2m 3m 3M 4A 5P 6M 7m", "half-whole diminished", "dominant diminished"],
+        ["1P 2m 3m 3M 4A 5P 6M 7m", "half-whole diminished", "dominant diminished", "messiaen's mode #2"],
         ["1P 3m 3M 4P 5P 6M 7m 7M", "kafi raga"],
+        ["1P 2M 3M 4P 4A 5A 6A 7M", "messiaen's mode #6"],
         // 9-note scales
         ["1P 2M 3m 3M 4P 5d 5P 6M 7m", "composite blues"],
+        ["1P 2M 3m 3M 4A 5P 6m 7m 7M", "messiaen's mode #3"],
+        // 10-note scales
+        ["1P 2m 2M 3m 4P 4A 5P 6m 6M 7M", "messiaen's mode #7"],
         // 12-note scales
-        ["1P 2m 2M 3m 3M 4P 5d 5P 6m 6M 7m 7M", "chromatic"]
+        ["1P 2m 2M 3m 3M 4P 5d 5P 6m 6M 7m 7M", "chromatic"],
     ];
 
     var NoScaleType = __assign(__assign({}, pcset.EmptyPcset), { intervals: [], aliases: [] });
@@ -3128,7 +3171,7 @@ exports.getRoot     = Translate.getRoot;
         keys: keys,
         // deprecated
         entries: entries,
-        scaleType: scaleType
+        scaleType: scaleType,
     };
 
     exports.NoScaleType = NoScaleType;
@@ -3156,18 +3199,18 @@ exports.getRoot     = Translate.getRoot;
 }(this, (function (exports, chordType, collection, core, note, pcset, scaleType) { 'use strict';
 
     /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
+    Copyright (c) Microsoft Corporation.
 
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
+    Permission to use, copy, modify, and/or distribute this software for any
+    purpose with or without fee is hereby granted.
 
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+    PERFORMANCE OF THIS SOFTWARE.
     ***************************************************************************** */
 
     var __assign = function() {
@@ -3191,7 +3234,7 @@ exports.getRoot     = Translate.getRoot;
         normalized: "",
         aliases: [],
         notes: [],
-        intervals: []
+        intervals: [],
     };
     /**
      * Given a string with a scale name and (optionally) a tonic, split
@@ -3350,7 +3393,7 @@ exports.getRoot     = Translate.getRoot;
         scaleNotes: scaleNotes,
         tokenize: tokenize,
         // deprecated
-        scale: scale
+        scale: scale,
     };
 
     exports.default = index;
@@ -3371,10 +3414,91 @@ exports.getRoot     = Translate.getRoot;
 
 },{"@tonaljs/chord-type":7,"@tonaljs/collection":9,"@tonaljs/core":10,"@tonaljs/note":16,"@tonaljs/pcset":17,"@tonaljs/scale-type":21}],23:[function(require,module,exports){
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/abc-notation'), require('@tonaljs/array'), require('@tonaljs/chord'), require('@tonaljs/chord-type'), require('@tonaljs/collection'), require('@tonaljs/core'), require('@tonaljs/duration-value'), require('@tonaljs/interval'), require('@tonaljs/key'), require('@tonaljs/midi'), require('@tonaljs/mode'), require('@tonaljs/note'), require('@tonaljs/pcset'), require('@tonaljs/progression'), require('@tonaljs/range'), require('@tonaljs/roman-numeral'), require('@tonaljs/scale'), require('@tonaljs/scale-type')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/abc-notation', '@tonaljs/array', '@tonaljs/chord', '@tonaljs/chord-type', '@tonaljs/collection', '@tonaljs/core', '@tonaljs/duration-value', '@tonaljs/interval', '@tonaljs/key', '@tonaljs/midi', '@tonaljs/mode', '@tonaljs/note', '@tonaljs/pcset', '@tonaljs/progression', '@tonaljs/range', '@tonaljs/roman-numeral', '@tonaljs/scale', '@tonaljs/scale-type'], factory) :
-  (global = global || self, factory(global.Tonal = {}, global.abcNotation, global.array, global.chord, global.ChordType, global.collection, global.Core, global.durationValue, global.interval, global.key, global.midi, global.mode, global.note, global.Pcset, global.progression, global.range, global.romanNumeral, global.scale, global.ScaleType));
-}(this, (function (exports, abcNotation, array, chord, ChordType, collection, Core, durationValue, interval, key, midi, mode, note, Pcset, progression, range, romanNumeral, scale, ScaleType) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = global || self, factory(global.TimeSignature = {}));
+}(this, (function (exports) { 'use strict';
+
+  // CONSTANTS
+  var NONE = {
+      empty: true,
+      name: "",
+      upper: undefined,
+      lower: undefined,
+      type: undefined,
+      additive: [],
+  };
+  var NAMES = ["4/4", "3/4", "2/4", "2/2", "12/8", "9/8", "6/8", "3/8"];
+  // PUBLIC API
+  function names() {
+      return NAMES.slice();
+  }
+  var REGEX = /^(\d?\d(?:\+\d)*)\/(\d)$/;
+  var CACHE = new Map();
+  function get(literal) {
+      var cached = CACHE.get(literal);
+      if (cached) {
+          return cached;
+      }
+      var ts = build(parse(literal));
+      CACHE.set(literal, ts);
+      return ts;
+  }
+  function parse(literal) {
+      if (typeof literal === "string") {
+          var _a = REGEX.exec(literal) || [], _ = _a[0], up_1 = _a[1], low = _a[2];
+          return parse([up_1, low]);
+      }
+      var up = literal[0], down = literal[1];
+      var denominator = +down;
+      if (typeof up === "number") {
+          return [up, denominator];
+      }
+      var list = up.split("+").map(function (n) { return +n; });
+      return list.length === 1 ? [list[0], denominator] : [list, denominator];
+  }
+  var index = { names: names, parse: parse, get: get };
+  // PRIVATE
+  function build(_a) {
+      var up = _a[0], down = _a[1];
+      var upper = Array.isArray(up) ? up.reduce(function (a, b) { return a + b; }, 0) : up;
+      var lower = down;
+      if (upper === 0 || lower === 0) {
+          return NONE;
+      }
+      var name = Array.isArray(up) ? up.join("+") + "/" + down : up + "/" + down;
+      var additive = Array.isArray(up) ? up : [];
+      var type = lower === 4 || lower === 2
+          ? "simple"
+          : lower === 8 && upper % 3 === 0
+              ? "compound"
+              : "irregular";
+      return {
+          empty: false,
+          name: name,
+          type: type,
+          upper: upper,
+          lower: lower,
+          additive: additive,
+      };
+  }
+
+  exports.default = index;
+  exports.get = get;
+  exports.names = names;
+  exports.parse = parse;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+
+
+},{}],24:[function(require,module,exports){
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/abc-notation'), require('@tonaljs/array'), require('@tonaljs/chord'), require('@tonaljs/chord-type'), require('@tonaljs/collection'), require('@tonaljs/core'), require('@tonaljs/duration-value'), require('@tonaljs/interval'), require('@tonaljs/key'), require('@tonaljs/midi'), require('@tonaljs/mode'), require('@tonaljs/note'), require('@tonaljs/pcset'), require('@tonaljs/progression'), require('@tonaljs/range'), require('@tonaljs/roman-numeral'), require('@tonaljs/scale'), require('@tonaljs/scale-type'), require('@tonaljs/time-signature')) :
+  typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/abc-notation', '@tonaljs/array', '@tonaljs/chord', '@tonaljs/chord-type', '@tonaljs/collection', '@tonaljs/core', '@tonaljs/duration-value', '@tonaljs/interval', '@tonaljs/key', '@tonaljs/midi', '@tonaljs/mode', '@tonaljs/note', '@tonaljs/pcset', '@tonaljs/progression', '@tonaljs/range', '@tonaljs/roman-numeral', '@tonaljs/scale', '@tonaljs/scale-type', '@tonaljs/time-signature'], factory) :
+  (global = global || self, factory(global.Tonal = {}, global.abcNotation, global.array, global.chord, global.ChordType, global.collection, global.Core, global.durationValue, global.interval, global.key, global.midi, global.mode, global.note, global.Pcset, global.progression, global.range, global.romanNumeral, global.scale, global.ScaleType, global.timeSignature));
+}(this, (function (exports, abcNotation, array, chord, ChordType, collection, Core, durationValue, interval, key, midi, mode, note, Pcset, progression, range, romanNumeral, scale, ScaleType, timeSignature) { 'use strict';
 
   abcNotation = abcNotation && Object.prototype.hasOwnProperty.call(abcNotation, 'default') ? abcNotation['default'] : abcNotation;
   chord = chord && Object.prototype.hasOwnProperty.call(chord, 'default') ? chord['default'] : chord;
@@ -3392,6 +3516,7 @@ exports.getRoot     = Translate.getRoot;
   romanNumeral = romanNumeral && Object.prototype.hasOwnProperty.call(romanNumeral, 'default') ? romanNumeral['default'] : romanNumeral;
   scale = scale && Object.prototype.hasOwnProperty.call(scale, 'default') ? scale['default'] : scale;
   ScaleType = ScaleType && Object.prototype.hasOwnProperty.call(ScaleType, 'default') ? ScaleType['default'] : ScaleType;
+  timeSignature = timeSignature && Object.prototype.hasOwnProperty.call(timeSignature, 'default') ? timeSignature['default'] : timeSignature;
 
   // deprecated (backwards compatibility)
   var Tonal = Core;
@@ -3425,6 +3550,7 @@ exports.getRoot     = Translate.getRoot;
   exports.RomanNumeral = romanNumeral;
   exports.Scale = scale;
   exports.ScaleType = ScaleType;
+  exports.TimeSignature = timeSignature;
   exports.ChordDictionary = ChordDictionary;
   exports.PcSet = PcSet;
   exports.ScaleDictionary = ScaleDictionary;
@@ -3435,7 +3561,7 @@ exports.getRoot     = Translate.getRoot;
 })));
 
 
-},{"@tonaljs/abc-notation":4,"@tonaljs/array":5,"@tonaljs/chord":8,"@tonaljs/chord-type":7,"@tonaljs/collection":9,"@tonaljs/core":10,"@tonaljs/duration-value":11,"@tonaljs/interval":12,"@tonaljs/key":13,"@tonaljs/midi":14,"@tonaljs/mode":15,"@tonaljs/note":16,"@tonaljs/pcset":17,"@tonaljs/progression":18,"@tonaljs/range":19,"@tonaljs/roman-numeral":20,"@tonaljs/scale":22,"@tonaljs/scale-type":21}],24:[function(require,module,exports){
+},{"@tonaljs/abc-notation":4,"@tonaljs/array":5,"@tonaljs/chord":8,"@tonaljs/chord-type":7,"@tonaljs/collection":9,"@tonaljs/core":10,"@tonaljs/duration-value":11,"@tonaljs/interval":12,"@tonaljs/key":13,"@tonaljs/midi":14,"@tonaljs/mode":15,"@tonaljs/note":16,"@tonaljs/pcset":17,"@tonaljs/progression":18,"@tonaljs/range":19,"@tonaljs/roman-numeral":20,"@tonaljs/scale":22,"@tonaljs/scale-type":21,"@tonaljs/time-signature":23}],25:[function(require,module,exports){
 ;(function (globalObject) {
   'use strict';
 
@@ -6339,9 +6465,9 @@ exports.getRoot     = Translate.getRoot;
   }
 })(this);
 
-},{}],25:[function(require,module,exports){
-
 },{}],26:[function(require,module,exports){
+
+},{}],27:[function(require,module,exports){
 // A library of seedable RNGs implemented in Javascript.
 //
 // Usage:
@@ -6403,7 +6529,7 @@ sr.tychei = tychei;
 
 module.exports = sr;
 
-},{"./lib/alea":27,"./lib/tychei":28,"./lib/xor128":29,"./lib/xor4096":30,"./lib/xorshift7":31,"./lib/xorwow":32,"./seedrandom":33}],27:[function(require,module,exports){
+},{"./lib/alea":28,"./lib/tychei":29,"./lib/xor128":30,"./lib/xor4096":31,"./lib/xorshift7":32,"./lib/xorwow":33,"./seedrandom":34}],28:[function(require,module,exports){
 // A port of an algorithm by Johannes Baagøe <baagoe@baagoe.com>, 2010
 // http://baagoe.com/en/RandomMusings/javascript/
 // https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
@@ -6519,7 +6645,7 @@ if (module && module.exports) {
 
 
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 // A Javascript implementaion of the "Tyche-i" prng algorithm by
 // Samuel Neves and Filipe Araujo.
 // See https://eden.dei.uc.pt/~sneves/pubs/2011-snfa2.pdf
@@ -6624,7 +6750,7 @@ if (module && module.exports) {
 
 
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 // A Javascript implementaion of the "xor128" prng algorithm by
 // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
 
@@ -6707,7 +6833,7 @@ if (module && module.exports) {
 
 
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 // A Javascript implementaion of Richard Brent's Xorgens xor4096 algorithm.
 //
 // This fast non-cryptographic random number generator is designed for
@@ -6855,7 +6981,7 @@ if (module && module.exports) {
   (typeof define) == 'function' && define   // present with an AMD loader
 );
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 // A Javascript implementaion of the "xorshift7" algorithm by
 // François Panneton and Pierre L'ecuyer:
 // "On the Xorgshift Random Number Generators"
@@ -6954,7 +7080,7 @@ if (module && module.exports) {
 );
 
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 // A Javascript implementaion of the "xorwow" prng algorithm by
 // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
 
@@ -7042,7 +7168,7 @@ if (module && module.exports) {
 
 
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 /*
 Copyright 2019 David Bau.
 
@@ -7297,7 +7423,7 @@ if ((typeof module) == 'object' && module.exports) {
   Math    // math: package containing random, pow, and seedrandom
 );
 
-},{"crypto":25}],34:[function(require,module,exports){
+},{"crypto":26}],35:[function(require,module,exports){
 //==========================================================================
 // gen-basic.js
 // part of 'total-serialism' Package
@@ -7523,7 +7649,7 @@ function cosine(len=1, periods=1, lo=12, hi, phase=0){
 	return arr.map(v => Math.trunc(v));
 }
 exports.cosine = cosine;
-},{"./utility.js":40}],35:[function(require,module,exports){
+},{"./utility.js":41}],36:[function(require,module,exports){
 //==============================================================================
 // gen-complex.js
 // part of 'total-serialism' Package
@@ -7800,7 +7926,7 @@ function lucas(len=1){
 }
 exports.lucas = lucas;
 
-},{"./transform.js":38,"bignumber.js":24}],36:[function(require,module,exports){
+},{"./transform.js":39,"bignumber.js":25}],37:[function(require,module,exports){
 //=======================================================================
 // gen-stochastic.js
 // part of 'total-serialism' Package
@@ -8109,7 +8235,7 @@ class MarkovChain {
 	}
 }
 exports.MarkovChain = MarkovChain;
-},{"./gen-basic.js":34,"seedrandom":26}],37:[function(require,module,exports){
+},{"./gen-basic.js":35,"seedrandom":27}],38:[function(require,module,exports){
 //=======================================================================
 // statistic.js
 // part of 'total-serialism' Package
@@ -8251,7 +8377,7 @@ function mode(a=[0]){
 }
 exports.mode = mode;
 exports.common = mode;
-},{"./transform":38}],38:[function(require,module,exports){
+},{"./transform":39}],39:[function(require,module,exports){
 //=======================================================================
 // transform.js
 // part of 'total-serialism' Package
@@ -8538,7 +8664,7 @@ function unique(a=[0]){
 	return [...new Set(a)];
 }
 exports.unique = unique;
-},{"./statistic":37,"./utility":40}],39:[function(require,module,exports){
+},{"./statistic":38,"./utility":41}],40:[function(require,module,exports){
 //==============================================================================
 // translate.js
 // part of 'total-serialism' Package
@@ -8895,7 +9021,7 @@ function divisionToRatio(a=['1']){
 }
 exports.divisionToRatio = divisionToRatio;
 exports.dtor = divisionToRatio;
-},{"../data/scales.json":1,"../data/tones.json":2,"@tonaljs/tonal":23}],40:[function(require,module,exports){
+},{"../data/scales.json":1,"../data/tones.json":2,"@tonaljs/tonal":24}],41:[function(require,module,exports){
 //=======================================================================
 // utility.js
 // part of 'total-serialism' Package

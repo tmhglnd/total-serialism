@@ -4,7 +4,7 @@ function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableTo
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
@@ -237,13 +237,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       exports.setRoot = Translate.setRoot;
       exports.getRoot = Translate.getRoot;
     }, {
-      "./src/gen-basic.js": 34,
-      "./src/gen-complex.js": 35,
-      "./src/gen-stochastic.js": 36,
-      "./src/statistic.js": 37,
-      "./src/transform.js": 38,
-      "./src/translate.js": 39,
-      "./src/utility.js": 40
+      "./src/gen-basic.js": 35,
+      "./src/gen-complex.js": 36,
+      "./src/gen-stochastic.js": 37,
+      "./src/statistic.js": 38,
+      "./src/transform.js": 39,
+      "./src/translate.js": 40,
+      "./src/utility.js": 41
     }],
     4: [function (require, module, exports) {
       (function (global, factory) {
@@ -640,16 +640,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       })(this, function (exports, core, pcset) {
         'use strict';
         /*! *****************************************************************************
-        Copyright (c) Microsoft Corporation. All rights reserved.
-        Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-        this file except in compliance with the License. You may obtain a copy of the
-        License at http://www.apache.org/licenses/LICENSE-2.0
-          THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-        KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-        WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-        MERCHANTABLITY OR NON-INFRINGEMENT.
-          See the Apache Version 2.0 License for specific language governing permissions
-        and limitations under the License.
+        Copyright (c) Microsoft Corporation.
+          Permission to use, copy, modify, and/or distribute this software for any
+        purpose with or without fee is hereby granted.
+          THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+        REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+        AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+        INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+        LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+        OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+        PERFORMANCE OF THIS SOFTWARE.
         ***************************************************************************** */
 
         var _assign = function __assign() {
@@ -676,16 +676,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
         var CHORDS = [// ==Major==
-        ["1P 3M 5P", "major", "M "], ["1P 3M 5P 7M", "major seventh", "maj7 Δ ma7 M7 Maj7"], ["1P 3M 5P 7M 9M", "major ninth", "maj9 Δ9"], ["1P 3M 5P 7M 9M 13M", "major thirteenth", "maj13 Maj13"], ["1P 3M 5P 6M", "sixth", "6 add6 add13 M6"], ["1P 3M 5P 6M 9M", "sixth/ninth", "6/9 69"], ["1P 3M 5P 7M 11A", "lydian", "maj#4 Δ#4 Δ#11"], ["1P 3M 6m 7M", "major seventh b6", "M7b6"], // ==Minor==
+        ["1P 3M 5P", "major", "M "], ["1P 3M 5P 7M", "major seventh", "maj7 Δ ma7 M7 Maj7"], ["1P 3M 5P 7M 9M", "major ninth", "maj9 Δ9"], ["1P 3M 5P 7M 9M 13M", "major thirteenth", "maj13 Maj13"], ["1P 3M 5P 6M", "sixth", "6 add6 add13 M6"], ["1P 3M 5P 6M 9M", "sixth/ninth", "6/9 69"], ["1P 3M 5P 7M 11A", "lydian", "maj#4 Δ#4 Δ#11"], ["1P 3M 6m 7M", "major seventh flat sixth", "M7b6"], // ==Minor==
         // '''Normal'''
-        ["1P 3m 5P", "minor", "m min -"], ["1P 3m 5P 7m", "minor seventh", "m7 min7 mi7 -7"], ["1P 3m 5P 7M", "minor/major seventh", "m/ma7 m/maj7 mM7 m/M7 -Δ7 mΔ"], ["1P 3m 5P 6M", "minor sixth", "m6"], ["1P 3m 5P 7m 9M", "minor ninth", "m9"], ["1P 3m 5P 7m 9M 11P", "minor eleventh", "m11"], ["1P 3m 5P 7m 9M 13M", "minor thirteenth", "m13"], // '''Diminished'''
+        ["1P 3m 5P", "minor", "m min -"], ["1P 3m 5P 7m", "minor seventh", "m7 min7 mi7 -7"], ["1P 3m 5P 7M", "minor/major seventh", "m/ma7 m/maj7 mM7 mMaj7 m/M7 -Δ7 mΔ"], ["1P 3m 5P 6M", "minor sixth", "m6"], ["1P 3m 5P 7m 9M", "minor ninth", "m9"], ["1P 3m 5P 7m 9M 11P", "minor eleventh", "m11"], ["1P 3m 5P 7m 9M 13M", "minor thirteenth", "m13"], // '''Diminished'''
         ["1P 3m 5d", "diminished", "dim ° o"], ["1P 3m 5d 7d", "diminished seventh", "dim7 °7 o7"], ["1P 3m 5d 7m", "half-diminished", "m7b5 ø"], // ==Dominant/Seventh==
         // '''Normal'''
         ["1P 3M 5P 7m", "dominant seventh", "7 dom"], ["1P 3M 5P 7m 9M", "dominant ninth", "9"], ["1P 3M 5P 7m 9M 13M", "dominant thirteenth", "13"], ["1P 3M 5P 7m 11A", "lydian dominant seventh", "7#11 7#4"], // '''Altered'''
-        ["1P 3M 5P 7m 9m", "dominant b9", "7b9"], ["1P 3M 5P 7m 9A", "dominant #9", "7#9"], ["1P 3M 7m 9m", "altered", "alt7"], // '''Suspended'''
-        ["1P 4P 5P", "suspended 4th", "sus4"], ["1P 2M 5P", "suspended 2nd", "sus2"], ["1P 4P 5P 7m", "suspended 4th seventh", "7sus4"], ["1P 5P 7m 9M 11P", "eleventh", "11"], ["1P 4P 5P 7m 9m", "suspended 4th b9", "b9sus phryg"], // ==Other==
-        ["1P 5P", "fifth", "5"], ["1P 3M 5A", "augmented", "aug + +5"], ["1P 3M 5A 7M", "augmented seventh", "maj7#5 maj7+5"], ["1P 3M 5P 7M 9M 11A", "major #11 (lydian)", "maj9#11 Δ9#11"], // ==Legacy==
-        ["1P 2M 4P 5P", "", "sus24 sus4add9"], ["1P 3M 13m", "", "Mb6"], ["1P 3M 5A 7M 9M", "", "maj9#5 Maj9#5"], ["1P 3M 5A 7m", "", "7#5 +7 7aug aug7"], ["1P 3M 5A 7m 9A", "", "7#5#9 7alt"], ["1P 3M 5A 7m 9M", "", "9#5 9+"], ["1P 3M 5A 7m 9M 11A", "", "9#5#11"], ["1P 3M 5A 7m 9m", "", "7#5b9"], ["1P 3M 5A 7m 9m 11A", "", "7#5b9#11"], ["1P 3M 5A 9A", "", "+add#9"], ["1P 3M 5A 9M", "", "M#5add9 +add9"], ["1P 3M 5P 6M 11A", "", "M6#11 M6b5 6#11 6b5"], ["1P 3M 5P 6M 7M 9M", "", "M7add13"], ["1P 3M 5P 6M 9M 11A", "", "69#11"], ["1P 3M 5P 6m 7m", "", "7b6"], ["1P 3M 5P 7M 9A 11A", "", "maj7#9#11"], ["1P 3M 5P 7M 9M 11A 13M", "", "M13#11 maj13#11 M13+4 M13#4"], ["1P 3M 5P 7M 9m", "", "M7b9"], ["1P 3M 5P 7m 11A 13m", "", "7#11b13 7b5b13"], ["1P 3M 5P 7m 13M", "", "7add6 67 7add13"], ["1P 3M 5P 7m 9A 11A", "", "7#9#11 7b5#9"], ["1P 3M 5P 7m 9A 11A 13M", "", "13#9#11"], ["1P 3M 5P 7m 9A 11A 13m", "", "7#9#11b13"], ["1P 3M 5P 7m 9A 13M", "", "13#9"], ["1P 3M 5P 7m 9A 13m", "", "7#9b13"], ["1P 3M 5P 7m 9M 11A", "", "9#11 9+4 9#4"], ["1P 3M 5P 7m 9M 11A 13M", "", "13#11 13+4 13#4"], ["1P 3M 5P 7m 9M 11A 13m", "", "9#11b13 9b5b13"], ["1P 3M 5P 7m 9m 11A", "", "7b9#11 7b5b9"], ["1P 3M 5P 7m 9m 11A 13M", "", "13b9#11"], ["1P 3M 5P 7m 9m 11A 13m", "", "7b9b13#11 7b9#11b13 7b5b9b13"], ["1P 3M 5P 7m 9m 13M", "", "13b9"], ["1P 3M 5P 7m 9m 13m", "", "7b9b13"], ["1P 3M 5P 7m 9m 9A", "", "7b9#9"], ["1P 3M 5P 9M", "", "Madd9 2 add9 add2"], ["1P 3M 5P 9m", "", "Maddb9"], ["1P 3M 5d", "", "Mb5"], ["1P 3M 5d 6M 7m 9M", "", "13b5"], ["1P 3M 5d 7M", "", "M7b5"], ["1P 3M 5d 7M 9M", "", "M9b5"], ["1P 3M 5d 7m", "", "7b5"], ["1P 3M 5d 7m 9M", "", "9b5"], ["1P 3M 7m", "", "7no5"], ["1P 3M 7m 13m", "", "7b13"], ["1P 3M 7m 9M", "", "9no5"], ["1P 3M 7m 9M 13M", "", "13no5"], ["1P 3M 7m 9M 13m", "", "9b13"], ["1P 3m 4P 5P", "", "madd4"], ["1P 3m 5A", "", "m#5 m+ mb6"], ["1P 3m 5P 6M 9M", "", "m69"], ["1P 3m 5P 6m 7M", "", "mMaj7b6"], ["1P 3m 5P 6m 7M 9M", "", "mMaj9b6"], ["1P 3m 5P 7M 9M", "", "mMaj9"], ["1P 3m 5P 7m 11P", "", "m7add11 m7add4"], ["1P 3m 5P 9M", "", "madd9"], ["1P 3m 5d 6M 7M", "", "o7M7"], ["1P 3m 5d 7M", "", "oM7"], ["1P 3m 6m 7M", "", "mb6M7"], ["1P 3m 6m 7m", "", "m7#5"], ["1P 3m 6m 7m 9M", "", "m9#5"], ["1P 3m 6m 7m 9M 11P", "", "m11A"], ["1P 3m 6m 9m", "", "mb6b9"], ["1P 3m 7m 12d 2M", "", "m9b5 h9"], ["1P 3m 7m 12d 2M 4P", "", "m11b5 h11"], ["1P 4P 5A 7M", "", "M7#5sus4"], ["1P 4P 5A 7M 9M", "", "M9#5sus4"], ["1P 4P 5A 7m", "", "7#5sus4"], ["1P 4P 5P 7M", "", "M7sus4"], ["1P 4P 5P 7M 9M", "", "M9sus4"], ["1P 4P 5P 7m 9M", "", "9sus4 9sus"], ["1P 4P 5P 7m 9M 13M", "", "13sus4 13sus"], ["1P 4P 5P 7m 9m 13m", "", "7sus4b9b13 7b9b13sus4"], ["1P 4P 7m 10m", "", "4 quartal"], ["1P 5P 7m 9m 11P", "", "11b9"]];
+        ["1P 3M 5P 7m 9m", "dominant flat ninth", "7b9"], ["1P 3M 5P 7m 9A", "dominant sharp ninth", "7#9"], ["1P 3M 7m 9m", "altered", "alt7"], // '''Suspended'''
+        ["1P 4P 5P", "suspended fourth", "sus4"], ["1P 2M 5P", "suspended second", "sus2"], ["1P 4P 5P 7m", "suspended fourth seventh", "7sus4"], ["1P 5P 7m 9M 11P", "eleventh", "11"], ["1P 4P 5P 7m 9m", "suspended fourth flat ninth", "b9sus phryg"], // ==Other==
+        ["1P 5P", "fifth", "5"], ["1P 3M 5A", "augmented", "aug + +5"], ["1P 3M 5A 7M", "augmented seventh", "maj7#5 maj7+5 +maj7"], ["1P 3M 5P 7M 9M 11A", "major sharp eleventh (lydian)", "maj9#11 Δ9#11"], // ==Legacy==
+        ["1P 2M 4P 5P", "", "sus24 sus4add9"], ["1P 3M 13m", "", "Mb6"], ["1P 3M 5A 7M 9M", "", "maj9#5 Maj9#5"], ["1P 3M 5A 7m", "", "7#5 +7 7aug aug7"], ["1P 3M 5A 7m 9A", "", "7#5#9 7alt"], ["1P 3M 5A 7m 9M", "", "9#5 9+"], ["1P 3M 5A 7m 9M 11A", "", "9#5#11"], ["1P 3M 5A 7m 9m", "", "7#5b9"], ["1P 3M 5A 7m 9m 11A", "", "7#5b9#11"], ["1P 3M 5A 9A", "", "+add#9"], ["1P 3M 5A 9M", "", "M#5add9 +add9"], ["1P 3M 5P 6M 11A", "", "M6#11 M6b5 6#11 6b5"], ["1P 3M 5P 6M 7M 9M", "", "M7add13"], ["1P 3M 5P 6M 9M 11A", "", "69#11"], ["1P 3M 5P 6m 7m", "", "7b6"], ["1P 3M 5P 7M 9A 11A", "", "maj7#9#11"], ["1P 3M 5P 7M 9M 11A 13M", "", "M13#11 maj13#11 M13+4 M13#4"], ["1P 3M 5P 7M 9m", "", "M7b9"], ["1P 3M 5P 7m 11A 13m", "", "7#11b13 7b5b13"], ["1P 3M 5P 7m 13M", "", "7add6 67 7add13"], ["1P 3M 5P 7m 9A 11A", "", "7#9#11 7b5#9"], ["1P 3M 5P 7m 9A 11A 13M", "", "13#9#11"], ["1P 3M 5P 7m 9A 11A 13m", "", "7#9#11b13"], ["1P 3M 5P 7m 9A 13M", "", "13#9"], ["1P 3M 5P 7m 9A 13m", "", "7#9b13"], ["1P 3M 5P 7m 9M 11A", "", "9#11 9+4 9#4"], ["1P 3M 5P 7m 9M 11A 13M", "", "13#11 13+4 13#4"], ["1P 3M 5P 7m 9M 11A 13m", "", "9#11b13 9b5b13"], ["1P 3M 5P 7m 9m 11A", "", "7b9#11 7b5b9"], ["1P 3M 5P 7m 9m 11A 13M", "", "13b9#11"], ["1P 3M 5P 7m 9m 11A 13m", "", "7b9b13#11 7b9#11b13 7b5b9b13"], ["1P 3M 5P 7m 9m 13M", "", "13b9"], ["1P 3M 5P 7m 9m 13m", "", "7b9b13"], ["1P 3M 5P 7m 9m 9A", "", "7b9#9"], ["1P 3M 5P 9M", "", "Madd9 2 add9 add2"], ["1P 3M 5P 9m", "", "Maddb9"], ["1P 3M 5d", "", "Mb5"], ["1P 3M 5d 6M 7m 9M", "", "13b5"], ["1P 3M 5d 7M", "", "M7b5"], ["1P 3M 5d 7M 9M", "", "M9b5"], ["1P 3M 5d 7m", "", "7b5"], ["1P 3M 5d 7m 9M", "", "9b5"], ["1P 3M 7m", "", "7no5"], ["1P 3M 7m 13m", "", "7b13"], ["1P 3M 7m 9M", "", "9no5"], ["1P 3M 7m 9M 13M", "", "13no5"], ["1P 3M 7m 9M 13m", "", "9b13"], ["1P 3m 4P 5P", "", "madd4"], ["1P 3m 5A", "", "m#5 m+ mb6"], ["1P 3m 5P 6M 9M", "", "m69"], ["1P 3m 5P 6m 7M", "", "mMaj7b6"], ["1P 3m 5P 6m 7M 9M", "", "mMaj9b6"], ["1P 3m 5P 7M 9M", "", "mMaj9"], ["1P 3m 5P 7m 11P", "", "m7add11 m7add4"], ["1P 3m 5P 9M", "", "madd9"], ["1P 3m 5d 6M 7M", "", "o7M7"], ["1P 3m 5d 7M", "", "oM7"], ["1P 3m 6m 7M", "", "mb6M7"], ["1P 3m 6m 7m", "", "m7#5"], ["1P 3m 6m 7m 9M", "", "m9#5"], ["1P 3m 6m 7m 9M 11P", "", "m11A"], ["1P 3m 6m 9m", "", "mb6b9"], ["1P 2M 3m 5d 7m", "", "m9b5"], ["1P 4P 5A 7M", "", "M7#5sus4"], ["1P 4P 5A 7M 9M", "", "M9#5sus4"], ["1P 4P 5A 7m", "", "7#5sus4"], ["1P 4P 5P 7M", "", "M7sus4"], ["1P 4P 5P 7M 9M", "", "M9sus4"], ["1P 4P 5P 7m 9M", "", "9sus4 9sus"], ["1P 4P 5P 7m 9M 13M", "", "13sus4 13sus"], ["1P 4P 5P 7m 9m 13m", "", "7sus4b9b13 7b9b13sus4"], ["1P 4P 7m 10m", "", "4 quartal"], ["1P 5P 7m 9m 11P", "", "11b9"]];
 
         var NoChordType = _assign(_assign({}, pcset.EmptyPcset), {
           name: "",
@@ -847,16 +847,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       })(this, function (exports, chordDetect, chordType, core, pcset, scaleType) {
         'use strict';
         /*! *****************************************************************************
-        Copyright (c) Microsoft Corporation. All rights reserved.
-        Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-        this file except in compliance with the License. You may obtain a copy of the
-        License at http://www.apache.org/licenses/LICENSE-2.0
-          THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-        KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-        WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-        MERCHANTABLITY OR NON-INFRINGEMENT.
-          See the Apache Version 2.0 License for specific language governing permissions
-        and limitations under the License.
+        Copyright (c) Microsoft Corporation.
+          Permission to use, copy, modify, and/or distribute this software for any
+        purpose with or without fee is hereby granted.
+          THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+        REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+        AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+        INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+        LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+        OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+        PERFORMANCE OF THIS SOFTWARE.
         ***************************************************************************** */
 
         var _assign2 = function __assign() {
@@ -878,6 +878,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         var NoChord = {
           empty: true,
           name: "",
+          symbol: "",
+          root: "",
+          rootDegree: 0,
           type: "",
           tonic: null,
           setNum: NaN,
@@ -941,51 +944,64 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
         function get(src) {
-          var _a = findChord(src),
-              type = _a.type,
-              tonic = _a.tonic;
-
-          if (!type || type.empty) {
+          if (src === "") {
             return NoChord;
           }
 
-          var notes = tonic ? type.intervals.map(function (i) {
+          if (Array.isArray(src) && src.length === 2) {
+            return getChord(src[1], src[0]);
+          } else {
+            var _a = tokenize(src),
+                tonic = _a[0],
+                type = _a[1];
+
+            var chord_1 = getChord(type, tonic);
+            return chord_1.empty ? getChord(src) : chord_1;
+          }
+        }
+        /**
+         * Get chord properties
+         *
+         * @param typeName - the chord type name
+         * @param [tonic] - Optional tonic
+         * @param [root]  - Optional root (requires a tonic)
+         */
+
+
+        function getChord(typeName, optionalTonic, optionalRoot) {
+          var type = chordType.get(typeName);
+          var tonic = core.note(optionalTonic || "");
+          var root = core.note(optionalRoot || "");
+
+          if (type.empty || optionalTonic && tonic.empty || optionalRoot && root.empty) {
+            return NoChord;
+          }
+
+          var rootInterval = core.distance(tonic.pc, root.pc);
+          var rootDegree = type.intervals.indexOf(rootInterval) + 1;
+
+          if (!root.empty && !rootDegree) {
+            return NoChord;
+          }
+
+          var notes = tonic.empty ? [] : type.intervals.map(function (i) {
             return core.transpose(tonic, i);
-          }) : [];
-          var name = tonic ? tonic + " " + type.name : type.name;
+          });
+          typeName = type.aliases.indexOf(typeName) !== -1 ? typeName : type.aliases[0];
+          var symbol = "" + (tonic.empty ? "" : tonic.pc) + typeName + (root.empty ? "" : "/" + root.pc);
+          var name = "" + (optionalTonic ? tonic.pc + " " : "") + type.name + (optionalRoot ? " over " + root.pc : "");
           return _assign2(_assign2({}, type), {
             name: name,
+            symbol: symbol,
             type: type.name,
-            tonic: tonic || "",
+            root: root.name,
+            rootDegree: rootDegree,
+            tonic: tonic.name,
             notes: notes
           });
         }
 
         var chord = core.deprecate("Chord.chord", "Chord.get", get);
-
-        function findChord(src) {
-          if (!src || !src.length) {
-            return {};
-          }
-
-          var tokens = Array.isArray(src) ? src : tokenize(src);
-          var tonic = core.note(tokens[0]).name;
-          var type = chordType.get(tokens[1]);
-
-          if (!type.empty) {
-            return {
-              tonic: tonic,
-              type: type
-            };
-          } else if (tonic && typeof src === "string") {
-            return {
-              tonic: "",
-              type: chordType.get(src)
-            };
-          } else {
-            return {};
-          }
-        }
         /**
          * Transpose a chord name
          *
@@ -996,14 +1012,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
          * transpose('Dm7', 'P4') // => 'Gm7
          */
 
-
         function transpose(chordName, interval) {
           var _a = tokenize(chordName),
               tonic = _a[0],
               type = _a[1];
 
           if (!tonic) {
-            return name;
+            return chordName;
           }
 
           return core.transpose(tonic, interval) + type;
@@ -1065,6 +1080,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }
 
         var index = {
+          getChord: getChord,
           get: get,
           detect: chordDetect.detect,
           chordScales: chordScales,
@@ -1086,6 +1102,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         exports["default"] = index;
         exports.extended = extended;
         exports.get = get;
+        exports.getChord = getChord;
         exports.reduced = reduced;
         exports.tokenize = tokenize;
         exports.transpose = transpose;
@@ -1409,6 +1426,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           return note(decode(noteCoord));
         }
 
+        var mod = function mod(n, m) {
+          return (n % m + m) % m;
+        };
+
         var SEMI = [0, 2, 4, 5, 7, 9, 11];
 
         function parse(noteName) {
@@ -1432,8 +1453,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           var name = letter + acc + octStr;
           var pc = letter + acc;
           var chroma = (SEMI[step] + alt + 120) % 12;
-          var o = oct === undefined ? -100 : oct;
-          var height = SEMI[step] + alt + 12 * (o + 1);
+          var height = oct === undefined ? mod(SEMI[step] + alt, 12) - 12 * 99 : SEMI[step] + alt + 12 * (oct + 1);
           var midi = height >= 0 && height <= 127 ? height : null;
           var freq = oct === undefined ? null : Math.pow(2, (height - 69) / 12) * 440;
           return {
@@ -1875,19 +1895,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
          * Interval.name('C4') // => ""
          */
 
-        var name = function (_name) {
-          function name(_x) {
-            return _name.apply(this, arguments);
-          }
-
-          name.toString = function () {
-            return _name.toString();
-          };
-
-          return name;
-        }(function (name) {
-          return core.interval(name).name;
-        });
+        var name = function name(_name) {
+          return core.interval(_name).name;
+        };
         /**
          * Get semitones of an interval
          * @function
@@ -2348,6 +2358,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             options = {};
           }
 
+          if (isNaN(midi) || midi === -Infinity || midi === Infinity) return "";
           midi = Math.round(midi);
           var pcs = options.sharps === true ? SHARPS : FLATS;
           var pc = pcs[midi % 12];
@@ -2386,16 +2397,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       })(this, function (exports, core, pcset) {
         'use strict';
         /*! *****************************************************************************
-        Copyright (c) Microsoft Corporation. All rights reserved.
-        Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-        this file except in compliance with the License. You may obtain a copy of the
-        License at http://www.apache.org/licenses/LICENSE-2.0
-          THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-        KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-        WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-        MERCHANTABLITY OR NON-INFRINGEMENT.
-          See the Apache Version 2.0 License for specific language governing permissions
-        and limitations under the License.
+        Copyright (c) Microsoft Corporation.
+          Permission to use, copy, modify, and/or distribute this software for any
+        purpose with or without fee is hereby granted.
+          THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+        REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+        AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+        INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+        LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+        OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+        PERFORMANCE OF THIS SOFTWARE.
         ***************************************************************************** */
 
         var _assign5 = function __assign() {
@@ -2648,6 +2659,24 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }
         /**
          * Given a midi number, returns a note name. Uses flats for altered notes.
+         */
+
+
+        function fromFreq(freq) {
+          return midi$1.midiToNoteName(midi$1.freqToMidi(freq));
+        }
+        /**
+         * Given a midi number, returns a note name. Uses flats for altered notes.
+         */
+
+
+        function fromFreqSharps(freq) {
+          return midi$1.midiToNoteName(midi$1.freqToMidi(freq), {
+            sharps: true
+          });
+        }
+        /**
+         * Given a midi number, returns a note name. Uses flats for altered notes.
          *
          * @function
          * @param {number} midi - the midi note number
@@ -2811,6 +2840,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           fromMidi: fromMidi,
           fromMidiSharps: fromMidiSharps,
           freq: freq,
+          fromFreq: fromFreq,
+          fromFreqSharps: fromFreqSharps,
           chroma: chroma,
           transpose: transpose,
           tr: tr,
@@ -2830,6 +2861,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         exports.descending = descending;
         exports.enharmonic = enharmonic;
         exports.freq = freq;
+        exports.fromFreq = fromFreq;
+        exports.fromFreqSharps = fromFreqSharps;
         exports.fromMidi = fromMidi;
         exports.fromMidiSharps = fromMidiSharps;
         exports.get = get;
@@ -3439,16 +3472,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       })(this, function (exports, core, pcset) {
         'use strict';
         /*! *****************************************************************************
-        Copyright (c) Microsoft Corporation. All rights reserved.
-        Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-        this file except in compliance with the License. You may obtain a copy of the
-        License at http://www.apache.org/licenses/LICENSE-2.0
-          THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-        KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-        WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-        MERCHANTABLITY OR NON-INFRINGEMENT.
-          See the Apache Version 2.0 License for specific language governing permissions
-        and limitations under the License.
+        Copyright (c) Microsoft Corporation.
+          Permission to use, copy, modify, and/or distribute this software for any
+        purpose with or without fee is hereby granted.
+          THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+        REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+        AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+        INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+        LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+        OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+        PERFORMANCE OF THIS SOFTWARE.
         ***************************************************************************** */
 
         var _assign6 = function __assign() {
@@ -3471,10 +3504,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
         var SCALES = [// 5-note scales
         ["1P 2M 3M 5P 6M", "major pentatonic", "pentatonic"], ["1P 3M 4P 5P 7M", "ionian pentatonic"], ["1P 3M 4P 5P 7m", "mixolydian pentatonic", "indian"], ["1P 2M 4P 5P 6M", "ritusen"], ["1P 2M 4P 5P 7m", "egyptian"], ["1P 3M 4P 5d 7m", "neopolitan major pentatonic"], ["1P 3m 4P 5P 6m", "vietnamese 1"], ["1P 2m 3m 5P 6m", "pelog"], ["1P 2m 4P 5P 6m", "kumoijoshi"], ["1P 2M 3m 5P 6m", "hirajoshi"], ["1P 2m 4P 5d 7m", "iwato"], ["1P 2m 4P 5P 7m", "in-sen"], ["1P 3M 4A 5P 7M", "lydian pentatonic", "chinese"], ["1P 3m 4P 6m 7m", "malkos raga"], ["1P 3m 4P 5d 7m", "locrian pentatonic", "minor seven flat five pentatonic"], ["1P 3m 4P 5P 7m", "minor pentatonic", "vietnamese 2"], ["1P 3m 4P 5P 6M", "minor six pentatonic"], ["1P 2M 3m 5P 6M", "flat three pentatonic", "kumoi"], ["1P 2M 3M 5P 6m", "flat six pentatonic"], ["1P 2m 3M 5P 6M", "scriabin"], ["1P 3M 5d 6m 7m", "whole tone pentatonic"], ["1P 3M 4A 5A 7M", "lydian #5P pentatonic"], ["1P 3M 4A 5P 7m", "lydian dominant pentatonic"], ["1P 3m 4P 5P 7M", "minor #7M pentatonic"], ["1P 3m 4d 5d 7m", "super locrian pentatonic"], // 6-note scales
-        ["1P 2M 3m 4P 5P 7M", "minor hexatonic"], ["1P 2A 3M 5P 5A 7M", "augmented"], ["1P 3m 4P 5d 5P 7m", "minor blues", "blues"], ["1P 2M 3m 3M 5P 6M", "major blues"], ["1P 2M 4P 5P 6M 7m", "piongio"], ["1P 2m 3M 4A 6M 7m", "prometheus neopolitan"], ["1P 2M 3M 4A 6M 7m", "prometheus"], ["1P 2m 3M 5d 6m 7m", "mystery #1"], ["1P 2m 3M 4P 5A 6M", "six tone symmetric"], ["1P 2M 3M 4A 5A 7m", "whole tone"], // 7-note scales
-        ["1P 2M 3M 4P 5d 6m 7m", "locrian major", "arabian"], ["1P 2m 3M 4A 5P 6m 7M", "double harmonic lydian"], ["1P 2M 3m 4P 5P 6m 7M", "harmonic minor"], ["1P 2m 3m 3M 5d 6m 7m", "altered", "super locrian", "diminished whole tone", "pomeroy"], ["1P 2M 3m 4P 5d 6m 7m", "locrian #2", "half-diminished", '"aeolian b5'], ["1P 2M 3M 4P 5P 6m 7m", "mixolydian b6", "melodic minor fifth mode", "hindu"], ["1P 2M 3M 4A 5P 6M 7m", "lydian dominant", "lydian b7", "overtone"], ["1P 2M 3M 4A 5P 6M 7M", "lydian"], ["1P 2M 3M 4A 5A 6M 7M", "lydian augmented"], ["1P 2m 3m 4P 5P 6M 7m", "dorian b2", "phrygian #6", "melodic minor second mode"], ["1P 2M 3m 4P 5P 6M 7M", "melodic minor"], ["1P 2m 3m 4P 5d 6m 7m", "locrian"], ["1P 2m 3m 4d 5d 6m 7d", "ultralocrian", "superlocrian bb7", "·superlocrian diminished"], ["1P 2m 3m 4P 5d 6M 7m", "locrian 6", "locrian natural 6", "locrian sharp 6"], ["1P 2A 3M 4P 5P 5A 7M", "augmented heptatonic"], ["1P 2M 3m 5d 5P 6M 7m", "romanian minor"], ["1P 2M 3m 4A 5P 6M 7m", "dorian #4"], ["1P 2M 3m 4A 5P 6M 7M", "lydian diminished"], ["1P 2m 3m 4P 5P 6m 7m", "phrygian"], ["1P 2M 3M 4A 5A 7m 7M", "leading whole tone"], ["1P 2M 3M 4A 5P 6m 7m", "lydian minor"], ["1P 2m 3M 4P 5P 6m 7m", "phrygian dominant", "spanish", "phrygian major"], ["1P 2m 3m 4P 5P 6m 7M", "balinese"], ["1P 2m 3m 4P 5P 6M 7M", "neopolitan major"], ["1P 2M 3m 4P 5P 6m 7m", "aeolian", "minor"], ["1P 2M 3M 4P 5P 6m 7M", "harmonic major"], ["1P 2m 3M 4P 5P 6m 7M", "double harmonic major", "gypsy"], ["1P 2M 3m 4P 5P 6M 7m", "dorian"], ["1P 2M 3m 4A 5P 6m 7M", "hungarian minor"], ["1P 2A 3M 4A 5P 6M 7m", "hungarian major"], ["1P 2m 3M 4P 5d 6M 7m", "oriental"], ["1P 2m 3m 3M 4A 5P 7m", "flamenco"], ["1P 2m 3m 4A 5P 6m 7M", "todi raga"], ["1P 2M 3M 4P 5P 6M 7m", "mixolydian", "dominant"], ["1P 2m 3M 4P 5d 6m 7M", "persian"], ["1P 2M 3M 4P 5P 6M 7M", "major", "ionian"], ["1P 2m 3M 5d 6m 7m 7M", "enigmatic"], ["1P 2M 3M 4P 5A 6M 7M", "major augmented", "major #5", "ionian augmented", "ionian #5"], ["1P 2A 3M 4A 5P 6M 7M", "lydian #9"], // 8-note scales
-        ["1P 2m 3M 4P 4A 5P 6m 7M", "purvi raga"], ["1P 2m 3m 3M 4P 5P 6m 7m", "spanish heptatonic"], ["1P 2M 3M 4P 5P 6M 7m 7M", "bebop"], ["1P 2M 3m 3M 4P 5P 6M 7m", "bebop minor"], ["1P 2M 3M 4P 5P 5A 6M 7M", "bebop major"], ["1P 2m 3m 4P 5d 5P 6m 7m", "bebop locrian"], ["1P 2M 3m 4P 5P 6m 7m 7M", "minor bebop"], ["1P 2M 3m 4P 5d 6m 6M 7M", "diminished", "whole-half diminished"], ["1P 2M 3M 4P 5d 5P 6M 7M", "ichikosucho"], ["1P 2M 3m 4P 5P 6m 6M 7M", "minor six diminished"], ["1P 2m 3m 3M 4A 5P 6M 7m", "half-whole diminished", "dominant diminished"], ["1P 3m 3M 4P 5P 6M 7m 7M", "kafi raga"], // 9-note scales
-        ["1P 2M 3m 3M 4P 5d 5P 6M 7m", "composite blues"], // 12-note scales
+        ["1P 2M 3m 4P 5P 7M", "minor hexatonic"], ["1P 2A 3M 5P 5A 7M", "augmented"], ["1P 2M 3m 3M 5P 6M", "major blues"], ["1P 2M 4P 5P 6M 7m", "piongio"], ["1P 2m 3M 4A 6M 7m", "prometheus neopolitan"], ["1P 2M 3M 4A 6M 7m", "prometheus"], ["1P 2m 3M 5d 6m 7m", "mystery #1"], ["1P 2m 3M 4P 5A 6M", "six tone symmetric"], ["1P 2M 3M 4A 5A 7m", "whole tone", "messiaen's mode #1"], ["1P 2m 4P 4A 5P 7M", "messiaen's mode #5"], ["1P 3m 4P 5d 5P 7m", "minor blues", "blues"], // 7-note scales
+        ["1P 2M 3M 4P 5d 6m 7m", "locrian major", "arabian"], ["1P 2m 3M 4A 5P 6m 7M", "double harmonic lydian"], ["1P 2M 3m 4P 5P 6m 7M", "harmonic minor"], ["1P 2m 3m 3M 5d 6m 7m", "altered", "super locrian", "diminished whole tone", "pomeroy"], ["1P 2M 3m 4P 5d 6m 7m", "locrian #2", "half-diminished", "aeolian b5"], ["1P 2M 3M 4P 5P 6m 7m", "mixolydian b6", "melodic minor fifth mode", "hindu"], ["1P 2M 3M 4A 5P 6M 7m", "lydian dominant", "lydian b7", "overtone"], ["1P 2M 3M 4A 5P 6M 7M", "lydian"], ["1P 2M 3M 4A 5A 6M 7M", "lydian augmented"], ["1P 2m 3m 4P 5P 6M 7m", "dorian b2", "phrygian #6", "melodic minor second mode"], ["1P 2M 3m 4P 5P 6M 7M", "melodic minor"], ["1P 2m 3m 4P 5d 6m 7m", "locrian"], ["1P 2m 3m 4d 5d 6m 7d", "ultralocrian", "superlocrian bb7", "·superlocrian diminished"], ["1P 2m 3m 4P 5d 6M 7m", "locrian 6", "locrian natural 6", "locrian sharp 6"], ["1P 2A 3M 4P 5P 5A 7M", "augmented heptatonic"], ["1P 2M 3m 5d 5P 6M 7m", "romanian minor"], ["1P 2M 3m 4A 5P 6M 7m", "dorian #4"], ["1P 2M 3m 4A 5P 6M 7M", "lydian diminished"], ["1P 2m 3m 4P 5P 6m 7m", "phrygian"], ["1P 2M 3M 4A 5A 7m 7M", "leading whole tone"], ["1P 2M 3M 4A 5P 6m 7m", "lydian minor"], ["1P 2m 3M 4P 5P 6m 7m", "phrygian dominant", "spanish", "phrygian major"], ["1P 2m 3m 4P 5P 6m 7M", "balinese"], ["1P 2m 3m 4P 5P 6M 7M", "neopolitan major"], ["1P 2M 3m 4P 5P 6m 7m", "aeolian", "minor"], ["1P 2M 3M 4P 5P 6m 7M", "harmonic major"], ["1P 2m 3M 4P 5P 6m 7M", "double harmonic major", "gypsy"], ["1P 2M 3m 4P 5P 6M 7m", "dorian"], ["1P 2M 3m 4A 5P 6m 7M", "hungarian minor"], ["1P 2A 3M 4A 5P 6M 7m", "hungarian major"], ["1P 2m 3M 4P 5d 6M 7m", "oriental"], ["1P 2m 3m 3M 4A 5P 7m", "flamenco"], ["1P 2m 3m 4A 5P 6m 7M", "todi raga"], ["1P 2M 3M 4P 5P 6M 7m", "mixolydian", "dominant"], ["1P 2m 3M 4P 5d 6m 7M", "persian"], ["1P 2M 3M 4P 5P 6M 7M", "major", "ionian"], ["1P 2m 3M 5d 6m 7m 7M", "enigmatic"], ["1P 2M 3M 4P 5A 6M 7M", "major augmented", "major #5", "ionian augmented", "ionian #5"], ["1P 2A 3M 4A 5P 6M 7M", "lydian #9"], // 8-note scales
+        ["1P 2m 2M 4P 4A 5P 6m 7M", "messiaen's mode #4"], ["1P 2m 3M 4P 4A 5P 6m 7M", "purvi raga"], ["1P 2m 3m 3M 4P 5P 6m 7m", "spanish heptatonic"], ["1P 2M 3M 4P 5P 6M 7m 7M", "bebop"], ["1P 2M 3m 3M 4P 5P 6M 7m", "bebop minor"], ["1P 2M 3M 4P 5P 5A 6M 7M", "bebop major"], ["1P 2m 3m 4P 5d 5P 6m 7m", "bebop locrian"], ["1P 2M 3m 4P 5P 6m 7m 7M", "minor bebop"], ["1P 2M 3m 4P 5d 6m 6M 7M", "diminished", "whole-half diminished"], ["1P 2M 3M 4P 5d 5P 6M 7M", "ichikosucho"], ["1P 2M 3m 4P 5P 6m 6M 7M", "minor six diminished"], ["1P 2m 3m 3M 4A 5P 6M 7m", "half-whole diminished", "dominant diminished", "messiaen's mode #2"], ["1P 3m 3M 4P 5P 6M 7m 7M", "kafi raga"], ["1P 2M 3M 4P 4A 5A 6A 7M", "messiaen's mode #6"], // 9-note scales
+        ["1P 2M 3m 3M 4P 5d 5P 6M 7m", "composite blues"], ["1P 2M 3m 3M 4A 5P 6m 7m 7M", "messiaen's mode #3"], // 10-note scales
+        ["1P 2m 2M 3m 4P 4A 5P 6m 6M 7M", "messiaen's mode #7"], // 12-note scales
         ["1P 2m 2M 3m 3M 4P 5d 5P 6m 6M 7m 7M", "chromatic"]];
 
         var NoScaleType = _assign6(_assign6({}, pcset.EmptyPcset), {
@@ -3606,16 +3640,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       })(this, function (exports, chordType, collection, core, note, pcset, scaleType) {
         'use strict';
         /*! *****************************************************************************
-        Copyright (c) Microsoft Corporation. All rights reserved.
-        Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-        this file except in compliance with the License. You may obtain a copy of the
-        License at http://www.apache.org/licenses/LICENSE-2.0
-          THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-        KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-        WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-        MERCHANTABLITY OR NON-INFRINGEMENT.
-          See the Apache Version 2.0 License for specific language governing permissions
-        and limitations under the License.
+        Copyright (c) Microsoft Corporation.
+          Permission to use, copy, modify, and/or distribute this software for any
+        purpose with or without fee is hereby granted.
+          THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+        REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+        AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+        INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+        LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+        OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+        PERFORMANCE OF THIS SOFTWARE.
         ***************************************************************************** */
 
         var _assign7 = function __assign() {
@@ -3866,8 +3900,107 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     }],
     23: [function (require, module, exports) {
       (function (global, factory) {
-        _typeof(exports) === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/abc-notation'), require('@tonaljs/array'), require('@tonaljs/chord'), require('@tonaljs/chord-type'), require('@tonaljs/collection'), require('@tonaljs/core'), require('@tonaljs/duration-value'), require('@tonaljs/interval'), require('@tonaljs/key'), require('@tonaljs/midi'), require('@tonaljs/mode'), require('@tonaljs/note'), require('@tonaljs/pcset'), require('@tonaljs/progression'), require('@tonaljs/range'), require('@tonaljs/roman-numeral'), require('@tonaljs/scale'), require('@tonaljs/scale-type')) : typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/abc-notation', '@tonaljs/array', '@tonaljs/chord', '@tonaljs/chord-type', '@tonaljs/collection', '@tonaljs/core', '@tonaljs/duration-value', '@tonaljs/interval', '@tonaljs/key', '@tonaljs/midi', '@tonaljs/mode', '@tonaljs/note', '@tonaljs/pcset', '@tonaljs/progression', '@tonaljs/range', '@tonaljs/roman-numeral', '@tonaljs/scale', '@tonaljs/scale-type'], factory) : (global = global || self, factory(global.Tonal = {}, global.abcNotation, global.array, global.chord, global.ChordType, global.collection, global.Core, global.durationValue, global.interval, global.key, global.midi, global.mode, global.note, global.Pcset, global.progression, global.range, global.romanNumeral, global.scale, global.ScaleType));
-      })(this, function (exports, abcNotation, array, chord, ChordType, collection, Core, durationValue, interval, key, midi, mode, note, Pcset, progression, range, romanNumeral, scale, ScaleType) {
+        _typeof(exports) === 'object' && typeof module !== 'undefined' ? factory(exports) : typeof define === 'function' && define.amd ? define(['exports'], factory) : (global = global || self, factory(global.TimeSignature = {}));
+      })(this, function (exports) {
+        'use strict'; // CONSTANTS
+
+        var NONE = {
+          empty: true,
+          name: "",
+          upper: undefined,
+          lower: undefined,
+          type: undefined,
+          additive: []
+        };
+        var NAMES = ["4/4", "3/4", "2/4", "2/2", "12/8", "9/8", "6/8", "3/8"]; // PUBLIC API
+
+        function names() {
+          return NAMES.slice();
+        }
+
+        var REGEX = /^(\d?\d(?:\+\d)*)\/(\d)$/;
+        var CACHE = new Map();
+
+        function get(literal) {
+          var cached = CACHE.get(literal);
+
+          if (cached) {
+            return cached;
+          }
+
+          var ts = build(parse(literal));
+          CACHE.set(literal, ts);
+          return ts;
+        }
+
+        function parse(literal) {
+          if (typeof literal === "string") {
+            var _a = REGEX.exec(literal) || [],
+                _ = _a[0],
+                up_1 = _a[1],
+                low = _a[2];
+
+            return parse([up_1, low]);
+          }
+
+          var up = literal[0],
+              down = literal[1];
+          var denominator = +down;
+
+          if (typeof up === "number") {
+            return [up, denominator];
+          }
+
+          var list = up.split("+").map(function (n) {
+            return +n;
+          });
+          return list.length === 1 ? [list[0], denominator] : [list, denominator];
+        }
+
+        var index = {
+          names: names,
+          parse: parse,
+          get: get
+        }; // PRIVATE
+
+        function build(_a) {
+          var up = _a[0],
+              down = _a[1];
+          var upper = Array.isArray(up) ? up.reduce(function (a, b) {
+            return a + b;
+          }, 0) : up;
+          var lower = down;
+
+          if (upper === 0 || lower === 0) {
+            return NONE;
+          }
+
+          var name = Array.isArray(up) ? up.join("+") + "/" + down : up + "/" + down;
+          var additive = Array.isArray(up) ? up : [];
+          var type = lower === 4 || lower === 2 ? "simple" : lower === 8 && upper % 3 === 0 ? "compound" : "irregular";
+          return {
+            empty: false,
+            name: name,
+            type: type,
+            upper: upper,
+            lower: lower,
+            additive: additive
+          };
+        }
+
+        exports["default"] = index;
+        exports.get = get;
+        exports.names = names;
+        exports.parse = parse;
+        Object.defineProperty(exports, '__esModule', {
+          value: true
+        });
+      });
+    }, {}],
+    24: [function (require, module, exports) {
+      (function (global, factory) {
+        _typeof(exports) === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/abc-notation'), require('@tonaljs/array'), require('@tonaljs/chord'), require('@tonaljs/chord-type'), require('@tonaljs/collection'), require('@tonaljs/core'), require('@tonaljs/duration-value'), require('@tonaljs/interval'), require('@tonaljs/key'), require('@tonaljs/midi'), require('@tonaljs/mode'), require('@tonaljs/note'), require('@tonaljs/pcset'), require('@tonaljs/progression'), require('@tonaljs/range'), require('@tonaljs/roman-numeral'), require('@tonaljs/scale'), require('@tonaljs/scale-type'), require('@tonaljs/time-signature')) : typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/abc-notation', '@tonaljs/array', '@tonaljs/chord', '@tonaljs/chord-type', '@tonaljs/collection', '@tonaljs/core', '@tonaljs/duration-value', '@tonaljs/interval', '@tonaljs/key', '@tonaljs/midi', '@tonaljs/mode', '@tonaljs/note', '@tonaljs/pcset', '@tonaljs/progression', '@tonaljs/range', '@tonaljs/roman-numeral', '@tonaljs/scale', '@tonaljs/scale-type', '@tonaljs/time-signature'], factory) : (global = global || self, factory(global.Tonal = {}, global.abcNotation, global.array, global.chord, global.ChordType, global.collection, global.Core, global.durationValue, global.interval, global.key, global.midi, global.mode, global.note, global.Pcset, global.progression, global.range, global.romanNumeral, global.scale, global.ScaleType, global.timeSignature));
+      })(this, function (exports, abcNotation, array, chord, ChordType, collection, Core, durationValue, interval, key, midi, mode, note, Pcset, progression, range, romanNumeral, scale, ScaleType, timeSignature) {
         'use strict';
 
         abcNotation = abcNotation && Object.prototype.hasOwnProperty.call(abcNotation, 'default') ? abcNotation['default'] : abcNotation;
@@ -3885,7 +4018,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         range = range && Object.prototype.hasOwnProperty.call(range, 'default') ? range['default'] : range;
         romanNumeral = romanNumeral && Object.prototype.hasOwnProperty.call(romanNumeral, 'default') ? romanNumeral['default'] : romanNumeral;
         scale = scale && Object.prototype.hasOwnProperty.call(scale, 'default') ? scale['default'] : scale;
-        ScaleType = ScaleType && Object.prototype.hasOwnProperty.call(ScaleType, 'default') ? ScaleType['default'] : ScaleType; // deprecated (backwards compatibility)
+        ScaleType = ScaleType && Object.prototype.hasOwnProperty.call(ScaleType, 'default') ? ScaleType['default'] : ScaleType;
+        timeSignature = timeSignature && Object.prototype.hasOwnProperty.call(timeSignature, 'default') ? timeSignature['default'] : timeSignature; // deprecated (backwards compatibility)
 
         var Tonal = Core;
         var PcSet = Pcset;
@@ -3917,6 +4051,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         exports.RomanNumeral = romanNumeral;
         exports.Scale = scale;
         exports.ScaleType = ScaleType;
+        exports.TimeSignature = timeSignature;
         exports.ChordDictionary = ChordDictionary;
         exports.PcSet = PcSet;
         exports.ScaleDictionary = ScaleDictionary;
@@ -3943,9 +4078,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       "@tonaljs/range": 19,
       "@tonaljs/roman-numeral": 20,
       "@tonaljs/scale": 22,
-      "@tonaljs/scale-type": 21
+      "@tonaljs/scale-type": 21,
+      "@tonaljs/time-signature": 23
     }],
-    24: [function (require, module, exports) {
+    25: [function (require, module, exports) {
       ;
 
       (function (globalObject) {
@@ -6700,8 +6836,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }
       })(this);
     }, {}],
-    25: [function (require, module, exports) {}, {}],
-    26: [function (require, module, exports) {
+    26: [function (require, module, exports) {}, {}],
+    27: [function (require, module, exports) {
       // A library of seedable RNGs implemented in Javascript.
       //
       // Usage:
@@ -6761,15 +6897,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       sr.tychei = tychei;
       module.exports = sr;
     }, {
-      "./lib/alea": 27,
-      "./lib/tychei": 28,
-      "./lib/xor128": 29,
-      "./lib/xor4096": 30,
-      "./lib/xorshift7": 31,
-      "./lib/xorwow": 32,
-      "./seedrandom": 33
+      "./lib/alea": 28,
+      "./lib/tychei": 29,
+      "./lib/xor128": 30,
+      "./lib/xor4096": 31,
+      "./lib/xorshift7": 32,
+      "./lib/xorwow": 33,
+      "./seedrandom": 34
     }],
-    27: [function (require, module, exports) {
+    28: [function (require, module, exports) {
       // A port of an algorithm by Johannes Baagøe <baagoe@baagoe.com>, 2010
       // http://baagoe.com/en/RandomMusings/javascript/
       // https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
@@ -6902,7 +7038,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       typeof define == 'function' && define // present with an AMD loader
       );
     }, {}],
-    28: [function (require, module, exports) {
+    29: [function (require, module, exports) {
       // A Javascript implementaion of the "Tyche-i" prng algorithm by
       // Samuel Neves and Filipe Araujo.
       // See https://eden.dei.uc.pt/~sneves/pubs/2011-snfa2.pdf
@@ -7017,7 +7153,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       typeof define == 'function' && define // present with an AMD loader
       );
     }, {}],
-    29: [function (require, module, exports) {
+    30: [function (require, module, exports) {
       // A Javascript implementaion of the "xor128" prng algorithm by
       // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
       (function (global, module, define) {
@@ -7104,7 +7240,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       typeof define == 'function' && define // present with an AMD loader
       );
     }, {}],
-    30: [function (require, module, exports) {
+    31: [function (require, module, exports) {
       // A Javascript implementaion of Richard Brent's Xorgens xor4096 algorithm.
       //
       // This fast non-cryptographic random number generator is designed for
@@ -7280,7 +7416,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       typeof define == 'function' && define // present with an AMD loader
       );
     }, {}],
-    31: [function (require, module, exports) {
+    32: [function (require, module, exports) {
       // A Javascript implementaion of the "xorshift7" algorithm by
       // François Panneton and Pierre L'ecuyer:
       // "On the Xorgshift Random Number Generators"
@@ -7403,7 +7539,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       typeof define == 'function' && define // present with an AMD loader
       );
     }, {}],
-    32: [function (require, module, exports) {
+    33: [function (require, module, exports) {
       // A Javascript implementaion of the "xorwow" prng algorithm by
       // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
       (function (global, module, define) {
@@ -7500,7 +7636,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       typeof define == 'function' && define // present with an AMD loader
       );
     }, {}],
-    33: [function (require, module, exports) {
+    34: [function (require, module, exports) {
       /*
       Copyright 2019 David Bau.
       
@@ -7790,9 +7926,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       Math // math: package containing random, pow, and seedrandom
       );
     }, {
-      "crypto": 25
+      "crypto": 26
     }],
-    34: [function (require, module, exports) {
+    35: [function (require, module, exports) {
       //==========================================================================
       // gen-basic.js
       // part of 'total-serialism' Package
@@ -8124,9 +8260,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       exports.cosine = cosine;
     }, {
-      "./utility.js": 40
+      "./utility.js": 41
     }],
-    35: [function (require, module, exports) {
+    36: [function (require, module, exports) {
       //==============================================================================
       // gen-complex.js
       // part of 'total-serialism' Package
@@ -8472,10 +8608,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       exports.lucas = lucas;
     }, {
-      "./transform.js": 38,
-      "bignumber.js": 24
+      "./transform.js": 39,
+      "bignumber.js": 25
     }],
-    36: [function (require, module, exports) {
+    37: [function (require, module, exports) {
       //=======================================================================
       // gen-stochastic.js
       // part of 'total-serialism' Package
@@ -8863,10 +8999,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       exports.MarkovChain = MarkovChain;
     }, {
-      "./gen-basic.js": 34,
-      "seedrandom": 26
+      "./gen-basic.js": 35,
+      "seedrandom": 27
     }],
-    37: [function (require, module, exports) {
+    38: [function (require, module, exports) {
       //=======================================================================
       // statistic.js
       // part of 'total-serialism' Package
@@ -9064,9 +9200,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       exports.mode = mode;
       exports.common = mode;
     }, {
-      "./transform": 38
+      "./transform": 39
     }],
-    38: [function (require, module, exports) {
+    39: [function (require, module, exports) {
       //=======================================================================
       // transform.js
       // part of 'total-serialism' Package
@@ -9441,10 +9577,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       exports.unique = unique;
     }, {
-      "./statistic": 37,
-      "./utility": 40
+      "./statistic": 38,
+      "./utility": 41
     }],
-    39: [function (require, module, exports) {
+    40: [function (require, module, exports) {
       //==============================================================================
       // translate.js
       // part of 'total-serialism' Package
@@ -9867,9 +10003,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     }, {
       "../data/scales.json": 1,
       "../data/tones.json": 2,
-      "@tonaljs/tonal": 23
+      "@tonaljs/tonal": 24
     }],
-    40: [function (require, module, exports) {
+    41: [function (require, module, exports) {
       //=======================================================================
       // utility.js
       // part of 'total-serialism' Package
