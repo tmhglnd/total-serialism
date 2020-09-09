@@ -7,6 +7,9 @@
 // Utility functions
 //=======================================================================
 
+const HALF_PI = Math.PI / 2.0;
+const TWO_PI = Math.PI * 2.0;
+
 // Return the remainder after division
 // works also in the negative direction
 // 
@@ -38,6 +41,24 @@ function constrain(a, min, max){
 }
 exports.constrain = constrain;
 exports.bound = constrain;
+
+// Fold a between a low and high range
+// When the value exceeds the range it is folded inwards
+// Has the effect of "bouncing" against the boundaries
+// 
+// @param {Number} -> number to fold
+// @param {Number} -> minimum value
+// @param {Number} -> maximum value
+// @return {Number} -> folder value
+// 
+function fold(a){
+	if (!Array.isArray(a)){
+		return Math.asin(Math.sin(a * HALF_PI)) / HALF_PI;
+	}
+	return a.map(x => Math.asin(Math.sin(x * HALF_PI)) / HALF_PI);
+}
+exports.fold = fold;
+exports.bounce = fold;
 
 // Map a value or array from one input-range 
 // to a given output-range

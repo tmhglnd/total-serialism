@@ -114,14 +114,15 @@ Generate an array of Fibonacci numbers `F[n] = F[n-1] + F[n-2]`. Numbers are by 
 **arguments**
 - {Int+} -> output length of ring
 - {Int+} -> offset, start the sequence at nth-fibonacci number (optional, default=0)
+- {Bool} -> numbers as strings (optional, default=false)
 
 ```js
 // 10 fibonacci numbers, starting from 0, 1, 1 etc...
 Algo.fibonacci(12);
-//=> [ '0', '1', '1', '2', '3', '5', '8', '13', '21', '34', '55', '89' ] 
+//=> [ 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ] 
 
 // 2 fibonacci numbers, starting from the 100th value
-Algo.fibonacci(2, 100);
+Algo.fibonacci(2, 100, true);
 //=> [ '354224848179261915075', '573147844013817084101' ] 
 ```
 
@@ -153,21 +154,21 @@ Other integer sequences based on Fibonacci are also available
 
 ```js
 Algo.pell(10);
-//=> [ '0', '1', '2', '5', '12', '29', '70', '169', '408', '985' ] 
+//=> [ 0, 1, 2, 5, 12, 29, 70, 169, 408, 985 ] 
 ```
 
 ## threeFibonacci
 
 ```js
 Algo.threeFibonacci(10);
-//=> [ '0', '1', '3', '10', '33', '109', '360', '1189', '3927', '12970' ] 
+//=> [ 0, 1, 3, 10, 33, 109, 360, 1189, 3927, 12970 ] 
 ```
 
 ## lucas
 
 ```js
 Algo.lucas(10);
-//=> [ '2', '1', '3', '4', '7', '11', '18', '29', '47', '76' ] 
+//=> [ 2, 1, 3, 4, 7, 11, 18, 29, 47, 76 ]  
 ```
 
 Set a custom starting pair of numbers to generate an n-bonacci sequence according to the following method: `F[n] = t * F[n-1] + F[n-2]`
@@ -175,9 +176,9 @@ Set a custom starting pair of numbers to generate an n-bonacci sequence accordin
 ```js
 // start with 1, 3, then multiply [n-1] by 2 before adding with [n-2]
 Algo.nbonacci(10, 1, 3, 2);
-//=> [ '1', '3', '7', '17', '41', '99', '239', '577', '1393', '3363' ] 
+//=> [ 1, 3, 7, 17, 41, 99, 239, 577, 1393, 3363 ]
 
-// this is the same as Algo.fibonacci(10)
-Algo.nbonacci(10, 0, 1, 1);
-//=> [ '0', '1', '1', '2', '3', '5', '8', '13', '21', '34' ] 
+// this is the same as Algo.fibonacci(12)
+Algo.nbonacci(12, 0, 1, 1);
+//=> [ 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ]  
 ```

@@ -171,8 +171,10 @@ function numBonacci(len=1, s1=0, s2=1, t=1){
 // @param {Int} -> multiplier (optional, default=1)
 // @return {String-Array} -> array of bignumbers as strings
 // 
-function nbonacci(len=1, s1=0, s2=1, t=1){
-	return numBonacci(len, s1, s2, t).map(x => x.toNumber());
+function nbonacci(len=1, s1=0, s2=1, t=1, toString=false){
+	return numBonacci(len, s1, s2, t).map(x => {
+		return (toString)? x.toFixed() : x.toNumber() 
+	});
 }
 exports.nbonacci = nbonacci;
 

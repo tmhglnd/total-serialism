@@ -27,6 +27,13 @@ console.log();
 	- test for strings vs numbers
 */
 
+// console.log(Rand.drunk(10));
+
+let spr = Gen.spreadFloat(20, -3.14, 16.18);
+console.log(spr);
+
+console.log(Util.fold(spr).map(x => x.toFixed(3)));
+
 /*
 var markov = new Rand.MarkovChain();
 
@@ -67,7 +74,7 @@ function fullTest(){
 	console.time('Total Time');
 	// testSerial();
 	// testGen();
-	testAlgo();
+	// testAlgo();
 	// testRand();
 	// testMod();
 	// testStat();
@@ -172,9 +179,7 @@ function testAlgo(){
 	pagebreak("Fibonacci");
 	test('Algo.fibonacci()');
 	test("Algo.fibonacci(12)");
-	// test("Algo.fibonacci(120)");
-	// test("Algo.fibonacci(2, 100)");
-	// test('Algo.fibonacci(1, 100).toString().split("").map(x => Number(x))');
+	test("Algo.fibonacci(2, 100, true)");
 	
 	test('Algo.pisano()');
 	test("Algo.pisano(12)");
@@ -311,7 +316,7 @@ function testMod(){
 	// console.log(palArr);
 	test("Mod.palindrome()");
 	test("Mod.palindrome([0, 1, 2, 3])");
-	test("Mod.palindrome([0, 1, 2, 3], true)");
+	test("Mod.palindrome([0, [1, 11], 2, 3], true)");
 	test("Mod.palindrome([0, 1, 2, 3], 1)");
 
 	// var revArr = [0, 5, 7, 12];
@@ -440,6 +445,8 @@ function testUtil(){
 
 	test("Util.bound(10.34, 0, 3.14)");
 	test("Util.bound([-2, 4, 3, 7], 1, 5)");
+
+	// test("Util.fold()")
 
 	test("Util.map(0.5, 0, 1, 0, 2)");
 	test("Util.map(0.5, 0, 1, 0, 2, 0.5)");
