@@ -65,14 +65,14 @@ fullTest();
 
 function fullTest(){
 	console.time('Total Time');
-	testSerial();
-	testGen();
+	// testSerial();
+	// testGen();
 	testAlgo();
-	testRand();
-	testMod();
-	testStat();
-	testTranslate();
-	testUtil();
+	// testRand();
+	// testMod();
+	// testStat();
+	// testTranslate();
+	// testUtil();
 
 	pagebreak("Test Passed");
 	console.timeEnd('Total Time');
@@ -172,8 +172,9 @@ function testAlgo(){
 	pagebreak("Fibonacci");
 	test('Algo.fibonacci()');
 	test("Algo.fibonacci(12)");
-	test("Algo.fibonacci(2, 100)");
-	test('Algo.fibonacci(1, 100)[0].split("").map(x => Number(x))');
+	// test("Algo.fibonacci(120)");
+	// test("Algo.fibonacci(2, 100)");
+	// test('Algo.fibonacci(1, 100).toString().split("").map(x => Number(x))');
 	
 	test('Algo.pisano()');
 	test("Algo.pisano(12)");
