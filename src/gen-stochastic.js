@@ -73,14 +73,17 @@ function random(len=1, lo=2, hi=0){
 }
 exports.random = random;
 
-// generate a list of random integer values but the next random 
+// generate a list of random float values but the next random 
 // value is within a limited range of the previous value generating
 // a random "drunk" walk, also referred to as brownian motion.
 // Inspired by the [drunk]-object in MaxMSP
 // 
 // @param {Int} -> length of output array
+// @param {Number} -> step range for next random value
 // @param {Number} -> minimum range (optional, default=null)
 // @param {Number} -> maximum range (optional, default=null)
+// @param {Number} -> starting point
+// @param {Bool} -> fold between lo and hi range
 // @return {Array}
 // 
 function drunkFloat(len=1, step=1, lo=1, hi=0, p, bound=true){
@@ -92,8 +95,7 @@ function drunkFloat(len=1, step=1, lo=1, hi=0, p, bound=true){
 	for (var i=0; i<Math.max(1,len); i++){
 		// direction of next random number (+ / -)
 		var dir = (rng() > 0.5) * 2 - 1;
-		// prev + random value * step * direction 
-		// p += rng() * step + 1 * dir;
+		// prev + random value * step * direction
 		p += rng() * step * dir;
 
 		if (bound && (p > hi || p < lo)){
@@ -103,7 +105,28 @@ function drunkFloat(len=1, step=1, lo=1, hi=0, p, bound=true){
 	}
 	return arr;
 }
-exports.drunk = drunkFloat; 
+exports.drunkFloat = drunkFloat;
+exports.walkFloat = drunkFloat;
+
+// generate a list of random integer values but the next random 
+// value is within a limited range of the previous value generating
+// a random "drunk" walk, also referred to as brownian motion.
+// Inspired by the [drunk]-object in MaxMSP
+// 
+// @param {Int} -> length of output array
+// @param {Number} -> step range for next random value
+// @param {Number} -> minimum range (optional, default=null)
+// @param {Number} -> maximum range (optional, default=null)
+// @param {Number} -> starting point
+// @param {Bool} -> fold between lo and hi range
+// @return {Array}
+// 
+function drunk(len=1, step=1, lo=12, hi=0, p, bound=true){
+	let arr = drunkFloat(len, step, lo, hi, p, bound);
+	return arr.map(v => Math.floor(v));
+}
+exports.drunk = drunk;
+exports.walk = drunk;
 
 // generate a list of random integer values 0 or 1
 // like a coin toss, heads/tails

@@ -14,6 +14,15 @@ const Stat = Srl.Statistic;
 const TL = Srl.Translate;
 const Util = Srl.Utility;
 
+const chart = require('asciichart');
+var config = {
+    offset: 3,
+    padding: '        ',
+	height: 10,
+}
+
+const fs = require('fs');
+
 console.time('requires load');
 console.timeEnd('requires load');
 console.log();
@@ -27,7 +36,7 @@ console.log();
 	- test for strings vs numbers
 */
 
-// console.log(Rand.drunk(10));
+// fs.writeFileSync('test-plot.txt', p);
 
 // let spr = Gen.spreadFloat(20, -3.14, 16.18);
 // console.log(spr);
@@ -71,13 +80,13 @@ fullTest();
 
 function fullTest(){
 	console.time('Total Time');
-	// testSerial();
-	// testGen();
-	// testAlgo();
-	// testRand();
-	// testMod();
-	// testStat();
-	// testTranslate();
+	testSerial();
+	testGen();
+	testAlgo();
+	testRand();
+	testMod();
+	testStat();
+	testTranslate();
 	testUtil();
 
 	pagebreak("Test Passed");
@@ -207,6 +216,16 @@ function testRand(){
 	test("Rand.seed(4827)");
 	test("Rand.random(5, 2)");
 	test("Rand.random(5, 0, 12)");
+
+	test("Rand.seed(1618)");
+	test("Rand.drunkFloat(5)");
+	console.log(chart.plot(Rand.drunkFloat(5, 1), {height: 5}));
+	
+	test("Rand.drunk(10, 5, 0, 24)");
+	console.log(chart.plot(Rand.drunk(10, 24, 0, 24), {height: 5}));
+
+	test("Rand.drunk(10, 4, 0, 12, 6, false)");
+	console.log(chart.plot(Rand.drunk(10, 4, 0, 12, 1, false), {height: 5}));
 
 	test("Rand.seed(0)");
 	test("Rand.coin(10)");

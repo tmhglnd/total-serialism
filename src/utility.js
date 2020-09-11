@@ -51,7 +51,7 @@ exports.mod = mod;
 // @param {Number} -> maximum value (default=1)
 // @return {Number} -> constrained value
 // 
-function constrain(a, min=1, max=0){
+function constrain(a, min, max){
 	if (!Array.isArray(a)){
 		return Math.min(max, Math.max(min, a));
 	}
@@ -78,7 +78,7 @@ function fold(a, ...params){
 exports.fold = fold;
 exports.bounce = fold;
 
-function _fold(a, min=0, max=1){
+function _fold(a, min, max){
 	a = _map(a, min, max, -1, 1);
 	a = Math.asin(Math.sin(a * HALF_PI)) / HALF_PI;
 	return _map(a, -1, 1, min, max);
