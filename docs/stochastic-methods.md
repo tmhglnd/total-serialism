@@ -48,6 +48,8 @@ Rand.random(5, 0, 12);
 //=> [ 3, 3, 7, 1, 0 ]
 ```
 
+<iframe src="https://editor.p5js.org/tmhglnd/embed/gzWOFUorY" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+
 ## drunk
 
 Generate a list of random float values but the next random value is within a limited range of the previous value generating a random "drunk" walk, also referred to as brownian motion. Inspired by the [drunk]-object in MaxMSP
@@ -90,10 +92,7 @@ Rand.drunk(10, 4, 0, 12, 6, false);
 // -4.60 ┤   │╭╮ ╭╯ 
 // -6.80 ┼   ╰╯│╭╯  
 // -9.00 ┤     ╰╯  
-
 ```
-
-<iframe src="https://editor.p5js.org/tmhglnd/embed/gzWOFUorY" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
 
 ## coin
 

@@ -7787,9 +7787,9 @@ exports.linden = linden;
 // integer sequences: fibonacci, pell, tribonacci
 // 
 // @param {Int} -> output length of array
-// @param {Int} -> multiplier t
 // @param {Int} -> start value 1
 // @param {Int} -> start value 2
+// @param {Int} -> multiplier t
 // @return {Array} -> array of BigNumber objects
 // 
 function numBonacci(len=1, s1=0, s2=1, t=1){
@@ -7815,12 +7815,18 @@ function numBonacci(len=1, s1=0, s2=1, t=1){
 }
 
 // Generate any n-bonacci sequence as an array of BigNumber objects
-// for export fuction
+// for export fuction. F(n) = t * F(n-1) + F(n-2)
 // 
+// @param {Int} -> output length of array
+// @param {Int} -> start value 1 (optional, default=0)
+// @param {Int} -> start value 2 (optional, default=1)
+// @param {Int} -> multiplier (optional, default=1)
 // @return {String-Array} -> array of bignumbers as strings
 // 
-function nbonacci(len=1, s1=0, s2=1, t=1){
-	return numBonacci(len, s1, s2, t).map(x => x.toFixed());
+function nbonacci(len=1, s1=0, s2=1, t=1, toString=false){
+	return numBonacci(len, s1, s2, t).map(x => {
+		return (toString)? x.toFixed() : x.toNumber() 
+	});
 }
 exports.nbonacci = nbonacci;
 
@@ -7828,12 +7834,18 @@ exports.nbonacci = nbonacci;
 // F(n) = F(n-1) + F(n-2). The ratio between consecutive numbers in 
 // the fibonacci sequence tends towards the Golden Ratio (1+√5)/2
 // OEIS: A000045 (Online Encyclopedia of Integer Sequences)
+// When working with larger fibonacci-numbers then possible in 64-bit
+// Set the toString to true
 // 
 // @param {Int} -> output length of array
+// @param {Int} -> offset in sequence (optional, default=0)
+// @param {Bool} -> numbers as strings (optional, default=false)
 // @return {String-Array} -> array of bignumbers as strings
 // 
-function fibonacci(len=1, offset=0){
-	var f = numBonacci(len+offset, 0, 1, 1).map(x => x.toFixed())
+function fibonacci(len=1, offset=0, toString=false){
+	var f = numBonacci(len+offset, 0, 1, 1).map(x => {
+		return (toString)? x.toFixed() : x.toNumber() 
+	});
 	if (offset > 0){
 		return f.slice(offset, offset+len);
 	}
@@ -7894,10 +7906,18 @@ function pisanoPeriod(mod=2, length=64){
 // OEIS: A006190 (Online Encyclopedia of Integer Sequences)
 // 
 // @param {Int} -> output length of array
+// @param {Int} -> offset in sequence (optional, default=0)
+// @param {Bool} -> numbers as strings (optional, default=false)
 // @return {String-Array} -> array of bignumbers as strings
 // 
-function pell(len=1){
-	return numBonacci(len, 0, 1, 2).map(x => x.toFixed());
+function pell(len=1, offset=0, toString=false){
+	var f = numBonacci(len+offset, 0, 1, 2).map(x => {
+		return (toString)? x.toFixed() : x.toNumber() 
+	});
+	if (offset > 0){
+		return f.slice(offset, offset+len);
+	}
+	return f;
 }
 exports.pell = pell;
 
@@ -7907,10 +7927,18 @@ exports.pell = pell;
 // OEIS: A000129 (Online Encyclopedia of Integer Sequences)
 // 
 // @param {Int} -> output length of array
+// @param {Int} -> offset in sequence (optional, default=0)
+// @param {Bool} -> numbers as strings (optional, default=false)
 // @return {String-Array} -> array of bignumbers as strings
 // 
-function threeFibonacci(len=1){
-	return numBonacci(len, 0, 1, 3).map(x => x.toFixed());
+function threeFibonacci(len=1, offset=0, toString=false){
+	let f = numBonacci(len+offset, 0, 1, 3).map(x => {
+		return (toString)? x.toFixed() : x.toNumber() 
+	});
+	if (offset > 0){
+		return f.slice(offset, offset+len);
+	}
+	return f;
 }
 exports.threeFibonacci = threeFibonacci;
 
@@ -7919,10 +7947,18 @@ exports.threeFibonacci = threeFibonacci;
 // OEIS: A000032 (Online Encyclopedia of Integer Sequences)
 // 
 // @param {Int} -> output length of array
+// @param {Int} -> offset in sequence (optional, default=0)
+// @param {Bool} -> numbers as strings (optional, default=false)
 // @return {String-Array} -> array of bignumbers as strings
 // 
-function lucas(len=1){
-	return numBonacci(len, 2, 1, 1).map(x => x.toFixed());
+function lucas(len=1, offset=0, toString=false){
+	let f = numBonacci(len+offset, 2, 1, 1).map(x => {
+		return (toString)? x.toFixed() : x.toNumber() 
+	});
+	if (offset > 0){
+		return f.slice(offset, offset+len);
+	}
+	return f;
 }
 exports.lucas = lucas;
 
@@ -7943,6 +7979,7 @@ exports.lucas = lucas;
 
 // require Generative methods
 const Gen = require('./gen-basic.js');
+const Util = require('./utility.js');
 // require seedrandom package
 var seedrandom = require('seedrandom');
 
@@ -7976,7 +8013,7 @@ function randomFloat(len=1, lo=1, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
 	// len is positive and minimum of 1
-	len = Math.max(1, Math.abs(len));
+	len = Math.max(1, len);
 	
 	var arr = new Array(len);
 	for (var i=0; i<len; i++){
@@ -8001,28 +8038,60 @@ function random(len=1, lo=2, hi=0){
 }
 exports.random = random;
 
-/* WORK IN PROGRESS
-// generate a list of random integer values
-// but the next random value is within a limited range of the 
-// previous value generating a random "drunk" walk
+// generate a list of random float values but the next random 
+// value is within a limited range of the previous value generating
+// a random "drunk" walk, also referred to as brownian motion.
+// Inspired by the [drunk]-object in MaxMSP
 // 
 // @param {Int} -> length of output array
+// @param {Number} -> step range for next random value
 // @param {Number} -> minimum range (optional, default=null)
 // @param {Number} -> maximum range (optional, default=null)
+// @param {Number} -> starting point
+// @param {Bool} -> fold between lo and hi range
 // @return {Array}
 // 
-function drunk(len=1, step=2){
-	var p = 0, arr = [];
-	for (var i=0; i<Math.max(len); i++){
-		var n = (rng() > 0.5) * 2 - 1;
-		var s = Math.floor(rng() * step + 1) * n;
-		p += s;
+function drunkFloat(len=1, step=1, lo=1, hi=0, p, bound=true){
+	// swap if lo > hi
+	if (lo > hi){ var t=lo, lo=hi, hi=t; }
+	p = (!p)? (lo+hi)/2 : p;
+
+	var arr = [];
+	for (var i=0; i<Math.max(1,len); i++){
+		// direction of next random number (+ / -)
+		var dir = (rng() > 0.5) * 2 - 1;
+		// prev + random value * step * direction
+		p += rng() * step * dir;
+
+		if (bound && (p > hi || p < lo)){
+			p = Util.fold(p, lo, hi);
+		}
 		arr.push(p);
 	}
 	return arr;
 }
-exports.drunk = drunk; 
-WORK IN PROGRESS */
+exports.drunkFloat = drunkFloat;
+exports.walkFloat = drunkFloat;
+
+// generate a list of random integer values but the next random 
+// value is within a limited range of the previous value generating
+// a random "drunk" walk, also referred to as brownian motion.
+// Inspired by the [drunk]-object in MaxMSP
+// 
+// @param {Int} -> length of output array
+// @param {Number} -> step range for next random value
+// @param {Number} -> minimum range (optional, default=null)
+// @param {Number} -> maximum range (optional, default=null)
+// @param {Number} -> starting point
+// @param {Bool} -> fold between lo and hi range
+// @return {Array}
+// 
+function drunk(len=1, step=1, lo=12, hi=0, p, bound=true){
+	let arr = drunkFloat(len, step, lo, hi, p, bound);
+	return arr.map(v => Math.floor(v));
+}
+exports.drunk = drunk;
+exports.walk = drunk;
 
 // generate a list of random integer values 0 or 1
 // like a coin toss, heads/tails
@@ -8079,11 +8148,11 @@ function twelveTone(){
 exports.twelveTone = twelveTone;
 
 // Generate a list of unique random integer values between a 
-// certain specified range (excluding high val)
-// An 'urn' is filled with values and when one is picked it is removed 
-// from the urn. If the outputlist is longer then the range, the urn 
-// refills when empty. On refill it is made sure no repeating value
-// can be picked.
+// certain specified range (excluding high val). An 'urn' is filled
+// with values and when one is picked it is removed from the urn. 
+// If the outputlist is longer then the range, the urn refills when
+// empty. On refill it is made sure no repeating value can be picked.
+// Inspired by the [urn]-object in MaxMSP
 // 
 // @param {Int} -> number of values to output
 // @param {Number} -> maximum range (optional, default=12)
@@ -8235,7 +8304,7 @@ class MarkovChain {
 	}
 }
 exports.MarkovChain = MarkovChain;
-},{"./gen-basic.js":35,"seedrandom":27}],38:[function(require,module,exports){
+},{"./gen-basic.js":35,"./utility.js":41,"seedrandom":27}],38:[function(require,module,exports){
 //=======================================================================
 // statistic.js
 // part of 'total-serialism' Package
@@ -9031,6 +9100,14 @@ exports.dtor = divisionToRatio;
 // Utility functions
 //=======================================================================
 
+const HALF_PI = Math.PI / 2.0;
+const TWO_PI = Math.PI * 2.0;
+const PI = Math.PI;
+
+exports.HALF_PI = HALF_PI;
+exports.TWO_PI = TWO_PI;
+exports.PI = PI;
+
 // Return the remainder after division
 // works also in the negative direction
 // 
@@ -9046,12 +9123,25 @@ function mod(a, mod){
 }
 exports.mod = mod;
 
+// Wrap a value between a low and high range
+// Similar to mod, expect the low range is also adjustable
+// 
+// @param {Number/Array} -> input value
+// @param {Number} -> minimum value (default=0)
+// @param {Number} -> maximum value (default=12)
+// @return {Number} -> remainder after division
+// 
+// function wrap(a, max=12, min=0){
+// 
+// }
+// exports.wrap = wrap;
+
 // Constrain a value between a low
 // and high range
 // 
 // @param {Number} -> number to constrain
-// @param {Number} -> minimum value
-// @param {Number} -> maximum value
+// @param {Number} -> minimum value (default=0)
+// @param {Number} -> maximum value (default=1)
 // @return {Number} -> constrained value
 // 
 function constrain(a, min, max){
@@ -9063,7 +9153,31 @@ function constrain(a, min, max){
 exports.constrain = constrain;
 exports.bound = constrain;
 
-// Map a value or array from one input-range 
+// Fold a between a low and high range
+// When the value exceeds the range it is folded inwards
+// Has the effect of "bouncing" against the boundaries
+// 
+// @param {Number} -> number to fold
+// @param {Number} -> minimum value
+// @param {Number} -> maximum value
+// @return {Number} -> folder value
+// 
+function fold(a, ...params){
+	if (!Array.isArray(a)){
+		return _fold(a, ...params);
+	}
+	return a.map(x => _fold(x, ...params));
+}
+exports.fold = fold;
+exports.bounce = fold;
+
+function _fold(a, min, max){
+	a = _map(a, min, max, -1, 1);
+	a = Math.asin(Math.sin(a * HALF_PI)) / HALF_PI;
+	return _map(a, -1, 1, min, max);
+}
+
+// Map/scale a value or array from one input-range 
 // to a given output-range
 // 
 // @param {Number/Array} -> value to be scaled
@@ -9081,6 +9195,7 @@ function map(a, ...params){
 	return a.map(x => _map(x, ...params));
 }
 exports.map = map;
+exports.scale = map;
 
 function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 	a = (a - inLo) / (inHi - inLo);
@@ -9090,7 +9205,6 @@ function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 	}
 	return a * (outHi - outLo) + outLo;
 }
-
 
 // add 1 or more values to an array, 
 // preserves listlength of first argument

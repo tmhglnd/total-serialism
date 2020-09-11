@@ -8421,9 +8421,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // integer sequences: fibonacci, pell, tribonacci
       // 
       // @param {Int} -> output length of array
-      // @param {Int} -> multiplier t
       // @param {Int} -> start value 1
       // @param {Int} -> start value 2
+      // @param {Int} -> multiplier t
       // @return {Array} -> array of BigNumber objects
       // 
 
@@ -8457,8 +8457,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           return arr;
         }
       } // Generate any n-bonacci sequence as an array of BigNumber objects
-      // for export fuction
+      // for export fuction. F(n) = t * F(n-1) + F(n-2)
       // 
+      // @param {Int} -> output length of array
+      // @param {Int} -> start value 1 (optional, default=0)
+      // @param {Int} -> start value 2 (optional, default=1)
+      // @param {Int} -> multiplier (optional, default=1)
       // @return {String-Array} -> array of bignumbers as strings
       // 
 
@@ -8468,8 +8472,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         var s1 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
         var s2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
         var t = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+        var toString = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
         return numBonacci(len, s1, s2, t).map(function (x) {
-          return x.toFixed();
+          return toString ? x.toFixed() : x.toNumber();
         });
       }
 
@@ -8477,16 +8482,21 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // F(n) = F(n-1) + F(n-2). The ratio between consecutive numbers in 
       // the fibonacci sequence tends towards the Golden Ratio (1+√5)/2
       // OEIS: A000045 (Online Encyclopedia of Integer Sequences)
+      // When working with larger fibonacci-numbers then possible in 64-bit
+      // Set the toString to true
       // 
       // @param {Int} -> output length of array
+      // @param {Int} -> offset in sequence (optional, default=0)
+      // @param {Bool} -> numbers as strings (optional, default=false)
       // @return {String-Array} -> array of bignumbers as strings
       // 
 
       function fibonacci() {
         var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
         var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+        var toString = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
         var f = numBonacci(len + offset, 0, 1, 1).map(function (x) {
-          return x.toFixed();
+          return toString ? x.toFixed() : x.toNumber();
         });
 
         if (offset > 0) {
@@ -8564,15 +8574,25 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // OEIS: A006190 (Online Encyclopedia of Integer Sequences)
       // 
       // @param {Int} -> output length of array
+      // @param {Int} -> offset in sequence (optional, default=0)
+      // @param {Bool} -> numbers as strings (optional, default=false)
       // @return {String-Array} -> array of bignumbers as strings
       // 
 
 
       function pell() {
         var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-        return numBonacci(len, 0, 1, 2).map(function (x) {
-          return x.toFixed();
+        var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+        var toString = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+        var f = numBonacci(len + offset, 0, 1, 2).map(function (x) {
+          return toString ? x.toFixed() : x.toNumber();
         });
+
+        if (offset > 0) {
+          return f.slice(offset, offset + len);
+        }
+
+        return f;
       }
 
       exports.pell = pell; // Generate the Tribonacci numbers as an array of BigNumber objects
@@ -8581,14 +8601,24 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // OEIS: A000129 (Online Encyclopedia of Integer Sequences)
       // 
       // @param {Int} -> output length of array
+      // @param {Int} -> offset in sequence (optional, default=0)
+      // @param {Bool} -> numbers as strings (optional, default=false)
       // @return {String-Array} -> array of bignumbers as strings
       // 
 
       function threeFibonacci() {
         var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-        return numBonacci(len, 0, 1, 3).map(function (x) {
-          return x.toFixed();
+        var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+        var toString = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+        var f = numBonacci(len + offset, 0, 1, 3).map(function (x) {
+          return toString ? x.toFixed() : x.toNumber();
         });
+
+        if (offset > 0) {
+          return f.slice(offset, offset + len);
+        }
+
+        return f;
       }
 
       exports.threeFibonacci = threeFibonacci; // Generate the Lucas numbers as an array of BigNumber objects
@@ -8596,14 +8626,24 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // OEIS: A000032 (Online Encyclopedia of Integer Sequences)
       // 
       // @param {Int} -> output length of array
+      // @param {Int} -> offset in sequence (optional, default=0)
+      // @param {Bool} -> numbers as strings (optional, default=false)
       // @return {String-Array} -> array of bignumbers as strings
       // 
 
       function lucas() {
         var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-        return numBonacci(len, 2, 1, 1).map(function (x) {
-          return x.toFixed();
+        var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+        var toString = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+        var f = numBonacci(len + offset, 2, 1, 1).map(function (x) {
+          return toString ? x.toFixed() : x.toNumber();
         });
+
+        if (offset > 0) {
+          return f.slice(offset, offset + len);
+        }
+
+        return f;
       }
 
       exports.lucas = lucas;
@@ -8626,7 +8666,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // - Gratefully using the seedrandom package by David Bau
       //=======================================================================
       // require Generative methods
-      var Gen = require('./gen-basic.js'); // require seedrandom package
+      var Gen = require('./gen-basic.js');
+
+      var Util = require('./utility.js'); // require seedrandom package
 
 
       var seedrandom = require('seedrandom'); // local pseudorandom number generator
@@ -8671,7 +8713,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           } // len is positive and minimum of 1
 
 
-          len = Math.max(1, Math.abs(len));
+          len = Math.max(1, len);
           var arr = new Array(len);
 
           for (var i = 0; i < len; i++) {
@@ -8702,30 +8744,85 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         });
       }
 
-      exports.random = random;
-      /* WORK IN PROGRESS
-      // generate a list of random integer values
-      // but the next random value is within a limited range of the 
-      // previous value generating a random "drunk" walk
+      exports.random = random; // generate a list of random float values but the next random 
+      // value is within a limited range of the previous value generating
+      // a random "drunk" walk, also referred to as brownian motion.
+      // Inspired by the [drunk]-object in MaxMSP
       // 
       // @param {Int} -> length of output array
+      // @param {Number} -> step range for next random value
       // @param {Number} -> minimum range (optional, default=null)
       // @param {Number} -> maximum range (optional, default=null)
+      // @param {Number} -> starting point
+      // @param {Bool} -> fold between lo and hi range
       // @return {Array}
       // 
-      function drunk(len=1, step=2){
-      	var p = 0, arr = [];
-      	for (var i=0; i<Math.max(len); i++){
-      		var n = (rng() > 0.5) * 2 - 1;
-      		var s = Math.floor(rng() * step + 1) * n;
-      		p += s;
-      		arr.push(p);
-      	}
-      	return arr;
+
+      function drunkFloat() {
+        var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+        var step = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+        var lo = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+        var hi = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+        var p = arguments.length > 4 ? arguments[4] : undefined;
+        var bound = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : true;
+        return function (lo, hi) {
+          // swap if lo > hi
+          if (lo > hi) {
+            var t = lo,
+                lo = hi,
+                hi = t;
+          }
+
+          p = !p ? (lo + hi) / 2 : p;
+          var arr = [];
+
+          for (var i = 0; i < Math.max(1, len); i++) {
+            // direction of next random number (+ / -)
+            var dir = (rng() > 0.5) * 2 - 1; // prev + random value * step * direction
+
+            p += rng() * step * dir;
+
+            if (bound && (p > hi || p < lo)) {
+              p = Util.fold(p, lo, hi);
+            }
+
+            arr.push(p);
+          }
+
+          return arr;
+        }(lo, hi);
       }
-      exports.drunk = drunk; 
-      WORK IN PROGRESS */
-      // generate a list of random integer values 0 or 1
+
+      exports.drunkFloat = drunkFloat;
+      exports.walkFloat = drunkFloat; // generate a list of random integer values but the next random 
+      // value is within a limited range of the previous value generating
+      // a random "drunk" walk, also referred to as brownian motion.
+      // Inspired by the [drunk]-object in MaxMSP
+      // 
+      // @param {Int} -> length of output array
+      // @param {Number} -> step range for next random value
+      // @param {Number} -> minimum range (optional, default=null)
+      // @param {Number} -> maximum range (optional, default=null)
+      // @param {Number} -> starting point
+      // @param {Bool} -> fold between lo and hi range
+      // @return {Array}
+      // 
+
+      function drunk() {
+        var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+        var step = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+        var lo = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 12;
+        var hi = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+        var p = arguments.length > 4 ? arguments[4] : undefined;
+        var bound = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : true;
+        var arr = drunkFloat(len, step, lo, hi, p, bound);
+        return arr.map(function (v) {
+          return Math.floor(v);
+        });
+      }
+
+      exports.drunk = drunk;
+      exports.walk = drunk; // generate a list of random integer values 0 or 1
       // like a coin toss, heads/tails
       // 
       // @param {Int} -> number of tosses to output
@@ -8790,11 +8887,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
 
       exports.twelveTone = twelveTone; // Generate a list of unique random integer values between a 
-      // certain specified range (excluding high val)
-      // An 'urn' is filled with values and when one is picked it is removed 
-      // from the urn. If the outputlist is longer then the range, the urn 
-      // refills when empty. On refill it is made sure no repeating value
-      // can be picked.
+      // certain specified range (excluding high val). An 'urn' is filled
+      // with values and when one is picked it is removed from the urn. 
+      // If the outputlist is longer then the range, the urn refills when
+      // empty. On refill it is made sure no repeating value can be picked.
+      // Inspired by the [urn]-object in MaxMSP
       // 
       // @param {Int} -> number of values to output
       // @param {Number} -> maximum range (optional, default=12)
@@ -9000,6 +9097,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       exports.MarkovChain = MarkovChain;
     }, {
       "./gen-basic.js": 35,
+      "./utility.js": 41,
       "seedrandom": 27
     }],
     38: [function (require, module, exports) {
@@ -10014,13 +10112,19 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       //
       // Utility functions
       //=======================================================================
-      // Return the remainder after division
+      var HALF_PI = Math.PI / 2.0;
+      var TWO_PI = Math.PI * 2.0;
+      var PI = Math.PI;
+      exports.HALF_PI = HALF_PI;
+      exports.TWO_PI = TWO_PI;
+      exports.PI = PI; // Return the remainder after division
       // works also in the negative direction
       // 
       // @param {Int/Array} -> input value
       // @param {Int} -> divisor
       // @return {Int/Array} -> remainder after division
       // 
+
       function mod(a, mod) {
         if (!Array.isArray(a)) {
           return (a % mod + mod) % mod;
@@ -10031,12 +10135,24 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         });
       }
 
-      exports.mod = mod; // Constrain a value between a low
+      exports.mod = mod; // Wrap a value between a low and high range
+      // Similar to mod, expect the low range is also adjustable
+      // 
+      // @param {Number/Array} -> input value
+      // @param {Number} -> minimum value (default=0)
+      // @param {Number} -> maximum value (default=12)
+      // @return {Number} -> remainder after division
+      // 
+      // function wrap(a, max=12, min=0){
+      // 
+      // }
+      // exports.wrap = wrap;
+      // Constrain a value between a low
       // and high range
       // 
       // @param {Number} -> number to constrain
-      // @param {Number} -> minimum value
-      // @param {Number} -> maximum value
+      // @param {Number} -> minimum value (default=0)
+      // @param {Number} -> maximum value (default=1)
       // @return {Number} -> constrained value
       // 
 
@@ -10051,7 +10167,38 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
 
       exports.constrain = constrain;
-      exports.bound = constrain; // Map a value or array from one input-range 
+      exports.bound = constrain; // Fold a between a low and high range
+      // When the value exceeds the range it is folded inwards
+      // Has the effect of "bouncing" against the boundaries
+      // 
+      // @param {Number} -> number to fold
+      // @param {Number} -> minimum value
+      // @param {Number} -> maximum value
+      // @return {Number} -> folder value
+      // 
+
+      function fold(a) {
+        for (var _len5 = arguments.length, params = new Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
+          params[_key5 - 1] = arguments[_key5];
+        }
+
+        if (!Array.isArray(a)) {
+          return _fold.apply(void 0, [a].concat(params));
+        }
+
+        return a.map(function (x) {
+          return _fold.apply(void 0, [x].concat(params));
+        });
+      }
+
+      exports.fold = fold;
+      exports.bounce = fold;
+
+      function _fold(a, min, max) {
+        a = _map(a, min, max, -1, 1);
+        a = Math.asin(Math.sin(a * HALF_PI)) / HALF_PI;
+        return _map(a, -1, 1, min, max);
+      } // Map/scale a value or array from one input-range 
       // to a given output-range
       // 
       // @param {Number/Array} -> value to be scaled
@@ -10063,9 +10210,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // @return {Number/Array}
       // 
 
+
       function map(a) {
-        for (var _len5 = arguments.length, params = new Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
-          params[_key5 - 1] = arguments[_key5];
+        for (var _len6 = arguments.length, params = new Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
+          params[_key6 - 1] = arguments[_key6];
         }
 
         if (!Array.isArray(a)) {
@@ -10078,6 +10226,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
 
       exports.map = map;
+      exports.scale = map;
 
       function _map(a) {
         var inLo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
