@@ -30,15 +30,28 @@ function mod(a, mod){
 }
 exports.mod = mod;
 
+// Wrap a value between a low and high range
+// Similar to mod, expect the low range is also adjustable
+// 
+// @param {Number/Array} -> input value
+// @param {Number} -> minimum value (default=0)
+// @param {Number} -> maximum value (default=12)
+// @return {Number} -> remainder after division
+// 
+// function wrap(a, max=12, min=0){
+// 
+// }
+// exports.wrap = wrap;
+
 // Constrain a value between a low
 // and high range
 // 
 // @param {Number} -> number to constrain
-// @param {Number} -> minimum value
-// @param {Number} -> maximum value
+// @param {Number} -> minimum value (default=0)
+// @param {Number} -> maximum value (default=1)
 // @return {Number} -> constrained value
 // 
-function constrain(a, min, max){
+function constrain(a, min=1, max=0){
 	if (!Array.isArray(a)){
 		return Math.min(max, Math.max(min, a));
 	}
@@ -99,7 +112,6 @@ function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 	}
 	return a * (outHi - outLo) + outLo;
 }
-
 
 // add 1 or more values to an array, 
 // preserves listlength of first argument

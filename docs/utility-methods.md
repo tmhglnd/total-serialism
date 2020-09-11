@@ -21,6 +21,11 @@ Util.mod([-2, 4, 3, 7], 5);
 Util.bound([-2, 4, 3, 7], 1, 5);
 //=> [ 1, 4, 3, 5 ] 
 
+// Fold an array between low and high values
+// Higher/lower values will bounce back instead of wrap
+Util.fold([-1, 0, 1, 2, 3, 4, 5], 0, 3);
+//=> [ 1, 0, 1, 2, 3, 2, 1 ]
+
 // Scale values from an input range to output range
 Util.map([0, 1, 2, 3, 4], 0, 4, -1, 1);
 //=> [ -1, -0.5, 0, 0.5, 1 ] 

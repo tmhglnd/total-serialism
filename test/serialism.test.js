@@ -445,9 +445,10 @@ function testUtil(){
 	test("Util.bound(10.34, 0, 3.14)");
 	test("Util.bound([-2, 4, 3, 7], 1, 5)");
 
-	// let spr = Gen.spreadFloat(20, -3.14, 16.18);
-	// console.log(spr);
-	test("Util.fold(Gen.spreadFloat(20, -4, 6), -2, 3)");
+	test("Util.fold([-1, 0, 1, 2, 3, 4, 5], 0, 3)");
+	// test("Util.fold(Gen.spreadFloat(10, -5, 5), 0, 1)");
+	// test("Util.fold(Gen.spreadFloat(20, -4, 6), -2, 3)");
+	// test("Util.fold(Gen.sineFloat(20, 1, -5, 29), 0, 24)");
 
 	test("Util.map(0.5, 0, 1, 0, 2)");
 	test("Util.map(0.5, 0, 1, 0, 2, 0.5)");
