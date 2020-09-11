@@ -14,6 +14,7 @@
 
 // require Generative methods
 const Gen = require('./gen-basic.js');
+const Util = require('./utility.js');
 // require seedrandom package
 var seedrandom = require('seedrandom');
 
@@ -72,7 +73,6 @@ function random(len=1, lo=2, hi=0){
 }
 exports.random = random;
 
-// WORK IN PROGRESS
 // generate a list of random integer values but the next random 
 // value is within a limited range of the previous value generating
 // a random "drunk" walk, also referred to as brownian motion.
@@ -90,15 +90,20 @@ function drunkFloat(len=1, step=1, lo=1, hi=0, p, bound=true){
 
 	var arr = [];
 	for (var i=0; i<Math.max(1,len); i++){
+		// direction of next random number (+ / -)
 		var dir = (rng() > 0.5) * 2 - 1;
-		var s = rng() * step + 1 * dir;
-		p += s;
+		// prev + random value * step * direction 
+		// p += rng() * step + 1 * dir;
+		p += rng() * step * dir;
+
+		if (bound && (p > hi || p < lo)){
+			p = Util.fold(p, lo, hi);
+		}
 		arr.push(p);
 	}
 	return arr;
 }
 exports.drunk = drunkFloat; 
-// WORK IN PROGRESS
 
 // generate a list of random integer values 0 or 1
 // like a coin toss, heads/tails

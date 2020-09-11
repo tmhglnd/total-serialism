@@ -29,10 +29,9 @@ console.log();
 
 // console.log(Rand.drunk(10));
 
-let spr = Gen.spreadFloat(20, -3.14, 16.18);
-console.log(spr);
-
-console.log(Util.fold(spr).map(x => x.toFixed(3)));
+// let spr = Gen.spreadFloat(20, -3.14, 16.18);
+// console.log(spr);
+// console.log(Util.fold(spr).map(x => x.toFixed(3)));
 
 /*
 var markov = new Rand.MarkovChain();
@@ -79,7 +78,7 @@ function fullTest(){
 	// testMod();
 	// testStat();
 	// testTranslate();
-	// testUtil();
+	testUtil();
 
 	pagebreak("Test Passed");
 	console.timeEnd('Total Time');
@@ -446,7 +445,9 @@ function testUtil(){
 	test("Util.bound(10.34, 0, 3.14)");
 	test("Util.bound([-2, 4, 3, 7], 1, 5)");
 
-	// test("Util.fold()")
+	// let spr = Gen.spreadFloat(20, -3.14, 16.18);
+	// console.log(spr);
+	test("Util.fold(Gen.spreadFloat(20, -4, 6), -2, 3)");
 
 	test("Util.map(0.5, 0, 1, 0, 2)");
 	test("Util.map(0.5, 0, 1, 0, 2, 0.5)");

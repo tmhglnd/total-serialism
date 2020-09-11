@@ -9,6 +9,11 @@
 
 const HALF_PI = Math.PI / 2.0;
 const TWO_PI = Math.PI * 2.0;
+const PI = Math.PI;
+
+exports.HALF_PI = HALF_PI;
+exports.TWO_PI = TWO_PI;
+exports.PI = PI;
 
 // Return the remainder after division
 // works also in the negative direction
@@ -51,16 +56,22 @@ exports.bound = constrain;
 // @param {Number} -> maximum value
 // @return {Number} -> folder value
 // 
-function fold(a){
+function fold(a, ...params){
 	if (!Array.isArray(a)){
-		return Math.asin(Math.sin(a * HALF_PI)) / HALF_PI;
+		return _fold(a, ...params);
 	}
-	return a.map(x => Math.asin(Math.sin(x * HALF_PI)) / HALF_PI);
+	return a.map(x => _fold(x, ...params));
 }
 exports.fold = fold;
 exports.bounce = fold;
 
-// Map a value or array from one input-range 
+function _fold(a, min=0, max=1){
+	a = _map(a, min, max, -1, 1);
+	a = Math.asin(Math.sin(a * HALF_PI)) / HALF_PI;
+	return _map(a, -1, 1, min, max);
+}
+
+// Map/scale a value or array from one input-range 
 // to a given output-range
 // 
 // @param {Number/Array} -> value to be scaled
@@ -78,6 +89,7 @@ function map(a, ...params){
 	return a.map(x => _map(x, ...params));
 }
 exports.map = map;
+exports.scale = map;
 
 function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 	a = (a - inLo) / (inHi - inLo);
