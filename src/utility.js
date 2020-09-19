@@ -19,32 +19,37 @@ exports.PI = PI;
 // Similar to mod, expect the low range is also adjustable
 // 
 // @param {Number/Array} -> input value
-// @param {Number} -> minimum value (default=0)
-// @param {Number} -> maximum value (default=12)
+// @param {Number} -> minimum value optional, (default=12)
+// @param {Number} -> maximum value optional, (default=0)
 // @return {Number} -> remainder after division
 // 
-function wrap(a, min, max){
-	let r = Math.abs(max - min);
+function wrap(a, lo=12, hi=0){
+	// swap if lo > hi
+	if (lo > hi){ var t=lo, lo=hi, hi=t; }
+	// calculate range and wrap the values
+	let r = hi - lo;
 	if (!Array.isArray(a)){
-		return (((a - min % r) + r) % r) + min;
+		return (((a - lo % r) + r) % r) + lo;
 	}
-	return a.map(x => (((x - min % r) + r) % r) + min)
+	return a.map(x => (((x - hi % r) + r) % r) + hi)
 }
 exports.wrap = wrap;
 
-// Constrain a value between a low
-// and high range
+// Constrain a value between a low and high range
 // 
-// @param {Number} -> number to constrain
-// @param {Number} -> minimum value (default=0)
-// @param {Number} -> maximum value (default=1)
+// @param {Number/Array} -> number to constrain
+// @param {Number} -> minimum value (optional, default=12)
+// @param {Number} -> maximum value (optional, default=0)
 // @return {Number} -> constrained value
 // 
-function constrain(a, min, max){
+function constrain(a, lo=12, hi=0){
+	// swap if lo > hi
+	if (lo > hi){ var t=lo, lo=hi, hi=t; }
+	// constrain the values
 	if (!Array.isArray(a)){
-		return Math.min(max, Math.max(min, a));
+		return Math.min(hi, Math.max(lo, a));
 	}
-	return a.map(x => Math.min(max, Math.max(min, x)));
+	return a.map(x => Math.min(hi, Math.max(lo, x)));
 }
 exports.constrain = constrain;
 exports.bound = constrain;
@@ -53,24 +58,27 @@ exports.bound = constrain;
 // When the value exceeds the range it is folded inwards
 // Has the effect of "bouncing" against the boundaries
 // 
-// @param {Number} -> number to fold
-// @param {Number} -> minimum value
-// @param {Number} -> maximum value
+// @param {Number/Array} -> number to fold
+// @param {Number} -> minimum value (optional, default=12)
+// @param {Number} -> maximum value (optional, default=0)
 // @return {Number} -> folder value
 // 
-function fold(a, min, max){
+function fold(a, lo=12, hi=0){
+	// swap if lo > hi
+	if (lo > hi){ var t=lo, lo=hi, hi=t; }
+	// fold the values
 	if (!Array.isArray(a)){
-		return _fold(a, min, max);
+		return _fold(a, lo, hi);
 	}
-	return a.map(x => _fold(x, min, max));
+	return a.map(x => _fold(x, lo, hi));
 }
 exports.fold = fold;
 exports.bounce = fold;
 
-function _fold(a, min, max){
-	a = _map(a, min, max, -1, 1);
+function _fold(a, lo, hi){
+	a = _map(a, lo, hi, -1, 1);
 	a = Math.asin(Math.sin(a * HALF_PI)) / HALF_PI;
-	return _map(a, -1, 1, min, max);
+	return _map(a, -1, 1, lo, hi);
 }
 
 // Map/scale a value or array from one input-range 
@@ -110,7 +118,7 @@ function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 // @param {Number/Array} -> value to add
 // @return {Number/Array}
 // 
-function add(a=[0], v=0){
+function add(a, v=0){
 	if (Array.isArray(v)){
 		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
@@ -135,7 +143,7 @@ exports.add = add;
 // @param {Number/Array} -> value to subtract
 // @return {Number/Array}
 // 
-function subtract(a=[0], v=0){
+function subtract(a, v=0){
 	if (Array.isArray(v)){
 		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
@@ -161,7 +169,7 @@ exports.sub = subtract;
 // @param {Number/Array} -> value to multiply with
 // @return {Number/Array}
 // 
-function multiply(a=[0], v=0){
+function multiply(a, v=1){
 	if (Array.isArray(v)){
 		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
@@ -187,7 +195,7 @@ exports.mul = multiply;
 // @param {Number/Array} -> value to divide with
 // @return {Number/Array}
 // 
-function divide(a=[0], v=0){
+function divide(a, v=1){
 	if (Array.isArray(v)){
 		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
