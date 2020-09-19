@@ -76,19 +76,14 @@ markov.clear();
 console.log(markov.table);
 */
 
-let arr = [0, 1, 2, 3, 4, 5];
-let ar2 = [0, 1, 2];
-let val = 1;
-// console.log(arr);
-// console.log(Util.multiply(arr, [10, 100, 1000]));
-// console.log(arr);
+let arr = Gen.spread(20);
 
-console.log(Util.div(arr, 10));
-console.log(Util.div(arr, [10, 100, 1000]));
-console.log(Util.div(val, [10, 100, 1000]));
-console.log(Util.div(ar2, [10, 50, 100, 250, 500, 750]));
-console.log(Util.div(2, 5));
-// console.log(val);
+// console.log(Util.wrap(7, 3, 5));
+
+console.log(Util.wrap(arr, 0, 7));
+console.log(Util.wrap(arr, 7, 15));
+console.log(Util.wrap(arr, 4, 7));
+// console.log(arr);
 
 fullTest();
 
@@ -490,18 +485,22 @@ function testUtil(){
 	test("Util.add(5, 2)");
 	test("Util.add([0, 3, 7], 2)");
 	test("Util.add([1, 2, 3, 4], [1, 2, 3])");
-
+	test("Util.add([1, 2], [1, 2, 3, 4])");
+	
 	test("Util.sub(5, 2)");
 	test("Util.sub([0, 3, 7], 2)");
 	test("Util.sub([1, 2, 3, 4], [1, 2, 3])");
-
+	test("Util.sub([1, 2], [1, 2, 3, 4])");
+	
 	test("Util.mul(5, 2)");
 	test("Util.mul([0, 3, 7], 2)");
 	test("Util.mul([1, 2, 3, 4], [1, 2, 3])");
-
+	test("Util.mul([1, 2], [1, 2, 3, 4])");
+	
 	test("Util.div(5, 2)");
 	test("Util.div([0, 3, 7], 2)");
 	test("Util.div([1, 2, 3, 4], [1, 2, 3])");
+	test("Util.div([1, 2], [1, 2, 3, 4])");
 }
 
 function test(f){

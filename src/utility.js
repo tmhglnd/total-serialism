@@ -15,28 +15,6 @@ exports.HALF_PI = HALF_PI;
 exports.TWO_PI = TWO_PI;
 exports.PI = PI;
 
-// Return the remainder after division
-// also works in the negative direction
-// 
-// @param {Int/Array} -> input value
-// @param {Int/Array} -> divisor (optional, default=12)
-// @return {Int/Array} -> remainder after division
-// 
-function mod(a, mod=12){
-	if (!Array.isArray(a)){
-		return ((a % mod) + mod) % mod;
-	}
-	else if (Array.isArray(mod)){
-		for (let i in a){
-			let m = mod[i % mod.length];
-			a[i] = ((a[i] % m) + m) % m;
-		}
-		return a;
-	}
-	return a.map(x => ((x % mod) + mod) % mod);
-}
-exports.mod = mod;
-
 // Wrap a value between a low and high range
 // Similar to mod, expect the low range is also adjustable
 // 
@@ -45,10 +23,14 @@ exports.mod = mod;
 // @param {Number} -> maximum value (default=12)
 // @return {Number} -> remainder after division
 // 
-// function wrap(a, max=12, min=0){
-// 
-// }
-// exports.wrap = wrap;
+function wrap(a, min, max){
+	let r = Math.abs(max - min);
+	if (!Array.isArray(a)){
+		return (((a - min % r) + r) % r) + min;
+	}
+	return a.map(x => (((x - min % r) + r) % r) + min)
+}
+exports.wrap = wrap;
 
 // Constrain a value between a low
 // and high range
@@ -76,11 +58,11 @@ exports.bound = constrain;
 // @param {Number} -> maximum value
 // @return {Number} -> folder value
 // 
-function fold(a, ...params){
+function fold(a, min, max){
 	if (!Array.isArray(a)){
-		return _fold(a, ...params);
+		return _fold(a, min, max);
 	}
-	return a.map(x => _fold(x, ...params));
+	return a.map(x => _fold(x, min, max));
 }
 exports.fold = fold;
 exports.bounce = fold;
@@ -130,7 +112,7 @@ function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 // 
 function add(a=[0], v=0){
 	if (Array.isArray(v)){
-		a = (Array.isArray(a))? a.slice() : [a];
+		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
@@ -155,7 +137,7 @@ exports.add = add;
 // 
 function subtract(a=[0], v=0){
 	if (Array.isArray(v)){
-		a = (Array.isArray(a))? a.slice() : [a];
+		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
@@ -181,7 +163,7 @@ exports.sub = subtract;
 // 
 function multiply(a=[0], v=0){
 	if (Array.isArray(v)){
-		a = (Array.isArray(a))? a.slice() : [a];
+		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
@@ -207,7 +189,7 @@ exports.mul = multiply;
 // 
 function divide(a=[0], v=0){
 	if (Array.isArray(v)){
-		a = (Array.isArray(a))? a.slice() : [a];
+		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
@@ -222,3 +204,28 @@ function divide(a=[0], v=0){
 }
 exports.divide = divide;
 exports.div = divide;
+
+// Return the remainder after division
+// also works in the negative direction
+// 
+// @param {Int/Array} -> input value
+// @param {Int/Array} -> divisor (optional, default=12)
+// @return {Int/Array} -> remainder after division
+// 
+function mod(a, mod=12){
+	if (Array.isArray(mod)){
+		a = (Array.isArray(a))? a : [a];
+		let l1 = a.length, l2 = mod.length, r = [];
+		let l = Math.max(l1, l2);
+		for (let i=0; i<l; i++){
+			let m = mod[i % l2];
+			r[i] = ((a[i % l1] % m) + m) % m;
+		}
+		return r;
+	}
+	if (!Array.isArray(a)){
+		return ((a % mod) + mod) % mod;
+	}
+	return a.map(x => ((x % mod) + mod) % mod);
+}
+exports.mod = mod;
