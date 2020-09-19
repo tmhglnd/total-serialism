@@ -1,4 +1,5 @@
 
+// test with different builds
 let entryPoint = "../index";
 // entryPoint = "../build/ts.bundle.js";
 // entryPoint = "../build/ts.es5.js";
@@ -20,7 +21,6 @@ var config = {
     padding: '        ',
 	height: 10,
 }
-
 const fs = require('fs');
 
 console.time('requires load');
@@ -76,20 +76,29 @@ markov.clear();
 console.log(markov.table);
 */
 
+let arr = [0, 1, 2, 3, 4, 5];
+console.log(arr);
+console.log(Util.multiply(arr, [10, 100, 1000]));
+console.log(arr);
+
+// let val = 1;
+// console.log(Util.add(val, 10));
+// console.log(val);
+
 fullTest();
 
 function fullTest(){
 	console.time('Total Time');
-	testSerial();
-	testGen();
-	testAlgo();
-	testRand();
-	testMod();
-	testStat();
-	testTranslate();
-	testUtil();
+	// testSerial();
+	// testGen();
+	// testAlgo();
+	// testRand();
+	// testMod();
+	// testStat();
+	// testTranslate();
+	// testUtil();
 
-	pagebreak("Test Passed");
+	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
 }
 

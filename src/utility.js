@@ -1,11 +1,11 @@
-//=======================================================================
+//====================================================================
 // utility.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
 // MIT License
 //
 // Utility functions
-//=======================================================================
+//====================================================================
 
 const HALF_PI = Math.PI / 2.0;
 const TWO_PI = Math.PI * 2.0;
@@ -16,15 +16,22 @@ exports.TWO_PI = TWO_PI;
 exports.PI = PI;
 
 // Return the remainder after division
-// works also in the negative direction
+// also works in the negative direction
 // 
 // @param {Int/Array} -> input value
-// @param {Int} -> divisor
+// @param {Int/Array} -> divisor (optional, default=12)
 // @return {Int/Array} -> remainder after division
 // 
-function mod(a, mod){
+function mod(a, mod=12){
 	if (!Array.isArray(a)){
 		return ((a % mod) + mod) % mod;
+	}
+	else if (Array.isArray(mod)){
+		for (let i in a){
+			let m = mod[i % mod.length];
+			a[i] = ((a[i] % m) + m) % m;
+		}
+		return a;
 	}
 	return a.map(x => ((x % mod) + mod) % mod);
 }
@@ -126,6 +133,7 @@ function add(a=[0], v=0){
 		return a + v;
 	}
 	if (Array.isArray(v)){
+		a = a.slice();
 		for (let i in a){
 			a[i] = a[i] + v[i % v.length];
 		}
@@ -148,6 +156,7 @@ function subtract(a=[0], v=0){
 		return a - v;
 	}
 	if (Array.isArray(v)){
+		a = a.slice();
 		for (let i in a){
 			a[i] = a[i] - v[i % v.length];
 		}
@@ -171,6 +180,7 @@ function multiply(a=[0], v=0){
 		return a * v;
 	}
 	if (Array.isArray(v)){
+		a = a.slice();
 		for (let i in a){
 			a[i] = a[i] * v[i % v.length];
 		}
@@ -194,6 +204,7 @@ function divide(a=[0], v=0){
 		return a / v;
 	}
 	if (Array.isArray(v)){
+		a = a.slice();
 		for (let i in a){
 			a[i] = a[i] / v[i % v.length];
 		}
