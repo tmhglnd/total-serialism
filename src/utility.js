@@ -129,15 +129,16 @@ function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 // @return {Number/Array}
 // 
 function add(a=[0], v=0){
-	if (!Array.isArray(a)){
-		return a + v;
-	}
 	if (Array.isArray(v)){
-		a = a.slice();
-		for (let i in a){
-			a[i] = a[i] + v[i % v.length];
+		a = (Array.isArray(a))? a.slice() : [a];
+		let l = Math.max(a.length, v.length);
+		for (let i=0; i<l; i++){
+			a[i] = a[i % a.length] + v[i % v.length];
 		}
 		return a;
+	}
+	if (!Array.isArray(a)){
+		return a + v;
 	}
 	return a.map(x => x + v);
 }

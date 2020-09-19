@@ -77,12 +77,15 @@ console.log(markov.table);
 */
 
 let arr = [0, 1, 2, 3, 4, 5];
-console.log(arr);
-console.log(Util.multiply(arr, [10, 100, 1000]));
-console.log(arr);
+let val = 1;
+// console.log(arr);
+// console.log(Util.multiply(arr, [10, 100, 1000]));
+// console.log(arr);
 
-// let val = 1;
-// console.log(Util.add(val, 10));
+console.log(Util.add(arr, 10));
+console.log(Util.add(arr, [10, 100, 1000]));
+console.log(Util.add(val, [10, 100, 1000]));
+console.log(Util.add(2, 5));
 // console.log(val);
 
 fullTest();
