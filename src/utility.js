@@ -131,11 +131,12 @@ function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 function add(a=[0], v=0){
 	if (Array.isArray(v)){
 		a = (Array.isArray(a))? a.slice() : [a];
-		let l = Math.max(a.length, v.length);
+		let l1 = a.length, l2 = v.length, r = [];
+		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			a[i] = a[i % a.length] + v[i % v.length];
+			r[i] = a[i % l1] + v[i % l2];
 		}
-		return a;
+		return r;
 	}
 	if (!Array.isArray(a)){
 		return a + v;
@@ -153,15 +154,17 @@ exports.add = add;
 // @return {Number/Array}
 // 
 function subtract(a=[0], v=0){
+	if (Array.isArray(v)){
+		a = (Array.isArray(a))? a.slice() : [a];
+		let l1 = a.length, l2 = v.length, r = [];
+		let l = Math.max(l1, l2);
+		for (let i=0; i<l; i++){
+			r[i] = a[i % l1] - v[i % l2];
+		}
+		return r;
+	}
 	if (!Array.isArray(a)){
 		return a - v;
-	}
-	if (Array.isArray(v)){
-		a = a.slice();
-		for (let i in a){
-			a[i] = a[i] - v[i % v.length];
-		}
-		return a;
 	}
 	return a.map(x => x - v);
 }
@@ -177,15 +180,17 @@ exports.sub = subtract;
 // @return {Number/Array}
 // 
 function multiply(a=[0], v=0){
+	if (Array.isArray(v)){
+		a = (Array.isArray(a))? a.slice() : [a];
+		let l1 = a.length, l2 = v.length, r = [];
+		let l = Math.max(l1, l2);
+		for (let i=0; i<l; i++){
+			r[i] = a[i % l1] * v[i % l2];
+		}
+		return r;
+	}
 	if (!Array.isArray(a)){
 		return a * v;
-	}
-	if (Array.isArray(v)){
-		a = a.slice();
-		for (let i in a){
-			a[i] = a[i] * v[i % v.length];
-		}
-		return a;
 	}
 	return a.map(x => x * v);
 }
@@ -201,15 +206,17 @@ exports.mul = multiply;
 // @return {Number/Array}
 // 
 function divide(a=[0], v=0){
+	if (Array.isArray(v)){
+		a = (Array.isArray(a))? a.slice() : [a];
+		let l1 = a.length, l2 = v.length, r = [];
+		let l = Math.max(l1, l2);
+		for (let i=0; i<l; i++){
+			r[i] = a[i % l1] / v[i % l2];
+		}
+		return r;
+	}
 	if (!Array.isArray(a)){
 		return a / v;
-	}
-	if (Array.isArray(v)){
-		a = a.slice();
-		for (let i in a){
-			a[i] = a[i] / v[i % v.length];
-		}
-		return a;
 	}
 	return a.map(x => x / v);
 }
