@@ -183,13 +183,14 @@ function sineFloat(len=1, periods=1, lo, hi=0, phase=0){
 	// if no range specified
 	if (lo === undefined){ lo = -1; hi = 1; }
 	// swap if lo > hi
-	if (lo > hi){ var t=lo, lo=hi, hi=t; }
+	// if (lo > hi){ var t=lo, lo=hi, hi=t; }
+
 	// array length minimum of 1
 	len = Math.max(1, len);
 	let arr = [];
 
 	let a = Math.PI * 2.0 * periods / len;
-	let p = Math.PI * phase;
+	let p = Math.PI * phase * 2.0;
 	for (let i=0; i<len; i++){
 		arr[i] = Math.sin(a * i + p);
 	}
@@ -205,6 +206,7 @@ exports.sin = sineFloat;
 // @param {Number} -> Periods of sine-wave 
 // @param {Number} -> Low range of values (optional, default = 0) 
 // @param {Number} -> High range of values (optional, default = 12)
+// @param {Number} -> Phase shift (optional, default = 0)
 // @return {Array} -> Sine function
 // 
 function sine(len=1, periods=1, lo=12, hi, phase){
@@ -214,19 +216,23 @@ function sine(len=1, periods=1, lo=12, hi, phase){
 exports.sine = sine;
 
 // Generate an array with n-periods of a cosine function
+// Flip the low and high range to invert the function
 // See sinFloat() for details
 //
 function cosineFloat(len=1, periods=1, lo, hi, phase=0){
-	return sineFloat(len, periods, lo, hi, phase+0.5);
+	return sineFloat(len, periods, lo, hi, phase+0.25);
 }
 exports.cosineFloat = cosineFloat;
 exports.cos = cosineFloat;
 
 // Generate an integer array with n-periods of a cosine function
+// Flip the low and high range to invert the function
 // See sin() for details
 // 
 function cosine(len=1, periods=1, lo=12, hi, phase=0){
-	var arr = sineFloat(len, periods, lo, hi, phase+0.5);
+	if (hi === undefined){ hi = lo, lo = 0; }
+
+	var arr = sineFloat(len, periods, lo, hi, phase+0.25);
 	return arr.map(v => Math.trunc(v));
 }
 exports.cosine = cosine;

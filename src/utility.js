@@ -7,6 +7,8 @@
 // Utility functions
 //====================================================================
 
+const chart = require('asciichart');
+
 const HALF_PI = Math.PI / 2.0;
 const TWO_PI = Math.PI * 2.0;
 const PI = Math.PI;
@@ -237,3 +239,23 @@ function mod(a, mod=12){
 	return a.map(x => ((x % mod) + mod) % mod);
 }
 exports.mod = mod;
+
+// Plot an array of values to the console in the form of an
+// ascii chart and return chart from function. If you just want the 
+// chart returned as text and not log to console set { log: false }.
+// Using the asciichart package by x84. 
+// 
+// @param {Number/Array/String} -> value to plot
+// @param {Object} -> preferences for height, padding, colors, offset, log
+//
+function plot(a, prefs){
+	prefs = (typeof prefs !== 'undefined') ? prefs : {};
+	prefs.log = (typeof prefs.log !== 'undefined') ? prefs.log : true;
+
+	let p = chart.plot(a, prefs);
+	if (prefs.log){
+		console.log(chart.plot(a, prefs));
+	}
+	return p;
+}
+exports.plot = plot;

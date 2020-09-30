@@ -76,7 +76,12 @@ markov.clear();
 console.log(markov.table);
 */
 
-fullTest();
+// fullTest();
+
+// console.log(chart.plot(Gen.sineFloat(24, 0.5, 0, 10)));
+// console.log(chart.plot(Gen.cosineFloat(24, 35.321, -2, 5)));
+Util.plot(Gen.cosine(25, 1), { log : false });
+// Util.plot(Gen.cosine(25, 1));
 
 function fullTest(){
 	console.time('Total Time');
