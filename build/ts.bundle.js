@@ -148,7 +148,7 @@ exports.setScale    = Translate.setScale;
 exports.getScale    = Translate.getScale;
 exports.setRoot     = Translate.setRoot;
 exports.getRoot     = Translate.getRoot;
-},{"./src/gen-basic.js":35,"./src/gen-complex.js":36,"./src/gen-stochastic.js":37,"./src/statistic.js":38,"./src/transform.js":39,"./src/translate.js":40,"./src/utility.js":41}],4:[function(require,module,exports){
+},{"./src/gen-basic.js":36,"./src/gen-complex.js":37,"./src/gen-stochastic.js":38,"./src/statistic.js":39,"./src/transform.js":40,"./src/translate.js":41,"./src/utility.js":42}],4:[function(require,module,exports){
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/core')) :
   typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/core'], factory) :
@@ -3562,6 +3562,118 @@ exports.getRoot     = Translate.getRoot;
 
 
 },{"@tonaljs/abc-notation":4,"@tonaljs/array":5,"@tonaljs/chord":8,"@tonaljs/chord-type":7,"@tonaljs/collection":9,"@tonaljs/core":10,"@tonaljs/duration-value":11,"@tonaljs/interval":12,"@tonaljs/key":13,"@tonaljs/midi":14,"@tonaljs/mode":15,"@tonaljs/note":16,"@tonaljs/pcset":17,"@tonaljs/progression":18,"@tonaljs/range":19,"@tonaljs/roman-numeral":20,"@tonaljs/scale":22,"@tonaljs/scale-type":21,"@tonaljs/time-signature":23}],25:[function(require,module,exports){
+"use strict";
+
+(function (exports) {
+
+    // control sequences for coloring
+
+    exports.black = "\x1b[30m"
+    exports.red = "\x1b[31m"
+    exports.green = "\x1b[32m"
+    exports.yellow = "\x1b[33m"
+    exports.blue = "\x1b[34m"
+    exports.magenta = "\x1b[35m"
+    exports.cyan = "\x1b[36m"
+    exports.lightgray = "\x1b[37m"
+    exports.default = "\x1b[39m"
+    exports.darkgray = "\x1b[90m"
+    exports.lightred = "\x1b[91m"
+    exports.lightgreen = "\x1b[92m"
+    exports.lightyellow = "\x1b[93m"
+    exports.lightblue = "\x1b[94m"
+    exports.lightmagenta = "\x1b[95m"
+    exports.lightcyan = "\x1b[96m"
+    exports.white = "\x1b[97m"
+    exports.reset = "\x1b[0m"
+
+    function colored (char, color) {
+        // do not color it if color is not specified
+        return (color === undefined) ? char : (color + char + exports.reset)
+    }
+
+    exports.colored = colored
+
+    exports.plot = function (series, cfg = undefined) {
+        // this function takes oth one array and array of arrays
+        // if an array of numbers is passed it is transfored to
+        // an array of exactly one array with numbers
+        if (typeof(series[0]) == "number"){
+            series = [series]
+        }
+
+        cfg = (typeof cfg !== 'undefined') ? cfg : {}
+
+        let min = (typeof cfg.min !== 'undefined') ? cfg.min : series[0][0]
+        let max = (typeof cfg.max !== 'undefined') ? cfg.max : series[0][0]
+
+        for (let j = 0; j < series.length; j++) {
+            for (let i = 0; i < series[j].length; i++) {
+                min = Math.min(min, series[j][i])
+                max = Math.max(max, series[j][i])
+            }
+        }
+
+        let defaultSymbols = [ '┼', '┤', '╶', '╴', '─', '╰', '╭', '╮', '╯', '│' ]
+        let range   = Math.abs (max - min)
+        let offset  = (typeof cfg.offset  !== 'undefined') ? cfg.offset  : 3
+        let padding = (typeof cfg.padding !== 'undefined') ? cfg.padding : '           '
+        let height  = (typeof cfg.height  !== 'undefined') ? cfg.height  : range
+        let colors  = (typeof cfg.colors !== 'undefined') ? cfg.colors : []
+        let ratio   = range !== 0 ? height / range : 1;
+        let min2    = Math.round (min * ratio)
+        let max2    = Math.round (max * ratio)
+        let rows    = Math.abs (max2 - min2)
+        let width = 0
+        for (let i = 0; i < series.length; i++) {
+            width = Math.max(width, series[i].length)
+        }
+        width = width + offset
+        let symbols = (typeof cfg.symbols !== 'undefined') ? cfg.symbols : defaultSymbols
+        let format  = (typeof cfg.format !== 'undefined') ? cfg.format : function (x) {
+            return (padding + x.toFixed (2)).slice (-padding.length)
+        }
+
+        let result = new Array (rows + 1) // empty space
+        for (let i = 0; i <= rows; i++) {
+            result[i] = new Array (width)
+            for (let j = 0; j < width; j++) {
+                result[i][j] = ' '
+            }
+        }
+        for (let y = min2; y <= max2; ++y) { // axis + labels
+            let label = format (rows > 0 ? max - (y - min2) * range / rows : y, y - min2)
+            result[y - min2][Math.max (offset - label.length, 0)] = label
+            result[y - min2][offset - 1] = (y == 0) ? symbols[0] : symbols[1]
+        }
+
+        for (let j = 0; j < series.length; j++) {
+            let currentColor = colors[j % colors.length]
+            let y0 = Math.round (series[j][0] * ratio) - min2
+            result[rows - y0][offset - 1] = colored(symbols[0], currentColor) // first value
+
+            for (let x = 0; x < series[j].length - 1; x++) { // plot the line
+                let y0 = Math.round (series[j][x + 0] * ratio) - min2
+                let y1 = Math.round (series[j][x + 1] * ratio) - min2
+                if (y0 == y1) {
+                    result[rows - y0][x + offset] = colored(symbols[4], currentColor)
+                } else {
+                    result[rows - y1][x + offset] = colored((y0 > y1) ? symbols[5] : symbols[6], currentColor)
+                    result[rows - y0][x + offset] = colored((y0 > y1) ? symbols[7] : symbols[8], currentColor)
+                    let from = Math.min (y0, y1)
+                    let to = Math.max (y0, y1)
+                    for (let y = from + 1; y < to; y++) {
+                        result[rows - y][x + offset] = colored(symbols[9], currentColor)
+                    }
+                }
+            }
+        }
+        return result.map (function (x) { return x.join ('') }).join ('\n')
+    }
+
+}) (typeof exports === 'undefined' ? /* istanbul ignore next */ this['asciichart'] = {} : exports);
+
+},{}],26:[function(require,module,exports){
 ;(function (globalObject) {
   'use strict';
 
@@ -6465,9 +6577,9 @@ exports.getRoot     = Translate.getRoot;
   }
 })(this);
 
-},{}],26:[function(require,module,exports){
-
 },{}],27:[function(require,module,exports){
+
+},{}],28:[function(require,module,exports){
 // A library of seedable RNGs implemented in Javascript.
 //
 // Usage:
@@ -6529,7 +6641,7 @@ sr.tychei = tychei;
 
 module.exports = sr;
 
-},{"./lib/alea":28,"./lib/tychei":29,"./lib/xor128":30,"./lib/xor4096":31,"./lib/xorshift7":32,"./lib/xorwow":33,"./seedrandom":34}],28:[function(require,module,exports){
+},{"./lib/alea":29,"./lib/tychei":30,"./lib/xor128":31,"./lib/xor4096":32,"./lib/xorshift7":33,"./lib/xorwow":34,"./seedrandom":35}],29:[function(require,module,exports){
 // A port of an algorithm by Johannes Baagøe <baagoe@baagoe.com>, 2010
 // http://baagoe.com/en/RandomMusings/javascript/
 // https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
@@ -6645,7 +6757,7 @@ if (module && module.exports) {
 
 
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 // A Javascript implementaion of the "Tyche-i" prng algorithm by
 // Samuel Neves and Filipe Araujo.
 // See https://eden.dei.uc.pt/~sneves/pubs/2011-snfa2.pdf
@@ -6750,7 +6862,7 @@ if (module && module.exports) {
 
 
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 // A Javascript implementaion of the "xor128" prng algorithm by
 // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
 
@@ -6833,7 +6945,7 @@ if (module && module.exports) {
 
 
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 // A Javascript implementaion of Richard Brent's Xorgens xor4096 algorithm.
 //
 // This fast non-cryptographic random number generator is designed for
@@ -6981,7 +7093,7 @@ if (module && module.exports) {
   (typeof define) == 'function' && define   // present with an AMD loader
 );
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 // A Javascript implementaion of the "xorshift7" algorithm by
 // François Panneton and Pierre L'ecuyer:
 // "On the Xorgshift Random Number Generators"
@@ -7080,7 +7192,7 @@ if (module && module.exports) {
 );
 
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 // A Javascript implementaion of the "xorwow" prng algorithm by
 // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
 
@@ -7168,7 +7280,7 @@ if (module && module.exports) {
 
 
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 /*
 Copyright 2019 David Bau.
 
@@ -7423,7 +7535,7 @@ if ((typeof module) == 'object' && module.exports) {
   Math    // math: package containing random, pow, and seedrandom
 );
 
-},{"crypto":26}],35:[function(require,module,exports){
+},{"crypto":27}],36:[function(require,module,exports){
 //==========================================================================
 // gen-basic.js
 // part of 'total-serialism' Package
@@ -7440,7 +7552,7 @@ if ((typeof module) == 'object' && module.exports) {
 const Util = require('./utility.js');
 
 // Generate a list of n-length starting at one value
-// up untill (but excluding) the 3th argument. 
+// up until (but excluding) the 3th argument. 
 // Evenly spaced values in between in floating-point
 // 
 // @params {array-length, low-output, high-output}
@@ -7449,11 +7561,11 @@ const Util = require('./utility.js');
 function spreadFloat(len=1, lo=len, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
-	// len is positive and minimum of 1
-	len = Math.max(1, Math.abs(len));
+	// len is minimum of 1
+	len = Math.max(1, len);
 	// generate array
-	var arr = new Array(len);
-	for (var i=0; i<len; i++){
+	let arr = [];
+	for (let i=0; i<len; i++){
 		arr[i] = (i / len) * (hi - lo) + lo;
 	}
 	return arr;
@@ -7462,7 +7574,7 @@ exports.spreadFloat = spreadFloat;
 exports.spreadF = spreadFloat;
 
 // Generate a list of n-length starting at one value
-// up untill (but excluding) the 3th argument. 
+// up until (but excluding) the 3th argument. 
 // Set an exponential curve in the spacing of the values.
 // 
 // @params {length, low-output, high-output, exponent}
@@ -7471,11 +7583,11 @@ exports.spreadF = spreadFloat;
 function spreadFloatExp(len=1, lo=len, hi=0, exp=1){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
-	// len is positive and minimum of 1
-	len = Math.max(1, Math.abs(len));
+	// len is minimum of 1
+	len = Math.max(1, len);
 	// generate array
-	var arr = new Array(len);
-	for (var i=0; i<len; i++){
+	let arr = [];
+	for (let i=0; i<len; i++){
 		arr[i] = Math.pow((i / len), exp) * (hi - lo) + lo;
 	}
 	return arr;
@@ -7488,7 +7600,7 @@ exports.spreadFloatExp = spreadFloatExp;
 // @return {Array}
 //
 function spread(len, lo, hi){
-	var arr = spreadFloat(len, lo, hi);
+	let arr = spreadFloat(len, lo, hi);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
 exports.spread = spread;
@@ -7499,7 +7611,7 @@ exports.spread = spread;
 // @return {Array}
 //
 function spreadExp(len, lo, hi, exp){
-	var arr = spreadFloatExp(len, lo, hi, exp);
+	let arr = spreadFloatExp(len, lo, hi, exp);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
 exports.spreadExp = spreadExp;
@@ -7514,9 +7626,11 @@ exports.spreadExp = spreadExp;
 function spreadInclusiveFloat(len=1, lo=len, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
+	// len is minimum of 1
+	len = Math.max(1, len);
 	// generate array
-	var arr = new Array(len);
-	for (var i = 0; i < len; i++){
+	let arr = []
+	for (let i=0; i<len; i++){
 		arr[i] = (i / (len-1)) * (hi - lo) + lo;
 	}
 	return arr;
@@ -7534,9 +7648,11 @@ exports.spreadIncF = spreadInclusiveFloat;
 function spreadInclusiveFloatExp(len=1, lo=len, hi=0, exp=1){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
+	// len is minimum of 1
+	len = Math.max(1, len);
 	// generate array
-	var arr = new Array(len);
-	for (var i = 0; i < len; i++){
+	let arr = [];
+	for (let i=0; i<len; i++){
 		arr[i] = Math.pow((i / (len-1)), exp) * (hi - lo) + lo;
 	}
 	return arr;
@@ -7574,12 +7690,15 @@ exports.spreadInclusiveExp = spreadInclusiveExp;
 // @return {Array}
 // 
 function fill(...args){
+	// when no arguments return array of 0
 	if (!args.length){ return [0]; }
+	// when arguments uneven strip last argument
 	if (args.length % 2){ args.pop(); }
 	
-	var arr = [];
-	for (var i=0; i<args.length/2; i++){
-		for (var k=0; k<Math.abs(args[i*2+1]); k++){
+	let len = args.length/2;
+	let arr = [];
+	for (let i=0; i<len; i++){
+		for (let k=0; k<Math.abs(args[i*2+1]); k++){
 			arr.push(args[i*2]);
 		}
 	}
@@ -7588,7 +7707,7 @@ function fill(...args){
 exports.fill = fill;
 
 // Generate an array with n-periods of a sine function
-// Optional last arguments set lo and hi range
+// Optional last arguments set lo and hi range and phase offset
 // Only setting first range argument sets the low-range to 0
 // 
 // @param {Int} -> Length of output array
@@ -7598,24 +7717,27 @@ exports.fill = fill;
 // @param {Number} -> Phase offset (optional, default=0)
 // @return {Array} -> Sine function
 // 
-function sineFloat(len=1, periods=1, lo, hi=0, phase=0){
-	// if no range specified
+function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	if (lo === undefined){ lo = -1; hi = 1; }
+	else if (hi === undefined){ hi = lo, lo = 0; }
+	// if no range specified
+	// if (lo === undefined){ lo = -1; hi = 1; }
 	// swap if lo > hi
-	if (lo > hi){ var t=lo, lo=hi, hi=t; }
-	// clip array length
-	len = Math.max(1, len);
-	var arr = new Array(len);
+	// if (lo > hi){ var t=lo, lo=hi, hi=t; }
 
-	var a = Math.PI * 2.0 * periods / len;
-	var p = Math.PI * phase;
-	for (var i=0; i<len; i++){
+	// array length minimum of 1
+	len = Math.max(1, len);
+	let arr = [];
+
+	let a = Math.PI * 2.0 * periods / len;
+	let p = Math.PI * phase * 2.0;
+	for (let i=0; i<len; i++){
 		arr[i] = Math.sin(a * i + p);
 	}
 	return Util.map(arr, -1, 1, lo, hi);
 }
 exports.sineFloat = sineFloat;
-exports.sin = sineFloat;
+// exports.sin = sineFloat;
 
 // Generate an integer array with n-periods of a sine function
 // Optional last arguments set lo and hi range
@@ -7624,6 +7746,7 @@ exports.sin = sineFloat;
 // @param {Number} -> Periods of sine-wave 
 // @param {Number} -> Low range of values (optional, default = 0) 
 // @param {Number} -> High range of values (optional, default = 12)
+// @param {Number} -> Phase shift (optional, default = 0)
 // @return {Array} -> Sine function
 // 
 function sine(len=1, periods=1, lo=12, hi, phase){
@@ -7633,23 +7756,27 @@ function sine(len=1, periods=1, lo=12, hi, phase){
 exports.sine = sine;
 
 // Generate an array with n-periods of a cosine function
+// Flip the low and high range to invert the function
 // See sinFloat() for details
 //
 function cosineFloat(len=1, periods=1, lo, hi, phase=0){
-	return sineFloat(len, periods, lo, hi, phase+0.5);
+	return sineFloat(len, periods, lo, hi, phase+0.25);
 }
 exports.cosineFloat = cosineFloat;
-exports.cos = cosineFloat;
+// exports.cos = cosineFloat;
 
 // Generate an integer array with n-periods of a cosine function
+// Flip the low and high range to invert the function
 // See sin() for details
 // 
 function cosine(len=1, periods=1, lo=12, hi, phase=0){
-	var arr = sineFloat(len, periods, lo, hi, phase+0.5);
+	var arr = sineFloat(len, periods, lo, hi, phase+0.25);
 	return arr.map(v => Math.trunc(v));
 }
 exports.cosine = cosine;
-},{"./utility.js":41}],36:[function(require,module,exports){
+
+
+},{"./utility.js":42}],37:[function(require,module,exports){
 //==============================================================================
 // gen-complex.js
 // part of 'total-serialism' Package
@@ -7962,7 +8089,7 @@ function lucas(len=1, offset=0, toString=false){
 }
 exports.lucas = lucas;
 
-},{"./transform.js":39,"bignumber.js":25}],37:[function(require,module,exports){
+},{"./transform.js":40,"bignumber.js":26}],38:[function(require,module,exports){
 //=======================================================================
 // gen-stochastic.js
 // part of 'total-serialism' Package
@@ -8304,7 +8431,7 @@ class MarkovChain {
 	}
 }
 exports.MarkovChain = MarkovChain;
-},{"./gen-basic.js":35,"./utility.js":41,"seedrandom":27}],38:[function(require,module,exports){
+},{"./gen-basic.js":36,"./utility.js":42,"seedrandom":28}],39:[function(require,module,exports){
 //=======================================================================
 // statistic.js
 // part of 'total-serialism' Package
@@ -8446,7 +8573,7 @@ function mode(a=[0]){
 }
 exports.mode = mode;
 exports.common = mode;
-},{"./transform":39}],39:[function(require,module,exports){
+},{"./transform":40}],40:[function(require,module,exports){
 //=======================================================================
 // transform.js
 // part of 'total-serialism' Package
@@ -8733,7 +8860,7 @@ function unique(a=[0]){
 	return [...new Set(a)];
 }
 exports.unique = unique;
-},{"./statistic":38,"./utility":41}],40:[function(require,module,exports){
+},{"./statistic":39,"./utility":42}],41:[function(require,module,exports){
 //==============================================================================
 // translate.js
 // part of 'total-serialism' Package
@@ -9090,7 +9217,7 @@ function divisionToRatio(a=['1']){
 }
 exports.divisionToRatio = divisionToRatio;
 exports.dtor = divisionToRatio;
-},{"../data/scales.json":1,"../data/tones.json":2,"@tonaljs/tonal":24}],41:[function(require,module,exports){
+},{"../data/scales.json":1,"../data/tones.json":2,"@tonaljs/tonal":24}],42:[function(require,module,exports){
 //====================================================================
 // utility.js
 // part of 'total-serialism' Package
@@ -9099,6 +9226,8 @@ exports.dtor = divisionToRatio;
 //
 // Utility functions
 //====================================================================
+
+const chart = require('asciichart');
 
 const HALF_PI = Math.PI / 2.0;
 const TWO_PI = Math.PI * 2.0;
@@ -9330,5 +9459,39 @@ function mod(a, mod=12){
 	return a.map(x => ((x % mod) + mod) % mod);
 }
 exports.mod = mod;
-},{}]},{},[3])(3)
+
+// Plot an array of values to the console in the form of an
+// ascii chart and return chart from function. If you just want the 
+// chart returned as text and not log to console set { log: false }.
+// Using the asciichart package by x84. 
+// 
+// @param {Number/Array/String} -> value to plot
+// @param {Object} -> { log: false } don't log to console and only return
+//                 -> { data: true } log the original array data
+//                 -> { decimals: 2 } adjust the number of decimals
+//                 -> { height: 10 } set a fixed chart line-height
+//                 -> other preferences for padding, colors, offset
+//                    See the asciichart documentation
+// 
+function plot(a=[0], prefs){
+	// if a is not an Array
+	a = (Array.isArray(a)) ? a : [a]; 
+	// empty object if no preferences
+	prefs = (typeof prefs !== 'undefined') ? prefs : {};
+
+	prefs.log = (typeof prefs.log !== 'undefined') ? prefs.log : true;
+	prefs.data = (typeof prefs.data !== 'undefined') ? prefs.data : false;
+	prefs.decimals = (typeof prefs.decimals !== 'undefined') ? prefs.decimals : 2;
+
+	let p = chart.plot(a, prefs);
+	if (prefs.data){
+		console.log('chart data: [', a.map(x => x.toFixed(prefs.decimals)).join(", "), "]\n");
+	}
+	if (prefs.log){
+		console.log(chart.plot(a, prefs), "\n");
+	}
+	return p;
+}
+exports.plot = plot;
+},{"asciichart":25}]},{},[3])(3)
 });

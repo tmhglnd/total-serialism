@@ -237,13 +237,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       exports.setRoot = Translate.setRoot;
       exports.getRoot = Translate.getRoot;
     }, {
-      "./src/gen-basic.js": 35,
-      "./src/gen-complex.js": 36,
-      "./src/gen-stochastic.js": 37,
-      "./src/statistic.js": 38,
-      "./src/transform.js": 39,
-      "./src/translate.js": 40,
-      "./src/utility.js": 41
+      "./src/gen-basic.js": 36,
+      "./src/gen-complex.js": 37,
+      "./src/gen-stochastic.js": 38,
+      "./src/statistic.js": 39,
+      "./src/transform.js": 40,
+      "./src/translate.js": 41,
+      "./src/utility.js": 42
     }],
     4: [function (require, module, exports) {
       (function (global, factory) {
@@ -4082,6 +4082,130 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       "@tonaljs/time-signature": 23
     }],
     25: [function (require, module, exports) {
+      "use strict";
+
+      (function (exports) {
+        // control sequences for coloring
+        exports.black = "\x1b[30m";
+        exports.red = "\x1b[31m";
+        exports.green = "\x1b[32m";
+        exports.yellow = "\x1b[33m";
+        exports.blue = "\x1b[34m";
+        exports.magenta = "\x1b[35m";
+        exports.cyan = "\x1b[36m";
+        exports.lightgray = "\x1b[37m";
+        exports["default"] = "\x1b[39m";
+        exports.darkgray = "\x1b[90m";
+        exports.lightred = "\x1b[91m";
+        exports.lightgreen = "\x1b[92m";
+        exports.lightyellow = "\x1b[93m";
+        exports.lightblue = "\x1b[94m";
+        exports.lightmagenta = "\x1b[95m";
+        exports.lightcyan = "\x1b[96m";
+        exports.white = "\x1b[97m";
+        exports.reset = "\x1b[0m";
+
+        function colored(_char, color) {
+          // do not color it if color is not specified
+          return color === undefined ? _char : color + _char + exports.reset;
+        }
+
+        exports.colored = colored;
+
+        exports.plot = function (series) {
+          var cfg = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+
+          // this function takes oth one array and array of arrays
+          // if an array of numbers is passed it is transfored to
+          // an array of exactly one array with numbers
+          if (typeof series[0] == "number") {
+            series = [series];
+          }
+
+          cfg = typeof cfg !== 'undefined' ? cfg : {};
+          var min = typeof cfg.min !== 'undefined' ? cfg.min : series[0][0];
+          var max = typeof cfg.max !== 'undefined' ? cfg.max : series[0][0];
+
+          for (var j = 0; j < series.length; j++) {
+            for (var i = 0; i < series[j].length; i++) {
+              min = Math.min(min, series[j][i]);
+              max = Math.max(max, series[j][i]);
+            }
+          }
+
+          var defaultSymbols = ['┼', '┤', '╶', '╴', '─', '╰', '╭', '╮', '╯', '│'];
+          var range = Math.abs(max - min);
+          var offset = typeof cfg.offset !== 'undefined' ? cfg.offset : 3;
+          var padding = typeof cfg.padding !== 'undefined' ? cfg.padding : '           ';
+          var height = typeof cfg.height !== 'undefined' ? cfg.height : range;
+          var colors = typeof cfg.colors !== 'undefined' ? cfg.colors : [];
+          var ratio = range !== 0 ? height / range : 1;
+          var min2 = Math.round(min * ratio);
+          var max2 = Math.round(max * ratio);
+          var rows = Math.abs(max2 - min2);
+          var width = 0;
+
+          for (var _i2 = 0; _i2 < series.length; _i2++) {
+            width = Math.max(width, series[_i2].length);
+          }
+
+          width = width + offset;
+          var symbols = typeof cfg.symbols !== 'undefined' ? cfg.symbols : defaultSymbols;
+          var format = typeof cfg.format !== 'undefined' ? cfg.format : function (x) {
+            return (padding + x.toFixed(2)).slice(-padding.length);
+          };
+          var result = new Array(rows + 1); // empty space
+
+          for (var _i3 = 0; _i3 <= rows; _i3++) {
+            result[_i3] = new Array(width);
+
+            for (var _j = 0; _j < width; _j++) {
+              result[_i3][_j] = ' ';
+            }
+          }
+
+          for (var y = min2; y <= max2; ++y) {
+            // axis + labels
+            var label = format(rows > 0 ? max - (y - min2) * range / rows : y, y - min2);
+            result[y - min2][Math.max(offset - label.length, 0)] = label;
+            result[y - min2][offset - 1] = y == 0 ? symbols[0] : symbols[1];
+          }
+
+          for (var _j2 = 0; _j2 < series.length; _j2++) {
+            var currentColor = colors[_j2 % colors.length];
+            var y0 = Math.round(series[_j2][0] * ratio) - min2;
+            result[rows - y0][offset - 1] = colored(symbols[0], currentColor); // first value
+
+            for (var x = 0; x < series[_j2].length - 1; x++) {
+              // plot the line
+              var _y = Math.round(series[_j2][x + 0] * ratio) - min2;
+
+              var y1 = Math.round(series[_j2][x + 1] * ratio) - min2;
+
+              if (_y == y1) {
+                result[rows - _y][x + offset] = colored(symbols[4], currentColor);
+              } else {
+                result[rows - y1][x + offset] = colored(_y > y1 ? symbols[5] : symbols[6], currentColor);
+                result[rows - _y][x + offset] = colored(_y > y1 ? symbols[7] : symbols[8], currentColor);
+                var from = Math.min(_y, y1);
+                var to = Math.max(_y, y1);
+
+                for (var _y2 = from + 1; _y2 < to; _y2++) {
+                  result[rows - _y2][x + offset] = colored(symbols[9], currentColor);
+                }
+              }
+            }
+          }
+
+          return result.map(function (x) {
+            return x.join('');
+          }).join('\n');
+        };
+      })(typeof exports === 'undefined' ?
+      /* istanbul ignore next */
+      this['asciichart'] = {} : exports);
+    }, {}],
+    26: [function (require, module, exports) {
       ;
 
       (function (globalObject) {
@@ -6836,8 +6960,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }
       })(this);
     }, {}],
-    26: [function (require, module, exports) {}, {}],
-    27: [function (require, module, exports) {
+    27: [function (require, module, exports) {}, {}],
+    28: [function (require, module, exports) {
       // A library of seedable RNGs implemented in Javascript.
       //
       // Usage:
@@ -6897,15 +7021,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       sr.tychei = tychei;
       module.exports = sr;
     }, {
-      "./lib/alea": 28,
-      "./lib/tychei": 29,
-      "./lib/xor128": 30,
-      "./lib/xor4096": 31,
-      "./lib/xorshift7": 32,
-      "./lib/xorwow": 33,
-      "./seedrandom": 34
+      "./lib/alea": 29,
+      "./lib/tychei": 30,
+      "./lib/xor128": 31,
+      "./lib/xor4096": 32,
+      "./lib/xorshift7": 33,
+      "./lib/xorwow": 34,
+      "./seedrandom": 35
     }],
-    28: [function (require, module, exports) {
+    29: [function (require, module, exports) {
       // A port of an algorithm by Johannes Baagøe <baagoe@baagoe.com>, 2010
       // http://baagoe.com/en/RandomMusings/javascript/
       // https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
@@ -7038,7 +7162,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       typeof define == 'function' && define // present with an AMD loader
       );
     }, {}],
-    29: [function (require, module, exports) {
+    30: [function (require, module, exports) {
       // A Javascript implementaion of the "Tyche-i" prng algorithm by
       // Samuel Neves and Filipe Araujo.
       // See https://eden.dei.uc.pt/~sneves/pubs/2011-snfa2.pdf
@@ -7153,7 +7277,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       typeof define == 'function' && define // present with an AMD loader
       );
     }, {}],
-    30: [function (require, module, exports) {
+    31: [function (require, module, exports) {
       // A Javascript implementaion of the "xor128" prng algorithm by
       // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
       (function (global, module, define) {
@@ -7240,7 +7364,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       typeof define == 'function' && define // present with an AMD loader
       );
     }, {}],
-    31: [function (require, module, exports) {
+    32: [function (require, module, exports) {
       // A Javascript implementaion of Richard Brent's Xorgens xor4096 algorithm.
       //
       // This fast non-cryptographic random number generator is designed for
@@ -7416,7 +7540,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       typeof define == 'function' && define // present with an AMD loader
       );
     }, {}],
-    32: [function (require, module, exports) {
+    33: [function (require, module, exports) {
       // A Javascript implementaion of the "xorshift7" algorithm by
       // François Panneton and Pierre L'ecuyer:
       // "On the Xorgshift Random Number Generators"
@@ -7539,7 +7663,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       typeof define == 'function' && define // present with an AMD loader
       );
     }, {}],
-    33: [function (require, module, exports) {
+    34: [function (require, module, exports) {
       // A Javascript implementaion of the "xorwow" prng algorithm by
       // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
       (function (global, module, define) {
@@ -7636,7 +7760,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       typeof define == 'function' && define // present with an AMD loader
       );
     }, {}],
-    34: [function (require, module, exports) {
+    35: [function (require, module, exports) {
       /*
       Copyright 2019 David Bau.
       
@@ -7926,9 +8050,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       Math // math: package containing random, pow, and seedrandom
       );
     }, {
-      "crypto": 26
+      "crypto": 27
     }],
-    35: [function (require, module, exports) {
+    36: [function (require, module, exports) {
       //==========================================================================
       // gen-basic.js
       // part of 'total-serialism' Package
@@ -7942,7 +8066,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // - spread-methods inspired by Max8's MC functions spread and spreadinclusive
       //==========================================================================
       var Util = require('./utility.js'); // Generate a list of n-length starting at one value
-      // up untill (but excluding) the 3th argument. 
+      // up until (but excluding) the 3th argument. 
       // Evenly spaced values in between in floating-point
       // 
       // @params {array-length, low-output, high-output}
@@ -7960,12 +8084,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             var t = lo,
                 lo = hi,
                 hi = t;
-          } // len is positive and minimum of 1
+          } // len is minimum of 1
 
 
-          len = Math.max(1, Math.abs(len)); // generate array
+          len = Math.max(1, len); // generate array
 
-          var arr = new Array(len);
+          var arr = [];
 
           for (var i = 0; i < len; i++) {
             arr[i] = i / len * (hi - lo) + lo;
@@ -7977,7 +8101,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       exports.spreadFloat = spreadFloat;
       exports.spreadF = spreadFloat; // Generate a list of n-length starting at one value
-      // up untill (but excluding) the 3th argument. 
+      // up until (but excluding) the 3th argument. 
       // Set an exponential curve in the spacing of the values.
       // 
       // @params {length, low-output, high-output, exponent}
@@ -7995,12 +8119,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             var t = lo,
                 lo = hi,
                 hi = t;
-          } // len is positive and minimum of 1
+          } // len is minimum of 1
 
 
-          len = Math.max(1, Math.abs(len)); // generate array
+          len = Math.max(1, len); // generate array
 
-          var arr = new Array(len);
+          var arr = [];
 
           for (var i = 0; i < len; i++) {
             arr[i] = Math.pow(i / len, exp) * (hi - lo) + lo;
@@ -8054,10 +8178,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             var t = lo,
                 lo = hi,
                 hi = t;
-          } // generate array
+          } // len is minimum of 1
 
 
-          var arr = new Array(len);
+          len = Math.max(1, len); // generate array
+
+          var arr = [];
 
           for (var i = 0; i < len; i++) {
             arr[i] = i / (len - 1) * (hi - lo) + lo;
@@ -8087,10 +8213,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             var t = lo,
                 lo = hi,
                 hi = t;
-          } // generate array
+          } // len is minimum of 1
 
 
-          var arr = new Array(len);
+          len = Math.max(1, len); // generate array
+
+          var arr = [];
 
           for (var i = 0; i < len; i++) {
             arr[i] = Math.pow(i / (len - 1), exp) * (hi - lo) + lo;
@@ -8140,17 +8268,20 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           args[_key] = arguments[_key];
         }
 
+        // when no arguments return array of 0
         if (!args.length) {
           return [0];
-        }
+        } // when arguments uneven strip last argument
+
 
         if (args.length % 2) {
           args.pop();
         }
 
+        var len = args.length / 2;
         var arr = [];
 
-        for (var i = 0; i < args.length / 2; i++) {
+        for (var i = 0; i < len; i++) {
           for (var k = 0; k < Math.abs(args[i * 2 + 1]); k++) {
             arr.push(args[i * 2]);
           }
@@ -8160,7 +8291,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
 
       exports.fill = fill; // Generate an array with n-periods of a sine function
-      // Optional last arguments set lo and hi range
+      // Optional last arguments set lo and hi range and phase offset
       // Only setting first range argument sets the low-range to 0
       // 
       // @param {Int} -> Length of output array
@@ -8175,44 +8306,42 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
         var periods = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
         var lo = arguments.length > 2 ? arguments[2] : undefined;
-        var hi = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+        var hi = arguments.length > 3 ? arguments[3] : undefined;
         var phase = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
-        return function (lo, hi) {
-          // if no range specified
-          if (lo === undefined) {
-            lo = -1;
-            hi = 1;
-          } // swap if lo > hi
+
+        if (lo === undefined) {
+          lo = -1;
+          hi = 1;
+        } else if (hi === undefined) {
+          hi = lo, lo = 0;
+        } // if no range specified
+        // if (lo === undefined){ lo = -1; hi = 1; }
+        // swap if lo > hi
+        // if (lo > hi){ var t=lo, lo=hi, hi=t; }
+        // array length minimum of 1
 
 
-          if (lo > hi) {
-            var t = lo,
-                lo = hi,
-                hi = t;
-          } // clip array length
+        len = Math.max(1, len);
+        var arr = [];
+        var a = Math.PI * 2.0 * periods / len;
+        var p = Math.PI * phase * 2.0;
 
+        for (var i = 0; i < len; i++) {
+          arr[i] = Math.sin(a * i + p);
+        }
 
-          len = Math.max(1, len);
-          var arr = new Array(len);
-          var a = Math.PI * 2.0 * periods / len;
-          var p = Math.PI * phase;
-
-          for (var i = 0; i < len; i++) {
-            arr[i] = Math.sin(a * i + p);
-          }
-
-          return Util.map(arr, -1, 1, lo, hi);
-        }(lo, hi);
+        return Util.map(arr, -1, 1, lo, hi);
       }
 
-      exports.sineFloat = sineFloat;
-      exports.sin = sineFloat; // Generate an integer array with n-periods of a sine function
+      exports.sineFloat = sineFloat; // exports.sin = sineFloat;
+      // Generate an integer array with n-periods of a sine function
       // Optional last arguments set lo and hi range
       // 
       // @param {Int} -> Length of output array
       // @param {Number} -> Periods of sine-wave 
       // @param {Number} -> Low range of values (optional, default = 0) 
       // @param {Number} -> High range of values (optional, default = 12)
+      // @param {Number} -> Phase shift (optional, default = 0)
       // @return {Array} -> Sine function
       // 
 
@@ -8229,6 +8358,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
 
       exports.sine = sine; // Generate an array with n-periods of a cosine function
+      // Flip the low and high range to invert the function
       // See sinFloat() for details
       //
 
@@ -8238,11 +8368,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         var lo = arguments.length > 2 ? arguments[2] : undefined;
         var hi = arguments.length > 3 ? arguments[3] : undefined;
         var phase = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
-        return sineFloat(len, periods, lo, hi, phase + 0.5);
+        return sineFloat(len, periods, lo, hi, phase + 0.25);
       }
 
-      exports.cosineFloat = cosineFloat;
-      exports.cos = cosineFloat; // Generate an integer array with n-periods of a cosine function
+      exports.cosineFloat = cosineFloat; // exports.cos = cosineFloat;
+      // Generate an integer array with n-periods of a cosine function
+      // Flip the low and high range to invert the function
       // See sin() for details
       // 
 
@@ -8252,7 +8383,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         var lo = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 12;
         var hi = arguments.length > 3 ? arguments[3] : undefined;
         var phase = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
-        var arr = sineFloat(len, periods, lo, hi, phase + 0.5);
+        var arr = sineFloat(len, periods, lo, hi, phase + 0.25);
         return arr.map(function (v) {
           return Math.trunc(v);
         });
@@ -8260,9 +8391,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       exports.cosine = cosine;
     }, {
-      "./utility.js": 41
+      "./utility.js": 42
     }],
-    36: [function (require, module, exports) {
+    37: [function (require, module, exports) {
       //==============================================================================
       // gen-complex.js
       // part of 'total-serialism' Package
@@ -8400,13 +8531,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           res = asString ? "" : [];
 
           for (var ch in axiom) {
-            var _char = axiom[ch];
-            var rule = rules[_char];
+            var _char2 = axiom[ch];
+            var rule = rules[_char2];
 
             if (rule) {
               res = asString ? res + rule : res.concat(rule);
             } else {
-              res = asString ? res + _char : res.concat(_char);
+              res = asString ? res + _char2 : res.concat(_char2);
             }
           }
 
@@ -8648,10 +8779,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       exports.lucas = lucas;
     }, {
-      "./transform.js": 39,
-      "bignumber.js": 25
+      "./transform.js": 40,
+      "bignumber.js": 26
     }],
-    37: [function (require, module, exports) {
+    38: [function (require, module, exports) {
       //=======================================================================
       // gen-stochastic.js
       // part of 'total-serialism' Package
@@ -9096,11 +9227,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       exports.MarkovChain = MarkovChain;
     }, {
-      "./gen-basic.js": 35,
-      "./utility.js": 41,
-      "seedrandom": 27
+      "./gen-basic.js": 36,
+      "./utility.js": 42,
+      "seedrandom": 28
     }],
-    38: [function (require, module, exports) {
+    39: [function (require, module, exports) {
       //=======================================================================
       // statistic.js
       // part of 'total-serialism' Package
@@ -9298,9 +9429,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       exports.mode = mode;
       exports.common = mode;
     }, {
-      "./transform": 39
+      "./transform": 40
     }],
-    39: [function (require, module, exports) {
+    40: [function (require, module, exports) {
       //=======================================================================
       // transform.js
       // part of 'total-serialism' Package
@@ -9520,8 +9651,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
         var l = 0;
 
-        for (var _i2 in args) {
-          l = Math.max(args[_i2].length, l);
+        for (var _i4 in args) {
+          l = Math.max(args[_i4].length, l);
         }
 
         var arr = [];
@@ -9557,8 +9688,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
         var l = 0;
 
-        for (var _i3 in args) {
-          l = Math.max(args[_i3].length, l);
+        for (var _i5 in args) {
+          l = Math.max(args[_i5].length, l);
         }
 
         var arr = [];
@@ -9675,10 +9806,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       exports.unique = unique;
     }, {
-      "./statistic": 38,
-      "./utility": 41
+      "./statistic": 39,
+      "./utility": 42
     }],
-    40: [function (require, module, exports) {
+    41: [function (require, module, exports) {
       //==============================================================================
       // translate.js
       // part of 'total-serialism' Package
@@ -10103,7 +10234,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       "../data/tones.json": 2,
       "@tonaljs/tonal": 24
     }],
-    41: [function (require, module, exports) {
+    42: [function (require, module, exports) {
       //====================================================================
       // utility.js
       // part of 'total-serialism' Package
@@ -10112,6 +10243,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       //
       // Utility functions
       //====================================================================
+      var chart = require('asciichart');
+
       var HALF_PI = Math.PI / 2.0;
       var TWO_PI = Math.PI * 2.0;
       var PI = Math.PI;
@@ -10443,7 +10576,48 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         });
       }
 
-      exports.mod = mod;
-    }, {}]
+      exports.mod = mod; // Plot an array of values to the console in the form of an
+      // ascii chart and return chart from function. If you just want the 
+      // chart returned as text and not log to console set { log: false }.
+      // Using the asciichart package by x84. 
+      // 
+      // @param {Number/Array/String} -> value to plot
+      // @param {Object} -> { log: false } don't log to console and only return
+      //                 -> { data: true } log the original array data
+      //                 -> { decimals: 2 } adjust the number of decimals
+      //                 -> { height: 10 } set a fixed chart line-height
+      //                 -> other preferences for padding, colors, offset
+      //                    See the asciichart documentation
+      // 
+
+      function plot() {
+        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [0];
+        var prefs = arguments.length > 1 ? arguments[1] : undefined;
+        // if a is not an Array
+        a = Array.isArray(a) ? a : [a]; // empty object if no preferences
+
+        prefs = typeof prefs !== 'undefined' ? prefs : {};
+        prefs.log = typeof prefs.log !== 'undefined' ? prefs.log : true;
+        prefs.data = typeof prefs.data !== 'undefined' ? prefs.data : false;
+        prefs.decimals = typeof prefs.decimals !== 'undefined' ? prefs.decimals : 2;
+        var p = chart.plot(a, prefs);
+
+        if (prefs.data) {
+          console.log('chart data: [', a.map(function (x) {
+            return x.toFixed(prefs.decimals);
+          }).join(", "), "]\n");
+        }
+
+        if (prefs.log) {
+          console.log(chart.plot(a, prefs), "\n");
+        }
+
+        return p;
+      }
+
+      exports.plot = plot;
+    }, {
+      "asciichart": 25
+    }]
   }, {}, [3])(3);
 });
