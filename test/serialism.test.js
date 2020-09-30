@@ -144,6 +144,8 @@ function testGen(){
 	test("Gen.sine(12, 1, -1, 1)");
 	test("Gen.sine(11, 4, 0, 7)");
 
+	test("Util.plot(Gen.sine(20, 3.1415, 0, 24), { height: 10 })");
+
 	test("Gen.cosine(7, 1.5)");
 }
 
