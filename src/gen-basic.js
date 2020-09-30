@@ -14,7 +14,7 @@
 const Util = require('./utility.js');
 
 // Generate a list of n-length starting at one value
-// up untill (but excluding) the 3th argument. 
+// up until (but excluding) the 3th argument. 
 // Evenly spaced values in between in floating-point
 // 
 // @params {array-length, low-output, high-output}
@@ -23,11 +23,11 @@ const Util = require('./utility.js');
 function spreadFloat(len=1, lo=len, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
-	// len is positive and minimum of 1
-	len = Math.max(1, Math.abs(len));
+	// len is minimum of 1
+	len = Math.max(1, len);
 	// generate array
-	var arr = new Array(len);
-	for (var i=0; i<len; i++){
+	let arr = [];
+	for (let i=0; i<len; i++){
 		arr[i] = (i / len) * (hi - lo) + lo;
 	}
 	return arr;
@@ -36,7 +36,7 @@ exports.spreadFloat = spreadFloat;
 exports.spreadF = spreadFloat;
 
 // Generate a list of n-length starting at one value
-// up untill (but excluding) the 3th argument. 
+// up until (but excluding) the 3th argument. 
 // Set an exponential curve in the spacing of the values.
 // 
 // @params {length, low-output, high-output, exponent}
@@ -45,11 +45,11 @@ exports.spreadF = spreadFloat;
 function spreadFloatExp(len=1, lo=len, hi=0, exp=1){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
-	// len is positive and minimum of 1
-	len = Math.max(1, Math.abs(len));
+	// len is minimum of 1
+	len = Math.max(1, len);
 	// generate array
-	var arr = new Array(len);
-	for (var i=0; i<len; i++){
+	let arr = [];
+	for (let i=0; i<len; i++){
 		arr[i] = Math.pow((i / len), exp) * (hi - lo) + lo;
 	}
 	return arr;
@@ -62,7 +62,7 @@ exports.spreadFloatExp = spreadFloatExp;
 // @return {Array}
 //
 function spread(len, lo, hi){
-	var arr = spreadFloat(len, lo, hi);
+	let arr = spreadFloat(len, lo, hi);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
 exports.spread = spread;
@@ -73,7 +73,7 @@ exports.spread = spread;
 // @return {Array}
 //
 function spreadExp(len, lo, hi, exp){
-	var arr = spreadFloatExp(len, lo, hi, exp);
+	let arr = spreadFloatExp(len, lo, hi, exp);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
 exports.spreadExp = spreadExp;
@@ -88,9 +88,11 @@ exports.spreadExp = spreadExp;
 function spreadInclusiveFloat(len=1, lo=len, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
+	// len is minimum of 1
+	len = Math.max(1, len);
 	// generate array
-	var arr = new Array(len);
-	for (var i = 0; i < len; i++){
+	let arr = []
+	for (let i=0; i<len; i++){
 		arr[i] = (i / (len-1)) * (hi - lo) + lo;
 	}
 	return arr;
@@ -108,9 +110,11 @@ exports.spreadIncF = spreadInclusiveFloat;
 function spreadInclusiveFloatExp(len=1, lo=len, hi=0, exp=1){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
+	// len is minimum of 1
+	len = Math.max(1, len);
 	// generate array
-	var arr = new Array(len);
-	for (var i = 0; i < len; i++){
+	let arr = [];
+	for (let i=0; i<len; i++){
 		arr[i] = Math.pow((i / (len-1)), exp) * (hi - lo) + lo;
 	}
 	return arr;
@@ -148,12 +152,15 @@ exports.spreadInclusiveExp = spreadInclusiveExp;
 // @return {Array}
 // 
 function fill(...args){
+	// when no arguments return array of 0
 	if (!args.length){ return [0]; }
+	// when arguments uneven strip last argument
 	if (args.length % 2){ args.pop(); }
 	
-	var arr = [];
-	for (var i=0; i<args.length/2; i++){
-		for (var k=0; k<Math.abs(args[i*2+1]); k++){
+	let len = args.length/2;
+	let arr = [];
+	for (let i=0; i<len; i++){
+		for (let k=0; k<Math.abs(args[i*2+1]); k++){
 			arr.push(args[i*2]);
 		}
 	}
@@ -177,13 +184,13 @@ function sineFloat(len=1, periods=1, lo, hi=0, phase=0){
 	if (lo === undefined){ lo = -1; hi = 1; }
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
-	// clip array length
+	// array length minimum of 1
 	len = Math.max(1, len);
-	var arr = new Array(len);
+	let arr = [];
 
-	var a = Math.PI * 2.0 * periods / len;
-	var p = Math.PI * phase;
-	for (var i=0; i<len; i++){
+	let a = Math.PI * 2.0 * periods / len;
+	let p = Math.PI * phase;
+	for (let i=0; i<len; i++){
 		arr[i] = Math.sin(a * i + p);
 	}
 	return Util.map(arr, -1, 1, lo, hi);

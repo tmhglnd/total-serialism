@@ -76,21 +76,12 @@ markov.clear();
 console.log(markov.table);
 */
 
-let arr = Gen.spread(20);
-
-// console.log(Util.wrap(7, 3, 5));
-
-console.log(Util.wrap(arr, 0, 7));
-console.log(Util.wrap(arr, 7, 15));
-console.log(Util.wrap(arr, 4, 7));
-// console.log(arr);
-
 fullTest();
 
 function fullTest(){
 	console.time('Total Time');
 	// testSerial();
-	// testGen();
+	testGen();
 	// testAlgo();
 	// testRand();
 	// testMod();

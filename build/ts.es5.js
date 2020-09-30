@@ -10104,66 +10104,80 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       "@tonaljs/tonal": 24
     }],
     41: [function (require, module, exports) {
-      //=======================================================================
+      //====================================================================
       // utility.js
       // part of 'total-serialism' Package
       // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
       // MIT License
       //
       // Utility functions
-      //=======================================================================
+      //====================================================================
       var HALF_PI = Math.PI / 2.0;
       var TWO_PI = Math.PI * 2.0;
       var PI = Math.PI;
       exports.HALF_PI = HALF_PI;
       exports.TWO_PI = TWO_PI;
-      exports.PI = PI; // Return the remainder after division
-      // works also in the negative direction
-      // 
-      // @param {Int/Array} -> input value
-      // @param {Int} -> divisor
-      // @return {Int/Array} -> remainder after division
-      // 
-
-      function mod(a, mod) {
-        if (!Array.isArray(a)) {
-          return (a % mod + mod) % mod;
-        }
-
-        return a.map(function (x) {
-          return (x % mod + mod) % mod;
-        });
-      }
-
-      exports.mod = mod; // Wrap a value between a low and high range
+      exports.PI = PI; // Wrap a value between a low and high range
       // Similar to mod, expect the low range is also adjustable
       // 
       // @param {Number/Array} -> input value
-      // @param {Number} -> minimum value (default=0)
-      // @param {Number} -> maximum value (default=12)
+      // @param {Number} -> minimum value optional, (default=12)
+      // @param {Number} -> maximum value optional, (default=0)
       // @return {Number} -> remainder after division
       // 
-      // function wrap(a, max=12, min=0){
+
+      function wrap(a) {
+        var lo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 12;
+        var hi = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+        return function (lo, hi) {
+          // swap if lo > hi
+          if (lo > hi) {
+            var t = lo,
+                lo = hi,
+                hi = t;
+          } // calculate range and wrap the values
+
+
+          var r = hi - lo;
+
+          if (!Array.isArray(a)) {
+            return (a - lo % r + r) % r + lo;
+          }
+
+          return a.map(function (x) {
+            return (x - hi % r + r) % r + hi;
+          });
+        }(lo, hi);
+      }
+
+      exports.wrap = wrap; // Constrain a value between a low and high range
       // 
-      // }
-      // exports.wrap = wrap;
-      // Constrain a value between a low
-      // and high range
-      // 
-      // @param {Number} -> number to constrain
-      // @param {Number} -> minimum value (default=0)
-      // @param {Number} -> maximum value (default=1)
+      // @param {Number/Array} -> number to constrain
+      // @param {Number} -> minimum value (optional, default=12)
+      // @param {Number} -> maximum value (optional, default=0)
       // @return {Number} -> constrained value
       // 
 
-      function constrain(a, min, max) {
-        if (!Array.isArray(a)) {
-          return Math.min(max, Math.max(min, a));
-        }
+      function constrain(a) {
+        var lo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 12;
+        var hi = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+        return function (lo, hi) {
+          // swap if lo > hi
+          if (lo > hi) {
+            var t = lo,
+                lo = hi,
+                hi = t;
+          } // constrain the values
 
-        return a.map(function (x) {
-          return Math.min(max, Math.max(min, x));
-        });
+
+          if (!Array.isArray(a)) {
+            return Math.min(hi, Math.max(lo, a));
+          }
+
+          return a.map(function (x) {
+            return Math.min(hi, Math.max(lo, x));
+          });
+        }(lo, hi);
       }
 
       exports.constrain = constrain;
@@ -10171,33 +10185,41 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // When the value exceeds the range it is folded inwards
       // Has the effect of "bouncing" against the boundaries
       // 
-      // @param {Number} -> number to fold
-      // @param {Number} -> minimum value
-      // @param {Number} -> maximum value
+      // @param {Number/Array} -> number to fold
+      // @param {Number} -> minimum value (optional, default=12)
+      // @param {Number} -> maximum value (optional, default=0)
       // @return {Number} -> folder value
       // 
 
       function fold(a) {
-        for (var _len5 = arguments.length, params = new Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
-          params[_key5 - 1] = arguments[_key5];
-        }
+        var lo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 12;
+        var hi = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+        return function (lo, hi) {
+          // swap if lo > hi
+          if (lo > hi) {
+            var t = lo,
+                lo = hi,
+                hi = t;
+          } // fold the values
 
-        if (!Array.isArray(a)) {
-          return _fold.apply(void 0, [a].concat(params));
-        }
 
-        return a.map(function (x) {
-          return _fold.apply(void 0, [x].concat(params));
-        });
+          if (!Array.isArray(a)) {
+            return _fold(a, lo, hi);
+          }
+
+          return a.map(function (x) {
+            return _fold(x, lo, hi);
+          });
+        }(lo, hi);
       }
 
       exports.fold = fold;
       exports.bounce = fold;
 
-      function _fold(a, min, max) {
-        a = _map(a, min, max, -1, 1);
+      function _fold(a, lo, hi) {
+        a = _map(a, lo, hi, -1, 1);
         a = Math.asin(Math.sin(a * HALF_PI)) / HALF_PI;
-        return _map(a, -1, 1, min, max);
+        return _map(a, -1, 1, lo, hi);
       } // Map/scale a value or array from one input-range 
       // to a given output-range
       // 
@@ -10212,8 +10234,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
       function map(a) {
-        for (var _len6 = arguments.length, params = new Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
-          params[_key6 - 1] = arguments[_key6];
+        for (var _len5 = arguments.length, params = new Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
+          params[_key5 - 1] = arguments[_key5];
         }
 
         if (!Array.isArray(a)) {
@@ -10252,20 +10274,25 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // 
 
 
-      function add() {
-        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [0];
+      function add(a) {
         var v = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+        if (Array.isArray(v)) {
+          a = Array.isArray(a) ? a : [a];
+          var l1 = a.length,
+              l2 = v.length,
+              r = [];
+          var l = Math.max(l1, l2);
+
+          for (var i = 0; i < l; i++) {
+            r[i] = a[i % l1] + v[i % l2];
+          }
+
+          return r;
+        }
 
         if (!Array.isArray(a)) {
           return a + v;
-        }
-
-        if (Array.isArray(v)) {
-          for (var i in a) {
-            a[i] = a[i] + v[i % v.length];
-          }
-
-          return a;
         }
 
         return a.map(function (x) {
@@ -10282,20 +10309,25 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // @return {Number/Array}
       // 
 
-      function subtract() {
-        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [0];
+      function subtract(a) {
         var v = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+        if (Array.isArray(v)) {
+          a = Array.isArray(a) ? a : [a];
+          var l1 = a.length,
+              l2 = v.length,
+              r = [];
+          var l = Math.max(l1, l2);
+
+          for (var i = 0; i < l; i++) {
+            r[i] = a[i % l1] - v[i % l2];
+          }
+
+          return r;
+        }
 
         if (!Array.isArray(a)) {
           return a - v;
-        }
-
-        if (Array.isArray(v)) {
-          for (var i in a) {
-            a[i] = a[i] - v[i % v.length];
-          }
-
-          return a;
         }
 
         return a.map(function (x) {
@@ -10313,20 +10345,25 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // @return {Number/Array}
       // 
 
-      function multiply() {
-        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [0];
-        var v = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      function multiply(a) {
+        var v = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+        if (Array.isArray(v)) {
+          a = Array.isArray(a) ? a : [a];
+          var l1 = a.length,
+              l2 = v.length,
+              r = [];
+          var l = Math.max(l1, l2);
+
+          for (var i = 0; i < l; i++) {
+            r[i] = a[i % l1] * v[i % l2];
+          }
+
+          return r;
+        }
 
         if (!Array.isArray(a)) {
           return a * v;
-        }
-
-        if (Array.isArray(v)) {
-          for (var i in a) {
-            a[i] = a[i] * v[i % v.length];
-          }
-
-          return a;
         }
 
         return a.map(function (x) {
@@ -10344,20 +10381,25 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // @return {Number/Array}
       // 
 
-      function divide() {
-        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [0];
-        var v = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      function divide(a) {
+        var v = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+        if (Array.isArray(v)) {
+          a = Array.isArray(a) ? a : [a];
+          var l1 = a.length,
+              l2 = v.length,
+              r = [];
+          var l = Math.max(l1, l2);
+
+          for (var i = 0; i < l; i++) {
+            r[i] = a[i % l1] / v[i % l2];
+          }
+
+          return r;
+        }
 
         if (!Array.isArray(a)) {
           return a / v;
-        }
-
-        if (Array.isArray(v)) {
-          for (var i in a) {
-            a[i] = a[i] / v[i % v.length];
-          }
-
-          return a;
         }
 
         return a.map(function (x) {
@@ -10366,7 +10408,42 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
 
       exports.divide = divide;
-      exports.div = divide;
+      exports.div = divide; // Return the remainder after division
+      // also works in the negative direction
+      // 
+      // @param {Int/Array} -> input value
+      // @param {Int/Array} -> divisor (optional, default=12)
+      // @return {Int/Array} -> remainder after division
+      // 
+
+      function mod(a) {
+        var mod = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 12;
+
+        if (Array.isArray(mod)) {
+          a = Array.isArray(a) ? a : [a];
+          var l1 = a.length,
+              l2 = mod.length,
+              r = [];
+          var l = Math.max(l1, l2);
+
+          for (var i = 0; i < l; i++) {
+            var m = mod[i % l2];
+            r[i] = (a[i % l1] % m + m) % m;
+          }
+
+          return r;
+        }
+
+        if (!Array.isArray(a)) {
+          return (a % mod + mod) % mod;
+        }
+
+        return a.map(function (x) {
+          return (x % mod + mod) % mod;
+        });
+      }
+
+      exports.mod = mod;
     }, {}]
   }, {}, [3])(3);
 });
