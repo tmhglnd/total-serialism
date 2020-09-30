@@ -246,15 +246,29 @@ exports.mod = mod;
 // Using the asciichart package by x84. 
 // 
 // @param {Number/Array/String} -> value to plot
-// @param {Object} -> preferences for height, padding, colors, offset, log
-//
-function plot(a, prefs){
+// @param {Object} -> { log: false } don't log to console and only return
+//                 -> { data: true } log the original array data
+//                 -> { decimals: 2 } adjust the number of decimals
+//                 -> { height: 10 } set a fixed chart line-height
+//                 -> other preferences for padding, colors, offset
+//                    See the asciichart documentation
+// 
+function plot(a=[0], prefs){
+	// if a is not an Array
+	a = (Array.isArray(a)) ? a : [a]; 
+	// empty object if no preferences
 	prefs = (typeof prefs !== 'undefined') ? prefs : {};
+
 	prefs.log = (typeof prefs.log !== 'undefined') ? prefs.log : true;
+	prefs.data = (typeof prefs.data !== 'undefined') ? prefs.data : false;
+	prefs.decimals = (typeof prefs.decimals !== 'undefined') ? prefs.decimals : 2;
 
 	let p = chart.plot(a, prefs);
+	if (prefs.data){
+		console.log('chart data: [', a.map(x => x.toFixed(prefs.decimals)).join(", "), "]\n");
+	}
 	if (prefs.log){
-		console.log(chart.plot(a, prefs));
+		console.log(chart.plot(a, prefs), "\n");
 	}
 	return p;
 }

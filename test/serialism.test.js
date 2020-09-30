@@ -76,12 +76,7 @@ markov.clear();
 console.log(markov.table);
 */
 
-// fullTest();
-
-// console.log(chart.plot(Gen.sineFloat(24, 0.5, 0, 10)));
-// console.log(chart.plot(Gen.cosineFloat(24, 35.321, -2, 5)));
-Util.plot(Gen.cosine(25, 1), { log : false });
-// Util.plot(Gen.cosine(25, 1));
+fullTest();
 
 function fullTest(){
 	console.time('Total Time');
@@ -141,9 +136,9 @@ function testGen(){
 
 	test("Gen.sineFloat()");
 	test("Gen.sineFloat(10, 1, -1, 1, 0.5)");
-	test("Gen.sin(8)");
+	// test("Gen.sin(8)");
 	test("Gen.cosineFloat(8)");
-	test("Gen.cos(8)");
+	// test("Gen.cos(8)");
 
 	test("Gen.sine(10)");
 	test("Gen.sine(12, 1, -1, 1)");

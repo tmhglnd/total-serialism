@@ -169,7 +169,7 @@ function fill(...args){
 exports.fill = fill;
 
 // Generate an array with n-periods of a sine function
-// Optional last arguments set lo and hi range
+// Optional last arguments set lo and hi range and phase offset
 // Only setting first range argument sets the low-range to 0
 // 
 // @param {Int} -> Length of output array
@@ -179,9 +179,11 @@ exports.fill = fill;
 // @param {Number} -> Phase offset (optional, default=0)
 // @return {Array} -> Sine function
 // 
-function sineFloat(len=1, periods=1, lo, hi=0, phase=0){
-	// if no range specified
+function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	if (lo === undefined){ lo = -1; hi = 1; }
+	else if (hi === undefined){ hi = lo, lo = 0; }
+	// if no range specified
+	// if (lo === undefined){ lo = -1; hi = 1; }
 	// swap if lo > hi
 	// if (lo > hi){ var t=lo, lo=hi, hi=t; }
 
@@ -197,7 +199,7 @@ function sineFloat(len=1, periods=1, lo, hi=0, phase=0){
 	return Util.map(arr, -1, 1, lo, hi);
 }
 exports.sineFloat = sineFloat;
-exports.sin = sineFloat;
+// exports.sin = sineFloat;
 
 // Generate an integer array with n-periods of a sine function
 // Optional last arguments set lo and hi range
@@ -223,15 +225,13 @@ function cosineFloat(len=1, periods=1, lo, hi, phase=0){
 	return sineFloat(len, periods, lo, hi, phase+0.25);
 }
 exports.cosineFloat = cosineFloat;
-exports.cos = cosineFloat;
+// exports.cos = cosineFloat;
 
 // Generate an integer array with n-periods of a cosine function
 // Flip the low and high range to invert the function
 // See sin() for details
 // 
 function cosine(len=1, periods=1, lo=12, hi, phase=0){
-	if (hi === undefined){ hi = lo, lo = 0; }
-
 	var arr = sineFloat(len, periods, lo, hi, phase+0.25);
 	return arr.map(v => Math.trunc(v));
 }
