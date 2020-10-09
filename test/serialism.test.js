@@ -77,13 +77,15 @@ markov.clear();
 console.log(markov.table);
 */
 
-// var scl = new Scl.Scala();
-// scl.tune(432);
-// scl.center(72);
-// // console.log(process.cwd());
-// scl.parse('data/scl/05-19.scl');
-// console.log(scl.tuning);
-
+var scl = new Scl.Scala();
+scl.tune(432);
+scl.center(72);
+scl.parse('data/scl/05-19.scl');
+// console.log(scl.scala);
+console.log(scl.names.length);
+// console.log(scl.chart());
+console.log(scl.search({ cents: ['2/1', '3/2', '4/3', '5/4'] }));
+// console.log(scl.search({ size: 10, name: 'pyth' , range: 1200 }));
 // fullTest();
 
 function fullTest(){
