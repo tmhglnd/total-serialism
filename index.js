@@ -16,6 +16,7 @@ const Stochastic    = require('./src/gen-stochastic.js');
 const Transform     = require('./src/transform.js');
 const Statistic     = require('./src/statistic.js')
 const Translate     = require('./src/translate.js');
+const Scala         = require('./src/scala.js');
 const Utility       = require('./src/utility.js');
 
 // export the various libraries
@@ -25,6 +26,7 @@ exports.Stochastic  = Stochastic;
 exports.Transform   = Transform;
 exports.Statistic   = Statistic;
 exports.Translate   = Translate;
+exports.Scala       = Scala;
 exports.Utility     = Utility;
 
 // Methods exposed to global scope

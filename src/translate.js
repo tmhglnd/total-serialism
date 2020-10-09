@@ -354,3 +354,24 @@ function divisionToRatio(a=['1']){
 }
 exports.divisionToRatio = divisionToRatio;
 exports.dtor = divisionToRatio;
+
+// Convert a frequency ratio string to a corresponding cents value
+// eq. ['2/1', '3/2'] => [1200, 701.95]
+// 
+// @param {Number/String/Array} -> ratios to convert
+// @return {Number/Array} -> cents output
+// 
+function ratioToCent(ratio=['1/1']){
+	let reg = /^[0-9]+(\/[0-9]+)?$/;
+	let a = (!Array.isArray(ratio))? [ratio] : ratio;
+
+	a = a.map(x => {
+		if (typeof x === 'string' && reg.test(x)){
+			x = eval(x);
+		}
+		return Math.log(x)/Math.log(2)*1200.0;
+	});
+	return (!Array.isArray(ratio))? a[0] : a;
+}
+exports.ratioToCent = ratioToCent;
+exports.rtoc = ratioToCent;

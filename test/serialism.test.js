@@ -13,6 +13,7 @@ const Mod = Srl.Transform;
 const Rand = Srl.Stochastic;
 const Stat = Srl.Statistic;
 const TL = Srl.Translate;
+const Scl = Srl.Scala;
 const Util = Srl.Utility;
 
 const chart = require('asciichart');
@@ -76,7 +77,14 @@ markov.clear();
 console.log(markov.table);
 */
 
-fullTest();
+// var scl = new Scl.Scala();
+// scl.tune(432);
+// scl.center(72);
+// // console.log(process.cwd());
+// scl.parse('data/scl/05-19.scl');
+// console.log(scl.tuning);
+
+// fullTest();
 
 function fullTest(){
 	console.time('Total Time');
