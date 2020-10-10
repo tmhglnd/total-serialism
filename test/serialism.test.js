@@ -76,31 +76,20 @@ markov.clear();
 console.log(markov.table);
 */
 
-var scala = new TL.Scala();
-
-scala.parse(fs.readFileSync('data/scl/12-TET.scl', 'utf8'));
-scala.tune(261.6255653);
-scala.center(60);
-console.log(scala.names.slice(0, 10));
-console.log(scala.data);
-
-console.log(scala.stof([60, 63, 67, 69, 72, 81, 36, 48]));
-console.log(TL.mtof([60, 63, 67, 69, 72, 81, 36, 48]));
-
 // console.log(scl.search({ cents: ['2/1', '3/2', '4/3', '5/4'], size: 12 }));
 // console.log(scl.search({ size: 10, name: 'pyth' , range: 1200 }));
 fullTest();
 
 function fullTest(){
 	console.time('Total Time');
-	testSerial();
-	testGen();
-	testAlgo();
-	testRand();
-	testMod();
-	testStat();
+	// testSerial();
+	// testGen();
+	// testAlgo();
+	// testRand();
+	// testMod();
+	// testStat();
 	testTranslate();
-	testUtil();
+	// testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -466,6 +455,19 @@ function testTranslate(){
 	test("TL.dtoms([0.25, 0.125, 0.1875, 0.25, 0.16667, 2])");
 	
 	test("TL.dtor(['1/4', '1/8', '3/16', '1/4', '1/6', '2'])");
+
+	console.log("var scala = new TL.Scala()");
+	var scl = new TL.Scala();
+
+	scl.parse(fs.readFileSync('data/scl/12-TET.scl', 'utf8'));
+	scl.tune(261.6255653);
+	scl.center(60);
+
+	console.log(scl.names.slice(0, 10));
+	console.log('//=>', scl.data);
+
+	console.log('scl.scalaToFreq([60, 63, 67, 69, 72, 81, 36, 48])')
+	console.log('//=>', scl.stof([60, 63, 67, 69, 72, 81, 36, 48]).map(x => x.toFixed(2)));
 }
 
 function testUtil(){
