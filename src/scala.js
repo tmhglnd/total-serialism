@@ -19,13 +19,13 @@ class Scala {
 	constructor() {
 		// the converted file to dictionary
 		this.scl = {
-			'name' : '',
-			'description' : '',
+			'name' : '12-TET',
+			'description' : '12-TET or Tone Equal Temperatement divides an octave into 12 equal steps',
 			'size' : 1,
 			'tune' : 440,
 			'center' :  69,
 			'range' : 1200,
-			'cents' : [ 0 ]
+			'cents' : [ 0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100 ]
 		};
 	}
 
@@ -197,7 +197,7 @@ class Scala {
 		// swap lo and hi range if hi is smaller than lo
 		if (hi < lo){ var t=hi, hi=lo, lo=t; }
 		let range = hi - lo;
-		
+
 		// empty object for frequencies
 		let chart = {};
 		// calculate frequencies for values 0 to 127
@@ -207,4 +207,4 @@ class Scala {
 		return chart;
 	}
 }
-exports.Scala = Scala;
+module.exports = Scala;

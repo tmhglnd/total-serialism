@@ -1,6 +1,6 @@
 //==============================================================================
 // database.js
-// part of 'total-serialism' Package
+// part of 'total-serialism' Package, used for the build process
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
 // MIT License
 //
@@ -13,12 +13,17 @@
 //==============================================================================
 
 const fs = require('fs-extra');
+const fg = require('fast-glob');
+const path = require('path');
+
+const TL = require('./translate.js');
 const Algo = require('./gen-complex');
 const { Note } = require('@tonaljs/tonal');
 
 // Build the databases
 buildNoteSet();
 buildIntegerSequences();
+buildScalaSet('data/scl');
 
 // Build a database of most common Notenames and their
 // corresponding relative semitone value
@@ -85,3 +90,22 @@ function buildScaleSet(){
 	}
 }
 */
+
+// Build a database of all the .scl files included in the /scl folder
+// 
+function buildScalaSet(fold){
+	// create instance of Scala class
+	let scl = new TL.Scala();
+	// get array of all .scl files
+	let files = fg.sync(fold+"/**/*.scl", { extglob: true });
+	
+	let dataBase = {};
+	files.forEach((f) => {
+		let file = path.parse(f);
+		scl.parse(f);
+		dataBase[file.name] = scl.data;
+	});
+
+	fs.writeJsonSync('data/scldb.json', dataBase, { spaces: 2 });
+	console.log("Scala database parsed succesfully");
+}

@@ -1,4 +1,6 @@
 
+const fs = require('fs');
+
 // test with different builds
 let entryPoint = "../index";
 // entryPoint = "../build/ts.bundle.js";
@@ -6,14 +8,12 @@ let entryPoint = "../index";
 // entryPoint = "../build/ts.es5.min.js";
 
 const Srl = require(entryPoint);
-
 const Gen = Srl.Generative;
 const Algo = Srl.Algorithmic;
 const Mod = Srl.Transform;
 const Rand = Srl.Stochastic;
 const Stat = Srl.Statistic;
 const TL = Srl.Translate;
-const Scl = Srl.Scala;
 const Util = Srl.Utility;
 
 const chart = require('asciichart');
@@ -22,7 +22,6 @@ var config = {
     padding: '        ',
 	height: 10,
 }
-const fs = require('fs');
 
 console.time('requires load');
 console.timeEnd('requires load');
@@ -77,19 +76,15 @@ markov.clear();
 console.log(markov.table);
 */
 
-var scl = new Scl.Scala();
-scl.tune(440);
-scl.center(69);
-scl.parse('data/scl/12-TET.scl');
-// console.log(scl.scala);
-// console.log(scl.names.length);
-// console.log(scl.scalaToFreq([60, 63, 69, 72, 36]));
-// console.log(TL.mtof([60, 63, 69, 72, 36]));
-// console.log(scl.scalaToFreq(69));
-// console.log(TL.midiToFreq(69));
-// console.log(scl.stof(69));
+var scala = new TL.Scala();
 
-console.log(scl.chart());
+// scala.parse('data/scl/12-TET.scl');
+// scala.tune(432);
+// scala.center(70);
+
+console.log(scala.names.slice(0, 10));
+console.log(scala.data);
+
 // console.log(scl.search({ cents: ['2/1', '3/2', '4/3', '5/4'], size: 12 }));
 // console.log(scl.search({ size: 10, name: 'pyth' , range: 1200 }));
 // fullTest();

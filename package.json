@@ -61,6 +61,7 @@
     "@babel/core": "^7.11.1",
     "@babel/preset-env": "^7.11.0",
     "browserify": "^16.5.2",
+    "fast-glob": "^3.2.4",
     "fs-extra": "^9.0.1",
     "nodemon": "^2.0.4",
     "uglify-js": "^3.10.1"
