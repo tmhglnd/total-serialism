@@ -78,13 +78,19 @@ console.log(markov.table);
 */
 
 var scl = new Scl.Scala();
-scl.tune(432);
-scl.center(72);
-scl.parse('data/scl/05-19.scl');
+scl.tune(440);
+scl.center(69);
+scl.parse('data/scl/12-TET.scl');
 // console.log(scl.scala);
-console.log(scl.names.length);
-// console.log(scl.chart());
-console.log(scl.search({ cents: ['2/1', '3/2', '4/3', '5/4'] }));
+// console.log(scl.names.length);
+// console.log(scl.scalaToFreq([60, 63, 69, 72, 36]));
+// console.log(TL.mtof([60, 63, 69, 72, 36]));
+// console.log(scl.scalaToFreq(69));
+// console.log(TL.midiToFreq(69));
+// console.log(scl.stof(69));
+
+console.log(scl.chart());
+// console.log(scl.search({ cents: ['2/1', '3/2', '4/3', '5/4'], size: 12 }));
 // console.log(scl.search({ size: 10, name: 'pyth' , range: 1200 }));
 // fullTest();
 

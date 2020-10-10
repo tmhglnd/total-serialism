@@ -37,6 +37,46 @@ class Scala {
 		return Object.keys(db);
 	}
 
+	// set the tuning for the center value
+	tune(v){
+		if (isNaN(Number(v))){
+			error(v + ' is not a number \n');
+		} else {
+			this.scl['tune'] = v;
+		}
+	}
+	
+	// set the center value corresponding with cent 0 and tuning frequency
+	center(v){
+		if (isNaN(Number(v))){
+			error(v + ' is not a number \n');
+		} else {
+			this.scl['center'] = v;
+		}
+	}
+
+	// return the frequency from the scala corresponding to the input number
+	scalaToFreq(a=48){
+		let isArr = !Array.isArray(a);
+		let arr = (isArr)? [a] : a;
+
+		arr = arr.map((x) => {
+			let s = this.scl.size;
+			let n = x - this.scl.center;
+			let o = Math.floor(n / s) * this.scl.range;
+			let c = this.scl.cents[((n % s) + s) % s];
+
+			return Math.pow(2, (c + o) / 1200) * this.scl.tune;
+		});
+		return (isArr)? arr[0] : arr;
+	}
+
+	// shorthand for scalaToFreq()
+	stof(a=48){
+		return this.scalaToFreq(a);
+	}
+
+	// search the scala scale database with filter options
 	search(f){
 		f = (typeof f !== 'undefined') ? f : {};
 		f.size = (typeof f.size !== 'undefined') ? f.size : null;
@@ -98,22 +138,7 @@ class Scala {
 		return result;
 	}
 
-	tune(v){
-		if (isNaN(Number(v))){
-			error(v + ' is not a number \n');
-		} else {
-			this.scl['tune'] = v;
-		}
-	}
-	
-	center(v){
-		if (isNaN(Number(v))){
-			error(v + ' is not a number \n');
-		} else {
-			this.scl['center'] = v;
-		}
-	}
-
+	// read and parse the .scl file to use in the scale
 	parse(f){
 		// read the file text in variable
 		let file = fs.readFileSync(f, 'utf8');
@@ -167,30 +192,18 @@ class Scala {
 		// return { ...scl };
 	}
 
+	// return an array with frequencies derived from the loaded scala
 	chart(hi=127, lo=0){
 		// swap lo and hi range if hi is smaller than lo
 		if (hi < lo){ var t=hi, hi=lo, lo=t; }
 		let range = hi - lo;
-	
-		// get cents, scale-size, "octave" range, tune and center
-		let cnts = this.scl.cents;
-		let nts = this.scl.size;
-		let oct = this.scl.range;
-		let tune = this.scl.tune;
-		let cntr = this.scl.center;
 		
 		// empty object for frequencies
 		let chart = {};
-		
 		// calculate frequencies for values 0 to 127
 		for (var i=0; i<range+1; i++){
-			let n = i - cntr + lo;
-			let o = Math.floor(n / nts) * oct;
-			let c = cnts[((n % nts) + nts) % nts];
-	
-			chart[i + lo] = Math.pow(2, (c + o) / 1200) * tune;
+			chart[i + lo] = this.scalaToFreq(i + lo);
 		}
-		// console.log(freqs);
 		return chart;
 	}
 }
