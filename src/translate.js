@@ -384,17 +384,17 @@ exports.rtoc = ratioToCent;
 // tune, center and the scala cents
 //=======================================================================
 
-const fs = require('fs');
-const path = require('path');
+// const fs = require('fs');
+// const path = require('path');
+
 // const TL = require('./translate.js');
 // scala database from json
-const db = require('../data/scldb-min.json');
+// const db = require('../data/scldb-min.json');
 
 class Scala {
 	constructor() {
 		// the converted file to dictionary
 		this.scl = {
-			'name' : '12-TET',
 			'description' : 'Divide an octave into 12 equal steps',
 			'size' : 1,
 			'tune' : 440,
@@ -406,16 +406,27 @@ class Scala {
 	}
 
 	// get the current loaded scala data
+	// 
+	// @return {Object} -> Object with the loaded scala data
+	// 
 	get data(){
 		return { ...this.scl };
 	}
 
 	// get the filenames from the database
+	// 
+	// @return {Array} -> array with all scala filenames
+	// 
 	get names(){
+		const db = require('../data/scldb.json');
 		return Object.keys(db);
 	}
 
-	// set the tuning for the center value
+	// set the tuning in Hz for the center value
+	// 
+	// @param {Number} -> tuning in Hz
+	// @return {Void}
+	// 
 	tune(v){
 		if (isNaN(Number(v))){
 			error(v + ' is not a number \n');
@@ -425,6 +436,10 @@ class Scala {
 	}
 	
 	// set the center value corresponding with cent 0 and tuning frequency
+	// 
+	// @param {Int} -> center value as integer
+	// @return {Void}
+	// 
 	center(v){
 		if (isNaN(Number(v))){
 			error(v + ' is not a number \n');
@@ -434,6 +449,10 @@ class Scala {
 	}
 
 	// return the frequency from the scala corresponding to the input number
+	// 
+	// @params {Number/Array} -> Number to convert
+	// @return {Number} -> Converted frequency
+	// 
 	scalaToFreq(a=48){
 		let isArr = !Array.isArray(a);
 		let arr = (isArr)? [a] : a;
@@ -455,12 +474,20 @@ class Scala {
 	}
 
 	// search the scala scale database with filter options
+	// 
+	// @params {Object} -> filter options in the format:
+	// 					{ size: <Number/Array>, range: <Number>, 
+	// 					  cents: <String/Array>, description: <String/Array> }
+	// @return {Object -> All scala files matching the filter
+	// 
 	search(f){
+		const db = require('../data/scldb.json');
+
 		f = (typeof f !== 'undefined') ? f : {};
 		f.size = (typeof f.size !== 'undefined') ? f.size : null;
 		f.range = (typeof f.range !== 'undefined') ? f.range : null;
 		f.cents = (typeof f.cents !== 'undefined') ? f.cents : null;
-		f.name = (typeof f.name !== 'undefined') ? f.name : null;
+		// f.name = (typeof f.name !== 'undefined') ? f.name : null;
 		f.description = (typeof f.description !== 'undefined') ? f.description : null;
 		
 		let result = { ...db };
@@ -516,13 +543,19 @@ class Scala {
 		return result;
 	}
 
-	// read and parse the .scl file to use in the scale
+	// read and parse a filestring (best imported with fs.readFileSync for 
+	// local usage or fetch() in the browser) to use in the scale
+	// 
+	// @params {String} -> text as string loaded from .scl file
+	// @return {Void}
+	// 
 	parse(f){
 		// read the file text in variable
-		let file = fs.readFileSync(f, 'utf8');
-		this.scl.name = path.parse(f).name;
+		// let file = fs.readFileSync(f, 'utf8');
+		// this.scl.name = path.parse(f).name;
+
 		// remove linebreaks and split into array of lines
-		file = file.replace(/(\r\n|\n\r|\r|\n)/g, '\n').split('\n');
+		let file = f.replace(/(\r\n|\n\r|\r|\n)/g, '\n').split('\n');
 		// empty cents array in dictionary
 		this.scl.cents = [ 0 ];
 		// init line number and note count
@@ -571,6 +604,11 @@ class Scala {
 
 	// return an object with frequencies derived from the loaded scala
 	// mapped to a specific range of values
+	// 
+	// @params {Int} -> high value for output range (optional, default=127)
+	// @params {Int} -> low value for output range (optional, default=0)
+	// @return {Object} -> Object with all values and corresponding frequency
+	// 
 	chart(hi=127, lo=0){
 		// swap lo and hi range if hi is smaller than lo
 		if (hi < lo){ var t=hi, hi=lo, lo=t; }
@@ -585,4 +623,3 @@ class Scala {
 	}
 }
 exports.Scala = Scala;
-

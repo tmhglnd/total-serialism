@@ -21,20 +21,21 @@ const Algo = require('./gen-complex');
 const { Note } = require('@tonaljs/tonal');
 
 // Build the databases
-buildNoteSet();
-buildIntegerSequences();
-buildScalaSet('data/scl');
+buildNoteSet('data/tones.json');
+buildIntegerSequences('data/fibonacci.json');
+buildScalaSet('data/scldb.json', 'data/scl');
 
 // Build a database of most common Notenames and their
 // corresponding relative semitone value
 // 
-// @return {Void} -> NoteSet as a JSON object
+// @param {String} -> relative file name + folder
+// @return {Void}
 // 
-function buildNoteSet(){
+function buildNoteSet(f){
 	let notes = 'c d e f g a b'.split(" ");
 	notes = notes.concat('c d e f g a b'.toUpperCase().split(" "));
 	let accidentals = 'bb b # ## x'.split(" ");
-
+	
 	let tones = {};
 	for (let n in notes){
 		tones[notes[n]] = Note.chroma(notes[n]);
@@ -43,17 +44,17 @@ function buildNoteSet(){
 			tones[key] = Note.chroma(key);
 		}
 	}
-
-	fs.writeJsonSync('data/tones.json', tones, { spaces : 2 , EOL: '\r\n' });
+	fs.writeJsonSync(f, tones, { spaces : 2 , EOL: '\r\n' });
 	console.log('NoteSet database written succesfully');
 }
 
 // Build the integer sequences dataset for quick access of
 // Fibonacci, Pell and Tribonacci numbers
 // 
-// @return {Void} -> Databases for integersequences as JSON object
-function buildIntegerSequences(){
-	const file = './data/fibonacci.json';
+// @param {String} -> relative file name + folder
+// @return {Void}
+// 
+function buildIntegerSequences(f){
 	let data = { 
 		"fibonacci" : [], 
 		"pell" : [],
@@ -62,8 +63,8 @@ function buildIntegerSequences(){
 	data.fibonacci = Algo.fibonacci(1024);
 	data.pell = Algo.pell(1024);
 	data.tribonacci = Algo.threeFibonacci(1024);
-
-	fs.writeJsonSync(file, data, { spaced: 2, EOL: '\r\n' })
+	
+	fs.writeJsonSync(f, data, { spaced: 2, EOL: '\r\n' })
 	console.log("Integer Sequences dataset written succesfully");
 }
 
@@ -78,14 +79,14 @@ const { Interval } = require('@tonaljs/tonal');
 function buildScaleSet(){
 	let scale = ScaleType.get("whole tone");
 	console.log(scale);
-
+	
 	for (let i in scale.intervals){
 		let iv = Interval.get(scale.intervals[i]);
 		let semitones = iv.semitones;
 		let ivName = iv.name;
 		let ivNum = iv.num;
 		let ivQ = iv.q;
-
+		
 		console.log(ivName, ivNum, ivQ, semitones);
 	}
 }
@@ -93,7 +94,10 @@ function buildScaleSet(){
 
 // Build a database of all the .scl files included in the /scl folder
 // 
-function buildScalaSet(fold){
+// @param {String} -> relative file name + folder
+// @return {Void}
+// 
+function buildScalaSet(f, fold){
 	// create instance of Scala class
 	let scl = new TL.Scala();
 	// get array of all .scl files
@@ -106,6 +110,6 @@ function buildScalaSet(fold){
 		dataBase[file.name] = scl.data;
 	});
 
-	fs.writeJsonSync('data/scldb.json', dataBase, { spaces: 2 });
-	console.log("Scala database parsed succesfully");
+	fs.writeJsonSync(f, dataBase, { spaces: 0 });
+	console.log("Scala database parsed and written succesfully");
 }

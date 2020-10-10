@@ -78,12 +78,15 @@ console.log(markov.table);
 
 var scala = new TL.Scala();
 
-// scala.parse('data/scl/12-TET.scl');
-// scala.tune(432);
-// scala.center(70);
-
+scala.parse(fs.readFileSync('data/scl/12-TET.scl', 'utf8'));
+scala.tune(261.6255653);
+scala.center(60);
 console.log(scala.names.slice(0, 10));
 console.log(scala.data);
+
+console.log(scala.stof([60, 63, 67, 69, 72, 81, 36, 48]));
+console.log(TL.mtof([60, 63, 67, 69, 72, 81, 36, 48]));
+
 
 // console.log(scl.search({ cents: ['2/1', '3/2', '4/3', '5/4'], size: 12 }));
 // console.log(scl.search({ size: 10, name: 'pyth' , range: 1200 }));
