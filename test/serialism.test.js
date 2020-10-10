@@ -87,10 +87,9 @@ console.log(scala.data);
 console.log(scala.stof([60, 63, 67, 69, 72, 81, 36, 48]));
 console.log(TL.mtof([60, 63, 67, 69, 72, 81, 36, 48]));
 
-
 // console.log(scl.search({ cents: ['2/1', '3/2', '4/3', '5/4'], size: 12 }));
 // console.log(scl.search({ size: 10, name: 'pyth' , range: 1200 }));
-// fullTest();
+fullTest();
 
 function fullTest(){
 	console.time('Total Time');
