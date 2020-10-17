@@ -57,7 +57,7 @@
 		- [median](docs/statistic-methods.md#median)
 		- [mode](docs/statistic-methods.md#mode)
 	- [Translate Methods](docs/translate-methods.md)
-		- [Scala Tuning](docs/translate-method.md#using-scala-tuning-format)
+		- [Scala Tuning](docs/translate-methods.md#using-scala-tuning-format)
 			- parse
 			- tune
 			- center
@@ -66,7 +66,7 @@
 			- data
 			- names
 			- search
-		- [Conversion between units](docs/translate-method.md#conversion-between-units)
+		- [Conversion between units](docs/translate-methods.md#conversion-between-units)
 			- midiToNote / mton
 			- noteToMidi / ntom
 			- midiToFreq / mtof
@@ -75,7 +75,7 @@
 			- relativeToFreq / rtof
 			- divisionToMs / dtoms
 			- divisionToRatio / dtor
-		- [Working with predefined scale and root](docs/translate-method.md#working-with-predefined-scale-and-root)
+		- [Working with predefined scale and root](docs/translate-methods.md#working-with-predefined-scale-and-root)
 			- setTempo
 			- setScale
 			- setRoot
@@ -84,16 +84,16 @@
 			- toScale
 			- toMidi
 	- [Utility Methods](docs/utility-methods.md)
-		- [wrap](docs/utility-method.md#wrap)
-		- [constrain](docs/utility-method.md#constrain)
-		- [fold](docs/utility-method.md#fold)
-		- [map](docs/utility-method.md#map)
-		- [add](docs/utility-method.md#add)
-		- [subtract](docs/utility-method.md#subtract)
-		- [multiply](docs/utility-method.md#multiply)
-		- [divide](docs/utility-method.md#divide)
-		- [mod](docs/utility-method.md#mod)
-		- [plot](docs/utility-method.md#plot)
+		- [wrap](docs/utility-methods.md#wrap)
+		- [constrain](docs/utility-methods.md#constrain)
+		- [fold](docs/utility-methods.md#fold)
+		- [map](docs/utility-methods.md#map)
+		- [add](docs/utility-methods.md#add)
+		- [subtract](docs/utility-methods.md#subtract)
+		- [multiply](docs/utility-methods.md#multiply)
+		- [divide](docs/utility-methods.md#divide)
+		- [mod](docs/utility-methods.md#mod)
+		- [plot](docs/utility-methods.md#plot)
 - [In Action](#in-action)
 - [Inspiration & Further Reading](#inspiration--further-reading)
 - [License](#license)
