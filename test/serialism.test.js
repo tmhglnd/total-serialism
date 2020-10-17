@@ -76,8 +76,6 @@ markov.clear();
 console.log(markov.table);
 */
 
-// console.log(scl.search({ cents: ['2/1', '3/2', '4/3', '5/4'], size: 12 }));
-// console.log(scl.search({ size: 10, name: 'pyth' , range: 1200 }));
 fullTest();
 
 function fullTest(){
@@ -468,6 +466,8 @@ function testTranslate(){
 
 	console.log('scl.scalaToFreq([60, 63, 67, 69, 72, 81, 36, 48])')
 	console.log('//=>', scl.stof([60, 63, 67, 69, 72, 81, 36, 48]).map(x => x.toFixed(2)));
+
+	console.log(scl.search({ cents: ['4/3', '5/4', '11/9'], size: 11 }));
 }
 
 function testUtil(){

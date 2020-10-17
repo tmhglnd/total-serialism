@@ -106,7 +106,7 @@ function buildScalaSet(f, fold){
 	let dataBase = {};
 	files.forEach((f) => {
 		let file = path.parse(f);
-		scl.parse(f);
+		scl.parse(fs.readFileSync(f, 'utf8'));
 		dataBase[file.name] = scl.data;
 	});
 

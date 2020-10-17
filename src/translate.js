@@ -16,6 +16,8 @@ const { Note } = require('@tonaljs/tonal');
 const Scales = require('../data/scales.json');
 const ToneSet = require('../data/tones.json');
 
+const Mod = require('./transform.js');
+
 // global settings stored in object
 var notation = {
 	"scale" : "chromatic",
@@ -485,10 +487,11 @@ class Scala {
 
 		f = (typeof f !== 'undefined') ? f : {};
 		f.size = (typeof f.size !== 'undefined') ? f.size : null;
-		f.range = (typeof f.range !== 'undefined') ? f.range : null;
 		f.cents = (typeof f.cents !== 'undefined') ? f.cents : null;
-		// f.name = (typeof f.name !== 'undefined') ? f.name : null;
 		f.description = (typeof f.description !== 'undefined') ? f.description : null;
+		f.decimals = (typeof f.decimals !== 'undefined') ? f.decimals : 3;
+
+		// console.log('search', f);
 		
 		let result = { ...db };
 		Object.keys(f).forEach((k) => {
@@ -522,19 +525,29 @@ class Scala {
 				// search cents for number or ratio
 				if (k === 'cents'){
 					Object.keys(result).forEach((scl) => {
-						s.forEach((v) => {
-							let c = TL.ratioToCent(v);
+						let match = 0;
 
-							if (result[scl]['range'] === c){
-								tmpRes[scl] = result[scl];
-							} else {
-								result[scl][k].forEach((cent) => {
-									if (cent === c){
-										tmpRes[scl] = result[scl];
-									}
-								});
+						// temporary cents array
+						let tmpCents = result[scl][k];
+						// append the octave ratio (or range)
+						tmpCents.push(result[scl]['range']);
+						// filter duplicates
+						tmpCents = Mod.unique(tmpCents).map(x => x.toFixed(f.decimals));
+
+						for (let i in s){
+							// for all entered cent/ratio values
+							let cent = (typeof s[i] === 'string')? ratioToCent(s[i]) : s[i];
+							// if equals cent from array increment match
+							for (let c=0; c<tmpCents.length; c++){
+								if (tmpCents[c] === cent.toFixed(f.decimals)){
+									match += 1;
+								}
 							}
-						});
+						}
+						// result if matches equals amount of searches
+						if (match === s.length) {
+							tmpRes[scl] = result[scl];
+						}
 					});
 					result = tmpRes;
 				}
