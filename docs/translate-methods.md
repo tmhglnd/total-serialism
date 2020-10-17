@@ -140,10 +140,6 @@ Scala is a powerful tool for experimentation with musical tunings, such as just 
 - Converting numbers to frequencies
 - Return the full chart of frequencies for a specified range of integers
 
-Credit for text, scala library and format: [Stichting Huygens-Fokker](http://www.huygens-fokker.org/scala/)
-
-More about the [Scala Format](http://www.huygens-fokker.org/scala/scl_format.html)
-
 ```js
 // Create an instance of a Scala class
 let scl = new TL.Scala();
@@ -184,3 +180,7 @@ scl.names;
 //   '08-13',
 //   '08-19', ... and 5000 more]
 ```
+
+- Credit for text, scala library and format: [Stichting Huygens-Fokker](http://www.huygens-fokker.org/scala/)
+
+- More about the [Scala Format](http://www.huygens-fokker.org/scala/scl_format.html)
