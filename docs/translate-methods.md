@@ -32,12 +32,12 @@ TL.noteToMidi(['c2','d2','f#2']);
 // Alternative: TL.ntom()
 
 // Convert midi-pitches to frequency (A4 = 440 Hz)
-TL.midiToFrequency([60, 67, 72]);
+TL.midiToFreq([60, 67, 72]);
 //=> [ 261.6255653005986, 391.99543598174927, 523.2511306011972 ] 
 // Alternative: TL.mtof()
 
 // Convert midi-notenames to frequency (A4 = 440 Hz)
-TL.noteToFrequency(['c2','d2','f#2']);
+TL.noteToFreq(['c2','d2','f#2']);
 //=> [ 65.40639132514966, 73.41619197935188, 92.4986056779086 ] 
 // Alternative: TL.ntof()
 
@@ -49,7 +49,7 @@ TL.relativeToMidi([-12, 0, 7, 12], 4);
 
 // Convert relative semitone values to frequency (A4 = 440 Hz)
 // specify the octave as second argument (default = 'C3' = 4 => 48)
-TL.relativeToFrequency([-12, 0, 7, 12], 4);
+TL.relativeToFreq([-12, 0, 7, 12], 4);
 //=> [ 65.40639132514966,
 //   130.8127826502993,
 //   195.99771799087463,

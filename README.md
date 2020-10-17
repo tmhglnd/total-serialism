@@ -58,6 +58,31 @@
 		- [mode](docs/statistic-methods.md#mode)
 	- [Translate Methods](docs/translate-methods.md)
 		- [Scala Tuning](docs/translate-method.md#using-scala-tuning-format)
+			- parse
+			- tune
+			- center
+			- scalaToFreq
+			- chart
+			- data
+			- names
+			- search
+		- [Conversion between units](docs/translate-method.md#conversion-between-units)
+			- midiToNote / mton
+			- noteToMidi / ntom
+			- midiToFreq / mtof
+			- noteToFreq / ntof
+			- relativeToMidi / rtom
+			- relativeToFreq / rtof
+			- divisionToMs / dtoms
+			- divisionToRatio / dtor
+		- [Working with predefined scale and root](docs/translate-method.md#working-with-predefined-scale-and-root)
+			- setTempo
+			- setScale
+			- setRoot
+			- getSettings
+			- scaleNames
+			- toScale
+			- toMidi
 	- [Utility Methods](docs/utility-methods.md)
 		- [wrap](docs/utility-method.md#wrap)
 		- [constrain](docs/utility-method.md#constrain)
