@@ -222,6 +222,27 @@ function palindrome(arr=[0], noDouble=false){
 exports.palindrome = palindrome;
 exports.mirror = palindrome;
 
+// repeat the values of an array n-times
+// Using a second array for repeat times iterates over that array
+// 
+// @param {Array} -> array with values to repeat
+// @param {Int/Array} -> array or number of repetitions per value
+// @return {Array}
+// 
+function repeat(arr=[0], rep=1){
+	arr = (Array.isArray(arr))? arr : [arr];
+	rep = (Array.isArray(rep))? rep : [rep];
+	let a = [];
+	for (let i in arr){
+		let r = rep[i % rep.length];
+		for (k=0; k<r; k++){
+			a.push(arr[i]);
+		}
+	}
+	return a;
+}
+exports.repeat = repeat;
+
 // reverse the order of items in an Array
 // 
 // @param {Array} -> array to reverse

@@ -76,7 +76,10 @@ markov.clear();
 console.log(markov.table);
 */
 
-fullTest();
+console.log(Mod.repeat([10, 20, 30], 0));
+console.log(Mod.repeat([10, 20, 30], [1, 4, 2, 0]));
+
+// fullTest();
 
 function fullTest(){
 	console.time('Total Time');
