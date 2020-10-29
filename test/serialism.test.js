@@ -76,21 +76,18 @@ markov.clear();
 console.log(markov.table);
 */
 
-console.log(Mod.repeat([10, 20, 30], 0));
-console.log(Mod.repeat([10, 20, 30], [1, 4, 2, 0]));
-
-// fullTest();
+fullTest();
 
 function fullTest(){
 	console.time('Total Time');
-	testSerial();
-	testGen();
-	testAlgo();
-	testRand();
+	// testSerial();
+	// testGen();
+	// testAlgo();
+	// testRand();
 	testMod();
-	testStat();
-	testTranslate();
-	testUtil();
+	// testStat();
+	// testTranslate();
+	// testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -339,6 +336,12 @@ function testMod(){
 	test("Mod.palindrome([0, 1, 2, 3])");
 	test("Mod.palindrome([0, [1, 11], 2, 3], true)");
 	test("Mod.palindrome([0, 1, 2, 3], 1)");
+
+
+	test("Mod.repeat([10, 20, 30], 3)");
+	test("Mod.repeat([10, 20, 30, 40], [1, 4, 2, 0])");
+	test("Mod.repeat(['kick', 'hat'], [1, 4])");
+	test("Mod.repeat([[10, 20], [30, 40, 50]], [2, 3])");
 
 	// var revArr = [0, 5, 7, 12];
 	// console.log(Mod.reverse(revArr));

@@ -103,7 +103,37 @@ Mod.invert([0, 2, 5, 10, 13], 5);
 //=> [ 10, 8, 5, 0, -3 ]
 ```
 
+## repeat
 
+repeat the values of an array n-times
+Using a second array for repeat times iterates over that array
+
+**arguments**:
+
+- {Array} -> array with values to repeat
+- {Int/Array} -> array or number of repetitions per value
+
+```js
+Mod.repeat([10, 20, 30], 3);
+//=> [ 10, 10, 10, 20, 20, 20, 30, 30, 30 ] 
+
+Mod.repeat([10, 20, 30, 40], [1, 4, 2, 0]);
+//=> [ 10, 20, 20, 20, 20, 30, 30 ] 
+
+// works with strings as well
+Mod.repeat(['kick', 'hat'], [1, 4]);
+//=> [ 'kick', 'hat', 'hat', 'hat', 'hat' ] 
+
+// also works with 2D arrays
+Mod.repeat([[10, 20], [30, 40, 50]], [2, 3]);
+//=> [ [ 10, 20 ],
+//     [ 10, 20 ],
+//     [ 30, 40, 50 ],
+//     [ 30, 40, 50 ],
+//     [ 30, 40, 50 ] ] 
+```
+
+*more documentation needed for following functions*
 
 ```js
 // interleave multiple arrays into one
