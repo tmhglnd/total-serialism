@@ -100,32 +100,27 @@
 
 # Newest features
 
-A libary of statistical methods is now included, featuring methods for returning the mean, median and mode from an array
+Use the `new TL.Scala()` class to import a *.scl* file (Scala tuning format) to work with custom tuning systems apart from the Western 12-TET (Equal Temperament) tuning or use one of the tunings from a database with over 5000 tunings from [Stichting Huygens-Fokker](http://www.huygens-fokker.org/scala/).
 
 ```js
-// Get the average (artihmetic mean) value from an array
-Stat.average([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-//=> 5
+// Create an instance of a Scala class
+let scl = new TL.Scala();
 
-// Return the center value (median) from an array
-Stat.center([1, 5, 6, 9, 13]);
-//=> 6 
+scl.scalaToFreq([60, 63, 67, 69, 72, 81, 36, 48]);
+//=> [ 261.63, 311.13, 392.00, 440.00, 523.25, 880.00, 65.41, 130.81 ]
 
-// Returns the most common value (mode) from an array as an array
-Stat.common([8, 4, 3, 11, 9, 0, 11, 2, 10, 5, 11, 0]);
-//=> [ 11 ]
-```
-
-Set a global scale and map relative values to that scale to stay in tune
-
-```js
-// Set the global scale used with toScale() and toMidi() methods
-TL.setScale('minor_harmonic', 'c');
-
-// Map relative numbers to a specified scale class (including root)
-// output as midi value. Specify an octave (default = 'C3' = 4 => 48)
-TL.toMidi([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 4);;
-//=> [ 48, 48, 50, 51, 51, 53, 55, 55, 56, 56, 59, 59 ] 
+// Get the entire list of names from the library
+scl.names;
+// [ '05-19',
+//   '05-22',
+//   '05-24',
+//   '06-41',
+//   '07-19',
+//   '07-31',
+//   '07-37',
+//   '08-11',
+//   '08-13',
+//   '08-19', ... and 5000 more]
 ```
 
 Generate Lindenmayer system sequences
@@ -141,9 +136,6 @@ Generate Pisano periods and Fibonacci sequences
 ```js 
 Algo.pisano(7);
 //=> [ 0, 1, 1, 2, 3, 5, 1, 6, 0, 6, 6, 5, 4, 2, 6, 1 ]
-
-Algo.fibonacci(2, 100);
-//=> [ '354224848179261915075', '573147844013817084101' ] 
 ```
 
 # Install
