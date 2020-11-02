@@ -71,18 +71,20 @@ exports.copy = duplicate;
 // add zeroes to an array with a rhythmic sequence
 // the division determins the amount of values per bar
 // total length = bars * div
-// 
+//
 // param {Array} -> Array to use every n-bars
 // param {Int} -> amount of bars
 // param {Int} -> amount of values per bar
+// param {Int} -> optional value to append 
 // return {Array}
-// 
-function every(a=[0], bars=4, div=16, shift=0){
+//
+function every(a=[0], bars=4, div=16, val=0, shift=0){
 	let len = Math.floor(bars * div) - a.length;
-	if (len < 1) { 
-		return a; 
+	if (len < 1 ) {
+		return a;
 	} else {
-		let arr = new Array(len).fill(0);
+		let arr = new Array(len).fill(val);
+
 		return rotate(a.concat(arr), Math.floor(shift*div));
 	}
 }
