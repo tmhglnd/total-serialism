@@ -75,15 +75,16 @@ exports.copy = duplicate;
 // param {Array} -> Array to use every n-bars
 // param {Int} -> amount of bars
 // param {Int} -> amount of values per bar
-// param {Int} -> optional value to append 
+// param {Value} -> padding argument (optional, default=0)
+// param {Number} -> shift the output by n-divs (optional, default=0)
 // return {Array}
 //
-function every(a=[0], bars=4, div=16, val=0, shift=0){
+function every(a=[0], bars=4, div=16, pad=0, shift=0){
 	let len = Math.floor(bars * div) - a.length;
 	if (len < 1 ) {
 		return a;
 	} else {
-		let arr = new Array(len).fill(val);
+		let arr = new Array(len).fill(pad);
 
 		return rotate(a.concat(arr), Math.floor(shift*div));
 	}

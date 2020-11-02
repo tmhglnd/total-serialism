@@ -294,9 +294,10 @@ function testMod(){
 	// console.log(evArr);
 	test("Mod.every([1, 0, 1, 0, 1, 1, 0, 1], 2, 8)");
 	test("Mod.every([1, 0, 1, 1], 1, 16, 0.5)");
-	test("Mod.every([1, 1, 0, 1], 4, 5, -1)");
-	test("Mod.every([1,0,0,1,1], 0.5, 8, 0)");
-	test("Mod.every([1,0,0,1,1], 1.5, 8, 0.5)");
+	test("Mod.every([1, 1, 0, 1], 4, 5, 0, -1)");
+	test("Mod.every([1, 0, 0, 1, 1], 1, 8, 0)");
+	test("Mod.every([1, 0, 0, 1, 1], 1.5, 8, 0, 0.5)");
+	test("Mod.every([3, 0, 7, 9, 11], 2, 7, 12)");
 	
 	test("Mod.filter([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [3, 8, 10])");
 	test("Mod.filter([0, 1.618, 2, 3.14, 4], 3.14)");

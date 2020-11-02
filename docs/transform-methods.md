@@ -63,13 +63,23 @@ Add zeroes to an array with a number sequence. The division determines the amoun
 
 **arguments**
 - {NumberArrray} -> Array to use every n-bars
-- {Int} -> amount of bars
-- {Int} -> amount of values per bar
+- {Int} -> amount of bars (optional, default=4)
+- {Int} -> amount of values per bar (optional, defaul=16)
+- {Value} -> padding value for the added items (optional, default=0)
+- {Number} -> optional shift in n-divisions (optional, default=0)
 
 ```js
 // add zeroes to a rhythm to make it play once over a certain amount of bars
 Mod.every([1, 0, 1, 0, 1, 1, 0, 1], 2, 8)); 
 //=> [ 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ]
+
+// change the padding value with an optional 3rd argument
+Mod.every([3, 0, 7, 9, 11], 2, 7, 12);
+//=> [ 3, 0, 7, 9, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12 ] 
+
+// change the shift (rotation) with an optional 4th argument
+Mod.every([1, 0, 0, 1, 1], 1.5, 8, 0, 0.5);
+//=> [ 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0 ]
 ```
 
 <iframe src="https://editor.p5js.org/tmhglnd/embed/9AF_CeIcW" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
