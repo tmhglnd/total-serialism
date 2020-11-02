@@ -80,14 +80,14 @@ fullTest();
 
 function fullTest(){
 	console.time('Total Time');
-	// testSerial();
-	// testGen();
-	// testAlgo();
-	// testRand();
+	testSerial();
+	testGen();
+	testAlgo();
+	testRand();
 	testMod();
-	// testStat();
-	// testTranslate();
-	// testUtil();
+	testStat();
+	testTranslate();
+	testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');

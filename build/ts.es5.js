@@ -2573,13 +2573,15 @@ function combine(){if(!arguments.length){return[0];}var arr=[];for(var i=0;i<arg
 function duplicate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;var arr=[];for(var i=0;i<Math.max(1,d);i++){arr=arr.concat(a);}return arr;}exports.duplicate=duplicate;exports.copy=duplicate;// add zeroes to an array with a rhythmic sequence
 // the division determins the amount of values per bar
 // total length = bars * div
-// 
+//
 // param {Array} -> Array to use every n-bars
 // param {Int} -> amount of bars
 // param {Int} -> amount of values per bar
+// param {Value} -> padding argument (optional, default=0)
+// param {Number} -> shift the output by n-divs (optional, default=0)
 // return {Array}
-// 
-function every(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var bars=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var div=arguments.length>2&&arguments[2]!==undefined?arguments[2]:16;var shift=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var len=Math.floor(bars*div)-a.length;if(len<1){return a;}else{var arr=new Array(len).fill(0);return rotate(a.concat(arr),Math.floor(shift*div));}}exports.every=every;// filter one or multiple values from an array
+//
+function every(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var bars=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var div=arguments.length>2&&arguments[2]!==undefined?arguments[2]:16;var pad=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var shift=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var len=Math.floor(bars*div)-a.length;if(len<1){return a;}else{var arr=new Array(len).fill(pad);return rotate(a.concat(arr),Math.floor(shift*div));}}exports.every=every;// filter one or multiple values from an array
 // 
 // @param {Array} -> array to filter
 // @param {Number/String/Array} -> values to filter
@@ -2621,7 +2623,14 @@ function merge(){for(var _len4=arguments.length,args=new Array(_len4),_key4=0;_k
 // @param {Bool} -> no-double flag (optional, default=false)
 // @return {Array}
 // 
-function palindrome(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var noDouble=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;var rev=arr.slice().reverse();if(noDouble){rev=rev.slice(1,rev.length-1);}return arr.concat(rev);}exports.palindrome=palindrome;exports.mirror=palindrome;// reverse the order of items in an Array
+function palindrome(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var noDouble=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;var rev=arr.slice().reverse();if(noDouble){rev=rev.slice(1,rev.length-1);}return arr.concat(rev);}exports.palindrome=palindrome;exports.mirror=palindrome;// repeat the values of an array n-times
+// Using a second array for repeat times iterates over that array
+// 
+// @param {Array} -> array with values to repeat
+// @param {Int/Array} -> array or number of repetitions per value
+// @return {Array}
+// 
+function repeat(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var rep=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;arr=Array.isArray(arr)?arr:[arr];rep=Array.isArray(rep)?rep:[rep];var a=[];for(var i in arr){var r=rep[i%rep.length];for(var k=0;k<r;k++){a.push(arr[i]);}}return a;}exports.repeat=repeat;// reverse the order of items in an Array
 // 
 // @param {Array} -> array to reverse
 // @return {Array}

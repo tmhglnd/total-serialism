@@ -235,10 +235,11 @@ exports.mirror = palindrome;
 function repeat(arr=[0], rep=1){
 	arr = (Array.isArray(arr))? arr : [arr];
 	rep = (Array.isArray(rep))? rep : [rep];
+	
 	let a = [];
 	for (let i in arr){
 		let r = rep[i % rep.length];
-		for (k=0; k<r; k++){
+		for (let k=0; k<r; k++){
 			a.push(arr[i]);
 		}
 	}
