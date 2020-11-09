@@ -48,6 +48,7 @@
 		- [rotate](docs/transform-methods.md#rotate)
 		- [sort](docs/transform-method.md#sort)
 		- [spray](docs/transform-methods.md#spray)
+		- [stretch](docs/transform-methods.md#stretch)
 		- [unique](docs/transform-methods.md#unique)
 	- [Statistic Methods](docs/statistic-methods.md)
 		- [sort](docs/statistic-methods.md#sort)
@@ -56,6 +57,7 @@
 		- [mean](docs/statistic-methods.md#mean)
 		- [median](docs/statistic-methods.md#median)
 		- [mode](docs/statistic-methods.md#mode)
+		- [change](docs/statistic-methods.md#change)
 	- [Translate Methods](docs/translate-methods.md)
 		- [Scala Tuning](docs/translate-methods.md#using-scala-tuning-format)
 			- parse
