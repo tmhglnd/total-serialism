@@ -75,26 +75,18 @@ markov.clear();
 console.log(markov.table);
 */
 
-// Mod.expand([0, 1, 2, 3]);
-let arr = [0, 9, 7, 3, 2, 5, -1];
-
-// let arr = Rand.random(10, 0, 12);
-// Util.plot(arr)
-// Util.plot(Rand.expand(30, arr));
-Util.plot(Rand.expand(30, [5, 6, 3, 4]));
-
-// fullTest();
+fullTest();
 
 function fullTest(){
 	console.time('Total Time');
-	// testSerial();
-	// testGen();
-	// testAlgo();
-	// testRand();
-	// testMod();
-	// testStat();
-	// testTranslate();
-	// testUtil();
+	testSerial();
+	testGen();
+	testAlgo();
+	testRand();
+	testMod();
+	testStat();
+	testTranslate();
+	testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -226,13 +218,13 @@ function testRand(){
 
 	test("Rand.seed(1618)");
 	test("Rand.drunkFloat(5)");
-	console.log(chart.plot(Rand.drunkFloat(5, 1), {height: 5}));
+	console.log(Util.plot(Rand.drunkFloat(5, 1), {height: 5}));
 	
 	test("Rand.drunk(10, 5, 0, 24)");
-	console.log(chart.plot(Rand.drunk(10, 24, 0, 24), {height: 5}));
+	console.log(Util.plot(Rand.drunk(10, 24, 0, 24), {height: 5}));
 
 	test("Rand.drunk(10, 4, 0, 12, 6, false)");
-	console.log(chart.plot(Rand.drunk(10, 4, 0, 12, 1, false), {height: 5}));
+	console.log(Util.plot(Rand.drunk(10, 4, 0, 12, 1, false), {height: 5}));
 
 	test("Rand.seed(0)");
 	test("Rand.coin(10)");
@@ -267,6 +259,17 @@ function testRand(){
 	test("Rand.choose(5, ['c', 'e', 'g'])");
 	test("Rand.pick(5, [0, 1, 2, 3, 5, 8, 13])");
 	test("Rand.pick(5, ['c', 'e', ['g', 'd']])");
+
+	let arr = [0, 9, 7, 3, 5, 0, -1];
+	Rand.seed(3141);
+	test("Rand.expand(30, [0, 9, 7, 3, 5, 0, -1])");
+
+	test('Rand.seed(3141)');
+	Util.plot(Rand.expand(30, [0, 9, 7, 3, 5, 0, -1]), { height: 10 });
+	
+	test("Rand.seed(6181)");
+	console.log('Rand.expand(30, [0, 9, 7, 3, 5, 0, -1]')
+	Util.plot(Rand.expand(30, [0, 9, 7, 3, 5, 0, -1]), { height: 10 });
 }
 
 function testMod(){
