@@ -58,6 +58,7 @@ markov.train(melody);
 markov.train(melody2);
 
 console.log(markov.table);
+// console.log(JSON.stringify(markov.table));
 
 // var mark2 = new Rand.MarkovChain(markov.table);
 // console.log('chain 2', mark2.table);
@@ -67,7 +68,6 @@ markov.state('c');
 // markov.seed(58392);
 markov.seed(31415);
 
-console.log(JSON.stringify(markov.table));
 
 console.log(markov.next());
 console.log('result', markov.chain(10))
@@ -76,7 +76,19 @@ markov.clear();
 console.log(markov.table);
 */
 
-fullTest();
+// let arr = [0, 12, 4, 9];
+let arr = Rand.random(4, 0, 24);
+console.log(arr);
+Util.plot(arr);
+
+let res = Mod.stretch(arr, 30);
+console.log(res);
+Util.plot(res);
+
+// console.log(Util.lerp(0, 10, 0.9));
+// console.log(Util.mix(0, 10, 0.9));
+
+// fullTest();
 
 function fullTest(){
 	console.time('Total Time');

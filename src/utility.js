@@ -112,6 +112,26 @@ function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 	return a * (outHi - outLo) + outLo;
 }
 
+// Interpolate / mix between 2 values
+// 
+// @param {Number} -> value 1
+// @param {Number} -> value 2
+// @param {Number} -> interpolation factor (0-1, optional, default=0.5)
+// @return {Number}
+// 
+// function mix(arr0, arr1, f=0.5){
+// 	if (!Array.isArray(arr0) && !Array.isArray(arr1)){
+// 		return _mix(arr0, arr1, f);
+// 	}
+// }
+// exports.mix = mix;
+// exports.interpolate = mix;
+
+function _mix(a0, a1, f=0.5, mode='linear'){
+	return a0 * (1-f) + a1 * f;
+}
+exports.lerp = _mix;
+
 // add 1 or more values to an array, 
 // preserves listlength of first argument
 // arguments are applied sequentially
