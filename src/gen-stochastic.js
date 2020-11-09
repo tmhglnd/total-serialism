@@ -271,9 +271,6 @@ exports.pick = pick;
 // 
 function expand(l=1, a=[0, 0]){
 	a = (Array.isArray(a))? a : [a];
-	// if (!Array.isArray(a) || l < a.length){
-	// 	return a;
-	// }
 	// get the differences and pick the expansion options
 	let p = Stat.change(a);
 	let chg = pick(l-a.length, p);
@@ -285,7 +282,6 @@ function expand(l=1, a=[0, 0]){
 	for (let c in chg){
 		arr.push(acc += chg[c]);
 	}
-	console.log(arr.length);
 	return arr;
 }
 exports.expand = expand;

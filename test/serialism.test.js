@@ -81,7 +81,7 @@ let arr = [0, 9, 7, 3, 2, 5, -1];
 // let arr = Rand.random(10, 0, 12);
 // Util.plot(arr)
 // Util.plot(Rand.expand(30, arr));
-// Util.plot(Rand.expand(30, ));
+Util.plot(Rand.expand(30, [5, 6, 3, 4]));
 
 // fullTest();
 
