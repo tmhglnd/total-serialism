@@ -260,6 +260,21 @@ function mod(a, mod=12){
 }
 exports.mod = mod;
 
+// Truncate all the values in an array towards 0,
+// sometimes referred to as rounding down
+// 
+// @param {Number/Array} -> input value
+// @return {Int/Array} -> trucated value
+function truncate(a){
+	if (!Array.isArray(a)){
+		return Math.trunc(a);
+	}
+	return a.map(x => Math.trunc(x));
+}
+exports.truncate = truncate;
+exports.trunc = truncate;
+exports.int = truncate;
+
 // Plot an array of values to the console in the form of an
 // ascii chart and return chart from function. If you just want the 
 // chart returned as text and not log to console set { log: false }.

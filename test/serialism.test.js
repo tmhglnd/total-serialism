@@ -76,17 +76,14 @@ markov.clear();
 console.log(markov.table);
 */
 
-// let arr = [0, 12, 4, 9];
-let arr = Rand.random(4, 0, 24);
+let arr = [0, 9, 3, 19, 7];
+// let arr = Rand.random(4, 0, 24);
 console.log(arr);
 Util.plot(arr);
 
-let res = Mod.stretch(arr, 30);
+let res = Util.trunc(Mod.stretch(arr, 15));
 console.log(res);
 Util.plot(res);
-
-// console.log(Util.lerp(0, 10, 0.9));
-// console.log(Util.mix(0, 10, 0.9));
 
 // fullTest();
 

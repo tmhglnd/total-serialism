@@ -314,8 +314,8 @@ function stretch(a=[0], len=5, mode='linear'){
 		// construct a lookup interpolation position for new array
 		let val = i / (len - 1) * (l - 1);
 		// lookup nearest neighbour left/right
-		let a0 = a[Math.max(Math.floor(val), 0)];
-		let a1 = a[Math.min(Math.floor(val)+1, l-1)];
+		let a0 = a[Math.max(Math.trunc(val), 0)];
+		let a1 = a[Math.min(Math.trunc(val)+1, l-1)];
 		// interpolate between the values according to decimal place
 		arr.push(Util.lerp(a0, a1, val % 1));
 	}
