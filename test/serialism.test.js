@@ -76,27 +76,18 @@ markov.clear();
 console.log(markov.table);
 */
 
-let arr = [0, 9, 3, 19, 7];
-// let arr = Rand.random(4, 0, 24);
-console.log(arr);
-Util.plot(arr);
-
-let res = Util.trunc(Mod.stretch(arr, 15));
-console.log(res);
-Util.plot(res);
-
-// fullTest();
+fullTest();
 
 function fullTest(){
 	console.time('Total Time');
-	testSerial();
-	testGen();
-	testAlgo();
-	testRand();
+	// testSerial();
+	// testGen();
+	// testAlgo();
+	// testRand();
 	testMod();
-	testStat();
-	testTranslate();
-	testUtil();
+	// testStat();
+	// testTranslate();
+	// testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -379,6 +370,16 @@ function testMod(){
 	// console.log(sprArr1, sprArr2);
 	test("Mod.spray()");
 	test("Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0])");
+
+	let arr = [0, 12, 3, 7];
+	console.log('//=>', arr);
+	Util.plot(arr);
+
+	test("Mod.stretch([0, 12, 3, 7], 15)");
+	Util.plot(Mod.stretch([0, 12, 3, 7], 10), { height: 5 });
+
+	Util.plot(Mod.stretch([0, 12, 3, 7], 10, 'none'), { height: 5 });
+	// console.log(res);
 
 	// var unArr = [5, 7, 5, 0, 12, 7, 5];
 	// console.log(Mod.unique(unArr));

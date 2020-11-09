@@ -316,8 +316,13 @@ function stretch(a=[0], len=5, mode='linear'){
 		// lookup nearest neighbour left/right
 		let a0 = a[Math.max(Math.trunc(val), 0)];
 		let a1 = a[Math.min(Math.trunc(val)+1, l-1)];
-		// interpolate between the values according to decimal place
-		arr.push(Util.lerp(a0, a1, val % 1));
+
+		if (mode === 'none' || mode === null || mode === false){
+			arr.push(a0);
+		} else {
+			// interpolate between the values according to decimal place
+			arr.push(Util.lerp(a0, a1, val % 1));
+		}
 	}
 	return arr;
 }
