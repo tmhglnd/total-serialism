@@ -79,14 +79,14 @@ fullTest();
 
 function fullTest(){
 	console.time('Total Time');
-	testSerial();
-	testGen();
-	testAlgo();
-	testRand();
+	// testSerial();
+	// testGen();
+	// testAlgo();
+	// testRand();
 	testMod();
-	testStat();
-	testTranslate();
-	testUtil();
+	// testStat();
+	// testTranslate();
+	// testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -382,7 +382,7 @@ function testMod(){
 	test("Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0])");
 
 	test("Mod.stretch([0, 12, 3, 7], 15)");
-	Util.plot(Mod.stretch([0, 12, 3, 7], 10), { height: 5 });
+	Util.plot(Mod.stretch([0, 12, 3, 7], 30), { height: 10 });
 	Util.plot(Mod.stretch([0, 12, 3, 7], 10, 'none'), { height: 5 });
 
 	// var unArr = [5, 7, 5, 0, 12, 7, 5];

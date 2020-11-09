@@ -125,6 +125,44 @@ scl.names;
 //   '08-19', ... and 5000 more]
 ```
 
+Expand an array by analyzing its internal structure
+
+```js 
+Rand.seed(3141);
+Rand.expand(30, [0, 9, 7, 3, 5, 0, -1]);
+
+//=>  9.00 ┤╭╮      ╭╮                    
+//    6.80 ┤│╰╮     ││                    
+//    4.60 ┤│ │╭╮   ││                    
+//    2.40 ┤│ ╰╯│   │╰─╮             ╭─╮  
+//    0.20 ┼╯   ╰─╮╭╯  │             │ │╭ 
+//   -2.00 ┤      ╰╯   ╰╮   ╭─╮      │ ╰╯ 
+//   -4.20 ┼            │   │ │    ╭╮│    
+//   -6.40 ┤            ╰╮  │ │    │╰╯    
+//   -8.60 ┤             │╭╮│ ╰─╮  │      
+//  -10.80 ┤             ╰╯╰╯   │╭╮│      
+//  -13.00 ┤                    ╰╯╰╯      
+```
+
+Stretch an array by interpolating between array values
+
+```js 
+Mod.stretch([0, 12, 3, 7], 30);
+
+//=> 11.69 ┼        ╭─╮                   
+//   10.52 ┤        │ ╰╮                  
+//    9.35 ┤       ╭╯  ╰─╮                
+//    8.18 ┤      ╭╯     ╰╮               
+//    7.01 ┤     ╭╯       ╰╮           ╭─ 
+//    5.84 ┤    ╭╯         ╰╮       ╭──╯  
+//    4.68 ┤   ╭╯           ╰─╮  ╭──╯     
+//    3.51 ┤  ╭╯              ╰──╯        
+//    2.34 ┤ ╭╯                           
+//    1.17 ┤╭╯                            
+//    0.00 ┼╯ 
+
+```
+<!--
 Generate Lindenmayer system sequences
 
 ```js
@@ -139,6 +177,7 @@ Generate Pisano periods and Fibonacci sequences
 Algo.pisano(7);
 //=> [ 0, 1, 1, 2, 3, 5, 1, 6, 0, 6, 6, 5, 4, 2, 6, 1 ]
 ```
+-->
 
 # Install
 
