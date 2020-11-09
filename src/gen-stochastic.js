@@ -15,6 +15,8 @@
 // require Generative methods
 const Gen = require('./gen-basic.js');
 const Util = require('./utility.js');
+const Stat = require('./statistic.js');
+
 // require seedrandom package
 var seedrandom = require('seedrandom');
 
@@ -234,6 +236,9 @@ exports.choose = choose;
 function pick(len=1, a=[0, 1]){
 	// fill the jar with the input
 	var jar = (!Array.isArray(a))? [a] : a;
+	if (jar.length < 2){
+		return new Array(len).fill(jar[0]);
+	}
 	// shuffle the jar
 	var s = shuffle(jar);
 	// value, previous, output-array
@@ -264,19 +269,23 @@ exports.pick = pick;
 // @param {Number} -> the resulting array length
 // @return {Array}
 // 
-function expand(a=[0], l=a.length){
-	console.log(a, l);
-	let p = [];
-	for (let i=1; i<a.length; i++){
-		p[i-1] = a[i] - a[i-1];
+function expand(l=1, a=[0, 0]){
+	a = (Array.isArray(a))? a : [a];
+	// if (!Array.isArray(a) || l < a.length){
+	// 	return a;
+	// }
+	// get the differences and pick the expansion options
+	let p = Stat.change(a);
+	let chg = pick(l-a.length, p);
+	// console.log(chg);
+	// empty output array and axiom for output
+	let arr = a.slice();
+	let acc = arr[arr.length-1];
+	// accumulate the change and store in array
+	for (let c in chg){
+		arr.push(acc += chg[c]);
 	}
-	console.log(p);
-
-	let arr = [a[0]];
-	for (let j=1; j<l; j++){
-		arr[j] = arr[j-1] + p[Math.trunc(rng() * p.length)];
-	}
-	console.log(arr);
+	console.log(arr.length);
 	return arr;
 }
 exports.expand = expand;

@@ -68,7 +68,6 @@ markov.state('c');
 // markov.seed(58392);
 markov.seed(31415);
 
-
 console.log(markov.next());
 console.log('result', markov.chain(10))
 
@@ -77,13 +76,14 @@ console.log(markov.table);
 */
 
 // Mod.expand([0, 1, 2, 3]);
-let arr = [0, 9, 7, 3, 0];
+let arr = [0, 9, 7, 3, 2, 5, -1];
 
 // let arr = Rand.random(10, 0, 12);
 // Util.plot(arr)
-// Util.plot(Rand.expand(arr, 30));
+// Util.plot(Rand.expand(30, arr));
+// Util.plot(Rand.expand(30, ));
 
-fullTest();
+// fullTest();
 
 function fullTest(){
 	console.time('Total Time');

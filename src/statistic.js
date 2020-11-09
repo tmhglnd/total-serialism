@@ -6,7 +6,6 @@
 //
 // Statistical related methods and algorithms that can be helpful in
 // analysis of number sequences, melodies, rhythms and more
-// 
 //=======================================================================
 
 const Mod = require('./transform');
