@@ -119,10 +119,11 @@ function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 // @param {Number} -> interpolation factor (0-1, optional, default=0.5)
 // @return {Number}
 // 
-// function mix(arr0, arr1, f=0.5){
-// 	if (!Array.isArray(arr0) && !Array.isArray(arr1)){
-// 		return _mix(arr0, arr1, f);
-// 	}
+// function mix(arr0, arr1=[0], f=0.5){
+// 	arr1 = (Array.isArray())? arr1 : [arr1];
+// 	// if (!Array.isArray(arr0) && !Array.isArray(arr1)){
+// 	// 	return _mix(arr0, arr1, f);
+// 	// }
 // }
 // exports.mix = mix;
 // exports.interpolate = mix;
@@ -274,6 +275,28 @@ function truncate(a){
 exports.truncate = truncate;
 exports.trunc = truncate;
 exports.int = truncate;
+
+// Return the difference between every consecutive value in an array
+// With melodic content from a chromatic scale this can be seen as
+// a list of intervals that, when followed from the same note, results
+// in the same melody.
+// 
+// @param {Array} -> array to calculate from
+// @return {Array} -> list of changes
+// 
+function change(a=[0, 0]){
+	if (a.length < 2 || !Array.isArray(a)){
+		return [0];
+	}
+	let len = a.length;
+	let arr = [];
+	for (let i=1; i<len; i++){
+		arr.push(a[i] - a[i-1]);
+	}
+	return arr;
+}
+exports.change = change;
+exports.difference = change;
 
 // Plot an array of values to the console in the form of an
 // ascii chart and return chart from function. If you just want the 

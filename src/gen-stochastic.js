@@ -255,6 +255,32 @@ function pick(len=1, a=[0, 1]){
 }
 exports.pick = pick;
 
+// expand an array based upon the pattern within an array
+// the pattern is derived from the rate in change between values
+// the newly generated values are selected randomly from the list
+// of changes.
+// 
+// @param {Array} -> the array to expand
+// @param {Number} -> the resulting array length
+// @return {Array}
+// 
+function expand(a=[0], l=a.length){
+	console.log(a, l);
+	let p = [];
+	for (let i=1; i<a.length; i++){
+		p[i-1] = a[i] - a[i-1];
+	}
+	console.log(p);
+
+	let arr = [a[0]];
+	for (let j=1; j<l; j++){
+		arr[j] = arr[j-1] + p[Math.trunc(rng() * p.length)];
+	}
+	console.log(arr);
+	return arr;
+}
+exports.expand = expand;
+exports.extrapolate = expand;
 
 // Initialize a Markov Chain Model (One of the simpelest forms of ML)
 // A Markov chain is a stochastic model describing a sequence 
