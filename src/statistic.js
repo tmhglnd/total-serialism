@@ -139,3 +139,25 @@ function mode(a=[0]){
 }
 exports.mode = mode;
 exports.common = mode;
+
+// Return the difference between every consecutive value in an array
+// With melodic content from a chromatic scale this can be seen as
+// a list of intervals that, when followed from the same note, results
+// in the same melody.
+// 
+// @param {Array} -> array to calculate from
+// @return {Array} -> list of changes
+// 
+function change(a=[0, 0]){
+	if (a.length < 2 || !Array.isArray(a)){
+		return [0];
+	}
+	let len = a.length;
+	let arr = [];
+	for (let i=1; i<len; i++){
+		arr.push(a[i] - a[i-1]);
+	}
+	return arr;
+}
+exports.change = change;
+exports.difference = change;

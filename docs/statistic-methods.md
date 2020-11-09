@@ -66,3 +66,11 @@ Stat.minimum([-38, -53, -6, 33, 88, 32, -8, 73]);
 //=> -53 
 // Alternative: Stat.min()
 ```
+
+"Temporal" methods
+
+```js 
+// Return the difference between consecutive numbers in an array
+Util.change([0, 3, 7, 0, 12, 9, 5, 7]);
+//=> [ 3, 4, -7, 12, -3, -4, 2 ] 
+```

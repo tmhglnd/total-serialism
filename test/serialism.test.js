@@ -415,6 +415,8 @@ function testStat(){
 	test("Stat.maximum([-38, -53, -6, 33, 88, 32, -8, 73])");
 	test("Stat.minimum([-38, -53, -6, 33, 88, 32, -8, 73])");
 	test("Stat.minimum([-38, -53, -6, 'foo', 33, 'bar'])");
+
+	test("Stat.change([0, 3, 7, 0, 12, 9, 5, 7])");
 }
 
 function testTranslate(){
