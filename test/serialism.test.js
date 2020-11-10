@@ -53,7 +53,17 @@ console.log();
 // markov.clear();
 // console.log(markov.table);
 
-fullTest();
+let ca = new Algo.Automaton(10);
+
+ca.feed(Rand.coin(8));
+
+for (let i=0; i<10; i++){
+	console.log(ca.next());
+}
+
+console.log(String.fromCharCode(176));
+
+// fullTest();
 
 function fullTest(){
 	console.time('Total Time');

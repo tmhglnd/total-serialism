@@ -309,3 +309,89 @@ function lucas(len=1, offset=0, toString=false){
 	return f;
 }
 exports.lucas = lucas;
+
+// Generate an Elementary Cellular Automaton
+// 
+class Automaton {
+	constructor(l){
+		// the size of the population for each generation
+		this._length = Math.max(3, l);
+		// the state of the current generation
+		this._state = new Array(this._length).fill(0);
+		// the rule (will be converted to binary representation)
+		this._rule = this.ruleToBinary(110).split('');
+		// the rule table for lookup
+		this._table = this.binaryToTable(this._rule);
+	}
+	get state(){
+		// return the current state of the Automaton
+		return this._state;
+	}
+	get table(){
+		// return the object of rules
+		return this._table;
+	}
+	rule(a){
+		// set the rule for the automaton
+		if (Array.isArray(a)){
+			// when the argument is an array of 1's and 0's convert to table
+			if (a.length != 8){
+				console.log('Warning: rule() must have length 8 to correctly represent all possible states');
+			}
+			let r = a.slice(0, 8).join('').padStart(8, '0');
+			// this._rule = parseInt(r, 2);
+			this._table = this.binaryToTable(r);
+		} else if (typeof a === 'object'){
+			// when the argument is an object store it directly in table
+			if (Object.keys(a).length != 8){
+				console.log('Warning: rule() must have 8 keys to correctly represent all possible states')
+			}
+			this._rule = undefined;
+			this._table = { ...a };
+		} else {
+			if (isNaN(Number(a))){
+				console.error('Error: rule() expected a number but received:', a);
+			} else {
+				// when the argument is a number
+				let b = this.ruleToBinary(Number(a));
+				this._rule = a;
+				this._table = this.binaryToTable(b);
+			}
+		}
+	}
+	feed(a){
+		// feed the automaton with an initial array
+		if (!Array.isArray(a) || a.length < 3){
+			console.log('Warning: feed() expected array of at least length 3 but received:', typeof a, 'with length:', (Array.isArray(a)?a:[a]).length);
+		} else {
+			this._state = a;
+			this._length = a.length;
+		}
+	}
+	next(){
+		// calculate the next generation from the rules
+		let n = [];
+		// for every cell in the current state, check the neighbors
+		for (let i = 0; i < this._length; i++){
+			let left = this._state[((i-1 % 8) + 8) % 8];
+			let right = this._state[((i+1 % 8) + 8) % 8];
+			// join 3 cells to string and lookup next value from table
+			n[i] = this._table[[left, this._state[i], right].join('')];
+		}
+		// store in state and return result as array
+		return this._state = n;
+	}
+	ruleToBinary(r){
+		// convert a rule number to binary sequence 
+		return r.toString(2).padStart(8, '0');
+	}
+	binaryToTable(r){
+		// store binary sequence in lookup table
+		let c = {};
+		for (let i = 0; i < 8; i++){
+			c[(7-i).toString(2).padStart(3, '0')] = Number(r[i]);
+		}
+		return c;
+	}
+}
+exports.Automaton = Automaton;
