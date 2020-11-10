@@ -313,13 +313,13 @@ exports.lucas = lucas;
 // Generate an Elementary Cellular Automaton
 // 
 class Automaton {
-	constructor(l){
+	constructor(l=8, r=110){
 		// the size of the population for each generation
 		this._length = Math.max(3, l);
 		// the state of the current generation
 		this._state = new Array(this._length).fill(0);
 		// the rule (will be converted to binary representation)
-		this._rule = this.ruleToBinary(110).split('');
+		this._rule = this.ruleToBinary(r).split('');
 		// the rule table for lookup
 		this._table = this.binaryToTable(this._rule);
 	}
@@ -371,10 +371,11 @@ class Automaton {
 	next(){
 		// calculate the next generation from the rules
 		let n = [];
+		let l = this._length;
 		// for every cell in the current state, check the neighbors
-		for (let i = 0; i < this._length; i++){
-			let left = this._state[((i-1 % 8) + 8) % 8];
-			let right = this._state[((i+1 % 8) + 8) % 8];
+		for (let i = 0; i < l; i++){
+			let left = this._state[((i-1 % l) + l) % l];
+			let right = this._state[((i+1 % l) + l) % l];
 			// join 3 cells to string and lookup next value from table
 			n[i] = this._table[[left, this._state[i], right].join('')];
 		}

@@ -53,15 +53,18 @@ console.log();
 // markov.clear();
 // console.log(markov.table);
 
-let ca = new Algo.Automaton(10);
+let ca = new Algo.Automaton();
+ca.rule(110);
 
-ca.feed(Rand.coin(8));
+Rand.seed(65723);
+ca.feed(Rand.randomFloat(30).map(x => Number(x > 0.2)));
 
-for (let i=0; i<10; i++){
-	console.log(ca.next());
+// ' ░▒▓█'
+arr = [' ','█'];
+
+for (let i=0; i<20; i++){
+	console.log(ca.next().map(x => arr[x]).join(''));
 }
-
-console.log(String.fromCharCode(176));
 
 // fullTest();
 
