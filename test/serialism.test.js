@@ -262,14 +262,14 @@ function testRand(){
 
 	let arr = [0, 9, 7, 3, 5, 0, -1];
 	Rand.seed(3141);
-	test("Rand.expand(30, [0, 9, 7, 3, 5, 0, -1])");
+	test("Rand.expand([0, 9, 7, 3, 5, 0, -1], 30)");
 
 	test('Rand.seed(3141)');
-	Util.plot(Rand.expand(30, [0, 9, 7, 3, 5, 0, -1]), { height: 10 });
+	Util.plot(Rand.expand([0, 9, 7, 3, 5, 0, -1], 30), { height: 10 });
 	
 	test("Rand.seed(6181)");
 	console.log('Rand.expand(30, [0, 9, 7, 3, 5, 0, -1]')
-	Util.plot(Rand.expand(30, [0, 9, 7, 3, 5, 0, -1]), { height: 10 });
+	Util.plot(Rand.expand([0, 9, 7, 3, 5, 0, -1], 30), { height: 10 });
 }
 
 function testMod(){

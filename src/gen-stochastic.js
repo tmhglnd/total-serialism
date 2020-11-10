@@ -269,7 +269,7 @@ exports.pick = pick;
 // @param {Number} -> the resulting array length
 // @return {Array}
 // 
-function expand(l=1, a=[0, 0]){
+function expand(a=[0, 0], l=1){
 	a = (Array.isArray(a))? a : [a];
 	// get the differences and pick the expansion options
 	let p = Stat.change(a);
