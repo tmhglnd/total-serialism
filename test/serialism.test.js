@@ -16,13 +16,6 @@ const Stat = Srl.Statistic;
 const TL = Srl.Translate;
 const Util = Srl.Utility;
 
-const chart = require('asciichart');
-var config = {
-    offset: 3,
-    padding: '        ',
-	height: 10,
-}
-
 console.time('requires load');
 console.timeEnd('requires load');
 console.log();
@@ -36,44 +29,29 @@ console.log();
 	- test for strings vs numbers
 */
 
-// fs.writeFileSync('test-plot.txt', p);
+// var markov = new Rand.MarkovChain();
+// var set = [0, 1, 1, 2, 1, 3, 2, 3, 1, 3, 0];
+// var set2 = [0, 7, 5, 7, 7, 9, 3, 3, 5, 0, 0, 1];
 
-// let spr = Gen.spreadFloat(20, -3.14, 16.18);
-// console.log(spr);
-// console.log(Util.fold(spr).map(x => x.toFixed(3)));
+// var melody = ['c', 'e', 'f', 'e', 'g', 'f', 'a', 'c'];
+// var melody2 = ['g', 'a', 'g', 'a', 'f', 'd', 'e', 'b'];
 
-/*
-var markov = new Rand.MarkovChain();
+// // train with an array of values
+// markov.train(melody);
+// // add more to the training
+// markov.train(melody2);
+// console.log(markov.table);
+// // var mark2 = new Rand.MarkovChain(markov.table);
+// // console.log('chain 2', mark2.table);
+// // markov.state(2);
+// markov.state('c');
+// // markov.seed(58392);
+// markov.seed(31415);
+// console.log(markov.next());
+// console.log('result', markov.chain(10));
 
-var set = [0, 1, 1, 2, 1, 3, 2, 3, 1, 3, 0];
-var set2 = [0, 7, 5, 7, 7, 9, 3, 3, 5, 0, 0, 1];
-
-var melody = ['c', 'e', 'f', 'e', 'g', 'f', 'a', 'c'];
-var melody2 = ['g', 'a', 'b', 'g', 'a', 'f', 'd', 'e'];
-
-// train with an array of values
-markov.train(melody);
-
-// add more to the training
-markov.train(melody2);
-
-console.log(markov.table);
-// console.log(JSON.stringify(markov.table));
-
-// var mark2 = new Rand.MarkovChain(markov.table);
-// console.log('chain 2', mark2.table);
-
-// markov.state(2);
-markov.state('c');
-// markov.seed(58392);
-markov.seed(31415);
-
-console.log(markov.next());
-console.log('result', markov.chain(10))
-
-markov.clear();
-console.log(markov.table);
-*/
+// markov.clear();
+// console.log(markov.table);
 
 fullTest();
 

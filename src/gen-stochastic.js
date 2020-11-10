@@ -295,7 +295,9 @@ exports.extrapolate = expand;
 // @get chain -> return transition table from Markov
 // @method clear() -> erase the transition table
 // @method train() -> train the markov model
+// 		@param {Array} -> array of values as training data
 // @method seed() -> seed the random number generator (scoped RNG)
+// 		@param {Value} -> any value as random seed (0 = unpredictable seed)
 // @method axiom() -> set the initial value to start the chain
 // @method next() -> generate the next value based state or set axiom
 // @method chain() -> generate an array of values
