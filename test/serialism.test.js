@@ -54,21 +54,23 @@ console.log();
 // console.log(markov.table);
 
 let ca = new Algo.Automaton();
-ca.rule(120);
+ca.rule(106);
 
-Rand.seed(6523);
-ca.feed(Rand.randomFloat(40).map(x => Number(x > 0.2)));
+Rand.seed(0);
+// ca.feed(Rand.randomFloat(40).map(x => Number(x > 0.5)));
+ca.feed(Rand.coin(40));
 
 caRes = [];
 for (let i=0; i<50; i++){
 	caRes.push(ca.next());
 }
-// Util.plot2D(caRes);
+Util.draw(caRes);
 
 // fullTest();
 
 function fullTest(){
 	console.time('Total Time');
+
 	testSerial();
 	testGen();
 	testAlgo();

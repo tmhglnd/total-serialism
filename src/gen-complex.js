@@ -310,7 +310,24 @@ function lucas(len=1, offset=0, toString=false){
 }
 exports.lucas = lucas;
 
-// Generate an Elementary Cellular Automaton
+// Generate an Elementary Cellular Automaton class
+// This is an one dimensional array (collection of cells) with states
+// that are either dead or alive (0/1). By following a set of rules the
+// next generation is calculated for every cell based on its neighbouring
+// cells. Invoke the next() method to iterate the generations. Set the first
+// generation with the feed() method (usually random values work quite well)
+// Change the rule() based on a decimal number or an array of digits
+// 
+// Some interesting rules to try: 
+// 3 5 9 18 22 26 30 41 45 54 60 73 90 105 
+// 106 110 120 122 126 146 150 154 181
+// 
+// @constructor {length, rule} -> generate the CA
+// @get state -> return the current generations as array
+// @get table -> return the table of rules
+// @method rule() -> set the rule based on decimal number or array
+// @method feed() -> feed the initial generation with an array
+// @method next() -> generate the next generation and return
 // 
 class Automaton {
 	constructor(l=8, r=110){
