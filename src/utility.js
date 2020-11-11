@@ -309,3 +309,30 @@ function plot(a=[0], prefs){
 	return p;
 }
 exports.plot = plot;
+
+function plot2D(a=[0]){
+	let chars = ' ░▒▓█'.split('');
+	// let chars = ' .-=+#'.split('');
+
+	a = (Array.isArray(a[0]))? a : [a];
+
+	let lo = Infinity, hi = -Infinity, range = 0;
+	for (let i in a){
+		for (let j in a[i]){
+			lo = (a[i][j] < lo)? a[i][j] : lo;
+			hi = (a[i][j] > hi)? a[i][j] : hi;
+		}
+	}
+	range = hi - lo;
+
+	let p = '';
+	for (let i in a){
+		for (let j in a[i]){
+			p += chars[Math.trunc((a[i][j] - lo) / range * (chars.length-1))];
+		}
+		p += '\n';
+	}
+	// console.log(p);
+	return p;	
+}
+exports.plot2D = plot2D;

@@ -60,11 +60,23 @@ Rand.seed(65723);
 ca.feed(Rand.randomFloat(30).map(x => Number(x > 0.2)));
 
 // ' ░▒▓█'
-arr = [' ','█'];
+// let arr = [' ','█'];
 
-for (let i=0; i<20; i++){
-	console.log(ca.next().map(x => arr[x]).join(''));
+// for (let i=0; i<20; i++){
+// 	console.log(ca.next().map(x => arr[x]).join(''));
+// }
+
+let arr2d = [];
+for (let i=0; i<50; i++){
+	// arr2d.push(Gen.sine(46, i+1));
+	// arr2d.push(Gen.cosine(46, i+1));
+	// arr2d.push(Algo.euclid(40, i));
+	// arr2d.push(Rand.random(40, 0, 24));
+	// Rand.seed(123);
+	arr2d.push(Rand.drunk(40, 3));
 }
+
+console.log(Util.plot2D(arr2d));
 
 // fullTest();
 
