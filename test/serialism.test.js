@@ -58,14 +58,14 @@ fullTest();
 function fullTest(){
 	console.time('Total Time');
 
-	// testSerial();
-	// testGen();
+	testSerial();
+	testGen();
 	testAlgo();
-	// testRand();
-	// testMod();
-	// testStat();
-	// testTranslate();
-	// testUtil();
+	testRand();
+	testMod();
+	testStat();
+	testTranslate();
+	testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -163,7 +163,7 @@ function testAlgo(){
 	test("Algo.linden(0, 3, complexRules)");
 
 	let ca = new Algo.Automaton();
-	ca.rule(9);
+	ca.rule(122);
 
 	Rand.seed(0);
 	// ca.feed(Rand.randomFloat(40).map(x => Number(x > 0.5)));
