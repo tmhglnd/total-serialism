@@ -54,29 +54,28 @@ console.log();
 // console.log(markov.table);
 
 let ca = new Algo.Automaton();
-ca.rule(110);
+ca.rule(120);
 
 Rand.seed(65723);
-ca.feed(Rand.randomFloat(30).map(x => Number(x > 0.2)));
+ca.feed(Rand.randomFloat(46).map(x => Number(x > 0.2)));
 
-// ' ░▒▓█'
-// let arr = [' ','█'];
+for (let i=0; i<50; i++){
+	Util.plot2D(ca.next(), { error: true, ascii: false });
+}
 
-// for (let i=0; i<20; i++){
-// 	console.log(ca.next().map(x => arr[x]).join(''));
-// }
+// console.log(Util.plot2D())
 
 let arr2d = [];
 for (let i=0; i<50; i++){
-	// arr2d.push(Gen.sine(46, i+1));
+	// arr2d.push(Gen.sine(46, i*0.5+1));
 	// arr2d.push(Gen.cosine(46, i+1));
 	// arr2d.push(Algo.euclid(40, i));
 	// arr2d.push(Rand.random(40, 0, 24));
 	// Rand.seed(123);
-	arr2d.push(Rand.drunk(40, 3));
+	arr2d.push(Rand.drunk(40, 2));
 }
 
-console.log(Util.plot2D(arr2d));
+// Util.plot2D(arr2d, { ascii: false });
 
 // fullTest();
 

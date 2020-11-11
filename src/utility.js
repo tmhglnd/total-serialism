@@ -310,11 +310,18 @@ function plot(a=[0], prefs){
 }
 exports.plot = plot;
 
-function plot2D(a=[0]){
-	let chars = ' ░▒▓█'.split('');
-	// let chars = ' .-=+#'.split('');
-
+function plot2D(a=[0], prefs){
+	// if a is not an 2d-array
 	a = (Array.isArray(a[0]))? a : [a];
+
+	// empty object if no preferences
+	prefs = (typeof prefs !== 'undefined') ? prefs : {};
+
+	prefs.log = (typeof prefs.log !== 'undefined') ? prefs.log : true;
+	prefs.ascii = (typeof prefs.ascii !== 'undefined') ? prefs.ascii : false;
+	prefs.error = (typeof prefs.error !== 'undefined') ? prefs.error : false;
+
+	let c = (prefs.ascii)? ' .-=+#'.split('') : ' ░▒▓█'.split('');
 
 	let lo = Infinity, hi = -Infinity, range = 0;
 	for (let i in a){
@@ -328,11 +335,13 @@ function plot2D(a=[0]){
 	let p = '';
 	for (let i in a){
 		for (let j in a[i]){
-			p += chars[Math.trunc((a[i][j] - lo) / range * (chars.length-1))];
+			let grey = Math.trunc((a[i][j] - lo) / range * (c.length-1));
+			let char = (isNaN(grey)) ? ((prefs.error)? 'X' : ' ') : c[grey];
+			p += char;
 		}
-		p += '\n';
+		if (a.length > 1) { p += '\n'; }
 	}
-	// console.log(p);
+	if (prefs.log){ console.log(p); }
 	return p;	
 }
 exports.plot2D = plot2D;
