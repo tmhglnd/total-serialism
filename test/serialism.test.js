@@ -53,32 +53,19 @@ console.log();
 // markov.clear();
 // console.log(markov.table);
 
-let ca = new Algo.Automaton();
-ca.rule(106);
-
-Rand.seed(0);
-// ca.feed(Rand.randomFloat(40).map(x => Number(x > 0.5)));
-ca.feed(Rand.coin(40));
-
-caRes = [];
-for (let i=0; i<50; i++){
-	caRes.push(ca.next());
-}
-Util.draw(caRes);
-
-// fullTest();
+fullTest();
 
 function fullTest(){
 	console.time('Total Time');
 
-	testSerial();
-	testGen();
+	// testSerial();
+	// testGen();
 	testAlgo();
-	testRand();
-	testMod();
-	testStat();
-	testTranslate();
-	testUtil();
+	// testRand();
+	// testMod();
+	// testStat();
+	// testTranslate();
+	// testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -174,6 +161,19 @@ function testAlgo(){
 	test("Algo.linden([1, 0, 1], 3, {0: [1], 1: [0, 1]})");
 	// more complex rules for semitone melodies (see above for rules)
 	test("Algo.linden(0, 3, complexRules)");
+
+	let ca = new Algo.Automaton();
+	ca.rule(9);
+
+	Rand.seed(0);
+	// ca.feed(Rand.randomFloat(40).map(x => Number(x > 0.5)));
+	ca.feed(Rand.coin(40));
+
+	caRes = [];
+	for (let i=0; i<10; i++){
+		caRes.push(ca.next());
+	}
+	Util.draw(caRes);
 
 	pagebreak("Fibonacci");
 	test('Algo.fibonacci()');
