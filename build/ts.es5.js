@@ -2330,7 +2330,24 @@ function threeFibonacci(){var len=arguments.length>0&&arguments[0]!==undefined?a
 // @param {Bool} -> numbers as strings (optional, default=false)
 // @return {String-Array} -> array of bignumbers as strings
 // 
-function lucas(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var offset=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var toString=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;var f=numBonacci(len+offset,2,1,1).map(function(x){return toString?x.toFixed():x.toNumber();});if(offset>0){return f.slice(offset,offset+len);}return f;}exports.lucas=lucas;// Generate an Elementary Cellular Automaton
+function lucas(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var offset=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var toString=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;var f=numBonacci(len+offset,2,1,1).map(function(x){return toString?x.toFixed():x.toNumber();});if(offset>0){return f.slice(offset,offset+len);}return f;}exports.lucas=lucas;// Generate an Elementary Cellular Automaton class
+// This is an one dimensional array (collection of cells) with states
+// that are either dead or alive (0/1). By following a set of rules the
+// next generation is calculated for every cell based on its neighbouring
+// cells. Invoke the next() method to iterate the generations. Set the first
+// generation with the feed() method (usually random values work quite well)
+// Change the rule() based on a decimal number or an array of digits
+// 
+// Some interesting rules to try: 
+// 3 5 9 18 22 26 30 41 45 54 60 73 90 105 
+// 106 110 120 122 126 146 150 154 181
+// 
+// @constructor {length, rule} -> generate the CA
+// @get state -> return the current generations as array
+// @get table -> return the table of rules
+// @method rule() -> set the rule based on decimal number or array
+// @method feed() -> feed the initial generation with an array
+// @method next() -> generate the next generation and return
 // 
 var Automaton=/*#__PURE__*/function(){function Automaton(){var l=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var r=arguments.length>1&&arguments[1]!==undefined?arguments[1]:110;_classCallCheck(this,Automaton);// the size of the population for each generation
 this._length=Math.max(3,l);// the state of the current generation
