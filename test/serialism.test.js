@@ -56,26 +56,14 @@ console.log();
 let ca = new Algo.Automaton();
 ca.rule(120);
 
-Rand.seed(65723);
-ca.feed(Rand.randomFloat(46).map(x => Number(x > 0.2)));
+Rand.seed(6523);
+ca.feed(Rand.randomFloat(40).map(x => Number(x > 0.2)));
 
+caRes = [];
 for (let i=0; i<50; i++){
-	Util.plot2D(ca.next(), { error: true, ascii: false });
+	caRes.push(ca.next());
 }
-
-// console.log(Util.plot2D())
-
-let arr2d = [];
-for (let i=0; i<50; i++){
-	// arr2d.push(Gen.sine(46, i*0.5+1));
-	// arr2d.push(Gen.cosine(46, i+1));
-	// arr2d.push(Algo.euclid(40, i));
-	// arr2d.push(Rand.random(40, 0, 24));
-	// Rand.seed(123);
-	arr2d.push(Rand.drunk(40, 2));
-}
-
-// Util.plot2D(arr2d, { ascii: false });
+// Util.plot2D(caRes);
 
 // fullTest();
 
@@ -532,6 +520,21 @@ function testUtil(){
 	test("Util.div([0, 3, 7], 2)");
 	test("Util.div([1, 2, 3, 4], [1, 2, 3])");
 	test("Util.div([1, 2], [1, 2, 3, 4])");
+
+	let drawing = [];
+	Rand.seed(628);
+	for (let i=0; i<10; i++){
+		drawing.push(Rand.drunk(42, 3));
+	}
+	// console.log('Util.draw(drawing);');
+	// Util.draw(drawing);
+
+	let harmonics = [];
+	for (let i=0; i<10; i++){
+		harmonics.push(Gen.sine(42, i+1));
+	}
+	// console.log('Util.draw(harmonics, { extend: false });')
+	// Util.draw(harmonics, { extend: false });
 }
 
 function test(f){
