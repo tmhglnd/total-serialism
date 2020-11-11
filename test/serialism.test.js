@@ -57,6 +57,7 @@ fullTest();
 
 function fullTest(){
 	console.time('Total Time');
+
 	testSerial();
 	testGen();
 	testAlgo();
@@ -160,6 +161,19 @@ function testAlgo(){
 	test("Algo.linden([1, 0, 1], 3, {0: [1], 1: [0, 1]})");
 	// more complex rules for semitone melodies (see above for rules)
 	test("Algo.linden(0, 3, complexRules)");
+
+	let ca = new Algo.Automaton();
+	ca.rule(122);
+
+	Rand.seed(0);
+	// ca.feed(Rand.randomFloat(40).map(x => Number(x > 0.5)));
+	ca.feed(Rand.coin(40));
+
+	caRes = [];
+	for (let i=0; i<10; i++){
+		caRes.push(ca.next());
+	}
+	Util.draw(caRes);
 
 	pagebreak("Fibonacci");
 	test('Algo.fibonacci()');
@@ -508,6 +522,21 @@ function testUtil(){
 	test("Util.div([0, 3, 7], 2)");
 	test("Util.div([1, 2, 3, 4], [1, 2, 3])");
 	test("Util.div([1, 2], [1, 2, 3, 4])");
+
+	let drawing = [];
+	Rand.seed(628);
+	for (let i=0; i<10; i++){
+		drawing.push(Rand.drunk(42, 3));
+	}
+	// console.log('Util.draw(drawing);');
+	// Util.draw(drawing);
+
+	let harmonics = [];
+	for (let i=0; i<10; i++){
+		harmonics.push(Gen.sine(42, i+1));
+	}
+	// console.log('Util.draw(harmonics, { extend: false });')
+	// Util.draw(harmonics, { extend: false });
 }
 
 function test(f){
