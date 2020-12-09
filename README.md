@@ -104,6 +104,38 @@
 
 # Newest features
 
+## cellular automaton
+
+Generate an Elementary Cellular Automaton class. This is an one dimensional array (collection of cells) with states that are either dead or alive (0/1). By following a set of rules the next generation is calculated for every cell based on its neighbouring cells.
+
+```js 
+let ca = new Algo.Automaton();
+// feed with 40 randomly generated values 0-1
+ca.feed(Rand.coin(40));
+// set the rule with a decimal representation
+ca.rule(120);
+// generate the next generation and store in array
+let gen = ca.next();
+
+// create multiple generations in a forloop
+let gens = [];
+for (let i=0; i<10; i++){
+	gens.push(ca.next());
+}
+Util.draw(gens);
+
+//  ██  ████ ████ █  ███ █    █  ██    █ ██
+// ████ █  ███  ██ █ █ ██ █    █ ███    ███
+//    ██ █ █ ██ ███ █ ████ █    ██ ██   █  
+//    ███ █ █████ ██ ██  ██ █   ██████   █ 
+//    █ ██ ██   ████████ ███ █  █    ██   █
+// █   ███████  █      ███ ██ █  █   ███   
+//  █  █     ██  █     █ █████ █  █  █ ██  
+//   █  █    ███  █     ██   ██ █  █  ████ 
+//    █  █   █ ██  █    ███  ███ █  █ █  ██
+// █   █  █   ████  █   █ ██ █ ██ █  █ █ ██
+```
+
 Use the `new TL.Scala()` class to import a *.scl* file (Scala tuning format) to work with custom tuning systems apart from the Western 12-TET (Equal Temperament) tuning or use one of the tunings from a database with over 5000 tunings from [Stichting Huygens-Fokker](http://www.huygens-fokker.org/scala/).
 
 ```js
