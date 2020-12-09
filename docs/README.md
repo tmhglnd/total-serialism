@@ -86,5 +86,8 @@
 	- [multiply](./utility-methods.md#usage)
 	- [divide](./utility-methods.md#usage)
 	- [mod](./utility-methods.md#usage)
+	- [minimum](./utility-methods.md#minimum)
+	- [maximum](./utility-methods.md#maximum)
+	- [normalize](./utility-methods.md#normalize)
 	- [plot](./utility-methods.md#plot)
 	- [draw](./utility-methods.md#draw)
