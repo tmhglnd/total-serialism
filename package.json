@@ -41,7 +41,13 @@
     "pisano",
     "lindenmayer",
     "l-system",
-    "euclidean"
+    "euclidean",
+    "scala",
+    "tuning",
+    "cellular",
+    "automaton",
+    "markov",
+    "chain"
   ],
   "author": "Timo Hoogland",
   "license": "MIT",
