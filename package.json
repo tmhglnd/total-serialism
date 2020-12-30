@@ -58,18 +58,18 @@
   "dependencies": {
     "@tonaljs/tonal": "^3.7.5",
     "asciichart": "^1.5.25",
-    "bignumber.js": "^9.0.0",
+    "bignumber.js": "^9.0.1",
     "save-dev": "0.0.1-security",
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.1",
-    "@babel/preset-env": "^7.11.0",
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
     "browserify": "^16.5.2",
     "fast-glob": "^3.2.4",
     "fs-extra": "^9.0.1",
-    "nodemon": "^2.0.4",
-    "uglify-js": "^3.10.1"
+    "nodemon": "^2.0.6",
+    "uglify-js": "^3.12.3"
   }
 }
