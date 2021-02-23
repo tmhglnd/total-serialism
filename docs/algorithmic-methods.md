@@ -6,6 +6,7 @@ These are also generative methods, but are in general more complex algorithms, s
 - [hexBeat](#hexbeat)
 - [linden](#linden)
 - [cellular automaton](#cellular-automaton)
+- [collatz](#collatz)
 - [fibonacci](#fibonacci)
 - [pisano](#pisano)
 - [pell](#pell)
@@ -176,6 +177,19 @@ ca.rule(9);
 //  █     ███ █            ███████ █       
 //    ███ █     ██████████ █         ██████
 
+```
+
+## collatz
+
+Generate an array of numbers from the Collatz Conjecture, also known as the `3n+1` conjecture. Start with any positive integer `n`. Each next number is obtained from the previous number as follows: If the previous number is even then the next term is the previous term divided by 2. If the previous term is odd tthen the next term is 3 times the prevous term plus 1. The conjecture is that no matter what value of `n`, the sequence will always reach one. The length of the output is quite unpredicatable and can therefore be an interesting sequence for algorithmic composition.
+
+**arguments**
+- {Int+} -> starting point
+
+```js
+// the collatz sequence for the number 15
+Algo.collatz(15);
+//=> [] 
 ```
 
 ## fibonacci

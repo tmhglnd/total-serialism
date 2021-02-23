@@ -60,9 +60,9 @@ function fullTest(){
 
 	// testSerial();
 	// testGen();
-	// testAlgo();
+	testAlgo();
 	// testRand();
-	testMod();
+	// testMod();
 	// testStat();
 	// testTranslate();
 	// testUtil();
@@ -181,6 +181,17 @@ function testAlgo(){
 		caRes.push(ca.next());
 	}
 	Util.draw(caRes);
+
+	pagebreak("Collatz");
+	test('Algo.collatz()');
+	test('Algo.collatz(43)');
+	test('Algo.collatz(7)');
+	test('Algo.collatz(314)');
+	
+	test('Algo.collatzMod()');
+	test('Algo.collatzMod(43)');
+	test('Algo.collatzMod(7)');
+	test('Algo.collatzMod(314)');
 
 	pagebreak("Fibonacci");
 	test('Algo.fibonacci()');
