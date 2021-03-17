@@ -157,12 +157,18 @@ function collatz(n=12){
 }
 exports.collatz = collatz;
 
-function collatzMod(n=12){
-	return Util.mod(collatz(n), 2);
+// Return the modulus of a collatz conjecture sequence
+// Set the modulo
+// 
+// @param {Int+} -> starting number
+// @param {Int+} -> modulus
+// 
+function collatzMod(n=12, m=2){
+	return Util.mod(collatz(n), Math.min(m, Math.floor(m)));
 }
 exports.collatzMod = collatzMod;
 
-// The collatz conjecture with BigNumber
+// The collatz conjecture with BigNumber library
 // 
 function bigCollatz(n){
 	let num = new BigNumber(n);
@@ -180,6 +186,19 @@ function bigCollatz(n){
 	return sequence.reverse();
 }
 exports.bigCollatz = bigCollatz;
+
+// Return the modulus of a collatz conjecture sequence
+// Set the modulo
+// 
+function bigCollatzMod(n=12, m=2){
+	let arr = bigCollatz(n);
+	for (let i in arr){
+		arr[i] = new BigNumber(arr[i]);
+		arr[i] = arr[i].mod(m).toNumber();
+	}
+	return arr;
+}
+exports.bigCollatzMod = bigCollatzMod;
 
 // Generate any n-bonacci sequence as an array of BigNumber objects
 // F(n) = t * F(n-1) + F(n-2). This possibly generatres various 

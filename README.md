@@ -51,6 +51,8 @@ Util.draw(gens);
 // █   █  █   ████  █   █ ██ █ ██ █  █ █ ██
 ```
 
+## Scale tuning
+
 Use the `new TL.Scala()` class to import a *.scl* file (Scala tuning format) to work with custom tuning systems apart from the Western 12-TET (Equal Temperament) tuning or use one of the tunings from a database with over 5000 tunings from [Stichting Huygens-Fokker](http://www.huygens-fokker.org/scala/).
 
 ```js
@@ -73,6 +75,8 @@ scl.names;
 //   '08-13',
 //   '08-19', ... and 5000 more]
 ```
+
+## Expand and stretch array
 
 Expand an array by analyzing its internal structure
 

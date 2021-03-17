@@ -55,12 +55,14 @@ console.log();
 
 fullTest();
 
+// console.log(Algo.bigCollatzMod(100000));
+
 function fullTest(){
 	console.time('Total Time');
 
 	// testSerial();
 	// testGen();
-	testAlgo();
+	// testAlgo();
 	// testRand();
 	// testMod();
 	// testStat();
@@ -190,8 +192,8 @@ function testAlgo(){
 	
 	test('Algo.collatzMod()');
 	test('Algo.collatzMod(43)');
-	test('Algo.collatzMod(7)');
-	test('Algo.collatzMod(314)');
+	test('Algo.collatzMod(7, 12)');
+	test('Algo.collatzMod(314, 5)');
 
 	pagebreak("Fibonacci");
 	test('Algo.fibonacci()');
