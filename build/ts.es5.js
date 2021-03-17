@@ -2235,7 +2235,7 @@ function cosine(){var len=arguments.length>0&&arguments[0]!==undefined?arguments
 // reading in README.md. Also inspired by Numberphile videos on 
 // pisano period on youtube.
 //==============================================================================
-var Transform=require('./transform.js');var BigNumber=require('bignumber.js');// configure the bignumber settings
+var Util=require('./utility.js');var Transform=require('./transform.js');var BigNumber=require('bignumber.js');// configure the bignumber settings
 BigNumber.config({DECIMAL_PLACES:20,EXPONENTIAL_AT:[-7,20]});// A hexadecimal rhythm generator. Generates values of 0 and 1
 // based on the input of a hexadecimal character string
 //
@@ -2260,7 +2260,28 @@ var pattern,counts,remainders;function euclid(){var steps=arguments.length>0&&ar
 // @param {Object} -> production rules
 // @return {String/Array} -> axiom determins string or array output
 // 
-function linden(){var axiom=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];var iteration=arguments.length>1&&arguments[1]!==undefined?arguments[1]:3;var rules=arguments.length>2&&arguments[2]!==undefined?arguments[2]:{1:[1,0],0:[1]};axiom=typeof axiom==='number'?[axiom]:axiom;var asString=typeof axiom==='string';var res;for(var n=0;n<iteration;n++){res=asString?"":[];for(var ch in axiom){var _char2=axiom[ch];var rule=rules[_char2];if(rule){res=asString?res+rule:res.concat(rule);}else{res=asString?res+_char2:res.concat(_char2);}}axiom=res;}return res;}exports.linden=linden;// Generate any n-bonacci sequence as an array of BigNumber objects
+function linden(){var axiom=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];var iteration=arguments.length>1&&arguments[1]!==undefined?arguments[1]:3;var rules=arguments.length>2&&arguments[2]!==undefined?arguments[2]:{1:[1,0],0:[1]};axiom=typeof axiom==='number'?[axiom]:axiom;var asString=typeof axiom==='string';var res;for(var n=0;n<iteration;n++){res=asString?"":[];for(var ch in axiom){var _char2=axiom[ch];var rule=rules[_char2];if(rule){res=asString?res+rule:res.concat(rule);}else{res=asString?res+_char2:res.concat(_char2);}}axiom=res;}return res;}exports.linden=linden;// Generate a single sequence of the Collatz Conjecture given
+// a starting value greater than 1
+// The conjecture states that any giving positive integer will
+// eventually reach zero after iteratively applying the following rules
+// if the number is even, divide by 2
+// if the number is odd, multiply by 3 and add 1
+// 
+// @param {Int+} -> starting number
+// @return {Array} -> the sequence (inverted, so starting at 1)
+// 
+function collatz(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;n=Math.max(2,n);var sequence=[];while(n!=1){if(n%2){n=n*3+1;}else{n=n/2;}sequence.push(n);}return sequence.reverse();}exports.collatz=collatz;// Return the modulus of a collatz conjecture sequence
+// Set the modulo
+// 
+// @param {Int+} -> starting number
+// @param {Int+} -> modulus
+// 
+function collatzMod(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var m=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;return Util.mod(collatz(n),Math.min(m,Math.floor(m)));}exports.collatzMod=collatzMod;// The collatz conjecture with BigNumber library
+// 
+function bigCollatz(n){var num=new BigNumber(n);var sequence=[];while(num.gt(1)){if(num.mod(2).eq(1)){num=num.times(3);num=num.plus(1);}else{num=num.div(2);}sequence.push(num.toFixed());}return sequence.reverse();}exports.bigCollatz=bigCollatz;// Return the modulus of a collatz conjecture sequence
+// Set the modulo
+// 
+function bigCollatzMod(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var m=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;var arr=bigCollatz(n);for(var i in arr){arr[i]=new BigNumber(arr[i]);arr[i]=arr[i].mod(m).toNumber();}return arr;}exports.bigCollatzMod=bigCollatzMod;// Generate any n-bonacci sequence as an array of BigNumber objects
 // F(n) = t * F(n-1) + F(n-2). This possibly generatres various 
 // integer sequences: fibonacci, pell, tribonacci
 // 
@@ -2363,7 +2384,9 @@ var Automaton=/*#__PURE__*/function(){function Automaton(){var l=arguments.lengt
 this._length=Math.max(3,l);// the state of the current generation
 this._state=new Array(this._length).fill(0);// the rule (will be converted to binary representation)
 this._rule=this.ruleToBinary(r).split('');// the rule table for lookup
-this._table=this.binaryToTable(this._rule);}_createClass(Automaton,[{key:"rule",value:function rule(a){// set the rule for the automaton
+this._table=this.binaryToTable(this._rule);}_createClass(Automaton,[{key:"state",get:function get(){// return the current state of the Automaton
+return this._state;}},{key:"table",get:function get(){// return the object of rules
+return this._table;}},{key:"rule",value:function rule(a){// set the rule for the automaton
 if(Array.isArray(a)){// when the argument is an array of 1's and 0's convert to table
 if(a.length!=8){console.log('Warning: rule() must have length 8 to correctly represent all possible states');}var r=a.slice(0,8).join('').padStart(8,'0');// this._rule = parseInt(r, 2);
 this._table=this.binaryToTable(r);}else if(_typeof(a)==='object'){// when the argument is an object store it directly in table
@@ -2375,9 +2398,7 @@ for(var i=0;i<l;i++){var left=this._state[(i-1%l+l)%l];var right=this._state[(i+
 n[i]=this._table[[left,this._state[i],right].join('')];}// store in state and return result as array
 return this._state=n;}},{key:"ruleToBinary",value:function ruleToBinary(r){// convert a rule number to binary sequence 
 return r.toString(2).padStart(8,'0');}},{key:"binaryToTable",value:function binaryToTable(r){// store binary sequence in lookup table
-var c={};for(var i=0;i<8;i++){c[(7-i).toString(2).padStart(3,'0')]=Number(r[i]);}return c;}},{key:"state",get:function get(){// return the current state of the Automaton
-return this._state;}},{key:"table",get:function get(){// return the object of rules
-return this._table;}}]);return Automaton;}();exports.Automaton=Automaton;},{"./transform.js":41,"bignumber.js":27}],39:[function(require,module,exports){//=======================================================================
+var c={};for(var i=0;i<8;i++){c[(7-i).toString(2).padStart(3,'0')]=Number(r[i]);}return c;}}]);return Automaton;}();exports.Automaton=Automaton;},{"./transform.js":41,"./utility.js":43,"bignumber.js":27}],39:[function(require,module,exports){//=======================================================================
 // gen-stochastic.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2538,7 +2559,8 @@ var MarkovChain=/*#__PURE__*/function(){function MarkovChain(data){_classCallChe
 this._table={};// train if dataset is provided
 if(data){this.train(data);};// current state of markov chain
 this._state;// scoped random number generator
-this.rng=seedrandom();}_createClass(MarkovChain,[{key:"clear",value:function clear(){// empty the transition probabilities
+this.rng=seedrandom();}_createClass(MarkovChain,[{key:"table",get:function get(){// return copy of object
+return _objectSpread({},this._table);}},{key:"clear",value:function clear(){// empty the transition probabilities
 this._table={};}},{key:"train",value:function train(a){if(!Array.isArray(a)){return console.error('Error: train() expected array but received:',_typeof(a));}// build a transition table from array of values
 for(var i=1;i<a.length;i++){if(!this._table[a[i-1]]){this._table[a[i-1]]=[a[i]];}else{this._table[a[i-1]].push(a[i]);}}}},{key:"seed",value:function seed(s){// set unpredictable seed if 0, null or undefined
 if(s===0||s===null||s===undefined){rng=seedrandom();}else{rng=seedrandom(s);}}},{key:"state",value:function state(a){// set the state
@@ -2547,8 +2569,7 @@ if(!this._table[a]){console.error('Warning: state() value is not part of transit
 if(this._state===undefined||!this._table[this._state]){var states=Object.keys(this._table);this._state=states[Math.floor(rng()*states.length)];}// get probabilities based on state
 var probs=this._table[this._state];// select pseudorandomly next value
 this._state=probs[Math.floor(rng()*probs.length)];return this._state;}},{key:"chain",value:function chain(l){// return an array of values generated with next()
-var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}},{key:"table",get:function get(){// return copy of object
-return _objectSpread({},this._table);}}]);return MarkovChain;}();exports.MarkovChain=MarkovChain;},{"./gen-basic.js":37,"./statistic.js":40,"./utility.js":43,"seedrandom":29}],40:[function(require,module,exports){//=======================================================================
+var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return MarkovChain;}();exports.MarkovChain=MarkovChain;},{"./gen-basic.js":37,"./statistic.js":40,"./utility.js":43,"seedrandom":29}],40:[function(require,module,exports){//=======================================================================
 // statistic.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2941,12 +2962,16 @@ this.scl={'description':'Divide an octave into 12 equal steps','size':1,'tune':4
 // 
 // @return {Object} -> Object with the loaded scala data
 // 
-_createClass(Scala,[{key:"tune",// set the tuning in Hz for the center value
+_createClass(Scala,[{key:"data",get:function get(){return _objectSpread({},this.scl);}// get the filenames from the database
+// 
+// @return {Array} -> array with all scala filenames
+// 
+},{key:"names",get:function get(){var db=require('../data/scldb.json');return Object.keys(db);}// set the tuning in Hz for the center value
 // 
 // @param {Number} -> tuning in Hz
 // @return {Void}
 // 
-value:function tune(v){if(isNaN(Number(v))){error(v+' is not a number \n');}else{this.scl['tune']=v;}}// set the center value corresponding with cent 0 and tuning frequency
+},{key:"tune",value:function tune(v){if(isNaN(Number(v))){error(v+' is not a number \n');}else{this.scl['tune']=v;}}// set the center value corresponding with cent 0 and tuning frequency
 // 
 // @param {Int} -> center value as integer
 // @return {Void}
@@ -3011,11 +3036,7 @@ this.scl['range']=this.scl.cents.pop();}// return an object with frequencies der
 },{key:"chart",value:function chart(){var _this2=this;var hi=arguments.length>0&&arguments[0]!==undefined?arguments[0]:127;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;return function(hi,lo){// swap lo and hi range if hi is smaller than lo
 if(hi<lo){var t=hi,hi=lo,lo=t;}var range=hi-lo;// empty object for frequencies
 var chart={};// calculate frequencies for values 0 to 127
-for(var i=0;i<range+1;i++){chart[i+lo]=_this2.scalaToFreq(i+lo);}return chart;}(hi,lo);}},{key:"data",get:function get(){return _objectSpread({},this.scl);}// get the filenames from the database
-// 
-// @return {Array} -> array with all scala filenames
-// 
-},{key:"names",get:function get(){var db=require('../data/scldb.json');return Object.keys(db);}}]);return Scala;}();exports.Scala=Scala;},{"../data/scales.json":1,"../data/scldb.json":2,"../data/tones.json":3,"./transform.js":41,"@tonaljs/tonal":25}],43:[function(require,module,exports){//====================================================================
+for(var i=0;i<range+1;i++){chart[i+lo]=_this2.scalaToFreq(i+lo);}return chart;}(hi,lo);}}]);return Scala;}();exports.Scala=Scala;},{"../data/scales.json":1,"../data/scldb.json":2,"../data/tones.json":3,"./transform.js":41,"@tonaljs/tonal":25}],43:[function(require,module,exports){//====================================================================
 // utility.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com

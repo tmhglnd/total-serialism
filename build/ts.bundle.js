@@ -7822,6 +7822,7 @@ exports.cosine = cosine;
 // pisano period on youtube.
 //==============================================================================
 
+const Util = require('./utility.js');
 const Transform = require('./transform.js');
 const BigNumber = require('bignumber.js');
 
@@ -7930,6 +7931,75 @@ function linden(axiom=[1], iteration=3, rules={1: [1, 0], 0: [1]}){
 	return res;
 }
 exports.linden = linden;
+
+// Generate a single sequence of the Collatz Conjecture given
+// a starting value greater than 1
+// The conjecture states that any giving positive integer will
+// eventually reach zero after iteratively applying the following rules
+// if the number is even, divide by 2
+// if the number is odd, multiply by 3 and add 1
+// 
+// @param {Int+} -> starting number
+// @return {Array} -> the sequence (inverted, so starting at 1)
+// 
+function collatz(n=12){
+	n = Math.max(2, n);
+	let sequence = [];
+
+	while (n != 1){
+		if (n % 2){
+			n = n * 3 + 1;
+		} else {
+			n = n / 2;
+		}
+		sequence.push(n);
+	}
+	return sequence.reverse();
+}
+exports.collatz = collatz;
+
+// Return the modulus of a collatz conjecture sequence
+// Set the modulo
+// 
+// @param {Int+} -> starting number
+// @param {Int+} -> modulus
+// 
+function collatzMod(n=12, m=2){
+	return Util.mod(collatz(n), Math.min(m, Math.floor(m)));
+}
+exports.collatzMod = collatzMod;
+
+// The collatz conjecture with BigNumber library
+// 
+function bigCollatz(n){
+	let num = new BigNumber(n);
+	let sequence = [];
+
+	while (num.gt(1)){
+		if (num.mod(2).eq(1)){
+			num = num.times(3);
+			num = num.plus(1);
+		} else {
+			num = num.div(2);
+		}
+		sequence.push(num.toFixed());
+	}
+	return sequence.reverse();
+}
+exports.bigCollatz = bigCollatz;
+
+// Return the modulus of a collatz conjecture sequence
+// Set the modulo
+// 
+function bigCollatzMod(n=12, m=2){
+	let arr = bigCollatz(n);
+	for (let i in arr){
+		arr[i] = new BigNumber(arr[i]);
+		arr[i] = arr[i].mod(m).toNumber();
+	}
+	return arr;
+}
+exports.bigCollatzMod = bigCollatzMod;
 
 // Generate any n-bonacci sequence as an array of BigNumber objects
 // F(n) = t * F(n-1) + F(n-2). This possibly generatres various 
@@ -8214,7 +8284,7 @@ class Automaton {
 	}
 }
 exports.Automaton = Automaton;
-},{"./transform.js":41,"bignumber.js":27}],39:[function(require,module,exports){
+},{"./transform.js":41,"./utility.js":43,"bignumber.js":27}],39:[function(require,module,exports){
 //=======================================================================
 // gen-stochastic.js
 // part of 'total-serialism' Package
