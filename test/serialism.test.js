@@ -5,7 +5,7 @@ const fs = require('fs');
 let entryPoint = "../index";
 // entryPoint = "../build/ts.bundle.js";
 // entryPoint = "../build/ts.es5.js";
-entryPoint = "../build/ts.es5.min.js";
+// entryPoint = "../build/ts.es5.min.js";
 
 const Srl = require(entryPoint);
 const Gen = Srl.Generative;
@@ -60,14 +60,14 @@ fullTest();
 function fullTest(){
 	console.time('Total Time');
 
-	testSerial();
+	// testSerial();
 	testGen();
-	testAlgo();
-	testRand();
-	testMod();
-	testStat();
-	testTranslate();
-	testUtil();
+	// testAlgo();
+	// testRand();
+	// testMod();
+	// testStat();
+	// testTranslate();
+	// testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -95,7 +95,9 @@ function testGen(){
 	pagebreak("Generative");
 
 	test("Gen.spread()");
-	test("Gen.spreadFloat(7)");
+	test("Gen.spreadFloat()");
+	test("Gen.spreadInclusive()");
+	test("Gen.spreadInclusiveFloat()");
 
 	test("Gen.spread(5)");
 	test("Gen.spread(5, 12)");
@@ -106,32 +108,34 @@ function testGen(){
 	test("Gen.spreadInclusive(5, 12)");
 	test("Gen.spreadInclusive(5, 3, 12)");
 	test("Gen.spreadInclusive(5, 12, 3)");
-
-	// test("Gen.spreadInclusive(5, 7, 19)");
-	// test("Gen.spreadInc(4, 10, 2)");
 	
-	test("Gen.spreadFloat(5, 2, 11)");
+	test("Gen.spreadFloat(4)");
+	test("Gen.spreadFloat(4, 2)");
 	test("Gen.spreadFloat(4, -1, 1)");
-	test("Gen.spreadF(4, -2, 2)");
 	
-	test("Gen.spreadInclusiveFloat(9, -1, 1)");
-	test("Gen.spreadIncF(9, -1, 1)");
-	test("Gen.spreadInclusiveFloatExp(5, 0, 1, 2)");
-	
-	test("Gen.fill()");
-	test("Gen.fill(10, 2, 15, 3, 20, 4)");
+	test("Gen.spreadInclusiveFloat(5)");
+	test("Gen.spreadInclusiveFloat(5, 2)");
+	test("Gen.spreadInclusiveFloat(5, -1, 1)");
 
-	test("Util.plot(Gen.sineFloat(16), {log: false, height: 5, data: true})");
-	test("Gen.sineFloat(10, 1, -1, 1, 0.5)");
-	// test("Gen.sin(8)");
-	test("Util.plot(Gen.cosineFloat(16), {log: false, height: 5, data: true})");
-	// test("Gen.cos(8)");
+	test("Gen.spreadExp(10, 0, 10, 2)");
+	test("Gen.spreadInclusiveExp(10, 0, 10, 2)");
+	test("Gen.spreadFloatExp(12, 0, 10, 0.5)");
+	test("Gen.spreadInclusiveFloatExp(12, 0, 10, 0.5)");
 
-	test("Util.plot(Gen.sine(10), {log: false})");
-	test("Gen.sine(12, 1, -1, 1)");
-	test("Util.plot(Gen.sine(11, 4, 0, 7), {log: false})");
+	// test("Gen.fill()");
+	// test("Gen.fill(10, 2, 15, 3, 20, 4)");
 
-	test("Util.plot(Gen.cosine(7, 1.5), {log: false})");
+	// test("Util.plot(Gen.sineFloat(16), {log: false, height: 5, data: true})");
+	// test("Gen.sineFloat(10, 1, -1, 1, 0.5)");
+	// // test("Gen.sin(8)");
+	// test("Util.plot(Gen.cosineFloat(16), {log: false, height: 5, data: true})");
+	// // test("Gen.cos(8)");
+
+	// test("Util.plot(Gen.sine(10), {log: false})");
+	// test("Gen.sine(12, 1, -1, 1)");
+	// test("Util.plot(Gen.sine(11, 4, 0, 7), {log: false})");
+
+	// test("Util.plot(Gen.cosine(7, 1.5), {log: false})");
 }
 
 function testAlgo(){

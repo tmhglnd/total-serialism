@@ -16,11 +16,14 @@ const Util = require('./utility.js');
 // Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
 // Evenly spaced values in between in floating-point
+// Defaults to range of 0 - 1 for Float
 // 
-// @params {array-length, low-output, high-output}
-// @return {Array}
+// @param {Int+} -> array-length
+// @param {Int} -> low output 
+// @param {Int} -> high output
+// @return -> {Array}
 //
-function spreadFloat(len=1, lo=len, hi){
+function spreadFloat(len=1, lo=1, hi){
 	// if hi undefined set lo to 0 and hi=lo
 	if (hi === undefined){ var t=lo, lo=0, hi=t; }
 	// calculate the range
@@ -29,6 +32,7 @@ function spreadFloat(len=1, lo=len, hi){
 	lo = Math.min(lo, hi);
 	// len is minimum of 1
 	len = Math.max(1, len);
+	if (len === 1){ return [0]; }
 	// stepsize
 	let s = Math.abs(r) / len;
 	// generate array
@@ -44,11 +48,12 @@ exports.spreadF = spreadFloat;
 // Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
 // Set an exponential curve in the spacing of the values.
+// Defaults to range of 0 - 1 for Float
 // 
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadFloatExp(len=1, lo=len, hi, exp=1){
+function spreadFloatExp(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
 	if (hi === undefined){ var t=lo, lo=0, hi=t; }
 	// calculate the range
@@ -57,6 +62,7 @@ function spreadFloatExp(len=1, lo=len, hi, exp=1){
 	lo = Math.min(lo, hi);
 	// len is minimum of 1
 	len = Math.max(1, len);
+	if (len === 1){ return [0]; }
 	// generate array
 	let arr = [];
 	for (let i=0; i<len; i++){
@@ -71,7 +77,7 @@ exports.spreadFloatExp = spreadFloatExp;
 // @params {length, low-output, high-output}
 // @return {Array}
 //
-function spread(len, lo, hi){
+function spread(len, lo=len, hi){
 	let arr = spreadFloat(len, lo, hi);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
@@ -82,7 +88,7 @@ exports.spread = spread;
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadExp(len, lo, hi, exp){
+function spreadExp(len, lo=len, hi, exp){
 	let arr = spreadFloatExp(len, lo, hi, exp);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
@@ -91,11 +97,12 @@ exports.spreadExp = spreadExp;
 // Generate a list of n-length starting at one value
 // ending at the 3th argument.
 // Evenly spaced values in between in floating-point
+// Defaults to range of 0 - 1 for Float
 // 
 // @params {length, low-output, high-output}
 // @return {Array}
 //
-function spreadInclusiveFloat(len=1, lo=len, hi){
+function spreadInclusiveFloat(len=1, lo=1, hi){
 	// if hi undefined set lo to 0 and hi=lo
 	if (hi === undefined){ var t=lo, lo=0, hi=t; }
 	// calculate the range
@@ -104,6 +111,7 @@ function spreadInclusiveFloat(len=1, lo=len, hi){
 	lo = Math.min(lo, hi);
 	// len is minimum of 1
 	len = Math.max(1, len);
+	if (len === 1){ return [0]; }
 	// stepsize
 	let s = Math.abs(r) / (len - 1);
 	// generate array
@@ -119,11 +127,12 @@ exports.spreadIncF = spreadInclusiveFloat;
 // Generate a list of n-length starting at one value
 // ending at the 3th argument.
 // Set an exponential curve in the spacing of the values.
+// Defaults to range of 0 - 1 for Float
 // 
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadInclusiveFloatExp(len=1, lo=len, hi, exp=1){
+function spreadInclusiveFloatExp(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
 	if (hi === undefined){ var t=lo, lo=0, hi=t; }
 	// calculate the range
@@ -146,7 +155,7 @@ exports.spreadInclusiveFloatExp = spreadInclusiveFloatExp;
 // @params {length, low-output, high-output}
 // @return {Array}
 //
-function spreadInclusive(len, lo, hi){
+function spreadInclusive(len, lo=len, hi){
 	var arr = spreadInclusiveFloat(len, lo, hi);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
@@ -158,7 +167,7 @@ exports.spreadInc = spreadInclusive;
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadInclusiveExp(len, lo, hi, exp){
+function spreadInclusiveExp(len, lo=len, hi, exp){
 	var arr = spreadInclusiveFloatExp(len, lo, hi, exp);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
