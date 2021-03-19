@@ -123,17 +123,15 @@ function testGen(){
 	test("Gen.spreadInclusiveFloatExp(12, 0, 10, 0.5)");
 
 	// test("Gen.fill()");
-	// test("Gen.fill(10, 2, 15, 3, 20, 4)");
+	test("Gen.fill(10, 2, 15, 3, 20, 4)");
+	test("Gen.fill([10, 20], 2, 15, 3, 20, 4)");
+	test("Gen.fill([10, 20, 2, 15, 3, 20, 4])");
 
-	// test("Util.plot(Gen.sineFloat(16), {log: false, height: 5, data: true})");
-	// test("Gen.sineFloat(10, 1, -1, 1, 0.5)");
-	// // test("Gen.sin(8)");
+	test("Util.plot(Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5)), {log: false, height: 10})");
+
 	// test("Util.plot(Gen.cosineFloat(16), {log: false, height: 5, data: true})");
-	// // test("Gen.cos(8)");
 
 	// test("Util.plot(Gen.sine(10), {log: false})");
-	// test("Gen.sine(12, 1, -1, 1)");
-	// test("Util.plot(Gen.sine(11, 4, 0, 7), {log: false})");
 
 	// test("Util.plot(Gen.cosine(7, 1.5), {log: false})");
 }

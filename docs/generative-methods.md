@@ -78,16 +78,16 @@ Gen.spreadInclusive(5, 3, 12);
 Gen.spreadInclusive(5, 12, 3);
 //=> [ 12, 9, 7, 5, 3 ] 
 
-// generate an array of 9 floats between -1 - 1 (inclusive)
-Gen.spreadInclusiveFloat(9, -1, 1); 
-//=> [ -1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1 ]
+// generate an array of 5 floats (inclusive)
+Gen.spreadInclusiveFloat(5);
+//=> [ 0, 0.25, 0.5, 0.75, 1 ] 
 // Alternative: Gen.spreadIncF()
 
 ```
 
 ## spreadExp
 
-Similar to spread and spreadFloat but with an optional exponent as 4th argument
+Similar to spread and spreadFloat but with an optional exponent as 4th argument.
 
 **arguments**
 - {Int+} -> Length of array
@@ -95,16 +95,31 @@ Similar to spread and spreadFloat but with an optional exponent as 4th argument
 - {Number} -> High value (exclusive, optional, default=length)
 - {Number} -> Exponent (optional, default=1)
 
+```js
+Gen.spreadExp(10, 0, 10, 2);
+//=> [
+//   0, 0, 0, 0, 1,
+//   2, 3, 4, 6, 8
+// ] 
+```
+
 ## spreadInclusiveExp
 
-Similar to spreadInclusive and spreadInclusiveFloat but with an optional exponent as 4th argument
-
+Similar to spreadInclusive and spreadInclusiveFloat but with an optional exponent as 4th argument.
 
 **arguments**
 - {Int+} -> Length of array
 - {Number} -> Low value (optional)
 - {Number} -> High value (inclusive, optional)
 - {Number} -> Exponent (optional, default=1)
+
+```js
+Gen.spreadInclusiveExp(10, 0, 10, 2);
+//=> [
+//   0, 0, 0, 1,  1,
+//   3, 4, 6, 7, 10
+// ] 
+```
 
 ## fill
 
@@ -220,6 +235,19 @@ Gen.cosineFloat(8);
 //       -0.60 ┤    ╰╮    ╭╯    
 //       -1.00 ┤     ╰────╯      
 
+// frequency modulation of the period argument with another array
+Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5));
+//=>  1.00 ┤ ╭╮  ╭──╮           ╭╮   ╭╮  ╭─╮        
+//    0.80 ┤ │╰╮╭╯  │ ╭╮  ╭╮    ││   ││ ╭╯ │        
+//    0.60 ┤╭╯ ││   ╰╮││  ││    ││   ││ │  │        
+//    0.40 ┤│  ╰╯    │││  ││    ││   ││ │  │        
+//    0.20 ┤│        ││╰╮╭╯│╭╮  ││   ││ │  │╭╮   ╭╮ 
+//    0.00 ┼╯        ││ ││ ││╰╮╭╯│ ╭╮││ │  │││  ╭╯│ 
+//   -0.20 ┤         ││ ││ ││ ││ │ ││││ │  │││  │ │ 
+//   -0.40 ┤         ││ ││ ││ ││ │ ││││ │  ╰╯╰╮ │ │ 
+//   -0.60 ┤         ││ ╰╯ ││ ││ │ ││││ │     │ │ │ 
+//   -0.80 ┤         ││    ││ ╰╯ │ │╰╯│ │     ╰─╯ │ 
+//   -1.00 ┤         ╰╯    ╰╯    ╰─╯  ╰─╯         ╰  
 ```
 
 <iframe src="https://editor.p5js.org/tmhglnd/embed/CFOwE1yhW" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>

@@ -181,10 +181,10 @@ exports.spreadInclusiveExp = spreadInclusiveExp;
 // @return {Array}
 // 
 function fill(...args){
-	// when no arguments return array of 0
-	if (!args.length){ return [0]; }
 	// when arguments uneven strip last argument
 	if (args.length % 2){ args.pop(); }
+	// when no arguments return array of 0
+	if (!args.length){ return [0]; }
 	
 	let len = args.length/2;
 	let arr = [];
@@ -211,6 +211,8 @@ exports.fill = fill;
 function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	if (lo === undefined){ lo = -1; hi = 1; }
 	else if (hi === undefined){ hi = lo, lo = 0; }
+	// make periods array
+	periods = Array.isArray(periods)? periods : [periods];
 	// if no range specified
 	// if (lo === undefined){ lo = -1; hi = 1; }
 	// swap if lo > hi
@@ -220,9 +222,12 @@ function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	len = Math.max(1, len);
 	let arr = [];
 
-	let a = Math.PI * 2.0 * periods / len;
+	let twoPI = Math.PI * 2.0;
+	// let a = Math.PI * 2.0 * periods / len;
 	let p = Math.PI * phase * 2.0;
 	for (let i=0; i<len; i++){
+		// arr[i] = Math.sin(a * i + p);
+		let a = twoPI * periods[i % periods.length] / len;
 		arr[i] = Math.sin(a * i + p);
 	}
 	return Util.map(arr, -1, 1, lo, hi);
@@ -265,3 +270,4 @@ function cosine(len=1, periods=1, lo=12, hi, phase=0){
 	return arr.map(v => Math.trunc(v));
 }
 exports.cosine = cosine;
+
