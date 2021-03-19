@@ -2101,59 +2101,65 @@ Math// math: package containing random, pow, and seedrandom
 var Util=require('./utility.js');// Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
 // Evenly spaced values in between in floating-point
+// Defaults to range of 0 - 1 for Float
 // 
-// @params {array-length, low-output, high-output}
-// @return {Array}
+// @param {Int+} -> array-length
+// @param {Int} -> low output 
+// @param {Int} -> high output
+// @return -> {Array}
 //
-function spreadFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
+function spreadFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
 if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
 var r=hi-lo;// lo is actual lowest value
 lo=Math.min(lo,hi);// len is minimum of 1
-len=Math.max(1,len);// stepsize
+len=Math.max(1,len);if(len===1){return[0];}// stepsize
 var s=Math.abs(r)/len;// generate array
 var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadFloat=spreadFloat;exports.spreadF=spreadFloat;// Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
 // Set an exponential curve in the spacing of the values.
+// Defaults to range of 0 - 1 for Float
 // 
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadFloatExp(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
+function spreadFloatExp(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
 if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
 var r=hi-lo;// lo is actual lowest value
 lo=Math.min(lo,hi);// len is minimum of 1
-len=Math.max(1,len);// generate array
+len=Math.max(1,len);if(len===1){return[0];}// generate array
 var arr=[];for(var i=0;i<len;i++){arr[i]=Math.pow(i/len,exp)*Math.abs(r)+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadFloatExp=spreadFloatExp;// Spread function rounded to integers
 // 
 // @params {length, low-output, high-output}
 // @return {Array}
 //
-function spread(len,lo,hi){var arr=spreadFloat(len,lo,hi);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spread=spread;// Spread function floored to integers
+function spread(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;var arr=spreadFloat(len,lo,hi);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spread=spread;// Spread function floored to integers
 // 
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadExp(len,lo,hi,exp){var arr=spreadFloatExp(len,lo,hi,exp);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadExp=spreadExp;// Generate a list of n-length starting at one value
+function spreadExp(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3?arguments[3]:undefined;var arr=spreadFloatExp(len,lo,hi,exp);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadExp=spreadExp;// Generate a list of n-length starting at one value
 // ending at the 3th argument.
 // Evenly spaced values in between in floating-point
+// Defaults to range of 0 - 1 for Float
 // 
 // @params {length, low-output, high-output}
 // @return {Array}
 //
-function spreadInclusiveFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
+function spreadInclusiveFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
 if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
 var r=hi-lo;// lo is actual lowest value
 lo=Math.min(lo,hi);// len is minimum of 1
-len=Math.max(1,len);// stepsize
+len=Math.max(1,len);if(len===1){return[0];}// stepsize
 var s=Math.abs(r)/(len-1);// generate array
 var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadInclusiveFloat=spreadInclusiveFloat;exports.spreadIncF=spreadInclusiveFloat;// Generate a list of n-length starting at one value
 // ending at the 3th argument.
 // Set an exponential curve in the spacing of the values.
+// Defaults to range of 0 - 1 for Float
 // 
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadInclusiveFloatExp(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
+function spreadInclusiveFloatExp(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
 if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
 var r=hi-lo;// lo is actual lowest value
 lo=Math.min(lo,hi);// len is minimum of 1
@@ -2163,37 +2169,40 @@ var arr=[];for(var i=0;i<len;i++){arr[i]=Math.pow(i/(len-1),exp)*Math.abs(r)+lo;
 // @params {length, low-output, high-output}
 // @return {Array}
 //
-function spreadInclusive(len,lo,hi){var arr=spreadInclusiveFloat(len,lo,hi);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadInclusive=spreadInclusive;exports.spreadInc=spreadInclusive;// spreadinclusiveFloatExp function floored to integers
+function spreadInclusive(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;var arr=spreadInclusiveFloat(len,lo,hi);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadInclusive=spreadInclusive;exports.spreadInc=spreadInclusive;// spreadinclusiveFloatExp function floored to integers
 // 
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadInclusiveExp(len,lo,hi,exp){var arr=spreadInclusiveFloatExp(len,lo,hi,exp);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadInclusiveExp=spreadInclusiveExp;// fill an array with values. Arguments are pairs.
+function spreadInclusiveExp(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3?arguments[3]:undefined;var arr=spreadInclusiveFloatExp(len,lo,hi,exp);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadInclusiveExp=spreadInclusiveExp;// fill an array with values. Arguments are pairs.
 // Every pair consists of <value, amount>
 // The value is repeated n-amount times in the list
 // 
 // @params {value0, amount0, value1, amount1, ... value-n, amount-n}
 // @return {Array}
 // 
-function fill(){for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}// when no arguments return array of 0
-if(!args.length){return[0];}// when arguments uneven strip last argument
-if(args.length%2){args.pop();}var len=args.length/2;var arr=[];for(var i=0;i<len;i++){for(var k=0;k<Math.abs(args[i*2+1]);k++){arr.push(args[i*2]);}}return arr;}exports.fill=fill;// Generate an array with n-periods of a sine function
+function fill(){for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}// when arguments uneven strip last argument
+if(args.length%2){args.pop();}// when no arguments return array of 0
+if(!args.length){return[0];}var len=args.length/2;var arr=[];for(var i=0;i<len;i++){for(var k=0;k<Math.abs(args[i*2+1]);k++){arr.push(args[i*2]);}}return arr;}exports.fill=fill;// Generate an array with n-periods of a sine function
 // Optional last arguments set lo and hi range and phase offset
 // Only setting first range argument sets the low-range to 0
 // 
-// @param {Int} -> Length of output array
+// @param {Int} -> Length of output array (resolution)
 // @param {Number} -> Periods of sine-wave 
 // @param {Number} -> Low range of values (optional, default=-1) 
 // @param {Number} -> High range of values (optional, default=1)
 // @param {Number} -> Phase offset (optional, default=0)
 // @return {Array} -> Sine function
 // 
-function sineFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;if(lo===undefined){lo=-1;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// if no range specified
+function sineFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;if(lo===undefined){lo=-1;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
+periods=Array.isArray(periods)?periods:[periods];// if no range specified
 // if (lo === undefined){ lo = -1; hi = 1; }
 // swap if lo > hi
 // if (lo > hi){ var t=lo, lo=hi, hi=t; }
 // array length minimum of 1
-len=Math.max(1,len);var arr=[];var a=Math.PI*2.0*periods/len;var p=Math.PI*phase*2.0;for(var i=0;i<len;i++){arr[i]=Math.sin(a*i+p);}return Util.map(arr,-1,1,lo,hi);}exports.sineFloat=sineFloat;// exports.sin = sineFloat;
+len=Math.max(1,len);var arr=[];var twoPI=Math.PI*2.0;// let a = Math.PI * 2.0 * periods / len;
+var p=Math.PI*phase*2.0;for(var i=0;i<len;i++){// arr[i] = Math.sin(a * i + p);
+var a=twoPI*periods[i%periods.length]/len;arr[i]=Math.sin(a*i+p);}return Util.map(arr,-1,1,lo,hi);}exports.sineFloat=sineFloat;// exports.sin = sineFloat;
 // Generate an integer array with n-periods of a sine function
 // Optional last arguments set lo and hi range
 // 
@@ -2213,7 +2222,21 @@ function cosineFloat(){var len=arguments.length>0&&arguments[0]!==undefined?argu
 // Flip the low and high range to invert the function
 // See sin() for details
 // 
-function cosine(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var arr=sineFloat(len,periods,lo,hi,phase+0.25);return arr.map(function(v){return Math.trunc(v);});}exports.cosine=cosine;},{"./utility.js":43}],38:[function(require,module,exports){//==============================================================================
+function cosine(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var arr=sineFloat(len,periods,lo,hi,phase+0.25);return arr.map(function(v){return Math.trunc(v);});}exports.cosine=cosine;// Generate an array with n-periods of a saw/phasor function
+// Optional last arguments set lo and hi range and phase offset
+// Only setting first range argument sets the low-range to 0
+// 
+// @param {Int} -> Length of output array (resolution)
+// @param {Number/Array} -> Periods of the wave (option, default=1)
+// @param {Number} -> Low range of values (optional, default=-1) 
+// @param {Number} -> High range of values (optional, default=1)
+// @param {Number} -> Phase offset (optional, default=0)
+// @return {Array} -> wave-function as array
+//  
+function sawFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;if(lo===undefined){lo=-1;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
+periods=Array.isArray(periods)?periods:[periods];// array length minimum of 1
+len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=i*a*periods[i%periods.length]%1.0;}return Util.map(arr,0,1,lo,hi);// return arr;
+}exports.sawFloat=sawFloat;exports.phasor=sawFloat;function saw(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var arr=sawFloat(len,periods,lo,hi,phase);return arr.map(function(v){return Math.trunc(v);});}exports.saw=saw;},{"./utility.js":43}],38:[function(require,module,exports){//==============================================================================
 // gen-complex.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com

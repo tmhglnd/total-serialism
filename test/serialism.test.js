@@ -66,14 +66,14 @@ fullTest();
 function fullTest(){
 	console.time('Total Time');
 
-	// testSerial();
+	testSerial();
 	testGen();
-	// testAlgo();
-	// testRand();
-	// testMod();
-	// testStat();
-	// testTranslate();
-	// testUtil();
+	testAlgo();
+	testRand();
+	testMod();
+	testStat();
+	testTranslate();
+	testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
