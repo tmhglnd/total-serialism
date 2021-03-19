@@ -201,7 +201,7 @@ exports.fill = fill;
 // Optional last arguments set lo and hi range and phase offset
 // Only setting first range argument sets the low-range to 0
 // 
-// @param {Int} -> Length of output array
+// @param {Int} -> Length of output array (resolution)
 // @param {Number} -> Periods of sine-wave 
 // @param {Number} -> Low range of values (optional, default=-1) 
 // @param {Number} -> High range of values (optional, default=1)
@@ -271,3 +271,39 @@ function cosine(len=1, periods=1, lo=12, hi, phase=0){
 }
 exports.cosine = cosine;
 
+// Generate an array with n-periods of a saw/phasor function
+// Optional last arguments set lo and hi range and phase offset
+// Only setting first range argument sets the low-range to 0
+// 
+// @param {Int} -> Length of output array (resolution)
+// @param {Number/Array} -> Periods of the wave (option, default=1)
+// @param {Number} -> Low range of values (optional, default=-1) 
+// @param {Number} -> High range of values (optional, default=1)
+// @param {Number} -> Phase offset (optional, default=0)
+// @return {Array} -> wave-function as array
+//  
+function sawFloat(len=1, periods=1, lo, hi, phase=0){
+	if (lo === undefined){ lo = -1; hi = 1; }
+	else if (hi === undefined){ hi = lo, lo = 0; }
+	// make periods array
+	periods = Array.isArray(periods)? periods : [periods];
+
+	// array length minimum of 1
+	len = Math.max(1, len);
+	let arr = [];
+
+	let a = 1 / len;
+	for (let i=0; i<len; i++){
+		arr[i] = (i * a * periods[i % periods.length]) % 1.0;
+	}
+	return Util.map(arr, 0, 1, lo, hi);
+	// return arr;
+}
+exports.sawFloat = sawFloat;
+exports.phasor = sawFloat;
+
+function saw(len=1, periods=1, lo=12, hi, phase=0){
+	var arr = sawFloat(len, periods, lo, hi, phase);
+	return arr.map(v => Math.trunc(v));
+}
+exports.saw = saw;

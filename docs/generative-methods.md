@@ -9,6 +9,8 @@ Basic methods that generate arrays of number sequences, such as methods that gen
 - [spreadInclusiveExp / spreadInclusiveExpFloat](spreadInclusiveExp)
 - [fill](#fill)
 - [sine / cosine](#sine--cosine)
+- [sineFloat / cosineFloat](#sineFloat--cosineFloat)
+- [saw / sawFloat](#saw--sawFloat)
 
 ## Include
 
@@ -251,3 +253,38 @@ Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5));
 ```
 
 <iframe src="https://editor.p5js.org/tmhglnd/embed/CFOwE1yhW" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+
+## saw / sawFloat
+
+Generate an array with n-periods of a saw/phasor function. Optional last arguments set lo and hi range and phase offset. Only setting first range argument sets the low-range to 0
+
+**arguments**
+- {Int} -> Length of output array (resolution)
+- {Number/Array} -> Periods of the wave (option, default=1)
+- {Number} -> Low range of values (optional, default=-1) 
+- {Number} -> High range of values (optional, default=1)
+- {Number} -> Phase offset (optional, default=0)
+
+```js
+Gen.saw(16, 8.5);
+//=> 11.00 ┼              ╭ 
+//   10.00 ┤          ╭╮╭╮│ 
+//    9.00 ┤        ╭╮│││││ 
+//    8.00 ┤      ╭╮│││││││ 
+//    7.00 ┤  ╭╮╭╮│││││││││ 
+//    6.00 ┤╭╮│││││││││││││ 
+//    5.00 ┤│││││││││││││╰╯ 
+//    4.00 ┤│││││││││││╰╯   
+//    3.00 ┤│││││││╰╯╰╯     
+//    2.00 ┤│││││╰╯         
+//    1.00 ┤│││╰╯           
+//    0.00 ┼╯╰╯ 
+
+Gen.sawFloat(25, 2.5);
+//=>  0.80 ┤       ╭─╮       ╭─╮     
+//    0.44 ┤     ╭─╯ │     ╭─╯ │     
+//    0.08 ┤    ╭╯   │    ╭╯   │     
+//   -0.28 ┼  ╭─╯    │  ╭─╯    │  ╭─ 
+//   -0.64 ┤╭─╯      │╭─╯      │╭─╯  
+//   -1.00 ┼╯        ╰╯        ╰╯     
+```

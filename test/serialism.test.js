@@ -29,6 +29,12 @@ console.log();
 	- test for strings vs numbers
 */
 
+// Util.plot(Gen.saw(20, 4), { height: 10, data: false, plot: false });
+// Util.plot(Gen.saw(35, Gen.sineFloat(35, 1, 2, 4)), { height: 10 });
+
+// console.log(Util.plot(Gen.saw(30, 1), { height: 10}));
+// console.log(Util.plot(Gen.saw(30, 1), { height: 10 }));
+
 // var markov = new Rand.MarkovChain();
 // var set = [0, 1, 1, 2, 1, 3, 2, 3, 1, 3, 0];
 // var set2 = [0, 7, 5, 7, 7, 9, 3, 3, 5, 0, 0, 1];
@@ -127,13 +133,17 @@ function testGen(){
 	test("Gen.fill([10, 20], 2, 15, 3, 20, 4)");
 	test("Gen.fill([10, 20, 2, 15, 3, 20, 4])");
 
+	
+	test("Util.plot(Gen.cosineFloat(16), {log: false, height: 5, data: true})");
+	
+	test("Util.plot(Gen.sine(10), {log: false})");
+	test("Util.plot(Gen.cosine(7, 1.5), {log: false})");
+	
 	test("Util.plot(Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5)), {log: false, height: 10})");
+	
+	test("Util.plot(Gen.saw(16, 8.5), {log: false})");
 
-	// test("Util.plot(Gen.cosineFloat(16), {log: false, height: 5, data: true})");
-
-	// test("Util.plot(Gen.sine(10), {log: false})");
-
-	// test("Util.plot(Gen.cosine(7, 1.5), {log: false})");
+	test("Util.plot(Gen.sawFloat(25, 2.5), {log: false, height: 5, data: true})");
 }
 
 function testAlgo(){
