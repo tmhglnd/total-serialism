@@ -12,6 +12,8 @@ const Mod = require('total-serialism').Transform;
 
 Duplicate an array with an offset added to every value 
 
+Duplicate an array multiple times, optionaly add an offset to every value when duplicating. Also works with 2-dimensonal arrays. When using strings the values will be concatenated.
+
 **arguments**
 - {NumberArray} -> Array to clone
 - {Int, Int2, ... Int-n} -> amount of clones with integer offset
@@ -20,6 +22,10 @@ Duplicate an array with an offset added to every value
 // duplicate an array with an offset added to every value
 Mod.clone([0, 5, 7], 0, 12, -12); 
 //=> [ 0, 5, 7, 12, 17, 19, -12, -7, -5 ] 
+
+// when using strings it works as string concatenation
+Mod.clone(['kick', 'snare', 'hat'], ['808', '909']);
+//=> [ 'kick808', 'snare808', 'hat808', 'kick909', 'snare909', 'hat909' ] 
 ```
 
 <iframe src="https://editor.p5js.org/tmhglnd/embed/6hmjQkbzj" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>

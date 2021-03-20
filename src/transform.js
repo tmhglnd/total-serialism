@@ -20,16 +20,25 @@
 const Stat = require('./statistic');
 const Util = require('./utility');
 
-// duplicate an array, but add an offset to every value
+// Duplicate an array multiple times,
+// optionaly add an offset to every value when duplicating
+// Also works with 2-dimensonal arrays
+// If string the values will be concatenated
 // 
 // @param {Array} -> array to clone
 // @param {Int, Int2, ... Int-n} -> amount of clones with integer offset
+// 								 -> or string concatenation
 // 
 function clone(a=[0], ...c){
-	if (!c.length) { c = [0, 0]; }
+	// flatten array if multi-dimensional
+	if (!c.length) { 
+		c = [0, 0];
+	} else { 
+		c = c.flat(); 
+	}
 	var arr = [];
 	for (var i=0; i<c.length; i++){
-		arr = arr.concat(a.map(v => v + c[i]));
+		arr = arr.concat(a.map(v => Util.add(v, c[i])));
 	}
 	return arr;
 }

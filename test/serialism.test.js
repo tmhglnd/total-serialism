@@ -1,3 +1,4 @@
+console.time('requires load');
 
 const fs = require('fs');
 
@@ -16,7 +17,6 @@ const Stat = Srl.Statistic;
 const TL = Srl.Translate;
 const Util = Srl.Utility;
 
-console.time('requires load');
 console.timeEnd('requires load');
 console.log();
 
@@ -61,19 +61,17 @@ console.log();
 
 fullTest();
 
-// console.log(Algo.bigCollatzMod(100000));
-
 function fullTest(){
 	console.time('Total Time');
 
-	testSerial();
-	testGen();
-	testAlgo();
-	testRand();
+	// testSerial();
+	// testGen();
+	// testAlgo();
+	// testRand();
 	testMod();
-	testStat();
-	testTranslate();
-	testUtil();
+	// testStat();
+	// testTranslate();
+	// testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -304,8 +302,9 @@ function testMod(){
 	// console.log(modArr);
 	test("Mod.clone()");
 	test('Mod.clone([0, 5, 7], 0, 12, -12)');
-	test("Mod.clone(['hello', 'world'], 0, 1, 2)");
-
+	test('Mod.clone([0, 5, [7, 12]], 0, 12, -12)');
+	test('Mod.clone([0, 5, 7], [0, 12, -12])');
+	test("Mod.clone(['kick', 'snare', 'hat'], ['_808', '_909'])");
 	// var comArr1 = [0, 1];
 	// var comArr2 = [[22, 33], 4];
 	// console.log(Mod.combine(comArr1, comArr2));
