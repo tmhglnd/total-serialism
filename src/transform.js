@@ -6,6 +6,8 @@
 //
 // Basic methods that can transform number sequences
 // 
+// TODO:
+// - make invert() work with note-values 'c' etc.
 // 
 // credits:
 // - Many functions are based on Laurie Spiegel's suggestion to 
@@ -194,18 +196,24 @@ exports.lace = lace;
 
 // Build an array of items based on another array of indeces 
 // The values are wrapped within the length of the lookup array
+// Works with n-dimensional arrays by applying a recursive lookup
 // 
 // @param {Array} -> Array with indeces to lookup
 // @param {Array} -> Array with values returned from lookup
 // @return {Array} -> Looked up values
 // 
 function lookup(idx=1, arr=[0]){
-	idx = (Array.isArray(idx))? idx : [idx];
-	arr = (Array.isArray(arr))? arr : [arr];
+	idx = (Array.isArray(idx)) ? idx : [idx];
+	arr = (Array.isArray(arr)) ? arr : [arr];
 	let a = [];
-	let l = arr.length;
+	let len = arr.length;
 	for (let i in idx){
-		a[i] = arr[((idx[i] % l) + l) % l];
+		if (Array.isArray(idx[i])){
+			a[i] = lookup(idx[i], arr);
+		} else {
+			let look = (idx[i] % len + len) % len;
+			a[i] = arr[look];
+		}
 	}
 	return a;
 }
@@ -228,7 +236,10 @@ function merge(...args){
 		var a = [];
 		for (var k in args){
 			let v = args[k][i];
-			if (v != undefined){ a.push(v); }
+			if (v != undefined){ 
+				if (Array.isArray(v)) a.push(...v);
+				else a.push(v);
+			}
 		}
 		arr[i] = a;
 	}
@@ -297,7 +308,8 @@ function rotate(a=[0], r=0){
 	var l = a.length;
 	var arr = [];
 	for (var i=0; i<l; i++){
-		arr[i] = a[Util.mod((i - r), l)];
+		// arr[i] = a[Util.mod((i - r), l)];
+		arr[i] = a[((i - r) % l + l) % l];
 	}
 	return arr;
 }

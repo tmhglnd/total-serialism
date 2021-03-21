@@ -297,40 +297,28 @@ function testRand(){
 function testMod(){
 	pagebreak("Transform");
 	
-	// var modArr = [0, 5, 7];
-	// console.log(Mod.clone(modArr, 0, 12, -12));
-	// console.log(modArr);
 	test("Mod.clone()");
 	test('Mod.clone([0, 5, 7], 0, 12, -12)');
 	test('Mod.clone([0, 5, [7, 12]], 0, 12, -12)');
 	test('Mod.clone([0, 5, 7], [0, 12, -12])');
 	test("Mod.clone(['kick', 'snare', 'hat'], ['_808', '_909'])");
-	// var comArr1 = [0, 1];
-	// var comArr2 = [[22, 33], 4];
-	// console.log(Mod.combine(comArr1, comArr2));
-	// console.log(comArr1);
-	// console.log(comArr2);
+	test("Mod.clone(['c', 'e', 'g'], ['4', '5', '#3'])");
+
 	test("Mod.combine()");
-	test("Mod.combine([0, 1], [[22, 33], 4])");
+	test("Mod.combine([0, 5], [[12, 19], 7])");
 	test("Mod.combine([0, 5], 12, [7, 3])");
-	test("Mod.combine(0, 12, 3)");
+	test("Mod.combine(['c4', 'e4'], ['g4', 'f4'])");
 
-	// var dupArr = [0, 1, 2];
-	// console.log(Mod.duplicate(dupArr, 4));
-	// console.log(dupArr);
 	test("Mod.duplicate()");
-	test("Mod.duplicate([0, 1, 2])");
-	test("Mod.duplicate([0, 1, 2], 4)");
+	test("Mod.duplicate([0, 7, 12], 3)");
+	test("Mod.duplicate([0, [3, 7], 12], 2)");
+	test("Mod.duplicate(['c', 'f', 'g'], 4)");
 
-	// var evArr = [1, 0, 1, 0, 1, 1, 0, 1];
-	// console.log(Mod.every([1, 0, 1, 0, 1, 1, 0, 1], 2, 8));
-	// console.log(evArr);
-	test("Mod.every([1, 0, 1, 0, 1, 1, 0, 1], 2, 8)");
-	test("Mod.every([1, 0, 1, 1], 1, 16, 0.5)");
+	test("Mod.every([1, 0, 1, 1, 1], 2, 8)");
 	test("Mod.every([1, 1, 0, 1], 4, 5, 0, -1)");
-	test("Mod.every([1, 0, 0, 1, 1], 1, 8, 0)");
-	test("Mod.every([1, 0, 0, 1, 1], 1.5, 8, 0, 0.5)");
-	test("Mod.every([3, 0, 7, 9, 11], 2, 7, 12)");
+	test("Mod.every([3, 0, 7, 9, 11], 2, 8, 12)");
+	test("Mod.every([3, [0, 7, 9], 11], 1, 12)");
+	test("Mod.every(['c4', 'eb4', 'g4', 'f4', 'eb4'], 2, 8, 'r')");
 	
 	test("Mod.filter([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [3, 8, 10])");
 	test("Mod.filter([0, 1.618, 2, 3.14, 4], 3.14)");
@@ -338,25 +326,20 @@ function testMod(){
 	
 	test("Mod.filterType([0, 1, [1, 2], 'foo', 2, null, true, {bar: 5}, 3.14, undefined], 'number')");
 
-	// var invArr = [0, 2, 5, 10, 13];
-	// console.log(Mod.invert(invArr, 5));
-	// console.log(invArr);
 	test("Mod.invert()");
-	test("Mod.invert([0, 2, 5, 10, 13])");
-	test("Mod.invert([0, 2, 5, 10, 13], 5)");
-	test("Mod.invert([0, 2, 5, 10, 13], 0, 12)");
+	test("Mod.invert([-1, 2, 7, 9, 14])");
+	test("Mod.invert([-1, 2, 7, 9, 14], 5)");
+	test("Mod.invert([-1, 2, 7, 9, 14], 0, 12)");
 
-	// var lacArr1 = [0, 2, 4];
-	// var lacArr2 = [1, 3, 5];
-	// console.log(Mod.lace(lacArr1, lacArr2));
-	// console.log(lacArr1);
-	// console.log(lacArr2);
-	test("Mod.lace([0, 2, 4], [1, 3, 5], ['hello'])");
-	test("Mod.lace([0, 5, 9], [3, 3], [7, 12, 11, -1])");
+	// test("Mod.lace([0, 2, 4], [1, 3, 5], ['hello'])");
+	test("Mod.lace([0, 0, 0], [7, 7], [9, 9, 9, 9])");
+	test("Mod.lace([0, [0, 0]], [[7,7]], [9, [9, 9], 9])");
+	test("Mod.lace(['c', 'c', 'c', 'c'], ['g', 'g'], ['e'])");
 
-	test("Mod.lookup()");
-	test("Mod.lookup([0, 1, 1, 2, 0, 2, 2, 1], ['c', 'e', 'f', 'g'])");
-	test("Mod.lookup([8, -5, 144, 55], ['c', 'e', 'g'])");
+	// test("Mod.lookup()");
+	test("Mod.lookup([0, 1, 1, 2, 0, 2, 2, 1], ['c4', 'e4', 'f4', 'g4'])");
+	test("Mod.lookup([0, [1, 1, [2, 3 ], 0], 2], ['c4', 'e4', 'f4', 'g4'])");
+	test("Mod.lookup([-2, 5, 7, 12], ['c4', 'e4', 'f4', 'g4'])");
 
 	// var merArr1 = [0, 3, 7];
 	// var merArr2 = [3, 12];
@@ -364,52 +347,57 @@ function testMod(){
 	// console.log(Mod.merge(merArr1, merArr2, merArr3));
 	// console.log(merArr1, merArr2, merArr3);
 	test("Mod.merge()");
-	test("Mod.merge([0, 3, 7], [3, 12], [12, -1, 19, 5])");
-	test("Mod.merge([0, 1, 2, 3], [10, 20, 30, 40])");
+	test("Mod.merge([0, 0, 0], [5, 5], [7, 7, 7, 7])");
+	test("Mod.merge(['c4', 'c4'], ['f4'], ['g4', 'g4', 'g4'])");
+	test("Mod.merge([['c4', 'e4'], 'c4'], [['f4', 'a4']], ['g4', 'g4'])");
+	test("Mod.merge([[['c4', 'e4']], 'c4'], [['f4', 'a4']], ['g4', 'g4'])");
 
 	// var palArr = [0, 1, 2, 3];
 	// console.log(Mod.palindrome(palArr, false));
 	// console.log(palArr);
 	test("Mod.palindrome()");
-	test("Mod.palindrome([0, 1, 2, 3])");
-	test("Mod.palindrome([0, [1, 11], 2, 3], true)");
-	test("Mod.palindrome([0, 1, 2, 3], 1)");
+	test("Mod.palindrome([0, 5, 7, 12])");
+	test("Mod.palindrome([0, [5, 7], 9, 12], true)");
+	test("Mod.palindrome(['c4', 'f4', 'g4'], true)");
+	// test("Mod.palindrome([0, 1, 2, 3], 1)");
 
 
-	test("Mod.repeat([10, 20, 30], 3)");
-	test("Mod.repeat([10, 20, 30, 40], [1, 4, 2, 0])");
-	test("Mod.repeat(['kick', 'hat'], [1, 4])");
-	test("Mod.repeat([[10, 20], [30, 40, 50]], [2, 3])");
+	test("Mod.repeat([0, 5, 7], 3)");
+	test("Mod.repeat(['c4', 'e4', 'f4', 'g4'], [1, 4, 2, 0])");
+	// test("Mod.repeat(['kick', 'hat'], [1, 4])");
+	test("Mod.repeat([[0, 5], [7, 9, 12]], [2, 3])");
 
 	// var revArr = [0, 5, 7, 12];
 	// console.log(Mod.reverse(revArr));
 	// console.log(revArr);	
 	test("Mod.reverse()");
 	test("Mod.reverse([0, 5, 7, 12])");
-	test("Mod.reverse([0, [11, 12], 2, 3])");
+	test("Mod.reverse(['c4', ['e4', 'f4'], 'g4'])");
 
 	// var rotArr = [0, 1, 2, 3];
 	// console.log(Mod.rotate(rotArr, -1));
 	// console.log(rotArr);
 	test("Mod.rotate()");
-	test("Mod.rotate([0, 1, 2, 3])");
-	test("Mod.rotate([0, 1, 2, 3], 1)");
-	test("Mod.rotate([0, 5, 7, 12], -1)");
-	test("Mod.rotate([0, [11, 12], 2, 3], 1)");
+	test("Mod.rotate([0, 5, 7, 12], 1)");
+	test("Mod.rotate(['c4', ['e4', 'f4'], 'g4', 'a4'], -1)");
 
-	test("Mod.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11], -1)");
-	test("Mod.sort([10, 3.14, 'snare', 'kick', 5, -6, 'hat'])");
-	test("Mod.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11])");
+	test("Mod.sort([-5, 7, 0, 3, 12, -7, 9], -1)");
+	test("Mod.sort(['e4', 'g3', 'c4', 'f3', 'b5'])");
+	test("Mod.sort([-5, [7, 0, 3], 12, -7, 9], -1)");
 
 	// var sprArr1 = [12, 19, 24];
 	// var sprArr2 = [1, 0, 0, 1, 1, 0, 1, 0, 0.2];
 	// console.log(Mod.spray(sprArr1, sprArr2));
 	// console.log(sprArr1, sprArr2);
 	test("Mod.spray()");
-	test("Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0])");
 
-	test("Mod.stretch([0, 12, 3, 7], 15)");
-	Util.plot(Mod.stretch([0, 12, 3, 7], 30), { height: 10 });
+	test("Mod.spray([7, 9, 12], [1, 0, 0, 1, 1, 0, 1, 0])");
+	test("Mod.spray([[5, 7, 9], [12, 14]], [1, 0, 1, 1, 0])");
+	test("Mod.spray(['c4', 'f4', 'g4'], [1, 0, 0, 1, 1, 0, 1, 0])");
+	// test("Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0])");
+
+	test("Mod.stretch([0, 12, 3, 7], 24)");
+	Util.plot(Mod.stretch([0, 12, 3, 7], 24), { height: 10 });
 	Util.plot(Mod.stretch([0, 12, 3, 7], 10, 'none'), { height: 5 });
 
 	// var unArr = [5, 7, 5, 0, 12, 7, 5];
