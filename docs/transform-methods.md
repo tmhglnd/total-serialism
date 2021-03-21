@@ -24,6 +24,7 @@ const Mod = require('total-serialism').Transform;
 - [repeat](#repeat)
 - [reverse](#reverse)
 - [rotate](#rotate)
+- [sort](#sort)
 - [spray](#spray)
 - [stretch](#stretch)
 - [unique](#unique)
@@ -100,7 +101,7 @@ Mod.copy([0, [3, 7], 12], 2);
 Mod.copy(['c', 'f', 'g'], 3);
 //=> [ 'c', 'f', 'g', 'c', 'f', 'g', 'c', 'f', 'g' ] 
 
-// Alternative: Mod.duplicate()
+// Alternative: Mod.duplicate(), Mod.dup()
 ```
 
 <!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/5n5e03e4M" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
@@ -169,6 +170,8 @@ Filter one or multiple values from an array
 // return only a specific datatype (in this case you specify the type to return)
 Mod.filterType([0, 1, [1, 2], 'foo', 2, null, true, {bar: 5}, 3.14, undefined], 'number');
 //=> [ 0, 1, 2, 3.14 ] 
+
+// Alternative: Mod.tFilter()
 ```
 
 ## invert
@@ -215,6 +218,8 @@ Mod.lace([0, [0, 0]], [[7,7]], [9, [9, 9], 9]);
 // works with strings
 Mod.lace(['c', 'c', 'c', 'c'], ['g', 'g'], ['e']);
 //=> [ 'c', 'g', 'e', 'c', 'g', 'c', 'c' ] 
+
+// Alternative: Mod.zip()
 ```
 
 ## lookup

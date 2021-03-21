@@ -78,6 +78,7 @@ function duplicate(a=[0], d=2){
 }
 exports.duplicate = duplicate;
 exports.copy = duplicate;
+exports.dup = duplicate;
 
 // add zeroes to an array with a rhythmic sequence
 // the division determins the amount of values per bar
@@ -148,6 +149,7 @@ function filterType(a=[0], t){
 	return arr;
 }
 exports.filterType = filterType;
+exports.tFilter = filterType;
 
 // invert a list of values by mapping the lowest value
 // to the highest value and vice versa, flipping everything
@@ -193,6 +195,7 @@ function lace(...args){
 	return arr;
 }
 exports.lace = lace;
+exports.zip = lace;
 
 // Build an array of items based on another array of indeces 
 // The values are wrapped within the length of the lookup array
