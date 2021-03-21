@@ -67,8 +67,8 @@ function fullTest(){
 	// testSerial();
 	// testGen();
 	// testAlgo();
-	// testRand();
-	testMod();
+	testRand();
+	// testMod();
 	// testStat();
 	// testTranslate();
 	// testUtil();

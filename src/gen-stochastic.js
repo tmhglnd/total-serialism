@@ -18,10 +18,10 @@ const Util = require('./utility.js');
 const Stat = require('./statistic.js');
 
 // require seedrandom package
-var seedrandom = require('seedrandom');
+let seedrandom = require('seedrandom');
 
 // local pseudorandom number generator
-var rng = seedrandom();
+let rng = seedrandom();
 
 // Set the seed for all the Random Number Generators. 
 // 0 sets to unpredictable seeding

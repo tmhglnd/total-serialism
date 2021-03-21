@@ -1,6 +1,14 @@
-# Stochastic Methods
+# Stochastic
 
 Methods for procedurally generating number sequences based on various types of randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more. Also includes Markov Chain.
+
+## Include
+
+```js
+const Rand = require('total-serialism').Stochastic;
+```
+
+# Methods
 
 - [seed](#seed)
 - [random](#random)
@@ -14,12 +22,6 @@ Methods for procedurally generating number sequences based on various types of r
 - [pick](#pick)
 - [expand](#expand)
 - [MarkovChain](#markovchain)
-
-## Include
-
-```js
-const Rand = require('total-serialism').Stochastic;
-```
 
 ## seed
 

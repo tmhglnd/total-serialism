@@ -1,23 +1,25 @@
-# Algorithmic Methods
+# Algorithmic
 
 These are also generative methods, but are in general more complex algorithms, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci sequence, pisano periods and more.
-
-- [euclid](#euclid)
-- [hexBeat](#hexbeat)
-- [linden](#linden)
-- [cellular automaton](#cellular-automaton)
-- [collatz](#collatz)
-- [fibonacci](#fibonacci)
-- [pisano](#pisano)
-- [pell](#pell)
-- [threeFibonacci](#threefibonacci)
-- [lucas](#lucas)
 
 ## Include
 
 ```js
 const Algo = require('total-serialism').Algorithmic;
 ```
+
+# Methods
+
+- [euclid](#euclid)
+- [hexBeat](#hexbeat)
+- [linden](#linden)
+- [cellular automaton](#cellular-automaton)
+- [collatz](#collatz-conjecture)
+- [fibonacci](#fibonacci)
+- [pisano](#pisano)
+- [pell](#pell)
+- [threeFibonacci](#threefibonacci)
+- [lucas](#lucas)
 
 ## euclid
 

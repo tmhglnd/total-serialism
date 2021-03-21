@@ -1,4 +1,4 @@
-# Utility Methods
+# Utility
 
 Basic arithmetic and methods necessary to run functions in the libraries above. Can also be of help in your own algorithmic processes. Also includes a `plot()` method which generates an asciichart of the array printed to the console.
 
@@ -8,7 +8,21 @@ Basic arithmetic and methods necessary to run functions in the libraries above. 
 const Util = require('total-serialism').Utility;
 ```
 
-## Usage
+# Methods
+
+- mod
+- bound
+- fold
+- map
+- add
+- subtract
+- multiply
+- divide
+- minimum
+- maximum
+- normalize
+- plot
+- draw
 
 Mapping and scaling methods
 

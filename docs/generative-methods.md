@@ -1,7 +1,15 @@
 
-# Generative Methods
+# Generative
 
 Basic methods that generate arrays of number sequences, such as methods that generate an ascending array of numbers evenly spread between a low and high value.
+
+## Include
+
+```js
+const Gen = require('total-serialism').Generative;
+```
+
+# Methods
 
 - [spread / spreadFloat](#spread)
 - [spreadInclusive / spreadInclusiveFloat](#spreadinclusive)
@@ -11,12 +19,6 @@ Basic methods that generate arrays of number sequences, such as methods that gen
 - [sine / cosine](#sine--cosine)
 - [sineFloat / cosineFloat](#sineFloat--cosineFloat)
 - [saw / sawFloat](#saw--sawFloat)
-
-## Include
-
-```js
-const Gen = require('total-serialism').Generative;
-```
 
 ## spread
 

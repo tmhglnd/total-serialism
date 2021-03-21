@@ -8,6 +8,7 @@
 	- [fill](./generative-methods.md#fill)
 	- [sine / cosine](./generative-methods.md#sine--cosine)
 	- [sineFloat / cosineFloat](./generative-methods.md#sinefloat--cosinefloat)
+	- [saw / sawFloat](./generative-methods.md#saw--sawFloat);
 - [Algorithmic Methods](./algorithmic-methods.md)
 	- [Euclidean Rhythm](./algorithmic-methods.md#euclid)
 	- [Hexadecimal Rhythm](./algorithmic-methods.md#hexBeat)
