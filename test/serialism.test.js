@@ -59,7 +59,9 @@ console.log();
 // markov.clear();
 // console.log(markov.table);
 
-fullTest();
+console.log(Algo.pisano(40));
+
+// fullTest();
 
 function fullTest(){
 	console.time('Total Time');

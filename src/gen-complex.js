@@ -291,24 +291,27 @@ function pisano(mod=12, len=-1){
 }
 exports.pisano = pisano;
 
-function pisanoPeriod(mod=2, length=64){
+function pisanoPeriod(mod=2, length=32){
 	// console.log('pisano', '@mod', mod, '@length', length);
 	var seq = numBonacci(length, 0, 1, 1).map(x => x.mod(mod).toNumber());
 	var p = [], l = 0;
 
 	for (var i=0; i<seq.length; i++){
+		// console.log(i, seq[i]);
 		p.push(seq[i]);
 
 		if (p.length > 2){ 
 			var c = [0, 1, 1];
 			var equals = 0;
-
-			for (let k in p){
+			// compare last 3 values with [0, 1, 1]
+			for (let k=0; k<p.length; k++){
 				equals += p[k] === c[k];
+				// console.log('>>', equals);
 			}
+			// if equals slice the sequence and return
 			if (equals === 3 && l > 3){
+				// console.log('true');
 				return seq.slice(0, l);
-				// return { 'length' : l };
 			}
 			p = p.slice(1, 3);
 			l++;
