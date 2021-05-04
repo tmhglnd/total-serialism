@@ -8142,24 +8142,27 @@ function pisano(mod=12, len=-1){
 }
 exports.pisano = pisano;
 
-function pisanoPeriod(mod=2, length=64){
+function pisanoPeriod(mod=2, length=32){
 	// console.log('pisano', '@mod', mod, '@length', length);
 	var seq = numBonacci(length, 0, 1, 1).map(x => x.mod(mod).toNumber());
 	var p = [], l = 0;
 
 	for (var i=0; i<seq.length; i++){
+		// console.log(i, seq[i]);
 		p.push(seq[i]);
 
 		if (p.length > 2){ 
 			var c = [0, 1, 1];
 			var equals = 0;
-
-			for (let k in p){
+			// compare last 3 values with [0, 1, 1]
+			for (let k=0; k<p.length; k++){
 				equals += p[k] === c[k];
+				// console.log('>>', equals);
 			}
+			// if equals slice the sequence and return
 			if (equals === 3 && l > 3){
+				// console.log('true');
 				return seq.slice(0, l);
-				// return { 'length' : l };
 			}
 			p = p.slice(1, 3);
 			l++;
@@ -8355,10 +8358,10 @@ const Util = require('./utility.js');
 const Stat = require('./statistic.js');
 
 // require seedrandom package
-var seedrandom = require('seedrandom');
+let seedrandom = require('seedrandom');
 
 // local pseudorandom number generator
-var rng = seedrandom();
+let rng = seedrandom();
 
 // Set the seed for all the Random Number Generators. 
 // 0 sets to unpredictable seeding
@@ -8867,6 +8870,8 @@ exports.difference = change;
 //
 // Basic methods that can transform number sequences
 // 
+// TODO:
+// - make invert() work with note-values 'c' etc.
 // 
 // credits:
 // - Many functions are based on Laurie Spiegel's suggestion to 
@@ -8881,16 +8886,25 @@ exports.difference = change;
 const Stat = require('./statistic');
 const Util = require('./utility');
 
-// duplicate an array, but add an offset to every value
+// Duplicate an array multiple times,
+// optionaly add an offset to every value when duplicating
+// Also works with 2-dimensonal arrays
+// If string the values will be concatenated
 // 
 // @param {Array} -> array to clone
 // @param {Int, Int2, ... Int-n} -> amount of clones with integer offset
+// 								 -> or string concatenation
 // 
 function clone(a=[0], ...c){
-	if (!c.length) { c = [0, 0]; }
+	// flatten array if multi-dimensional
+	if (!c.length) { 
+		c = [0, 0];
+	} else { 
+		c = c.flat(); 
+	}
 	var arr = [];
 	for (var i=0; i<c.length; i++){
-		arr = arr.concat(a.map(v => v + c[i]));
+		arr = arr.concat(a.map(v => Util.add(v, c[i])));
 	}
 	return arr;
 }
@@ -8928,6 +8942,7 @@ function duplicate(a=[0], d=2){
 }
 exports.duplicate = duplicate;
 exports.copy = duplicate;
+exports.dup = duplicate;
 
 // add zeroes to an array with a rhythmic sequence
 // the division determins the amount of values per bar
@@ -8998,6 +9013,7 @@ function filterType(a=[0], t){
 	return arr;
 }
 exports.filterType = filterType;
+exports.tFilter = filterType;
 
 // invert a list of values by mapping the lowest value
 // to the highest value and vice versa, flipping everything
@@ -9043,21 +9059,28 @@ function lace(...args){
 	return arr;
 }
 exports.lace = lace;
+exports.zip = lace;
 
 // Build an array of items based on another array of indeces 
 // The values are wrapped within the length of the lookup array
+// Works with n-dimensional arrays by applying a recursive lookup
 // 
 // @param {Array} -> Array with indeces to lookup
 // @param {Array} -> Array with values returned from lookup
 // @return {Array} -> Looked up values
 // 
 function lookup(idx=1, arr=[0]){
-	idx = (Array.isArray(idx))? idx : [idx];
-	arr = (Array.isArray(arr))? arr : [arr];
+	idx = (Array.isArray(idx)) ? idx : [idx];
+	arr = (Array.isArray(arr)) ? arr : [arr];
 	let a = [];
-	let l = arr.length;
+	let len = arr.length;
 	for (let i in idx){
-		a[i] = arr[((idx[i] % l) + l) % l];
+		if (Array.isArray(idx[i])){
+			a[i] = lookup(idx[i], arr);
+		} else {
+			let look = (idx[i] % len + len) % len;
+			a[i] = arr[look];
+		}
 	}
 	return a;
 }
@@ -9080,7 +9103,10 @@ function merge(...args){
 		var a = [];
 		for (var k in args){
 			let v = args[k][i];
-			if (v != undefined){ a.push(v); }
+			if (v != undefined){ 
+				if (Array.isArray(v)) a.push(...v);
+				else a.push(v);
+			}
 		}
 		arr[i] = a;
 	}
@@ -9149,7 +9175,8 @@ function rotate(a=[0], r=0){
 	var l = a.length;
 	var arr = [];
 	for (var i=0; i<l; i++){
-		arr[i] = a[Util.mod((i - r), l)];
+		// arr[i] = a[Util.mod((i - r), l)];
+		arr[i] = a[((i - r) % l + l) % l];
 	}
 	return arr;
 }

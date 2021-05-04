@@ -2352,9 +2352,13 @@ function fibonacci(){var len=arguments.length>0&&arguments[0]!==undefined?argume
 // @param {Int} -> modulus for pisano period
 // @return {Int-Array} -> array of integers
 // 
-function pisano(){var mod=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:-1;if(mod<2){return[0];}if(len<1){return pisanoPeriod(mod);}else{return numBonacci(len,0,1,1).map(function(x){return x.mod(mod).toNumber();});}}exports.pisano=pisano;function pisanoPeriod(){var mod=arguments.length>0&&arguments[0]!==undefined?arguments[0]:2;var length=arguments.length>1&&arguments[1]!==undefined?arguments[1]:64;// console.log('pisano', '@mod', mod, '@length', length);
-var seq=numBonacci(length,0,1,1).map(function(x){return x.mod(mod).toNumber();});var p=[],l=0;for(var i=0;i<seq.length;i++){p.push(seq[i]);if(p.length>2){var c=[0,1,1];var equals=0;for(var k in p){equals+=p[k]===c[k];}if(equals===3&&l>3){return seq.slice(0,l);// return { 'length' : l };
-}p=p.slice(1,3);l++;}}// console.log('no period, next iteration');
+function pisano(){var mod=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:-1;if(mod<2){return[0];}if(len<1){return pisanoPeriod(mod);}else{return numBonacci(len,0,1,1).map(function(x){return x.mod(mod).toNumber();});}}exports.pisano=pisano;function pisanoPeriod(){var mod=arguments.length>0&&arguments[0]!==undefined?arguments[0]:2;var length=arguments.length>1&&arguments[1]!==undefined?arguments[1]:32;// console.log('pisano', '@mod', mod, '@length', length);
+var seq=numBonacci(length,0,1,1).map(function(x){return x.mod(mod).toNumber();});var p=[],l=0;for(var i=0;i<seq.length;i++){// console.log(i, seq[i]);
+p.push(seq[i]);if(p.length>2){var c=[0,1,1];var equals=0;// compare last 3 values with [0, 1, 1]
+for(var k=0;k<p.length;k++){equals+=p[k]===c[k];// console.log('>>', equals);
+}// if equals slice the sequence and return
+if(equals===3&&l>3){// console.log('true');
+return seq.slice(0,l);}p=p.slice(1,3);l++;}}// console.log('no period, next iteration');
 return pisanoPeriod(mod,length*2);}// Generate the Pell numbers as an array of BigNumber objects
 // F(n) = 2 * F(n-1) + F(n-2). The ratio between consecutive numbers 
 // in the pell sequence tends towards the Silver Ratio 1 + √2.
@@ -2656,6 +2660,8 @@ function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 //
 // Basic methods that can transform number sequences
 // 
+// TODO:
+// - make invert() work with note-values 'c' etc.
 // 
 // credits:
 // - Many functions are based on Laurie Spiegel's suggestion to 
@@ -2666,12 +2672,17 @@ function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 //=======================================================================
 // require the Utility methods
 // const Rand = require('./gen-stochastic');
-var Stat=require('./statistic');var Util=require('./utility');// duplicate an array, but add an offset to every value
+var Stat=require('./statistic');var Util=require('./utility');// Duplicate an array multiple times,
+// optionaly add an offset to every value when duplicating
+// Also works with 2-dimensonal arrays
+// If string the values will be concatenated
 // 
 // @param {Array} -> array to clone
 // @param {Int, Int2, ... Int-n} -> amount of clones with integer offset
+// 								 -> or string concatenation
 // 
-function clone(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];for(var _len2=arguments.length,c=new Array(_len2>1?_len2-1:0),_key2=1;_key2<_len2;_key2++){c[_key2-1]=arguments[_key2];}if(!c.length){c=[0,0];}var arr=[];for(var i=0;i<c.length;i++){arr=arr.concat(a.map(function(v){return v+c[i];}));}return arr;}exports.clone=clone;// combine arrays into one array
+function clone(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];for(var _len2=arguments.length,c=new Array(_len2>1?_len2-1:0),_key2=1;_key2<_len2;_key2++){c[_key2-1]=arguments[_key2];}// flatten array if multi-dimensional
+if(!c.length){c=[0,0];}else{c=c.flat();}var arr=[];for(var i=0;i<c.length;i++){arr=arr.concat(a.map(function(v){return Util.add(v,c[i]);}));}return arr;}exports.clone=clone;// combine arrays into one array
 // multiple arrays as arguments possible
 // 
 // @params {Array0, Array1, ..., Array-n} -> Arrays to join
@@ -2683,7 +2694,7 @@ function combine(){if(!arguments.length){return[0];}var arr=[];for(var i=0;i<arg
 // @param {Int} -> amount of output duplicates (optional, default=2)
 // @return {Array}
 // 
-function duplicate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;var arr=[];for(var i=0;i<Math.max(1,d);i++){arr=arr.concat(a);}return arr;}exports.duplicate=duplicate;exports.copy=duplicate;// add zeroes to an array with a rhythmic sequence
+function duplicate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;var arr=[];for(var i=0;i<Math.max(1,d);i++){arr=arr.concat(a);}return arr;}exports.duplicate=duplicate;exports.copy=duplicate;exports.dup=duplicate;// add zeroes to an array with a rhythmic sequence
 // the division determins the amount of values per bar
 // total length = bars * div
 //
@@ -2707,7 +2718,7 @@ function filter(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 // @param {String/Array} -> types to filter
 // @return (Array} -> filtered array
 // 
-function filterType(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var t=arguments.length>1?arguments[1]:undefined;a=Array.isArray(a)?a.slice():[a];t=Array.isArray(t)?t:[t];var types=a.map(function(x){return _typeof(x);});var arr=[];for(var i in t){var index=types.indexOf(t[i]);while(index>=0){arr.push(a[index]);a.splice(index,1);types.splice(index,1);index=types.indexOf(t[i]);}}return arr;}exports.filterType=filterType;// invert a list of values by mapping the lowest value
+function filterType(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var t=arguments.length>1?arguments[1]:undefined;a=Array.isArray(a)?a.slice():[a];t=Array.isArray(t)?t:[t];var types=a.map(function(x){return _typeof(x);});var arr=[];for(var i in t){var index=types.indexOf(t[i]);while(index>=0){arr.push(a[index]);a.splice(index,1);types.splice(index,1);index=types.indexOf(t[i]);}}return arr;}exports.filterType=filterType;exports.tFilter=filterType;// invert a list of values by mapping the lowest value
 // to the highest value and vice versa, flipping everything
 // in between. 
 // Second optional argument sets the center to flip values against. 
@@ -2723,20 +2734,21 @@ function invert(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array}
 //  
-function lace(){for(var _len3=arguments.length,args=new Array(_len3),_key3=0;_key3<_len3;_key3++){args[_key3]=arguments[_key3];}if(!args.length){return[0];}var l=0;for(var _i4 in args){l=Math.max(args[_i4].length,l);}var arr=[];for(var i=0;i<l;i++){for(var k in args){var v=args[k][i];if(v!=undefined){arr.push(v);}}}return arr;}exports.lace=lace;// Build an array of items based on another array of indeces 
+function lace(){for(var _len3=arguments.length,args=new Array(_len3),_key3=0;_key3<_len3;_key3++){args[_key3]=arguments[_key3];}if(!args.length){return[0];}var l=0;for(var _i4 in args){l=Math.max(args[_i4].length,l);}var arr=[];for(var i=0;i<l;i++){for(var k in args){var v=args[k][i];if(v!=undefined){arr.push(v);}}}return arr;}exports.lace=lace;exports.zip=lace;// Build an array of items based on another array of indeces 
 // The values are wrapped within the length of the lookup array
+// Works with n-dimensional arrays by applying a recursive lookup
 // 
 // @param {Array} -> Array with indeces to lookup
 // @param {Array} -> Array with values returned from lookup
 // @return {Array} -> Looked up values
 // 
-function lookup(){var idx=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var arr=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];idx=Array.isArray(idx)?idx:[idx];arr=Array.isArray(arr)?arr:[arr];var a=[];var l=arr.length;for(var i in idx){a[i]=arr[(idx[i]%l+l)%l];}return a;}exports.lookup=lookup;// merge all values of two arrays on the same index
+function lookup(){var idx=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var arr=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];idx=Array.isArray(idx)?idx:[idx];arr=Array.isArray(arr)?arr:[arr];var a=[];var len=arr.length;for(var i in idx){if(Array.isArray(idx[i])){a[i]=lookup(idx[i],arr);}else{var look=(idx[i]%len+len)%len;a[i]=arr[look];}}return a;}exports.lookup=lookup;// merge all values of two arrays on the same index
 // into a 2D array. preserves length of longest list
 // 
 // @params {Array0, Array1, ..., Array-n} -> Arrays to merge
 // @return {Array}
 // 
-function merge(){for(var _len4=arguments.length,args=new Array(_len4),_key4=0;_key4<_len4;_key4++){args[_key4]=arguments[_key4];}if(!args.length){return[0];}var l=0;for(var _i5 in args){l=Math.max(args[_i5].length,l);}var arr=[];for(var i=0;i<l;i++){var a=[];for(var k in args){var v=args[k][i];if(v!=undefined){a.push(v);}}arr[i]=a;}return arr;}exports.merge=merge;// reverse an array and concatenate to the input
+function merge(){for(var _len4=arguments.length,args=new Array(_len4),_key4=0;_key4<_len4;_key4++){args[_key4]=arguments[_key4];}if(!args.length){return[0];}var l=0;for(var _i5 in args){l=Math.max(args[_i5].length,l);}var arr=[];for(var i=0;i<l;i++){var a=[];for(var k in args){var v=args[k][i];if(v!=undefined){if(Array.isArray(v))a.push.apply(a,_toConsumableArray(v));else a.push(v);}}arr[i]=a;}return arr;}exports.merge=merge;// reverse an array and concatenate to the input
 // creating a palindrome of the array
 // 
 // @param {Array} -> array to make palindrome of
@@ -2762,7 +2774,8 @@ function reverse(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[
 // @param {Int} -> steps to rotate (optional, default=0)
 // @return {Array}
 // 
-function rotate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var r=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var l=a.length;var arr=[];for(var i=0;i<l;i++){arr[i]=a[Util.mod(i-r,l)];}return arr;}exports.rotate=rotate;// placeholder for the sort() method found in 
+function rotate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var r=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var l=a.length;var arr=[];for(var i=0;i<l;i++){// arr[i] = a[Util.mod((i - r), l)];
+arr[i]=a[((i-r)%l+l)%l];}return arr;}exports.rotate=rotate;// placeholder for the sort() method found in 
 // statistic.js
 // 
 exports.sort=Stat.sort;// spray the values of one array on the 

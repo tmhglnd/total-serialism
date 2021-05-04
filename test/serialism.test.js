@@ -59,21 +59,21 @@ console.log();
 // markov.clear();
 // console.log(markov.table);
 
-console.log(Algo.pisano(40));
+// console.log(Algo.pisano(40));
 
-// fullTest();
+fullTest();
 
 function fullTest(){
 	console.time('Total Time');
 
-	// testSerial();
-	// testGen();
-	// testAlgo();
+	testSerial();
+	testGen();
+	testAlgo();
 	testRand();
-	// testMod();
-	// testStat();
-	// testTranslate();
-	// testUtil();
+	testMod();
+	testStat();
+	testTranslate();
+	testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
