@@ -18,6 +18,7 @@ const Util = require('total-serialism').Utility;
 - subtract
 - multiply
 - divide
+- sum
 - minimum
 - maximum
 - normalize
@@ -63,6 +64,18 @@ Util.multiply([1, 2, 3, 4], [1, 2, 3]);
 // Divide two arrays sequentially
 Util.divide([1, 2, 3, 4], [1, 2, 3]);
 //=> [ 1, 1, 1, 4 ] 
+```
+
+## sum
+
+Return the sum of all values in an array. Ignores all non-numeric values.
+
+```js
+Util.sum([1, 2, 3, 4]);
+//=> 10 
+
+Util.sum([10, 'foo', 11, 'bar', 22]);
+//=> 43 
 ```
 
 ## minimum

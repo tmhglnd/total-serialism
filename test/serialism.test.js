@@ -59,9 +59,10 @@ console.log();
 // markov.clear();
 // console.log(markov.table);
 
-// console.log(Algo.pisano(40));
+// fullTest();
+testUtil();
 
-fullTest();
+// Rand.clave(8);
 
 function fullTest(){
 	console.time('Total Time');
@@ -552,6 +553,9 @@ function testUtil(){
 	test("Util.normalize([0, 3, 7])");
 	test("Util.normalize([1, 2, 3, 4])");
 	test("Util.normalize([5, 12, 4, 17, 3])");
+
+	test("Util.sum([1, 2, 3, 4])");
+	test("Util.sum([10, 'foo', 11, 'bar', 22])");
 
 	let drawing = [];
 	Rand.seed(628);

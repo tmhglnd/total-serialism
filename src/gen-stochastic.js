@@ -155,6 +155,34 @@ function dice(len=1, sides=6){
 }
 exports.dice = dice;
 
+// Generate random clave patterns. Outputs a binary list as rhythm, 
+// where 1's represent onsets and 0's represent rests.
+// 
+// @param {Int} -> output length of rhythm
+// @param {Int} -> rhythmic gaps to choose from (1, 2, 3 etc)
+// @param {Float} -> density distribution between -1 and 1.
+// 
+function clave(len=1, max=3, min=2, dist=0){
+	let arr = [];
+	len = Math.max(1, len);
+	// swap if lo > hi
+	if (min > max){ var t=min, min=max; max=t; }
+	min = Math.max(1, min);
+	max = Math.max(min, max);
+
+	console.log(len, min, max);
+
+	let sum = 0;
+	let rtm = [];
+	while (sum < len){
+		let r = Math.floor(rng() * (max + 1 - min)) + min;
+		rtm.push(r);
+		sum += r;
+	}
+	console.log(rtm, Util.sum(rtm));
+}
+exports.clave = clave;
+
 // shuffle a list, based on the Fisher-Yates shuffle algorithm
 // by Ronald Fisher and Frank Yates in 1938
 // The algorithm has run time complexity of O(n)
