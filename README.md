@@ -1,6 +1,8 @@
 # Total Serialism
 
-**Visit the [Total Serialism Documentation](http://tmhglnd.github.io/total-serialism) for interactive examples.**
+**A Toolbox full of Algorithmic Composition methods**
+
+*Visit the [Total Serialism Documentation](http://tmhglnd.github.io/total-serialism) for interactive examples.*
 
 `total-serialism` is a set of methods used for procedurally generating and transforming number sequences. This library is mainly designed with algorithmic composition of music in mind, but can surely be useful for other purposes that involve generation and manipulation of arrays and numbers. The library is a result of my research in algorithmic composition, livecoding and electronic music and was first prototyped with Max/MSP in the [Mercury](http://github.com/tmhglnd/mercury) livecoding environment.
 
