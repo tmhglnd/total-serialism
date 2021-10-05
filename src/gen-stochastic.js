@@ -158,28 +158,35 @@ exports.dice = dice;
 // Generate random clave patterns. Outputs a binary list as rhythm, 
 // where 1's represent onsets and 0's represent rests.
 // 
-// @param {Int} -> output length of rhythm
-// @param {Int} -> rhythmic gaps to choose from (1, 2, 3 etc)
-// @param {Float} -> density distribution between -1 and 1.
+// @param {Int} -> output length of rhythm (default=8)
+// @param {Int} -> maximum gap between onsets (default=3)
+// @param {Int} -> minimum gap between onsets (default=2)
 // 
-function clave(len=1, max=3, min=2, dist=0){
+function clave(len=8, max=3, min=2){
 	let arr = [];
+	// limit list length
 	len = Math.max(1, len);
 	// swap if lo > hi
 	if (min > max){ var t=min, min=max; max=t; }
+	// limit lower ranges
 	min = Math.max(1, min);
-	max = Math.max(min, max);
-
-	console.log(len, min, max);
+	max = Math.max(min, max) + 1;
 
 	let sum = 0;
 	let rtm = [];
+	// randomly generate list of gap intervals
 	while (sum < len){
-		let r = Math.floor(rng() * (max + 1 - min)) + min;
+		r = Math.floor(rng() * (max - min)) + min;
 		rtm.push(r);
 		sum += r;
 	}
-	console.log(rtm, Util.sum(rtm));
+	// convert rhythmic "gaps" to binary pattern
+	rtm.forEach((g) => {
+		for (let i=0; i<g; i++){
+			arr.push(!i ? 1 : 0);
+		}
+	});
+	return arr.slice(0, len);
 }
 exports.clave = clave;
 

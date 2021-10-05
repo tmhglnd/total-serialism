@@ -20,6 +20,7 @@ const Rand = require('total-serialism').Stochastic;
 - [shuffle](#shuffle)
 - [choose](#choose)
 - [pick](#pick)
+- [clave](#clave)
 - [expand](#expand)
 - [MarkovChain](#markovchain)
 
@@ -228,6 +229,33 @@ Rand.pick(5, ['c', 'e', ['g', 'd']]);
 ```
 
 <iframe src="https://editor.p5js.org/tmhglnd/embed/6QcjbpzNr" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+
+## clave
+
+Generate random clave patterns. The output is a binary list that represents a rhythm, where 1's represent onsets and 0's rests. First argument sets the list length output, second argument sets the maximum gap between onsets, third argument the minimum gap.
+
+**arguments**
+- {Int+} -> output length of rhythm (default=8)
+- {Int+} -> maximum gap between onsets (default=3)
+- {Int+} -> minimum gap between onsets (default=2)
+
+```js
+Rand.clave();
+//=> [ 1, 0, 1, 0, 0, 1, 0, 1 ] 
+//=> █ █  █ █
+
+Rand.clave(8);
+//=> [ 1, 0, 0, 1, 0, 1, 0, 1 ] 
+//=> █  █ █ █
+
+Rand.clave(16, 4);
+//=> [ 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1 ] 
+//=> █   █ █   █  █ █
+
+Rand.clave(16, 3, 1);
+//=> [ 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1 ] 
+//=> █  █  ██  █ █  █  
+```
 
 ## expand
 

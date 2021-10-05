@@ -59,10 +59,7 @@ console.log();
 // markov.clear();
 // console.log(markov.table);
 
-// fullTest();
-testUtil();
-
-// Rand.clave(8);
+fullTest();
 
 function fullTest(){
 	console.time('Total Time');
@@ -271,6 +268,12 @@ function testRand(){
 	test("Rand.seed(4923)");
 	test("Rand.twelveTone()");
 	test("Rand.twelveTone()");
+
+	test("Rand.seed(7483)");
+	test("Rand.clave()");
+	test("Rand.clave(8)");
+	test("Rand.clave(16, 4)");
+	test("Rand.clave(16, 3, 1)");
 
 	test("Rand.seed(4923)");
 	test("Rand.twelveTone()");
