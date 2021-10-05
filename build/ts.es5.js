@@ -2507,7 +2507,19 @@ function coin(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0
 // @param {Int} -> sides of the die (optional, default=6)
 // @return {Array}
 // 
-function dice(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var sides=arguments.length>1&&arguments[1]!==undefined?arguments[1]:6;var arr=randomFloat(len,1,sides+1);return arr.map(function(v){return Math.floor(v);});}exports.dice=dice;// shuffle a list, based on the Fisher-Yates shuffle algorithm
+function dice(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var sides=arguments.length>1&&arguments[1]!==undefined?arguments[1]:6;var arr=randomFloat(len,1,sides+1);return arr.map(function(v){return Math.floor(v);});}exports.dice=dice;// Generate random clave patterns. Outputs a binary list as rhythm, 
+// where 1's represent onsets and 0's represent rests.
+// 
+// @param {Int} -> output length of rhythm (default=8)
+// @param {Int} -> maximum gap between onsets (default=3)
+// @param {Int} -> minimum gap between onsets (default=2)
+// 
+function clave(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var max=arguments.length>1&&arguments[1]!==undefined?arguments[1]:3;var min=arguments.length>2&&arguments[2]!==undefined?arguments[2]:2;return function(min){var arr=[];// limit list length
+len=Math.max(1,len);// swap if lo > hi
+if(min>max){var t=min,min=max;max=t;}// limit lower ranges
+min=Math.max(1,min);max=Math.max(min,max)+1;var sum=0;var rtm=[];// randomly generate list of gap intervals
+while(sum<len){var r=Math.floor(rng()*(max-min))+min;rtm.push(r);sum+=r;}// convert rhythmic "gaps" to binary pattern
+rtm.forEach(function(g){for(var i=0;i<g;i++){arr.push(!i?1:0);}});return arr.slice(0,len);}(min);}exports.clave=clave;// shuffle a list, based on the Fisher-Yates shuffle algorithm
 // by Ronald Fisher and Frank Yates in 1938
 // The algorithm has run time complexity of O(n)
 // 
@@ -3180,7 +3192,12 @@ function mod(a){var mod=arguments.length>1&&arguments[1]!==undefined?arguments[1
 // 
 // @param {Number/Array} -> input value
 // @return {Int/Array} -> trucated value
-function truncate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return Math.trunc(a);}return a.map(function(x){return Math.trunc(x);});}exports.truncate=truncate;exports.trunc=truncate;exports["int"]=truncate;// Return the biggest value from an array
+function truncate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return Math.trunc(a);}return a.map(function(x){return Math.trunc(x);});}exports.truncate=truncate;exports.trunc=truncate;exports["int"]=truncate;// Return the sum of all values in the array
+// Ignore all non numeric values
+// 
+// @param {Array} -> input array
+// @return {Number} -> summed array
+function sum(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];a=Array.isArray(a)?a:[a];var s=0;a.forEach(function(v){s+=isNaN(v)?0:v;});return s;}exports.sum=sum;// Return the biggest value from an array
 // 
 // @param {NumberArray} -> input array
 // @return {Number} -> biggest value

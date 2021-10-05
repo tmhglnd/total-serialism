@@ -8495,6 +8495,41 @@ function dice(len=1, sides=6){
 }
 exports.dice = dice;
 
+// Generate random clave patterns. Outputs a binary list as rhythm, 
+// where 1's represent onsets and 0's represent rests.
+// 
+// @param {Int} -> output length of rhythm (default=8)
+// @param {Int} -> maximum gap between onsets (default=3)
+// @param {Int} -> minimum gap between onsets (default=2)
+// 
+function clave(len=8, max=3, min=2){
+	let arr = [];
+	// limit list length
+	len = Math.max(1, len);
+	// swap if lo > hi
+	if (min > max){ var t=min, min=max; max=t; }
+	// limit lower ranges
+	min = Math.max(1, min);
+	max = Math.max(min, max) + 1;
+
+	let sum = 0;
+	let rtm = [];
+	// randomly generate list of gap intervals
+	while (sum < len){
+		let r = Math.floor(rng() * (max - min)) + min;
+		rtm.push(r);
+		sum += r;
+	}
+	// convert rhythmic "gaps" to binary pattern
+	rtm.forEach((g) => {
+		for (let i=0; i<g; i++){
+			arr.push(!i ? 1 : 0);
+		}
+	});
+	return arr.slice(0, len);
+}
+exports.clave = clave;
+
 // shuffle a list, based on the Fisher-Yates shuffle algorithm
 // by Ronald Fisher and Frank Yates in 1938
 // The algorithm has run time complexity of O(n)
@@ -10165,6 +10200,21 @@ function truncate(a=[0]){
 exports.truncate = truncate;
 exports.trunc = truncate;
 exports.int = truncate;
+
+// Return the sum of all values in the array
+// Ignore all non numeric values
+// 
+// @param {Array} -> input array
+// @return {Number} -> summed array
+function sum(a=[0]){
+	a = Array.isArray(a)? a : [a];
+	let s = 0;
+	a.forEach((v) => {
+		s += isNaN(v)? 0 : v;
+	});
+	return s;
+}
+exports.sum = sum;
 
 // Return the biggest value from an array
 // 

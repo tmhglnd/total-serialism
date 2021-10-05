@@ -176,7 +176,7 @@ function clave(len=8, max=3, min=2){
 	let rtm = [];
 	// randomly generate list of gap intervals
 	while (sum < len){
-		r = Math.floor(rng() * (max - min)) + min;
+		let r = Math.floor(rng() * (max - min)) + min;
 		rtm.push(r);
 		sum += r;
 	}
