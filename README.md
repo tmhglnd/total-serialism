@@ -78,44 +78,18 @@ scl.names;
 //   '08-19', ... and 5000 more]
 ```
 
-## Expand and stretch array
+## Random clave patterns
 
-Expand an array by analyzing its internal structure
+Use the `Rand.clave()` to generate binary beats with clave patterns
 
-```js 
-Rand.seed(3141);
-Rand.expand(30, [0, 9, 7, 3, 5, 0, -1]);
+```js
+Rand.clave(16, 4);
+//=> [ 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1 ] 
+//=> █   █ █   █  █ █
 
-//=>  9.00 ┤╭╮      ╭╮                    
-//    6.80 ┤│╰╮     ││                    
-//    4.60 ┤│ │╭╮   ││                    
-//    2.40 ┤│ ╰╯│   │╰─╮             ╭─╮  
-//    0.20 ┼╯   ╰─╮╭╯  │             │ │╭ 
-//   -2.00 ┤      ╰╯   ╰╮   ╭─╮      │ ╰╯ 
-//   -4.20 ┼            │   │ │    ╭╮│    
-//   -6.40 ┤            ╰╮  │ │    │╰╯    
-//   -8.60 ┤             │╭╮│ ╰─╮  │      
-//  -10.80 ┤             ╰╯╰╯   │╭╮│      
-//  -13.00 ┤                    ╰╯╰╯      
-```
-
-Stretch an array by interpolating between array values
-
-```js 
-Mod.stretch([0, 12, 3, 7], 30);
-
-//=> 11.69 ┼        ╭─╮                   
-//   10.52 ┤        │ ╰╮                  
-//    9.35 ┤       ╭╯  ╰─╮                
-//    8.18 ┤      ╭╯     ╰╮               
-//    7.01 ┤     ╭╯       ╰╮           ╭─ 
-//    5.84 ┤    ╭╯         ╰╮       ╭──╯  
-//    4.68 ┤   ╭╯           ╰─╮  ╭──╯     
-//    3.51 ┤  ╭╯              ╰──╯        
-//    2.34 ┤ ╭╯                           
-//    1.17 ┤╭╯                            
-//    0.00 ┼╯ 
-
+Rand.clave(16, 3, 1);
+//=> [ 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1 ] 
+//=> █  █  ██  █ █  █
 ```
 
 # Install
