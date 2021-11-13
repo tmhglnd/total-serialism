@@ -207,7 +207,7 @@ exports.fill = fill;
 // Only setting first range argument sets the low-range to 0
 // 
 // @param {Int} -> Length of output array (resolution)
-// @param {Number} -> Periods of sine-wave 
+// @param {NumberArray | Number} -> Periods of sine-wave 
 // @param {Number} -> Low range of values (optional, default=-1) 
 // @param {Number} -> High range of values (optional, default=1)
 // @param {Number} -> Phase offset (optional, default=0)
@@ -238,7 +238,8 @@ function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	return Util.map(arr, -1, 1, lo, hi);
 }
 exports.sineFloat = sineFloat;
-// exports.sin = sineFloat;
+exports.sineF = sineFloat;
+exports.sinF = sineFloat;
 
 // Generate an integer array with n-periods of a sine function
 // Optional last arguments set lo and hi range
@@ -264,7 +265,8 @@ function cosineFloat(len=1, periods=1, lo, hi, phase=0){
 	return sineFloat(len, periods, lo, hi, phase+0.25);
 }
 exports.cosineFloat = cosineFloat;
-// exports.cos = cosineFloat;
+exports.cosineF = cosineFloat;
+exports.cosF = cosineFloat;
 
 // Generate an integer array with n-periods of a cosine function
 // Flip the low and high range to invert the function
@@ -299,13 +301,14 @@ function sawFloat(len=1, periods=1, lo, hi, phase=0){
 
 	let a = 1 / len;
 	for (let i=0; i<len; i++){
-		arr[i] = (i * a * periods[i % periods.length]) % 1.0;
+		arr[i] = ((i * a * periods[i % periods.length]) % 1.0 + 1.0) % 1.0;
 	}
 	return Util.map(arr, 0, 1, lo, hi);
 	// return arr;
 }
 exports.sawFloat = sawFloat;
 exports.phasor = sawFloat;
+exports.sawF = sawFloat;
 
 function saw(len=1, periods=1, lo=12, hi, phase=0){
 	var arr = sawFloat(len, periods, lo, hi, phase);

@@ -125,12 +125,14 @@ function testGen(){
 	test("Gen.spreadExpF(12, 0, 10, 0.5)");
 	test("Gen.spreadIncExpF(12, 0, 10, 0.5)");
 
-	// // test("Gen.fill()");
-	// test("Gen.fill(10, 2, 15, 3, 20, 4)");
-	// test("Gen.fill([10, 20], 2, 15, 3, 20, 4)");
-	// test("Gen.fill([10, 20, 2, 15, 3, 20, 4])");
+	test("Gen.fill()");
+	test("Gen.fill(10, 2, 15, 3, 20, 4)");
+	test("Gen.fill([10, 20], 2, [15, [5, 3]], 3)");
+	test("Gen.fill([10, 20, 2, 15, 3, 20, 4])");
 
-	
+	test("Util.plot(Gen.sinF(30, 1, -5, 5))");
+	test("Util.plot(Gen.cosF(30, Gen.sinF(30, 2), -5, 5))");
+
 	// test("Util.plot(Gen.cosineFloat(16), {log: false, height: 5, data: true})");
 	
 	// test("Util.plot(Gen.sine(10), {log: false})");
@@ -138,6 +140,8 @@ function testGen(){
 	
 	// test("Util.plot(Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5)), {log: false, height: 10})");
 	
+	test("Util.plot(Gen.saw(34, Gen.sinF(30, 2), 0, 12))");
+
 	// test("Util.plot(Gen.saw(16, 8.5), {log: false})");
 
 	// test("Util.plot(Gen.sawFloat(25, 2.5), {log: false, height: 5, data: true})");

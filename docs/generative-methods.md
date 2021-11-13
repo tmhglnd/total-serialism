@@ -204,23 +204,6 @@ Generate an array with n-periods of a (co)sine function with floating-point valu
 - {Number} -> Phase offset (optional, default=0)
 
 ```js
-// generate 7 ints of 1.5 period a cosine function
-Gen.cosine(7, 1.5);
-//=> [ 12, 7, 0, 2, 9, 11, 4 ] 
-//       12.00 ┼╮      
-//       11.00 ┤│   ╭╮ 
-//       10.00 ┤│   ││ 
-//        9.00 ┤│  ╭╯│ 
-//        8.00 ┤│  │ │ 
-//        7.00 ┤╰╮ │ │ 
-//        6.00 ┤ │ │ │ 
-//        5.00 ┤ │ │ │ 
-//        4.00 ┤ │ │ ╰ 
-//        3.00 ┤ │ │   
-//        2.00 ┤ │╭╯   
-//        1.00 ┤ ││    
-//        0.00 ┤ ╰╯     
-
 // generate 16 floats with 1 period of a sine function
 Gen.sineFloat(16);
 //=> [ 0.00, 0.38, 0.71, 0.92, 1.00, 0.92, 0.71, 0.38, 0.00, -0.38, 
@@ -258,6 +241,8 @@ Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5));
 //   -0.60 ┤         ││ ╰╯ ││ ││ │ ││││ │     │ │ │ 
 //   -0.80 ┤         ││    ││ ╰╯ │ │╰╯│ │     ╰─╯ │ 
 //   -1.00 ┤         ╰╯    ╰╯    ╰─╯  ╰─╯         ╰  
+
+// Alternative: Gen.sinF(), Gen.cosF()
 ```
 
 <iframe src="https://editor.p5js.org/tmhglnd/embed/CFOwE1yhW" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
@@ -294,5 +279,22 @@ Gen.sawFloat(25, 2.5);
 //    0.08 ┤    ╭╯   │    ╭╯   │     
 //   -0.28 ┼  ╭─╯    │  ╭─╯    │  ╭─ 
 //   -0.64 ┤╭─╯      │╭─╯      │╭─╯  
-//   -1.00 ┼╯        ╰╯        ╰╯     
+//   -1.00 ┼╯        ╰╯        ╰╯    
+
+// Modulation on frequency
+Gen.saw(34, Gen.sinF(30, 2, 0, 100), 0, 12);
+//=> 11.00 ┼         ╭╮             ╭╮╭╮      
+//   10.00 ┤         ││╭─╮     ╭╮   ││││      
+//    9.00 ┤         │││ │     ││ ╭╮││││      
+//    8.00 ┤   ╭─╮   │││ │    ╭╯│ ││││││    ╭ 
+//    7.00 ┤  ╭╯ │   │││ │   ╭╯ │ ││││││    │ 
+//    6.00 ┤  │  │   │││ │  ╭╯  │ │╰╯││╰╮   │ 
+//    5.00 ┤  │  │╭╮╭╯││ │  │   │ │  ││ │   │ 
+//    4.00 ┤  │  ││││ ││ │  │   │ │  ││ │   │ 
+//    3.00 ┤  │  ││╰╯ ││ │  │   │ │  ││ ╰╮  │ 
+//    2.00 ┤  │  ││   ││ ╰╮ │   │ │  ╰╯  │  │ 
+//    1.00 ┤ ╭╯  ││   ╰╯  │╭╯   │ │      ╰─╮│ 
+//    0.00 ┼─╯   ╰╯       ╰╯    ╰─╯        ╰╯  
+
+// Alternative: Gen.sawF()
 ```
