@@ -36,7 +36,7 @@ function clone(a=[0], ...c){
 	if (!c.length) { 
 		return a;
 	} else { 
-		c = flatten(c); 
+		c = Util.flatten(c); 
 	}
 	let arr = [];
 	for (let i=0; i<c.length; i++){
@@ -98,6 +98,12 @@ function every(a=[0], bars=1, div=16, pad=0, shift=0){
 }
 exports.every = every;
 
+// Import from the Util.flatten
+// flatten a multidimensional array. Optionally set the depth
+// for the flattening
+//
+exports.flat = Util.flatten;
+
 // similar to every(), but instead of specifying bars/devisions
 // this method allows you to specify the exact length of the array
 // and the shift is not a ratio but in whole integer steps
@@ -119,19 +125,6 @@ function padding(a=[0], length=16, pad=0, shift=0){
 }
 exports.padding = padding;
 exports.pad = padding;
-
-// flatten a multidimensional array. Optionally set the depth
-// for the flattening
-//
-// @param {Array} -> array to flatten
-// @param {Number} -> depth of flatten
-// @return {Array} -> flattened array
-//
-function flatten(a=[0], depth=Infinity){
-	return a.flat(depth);
-}
-exports.flatten = flatten;
-exports.flat = flatten;
 
 // filter one or multiple values from an array
 // 
@@ -194,12 +187,17 @@ exports.tFilter = filterType;
 // 
 function invert(arr=[0], lo, hi){
 	if (lo === undefined){
-		hi = Math.max(...arr);
-		lo = Math.min(...arr);
+		hi = Math.max(...Util.flatten(arr));
+		lo = Math.min(...Util.flatten(arr));
 	} else if (hi === undefined){
 		hi = lo;
 	}
-	return arr.slice().map(v => hi - v + lo);
+	return arr.slice().map(v => {
+		if (Array.isArray(v)){
+			return invert(v, lo, hi);
+		}
+		return hi - v + lo;
+	});
 }
 exports.invert = invert;
 

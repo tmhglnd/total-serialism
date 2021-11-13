@@ -280,6 +280,19 @@ function divide(a, v=1){
 exports.divide = divide;
 exports.div = divide;
 
+// flatten a multidimensional array. Optionally set the depth
+// for the flattening
+//
+// @param {Array} -> array to flatten
+// @param {Number} -> depth of flatten
+// @return {Array} -> flattened array
+//
+function flatten(a=[0], depth=Infinity){
+	return a.flat(depth);
+}
+exports.flatten = flatten;
+exports.flat = flatten;
+
 // Return the remainder after division
 // also works in the negative direction
 // 

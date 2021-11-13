@@ -192,7 +192,7 @@ Mod.filter([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [3, 8, 10]);
 
 ## filterType
 
-Filter one or multiple values from an array
+Filter one or multiple values from an array based on their type
 
 **arguments**
 - {Array} -> array to filter
@@ -227,6 +227,10 @@ Mod.invert([-1, 2, 7, 9, 14], 5);
 // invert an array around specified low and high points
 Mod.invert([-1, 2, 7, 9, 14], 0, 12);
 //=> [ 13, 10, 5, 3, -2 ] 
+
+// works with multidimensional arrays
+Mod.invert([-1, 2, [[7, 9], 14]]);
+//=> [ 14, 11, [ [ 6, 4 ], -1 ] ] 
 ```
 
 <!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/iU3-FJDWG" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
