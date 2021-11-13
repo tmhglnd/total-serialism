@@ -298,3 +298,35 @@ Gen.saw(34, Gen.sinF(30, 2, 0, 100), 0, 12);
 
 // Alternative: Gen.sawF()
 ```
+
+## square / squareFloat
+
+Generate an array with n-periods of a square/pulse wave function. Optional last arguments set lo and hi range and pulse width. Only setting first range argument sets the low-range to 0.
+
+**arguments**
+- {Int} -> Length of output array (resolution)
+- {Number/Array} -> Periods of the wave (option, default=1)
+- {Number} -> Low range of values (optional, default=0) 
+- {Number} -> High range of values (optional, default=1)
+- {Number} -> Pulse width (optional, default=0.5)
+
+```js
+Gen.squareFloat(30, 4, 0, 1, 0.2);
+//=>  1.00 ┼─╮     ╭─╮    ╭─╮     ╭╮           
+//    0.00 ┤ ╰─────╯ ╰────╯ ╰─────╯╰─────  
+
+Gen.squareFloat(30, 3, -2, 5, 0.8);
+//=>  5.00 ┼───────╮ ╭────────╮╭────────╮ 
+//    1.50 ┼       │ │        ││        │ 
+//   -2.00 ┤       ╰─╯        ╰╯        ╰  
+
+// Frequency Modulation with Gen.sin
+Gen.squareFloat(30, Gen.sinF(30, 2, 1, 5));
+//=>  1.00 ┼───╮     ╭──╮╭──╮ ╭─╮  ╭─╮ ╭─ 
+//    0.80 ┤   │     │  ││  │ │ │  │ │ │  
+//    0.60 ┤   │     │  ││  │ │ │  │ │ │  
+//    0.40 ┤   │     │  ││  │ │ │  │ │ │  
+//    0.20 ┤   │     │  ││  │ │ │  │ │ │  
+//    0.00 ┤   ╰─────╯  ╰╯  ╰─╯ ╰──╯ ╰─╯   
+
+```

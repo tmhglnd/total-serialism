@@ -315,3 +315,34 @@ function saw(len=1, periods=1, lo=12, hi, phase=0){
 	return arr.map(v => Math.trunc(v));
 }
 exports.saw = saw;
+
+// Generate an array with n-periods of a pulse/squarewave function
+// Optional last arguments set lo and hi range and pulse width
+// Only setting first range argument sets the low-range to 0
+// 
+// @param {Int} -> Length of output array (resolution)
+// @param {Number/Array} -> Periods of the wave (option, default=1)
+// @param {Number} -> Low range of values (optional, default=-1) 
+// @param {Number} -> High range of values (optional, default=1)
+// @param {Number} -> Pulse width (optional, default=0.5)
+// @return {Array} -> wave-function as array
+//  
+function squareFloat(len=1, periods=1, lo, hi, pulse=0.5){
+	if (lo === undefined){ lo = 0; hi = 1; }
+	else if (hi === undefined){ hi = lo, lo = 0; }
+	// make periods array
+	periods = Array.isArray(periods)? periods : [periods];
+
+	// array length minimum of 1
+	len = Math.max(1, len);
+	let arr = [];
+
+	let a = 1 / len;
+	for (let i=0; i<len; i++){
+		arr[i] = ((i * a * periods[i % periods.length]) % 1 + 1) % 1;
+		arr[i] = arr[i] < pulse;
+	}
+	return Util.map(arr, 0, 1, lo, hi);
+	// return arr;
+}
+exports.squareFloat = squareFloat;

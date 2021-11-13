@@ -140,11 +140,13 @@ function testGen(){
 	
 	// test("Util.plot(Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5)), {log: false, height: 10})");
 	
+	test("Util.plot(Gen.saw(16, 8.5), {log: false})");
+	test("Util.plot(Gen.sawFloat(25, 2.5), {log: false, height: 5, data: true})");
 	test("Util.plot(Gen.saw(34, Gen.sinF(30, 2), 0, 12))");
 
-	// test("Util.plot(Gen.saw(16, 8.5), {log: false})");
-
-	// test("Util.plot(Gen.sawFloat(25, 2.5), {log: false, height: 5, data: true})");
+	test("Util.plot(Gen.squareFloat(30, 4, 0, 1, 0.2), {log: false, height: 2})");
+	test("Util.plot(Gen.squareFloat(30, 3, -2, 5, 0.8), {log: false, height: 2})");
+	test("Util.plot(Gen.squareFloat(30, Gen.sinF(30, 2, 1, 5)), {log: false, height: 5, data: true})");
 }
 
 function testAlgo(){
