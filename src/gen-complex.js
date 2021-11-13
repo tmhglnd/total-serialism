@@ -39,11 +39,11 @@ BigNumber.config({
 // 
 function hexBeat(hex="8"){
 	if (!hex.isNaN){ hex = hex.toString(); }
-	var a = [];
+	let a = [];
 	for (let i in hex){
-		var binary = parseInt("0x"+hex[i]).toString(2);
+		let binary = parseInt("0x"+hex[i]).toString(2);
 		binary = isNaN(binary)? '0000' : binary;
-		var padding = binary.padStart(4, '0');
+		let padding = binary.padStart(4, '0');
 		a = a.concat(padding.split('').map(x => Number(x)));
 	}
 	return a;

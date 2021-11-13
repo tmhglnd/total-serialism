@@ -65,10 +65,10 @@ function fullTest(){
 	console.time('Total Time');
 
 	// testSerial();
-	testGen();
+	// testGen();
 	// testAlgo();
 	// testRand();
-	// testMod();
+	testMod();
 	// testStat();
 	// testTranslate();
 	// testUtil();
@@ -132,13 +132,6 @@ function testGen(){
 
 	test("Util.plot(Gen.sinF(30, 1, -5, 5))");
 	test("Util.plot(Gen.cosF(30, Gen.sinF(30, 2), -5, 5))");
-
-	// test("Util.plot(Gen.cosineFloat(16), {log: false, height: 5, data: true})");
-	
-	// test("Util.plot(Gen.sine(10), {log: false})");
-	// test("Util.plot(Gen.cosine(7, 1.5), {log: false})");
-	
-	// test("Util.plot(Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5)), {log: false, height: 10})");
 	
 	test("Util.plot(Gen.saw(16, 8.5), {log: false})");
 	test("Util.plot(Gen.sawFloat(25, 2.5), {log: false, height: 5, data: true})");
@@ -157,7 +150,7 @@ function testAlgo(){
 	test("Algo.euclid(10, 3)");
 	test("Algo.euclid(8, 5)");
 	test("Algo.euclid(16, 9, 1)");
-	test("Algo.euclid(16, 2)");
+	test("Algo.euclid(31, 17)");
 	
 	pagebreak("HexBeat");
 	test("Algo.hexBeat()");
@@ -166,6 +159,7 @@ function testAlgo(){
 	test("Algo.hexBeat(573)");
 	test("Algo.hexBeat(['32fa'])");
 	test("Algo.hexBeat(['-zxyt'])");
+	test("Algo.hexBeat(0x89fc)");
 	
 	pagebreak("Lindenmayer");
 	test("Algo.linden()");
@@ -309,12 +303,15 @@ function testMod(){
 	pagebreak("Transform");
 	
 	test("Mod.clone()");
+	test("Mod.clone([0, 5, 7], 1)");
 	test('Mod.clone([0, 5, 7], 0, 12, -12)');
-	test('Mod.clone([0, 5, [7, 12]], 0, 12, -12)');
+	test('Mod.clone([0, [5, 9], [7, 12]], 0, 10, -10)');
 	test('Mod.clone([0, 5, 7], [0, 12, -12])');
 	test("Mod.clone(['kick', 'snare', 'hat'], ['_808', '_909'])");
-	test("Mod.clone(['c', 'e', 'g'], ['4', '5', '#3'])");
+	test("Mod.clone(['c', ['e', 'g']], ['4', '5', '#3'])");
 
+	test("Mod.flat([1, [2, 3, [4], 5], 6])");
+/*
 	test("Mod.combine()");
 	test("Mod.combine([0, 5], [[12, 19], 7])");
 	test("Mod.combine([0, 5], 12, [7, 3])");
@@ -416,7 +413,7 @@ function testMod(){
 	// console.log(Mod.unique(unArr));
 	// console.log(unArr);
 	test("Mod.unique()");
-	test("Mod.unique([5, 7, 5, 0, 12, 7, 5])");
+	test("Mod.unique([5, 7, 5, 0, 12, 7, 5])"); */
 }
 
 function testStat(){

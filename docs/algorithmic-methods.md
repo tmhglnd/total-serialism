@@ -31,6 +31,9 @@ Generate a euclidean rhythm evenly spacing n-beats amongst n-steps.Inspired by G
 - {Int} -> rotate (optional, default=0)
 
 ```js
+Algo.euclid(8, 5);
+//=> [ 1, 0, 1, 1, 0, 1, 1, 0 ] 
+
 Algo.euclid(16, 9, 1); 
 //=> [ 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1 ]
 ```
@@ -42,13 +45,16 @@ Algo.euclid(16, 9, 1);
 Generate hexadecimal rhythms. Hexadecimal beats make use of hexadecimal values (0 - f) that are a base-16 number system. Because one digit in a base-16 number system has 16 possible values (0 - 15) these can be converted to 4 bits that therefore can be seen as groups of 4 16th notes. These hexadecimal values will then represent any permutation of 1's and 0's in a 4 bit number, where 0 = 0 0 0 0, 7 = 0 1 1 1, b = 1 0 1 1, f = 1 1 1 1 and all possible values in between.
 
 **arguments**
-- {String} -> hexadecimal characters (0 t/m f) (optional, default=8)
+- {String | Number} -> hexadecimal characters (0-f) (optional, default=8)
 
 ```js
 // generate a hexadecimal rhythm based on a hexadecimal string (0-f)
 // inspired by Steven Yi's implementation in CSound Live Coding
 Algo.hexBeat('a9d2');
 //=> [ 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0 ]
+
+Algo.hexBeat(573);
+//=> [ 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1 ] 
 ```
 
 <iframe src="https://editor.p5js.org/tmhglnd/embed/2iav0oh9K" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
@@ -78,9 +84,9 @@ Algo.linden('F-G-G', 1, {'F': 'F−G+F+G−F', 'G' : 'GG'});
 //=> 'F−G+F+G−F-GG-GG'
 ```
 
-## L-System returning Array with Ints
+## L-System returning Array of ints
 
-A more useful version that works nicely with the rest of library. By returning an array of integers it can be quickly put to use in combination with other methods and generate rhythms, melodies and more based on custom rulesets.
+A more useful version that works nicely with the rest of the library. By returning an array of integers it can be quickly put to use in combination with other methods to generate rhythms, melodies and more based on custom rulesets.
 
 ```js
 Algo.linden();

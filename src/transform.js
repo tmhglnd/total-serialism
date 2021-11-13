@@ -34,9 +34,10 @@ const Util = require('./utility');
 function clone(a=[0], ...c){
 	// flatten array if multi-dimensional
 	if (!c.length) { 
-		c = [0, 0];
+		// c = [0];
+		return a;
 	} else { 
-		c = c.flat(); 
+		c = flatten(c); 
 	}
 	var arr = [];
 	for (var i=0; i<c.length; i++){
@@ -102,6 +103,19 @@ function every(a=[0], bars=4, div=16, pad=0, shift=0){
 	}
 }
 exports.every = every;
+
+// flatten a multidimensional array. Optionally set the depth
+// for the flattening
+//
+// @param {Array} -> array to flatten
+// @param {Number} -> depth of flatten
+// @return {Array} -> flattened array
+//
+function flatten(a=[0], depth=Infinity){
+	return a.flat(depth);
+}
+exports.flatten = flatten;
+exports.flat = flatten;
 
 // filter one or multiple values from an array
 // 

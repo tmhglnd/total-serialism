@@ -14,6 +14,7 @@ const Mod = require('total-serialism').Transform;
 - [join](#join)
 - [copy](#copy)
 - [every](#every)
+- [flatten](#flatten)
 - [filter](#filter)
 - [filterType](#filterType)
 - [invert](#invert)
@@ -44,13 +45,13 @@ Duplicate an array multiple times, optionaly add an offset to every value when d
 Mod.clone([0, 5, 7], 0, 12, -12); 
 //=> [ 0, 5, 7, 12, 17, 19, -12, -7, -5 ] 
 
-// works with 2D-arrays
+// works with multidimensional arrays
 Mod.clone([0, 5, [7, 12]], 0, 12, -12);
 //=> [ 0, 5, [ 7, 12 ], 12, 17, [ 19, 24 ], -12, -7, [ -5, 0 ] ]
 
 // works with strings
-Mod.clone(['c', 'e', 'g'], ['4', '5', '#3']);
-//=> [ 'c4', 'e4', 'g4', 'c5', 'e5', 'g5', 'c#3', 'e#3', 'g#3' ]  
+Mod.clone(['c', ['e', 'g']], ['4', '5', '#3']);
+//=> [ 'c4', [ 'e4', 'g4' ], 'c5', [ 'e5', 'g5' ], 'c#3', [ 'e#3', 'g#3' ] ]
 ```
 
 <!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/6hmjQkbzj" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
@@ -143,6 +144,19 @@ Mod.every(['c4', 'eb4', 'g4', 'f4', 'eb4'], 2, 8, 'r');
 ```
 
 <!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/9AF_CeIcW" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
+
+## flatten
+
+Flatten a multidimensional array. Optionally set the depth for the flattening with the second argument.
+
+**arguments**
+- {Array} -> array to flatten
+- {Number} -> depth of flatten (default=Infinity)
+
+```js 
+Mod.flatten([1, [2, 3, [ 4 ], 5], 6]);
+//=> [ 1, 2, 3, 4, 5, 6 ] 
+```
 
 ## filter
 
