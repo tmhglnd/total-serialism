@@ -346,3 +346,13 @@ function squareFloat(len=1, periods=1, lo, hi, pulse=0.5){
 	// return arr;
 }
 exports.squareFloat = squareFloat;
+exports.squareF = squareFloat;
+exports.rectFloat = squareFloat;
+exports.rectF = squareFloat;
+
+function square(len=1, periods=1, lo=12, hi, pulse=0.5){
+	var arr = squareFloat(len, periods, lo, hi, pulse);
+	return arr.map(v => Math.trunc(v));
+}
+exports.square = square;
+exports.rect = square;

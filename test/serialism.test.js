@@ -145,7 +145,7 @@ function testGen(){
 	test("Util.plot(Gen.saw(34, Gen.sinF(30, 2), 0, 12))");
 
 	test("Util.plot(Gen.squareFloat(30, 4, 0, 1, 0.2), {log: false, height: 2})");
-	test("Util.plot(Gen.squareFloat(30, 3, -2, 5, 0.8), {log: false, height: 2})");
+	test("Util.plot(Gen.square(30, 3, 0, 12, 0.8), {log: false, height: 2})");
 	test("Util.plot(Gen.squareFloat(30, Gen.sinF(30, 2, 1, 5)), {log: false, height: 5, data: true})");
 }
 

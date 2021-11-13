@@ -311,14 +311,16 @@ Generate an array with n-periods of a square/pulse wave function. Optional last 
 - {Number} -> Pulse width (optional, default=0.5)
 
 ```js
-Gen.squareFloat(30, 4, 0, 1, 0.2);
-//=>  1.00 ┼─╮     ╭─╮    ╭─╮     ╭╮           
-//    0.00 ┤ ╰─────╯ ╰────╯ ╰─────╯╰─────  
-
-Gen.squareFloat(30, 3, -2, 5, 0.8);
+Gen.square(30, 3, -2, 5, 0.8);
 //=>  5.00 ┼───────╮ ╭────────╮╭────────╮ 
 //    1.50 ┼       │ │        ││        │ 
 //   -2.00 ┤       ╰─╯        ╰╯        ╰  
+
+Gen.square(30, 4, 0, 1, 0.2);
+//=>  1.00 ┼─╮     ╭─╮    ╭─╮     ╭╮           
+//    0.00 ┤ ╰─────╯ ╰────╯ ╰─────╯╰─────  
+
+// Alternative: Gen.rect()
 
 // Frequency Modulation with Gen.sin
 Gen.squareFloat(30, Gen.sinF(30, 2, 1, 5));
@@ -328,5 +330,7 @@ Gen.squareFloat(30, Gen.sinF(30, 2, 1, 5));
 //    0.40 ┤   │     │  ││  │ │ │  │ │ │  
 //    0.20 ┤   │     │  ││  │ │ │  │ │ │  
 //    0.00 ┤   ╰─────╯  ╰╯  ╰─╯ ╰──╯ ╰─╯   
+
+// Alternative: Gen.squareF(), Gen.rectFloat(), Gen.rectF()
 
 ```
