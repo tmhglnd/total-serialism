@@ -105,6 +105,9 @@ Gen.spreadExp(10, 0, 10, 2);
 //   0, 0, 0, 0, 1,
 //   2, 3, 4, 6, 8
 // ] 
+
+Gen.spreadExpFloat();
+// Alternative: Gen.spreadExpF()
 ```
 
 ## spreadInclusiveExp
@@ -123,6 +126,9 @@ Gen.spreadInclusiveExp(10, 0, 10, 2);
 //   0, 0, 0, 1,  1,
 //   3, 4, 6, 7, 10
 // ] 
+
+Gen.spreadInclusiveExpFloat();
+// Alternative: Gen.spreadIncExpF()
 ```
 
 ## fill

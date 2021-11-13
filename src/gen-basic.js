@@ -45,6 +45,17 @@ function spreadFloat(len=1, lo=1, hi){
 exports.spreadFloat = spreadFloat;
 exports.spreadF = spreadFloat;
 
+// Spread function rounded to integers
+// 
+// @params {length, low-output, high-output}
+// @return {Array}
+//
+function spread(len, lo=len, hi){
+	let arr = spreadFloat(len, lo, hi);
+	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
+}
+exports.spread = spread;
+
 // Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
 // Set an exponential curve in the spacing of the values.
@@ -53,7 +64,7 @@ exports.spreadF = spreadFloat;
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadFloatExp(len=1, lo=1, hi, exp=1){
+function spreadExpFloat(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
 	if (hi === undefined){ var t=lo, lo=0, hi=t; }
 	// calculate the range
@@ -70,18 +81,9 @@ function spreadFloatExp(len=1, lo=1, hi, exp=1){
 	}
 	return (r < 0)? arr.reverse() : arr;
 }
-exports.spreadFloatExp = spreadFloatExp;
-
-// Spread function rounded to integers
-// 
-// @params {length, low-output, high-output}
-// @return {Array}
-//
-function spread(len, lo=len, hi){
-	let arr = spreadFloat(len, lo, hi);
-	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
-}
-exports.spread = spread;
+exports.spreadFloatExp = spreadExpFloat; // deprecated
+exports.spreadExpFloat = spreadExpFloat;
+exports.spreadExpF = spreadExpFloat;
 
 // Spread function floored to integers
 // 
@@ -89,7 +91,7 @@ exports.spread = spread;
 // @return {Array}
 //
 function spreadExp(len, lo=len, hi, exp){
-	let arr = spreadFloatExp(len, lo, hi, exp);
+	let arr = spreadExpFloat(len, lo, hi, exp);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
 exports.spreadExp = spreadExp;
@@ -124,6 +126,18 @@ function spreadInclusiveFloat(len=1, lo=1, hi){
 exports.spreadInclusiveFloat = spreadInclusiveFloat;
 exports.spreadIncF = spreadInclusiveFloat;
 
+// spreadinclusiveFloat function floored to integers
+// 
+// @params {length, low-output, high-output}
+// @return {Array}
+//
+function spreadInclusive(len, lo=len, hi){
+	var arr = spreadInclusiveFloat(len, lo, hi);
+	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
+}
+exports.spreadInclusive = spreadInclusive;
+exports.spreadInc = spreadInclusive;
+
 // Generate a list of n-length starting at one value
 // ending at the 3th argument.
 // Set an exponential curve in the spacing of the values.
@@ -132,7 +146,7 @@ exports.spreadIncF = spreadInclusiveFloat;
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadInclusiveFloatExp(len=1, lo=1, hi, exp=1){
+function spreadInclusiveExpFloat(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
 	if (hi === undefined){ var t=lo, lo=0, hi=t; }
 	// calculate the range
@@ -148,19 +162,9 @@ function spreadInclusiveFloatExp(len=1, lo=1, hi, exp=1){
 	}
 	return (r < 0)? arr.reverse() : arr;
 }
-exports.spreadInclusiveFloatExp = spreadInclusiveFloatExp;
-
-// spreadinclusiveFloat function floored to integers
-// 
-// @params {length, low-output, high-output}
-// @return {Array}
-//
-function spreadInclusive(len, lo=len, hi){
-	var arr = spreadInclusiveFloat(len, lo, hi);
-	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
-}
-exports.spreadInclusive = spreadInclusive;
-exports.spreadInc = spreadInclusive;
+exports.spreadInclusiveFloatExp = spreadInclusiveExpFloat; //deprecated
+exports.spreadInclusiveExpFloat = spreadInclusiveExpFloat;
+exports.spreadIncExpF = spreadInclusiveExpFloat;
 
 // spreadinclusiveFloatExp function floored to integers
 // 
@@ -168,10 +172,11 @@ exports.spreadInc = spreadInclusive;
 // @return {Array}
 //
 function spreadInclusiveExp(len, lo=len, hi, exp){
-	var arr = spreadInclusiveFloatExp(len, lo, hi, exp);
+	var arr = spreadInclusiveExpFloat(len, lo, hi, exp);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
 exports.spreadInclusiveExp = spreadInclusiveExp;
+exports.spreadIncExp = spreadInclusiveExp;
 
 // fill an array with values. Arguments are pairs.
 // Every pair consists of <value, amount>

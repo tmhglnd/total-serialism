@@ -59,24 +59,19 @@ console.log();
 // markov.clear();
 // console.log(markov.table);
 
-// fullTest();
-
-console.log(Util.div([[1, 11, 111], 2, 3], [2, 10]));
-console.log(Util.div([1, [2, [3, 5]], 4], [10, [20, 30]]))
-console.log(Util.div([1, 2, [3, [4, 5]]], [10, [[20, 100], 30]]));
-console.log(Util.div(10, [1, 2, 3, 4]));
+fullTest();
 
 function fullTest(){
 	console.time('Total Time');
 
 	// testSerial();
-	// testGen();
+	testGen();
 	// testAlgo();
 	// testRand();
 	// testMod();
 	// testStat();
 	// testTranslate();
-	testUtil();
+	// testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -104,49 +99,48 @@ function testGen(){
 	pagebreak("Generative");
 
 	test("Gen.spread()");
-	test("Gen.spreadFloat()");
-	test("Gen.spreadInclusive()");
-	test("Gen.spreadInclusiveFloat()");
+	test("Gen.spread(6)");
+	test("Gen.spread(6, 12)");
+	test("Gen.spread(6, -3, 12)");
+	test("Gen.spread(6, -12, 3)");
 
-	test("Gen.spread(5)");
-	test("Gen.spread(5, 12)");
-	test("Gen.spread(5, 3, 12)");
-	test("Gen.spread(5, 12, 3)");
-	
-	test("Gen.spreadInclusive(5)");
-	test("Gen.spreadInclusive(5, 12)");
-	test("Gen.spreadInclusive(5, 3, 12)");
-	test("Gen.spreadInclusive(5, 12, 3)");
-	
+	test("Gen.spreadFloat()");
 	test("Gen.spreadFloat(4)");
 	test("Gen.spreadFloat(4, 2)");
 	test("Gen.spreadFloat(4, -1, 1)");
 	
-	test("Gen.spreadInclusiveFloat(5)");
-	test("Gen.spreadInclusiveFloat(5, 2)");
-	test("Gen.spreadInclusiveFloat(5, -1, 1)");
+	test("Gen.spreadInc()");
+	test("Gen.spreadInc(6)");
+	test("Gen.spreadInc(6, 12)");
+	test("Gen.spreadInc(6, -3, 12)");
+	test("Gen.spreadInc(6, -12, 3)");
+	
+	test("Gen.spreadIncF()");
+	test("Gen.spreadIncF(5)");
+	test("Gen.spreadIncF(5, 2)");
+	test("Gen.spreadIncF(5, -1, 1)");
 
 	test("Gen.spreadExp(10, 0, 10, 2)");
-	test("Gen.spreadInclusiveExp(10, 0, 10, 2)");
-	test("Gen.spreadFloatExp(12, 0, 10, 0.5)");
-	test("Gen.spreadInclusiveFloatExp(12, 0, 10, 0.5)");
+	test("Gen.spreadIncExp(10, 0, 10, 2)");
+	test("Gen.spreadExpF(12, 0, 10, 0.5)");
+	test("Gen.spreadIncExpF(12, 0, 10, 0.5)");
 
-	// test("Gen.fill()");
-	test("Gen.fill(10, 2, 15, 3, 20, 4)");
-	test("Gen.fill([10, 20], 2, 15, 3, 20, 4)");
-	test("Gen.fill([10, 20, 2, 15, 3, 20, 4])");
+	// // test("Gen.fill()");
+	// test("Gen.fill(10, 2, 15, 3, 20, 4)");
+	// test("Gen.fill([10, 20], 2, 15, 3, 20, 4)");
+	// test("Gen.fill([10, 20, 2, 15, 3, 20, 4])");
 
 	
-	test("Util.plot(Gen.cosineFloat(16), {log: false, height: 5, data: true})");
+	// test("Util.plot(Gen.cosineFloat(16), {log: false, height: 5, data: true})");
 	
-	test("Util.plot(Gen.sine(10), {log: false})");
-	test("Util.plot(Gen.cosine(7, 1.5), {log: false})");
+	// test("Util.plot(Gen.sine(10), {log: false})");
+	// test("Util.plot(Gen.cosine(7, 1.5), {log: false})");
 	
-	test("Util.plot(Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5)), {log: false, height: 10})");
+	// test("Util.plot(Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5)), {log: false, height: 10})");
 	
-	test("Util.plot(Gen.saw(16, 8.5), {log: false})");
+	// test("Util.plot(Gen.saw(16, 8.5), {log: false})");
 
-	test("Util.plot(Gen.sawFloat(25, 2.5), {log: false, height: 5, data: true})");
+	// test("Util.plot(Gen.sawFloat(25, 2.5), {log: false, height: 5, data: true})");
 }
 
 function testAlgo(){
