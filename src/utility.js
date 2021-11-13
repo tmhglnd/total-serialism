@@ -147,14 +147,25 @@ function add(a, v=0){
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			r[i] = a[i % l1] + v[i % l2];
+			let a1 = a[i % l1];
+			let v1 = v[i % l2];
+			if (Array.isArray(a1) || Array.isArray(v1)){
+				r[i] = add(a1, v1);
+			} else {
+				r[i] = a1 + v1;
+			}
 		}
 		return r;
 	}
 	if (!Array.isArray(a)){
 		return a + v;
 	}
-	return a.map(x => x + v);
+	return a.map(x => {
+		if (Array.isArray(x)){
+			return add(x, v);
+		}
+		return x + v;
+	});
 }
 exports.add = add;
 
@@ -172,14 +183,25 @@ function subtract(a, v=0){
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			r[i] = a[i % l1] - v[i % l2];
+			let a1 = a[i % l1];
+			let v1 = v[i % l2];
+			if (Array.isArray(a1) || Array.isArray(v1)){
+				r[i] = subtract(a1, v1);
+			} else {
+				r[i] = a1 - v1;
+			}
 		}
 		return r;
 	}
 	if (!Array.isArray(a)){
 		return a - v;
 	}
-	return a.map(x => x - v);
+	return a.map(x => {
+		if (Array.isArray(x)){
+			return subtract(x, v);
+		}
+		return x - v;
+	});
 }
 exports.subtract = subtract;
 exports.sub = subtract;
@@ -198,14 +220,25 @@ function multiply(a, v=1){
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			r[i] = a[i % l1] * v[i % l2];
+			let a1 = a[i % l1];
+			let v1 = v[i % l2];
+			if (Array.isArray(a1) || Array.isArray(v1)){
+				r[i] = multiply(a1, v1);
+			} else {
+				r[i] = a1 * v1;
+			}
 		}
 		return r;
 	}
 	if (!Array.isArray(a)){
 		return a * v;
 	}
-	return a.map(x => x * v);
+	return a.map(x => {
+		if (Array.isArray(x)){
+			return multiply(x, v);
+		}
+		return x * v;
+	});
 }
 exports.multiply = multiply;
 exports.mul = multiply;
@@ -224,14 +257,25 @@ function divide(a, v=1){
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			r[i] = a[i % l1] / v[i % l2];
+			let a1 = a[i % l1];
+			let v1 = v[i % l2];
+			if (Array.isArray(a1) || Array.isArray(v1)){
+				r[i] = divide(a1, v1);
+			} else {
+				r[i] = a1 / v1;
+			}
 		}
 		return r;
 	}
 	if (!Array.isArray(a)){
 		return a / v;
 	}
-	return a.map(x => x / v);
+	return a.map(x => {
+		if (Array.isArray(x)){
+			return divide(x, v);
+		}
+		return x / v;
+	});
 }
 exports.divide = divide;
 exports.div = divide;

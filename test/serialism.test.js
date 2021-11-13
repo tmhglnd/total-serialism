@@ -59,18 +59,23 @@ console.log();
 // markov.clear();
 // console.log(markov.table);
 
-fullTest();
+// fullTest();
+
+console.log(Util.div([[1, 11, 111], 2, 3], [2, 10]));
+console.log(Util.div([1, [2, [3, 5]], 4], [10, [20, 30]]))
+console.log(Util.div([1, 2, [3, [4, 5]]], [10, [[20, 100], 30]]));
+console.log(Util.div(10, [1, 2, 3, 4]));
 
 function fullTest(){
 	console.time('Total Time');
 
-	testSerial();
-	testGen();
-	testAlgo();
-	testRand();
-	testMod();
-	testStat();
-	testTranslate();
+	// testSerial();
+	// testGen();
+	// testAlgo();
+	// testRand();
+	// testMod();
+	// testStat();
+	// testTranslate();
 	testUtil();
 
 	pagebreak("All Tests Passed");
@@ -346,6 +351,7 @@ function testMod(){
 	test("Mod.lookup([0, 1, 1, 2, 0, 2, 2, 1], ['c4', 'e4', 'f4', 'g4'])");
 	test("Mod.lookup([0, [1, 1, [2, 3 ], 0], 2], ['c4', 'e4', 'f4', 'g4'])");
 	test("Mod.lookup([-2, 5, 7, 12], ['c4', 'e4', 'f4', 'g4'])");
+	test("Mod.lookup(Gen.cosine(16, 5.32, 0, 12), [0, 0, 2, 3, 3, 5, 7, 7, 8, 8, 11, 11])");
 
 	// var merArr1 = [0, 3, 7];
 	// var merArr2 = [3, 12];
