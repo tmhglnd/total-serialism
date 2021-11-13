@@ -309,25 +309,28 @@ function testMod(){
 	test('Mod.clone([0, 5, 7], [0, 12, -12])');
 	test("Mod.clone(['kick', 'snare', 'hat'], ['_808', '_909'])");
 	test("Mod.clone(['c', ['e', 'g']], ['4', '5', '#3'])");
-
-	test("Mod.flat([1, [2, 3, [4], 5], 6])");
-/*
+	
 	test("Mod.combine()");
-	test("Mod.combine([0, 5], [[12, 19], 7])");
+	test("Mod.combine([0, 5], [[12, [19, 24]], 7])");
 	test("Mod.combine([0, 5], 12, [7, 3])");
-	test("Mod.combine(['c4', 'e4'], ['g4', 'f4'])");
+	test("Mod.combine([['c4', 'e4']], ['g4', 'f4'])");
 
 	test("Mod.duplicate()");
 	test("Mod.duplicate([0, 7, 12], 3)");
 	test("Mod.duplicate([0, [3, 7], 12], 2)");
 	test("Mod.duplicate(['c', 'f', 'g'], 4)");
-
+	
 	test("Mod.every([1, 0, 1, 1, 1], 2, 8)");
 	test("Mod.every([1, 1, 0, 1], 4, 5, 0, -1)");
 	test("Mod.every([3, 0, 7, 9, 11], 2, 8, 12)");
 	test("Mod.every([3, [0, 7, 9], 11], 1, 12)");
 	test("Mod.every(['c4', 'eb4', 'g4', 'f4', 'eb4'], 2, 8, 'r')");
-	
+
+	test("Mod.pad([3, 7, 11, 12], 9)");
+	test("Mod.pad(['c', 'f', 'g'], 11, '-', 4)");
+/*	
+	test("Mod.flat([1, [2, 3, [4], 5], 6])");
+
 	test("Mod.filter([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [3, 8, 10])");
 	test("Mod.filter([0, 1.618, 2, 3.14, 4], 3.14)");
 	test("Mod.filter([0, 1, 'foo', 'bar', 2, 3], ['1', 'foo'])");

@@ -34,13 +34,12 @@ const Util = require('./utility');
 function clone(a=[0], ...c){
 	// flatten array if multi-dimensional
 	if (!c.length) { 
-		// c = [0];
 		return a;
 	} else { 
 		c = flatten(c); 
 	}
-	var arr = [];
-	for (var i=0; i<c.length; i++){
+	let arr = [];
+	for (let i=0; i<c.length; i++){
 		arr = arr.concat(a.map(v => Util.add(v, c[i])));
 	}
 	return arr;
@@ -55,8 +54,8 @@ exports.clone = clone;
 // 
 function combine(...args){
 	if (!args.length){ return [0]; }
-	var arr = [];
-	for (var i=0; i<args.length; i++){
+	let arr = [];
+	for (let i=0; i<args.length; i++){
 		arr = arr.concat(args[i]);
 	}
 	return arr;
@@ -71,8 +70,8 @@ exports.join = combine;
 // @return {Array}
 // 
 function duplicate(a=[0], d=2){
-	var arr = [];
-	for (var i=0; i<Math.max(1,d); i++){
+	let arr = [];
+	for (let i=0; i<Math.max(1,d); i++){
 		arr = arr.concat(a);
 	}
 	return arr;
@@ -81,28 +80,45 @@ exports.duplicate = duplicate;
 exports.copy = duplicate;
 exports.dup = duplicate;
 
-// add zeroes to an array with a rhythmic sequence
-// the division determins the amount of values per bar
+// pad an array with zeroes (or other values)
+// the division determines the amount of values per bar
 // total length = bars * div
 //
 // param {Array} -> Array to use every n-bars
-// param {Int} -> amount of bars
-// param {Int} -> amount of values per bar
+// param {Int} -> amount of bars (optional, default=1)
+// param {Int} -> amount of values per bar (optional, default=16)
 // param {Value} -> padding argument (optional, default=0)
 // param {Number} -> shift the output by n-divs (optional, default=0)
 // return {Array}
 //
-function every(a=[0], bars=4, div=16, pad=0, shift=0){
+function every(a=[0], bars=1, div=16, pad=0, shift=0){
 	let len = Math.floor(bars * div) - a.length;
-	if (len < 1 ) {
-		return a;
-	} else {
-		let arr = new Array(len).fill(pad);
-
-		return rotate(a.concat(arr), Math.floor(shift*div));
-	}
+	let sft = Math.floor(shift * div);
+	return padding(a, len, pad, sft);
 }
 exports.every = every;
+
+// similar to every(), but instead of specifying bars/devisions
+// this method allows you to specify the exact length of the array
+// and the shift is not a ratio but in whole integer steps
+//
+// param {Array} -> Array to use every n-bars
+// param {Int} -> Array length output
+// param {Number} -> shift the output by n-divs (optional, default=0)
+// param {Value} -> padding argument (optional, default=0)
+// return {Array}
+//
+function padding(a=[0], length=16, pad=0, shift=0){
+	a = Array.isArray(a)? a : [a];	
+	let len = length - a.length;
+	if (len < 1) {
+		return a;
+	}
+	let arr = new Array(len).fill(pad);
+	return rotate(a.concat(arr), shift);
+}
+exports.padding = padding;
+exports.pad = padding;
 
 // flatten a multidimensional array. Optionally set the depth
 // for the flattening

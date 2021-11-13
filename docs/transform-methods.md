@@ -107,6 +107,24 @@ Mod.copy(['c', 'f', 'g'], 3);
 
 <!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/5n5e03e4M" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
+## padding
+
+Pad an array with zeroes (or any other value) up to the length specified. The padding value can optionally be changed and the shift argument rotates the list n-steps left or right (negative). This method is similar to `every()` except arguments are not specified in musical bars/divisions.
+
+**arguments**
+- {NumberArrray} -> Array to use every n-bars
+- {Int} -> output length of array (optional, default=16)
+- {Value} -> padding value for the added items (optional, default=0)
+- {Number} -> shift in steps (optional, default=0)
+
+```js 
+Mod.pad([3, 7, 11, 12], 9);
+//=> [ 3, 7, 11, 12, 0, 0, 0, 0, 0 ] 
+
+Mod.pad(['c', 'f', 'g'], 11, '-', 4);
+//=> [ '-', '-', '-', '-', 'c', 'f', 'g', '-', '-', '-', '-' ] 
+```
+
 ## every
 
 Add zeroes to an array with a number sequence. The division determines the amount of values per bar. The total length equals the bars times division. This method is very useful for rhythms that must occur once in a while, but can also be use for melodic phrases. Also works with strings.
