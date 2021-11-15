@@ -32,7 +32,8 @@ const Util = require('./utility');
 // 								 -> or string concatenation
 // 
 function clone(a=[0], ...c){
-	// flatten array if multi-dimensional
+	a = Array.isArray(a)? a : [a];
+	// flatten clone array if multi-dimensional
 	if (!c.length) { 
 		return a;
 	} else { 
@@ -151,10 +152,10 @@ exports.filter = filter;
 // In this case the input type is the type that is output
 // 
 // @param {Array} -> array to filter
-// @param {String/Array} -> types to filter
+// @param {String/Array} -> types to filter (default = number)
 // @return (Array} -> filtered array
 // 
-function filterType(a=[0], t){
+function filterType(a=[0], t='number'){
 	a = (Array.isArray(a))? a.slice() : [a];
 	t = (Array.isArray(t))? t : [t];
 
@@ -186,6 +187,7 @@ exports.tFilter = filterType;
 // @return {Array}
 // 
 function invert(arr=[0], lo, hi){
+	arr = Array.isArray(arr)? arr : [arr];
 	if (lo === undefined){
 		hi = Math.max(...Util.flatten(arr));
 		lo = Math.min(...Util.flatten(arr));
@@ -208,9 +210,9 @@ exports.invert = invert;
 //  
 function lace(...args){
 	if (!args.length){ return [0]; }
-
 	var l = 0;
 	for (let i in args){
+		args[i] = Array.isArray(args[i])? args[i] : [args[i]];
 		l = Math.max(args[i].length, l);
 	}
 	var arr = [];
@@ -263,6 +265,7 @@ function merge(...args){
 	if (!args.length){ return [0]; }
 	let l = 0;
 	for (let i in args){
+		args[i] = Array.isArray(args[i])? args[i] : [args[i]];
 		l = Math.max(args[i].length, l);
 	}
 	let arr = [];
@@ -290,6 +293,7 @@ exports.merge = merge;
 // 
 function palindrome(arr, noDouble=false){
 	if (arr === undefined){ return [0] };
+	if (!Array.isArray(arr)){ return [arr] };
 	
 	let rev = arr.slice().reverse();
 	if (noDouble){
@@ -329,6 +333,7 @@ exports.repeat = repeat;
 // @return {Array}
 // 
 function reverse(a=[0]){
+	if (!Array.isArray(a)){ return [a]; }
 	return a.slice().reverse();
 }
 exports.reverse = reverse;
@@ -341,6 +346,7 @@ exports.reverse = reverse;
 // @return {Array}
 // 
 function rotate(a=[0], r=0){
+	if (!Array.isArray(a)){ return [a]; }
 	var l = a.length;
 	var arr = [];
 	for (var i=0; i<l; i++){
@@ -365,6 +371,9 @@ exports.sort = Stat.sort;
 // return {Array}
 // 
 function spray(values=[0], beats=[0]){
+	values = Array.isArray(values)? values : [values];
+	beats = Array.isArray(beats)? beats : [beats];
+
 	var arr = beats.slice();
 	var c = 0;
 	for (let i in beats){
@@ -384,7 +393,10 @@ exports.spray = spray;
 // param {Array} -> outputlength of array
 // param {String/Int} -> interpolation function (optional, default=linear)
 // 
-function stretch(a=[0], len=5, mode='linear'){
+function stretch(a=[0], len=1, mode='linear'){
+	a = Array.isArray(a)? a : [a];
+	if (len < 2){ return a; }
+	
 	let arr = [];
 	let l = a.length;
 	for (let i=0; i<len; i++){
@@ -392,7 +404,7 @@ function stretch(a=[0], len=5, mode='linear'){
 		let val = i / (len - 1) * (l - 1);
 		// lookup nearest neighbour left/right
 		let a0 = a[Math.max(Math.trunc(val), 0)];
-		let a1 = a[Math.min(Math.trunc(val)+1, l-1)];
+		let a1 = a[Math.min(Math.trunc(val)+1, l-1) % a.length];
 
 		if (mode === 'none' || mode === null || mode === false){
 			arr.push(a0);
@@ -412,6 +424,7 @@ exports.stretch = stretch;
 // @return {Array}
 // 
 function unique(a=[0]){
+	a = Array.isArray(a)? a : [a];
 	return [...new Set(a)];
 }
 exports.unique = unique;

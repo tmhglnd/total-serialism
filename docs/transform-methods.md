@@ -196,9 +196,13 @@ Filter one or multiple values from an array based on their type
 
 **arguments**
 - {Array} -> array to filter
-- {String} -> datatype to filter
+- {String} -> datatype to filter (optional, default=number)
 
 ```js
+// default filter is set as number
+Mod.filterType([0, 'foo', {bar : true}, 1, undefined]);
+//=> [ 0, 1 ] 
+
 // return only a specific datatype (in this case you specify the type to return)
 Mod.filterType([0, 1, [1, 2], 'foo', 2, null, true, {bar: 5}, 3.14, undefined], 'number');
 //=> [ 0, 1, 2, 3.14 ] 
@@ -450,7 +454,16 @@ Mod.stretch([0, 12, 3, 7], 24);
 //    3.48 ┤ ╭╯           ╰──╯      
 //    2.32 ┤ │                      
 //    1.16 ┤╭╯                      
-//    0.00 ┼╯        
+//    0.00 ┼╯
+
+// set interpolation to 'none'
+Mod.stretch([0, 12, 3, 7], 10, 'none');
+//=> 12.00 ┼  ╭──╮    
+//    9.60 ┤  │  │    
+//    7.20 ┤  │  │  ╭ 
+//    4.80 ┤  │  │  │ 
+//    2.40 ┤  │  ╰──╯ 
+//    0.00 ┼──╯ 
 ```
 
 ## unique

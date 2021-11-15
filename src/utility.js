@@ -288,6 +288,7 @@ exports.div = divide;
 // @return {Array} -> flattened array
 //
 function flatten(a=[0], depth=Infinity){
+	a = Array.isArray(a)? a : [a];
 	return a.flat(depth);
 }
 exports.flatten = flatten;
