@@ -11,13 +11,13 @@ const Stat = require('total-serialism').Statistic;
 
 # Methods
 
-- sort
-- avarage
-- center
-- common
-- maximum
-- minimum
-- change
+- [sort](#sort)
+- [average](#average) (mean)
+- [center](#center) (median)
+- [common](#common) (mode)
+- [maximum](#maximum)
+- [minimum](#minimum)
+- [change](#change)
 
 ## sort
 
@@ -41,41 +41,60 @@ Measures of central tendencies (Mean, Median, Mode)
 
 Get the average (the artihmetic mean) value from an array
 
+**arguments**
+- {Array} -> the array to take the average of
+- {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
+
 ```js
 Stat.average([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 //=> 5
-// Alternative: Stat.mean()
 
 Stat.average([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3]);
 //=> -0.0833
+
+// Alternative: Stat.mean()
 ```
 
 ## center
 
 Return the center value (the median) from an array
 
+**arguments**
+- {Array} -> the array to get the median from
+- {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
+
 ```js
 Stat.center([1, 5, 6, 9, 13]);
 //=> 6 
-// Alternative: Stat.median()
 
 // Returns average of 2 middle values for even listlengths
 // works with "official" statistics terminology
 Stat.center([1, 7, 4, 2, 9, 5]);
 //=> 4.5
+
+// Alternative: Stat.median()
 ```
 
 ## common
 
 Returns the most common value (the mode) from an array as an array
 
+**arguments**
+- {Array} -> the array to get the mode from
+- {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
+
 ```js
 Stat.common([8, 4, 3, 11, 9, 0, 11, 2, 10, 5, 11, 0]);
+//=> [ 11 ] 
+
+Stat.common([8, [4, 3], 9, [9, 0, [2, 10], 5], 11, 0, 11]);
 //=> [ 11 ] 
 
 // In the case of a multi-modal system the array contains all common values
 Stat.common([8, 4, 3, 9, 9, 0, 2, 10, 5, 11, 0, 11]);
 //=> [ 0, 9, 11 ] 
+
+// Alternative: Stat.mode()
 ```
 
 ## maximum

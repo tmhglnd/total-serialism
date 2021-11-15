@@ -53,13 +53,16 @@ exports.min = Util.minimum;
 // The mean is a measure of central tendency
 // 
 // @param {NumberArray} -> input array of n-numbers
+// @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
 // @return {Number} -> mean
 // 
-function mean(a=[0]){
+function mean(a=[0], d=true){
 	if (!Array.isArray(a)) { return a; }
+	if (d) { a = Util.flatten(a); }
+
 	let s = 0;
 	for (let i in a){
-		s += a[i];
+		s += isNaN(a[i])? 0 : a[i];
 	}
 	return s / a.length;
 }
@@ -73,10 +76,13 @@ exports.average = mean;
 // Ignores other datatypes then Number and Boolean
 // 
 // @param {NumberArray} -> input array of n-numbers
+// @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
 // @return {Number} -> median
 // 
-function median(a=[0]){
+function median(a=[0], d=true){
 	if (!Array.isArray(a)) { return a; }
+	if (d) { a = Util.flatten(a); }
+
 	let arr = a.slice();
 	if (arr.map(x => typeof x).includes('string')) { 
 		arr = Mod.filterType(arr, ['number', 'boolean']);
@@ -97,10 +103,13 @@ exports.center = median;
 // Returns an array when multi-modal system
 // 
 // @param {NumberArray} -> input array of n-numbers
+// @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
 // @return {Number/Array} -> the mode or modes
 //
-function mode(a=[0]){
+function mode(a=[0], d=true){
 	if (!Array.isArray(a)) { return a; }
+	if (d) { a = Util.flatten(a); }
+
 	let arr = a.slice().sort((a,b) => { return a-b; });
 
 	let amount = 1;

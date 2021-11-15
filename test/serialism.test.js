@@ -68,8 +68,8 @@ function fullTest(){
 	// testGen();
 	// testAlgo();
 	// testRand();
-	testMod();
-	// testStat();
+	// testMod();
+	testStat();
 	// testTranslate();
 	// testUtil();
 
@@ -452,31 +452,51 @@ function testMod(){
 
 function testStat(){
 	pagebreak("Statistic");
-
+	
+	test("Stat.sort()");
+	test("Stat.sort(3.14)");
+	test("Stat.sort('foo')");
 	test("Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11], -1)");
 	test("Stat.sort([10, 3.14, 'foo', 'bar', 5, -6, 'foobar'])");
 	test("Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11])");
-
+	
+	test("Stat.mean()");
+	test("Stat.mean(3.14)");
+	test("Stat.mean('foo')");
 	test("Stat.mean([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3])");
-	test("Stat.average([1, 2, 3, 4, 5, 6, 7, 8, 9])");
-	test("Stat.average([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3])");
-
+	test("Stat.mean([1, 2, 3, 4, 5, 6, 7, 8, 9])");
+	test("Stat.mean([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3])");
+	test("Stat.mean([2, [-6, 2, 0], [10, [9, -2], 5], -8, [-11, 1], -3])");
+	
 	test("Stat.median()");
+	test("Stat.median(3.14)");
 	test("Stat.median([1, 5, 6, 9, 13])");
+	test("Stat.median([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, -3])");
+	test("Stat.median([2, [-6, 2, 0], [10, [9, -2], 5], -8, [-11], -3])");
 	test("Stat.median([1, 5, 6, 'foo', 'bar', 13,])");
 	
 	test("Stat.center([1, 5, 11])");
 	test("Stat.center([1, 7, 4, 2, 9, 5])");
 	test("Stat.center([1, 7, 4, 2, 9, 5, 'foo', 'bar', true, true])");
 	
+	test("Stat.mode()");
 	test("Stat.common([8, 4, 3, 11, 9, 0, 11, 2, 10, 5, 11, 0])");
 	test("Stat.common([8, 4, 3, 9, 9, 0, 2, 10, 5, 11, 0, 11])");
+	test("Stat.common([8, [4, 3], 9, [9, 0, [2, 10], 5], 11, 0, 11])");
 	test("Stat.common([8, 4, 3, 'foo', 'foo', 0, 2, 10, 5, 11, 0, 11])");
-
+	
+	test("Stat.maximum()");
+	test("Stat.maximum(10)");
 	test("Stat.maximum([-38, -53, -6, 33, 88, 32, -8, 73])");
+	
+	test("Stat.minimum()");
+	test("Stat.minimum(10)");
 	test("Stat.minimum([-38, -53, -6, 33, 88, 32, -8, 73])");
 	test("Stat.minimum([-38, -53, -6, 'foo', 33, 'bar'])");
-
+	
+	test("Stat.change()");
+	test("Stat.change(4)");
+	test("Stat.change(['foo', 'bar'])");
 	test("Stat.change([0, 3, 7, 0, 12, 9, 5, 7])");
 }
 
