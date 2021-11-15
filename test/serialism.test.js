@@ -488,15 +488,16 @@ function testStat(){
 	test("Stat.maximum()");
 	test("Stat.maximum(10)");
 	test("Stat.maximum([-38, -53, -6, 33, 88, 32, -8, 73])");
+	test("Stat.maximum([-38, [-53, [-6, 33], 88, 32], [-8, 73]])");
 	
 	test("Stat.minimum()");
 	test("Stat.minimum(10)");
 	test("Stat.minimum([-38, -53, -6, 33, 88, 32, -8, 73])");
-	test("Stat.minimum([-38, -53, -6, 'foo', 33, 'bar'])");
+	test("Stat.minimum([-38, [-53, [-6, 33], 88, 32], [-8, 73]])");
+	// test("Stat.minimum([-38, -53, -6, 'foo', 33, 'bar'])");
 	
 	test("Stat.change()");
 	test("Stat.change(4)");
-	test("Stat.change(['foo', 'bar'])");
 	test("Stat.change([0, 3, 7, 0, 12, 9, 5, 7])");
 }
 

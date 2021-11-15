@@ -356,11 +356,7 @@ exports.sum = sum;
 // 
 function maximum(a=[0]){
 	if (!Array.isArray(a)) { return a; }
-	let m = -Infinity;
-	for (let i in a){
-		m = (a[i] > Number(m))? a[i] : m;
-	}
-	return m;
+	return Math.max(...flatten(a));
 }
 exports.maximum = maximum;
 exports.max = maximum;
@@ -372,11 +368,7 @@ exports.max = maximum;
 // 
 function minimum(a=[0]){
 	if (!Array.isArray(a)) { return a; }
-	let m = Infinity;
-	for (let i in a){
-		m = (a[i] < Number(m))? a[i] : m;
-	}
-	return m;
+	return Math.min(...flatten(a));
 }
 exports.minimum = minimum;
 exports.min = minimum;

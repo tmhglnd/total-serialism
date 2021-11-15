@@ -18,10 +18,12 @@ const Util = require('total-serialism').Utility;
 - subtract
 - multiply
 - divide
+- mod
 - sum
 - minimum
 - maximum
 - normalize
+- flatten
 - plot
 - draw
 
@@ -85,6 +87,11 @@ Return the minimum value from an array (Also part of `.Statistic`)
 ```js
 Util.minimum([-38, -53, -6, 33, 88, 32, -8, 73]);
 //=> -53 
+
+// Also works with n-dimensional arrays
+Stat.minimum([-38, [-53, [-6, 33], 88, 32], [-8, 73]]);
+//=> -53 
+
 // Alternative: Util.min()
 ```
 
@@ -95,6 +102,11 @@ Return the maximum value from an array (Also part of `.Statistic`)
 ```js
 Util.maximum([-38, -53, -6, 33, 88, 32, -8, 73]);
 //=> 88 
+
+// Also works with n-dimensional arrays
+Stat.maximum([-38, [-53, [-6, 33], 88, 32], [-8, 73]]);
+//=> 88 
+
 // Alternative: Util.max()
 ```
 
@@ -113,6 +125,19 @@ Util.normalize([0, 1, 2, 3, 4]);
 
 Util.normalize([5, 12, 4, 17, 3]);
 //=> [ 0.14285714285714285, 0.6428571428571429, 0.07142857142857142, 1, 0 ] 
+```
+
+## flatten
+
+Flatten a multidimensional array to a single dimension. Optionally set the depth for the flattening.
+
+**arguments**
+- {Array} -> array to flatten
+- {Number} -> depth of flatten
+
+```js 
+Util.flatten([1, [2, 3, [4, 5], 6], 7]);
+// => [ 1, 2, 3, 4, 5, 6, 7 ]
 ```
 
 ## plot

@@ -189,8 +189,8 @@ exports.tFilter = filterType;
 function invert(arr=[0], lo, hi){
 	arr = Array.isArray(arr)? arr : [arr];
 	if (lo === undefined){
-		hi = Math.max(...Util.flatten(arr));
-		lo = Math.min(...Util.flatten(arr));
+		hi = Util.max(arr);
+		lo = Util.max(arr);
 	} else if (hi === undefined){
 		hi = lo;
 	}
