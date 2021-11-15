@@ -417,10 +417,13 @@ function testMod(){
 	test("Mod.sort([-1, [3, 5, -2], 5, 10])");
 	test("Mod.sort(10)");
 
-	test("Mod.split()");
-	test("Mod.split(Gen.spread(8), [3, 2])");
-	test("Mod.split(Gen.spread(24), [3, 2, -1, 5], false)");
-	test("Mod.split([1, [2, 3], 4, [5, 6, [7, 8]]], [3, 2])");
+	test("Mod.slice()");
+	test("Mod.slice(Gen.spread(8), [3, 2])");
+	test("Mod.slice(Gen.spread(24), [3, 2, -1, 5], false)");
+	test("Mod.slice([1, [2, 3], 4, [5, 6, [7, 8]]], [3, 2])");
+
+	test("Mod.split(Gen.spread(12), 3)");
+	test("Mod.split(Gen.spread(12), [3, 2, -1])");
 
 	// var sprArr1 = [12, 19, 24];
 	// var sprArr2 = [1, 0, 0, 1, 1, 0, 1, 0, 0.2];

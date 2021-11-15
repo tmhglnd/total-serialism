@@ -362,20 +362,15 @@ exports.rotate = rotate;
 // 
 exports.sort = Stat.sort;
 
-// function share(a=[0], s=1){
-// 
-// }
-// exports.share = share;
-
-// split an array in one or multiple parts 
+// slice an array in one or multiple parts 
 // slice lengths are determined by the second argument array
 // outputs an array of arrays of the result
 //
-// @params {Array} -> array to split
-// @params {Number|Array} -> split points
+// @params {Array} -> array to slice
+// @params {Number|Array} -> slice points
 // @return {Array}
 // 
-function split(a=[0], s=[1], r=true){
+function slice(a=[0], s=[1], r=true){
 	a = Array.isArray(a)? a : [a];
 	s = Array.isArray(s)? s : [s];
 
@@ -393,7 +388,34 @@ function split(a=[0], s=[1], r=true){
 	}
 	return arr;
 }
+exports.slice = slice;
+
+// Similar to slice in that it also splits an array
+// excepts slice recursively splits until the array is
+// completely empty 
+// 
+// @params {Array} -> array to split
+// @params {Number/Array} -> split sizes to iterate over
+// @return {Array} -> 2D array of splitted values
+// 
+function split(a=[0], s=[1]){
+	a = Array.isArray(a)? a : [a];
+	s = Array.isArray(s)? s : [s];
+
+	return _split(a, s);
+}
 exports.split = split;
+
+function _split(a, s){
+	if (s[0] > 0){
+		let arr = a.slice(0, s[0]);
+		let res = a.slice(s[0], a.length);
+
+		if (res.length < 1){ return [arr]; }
+		return [arr, ...split(res, rotate(s, -1))];
+	}
+	return [...split(a, rotate(s, -1))];
+}
 
 // spray the values of one array on the 
 // places of values of another array if 

@@ -26,6 +26,7 @@ const Mod = require('total-serialism').Transform;
 - [reverse](#reverse)
 - [rotate](#rotate)
 - [sort](#sort)
+- [slice](#slice)
 - [split](#split)
 - [spray](#spray)
 - [stretch](#stretch)
@@ -411,13 +412,13 @@ Mod.sort(['e4', 'g3', 'c4', 'f3', 'b5']);
 //=> [ 'b5', 'c4', 'e4', 'f3', 'g3' ]
 ```
 
-## split
+## slice
 
-Split an array in one or multiple parts. Slice lengths are determined by the second argument array. Outputs an array of arrays of the result
+Slice an array in one or multiple parts. Slice lengths are determined by the second argument array. Outputs an array of arrays of the result
 
 **arguments**
-- {Array} -> array to split in parts
-- {Number | Array} -> slice lengths to split array into
+- {Array} -> array to slice in parts
+- {Number | Array} -> slice lengths to slice array into
 - {Bool} -> output rest flag (optional, default=false)
 
 ```js
@@ -429,9 +430,21 @@ Mod.split(Gen.spread(24), [3, 2, -1, 5], false);
 //=> [ [ 0, 1, 2 ], [ 3, 4 ], [ 5, 6, 7, 8, 9 ] ] 
 ```
 
-## share
+## split
 
+Similar to slice in that it also splits an array, except that slice recursively splits until the array is completely empty. If an array is provided as split sizes it will iterate the lengths.
 
+**arguments**
+- {Array} -> array to split in parts
+- {Number | Array} -> split lengths to split array into
+
+```js
+Mod.split(Gen.spread(12), 3);
+//=> [ [ 0, 1, 2 ], [ 3, 4, 5 ], [ 6, 7, 8 ], [ 9, 10, 11 ] ] 
+
+Mod.split(Gen.spread(12), [3, 2, -1]);
+//=> [ [ 0, 1, 2 ], [ 3, 4 ], [ 5, 6, 7 ], [ 8, 9 ], [ 10, 11 ] ] 
+```
 
 ## spray
 
