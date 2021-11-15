@@ -343,9 +343,11 @@ Using a second array for repeat times iterates over that array
 Mod.repeat([0, 5, 7], 3);
 //=> [ 0, 0, 0, 5, 5, 5, 7, 7, 7 ] 
 
+// us an array for repetitions per index
 Mod.repeat(['c4', 'e4', 'f4', 'g4'], [1, 4, 2, 0]);
 //=> [ 'c4', 'e4', 'e4', 'e4', 'e4', 'f4', 'f4' ] 
 
+// works with multidimensional arrays
 Mod.repeat([[0, 5], [7, 9, 12]], [2, 3]);
 //=> [ 
 // 	 [ 0, 5 ], 

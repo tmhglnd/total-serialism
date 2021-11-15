@@ -233,7 +233,7 @@ exports.zip = lace;
 // @param {Array} -> Array with values returned from lookup
 // @return {Array} -> Looked up values
 // 
-function lookup(idx=1, arr=[0]){
+function lookup(idx=0, arr=[0]){
 	idx = (Array.isArray(idx)) ? idx : [idx];
 	arr = (Array.isArray(arr)) ? arr : [arr];
 	let a = [];
@@ -254,20 +254,21 @@ exports.lookup = lookup;
 
 // merge all values of two arrays on the same index
 // into a 2D array. preserves length of longest list
+// flattens multidimensional arrays to 2 dimensions on merge
 // 
 // @params {Array0, Array1, ..., Array-n} -> Arrays to merge
 // @return {Array}
 // 
 function merge(...args){
 	if (!args.length){ return [0]; }
-	var l = 0;
+	let l = 0;
 	for (let i in args){
 		l = Math.max(args[i].length, l);
 	}
-	var arr = [];
-	for (var i=0; i<l; i++){
-		var a = [];
-		for (var k in args){
+	let arr = [];
+	for (let i=0; i<l; i++){
+		let a = [];
+		for (let k in args){
 			let v = args[k][i];
 			if (v != undefined){ 
 				if (Array.isArray(v)) a.push(...v);
@@ -287,8 +288,10 @@ exports.merge = merge;
 // @param {Bool} -> no-double flag (optional, default=false)
 // @return {Array}
 // 
-function palindrome(arr=[0], noDouble=false){
-	var rev = arr.slice().reverse();
+function palindrome(arr, noDouble=false){
+	if (arr === undefined){ return [0] };
+	
+	let rev = arr.slice().reverse();
 	if (noDouble){
 		rev = rev.slice(1, rev.length-1);
 	}

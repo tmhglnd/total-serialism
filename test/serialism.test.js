@@ -347,17 +347,19 @@ function testMod(){
 	test("Mod.invert([-1, 2, [[7, 9], 14]])");
 
 	// test("Mod.lace([0, 2, 4], [1, 3, 5], ['hello'])");
+	test("Mod.lace()");
 	test("Mod.lace([0, 0, 0], [7, 7], [9, 9, 9, 9])");
 	test("Mod.lace([0, [0, 0]], [[7,7]], [9, [[9, 9], 9], 9])");
 	test("Mod.lace(['c', 'c', 'c', 'c'], ['g', 'g'], ['e'])");
 
 	// test("Mod.lookup()");
+	test("Mod.lookup()");
 	test("Mod.lookup([0, 1, 1, 2, 0, 2, 2, 1], ['c4', 'e4', 'f4', 'g4'])");
 	test("Mod.lookup([0, [1, 1, [2, 3 ], 0], 2], ['c4', 'e4', 'f4', 'g4'])");
 	test("Mod.lookup([-2, 5, 7, 12], ['c4', 'e4', 'f4', 'g4'])");
 	test("Mod.lookup(Gen.cosine(16, 5.32, 0, 12), [0, 0, 2, 3, 3, 5, 7, 7, 8, 8, 11, 11])");
 	test("Mod.lookup([0, 'foo', ['1', 'bar']], [1, 2, 3])")
-/*
+
 	// var merArr1 = [0, 3, 7];
 	// var merArr2 = [3, 12];
 	// var merArr3 = [12, -1, 19, 5];
@@ -378,11 +380,10 @@ function testMod(){
 	test("Mod.palindrome(['c4', 'f4', 'g4'], true)");
 	// test("Mod.palindrome([0, 1, 2, 3], 1)");
 
-
 	test("Mod.repeat([0, 5, 7], 3)");
 	test("Mod.repeat(['c4', 'e4', 'f4', 'g4'], [1, 4, 2, 0])");
 	// test("Mod.repeat(['kick', 'hat'], [1, 4])");
-	test("Mod.repeat([[0, 5], [7, 9, 12]], [2, 3])");
+	test("Mod.repeat([[0, 5], [7, [9, 12]]], [2, 3])");
 
 	// var revArr = [0, 5, 7, 12];
 	// console.log(Mod.reverse(revArr));
@@ -402,6 +403,9 @@ function testMod(){
 	test("Mod.sort(['e4', 'g3', 'c4', 'f3', 'b5'])");
 	test("Mod.sort([-5, [7, 0, 3], 12, -7, 9], -1)");
 
+	test("Mod.sort([-1, [3, 5, -2], 5, 10])");
+	test("Mod.sort(10)");
+/*
 	// var sprArr1 = [12, 19, 24];
 	// var sprArr2 = [1, 0, 0, 1, 1, 0, 1, 0, 0.2];
 	// console.log(Mod.spray(sprArr1, sprArr2));

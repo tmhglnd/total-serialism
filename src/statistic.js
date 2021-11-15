@@ -19,7 +19,7 @@ const Util = require('./utility');
 // @return {Array} -> sorted array, object includes order-indeces
 // 
 function sort(a=[0], d=1){
-	if (!Array.isArray(a)) { return a; }
+	a = Array.isArray(a)? a : [a];
 	let arr;
 	if (a.map(x => typeof x).includes('string')){
 		arr = a.slice().sort();
