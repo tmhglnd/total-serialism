@@ -240,10 +240,12 @@ function lookup(idx=1, arr=[0]){
 	let len = arr.length;
 	for (let i in idx){
 		if (Array.isArray(idx[i])){
-			a[i] = lookup(idx[i], arr);
+			a.push(lookup(idx[i], arr));
 		} else {
-			let look = (idx[i] % len + len) % len;
-			a[i] = arr[look];
+			if (!isNaN(idx[i])){
+				let look = (idx[i] % len + len) % len;
+				a.push(arr[look]);
+			}
 		}
 	}
 	return a;

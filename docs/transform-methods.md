@@ -247,7 +247,7 @@ Interleave two or more arrays. Works with every length of an array. Works with 2
 Mod.lace([0, 0, 0], [7, 7], [9, 9, 9, 9]);
 //=> [ 0, 7, 9, 0, 7, 9, 0, 9, 9 ] 
 
-// works with 2D-arrays
+// works with multidimensional arrays
 Mod.lace([0, [0, 0]], [[7,7]], [9, [9, 9], 9]);
 //=> [ 0, [ 7, 7 ], 9, [ 0, 0 ], [ 9, 9 ], 9 ] 
 
@@ -260,7 +260,7 @@ Mod.lace(['c', 'c', 'c', 'c'], ['g', 'g'], ['e']);
 
 ## lookup
 
-Build an array of items based on another array of indeces. The values are wrapped within the length of the lookup array. Works with n-dimensional arrays.
+Build an array of items based on an array of indeces looking up values from an input array. The values are wrapped within the length of the lookup array. Works with n-dimensional arrays.
 
 **arguments**
 - {Array} -> Array with indeces to lookup
@@ -272,13 +272,17 @@ Build an array of items based on another array of indeces. The values are wrappe
 Mod.lookup([0, 1, 1, 2, 0, 2, 2, 1], ['c4', 'e4', 'f4', 'g4']);
 //=> [ 'c4', 'e4', 'e4', 'f4', 'c4', 'f4', 'f4', 'e4' ] 
 
-// works with n-dimensional arrays and leaves them intact
+// works with multidimensional arrays and leaves nesting intact
 Mod.lookup([0, [1, 1, [2, 3], 0], 2], ['c4', 'e4', 'f4', 'g4']);
 //=> [ 'c4', [ 'e4', 'e4', [ 'f4', 'g4' ], 'c4' ], 'f4' ] 
 
 // indices are wrapped between listlength
 Mod.lookup([-2, 5, 7, 12], ['c4', 'e4', 'f4', 'g4']);
 //=> [ 'f4', 'e4', 'g4', 'c4' ] 
+
+// ignores non-numeric values
+Mod.lookup([0, 'foo', ['1', 'bar']], [1, 2, 3]);
+//=> [ 1, [ 2 ] ] 
 ```
 
 ## merge

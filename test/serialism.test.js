@@ -350,13 +350,14 @@ function testMod(){
 	test("Mod.lace([0, 0, 0], [7, 7], [9, 9, 9, 9])");
 	test("Mod.lace([0, [0, 0]], [[7,7]], [9, [[9, 9], 9], 9])");
 	test("Mod.lace(['c', 'c', 'c', 'c'], ['g', 'g'], ['e'])");
-/*
+
 	// test("Mod.lookup()");
 	test("Mod.lookup([0, 1, 1, 2, 0, 2, 2, 1], ['c4', 'e4', 'f4', 'g4'])");
 	test("Mod.lookup([0, [1, 1, [2, 3 ], 0], 2], ['c4', 'e4', 'f4', 'g4'])");
 	test("Mod.lookup([-2, 5, 7, 12], ['c4', 'e4', 'f4', 'g4'])");
 	test("Mod.lookup(Gen.cosine(16, 5.32, 0, 12), [0, 0, 2, 3, 3, 5, 7, 7, 8, 8, 11, 11])");
-
+	test("Mod.lookup([0, 'foo', ['1', 'bar']], [1, 2, 3])")
+/*
 	// var merArr1 = [0, 3, 7];
 	// var merArr2 = [3, 12];
 	// var merArr3 = [12, -1, 19, 5];
