@@ -362,6 +362,39 @@ exports.rotate = rotate;
 // 
 exports.sort = Stat.sort;
 
+// function share(a=[0], s=1){
+// 
+// }
+// exports.share = share;
+
+// split an array in one or multiple parts 
+// slice lengths are determined by the second argument array
+// outputs an array of arrays of the result
+//
+// @params {Array} -> array to split
+// @params {Number|Array} -> split points
+// @return {Array}
+// 
+function split(a=[0], s=[1], r=true){
+	a = Array.isArray(a)? a : [a];
+	s = Array.isArray(s)? s : [s];
+
+	let arr = [];
+	let _s = 0;
+	for (let i=0; i<s.length; i++){
+		if (s[i] > 0){
+			let _t = _s + s[i];
+			arr.push(a.slice(_s, _t));
+			_s = _t;
+		}
+	}
+	if (r){
+		arr.push(a.slice(_s, a.length));
+	}
+	return arr;
+}
+exports.split = split;
+
 // spray the values of one array on the 
 // places of values of another array if 
 // the value is greater than 0

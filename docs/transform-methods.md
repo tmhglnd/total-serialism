@@ -26,6 +26,7 @@ const Mod = require('total-serialism').Transform;
 - [reverse](#reverse)
 - [rotate](#rotate)
 - [sort](#sort)
+- [split](#split)
 - [spray](#spray)
 - [stretch](#stretch)
 - [unique](#unique)
@@ -409,6 +410,28 @@ Mod.sort([-5, 7, 0, 3, 12, -7, 9], -1);
 Mod.sort(['e4', 'g3', 'c4', 'f3', 'b5']);
 //=> [ 'b5', 'c4', 'e4', 'f3', 'g3' ]
 ```
+
+## split
+
+Split an array in one or multiple parts. Slice lengths are determined by the second argument array. Outputs an array of arrays of the result
+
+**arguments**
+- {Array} -> array to split in parts
+- {Number | Array} -> slice lengths to split array into
+- {Bool} -> output rest flag (optional, default=false)
+
+```js
+Mod.split(Gen.spread(8), [3, 2]);
+//=> [ [ 0, 1, 2 ], [ 3, 4 ], [ 5, 6, 7 ] ] 
+
+// set rest-flag to false removes last slice 
+Mod.split(Gen.spread(24), [3, 2, -1, 5], false);
+//=> [ [ 0, 1, 2 ], [ 3, 4 ], [ 5, 6, 7, 8, 9 ] ] 
+```
+
+## share
+
+
 
 ## spray
 
