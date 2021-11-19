@@ -59,15 +59,33 @@ console.log();
 // markov.clear();
 // console.log(markov.table);
 
-for (let i=0; i<100; i++){
-	for (let j=1; j<i; j++){
-		let e1 = Util.sum(Algo.euclidMin(i, j));
-		let e2 = Util.sum(Algo.euclid(i, j));
-		if (Util.sum(e1) !== Util.sum(e2)){
-			console.log(false);
-		}
-	}
-}
+// for (let i=0; i<100; i++){
+// 	for (let j=1; j<i; j++){
+// 		let e1 = Algo.euclid(i, j);
+// 		let e2 = Algo.fastEuclid(i, j);
+
+// 		let eq = false;
+// 		for (let k=-e2.length; k<e2.length+1; k++){
+// 			let r2 = Mod.rotate(e2, k);
+			
+// 			eq = Stat.compare(e1, r2);
+// 			if (eq){
+// 				break;
+// 			}
+// 		}
+// 		for (let k=-e2.length; k<e2.length+1; k++){
+// 			let r3 = Mod.rotate(Mod.reverse(e2), k);
+			
+// 			eq = Stat.compare(e1, r3);
+// 			if (eq){
+// 				break;
+// 			}
+// 		}
+// 		if (!eq){
+// 			console.log(i, j, eq);
+// 		}
+// 	}
+// }
 
 fullTest();
 
@@ -76,10 +94,10 @@ function fullTest(){
 
 	// testSerial();
 	// testGen();
-	// testAlgo();
+	testAlgo();
 	// testRand();
 	// testMod();
-	testStat();
+	// testStat();
 	// testTranslate();
 	// testUtil();
 
@@ -161,6 +179,12 @@ function testAlgo(){
 	test("Algo.euclid(8, 5)");
 	test("Algo.euclid(16, 9, 1)");
 	test("Algo.euclid(31, 17)");
+
+	test("Algo.fastEuclid()");
+	test("Algo.fastEuclid(10, 3)");
+	test("Algo.fastEuclid(8, 5)");
+	test("Algo.fastEuclid(16, 9, 1)");
+	test("Algo.fastEuclid(31, 17)");
 	
 	pagebreak("HexBeat");
 	test("Algo.hexBeat()");

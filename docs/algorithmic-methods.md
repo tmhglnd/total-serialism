@@ -40,6 +40,23 @@ Algo.euclid(16, 9, 1);
 
 <iframe src="https://editor.p5js.org/tmhglnd/embed/xS8sKejzG" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
 
+## fastEuclid
+
+A fast euclidean rhythm algorithm. Uses the downsampling of a line drawn between two points in a 2-dimensional grid to divide the squares into an evenly distributed amount of steps. Generates correct distribution, but the distribution may differ a bit from the recursive method `euclid()` above.
+
+**arguments**
+- {Int} -> steps (optional, default=8)
+- {Int} -> beats (optional, default=4)
+- {Int} -> rotate (optional, default=0)
+
+```js
+Algo.fastEuclid(8, 5);
+//=> [ 1, 0, 1, 0, 1, 1, 0, 1 ] 
+
+Algo.fastEuclid(16, 9, 1);
+//=> [ 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0 ]  
+```
+
 ## hexBeat
 
 Generate hexadecimal rhythms. Hexadecimal beats make use of hexadecimal values (0 - f) that are a base-16 number system. Because one digit in a base-16 number system has 16 possible values (0 - 15) these can be converted to 4 bits that therefore can be seen as groups of 4 16th notes. These hexadecimal values will then represent any permutation of 1's and 0's in a 4 bit number, where 0 = 0 0 0 0, 7 = 0 1 1 1, b = 1 0 1 1, f = 1 1 1 1 and all possible values in between.
