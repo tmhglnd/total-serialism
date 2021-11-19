@@ -59,6 +59,16 @@ console.log();
 // markov.clear();
 // console.log(markov.table);
 
+for (let i=0; i<100; i++){
+	for (let j=1; j<i; j++){
+		let e1 = Util.sum(Algo.euclidMin(i, j));
+		let e2 = Util.sum(Algo.euclid(i, j));
+		if (Util.sum(e1) !== Util.sum(e2)){
+			console.log(false);
+		}
+	}
+}
+
 fullTest();
 
 function fullTest(){
@@ -499,6 +509,13 @@ function testStat(){
 	test("Stat.change()");
 	test("Stat.change(4)");
 	test("Stat.change([0, 3, 7, 0, 12, 9, 5, 7])");
+
+	test("Stat.compare()");
+	test("Stat.compare(2, 2)");
+	test("Stat.compare([0, 5, 7], [0, '5', 7])");
+	test("Stat.compare(3.1451, '3.1451')");
+	test("Stat.compare(['c', ['e', 'g']], ['c', ['e', 'g']])");
+	test("Stat.compare([0, [3, [7, 5]], 12], [0, [3, [7, 5]], 12])");
 }
 
 function testTranslate(){

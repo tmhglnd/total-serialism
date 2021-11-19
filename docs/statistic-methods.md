@@ -18,6 +18,7 @@ const Stat = require('total-serialism').Statistic;
 - [maximum](#maximum)
 - [minimum](#minimum)
 - [change](#change)
+- [compare](#compare)
 
 ## sort
 
@@ -97,24 +98,34 @@ Stat.common([8, 4, 3, 9, 9, 0, 2, 10, 5, 11, 0, 11]);
 // Alternative: Stat.mode()
 ```
 
-## maximum
-
-Return the maximum value from an array
-
-```js
-Stat.maximum([-38, -53, -6, 33, 88, 32, -8, 73]);
-//=> 88 
-// Alternative: Stat.max()
-```
-
 ## minimum
 
-Return the minimum value from an array
+Return the minimum value from an array (Also part of `.Statistic`)
 
 ```js
-Stat.minimum([-38, -53, -6, 33, 88, 32, -8, 73]);
+Util.minimum([-38, -53, -6, 33, 88, 32, -8, 73]);
 //=> -53 
-// Alternative: Stat.min()
+
+// Also works with n-dimensional arrays
+Stat.minimum([-38, [-53, [-6, 33], 88, 32], [-8, 73]]);
+//=> -53 
+
+// Alternative: Util.min()
+```
+
+## maximum
+
+Return the maximum value from an array (Also part of `.Statistic`)
+
+```js
+Util.maximum([-38, -53, -6, 33, 88, 32, -8, 73]);
+//=> 88 
+
+// Also works with n-dimensional arrays
+Stat.maximum([-38, [-53, [-6, 33], 88, 32], [-8, 73]]);
+//=> 88 
+
+// Alternative: Util.max()
 ```
 
 ## change
@@ -124,4 +135,22 @@ Return the difference between consecutive numbers in an array
 ```js 
 Util.change([0, 3, 7, 0, 12, 9, 5, 7]);
 //=> [ 3, 4, -7, 12, -3, -4, 2 ] 
+```
+
+## compare
+
+Compare two arrays recursively and if all values of the array and subarrays are equal to eachother return a `true` boolean, else returns `false`. 
+
+```js
+// works with multidimensional arrays
+Stat.compare([0, [3, [7, 5]], 12], [0, [3, [7, 5]], 12]);
+//=> true 
+
+// works with strings as well
+Stat.compare(['c', ['e', 'g']], ['c', ['e', 'g']]);
+//=> true 
+
+// type has to match too
+Stat.compare([0, 5, 7], [0, '5', 7]);
+//=> false 
 ```

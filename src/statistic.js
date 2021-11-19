@@ -133,6 +133,31 @@ function mode(a=[0], d=true){
 exports.mode = mode;
 exports.common = mode;
 
+// Compare two arrays recursively and if all values
+// of the array and subarrays are equal to eachother
+// return a true boolean
+// 
+// @params {Array} -> compare array1
+// @params {Array} -> compare array2
+// @return {Bool} -> true or false
+// 
+function compare(a1=[0], a2){
+	a1 = (Array.isArray(a1))? a1 : [a1];
+	a2 = (Array.isArray(a2))? a2 : [a2];
+	if (a1.length !== a2.length){
+		return false;
+	}
+	for (let i in a1){
+		if (Array.isArray(a1[i])){
+			return compare(a1[i], a2[i]);
+		} else if (a1[i] !== a2[i]){
+			return false;
+		}
+	}
+	return true;
+}
+exports.compare = compare;
+
 // Return the difference between every consecutive value in an array
 // With melodic content from a chromatic scale this can be seen as
 // a list of intervals that, when followed from the same note, results

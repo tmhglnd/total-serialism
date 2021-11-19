@@ -58,6 +58,18 @@ exports.hexBeat = hexBeat;
 // @param {Int} -> rotate (optional, default=0)
 // @return {Array}
 // 
+function euclidMin(s=8, h=4, r=0){
+	let d = -1, arr = [];
+	
+	for (let i=0; i<s; i++){
+		let v = Math.floor(i * (h / s));
+		arr[i] = v - d;
+		d = v;
+	}
+	return Transform.rotate(arr, r);
+}
+exports.euclidMin = euclidMin;
+
 var pattern, counts, remainders;
 
 function euclid(steps=8, beats=4, rot=0){

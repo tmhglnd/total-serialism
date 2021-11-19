@@ -7586,6 +7586,17 @@ function spreadFloat(len=1, lo=1, hi){
 exports.spreadFloat = spreadFloat;
 exports.spreadF = spreadFloat;
 
+// Spread function rounded to integers
+// 
+// @params {length, low-output, high-output}
+// @return {Array}
+//
+function spread(len, lo=len, hi){
+	let arr = spreadFloat(len, lo, hi);
+	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
+}
+exports.spread = spread;
+
 // Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
 // Set an exponential curve in the spacing of the values.
@@ -7594,7 +7605,7 @@ exports.spreadF = spreadFloat;
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadFloatExp(len=1, lo=1, hi, exp=1){
+function spreadExpFloat(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
 	if (hi === undefined){ var t=lo, lo=0, hi=t; }
 	// calculate the range
@@ -7611,18 +7622,9 @@ function spreadFloatExp(len=1, lo=1, hi, exp=1){
 	}
 	return (r < 0)? arr.reverse() : arr;
 }
-exports.spreadFloatExp = spreadFloatExp;
-
-// Spread function rounded to integers
-// 
-// @params {length, low-output, high-output}
-// @return {Array}
-//
-function spread(len, lo=len, hi){
-	let arr = spreadFloat(len, lo, hi);
-	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
-}
-exports.spread = spread;
+exports.spreadFloatExp = spreadExpFloat; // deprecated
+exports.spreadExpFloat = spreadExpFloat;
+exports.spreadExpF = spreadExpFloat;
 
 // Spread function floored to integers
 // 
@@ -7630,7 +7632,7 @@ exports.spread = spread;
 // @return {Array}
 //
 function spreadExp(len, lo=len, hi, exp){
-	let arr = spreadFloatExp(len, lo, hi, exp);
+	let arr = spreadExpFloat(len, lo, hi, exp);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
 exports.spreadExp = spreadExp;
@@ -7665,6 +7667,18 @@ function spreadInclusiveFloat(len=1, lo=1, hi){
 exports.spreadInclusiveFloat = spreadInclusiveFloat;
 exports.spreadIncF = spreadInclusiveFloat;
 
+// spreadinclusiveFloat function floored to integers
+// 
+// @params {length, low-output, high-output}
+// @return {Array}
+//
+function spreadInclusive(len, lo=len, hi){
+	var arr = spreadInclusiveFloat(len, lo, hi);
+	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
+}
+exports.spreadInclusive = spreadInclusive;
+exports.spreadInc = spreadInclusive;
+
 // Generate a list of n-length starting at one value
 // ending at the 3th argument.
 // Set an exponential curve in the spacing of the values.
@@ -7673,7 +7687,7 @@ exports.spreadIncF = spreadInclusiveFloat;
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadInclusiveFloatExp(len=1, lo=1, hi, exp=1){
+function spreadInclusiveExpFloat(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
 	if (hi === undefined){ var t=lo, lo=0, hi=t; }
 	// calculate the range
@@ -7689,19 +7703,9 @@ function spreadInclusiveFloatExp(len=1, lo=1, hi, exp=1){
 	}
 	return (r < 0)? arr.reverse() : arr;
 }
-exports.spreadInclusiveFloatExp = spreadInclusiveFloatExp;
-
-// spreadinclusiveFloat function floored to integers
-// 
-// @params {length, low-output, high-output}
-// @return {Array}
-//
-function spreadInclusive(len, lo=len, hi){
-	var arr = spreadInclusiveFloat(len, lo, hi);
-	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
-}
-exports.spreadInclusive = spreadInclusive;
-exports.spreadInc = spreadInclusive;
+exports.spreadInclusiveFloatExp = spreadInclusiveExpFloat; //deprecated
+exports.spreadInclusiveExpFloat = spreadInclusiveExpFloat;
+exports.spreadIncExpF = spreadInclusiveExpFloat;
 
 // spreadinclusiveFloatExp function floored to integers
 // 
@@ -7709,10 +7713,11 @@ exports.spreadInc = spreadInclusive;
 // @return {Array}
 //
 function spreadInclusiveExp(len, lo=len, hi, exp){
-	var arr = spreadInclusiveFloatExp(len, lo, hi, exp);
+	var arr = spreadInclusiveExpFloat(len, lo, hi, exp);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
 exports.spreadInclusiveExp = spreadInclusiveExp;
+exports.spreadIncExp = spreadInclusiveExp;
 
 // fill an array with values. Arguments are pairs.
 // Every pair consists of <value, amount>
@@ -7743,7 +7748,7 @@ exports.fill = fill;
 // Only setting first range argument sets the low-range to 0
 // 
 // @param {Int} -> Length of output array (resolution)
-// @param {Number} -> Periods of sine-wave 
+// @param {NumberArray | Number} -> Periods of sine-wave 
 // @param {Number} -> Low range of values (optional, default=-1) 
 // @param {Number} -> High range of values (optional, default=1)
 // @param {Number} -> Phase offset (optional, default=0)
@@ -7774,7 +7779,8 @@ function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	return Util.map(arr, -1, 1, lo, hi);
 }
 exports.sineFloat = sineFloat;
-// exports.sin = sineFloat;
+exports.sineF = sineFloat;
+exports.sinF = sineFloat;
 
 // Generate an integer array with n-periods of a sine function
 // Optional last arguments set lo and hi range
@@ -7800,7 +7806,8 @@ function cosineFloat(len=1, periods=1, lo, hi, phase=0){
 	return sineFloat(len, periods, lo, hi, phase+0.25);
 }
 exports.cosineFloat = cosineFloat;
-// exports.cos = cosineFloat;
+exports.cosineF = cosineFloat;
+exports.cosF = cosineFloat;
 
 // Generate an integer array with n-periods of a cosine function
 // Flip the low and high range to invert the function
@@ -7835,19 +7842,61 @@ function sawFloat(len=1, periods=1, lo, hi, phase=0){
 
 	let a = 1 / len;
 	for (let i=0; i<len; i++){
-		arr[i] = (i * a * periods[i % periods.length]) % 1.0;
+		arr[i] = ((i * a * periods[i % periods.length]) % 1.0 + 1.0) % 1.0;
 	}
 	return Util.map(arr, 0, 1, lo, hi);
 	// return arr;
 }
 exports.sawFloat = sawFloat;
 exports.phasor = sawFloat;
+exports.sawF = sawFloat;
 
 function saw(len=1, periods=1, lo=12, hi, phase=0){
 	var arr = sawFloat(len, periods, lo, hi, phase);
 	return arr.map(v => Math.trunc(v));
 }
 exports.saw = saw;
+
+// Generate an array with n-periods of a pulse/squarewave function
+// Optional last arguments set lo and hi range and pulse width
+// Only setting first range argument sets the low-range to 0
+// 
+// @param {Int} -> Length of output array (resolution)
+// @param {Number/Array} -> Periods of the wave (option, default=1)
+// @param {Number} -> Low range of values (optional, default=-1) 
+// @param {Number} -> High range of values (optional, default=1)
+// @param {Number} -> Pulse width (optional, default=0.5)
+// @return {Array} -> wave-function as array
+//  
+function squareFloat(len=1, periods=1, lo, hi, pulse=0.5){
+	if (lo === undefined){ lo = 0; hi = 1; }
+	else if (hi === undefined){ hi = lo, lo = 0; }
+	// make periods array
+	periods = Array.isArray(periods)? periods : [periods];
+
+	// array length minimum of 1
+	len = Math.max(1, len);
+	let arr = [];
+
+	let a = 1 / len;
+	for (let i=0; i<len; i++){
+		arr[i] = ((i * a * periods[i % periods.length]) % 1 + 1) % 1;
+		arr[i] = arr[i] < pulse;
+	}
+	return Util.map(arr, 0, 1, lo, hi);
+	// return arr;
+}
+exports.squareFloat = squareFloat;
+exports.squareF = squareFloat;
+exports.rectFloat = squareFloat;
+exports.rectF = squareFloat;
+
+function square(len=1, periods=1, lo=12, hi, pulse=0.5){
+	var arr = squareFloat(len, periods, lo, hi, pulse);
+	return arr.map(v => Math.trunc(v));
+}
+exports.square = square;
+exports.rect = square;
 },{"./utility.js":43}],38:[function(require,module,exports){
 //==============================================================================
 // gen-complex.js
@@ -7890,11 +7939,11 @@ BigNumber.config({
 // 
 function hexBeat(hex="8"){
 	if (!hex.isNaN){ hex = hex.toString(); }
-	var a = [];
+	let a = [];
 	for (let i in hex){
-		var binary = parseInt("0x"+hex[i]).toString(2);
+		let binary = parseInt("0x"+hex[i]).toString(2);
 		binary = isNaN(binary)? '0000' : binary;
-		var padding = binary.padStart(4, '0');
+		let padding = binary.padStart(4, '0');
 		a = a.concat(padding.split('').map(x => Number(x)));
 	}
 	return a;
@@ -8769,7 +8818,7 @@ const Util = require('./utility');
 // @return {Array} -> sorted array, object includes order-indeces
 // 
 function sort(a=[0], d=1){
-	if (!Array.isArray(a)) { return a; }
+	a = Array.isArray(a)? a : [a];
 	let arr;
 	if (a.map(x => typeof x).includes('string')){
 		arr = a.slice().sort();
@@ -8803,13 +8852,16 @@ exports.min = Util.minimum;
 // The mean is a measure of central tendency
 // 
 // @param {NumberArray} -> input array of n-numbers
+// @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
 // @return {Number} -> mean
 // 
-function mean(a=[0]){
+function mean(a=[0], d=true){
 	if (!Array.isArray(a)) { return a; }
+	if (d) { a = Util.flatten(a); }
+
 	let s = 0;
 	for (let i in a){
-		s += a[i];
+		s += isNaN(a[i])? 0 : a[i];
 	}
 	return s / a.length;
 }
@@ -8823,10 +8875,13 @@ exports.average = mean;
 // Ignores other datatypes then Number and Boolean
 // 
 // @param {NumberArray} -> input array of n-numbers
+// @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
 // @return {Number} -> median
 // 
-function median(a=[0]){
+function median(a=[0], d=true){
 	if (!Array.isArray(a)) { return a; }
+	if (d) { a = Util.flatten(a); }
+
 	let arr = a.slice();
 	if (arr.map(x => typeof x).includes('string')) { 
 		arr = Mod.filterType(arr, ['number', 'boolean']);
@@ -8847,10 +8902,13 @@ exports.center = median;
 // Returns an array when multi-modal system
 // 
 // @param {NumberArray} -> input array of n-numbers
+// @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
 // @return {Number/Array} -> the mode or modes
 //
-function mode(a=[0]){
+function mode(a=[0], d=true){
 	if (!Array.isArray(a)) { return a; }
+	if (d) { a = Util.flatten(a); }
+
 	let arr = a.slice().sort((a,b) => { return a-b; });
 
 	let amount = 1;
@@ -8931,14 +8989,15 @@ const Util = require('./utility');
 // 								 -> or string concatenation
 // 
 function clone(a=[0], ...c){
-	// flatten array if multi-dimensional
+	a = Array.isArray(a)? a : [a];
+	// flatten clone array if multi-dimensional
 	if (!c.length) { 
-		c = [0, 0];
+		return a;
 	} else { 
-		c = c.flat(); 
+		c = Util.flatten(c); 
 	}
-	var arr = [];
-	for (var i=0; i<c.length; i++){
+	let arr = [];
+	for (let i=0; i<c.length; i++){
 		arr = arr.concat(a.map(v => Util.add(v, c[i])));
 	}
 	return arr;
@@ -8953,8 +9012,8 @@ exports.clone = clone;
 // 
 function combine(...args){
 	if (!args.length){ return [0]; }
-	var arr = [];
-	for (var i=0; i<args.length; i++){
+	let arr = [];
+	for (let i=0; i<args.length; i++){
 		arr = arr.concat(args[i]);
 	}
 	return arr;
@@ -8969,8 +9028,8 @@ exports.join = combine;
 // @return {Array}
 // 
 function duplicate(a=[0], d=2){
-	var arr = [];
-	for (var i=0; i<Math.max(1,d); i++){
+	let arr = [];
+	for (let i=0; i<Math.max(1,d); i++){
 		arr = arr.concat(a);
 	}
 	return arr;
@@ -8979,28 +9038,51 @@ exports.duplicate = duplicate;
 exports.copy = duplicate;
 exports.dup = duplicate;
 
-// add zeroes to an array with a rhythmic sequence
-// the division determins the amount of values per bar
+// pad an array with zeroes (or other values)
+// the division determines the amount of values per bar
 // total length = bars * div
 //
 // param {Array} -> Array to use every n-bars
-// param {Int} -> amount of bars
-// param {Int} -> amount of values per bar
+// param {Int} -> amount of bars (optional, default=1)
+// param {Int} -> amount of values per bar (optional, default=16)
 // param {Value} -> padding argument (optional, default=0)
 // param {Number} -> shift the output by n-divs (optional, default=0)
 // return {Array}
 //
-function every(a=[0], bars=4, div=16, pad=0, shift=0){
+function every(a=[0], bars=1, div=16, pad=0, shift=0){
 	let len = Math.floor(bars * div) - a.length;
-	if (len < 1 ) {
-		return a;
-	} else {
-		let arr = new Array(len).fill(pad);
-
-		return rotate(a.concat(arr), Math.floor(shift*div));
-	}
+	let sft = Math.floor(shift * div);
+	return padding(a, len, pad, sft);
 }
 exports.every = every;
+
+// Import from the Util.flatten
+// flatten a multidimensional array. Optionally set the depth
+// for the flattening
+//
+exports.flat = Util.flatten;
+
+// similar to every(), but instead of specifying bars/devisions
+// this method allows you to specify the exact length of the array
+// and the shift is not a ratio but in whole integer steps
+//
+// param {Array} -> Array to use every n-bars
+// param {Int} -> Array length output
+// param {Number} -> shift the output by n-divs (optional, default=0)
+// param {Value} -> padding argument (optional, default=0)
+// return {Array}
+//
+function padding(a=[0], length=16, pad=0, shift=0){
+	a = Array.isArray(a)? a : [a];	
+	let len = length - a.length;
+	if (len < 1) {
+		return a;
+	}
+	let arr = new Array(len).fill(pad);
+	return rotate(a.concat(arr), shift);
+}
+exports.padding = padding;
+exports.pad = padding;
 
 // filter one or multiple values from an array
 // 
@@ -9027,10 +9109,10 @@ exports.filter = filter;
 // In this case the input type is the type that is output
 // 
 // @param {Array} -> array to filter
-// @param {String/Array} -> types to filter
+// @param {String/Array} -> types to filter (default = number)
 // @return (Array} -> filtered array
 // 
-function filterType(a=[0], t){
+function filterType(a=[0], t='number'){
 	a = (Array.isArray(a))? a.slice() : [a];
 	t = (Array.isArray(t))? t : [t];
 
@@ -9062,13 +9144,19 @@ exports.tFilter = filterType;
 // @return {Array}
 // 
 function invert(arr=[0], lo, hi){
+	arr = Array.isArray(arr)? arr : [arr];
 	if (lo === undefined){
-		hi = Math.max(...arr);
-		lo = Math.min(...arr);
+		hi = Util.max(arr);
+		lo = Util.max(arr);
 	} else if (hi === undefined){
 		hi = lo;
 	}
-	return arr.slice().map(v => hi - v + lo);
+	return arr.slice().map(v => {
+		if (Array.isArray(v)){
+			return invert(v, lo, hi);
+		}
+		return hi - v + lo;
+	});
 }
 exports.invert = invert;
 
@@ -9079,9 +9167,9 @@ exports.invert = invert;
 //  
 function lace(...args){
 	if (!args.length){ return [0]; }
-
 	var l = 0;
 	for (let i in args){
+		args[i] = Array.isArray(args[i])? args[i] : [args[i]];
 		l = Math.max(args[i].length, l);
 	}
 	var arr = [];
@@ -9104,17 +9192,19 @@ exports.zip = lace;
 // @param {Array} -> Array with values returned from lookup
 // @return {Array} -> Looked up values
 // 
-function lookup(idx=1, arr=[0]){
+function lookup(idx=0, arr=[0]){
 	idx = (Array.isArray(idx)) ? idx : [idx];
 	arr = (Array.isArray(arr)) ? arr : [arr];
 	let a = [];
 	let len = arr.length;
 	for (let i in idx){
 		if (Array.isArray(idx[i])){
-			a[i] = lookup(idx[i], arr);
+			a.push(lookup(idx[i], arr));
 		} else {
-			let look = (idx[i] % len + len) % len;
-			a[i] = arr[look];
+			if (!isNaN(idx[i])){
+				let look = (idx[i] % len + len) % len;
+				a.push(arr[look]);
+			}
 		}
 	}
 	return a;
@@ -9123,20 +9213,22 @@ exports.lookup = lookup;
 
 // merge all values of two arrays on the same index
 // into a 2D array. preserves length of longest list
+// flattens multidimensional arrays to 2 dimensions on merge
 // 
 // @params {Array0, Array1, ..., Array-n} -> Arrays to merge
 // @return {Array}
 // 
 function merge(...args){
 	if (!args.length){ return [0]; }
-	var l = 0;
+	let l = 0;
 	for (let i in args){
+		args[i] = Array.isArray(args[i])? args[i] : [args[i]];
 		l = Math.max(args[i].length, l);
 	}
-	var arr = [];
-	for (var i=0; i<l; i++){
-		var a = [];
-		for (var k in args){
+	let arr = [];
+	for (let i=0; i<l; i++){
+		let a = [];
+		for (let k in args){
 			let v = args[k][i];
 			if (v != undefined){ 
 				if (Array.isArray(v)) a.push(...v);
@@ -9156,8 +9248,11 @@ exports.merge = merge;
 // @param {Bool} -> no-double flag (optional, default=false)
 // @return {Array}
 // 
-function palindrome(arr=[0], noDouble=false){
-	var rev = arr.slice().reverse();
+function palindrome(arr, noDouble=false){
+	if (arr === undefined){ return [0] };
+	if (!Array.isArray(arr)){ return [arr] };
+	
+	let rev = arr.slice().reverse();
 	if (noDouble){
 		rev = rev.slice(1, rev.length-1);
 	}
@@ -9195,6 +9290,7 @@ exports.repeat = repeat;
 // @return {Array}
 // 
 function reverse(a=[0]){
+	if (!Array.isArray(a)){ return [a]; }
 	return a.slice().reverse();
 }
 exports.reverse = reverse;
@@ -9207,6 +9303,7 @@ exports.reverse = reverse;
 // @return {Array}
 // 
 function rotate(a=[0], r=0){
+	if (!Array.isArray(a)){ return [a]; }
 	var l = a.length;
 	var arr = [];
 	for (var i=0; i<l; i++){
@@ -9222,6 +9319,61 @@ exports.rotate = rotate;
 // 
 exports.sort = Stat.sort;
 
+// slice an array in one or multiple parts 
+// slice lengths are determined by the second argument array
+// outputs an array of arrays of the result
+//
+// @params {Array} -> array to slice
+// @params {Number|Array} -> slice points
+// @return {Array}
+// 
+function slice(a=[0], s=[1], r=true){
+	a = Array.isArray(a)? a : [a];
+	s = Array.isArray(s)? s : [s];
+
+	let arr = [];
+	let _s = 0;
+	for (let i=0; i<s.length; i++){
+		if (s[i] > 0){
+			let _t = _s + s[i];
+			arr.push(a.slice(_s, _t));
+			_s = _t;
+		}
+	}
+	if (r){
+		arr.push(a.slice(_s, a.length));
+	}
+	return arr;
+}
+exports.slice = slice;
+
+// Similar to slice in that it also splits an array
+// excepts slice recursively splits until the array is
+// completely empty 
+// 
+// @params {Array} -> array to split
+// @params {Number/Array} -> split sizes to iterate over
+// @return {Array} -> 2D array of splitted values
+// 
+function split(a=[0], s=[1]){
+	a = Array.isArray(a)? a : [a];
+	s = Array.isArray(s)? s : [s];
+
+	return _split(a, s);
+}
+exports.split = split;
+
+function _split(a, s){
+	if (s[0] > 0){
+		let arr = a.slice(0, s[0]);
+		let res = a.slice(s[0], a.length);
+
+		if (res.length < 1){ return [arr]; }
+		return [arr, ...split(res, rotate(s, -1))];
+	}
+	return [...split(a, rotate(s, -1))];
+}
+
 // spray the values of one array on the 
 // places of values of another array if 
 // the value is greater than 0
@@ -9231,6 +9383,9 @@ exports.sort = Stat.sort;
 // return {Array}
 // 
 function spray(values=[0], beats=[0]){
+	values = Array.isArray(values)? values : [values];
+	beats = Array.isArray(beats)? beats : [beats];
+
 	var arr = beats.slice();
 	var c = 0;
 	for (let i in beats){
@@ -9250,7 +9405,10 @@ exports.spray = spray;
 // param {Array} -> outputlength of array
 // param {String/Int} -> interpolation function (optional, default=linear)
 // 
-function stretch(a=[0], len=5, mode='linear'){
+function stretch(a=[0], len=1, mode='linear'){
+	a = Array.isArray(a)? a : [a];
+	if (len < 2){ return a; }
+	
 	let arr = [];
 	let l = a.length;
 	for (let i=0; i<len; i++){
@@ -9258,7 +9416,7 @@ function stretch(a=[0], len=5, mode='linear'){
 		let val = i / (len - 1) * (l - 1);
 		// lookup nearest neighbour left/right
 		let a0 = a[Math.max(Math.trunc(val), 0)];
-		let a1 = a[Math.min(Math.trunc(val)+1, l-1)];
+		let a1 = a[Math.min(Math.trunc(val)+1, l-1) % a.length];
 
 		if (mode === 'none' || mode === null || mode === false){
 			arr.push(a0);
@@ -9278,6 +9436,7 @@ exports.stretch = stretch;
 // @return {Array}
 // 
 function unique(a=[0]){
+	a = Array.isArray(a)? a : [a];
 	return [...new Set(a)];
 }
 exports.unique = unique;
@@ -10072,14 +10231,25 @@ function add(a, v=0){
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			r[i] = a[i % l1] + v[i % l2];
+			let a1 = a[i % l1];
+			let v1 = v[i % l2];
+			if (Array.isArray(a1) || Array.isArray(v1)){
+				r[i] = add(a1, v1);
+			} else {
+				r[i] = a1 + v1;
+			}
 		}
 		return r;
 	}
 	if (!Array.isArray(a)){
 		return a + v;
 	}
-	return a.map(x => x + v);
+	return a.map(x => {
+		if (Array.isArray(x)){
+			return add(x, v);
+		}
+		return x + v;
+	});
 }
 exports.add = add;
 
@@ -10097,14 +10267,25 @@ function subtract(a, v=0){
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			r[i] = a[i % l1] - v[i % l2];
+			let a1 = a[i % l1];
+			let v1 = v[i % l2];
+			if (Array.isArray(a1) || Array.isArray(v1)){
+				r[i] = subtract(a1, v1);
+			} else {
+				r[i] = a1 - v1;
+			}
 		}
 		return r;
 	}
 	if (!Array.isArray(a)){
 		return a - v;
 	}
-	return a.map(x => x - v);
+	return a.map(x => {
+		if (Array.isArray(x)){
+			return subtract(x, v);
+		}
+		return x - v;
+	});
 }
 exports.subtract = subtract;
 exports.sub = subtract;
@@ -10123,14 +10304,25 @@ function multiply(a, v=1){
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			r[i] = a[i % l1] * v[i % l2];
+			let a1 = a[i % l1];
+			let v1 = v[i % l2];
+			if (Array.isArray(a1) || Array.isArray(v1)){
+				r[i] = multiply(a1, v1);
+			} else {
+				r[i] = a1 * v1;
+			}
 		}
 		return r;
 	}
 	if (!Array.isArray(a)){
 		return a * v;
 	}
-	return a.map(x => x * v);
+	return a.map(x => {
+		if (Array.isArray(x)){
+			return multiply(x, v);
+		}
+		return x * v;
+	});
 }
 exports.multiply = multiply;
 exports.mul = multiply;
@@ -10149,17 +10341,42 @@ function divide(a, v=1){
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			r[i] = a[i % l1] / v[i % l2];
+			let a1 = a[i % l1];
+			let v1 = v[i % l2];
+			if (Array.isArray(a1) || Array.isArray(v1)){
+				r[i] = divide(a1, v1);
+			} else {
+				r[i] = a1 / v1;
+			}
 		}
 		return r;
 	}
 	if (!Array.isArray(a)){
 		return a / v;
 	}
-	return a.map(x => x / v);
+	return a.map(x => {
+		if (Array.isArray(x)){
+			return divide(x, v);
+		}
+		return x / v;
+	});
 }
 exports.divide = divide;
 exports.div = divide;
+
+// flatten a multidimensional array. Optionally set the depth
+// for the flattening
+//
+// @param {Array} -> array to flatten
+// @param {Number} -> depth of flatten
+// @return {Array} -> flattened array
+//
+function flatten(a=[0], depth=Infinity){
+	a = Array.isArray(a)? a : [a];
+	return a.flat(depth);
+}
+exports.flatten = flatten;
+exports.flat = flatten;
 
 // Return the remainder after division
 // also works in the negative direction
@@ -10223,11 +10440,7 @@ exports.sum = sum;
 // 
 function maximum(a=[0]){
 	if (!Array.isArray(a)) { return a; }
-	let m = -Infinity;
-	for (let i in a){
-		m = (a[i] > Number(m))? a[i] : m;
-	}
-	return m;
+	return Math.max(...flatten(a));
 }
 exports.maximum = maximum;
 exports.max = maximum;
@@ -10239,11 +10452,7 @@ exports.max = maximum;
 // 
 function minimum(a=[0]){
 	if (!Array.isArray(a)) { return a; }
-	let m = Infinity;
-	for (let i in a){
-		m = (a[i] < Number(m))? a[i] : m;
-	}
-	return m;
+	return Math.min(...flatten(a));
 }
 exports.minimum = minimum;
 exports.min = minimum;

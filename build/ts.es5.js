@@ -2114,7 +2114,12 @@ var r=hi-lo;// lo is actual lowest value
 lo=Math.min(lo,hi);// len is minimum of 1
 len=Math.max(1,len);if(len===1){return[0];}// stepsize
 var s=Math.abs(r)/len;// generate array
-var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadFloat=spreadFloat;exports.spreadF=spreadFloat;// Generate a list of n-length starting at one value
+var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadFloat=spreadFloat;exports.spreadF=spreadFloat;// Spread function rounded to integers
+// 
+// @params {length, low-output, high-output}
+// @return {Array}
+//
+function spread(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;var arr=spreadFloat(len,lo,hi);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spread=spread;// Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
 // Set an exponential curve in the spacing of the values.
 // Defaults to range of 0 - 1 for Float
@@ -2122,22 +2127,18 @@ var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return r<0?arr.reverse():arr;}(
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadFloatExp(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
+function spreadExpFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
 if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
 var r=hi-lo;// lo is actual lowest value
 lo=Math.min(lo,hi);// len is minimum of 1
 len=Math.max(1,len);if(len===1){return[0];}// generate array
-var arr=[];for(var i=0;i<len;i++){arr[i]=Math.pow(i/len,exp)*Math.abs(r)+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadFloatExp=spreadFloatExp;// Spread function rounded to integers
-// 
-// @params {length, low-output, high-output}
-// @return {Array}
-//
-function spread(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;var arr=spreadFloat(len,lo,hi);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spread=spread;// Spread function floored to integers
+var arr=[];for(var i=0;i<len;i++){arr[i]=Math.pow(i/len,exp)*Math.abs(r)+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadFloatExp=spreadExpFloat;// deprecated
+exports.spreadExpFloat=spreadExpFloat;exports.spreadExpF=spreadExpFloat;// Spread function floored to integers
 // 
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadExp(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3?arguments[3]:undefined;var arr=spreadFloatExp(len,lo,hi,exp);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadExp=spreadExp;// Generate a list of n-length starting at one value
+function spreadExp(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3?arguments[3]:undefined;var arr=spreadExpFloat(len,lo,hi,exp);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadExp=spreadExp;// Generate a list of n-length starting at one value
 // ending at the 3th argument.
 // Evenly spaced values in between in floating-point
 // Defaults to range of 0 - 1 for Float
@@ -2151,7 +2152,12 @@ var r=hi-lo;// lo is actual lowest value
 lo=Math.min(lo,hi);// len is minimum of 1
 len=Math.max(1,len);if(len===1){return[0];}// stepsize
 var s=Math.abs(r)/(len-1);// generate array
-var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadInclusiveFloat=spreadInclusiveFloat;exports.spreadIncF=spreadInclusiveFloat;// Generate a list of n-length starting at one value
+var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadInclusiveFloat=spreadInclusiveFloat;exports.spreadIncF=spreadInclusiveFloat;// spreadinclusiveFloat function floored to integers
+// 
+// @params {length, low-output, high-output}
+// @return {Array}
+//
+function spreadInclusive(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;var arr=spreadInclusiveFloat(len,lo,hi);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadInclusive=spreadInclusive;exports.spreadInc=spreadInclusive;// Generate a list of n-length starting at one value
 // ending at the 3th argument.
 // Set an exponential curve in the spacing of the values.
 // Defaults to range of 0 - 1 for Float
@@ -2159,22 +2165,18 @@ var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return r<0?arr.reverse():arr;}(
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadInclusiveFloatExp(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
+function spreadInclusiveExpFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
 if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
 var r=hi-lo;// lo is actual lowest value
 lo=Math.min(lo,hi);// len is minimum of 1
 len=Math.max(1,len);// generate array
-var arr=[];for(var i=0;i<len;i++){arr[i]=Math.pow(i/(len-1),exp)*Math.abs(r)+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadInclusiveFloatExp=spreadInclusiveFloatExp;// spreadinclusiveFloat function floored to integers
-// 
-// @params {length, low-output, high-output}
-// @return {Array}
-//
-function spreadInclusive(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;var arr=spreadInclusiveFloat(len,lo,hi);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadInclusive=spreadInclusive;exports.spreadInc=spreadInclusive;// spreadinclusiveFloatExp function floored to integers
+var arr=[];for(var i=0;i<len;i++){arr[i]=Math.pow(i/(len-1),exp)*Math.abs(r)+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadInclusiveFloatExp=spreadInclusiveExpFloat;//deprecated
+exports.spreadInclusiveExpFloat=spreadInclusiveExpFloat;exports.spreadIncExpF=spreadInclusiveExpFloat;// spreadinclusiveFloatExp function floored to integers
 // 
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadInclusiveExp(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3?arguments[3]:undefined;var arr=spreadInclusiveFloatExp(len,lo,hi,exp);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadInclusiveExp=spreadInclusiveExp;// fill an array with values. Arguments are pairs.
+function spreadInclusiveExp(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:len;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3?arguments[3]:undefined;var arr=spreadInclusiveExpFloat(len,lo,hi,exp);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadInclusiveExp=spreadInclusiveExp;exports.spreadIncExp=spreadInclusiveExp;// fill an array with values. Arguments are pairs.
 // Every pair consists of <value, amount>
 // The value is repeated n-amount times in the list
 // 
@@ -2188,7 +2190,7 @@ if(!args.length){return[0];}var len=args.length/2;var arr=[];for(var i=0;i<len;i
 // Only setting first range argument sets the low-range to 0
 // 
 // @param {Int} -> Length of output array (resolution)
-// @param {Number} -> Periods of sine-wave 
+// @param {NumberArray | Number} -> Periods of sine-wave 
 // @param {Number} -> Low range of values (optional, default=-1) 
 // @param {Number} -> High range of values (optional, default=1)
 // @param {Number} -> Phase offset (optional, default=0)
@@ -2202,8 +2204,7 @@ periods=Array.isArray(periods)?periods:[periods];// if no range specified
 // array length minimum of 1
 len=Math.max(1,len);var arr=[];var twoPI=Math.PI*2.0;// let a = Math.PI * 2.0 * periods / len;
 var p=Math.PI*phase*2.0;for(var i=0;i<len;i++){// arr[i] = Math.sin(a * i + p);
-var a=twoPI*periods[i%periods.length]/len;arr[i]=Math.sin(a*i+p);}return Util.map(arr,-1,1,lo,hi);}exports.sineFloat=sineFloat;// exports.sin = sineFloat;
-// Generate an integer array with n-periods of a sine function
+var a=twoPI*periods[i%periods.length]/len;arr[i]=Math.sin(a*i+p);}return Util.map(arr,-1,1,lo,hi);}exports.sineFloat=sineFloat;exports.sineF=sineFloat;exports.sinF=sineFloat;// Generate an integer array with n-periods of a sine function
 // Optional last arguments set lo and hi range
 // 
 // @param {Int} -> Length of output array
@@ -2217,8 +2218,7 @@ function sine(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0
 // Flip the low and high range to invert the function
 // See sinFloat() for details
 //
-function cosineFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;return sineFloat(len,periods,lo,hi,phase+0.25);}exports.cosineFloat=cosineFloat;// exports.cos = cosineFloat;
-// Generate an integer array with n-periods of a cosine function
+function cosineFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;return sineFloat(len,periods,lo,hi,phase+0.25);}exports.cosineFloat=cosineFloat;exports.cosineF=cosineFloat;exports.cosF=cosineFloat;// Generate an integer array with n-periods of a cosine function
 // Flip the low and high range to invert the function
 // See sin() for details
 // 
@@ -2235,8 +2235,22 @@ function cosine(){var len=arguments.length>0&&arguments[0]!==undefined?arguments
 //  
 function sawFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;if(lo===undefined){lo=-1;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
 periods=Array.isArray(periods)?periods:[periods];// array length minimum of 1
-len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=i*a*periods[i%periods.length]%1.0;}return Util.map(arr,0,1,lo,hi);// return arr;
-}exports.sawFloat=sawFloat;exports.phasor=sawFloat;function saw(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var arr=sawFloat(len,periods,lo,hi,phase);return arr.map(function(v){return Math.trunc(v);});}exports.saw=saw;},{"./utility.js":43}],38:[function(require,module,exports){//==============================================================================
+len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*periods[i%periods.length]%1.0+1.0)%1.0;}return Util.map(arr,0,1,lo,hi);// return arr;
+}exports.sawFloat=sawFloat;exports.phasor=sawFloat;exports.sawF=sawFloat;function saw(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var arr=sawFloat(len,periods,lo,hi,phase);return arr.map(function(v){return Math.trunc(v);});}exports.saw=saw;// Generate an array with n-periods of a pulse/squarewave function
+// Optional last arguments set lo and hi range and pulse width
+// Only setting first range argument sets the low-range to 0
+// 
+// @param {Int} -> Length of output array (resolution)
+// @param {Number/Array} -> Periods of the wave (option, default=1)
+// @param {Number} -> Low range of values (optional, default=-1) 
+// @param {Number} -> High range of values (optional, default=1)
+// @param {Number} -> Pulse width (optional, default=0.5)
+// @return {Array} -> wave-function as array
+//  
+function squareFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var pulse=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0.5;if(lo===undefined){lo=0;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
+periods=Array.isArray(periods)?periods:[periods];// array length minimum of 1
+len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*periods[i%periods.length]%1+1)%1;arr[i]=arr[i]<pulse;}return Util.map(arr,0,1,lo,hi);// return arr;
+}exports.squareFloat=squareFloat;exports.squareF=squareFloat;exports.rectFloat=squareFloat;exports.rectF=squareFloat;function square(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var pulse=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0.5;var arr=squareFloat(len,periods,lo,hi,pulse);return arr.map(function(v){return Math.trunc(v);});}exports.square=square;exports.rect=square;},{"./utility.js":43}],38:[function(require,module,exports){//==============================================================================
 // gen-complex.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2624,7 +2638,7 @@ var Mod=require('./transform');var Util=require('./utility');// sort an array of
 // @param {Int} -> sort direction (positive value is ascending)
 // @return {Array} -> sorted array, object includes order-indeces
 // 
-function sort(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;if(!Array.isArray(a)){return a;}var arr;if(a.map(function(x){return _typeof(x);}).includes('string')){arr=a.slice().sort();}else{arr=a.slice().sort(function(a,b){return a-b;});}if(d<0){return arr.reverse();}return arr;}exports.sort=sort;// Return the biggest value from an array
+function sort(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;a=Array.isArray(a)?a:[a];var arr;if(a.map(function(x){return _typeof(x);}).includes('string')){arr=a.slice().sort();}else{arr=a.slice().sort(function(a,b){return a-b;});}if(d<0){return arr.reverse();}return arr;}exports.sort=sort;// Return the biggest value from an array
 // 
 // @param {NumberArray} -> input array
 // @return {Number} -> biggest value
@@ -2638,25 +2652,28 @@ exports.minimum=Util.minimum;exports.min=Util.minimum;// Return the average (art
 // The mean is a measure of central tendency
 // 
 // @param {NumberArray} -> input array of n-numbers
+// @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
 // @return {Number} -> mean
 // 
-function mean(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return a;}var s=0;for(var i in a){s+=a[i];}return s/a.length;}exports.mean=mean;exports.average=mean;// Return the median (center value) from an array
+function mean(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=Util.flatten(a);}var s=0;for(var i in a){s+=isNaN(a[i])?0:a[i];}return s/a.length;}exports.mean=mean;exports.average=mean;// Return the median (center value) from an array
 // The median is a measure of central tendency
 // If array is even number of values the median is the
 // average of the two center values
 // Ignores other datatypes then Number and Boolean
 // 
 // @param {NumberArray} -> input array of n-numbers
+// @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
 // @return {Number} -> median
 // 
-function median(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return a;}var arr=a.slice();if(arr.map(function(x){return _typeof(x);}).includes('string')){arr=Mod.filterType(arr,['number','boolean']);}arr=arr.sort(function(a,b){return a-b;});var c=Math.floor(arr.length/2);if(!(arr.length%2)){return(arr[c]+arr[c-1])/2;}return arr[c];}exports.median=median;exports.center=median;// Returns the mode(s) (most common value) from an array
+function median(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=Util.flatten(a);}var arr=a.slice();if(arr.map(function(x){return _typeof(x);}).includes('string')){arr=Mod.filterType(arr,['number','boolean']);}arr=arr.sort(function(a,b){return a-b;});var c=Math.floor(arr.length/2);if(!(arr.length%2)){return(arr[c]+arr[c-1])/2;}return arr[c];}exports.median=median;exports.center=median;// Returns the mode(s) (most common value) from an array
 // The mode is a measure of central tendency
 // Returns an array when multi-modal system
 // 
 // @param {NumberArray} -> input array of n-numbers
+// @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
 // @return {Number/Array} -> the mode or modes
 //
-function mode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return a;}var arr=a.slice().sort(function(a,b){return a-b;});var amount=1;var streak=0;var modes=[];for(var i=1;i<arr.length;i++){if(arr[i-1]!=arr[i]){amount=0;}amount++;if(amount>streak){streak=amount;modes=[arr[i]];}else if(amount==streak){modes.push(arr[i]);}}return modes;}exports.mode=mode;exports.common=mode;// Return the difference between every consecutive value in an array
+function mode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=Util.flatten(a);}var arr=a.slice().sort(function(a,b){return a-b;});var amount=1;var streak=0;var modes=[];for(var i=1;i<arr.length;i++){if(arr[i-1]!=arr[i]){amount=0;}amount++;if(amount>streak){streak=amount;modes=[arr[i]];}else if(amount==streak){modes.push(arr[i]);}}return modes;}exports.mode=mode;exports.common=mode;// Return the difference between every consecutive value in an array
 // With melodic content from a chromatic scale this can be seen as
 // a list of intervals that, when followed from the same note, results
 // in the same melody.
@@ -2693,8 +2710,8 @@ var Stat=require('./statistic');var Util=require('./utility');// Duplicate an ar
 // @param {Int, Int2, ... Int-n} -> amount of clones with integer offset
 // 								 -> or string concatenation
 // 
-function clone(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];for(var _len2=arguments.length,c=new Array(_len2>1?_len2-1:0),_key2=1;_key2<_len2;_key2++){c[_key2-1]=arguments[_key2];}// flatten array if multi-dimensional
-if(!c.length){c=[0,0];}else{c=c.flat();}var arr=[];for(var i=0;i<c.length;i++){arr=arr.concat(a.map(function(v){return Util.add(v,c[i]);}));}return arr;}exports.clone=clone;// combine arrays into one array
+function clone(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];for(var _len2=arguments.length,c=new Array(_len2>1?_len2-1:0),_key2=1;_key2<_len2;_key2++){c[_key2-1]=arguments[_key2];}a=Array.isArray(a)?a:[a];// flatten clone array if multi-dimensional
+if(!c.length){return a;}else{c=Util.flatten(c);}var arr=[];var _loop=function _loop(i){arr=arr.concat(a.map(function(v){return Util.add(v,c[i]);}));};for(var i=0;i<c.length;i++){_loop(i);}return arr;}exports.clone=clone;// combine arrays into one array
 // multiple arrays as arguments possible
 // 
 // @params {Array0, Array1, ..., Array-n} -> Arrays to join
@@ -2706,18 +2723,32 @@ function combine(){if(!arguments.length){return[0];}var arr=[];for(var i=0;i<arg
 // @param {Int} -> amount of output duplicates (optional, default=2)
 // @return {Array}
 // 
-function duplicate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;var arr=[];for(var i=0;i<Math.max(1,d);i++){arr=arr.concat(a);}return arr;}exports.duplicate=duplicate;exports.copy=duplicate;exports.dup=duplicate;// add zeroes to an array with a rhythmic sequence
-// the division determins the amount of values per bar
+function duplicate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;var arr=[];for(var i=0;i<Math.max(1,d);i++){arr=arr.concat(a);}return arr;}exports.duplicate=duplicate;exports.copy=duplicate;exports.dup=duplicate;// pad an array with zeroes (or other values)
+// the division determines the amount of values per bar
 // total length = bars * div
 //
 // param {Array} -> Array to use every n-bars
-// param {Int} -> amount of bars
-// param {Int} -> amount of values per bar
+// param {Int} -> amount of bars (optional, default=1)
+// param {Int} -> amount of values per bar (optional, default=16)
 // param {Value} -> padding argument (optional, default=0)
 // param {Number} -> shift the output by n-divs (optional, default=0)
 // return {Array}
 //
-function every(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var bars=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var div=arguments.length>2&&arguments[2]!==undefined?arguments[2]:16;var pad=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var shift=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var len=Math.floor(bars*div)-a.length;if(len<1){return a;}else{var arr=new Array(len).fill(pad);return rotate(a.concat(arr),Math.floor(shift*div));}}exports.every=every;// filter one or multiple values from an array
+function every(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var bars=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var div=arguments.length>2&&arguments[2]!==undefined?arguments[2]:16;var pad=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var shift=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var len=Math.floor(bars*div)-a.length;var sft=Math.floor(shift*div);return padding(a,len,pad,sft);}exports.every=every;// Import from the Util.flatten
+// flatten a multidimensional array. Optionally set the depth
+// for the flattening
+//
+exports.flat=Util.flatten;// similar to every(), but instead of specifying bars/devisions
+// this method allows you to specify the exact length of the array
+// and the shift is not a ratio but in whole integer steps
+//
+// param {Array} -> Array to use every n-bars
+// param {Int} -> Array length output
+// param {Number} -> shift the output by n-divs (optional, default=0)
+// param {Value} -> padding argument (optional, default=0)
+// return {Array}
+//
+function padding(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var length=arguments.length>1&&arguments[1]!==undefined?arguments[1]:16;var pad=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var shift=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;a=Array.isArray(a)?a:[a];var len=length-a.length;if(len<1){return a;}var arr=new Array(len).fill(pad);return rotate(a.concat(arr),shift);}exports.padding=padding;exports.pad=padding;// filter one or multiple values from an array
 // 
 // @param {Array} -> array to filter
 // @param {Number/String/Array} -> values to filter
@@ -2727,10 +2758,10 @@ function filter(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 // In this case the input type is the type that is output
 // 
 // @param {Array} -> array to filter
-// @param {String/Array} -> types to filter
+// @param {String/Array} -> types to filter (default = number)
 // @return (Array} -> filtered array
 // 
-function filterType(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var t=arguments.length>1?arguments[1]:undefined;a=Array.isArray(a)?a.slice():[a];t=Array.isArray(t)?t:[t];var types=a.map(function(x){return _typeof(x);});var arr=[];for(var i in t){var index=types.indexOf(t[i]);while(index>=0){arr.push(a[index]);a.splice(index,1);types.splice(index,1);index=types.indexOf(t[i]);}}return arr;}exports.filterType=filterType;exports.tFilter=filterType;// invert a list of values by mapping the lowest value
+function filterType(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var t=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'number';a=Array.isArray(a)?a.slice():[a];t=Array.isArray(t)?t:[t];var types=a.map(function(x){return _typeof(x);});var arr=[];for(var i in t){var index=types.indexOf(t[i]);while(index>=0){arr.push(a[index]);a.splice(index,1);types.splice(index,1);index=types.indexOf(t[i]);}}return arr;}exports.filterType=filterType;exports.tFilter=filterType;// invert a list of values by mapping the lowest value
 // to the highest value and vice versa, flipping everything
 // in between. 
 // Second optional argument sets the center to flip values against. 
@@ -2741,12 +2772,12 @@ function filterType(){var a=arguments.length>0&&arguments[0]!==undefined?argumen
 // @param {Int} -> high range (optional)
 // @return {Array}
 // 
-function invert(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var lo=arguments.length>1?arguments[1]:undefined;var hi=arguments.length>2?arguments[2]:undefined;if(lo===undefined){hi=Math.max.apply(Math,_toConsumableArray(arr));lo=Math.min.apply(Math,_toConsumableArray(arr));}else if(hi===undefined){hi=lo;}return arr.slice().map(function(v){return hi-v+lo;});}exports.invert=invert;// interleave two or more arrays
+function invert(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var lo=arguments.length>1?arguments[1]:undefined;var hi=arguments.length>2?arguments[2]:undefined;arr=Array.isArray(arr)?arr:[arr];if(lo===undefined){hi=Util.max(arr);lo=Util.max(arr);}else if(hi===undefined){hi=lo;}return arr.slice().map(function(v){if(Array.isArray(v)){return invert(v,lo,hi);}return hi-v+lo;});}exports.invert=invert;// interleave two or more arrays
 // 
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array}
 //  
-function lace(){for(var _len3=arguments.length,args=new Array(_len3),_key3=0;_key3<_len3;_key3++){args[_key3]=arguments[_key3];}if(!args.length){return[0];}var l=0;for(var _i4 in args){l=Math.max(args[_i4].length,l);}var arr=[];for(var i=0;i<l;i++){for(var k in args){var v=args[k][i];if(v!=undefined){arr.push(v);}}}return arr;}exports.lace=lace;exports.zip=lace;// Build an array of items based on another array of indeces 
+function lace(){for(var _len3=arguments.length,args=new Array(_len3),_key3=0;_key3<_len3;_key3++){args[_key3]=arguments[_key3];}if(!args.length){return[0];}var l=0;for(var _i4 in args){args[_i4]=Array.isArray(args[_i4])?args[_i4]:[args[_i4]];l=Math.max(args[_i4].length,l);}var arr=[];for(var i=0;i<l;i++){for(var k in args){var v=args[k][i];if(v!=undefined){arr.push(v);}}}return arr;}exports.lace=lace;exports.zip=lace;// Build an array of items based on another array of indeces 
 // The values are wrapped within the length of the lookup array
 // Works with n-dimensional arrays by applying a recursive lookup
 // 
@@ -2754,20 +2785,21 @@ function lace(){for(var _len3=arguments.length,args=new Array(_len3),_key3=0;_ke
 // @param {Array} -> Array with values returned from lookup
 // @return {Array} -> Looked up values
 // 
-function lookup(){var idx=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var arr=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];idx=Array.isArray(idx)?idx:[idx];arr=Array.isArray(arr)?arr:[arr];var a=[];var len=arr.length;for(var i in idx){if(Array.isArray(idx[i])){a[i]=lookup(idx[i],arr);}else{var look=(idx[i]%len+len)%len;a[i]=arr[look];}}return a;}exports.lookup=lookup;// merge all values of two arrays on the same index
+function lookup(){var idx=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var arr=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];idx=Array.isArray(idx)?idx:[idx];arr=Array.isArray(arr)?arr:[arr];var a=[];var len=arr.length;for(var i in idx){if(Array.isArray(idx[i])){a.push(lookup(idx[i],arr));}else{if(!isNaN(idx[i])){var look=(idx[i]%len+len)%len;a.push(arr[look]);}}}return a;}exports.lookup=lookup;// merge all values of two arrays on the same index
 // into a 2D array. preserves length of longest list
+// flattens multidimensional arrays to 2 dimensions on merge
 // 
 // @params {Array0, Array1, ..., Array-n} -> Arrays to merge
 // @return {Array}
 // 
-function merge(){for(var _len4=arguments.length,args=new Array(_len4),_key4=0;_key4<_len4;_key4++){args[_key4]=arguments[_key4];}if(!args.length){return[0];}var l=0;for(var _i5 in args){l=Math.max(args[_i5].length,l);}var arr=[];for(var i=0;i<l;i++){var a=[];for(var k in args){var v=args[k][i];if(v!=undefined){if(Array.isArray(v))a.push.apply(a,_toConsumableArray(v));else a.push(v);}}arr[i]=a;}return arr;}exports.merge=merge;// reverse an array and concatenate to the input
+function merge(){for(var _len4=arguments.length,args=new Array(_len4),_key4=0;_key4<_len4;_key4++){args[_key4]=arguments[_key4];}if(!args.length){return[0];}var l=0;for(var i in args){args[i]=Array.isArray(args[i])?args[i]:[args[i]];l=Math.max(args[i].length,l);}var arr=[];for(var _i5=0;_i5<l;_i5++){var a=[];for(var k in args){var v=args[k][_i5];if(v!=undefined){if(Array.isArray(v))a.push.apply(a,_toConsumableArray(v));else a.push(v);}}arr[_i5]=a;}return arr;}exports.merge=merge;// reverse an array and concatenate to the input
 // creating a palindrome of the array
 // 
 // @param {Array} -> array to make palindrome of
 // @param {Bool} -> no-double flag (optional, default=false)
 // @return {Array}
 // 
-function palindrome(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var noDouble=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;var rev=arr.slice().reverse();if(noDouble){rev=rev.slice(1,rev.length-1);}return arr.concat(rev);}exports.palindrome=palindrome;exports.mirror=palindrome;// repeat the values of an array n-times
+function palindrome(arr){var noDouble=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;if(arr===undefined){return[0];};if(!Array.isArray(arr)){return[arr];};var rev=arr.slice().reverse();if(noDouble){rev=rev.slice(1,rev.length-1);}return arr.concat(rev);}exports.palindrome=palindrome;exports.mirror=palindrome;// repeat the values of an array n-times
 // Using a second array for repeat times iterates over that array
 // 
 // @param {Array} -> array with values to repeat
@@ -2779,18 +2811,34 @@ function repeat(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments
 // @param {Array} -> array to reverse
 // @return {Array}
 // 
-function reverse(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];return a.slice().reverse();}exports.reverse=reverse;// rotate the position of items in an array 
+function reverse(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return[a];}return a.slice().reverse();}exports.reverse=reverse;// rotate the position of items in an array 
 // 1 = direction right, -1 = direction left
 // 
 // @param {Array} -> array to rotate
 // @param {Int} -> steps to rotate (optional, default=0)
 // @return {Array}
 // 
-function rotate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var r=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var l=a.length;var arr=[];for(var i=0;i<l;i++){// arr[i] = a[Util.mod((i - r), l)];
+function rotate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var r=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;if(!Array.isArray(a)){return[a];}var l=a.length;var arr=[];for(var i=0;i<l;i++){// arr[i] = a[Util.mod((i - r), l)];
 arr[i]=a[((i-r)%l+l)%l];}return arr;}exports.rotate=rotate;// placeholder for the sort() method found in 
 // statistic.js
 // 
-exports.sort=Stat.sort;// spray the values of one array on the 
+exports.sort=Stat.sort;// slice an array in one or multiple parts 
+// slice lengths are determined by the second argument array
+// outputs an array of arrays of the result
+//
+// @params {Array} -> array to slice
+// @params {Number|Array} -> slice points
+// @return {Array}
+// 
+function slice(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var s=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[1];var r=arguments.length>2&&arguments[2]!==undefined?arguments[2]:true;a=Array.isArray(a)?a:[a];s=Array.isArray(s)?s:[s];var arr=[];var _s=0;for(var i=0;i<s.length;i++){if(s[i]>0){var _t=_s+s[i];arr.push(a.slice(_s,_t));_s=_t;}}if(r){arr.push(a.slice(_s,a.length));}return arr;}exports.slice=slice;// Similar to slice in that it also splits an array
+// excepts slice recursively splits until the array is
+// completely empty 
+// 
+// @params {Array} -> array to split
+// @params {Number/Array} -> split sizes to iterate over
+// @return {Array} -> 2D array of splitted values
+// 
+function split(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var s=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[1];a=Array.isArray(a)?a:[a];s=Array.isArray(s)?s:[s];return _split(a,s);}exports.split=split;function _split(a,s){if(s[0]>0){var arr=a.slice(0,s[0]);var res=a.slice(s[0],a.length);if(res.length<1){return[arr];}return[arr].concat(_toConsumableArray(split(res,rotate(s,-1))));}return _toConsumableArray(split(a,rotate(s,-1)));}// spray the values of one array on the 
 // places of values of another array if 
 // the value is greater than 0
 // 
@@ -2798,7 +2846,7 @@ exports.sort=Stat.sort;// spray the values of one array on the
 // param {Array} -> positions to spread to
 // return {Array}
 // 
-function spray(){var values=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];var arr=beats.slice();var c=0;for(var i in beats){if(beats[i]>0){arr[i]=values[c++%values.length];}}return arr;}exports.spray=spray;// stretch (or shrink) an array of numbers to a specified length
+function spray(){var values=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];values=Array.isArray(values)?values:[values];beats=Array.isArray(beats)?beats:[beats];var arr=beats.slice();var c=0;for(var i in beats){if(beats[i]>0){arr[i]=values[c++%values.length];}}return arr;}exports.spray=spray;// stretch (or shrink) an array of numbers to a specified length
 // interpolating the values to fill in the gaps. 
 // TO-DO: Interpolations options are: none, linear, cosine, cubic
 // 
@@ -2806,16 +2854,16 @@ function spray(){var values=arguments.length>0&&arguments[0]!==undefined?argumen
 // param {Array} -> outputlength of array
 // param {String/Int} -> interpolation function (optional, default=linear)
 // 
-function stretch(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:5;var mode=arguments.length>2&&arguments[2]!==undefined?arguments[2]:'linear';var arr=[];var l=a.length;for(var i=0;i<len;i++){// construct a lookup interpolation position for new array
+function stretch(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var mode=arguments.length>2&&arguments[2]!==undefined?arguments[2]:'linear';a=Array.isArray(a)?a:[a];if(len<2){return a;}var arr=[];var l=a.length;for(var i=0;i<len;i++){// construct a lookup interpolation position for new array
 var val=i/(len-1)*(l-1);// lookup nearest neighbour left/right
-var a0=a[Math.max(Math.trunc(val),0)];var a1=a[Math.min(Math.trunc(val)+1,l-1)];if(mode==='none'||mode===null||mode===false){arr.push(a0);}else{// interpolate between the values according to decimal place
+var a0=a[Math.max(Math.trunc(val),0)];var a1=a[Math.min(Math.trunc(val)+1,l-1)%a.length];if(mode==='none'||mode===null||mode===false){arr.push(a0);}else{// interpolate between the values according to decimal place
 arr.push(Util.lerp(a0,a1,val%1));}}return arr;}exports.stretch=stretch;// filter duplicate items from an array
 // does not account for 2-dimensional arrays in the array
 // 
 // @param {Array} -> array to filter
 // @return {Array}
 // 
-function unique(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];return _toConsumableArray(new Set(a));}exports.unique=unique;},{"./statistic":40,"./utility":43}],42:[function(require,module,exports){//==============================================================================
+function unique(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];a=Array.isArray(a)?a:[a];return _toConsumableArray(new Set(a));}exports.unique=unique;},{"./statistic":40,"./utility":43}],42:[function(require,module,exports){//==============================================================================
 // translate.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -3156,7 +3204,7 @@ function _mix(a0,a1){var f=arguments.length>2&&arguments[2]!==undefined?argument
 // @param {Number/Array} -> value to add
 // @return {Number/Array}
 // 
-function add(a){var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){r[i]=a[i%l1]+v[i%l2];}return r;}if(!Array.isArray(a)){return a+v;}return a.map(function(x){return x+v;});}exports.add=add;// subtract 1 or more values from an array
+function add(a){var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){var a1=a[i%l1];var v1=v[i%l2];if(Array.isArray(a1)||Array.isArray(v1)){r[i]=add(a1,v1);}else{r[i]=a1+v1;}}return r;}if(!Array.isArray(a)){return a+v;}return a.map(function(x){if(Array.isArray(x)){return add(x,v);}return x+v;});}exports.add=add;// subtract 1 or more values from an array
 // preserves listlength of first argument
 // arguments are applied sequentially
 // 
@@ -3164,7 +3212,7 @@ function add(a){var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:
 // @param {Number/Array} -> value to subtract
 // @return {Number/Array}
 // 
-function subtract(a){var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){r[i]=a[i%l1]-v[i%l2];}return r;}if(!Array.isArray(a)){return a-v;}return a.map(function(x){return x-v;});}exports.subtract=subtract;exports.sub=subtract;// multiply 1 or more values from an array
+function subtract(a){var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){var a1=a[i%l1];var v1=v[i%l2];if(Array.isArray(a1)||Array.isArray(v1)){r[i]=subtract(a1,v1);}else{r[i]=a1-v1;}}return r;}if(!Array.isArray(a)){return a-v;}return a.map(function(x){if(Array.isArray(x)){return subtract(x,v);}return x-v;});}exports.subtract=subtract;exports.sub=subtract;// multiply 1 or more values from an array
 // preserves listlength of first argument
 // arguments are applied sequentially
 // 
@@ -3172,7 +3220,7 @@ function subtract(a){var v=arguments.length>1&&arguments[1]!==undefined?argument
 // @param {Number/Array} -> value to multiply with
 // @return {Number/Array}
 // 
-function multiply(a){var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){r[i]=a[i%l1]*v[i%l2];}return r;}if(!Array.isArray(a)){return a*v;}return a.map(function(x){return x*v;});}exports.multiply=multiply;exports.mul=multiply;// divide 1 or more values from an array
+function multiply(a){var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){var a1=a[i%l1];var v1=v[i%l2];if(Array.isArray(a1)||Array.isArray(v1)){r[i]=multiply(a1,v1);}else{r[i]=a1*v1;}}return r;}if(!Array.isArray(a)){return a*v;}return a.map(function(x){if(Array.isArray(x)){return multiply(x,v);}return x*v;});}exports.multiply=multiply;exports.mul=multiply;// divide 1 or more values from an array
 // preserves listlength of first argument
 // arguments are applied sequentially
 // 
@@ -3180,7 +3228,14 @@ function multiply(a){var v=arguments.length>1&&arguments[1]!==undefined?argument
 // @param {Number/Array} -> value to divide with
 // @return {Number/Array}
 // 
-function divide(a){var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){r[i]=a[i%l1]/v[i%l2];}return r;}if(!Array.isArray(a)){return a/v;}return a.map(function(x){return x/v;});}exports.divide=divide;exports.div=divide;// Return the remainder after division
+function divide(a){var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){var a1=a[i%l1];var v1=v[i%l2];if(Array.isArray(a1)||Array.isArray(v1)){r[i]=divide(a1,v1);}else{r[i]=a1/v1;}}return r;}if(!Array.isArray(a)){return a/v;}return a.map(function(x){if(Array.isArray(x)){return divide(x,v);}return x/v;});}exports.divide=divide;exports.div=divide;// flatten a multidimensional array. Optionally set the depth
+// for the flattening
+//
+// @param {Array} -> array to flatten
+// @param {Number} -> depth of flatten
+// @return {Array} -> flattened array
+//
+function flatten(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var depth=arguments.length>1&&arguments[1]!==undefined?arguments[1]:Infinity;a=Array.isArray(a)?a:[a];return a.flat(depth);}exports.flatten=flatten;exports.flat=flatten;// Return the remainder after division
 // also works in the negative direction
 // 
 // @param {Int/Array} -> input value
@@ -3202,12 +3257,12 @@ function sum(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[
 // @param {NumberArray} -> input array
 // @return {Number} -> biggest value
 // 
-function maximum(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return a;}var m=-Infinity;for(var i in a){m=a[i]>Number(m)?a[i]:m;}return m;}exports.maximum=maximum;exports.max=maximum;// Return the lowest value from an array
+function maximum(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return a;}return Math.max.apply(Math,_toConsumableArray(flatten(a)));}exports.maximum=maximum;exports.max=maximum;// Return the lowest value from an array
 // 
 // @param {NumberArray} -> input array
 // @return {Number} -> lowest value
 // 
-function minimum(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return a;}var m=Infinity;for(var i in a){m=a[i]<Number(m)?a[i]:m;}return m;}exports.minimum=minimum;exports.min=minimum;// Normalize all the values in an array between 0. and 1.
+function minimum(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return a;}return Math.min.apply(Math,_toConsumableArray(flatten(a)));}exports.minimum=minimum;exports.min=minimum;// Normalize all the values in an array between 0. and 1.
 // The highest value will be 1, the lowest value will be 0.
 // 
 // @param {Number/Array} -> input values
