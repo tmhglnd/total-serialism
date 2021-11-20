@@ -7950,8 +7950,38 @@ function hexBeat(hex="8"){
 }
 exports.hexBeat = hexBeat;
 
-// A euclidean rhythm generator. Generates values of 0 and 1
-// distributed based on the common denominator after division
+// A fast euclidean rhythm algorithm
+// Uses the downsampling of a line drawn between two points in a 
+// 2-dimensional grid to divide the squares into an evenly distributed
+// amount of steps. Generates correct distribution, but the distribution 
+// may differ a bit from the recursive euclidean distribution algorithm 
+// for steps above 44.
+//
+// @param {Int} -> steps (optional, default=8)
+// @param {Int} -> beats (optional, default=4)
+// @param {Int} -> rotate (optional, default=0)
+// @return {Array}
+// 
+function fastEuclid(s=8, h=4, r=0){
+	let arr = [];
+	let d = -1;
+	
+	for (let i=0; i<s; i++){
+		let v = Math.floor(i * (h / s));
+		arr[i] = v - d;
+		d = v;
+	}
+	if (r){
+		return Transform.rotate(arr, r);
+	}
+	return arr;
+}
+exports.fastEuclid = fastEuclid;
+
+// The Euclidean rhythm generator
+// Generate a euclidean rhythm evenly spacing n-beats amongst n-steps.
+// Inspired by Godfried Toussaints famous paper "The Euclidean Algorithm
+// Generates Traditional Musical Rhythms".
 //
 // @param {Int} -> steps (optional, default=8)
 // @param {Int} -> beats (optional, default=4)
@@ -8931,6 +8961,31 @@ function mode(a=[0], d=true){
 }
 exports.mode = mode;
 exports.common = mode;
+
+// Compare two arrays recursively and if all values
+// of the array and subarrays are equal to eachother
+// return a true boolean
+// 
+// @params {Array} -> compare array1
+// @params {Array} -> compare array2
+// @return {Bool} -> true or false
+// 
+function compare(a1=[0], a2){
+	a1 = (Array.isArray(a1))? a1 : [a1];
+	a2 = (Array.isArray(a2))? a2 : [a2];
+	if (a1.length !== a2.length){
+		return false;
+	}
+	for (let i in a1){
+		if (Array.isArray(a1[i])){
+			return compare(a1[i], a2[i]);
+		} else if (a1[i] !== a2[i]){
+			return false;
+		}
+	}
+	return true;
+}
+exports.compare = compare;
 
 // Return the difference between every consecutive value in an array
 // With melodic content from a chromatic scale this can be seen as

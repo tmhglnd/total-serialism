@@ -59,34 +59,6 @@ console.log();
 // markov.clear();
 // console.log(markov.table);
 
-// for (let i=0; i<100; i++){
-// 	for (let j=1; j<i; j++){
-// 		let e1 = Algo.euclid(i, j);
-// 		let e2 = Algo.fastEuclid(i, j);
-
-// 		let eq = false;
-// 		for (let k=-e2.length; k<e2.length+1; k++){
-// 			let r2 = Mod.rotate(e2, k);
-			
-// 			eq = Stat.compare(e1, r2);
-// 			if (eq){
-// 				break;
-// 			}
-// 		}
-// 		for (let k=-e2.length; k<e2.length+1; k++){
-// 			let r3 = Mod.rotate(Mod.reverse(e2), k);
-			
-// 			eq = Stat.compare(e1, r3);
-// 			if (eq){
-// 				break;
-// 			}
-// 		}
-// 		if (!eq){
-// 			console.log(i, j, eq);
-// 		}
-// 	}
-// }
-
 fullTest();
 
 function fullTest(){

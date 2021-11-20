@@ -68,7 +68,7 @@ function fastEuclid(s=8, h=4, r=0){
 	
 	for (let i=0; i<s; i++){
 		let v = Math.floor(i * (h / s));
-		arr[i] = v - d;
+		arr[i] = Number(v !== d);
 		d = v;
 	}
 	if (r){

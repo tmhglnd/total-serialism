@@ -2279,8 +2279,22 @@ BigNumber.config({DECIMAL_PLACES:20,EXPONENTIAL_AT:[-7,20]});// A hexadecimal rh
 // @param {String} -> hexadecimal characters (0 t/m f)
 // @return {Array} -> rhythm
 // 
-function hexBeat(){var hex=arguments.length>0&&arguments[0]!==undefined?arguments[0]:"8";if(!hex.isNaN){hex=hex.toString();}var a=[];for(var i in hex){var binary=parseInt("0x"+hex[i]).toString(2);binary=isNaN(binary)?'0000':binary;var padding=binary.padStart(4,'0');a=a.concat(padding.split('').map(function(x){return Number(x);}));}return a;}exports.hexBeat=hexBeat;// A euclidean rhythm generator. Generates values of 0 and 1
-// distributed based on the common denominator after division
+function hexBeat(){var hex=arguments.length>0&&arguments[0]!==undefined?arguments[0]:"8";if(!hex.isNaN){hex=hex.toString();}var a=[];for(var i in hex){var binary=parseInt("0x"+hex[i]).toString(2);binary=isNaN(binary)?'0000':binary;var padding=binary.padStart(4,'0');a=a.concat(padding.split('').map(function(x){return Number(x);}));}return a;}exports.hexBeat=hexBeat;// A fast euclidean rhythm algorithm
+// Uses the downsampling of a line drawn between two points in a 
+// 2-dimensional grid to divide the squares into an evenly distributed
+// amount of steps. Generates correct distribution, but the distribution 
+// may differ a bit from the recursive euclidean distribution algorithm 
+// for steps above 44.
+//
+// @param {Int} -> steps (optional, default=8)
+// @param {Int} -> beats (optional, default=4)
+// @param {Int} -> rotate (optional, default=0)
+// @return {Array}
+// 
+function fastEuclid(){var s=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var h=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var r=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var arr=[];var d=-1;for(var i=0;i<s;i++){var v=Math.floor(i*(h/s));arr[i]=v-d;d=v;}if(r){return Transform.rotate(arr,r);}return arr;}exports.fastEuclid=fastEuclid;// The Euclidean rhythm generator
+// Generate a euclidean rhythm evenly spacing n-beats amongst n-steps.
+// Inspired by Godfried Toussaints famous paper "The Euclidean Algorithm
+// Generates Traditional Musical Rhythms".
 //
 // @param {Int} -> steps (optional, default=8)
 // @param {Int} -> beats (optional, default=4)
@@ -2673,7 +2687,15 @@ function median(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 // @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
 // @return {Number/Array} -> the mode or modes
 //
-function mode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=Util.flatten(a);}var arr=a.slice().sort(function(a,b){return a-b;});var amount=1;var streak=0;var modes=[];for(var i=1;i<arr.length;i++){if(arr[i-1]!=arr[i]){amount=0;}amount++;if(amount>streak){streak=amount;modes=[arr[i]];}else if(amount==streak){modes.push(arr[i]);}}return modes;}exports.mode=mode;exports.common=mode;// Return the difference between every consecutive value in an array
+function mode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=Util.flatten(a);}var arr=a.slice().sort(function(a,b){return a-b;});var amount=1;var streak=0;var modes=[];for(var i=1;i<arr.length;i++){if(arr[i-1]!=arr[i]){amount=0;}amount++;if(amount>streak){streak=amount;modes=[arr[i]];}else if(amount==streak){modes.push(arr[i]);}}return modes;}exports.mode=mode;exports.common=mode;// Compare two arrays recursively and if all values
+// of the array and subarrays are equal to eachother
+// return a true boolean
+// 
+// @params {Array} -> compare array1
+// @params {Array} -> compare array2
+// @return {Bool} -> true or false
+// 
+function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var a2=arguments.length>1?arguments[1]:undefined;a1=Array.isArray(a1)?a1:[a1];a2=Array.isArray(a2)?a2:[a2];if(a1.length!==a2.length){return false;}for(var i in a1){if(Array.isArray(a1[i])){return compare(a1[i],a2[i]);}else if(a1[i]!==a2[i]){return false;}}return true;}exports.compare=compare;// Return the difference between every consecutive value in an array
 // With melodic content from a chromatic scale this can be seen as
 // a list of intervals that, when followed from the same note, results
 // in the same melody.
