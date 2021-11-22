@@ -205,7 +205,7 @@ exports.mtof = midiToFreq;
 // Set the detune flag to return te exact floating point midi value
 // 
 // @param {Number/Array} -> frequency value
-// @param {Number/Array} -> frequency value
+// @param {Number/Array} -> detune precision value (default=false)
 // @return {Number/Array} -> midi note
 // 
 function freqToMidi(a=261, d=false){
@@ -221,6 +221,12 @@ function freqToMidi(a=261, d=false){
 exports.freqToMidi = freqToMidi;
 exports.ftom = freqToMidi;
 
+// Convert a frequency to closest note name (261.62 Hz => 'c4')
+// With default equal temperament tuning A4 = 440 Hz
+// 
+// @param {Number/Array} -> frequency value
+// @return {Number/Array} -> midi note
+// 
 function freqToNote(a=261){
 	return midiToNote(freqToMidi(a));
 }
@@ -363,16 +369,10 @@ exports.mtos = midiToSemi;
 //
 function divisionToMs(a=['1'], bpm){
 	let measureMs = notation.measureInMs;
-	if (bpm !== undefined) {
-		measureMs = 60000.0 / Math.max(1, Number(bpm)) * 4;
-	}
-	let v = (!Array.isArray(a))? [a] : a; 
-	return v.map(x => {
-		// match all division symbols: eg. 1/4, 5/16
-		let d = /^\d+(\/\d+)?$/;
-		x = (typeof x === 'string' && d.test(x))? eval(x) : x;
-		return x * measureMs;
-	});
+	if (bpm) {
+		measureMs = 60000 / Math.max(1, Number(bpm)) * 4;
+	} 
+	return Util.multiply(divisionToRatio(a), measureMs);
 }
 exports.divisionToMs = divisionToMs;
 exports.dtoms = divisionToMs;
@@ -384,15 +384,24 @@ exports.dtoms = divisionToMs;
 // @return {Number/Array}
 //
 function divisionToRatio(a=['1']){
-	let v = (!Array.isArray(a))? [a] : a; 
-	return v.map(x => {
-		// match all division symbols: eg. 1/4, 5/16
-		let d = /^\d+(\/\d+)?$/;
-		return (typeof x === 'string' && d.test(x))? eval(x) : x;
+	a = Array.isArray(a)? a : [a];
+	return a.map(x => {
+		if (Array.isArray(x)){
+			return divisionToRatio(x);
+		}
+		return divRatio(x);
 	});
 }
 exports.divisionToRatio = divisionToRatio;
 exports.dtor = divisionToRatio;
+
+// Evaluate a division string to a ratio
+// 
+function divRatio(x){
+	// match all division symbols: eg. 1/4, 5/16
+	let d = /^\d+(\/\d+)?$/;
+	return (typeof x === 'string' && d.test(x))? eval(x) : x;
+}
 
 // Convert a frequency ratio string to a corresponding cents value
 // eq. ['2/1', '3/2'] => [1200, 701.95]
@@ -400,17 +409,17 @@ exports.dtor = divisionToRatio;
 // @param {Number/String/Array} -> ratios to convert
 // @return {Number/Array} -> cents output
 // 
-function ratioToCent(ratio=['1/1']){
+function ratioToCent(a=['1/1']){
 	let reg = /^[0-9]+(\/[0-9]+)?$/;
-	let a = (!Array.isArray(ratio))? [ratio] : ratio;
-
-	a = a.map(x => {
-		if (typeof x === 'string' && reg.test(x)){
-			x = eval(x);
+	// let a = (!Array.isArray(ratio))? [ratio] : ratio;
+	a = Array.isArray(a)? a : [a];
+	return a.map(x => {
+		if (Array.isArray(x)){
+			return ratioToCent(x);
 		}
-		return Math.log(x)/Math.log(2)*1200.0;
+		return Math.log(divRatio(x)) / Math.log(2) * 1200;
 	});
-	return (!Array.isArray(ratio))? a[0] : a;
+	// return (!Array.isArray(a))? a[0] : a;
 }
 exports.ratioToCent = ratioToCent;
 exports.rtoc = ratioToCent;

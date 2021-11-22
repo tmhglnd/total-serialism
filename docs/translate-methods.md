@@ -89,6 +89,12 @@ TL.relativeToMidi([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4');
 TL.relativeToFreq([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4');
 //=> [ [ 130.81, 155.56, 196 ], [ 261.62, 329.63, 392 ], [ 293.66, 349.23, 440 ] ]
 // Alias: rtof()
+
+// Convert ratio to relative cents
+TL.ratioToCent(['2/1', ['3/2', ['4/3', '5/4']], '9/8']);
+//=> [ 1200, [ 701.95, [ 498.04, 386.31 ] ], 203.91 ] 
+// Alias: rtoc()
+
 ```
 
 Convert between rhythmic notation such as divisions or ratios and milliseconds based on the set tempo in the global settings.
@@ -98,13 +104,13 @@ Convert between rhythmic notation such as divisions or ratios and milliseconds b
 TL.setTempo(120);
 
 // convert beat division strings to milliseconds use bpm from global settings
-TL.divisionToMs(['1/4', '1/8', '3/16', '1/4', '1/6', '2']);
-//=> [ 500, 250, 375, 500, 333.33, 4000 ] 
+TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2']);
+//=> [ 500, [ 250, [ 375, 500 ] ], 333.33, 4000 ] 
 // Alias: TL.dtoms()
 
 // optional second argument sets bpm
-TL.divisionToMs(['1/4', '1/8', '3/16', '1/4', '1/6', '2'], 100);
-//=> [ 600, 300, 450, 600, 400, 4800 ] 
+TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'], 100);
+//=> [ 600, [ 300, [ 450, 600 ] ], 400, 4800 ]
 
 // convert beat ratio floats to milliseconds
 TL.divisionToMs([0.25, 0.125, 0.1875, 0.25, 0.16667, 2]);
@@ -112,7 +118,7 @@ TL.divisionToMs([0.25, 0.125, 0.1875, 0.25, 0.16667, 2]);
 
 // convert beat division strings to beat ratio floats
 TL.divisionToRatio(['1/4', '1/8', '3/16', '1/4', '1/6', '2']);
-//=> [ 0.25, 0.125, 0.1875, 0.25, 0.1667, 2 ] 
+//=> [ 0.25, 0.125, 0.1875, 0.25, 0.167, 2 ] 
 // Alias: TL.dtor()
 ```
 
@@ -162,6 +168,12 @@ TL.toMidi([8, 14, -2, 22, -7, 22, -2, 14], 4);
 // Preserves floating point for detune/microtonality
 TL.toMidi([0, 4.1, 6.5, 7.1, 9.25], 'c3');
 //=> [ 48, 51.1, 55.5, 55.1, 56.25 ] 
+
+// Map relative semitones to a specified scale class (including root)
+// output as frequencies. Specify an octave offset (default = 'C3' = 4)
+TL.toFreq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 4);;
+//=> [ 146.83, 146.83, 164.81, 164.81, 184.99, 195.99, 195.99, 220, 220, 246.94, 246.94, 277.18 ]
+
 ```
 
 ### Using Scala tuning format

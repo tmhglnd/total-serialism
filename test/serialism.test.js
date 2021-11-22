@@ -529,7 +529,7 @@ function testTranslate(){
 	test("TL.midiToNote(60)");
 	test("TL.mton([48, 55, 51, 43])");
 	test("TL.mton([60, [63, 67, 69], [57, 65]])");
-	
+
 	test("TL.midiToFreq()");
 	test("TL.midiToFreq(60)");
 	test("TL.mtof([48, 55, 51, 43])");
@@ -541,67 +541,76 @@ function testTranslate(){
 	test("TL.ftom(261)");
 	test("TL.ftom([ 261, [ 311, 391, 440 ], [ 220, 349 ] ])");
 	test("TL.ftom([ 261, [ 311, 391, 440 ], [ 220, 349 ] ], true)");
-	
-	test("TL.fton()");
-	test("TL.fton(261)");
-	test("TL.fton([ 261, [ 311, 391, 440 ], [ 220, 349 ] ])");
-
 	// test("TL.ftom([48, 55, 51, 43])");
 	// test("TL.ftom([60, 67, 72])");
 	// test("TL.ftom([60, [63, 67, 69], [57, 65]])");
 	// test("TL.ftom([60.3, 67.4, 72.8])");
-
-	// test("TL.noteToMidi()");
-	// test("TL.noteToMidi('c3')");
-	// test("TL.noteToMidi(['c3', 'g3', 'eb3', 'g2'])");
-	// test("TL.ntom(['f3','bb3','g#2'])");
-	// test("TL.ntom(['c4', ['eb4', 'g4', 'a4'], ['a3', 'f4']])");
-
-	// test("TL.noteToFreq()");
-	// test("TL.noteToFreq('c3')");
-	// test("TL.noteToFreq(['c3', 'g3', 'eb3', 'g2'])");
-	// test("TL.ntof(['f3','bb3','g#2'])");
-	// test("TL.ntof(['c4', ['eb4', 'g4', 'a4'], ['a3', 'f4']])");
-
-	// test("TL.rtom()");
-	// test("TL.rtom([-12, 0, 7, 12])");
-	// test("TL.rtom([-12, 0, 7, 12], 4)");
-	// test("TL.rtom([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4')");
-	// test("TL.rtom([-12, 0, 7, 12], 'c3')");
-
-	// test("TL.rtof()");
-	// test("TL.rtof([-12, 0, 7, 12])");
-	// test("TL.rtof([-12, 0, 7, 12], 4)");
-	// test("TL.rtof([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4')");
-	// test("TL.rtof([-12, 0, 7, 12], 'c3')");
-
-	// Srl.setScale('minor_harmonic', 'b');
-
-	// test("TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);");
-	// test("TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]);");
+	
+	test("TL.fton()");
+	test("TL.fton(261)");
+	test("TL.fton([ 261, [ 311, 391, 440 ], [ 220, 349 ] ])");
+	
+	test("TL.noteToMidi()");
+	test("TL.noteToMidi('c3')");
+	test("TL.noteToMidi(['c3', 'g3', 'eb3', 'g2'])");
+	test("TL.ntom(['f3','bb3','g#2'])");
+	test("TL.ntom(['c4', ['eb4', 'g4', 'a4'], ['a3', 'f4']])");
+	
+	test("TL.noteToFreq()");
+	test("TL.noteToFreq('c3')");
+	test("TL.noteToFreq(['c3', 'g3', 'eb3', 'g2'])");
+	test("TL.ntof(['f3','bb3','g#2'])");
+	test("TL.ntof(['c4', ['eb4', 'g4', 'a4'], ['a3', 'f4']])");
+	
+	test("TL.rtom()");
+	test("TL.rtom([-12, 0, 7, 12])");
+	test("TL.rtom([-12, 0, 7, 12], 4)");
+	test("TL.rtom([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4')");
+	test("TL.rtom([-12, 0, 7, 12], 'c3')");
+	
+	test("TL.rtof()");
+	test("TL.rtof([-12, 0, 7, 12])");
+	test("TL.rtof([-12, 0, 7, 12], 4)");
+	test("TL.rtof([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4')");
+	test("TL.rtof([-12, 0, 7, 12], 'c3')");
+	
+	Srl.setScale('minor_harmonic', 'b');
+	
+	test("TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);");
+	test("TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]);");
+	test("TL.mton(TL.toScale(Gen.spread(12, 48, 60)));");
+	test("TL.toScale(Gen.sine(8, 3.5, -7, 24))");
+	test("TL.toScale([0, 4.1, 6.5, 7.1, 9.25])");
+	
+	test("Srl.setRoot('d')");
+	test("Srl.setScale('major')");
+	test("Srl.getSettings()");
+	
+	test("TL.toMidi([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);");
+	test("TL.toMidi([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]);");
+	test("TL.mton(TL.toMidi([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]));");
+	
 	// test("TL.mton(TL.toScale(Gen.spread(12, 48, 60)));");
-	// test("TL.toScale(Gen.sine(8, 3.5, -7, 24))");
-	// test("TL.toScale([0, 4.1, 6.5, 7.1, 9.25])");
+	test("TL.toFreq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 4);");
+	test("TL.toFreq([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]);");
+	test("TL.toFreq(Gen.sine(8, 1, -12, 12));");
+	test("TL.fton(TL.toFreq(Gen.sine(8, 1, -12, 12)));");
+	test("TL.fton(TL.toFreq([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]));");
 	
-	// test("Srl.setRoot('d')");
-	// test("Srl.setScale('major')");
-	// test("Srl.getSettings()");
-	
-	// test("TL.toMidi([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);");
-	// test("TL.toMidi([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]);");
-	// test("TL.mton(TL.toMidi([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]));");
-
-	// // test("TL.mton(TL.toScale(Gen.spread(12, 48, 60)));");
-	// test("TL.toFreq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 4);");
-	// test("TL.toFreq([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]);");
-	
-	// test("TL.setTempo(120)");
-	// test("TL.divisionToMs()");
-	// test("TL.dtoms(['1/4', '1/8', '3/16', '1/4', '1/6', '2'])");
-	// test("TL.dtoms(['1/4', '1/8', '3/16', '1/4', '1/6', '2'], 100)");
+	test("TL.setTempo(120)");
+	test("TL.divisionToMs()");
+	test("TL.divisionToMs('1/8', 113)");
+	test("TL.dtoms(['1/4', '1/8', '3/16', '1/4', '1/6', '2'])");
+	test("TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'])");
+	test("TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'], 100)");
 	// test("TL.dtoms([0.25, 0.125, 0.1875, 0.25, 0.16667, 2])");
 	
-	// test("TL.dtor(['1/4', '1/8', '3/16', '1/4', '1/6', '2'])");
+	test("TL.dtor(['1/4', '1/8', '3/16', '1/4', '1/6', '2'])");
+	test("TL.dtor(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'])");
+
+	test("TL.rtoc()");	
+	test("TL.rtoc('11/5')");	
+	test("TL.rtoc(['2/1', ['3/2', ['4/3', '5/4']], '9/8'])");	
 
 	// console.log("var scala = new TL.Scala()");
 	// var scl = new TL.Scala();
