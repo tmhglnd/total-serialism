@@ -79,6 +79,18 @@ Util.divide([1, 2, 3, 4], [1, 2, 3]);
 
 Util.div([1, [2, 3]], [10, [20, 30, 40]]);
 //=> [ 0.1, [ 0.1, 0.1, 0.05 ] ] 
+
+// Raise one array to the power of another
+Util.pow([1, 2, 3, 4], [2, 3, 4]);
+//=> [ 1, 8, 81, 16 ] 
+
+Util.pow([1, [2, 3]], [10, [2, 3, 4]]);
+//=> [ 1, [ 4, 27, 16 ] ] 
+
+// Return the squareroot of an array
+Util.sqrt([2, [9, [16, 25], 144]]);
+//=> [ 1.4142135623730951, [ 3, [ 4, 5 ], 12 ] ] 
+
 ```
 
 ## sum
@@ -136,8 +148,9 @@ The highest value will be 1, the lowest value will be 0.
 Util.normalize([0, 1, 2, 3, 4]);
 //=> [ 0, 0.25, 0.5, 0.75, 1 ]
 
-Util.normalize([5, 12, 4, 17, 3]);
-//=> [ 0.14285714285714285, 0.6428571428571429, 0.07142857142857142, 1, 0 ] 
+// works with n-dimensional arrays
+Util.normalize([5, [12, [4, 17]], 3, 1]);
+//=> [ 0.25, [ 0.6875, [ 0.1875, 1 ] ], 0.125, 0 ]  
 ```
 
 ## flatten

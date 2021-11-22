@@ -102,6 +102,7 @@ function map(a, ...params){
 }
 exports.map = map;
 exports.scale = map;
+exports.remap = map;
 
 function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 	a = (a - inLo) / (inHi - inLo);
@@ -142,22 +143,7 @@ exports.lerp = _mix;
 // @return {Number/Array}
 // 
 function add(a=0, v=0){
-	// if righthand side is array
-	if (Array.isArray(v)){
-		a = (Array.isArray(a))? a : [a];
-		let l1 = a.length, l2 = v.length, r = [];
-		let l = Math.max(l1, l2);
-		for (let i=0; i<l; i++){
-			r[i] = add(a[i % l1], v[i % l2]);
-		}
-		return r;
-	}
-	// if both are single values
-	if (!Array.isArray(a)){
-		return a + v;
-	}
-	// if lefthand side is array
-	return a.map(x => add(x, v));
+	return arrayEval(a, v, (a, b) => { return a + b });
 }
 exports.add = add;
 
@@ -170,19 +156,7 @@ exports.add = add;
 // @return {Number/Array}
 // 
 function subtract(a=0, v=0){
-	if (Array.isArray(v)){
-		a = (Array.isArray(a))? a : [a];
-		let l1 = a.length, l2 = v.length, r = [];
-		let l = Math.max(l1, l2);
-		for (let i=0; i<l; i++){
-			r[i] = subtract(a[i % l1], v[i % l2]);
-		}
-		return r;
-	}
-	if (!Array.isArray(a)){
-		return a - v;
-	}
-	return a.map(x => subtract(x, v));
+	return arrayEval(a, v, (a, b) => { return a - b });
 }
 exports.subtract = subtract;
 exports.sub = subtract;
@@ -196,19 +170,7 @@ exports.sub = subtract;
 // @return {Number/Array}
 // 
 function multiply(a=0, v=1){
-	if (Array.isArray(v)){
-		a = (Array.isArray(a))? a : [a];
-		let l1 = a.length, l2 = v.length, r = [];
-		let l = Math.max(l1, l2);
-		for (let i=0; i<l; i++){
-			r[i] = multiply(a[i % l1], v[i % l2]);
-		}
-		return r;
-	}
-	if (!Array.isArray(a)){
-		return a * v;
-	}
-	return a.map(x => multiply(x, v));
+	return arrayEval(a, v, (a, b) => { return a * b });
 }
 exports.multiply = multiply;
 exports.mul = multiply;
@@ -222,22 +184,66 @@ exports.mul = multiply;
 // @return {Number/Array}
 // 
 function divide(a=0, v=1){
+	return arrayEval(a, v, (a, b) => { return a / b });
+}
+exports.divide = divide;
+exports.div = divide;
+
+// Return the remainder after division
+// also works in the negative direction, so wrap starts at 0
+// 
+// @param {Int/Array} -> input value
+// @param {Int/Array} -> divisor (optional, default=12)
+// @return {Int/Array} -> remainder after division
+// 
+function mod(a=0, v=12){
+	return arrayEval(a, v, (a, b) => { return ((a % b) + b) % b });
+}
+exports.mod = mod;
+
+// Raise a value of one array to the power of the value
+// from the right hand array
+// 
+// @param {Number/Array} -> base
+// @param {Number/Array} -> exponent 
+// @return {Number/Array} -> result from function
+// 
+function pow(a=0, v=1){
+	return arrayEval(a, v, (a, b) => { return Math.pow(a, b) });
+}
+exports.pow = pow;
+
+function sqrt(a=0){
+	return arrayEval(a, 0, (a) => { return Math.sqrt(a) });
+}
+exports.sqrt = sqrt;
+
+// Evaluate a function for a multi-dimensional array
+// 
+// @params {Array|Number} -> left hand input array
+// @params {Array|Number} -> right hand input array
+// @params {Function} -> function to evaluate
+// @return {Array|Number} -> result of evaluation
+// 
+function arrayEval(a, v, func){
+	// if righthand side is array
 	if (Array.isArray(v)){
 		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			r[i] = divide(a[i % l1], v[i % l2]);
+			r[i] = arrayEval(a[i % l1], v[i % l2], func);
 		}
 		return r;
 	}
+	// if both are single values
 	if (!Array.isArray(a)){
-		return a / v;
+		let r = func(a, v);
+		return isNaN(r)? 0 : r;
 	}
-	return a.map(x => divide(x, v));
+	// if lefthand side is array
+	return a.map(x => arrayEval(x, v, func));
 }
-exports.divide = divide;
-exports.div = divide;
 
 // flatten a multidimensional array. Optionally set the depth
 // for the flattening
@@ -252,31 +258,6 @@ function flatten(a=[0], depth=Infinity){
 }
 exports.flatten = flatten;
 exports.flat = flatten;
-
-// Return the remainder after division
-// also works in the negative direction, so wrap starts at 0
-// 
-// @param {Int/Array} -> input value
-// @param {Int/Array} -> divisor (optional, default=12)
-// @return {Int/Array} -> remainder after division
-// 
-function mod(a, m=12){
-	if (Array.isArray(m)){
-		a = (Array.isArray(a))? a : [a];
-		let l1 = a.length, l2 = m.length, r = [];
-		let l = Math.max(l1, l2);
-		for (let i=0; i<l; i++){
-			r[i] = mod(a[i % l1], m[i % l2]);
-		}
-		return r;
-	}
-	if (!Array.isArray(a)){
-		let r = ((a % m) + m) % m;
-		return isNaN(r)? 0 : r;
-	}
-	return a.map(x => mod(x, m));
-}
-exports.mod = mod;
 
 // Truncate all the values in an array towards 0,
 // sometimes referred to as rounding down
@@ -338,14 +319,13 @@ exports.min = minimum;
 // @param {Number/Array} -> input values
 // @return {Int/Array} -> normailzed values
 function normalize(a=[0]){
-	a = (!Array.isArray(a))? [a] : a;
 	// get minimum and maximum
 	let min = minimum(a);
 	let range = maximum(a) - min;
 	// if range 0 then range = min and min = 0
 	if (!range) { range = min, min = 0; }
 	// normalize and return
-	return a.map(x => (x - min) / range);
+	return divide(subtract(a, min), range);
 }
 exports.normalize = normalize;
 

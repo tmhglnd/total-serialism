@@ -596,10 +596,6 @@ function testUtil(){
 	// test("Util.fold(Gen.spreadFloat(20, -4, 6), -2, 3)");
 	// test("Util.fold(Gen.sineFloat(20, 1, -5, 29), 0, 24)");
 
-	test("Util.map(0.5, 0, 1, 0, 2)");
-	test("Util.map(0.5, 0, 1, 0, 2, 0.5)");
-	test("Util.map([0, 1, 2, 3, 4], 0, 4, -1, 1)");
-
 	test("Util.add()");
 	test("Util.add(5, 2)");
 	test("Util.add([0, 3, 7], 2)");
@@ -635,6 +631,20 @@ function testUtil(){
 	test("Util.div([1, 2, 3], [10, 20, 30, 40])");
 	test("Util.div([1, [2, 3]], [10, [20, 30, 40]])");
 	test("Util.div([1, [2, 3], 4], [10, 20, 30])");
+
+	test("Util.pow()");
+	test("Util.pow(5, 2)");
+	test("Util.pow([2, 3, 4, 6], 2)");
+	test("Util.pow(2, [2, 3, 4, 6])");
+	test("Util.pow([1, 2, 3, 4], [2, 3, 4])");
+	test("Util.pow([1, 2, 3], [2, 3, 4, 5])");
+	test("Util.pow([1, [2, 3]], [10, [2, 3, 4]])");
+	test("Util.pow([1, [2, 3], 4], [10, 2, 3])");
+
+	test("Util.sqrt()");
+	test("Util.sqrt(9)");
+	test("Util.sqrt([2, 9, 16, 27])");
+	test("Util.sqrt([2, [9, [16, 25], 144]])");
 	
 	test("Util.mod()");
 	test("Util.mod(7, 3)");
@@ -642,19 +652,27 @@ function testUtil(){
 	test("Util.mod(2, [0, 3, 7])");
 	test("Util.mod([-2, 4, 3, 7], 5)");
 	test("Util.mod([-2, [4, [3, 7]]], 5)");
-
-	test("Util.normalize(5)");
-	test("Util.normalize([0, 3, 7])");
-	test("Util.normalize([1, 2, 3, 4])");
-	test("Util.normalize([5, 12, 4, 17, 3])");
-
+	
 	test("Util.sum([1, 2, 3, 4])");
 	test("Util.sum([10, 'foo', 11, 'bar', 22])");
-
+	
 	test("Util.trunc()");
 	test("Util.trunc([3.14, 5.12, 6.18])");
 	test("Util.trunc([[3.14, 5.12], 6.18])");
 	test("Util.trunc([[3.14, [5.12]], 6.18])");
+	
+	test("Util.normalize()");
+	test("Util.normalize(5)");
+	test("Util.normalize([0, 3, 9, 12, 24])");
+	test("Util.normalize(Gen.spread(5, -10, 6))");
+	test("Util.normalize(Gen.spread(5, 50, 100))");
+	test("Util.normalize([5, [12, [4, 17]], 3, 1])");
+
+	test("Util.map(0.5, 0, 1, 0, 2)");
+	test("Util.map(Gen.spread(5), 0, 5, 0, 1)");
+	Util.plot(Util.map(Gen.spreadF(30), 0, 1, 0, 1, 2), { height: 10 });
+	
+	test("Util.map([0, 1, 2, 3, 4], 0, 4, -1, 1)");
 
 	let drawing = [];
 	Rand.seed(628);
