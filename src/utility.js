@@ -29,13 +29,17 @@ function wrap(a, lo=12, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
 	// calculate range and wrap the values
-	let r = hi - lo;
 	if (!Array.isArray(a)){
-		return (((a - lo % r) + r) % r) + lo;
+		return _wrap(a, lo, hi);
 	}
-	return a.map(x => (((x - hi % r) + r) % r) + hi)
+	return a.map(x => wrap(x, lo, hi));
 }
 exports.wrap = wrap;
+
+function _wrap(a, lo, hi){
+	let r = hi - lo;
+	return (((a - lo % r) + r) % r) + lo;
+}
 
 // Constrain a value between a low and high range
 // 
@@ -51,10 +55,12 @@ function constrain(a, lo=12, hi=0){
 	if (!Array.isArray(a)){
 		return Math.min(hi, Math.max(lo, a));
 	}
-	return a.map(x => Math.min(hi, Math.max(lo, x)));
+	return a.map(x => constrain(x, lo, hi));
 }
 exports.constrain = constrain;
 exports.bound = constrain;
+exports.clip = constrain;
+exports.clamp = constrain;
 
 // Fold a between a low and high range
 // When the value exceeds the range it is folded inwards
@@ -72,7 +78,7 @@ function fold(a, lo=12, hi=0){
 	if (!Array.isArray(a)){
 		return _fold(a, lo, hi);
 	}
-	return a.map(x => _fold(x, lo, hi));
+	return a.map(x => fold(x, lo, hi));
 }
 exports.fold = fold;
 exports.bounce = fold;
@@ -98,11 +104,10 @@ function map(a, ...params){
 	if (!Array.isArray(a)){
 		return _map(a, ...params);
 	}
-	return a.map(x => _map(x, ...params));
+	return a.map(x => map(x, ...params));
 }
 exports.map = map;
 exports.scale = map;
-exports.remap = map;
 
 function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 	a = (a - inLo) / (inHi - inLo);
@@ -143,7 +148,7 @@ exports.lerp = _mix;
 // @return {Number/Array}
 // 
 function add(a=0, v=0){
-	return arrayEval(a, v, (a, b) => { return a + b });
+	return arrayCalc(a, v, (a, b) => { return a + b });
 }
 exports.add = add;
 
@@ -156,7 +161,7 @@ exports.add = add;
 // @return {Number/Array}
 // 
 function subtract(a=0, v=0){
-	return arrayEval(a, v, (a, b) => { return a - b });
+	return arrayCalc(a, v, (a, b) => { return a - b });
 }
 exports.subtract = subtract;
 exports.sub = subtract;
@@ -170,7 +175,7 @@ exports.sub = subtract;
 // @return {Number/Array}
 // 
 function multiply(a=0, v=1){
-	return arrayEval(a, v, (a, b) => { return a * b });
+	return arrayCalc(a, v, (a, b) => { return a * b });
 }
 exports.multiply = multiply;
 exports.mul = multiply;
@@ -184,7 +189,7 @@ exports.mul = multiply;
 // @return {Number/Array}
 // 
 function divide(a=0, v=1){
-	return arrayEval(a, v, (a, b) => { return a / b });
+	return arrayCalc(a, v, (a, b) => { return a / b });
 }
 exports.divide = divide;
 exports.div = divide;
@@ -197,7 +202,7 @@ exports.div = divide;
 // @return {Int/Array} -> remainder after division
 // 
 function mod(a=0, v=12){
-	return arrayEval(a, v, (a, b) => { return ((a % b) + b) % b });
+	return arrayCalc(a, v, (a, b) => { return ((a % b) + b) % b });
 }
 exports.mod = mod;
 
@@ -209,12 +214,17 @@ exports.mod = mod;
 // @return {Number/Array} -> result from function
 // 
 function pow(a=0, v=1){
-	return arrayEval(a, v, (a, b) => { return Math.pow(a, b) });
+	return arrayCalc(a, v, (a, b) => { return Math.pow(a, b) });
 }
 exports.pow = pow;
 
+// Return the squareroot of an array of values
+// 
+// @param {Number/Array} -> values
+// @return {Number/Array} -> result
+// 
 function sqrt(a=0){
-	return arrayEval(a, 0, (a) => { return Math.sqrt(a) });
+	return arrayCalc(a, 0, (a) => { return Math.sqrt(a) });
 }
 exports.sqrt = sqrt;
 
@@ -225,14 +235,14 @@ exports.sqrt = sqrt;
 // @params {Function} -> function to evaluate
 // @return {Array|Number} -> result of evaluation
 // 
-function arrayEval(a, v, func){
+function arrayCalc(a, v, func){
 	// if righthand side is array
 	if (Array.isArray(v)){
 		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			r[i] = arrayEval(a[i % l1], v[i % l2], func);
+			r[i] = arrayCalc(a[i % l1], v[i % l2], func);
 		}
 		return r;
 	}
@@ -242,8 +252,9 @@ function arrayEval(a, v, func){
 		return isNaN(r)? 0 : r;
 	}
 	// if lefthand side is array
-	return a.map(x => arrayEval(x, v, func));
+	return a.map(x => arrayCalc(x, v, func));
 }
+exports.arrayCalc = arrayCalc;
 
 // flatten a multidimensional array. Optionally set the depth
 // for the flattening

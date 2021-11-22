@@ -588,14 +588,6 @@ function testTranslate(){
 function testUtil(){
 	pagebreak("Utility");
 
-	test("Util.bound(10.34, 0, 3.14)");
-	test("Util.bound([-2, 4, 3, 7], 1, 5)");
-
-	test("Util.fold([-1, 0, 1, 2, 3, 4, 5], 0, 3)");
-	// test("Util.fold(Gen.spreadFloat(10, -5, 5), 0, 1)");
-	// test("Util.fold(Gen.spreadFloat(20, -4, 6), -2, 3)");
-	// test("Util.fold(Gen.sineFloat(20, 1, -5, 29), 0, 24)");
-
 	test("Util.add()");
 	test("Util.add(5, 2)");
 	test("Util.add([0, 3, 7], 2)");
@@ -673,6 +665,25 @@ function testUtil(){
 	Util.plot(Util.map(Gen.spreadF(30), 0, 1, 0, 1, 2), { height: 10 });
 	
 	test("Util.map([0, 1, 2, 3, 4], 0, 4, -1, 1)");
+	test("Util.map([0, [1, [2, 3]], 4], 0, 4, -1, 1)");
+
+	test("Util.fold([0, [1, [2, 3]], [4, 5], 6], 2, 5)");
+	Util.plot(Util.fold(Gen.spreadFloat(30, -9, 13), 0, 1), {height: 5});
+	test("Util.fold(Gen.spreadFloat(20, -4, 6), -2, 3)");
+	Util.plot(Util.fold(Gen.sineFloat(20, 1, -5, 29), 0, 24), {height: 5});
+	
+	test("Util.constrain(10.34, 0, 3.14)");
+	test("Util.constrain([0, [1, [2, 3]], [4, 5], 6], 2, 5)");
+	test("Util.constrain(Gen.cosine(30, 1), 5, 9)");
+	Util.plot(Util.constrain(Gen.cosine(30, 1), 5, 9), {height: 5});
+	
+	test("Util.wrap([0, [1, [2, 3]], [4, 5], 6], 2, 5)");
+
+	Util.plot(Util.wrap(Gen.spread(30), 2, 8), {height: 5});
+	test("Util.wrap(Gen.spread(30), 2, 8)");
+
+	test("Util.arrayCalc([0, 1, [2, 3]], [[5, 7], 10], (a,b)=>{ return (a+b)/2} )");
+	test("Util.arrayCalc([10, 2, 1, 5], [4, 9, 7, 3], (a,b)=>{ return Math.max(a,b) })");
 
 	let drawing = [];
 	Rand.seed(628);

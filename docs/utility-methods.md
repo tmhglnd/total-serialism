@@ -10,7 +10,7 @@ const Util = require('total-serialism').Utility;
 
 # Methods
 
-- mod
+- wrap
 - bound
 - fold
 - map
@@ -19,6 +19,8 @@ const Util = require('total-serialism').Utility;
 - multiply
 - divide
 - mod
+- pow
+- sqrt
 - sum
 - minimum
 - maximum
@@ -31,24 +33,54 @@ Mapping and scaling methods
 
 ```js
 // Apply modulus (%) operation to an array
-Util.mod([-2, 4, 3, 7], 5);
-//=> [ 3, 4, 3, 2 ] 
+Util.wrap([0, [1, [2, 3]], [4, 5], 6], 2, 5);
+//=> [ 3, [ 4, [ 2, 3 ] ], [ 4, 2 ], 3 ] 
+
+Util.wrap(Gen.spread(30), 2, 8);
+//=>  7.00 ┤╭╮    ╭╮    ╭╮    ╭╮    ╭╮    
+//    6.00 ┼╯│   ╭╯│   ╭╯│   ╭╯│   ╭╯│    
+//    5.00 ┤ │  ╭╯ │  ╭╯ │  ╭╯ │  ╭╯ │  ╭ 
+//    4.00 ┤ │ ╭╯  │ ╭╯  │ ╭╯  │ ╭╯  │ ╭╯ 
+//    3.00 ┤ │╭╯   │╭╯   │╭╯   │╭╯   │╭╯  
+//    2.00 ┤ ╰╯    ╰╯    ╰╯    ╰╯    ╰╯    
 
 // Constrain an array between low and high values
-Util.bound([-2, 4, 3, 7], 1, 5);
-//=> [ 1, 4, 3, 5 ] 
+Util.constrain([0, [1, [2, 3]], [4, 5], 6], 2, 5);
+//=> [ 2, [ 2, [ 2, 3 ] ], [ 4, 5 ], 5 ] 
+
+Util.constrain(Gen.cosine(30, 1), 5, 9);
+//=>  9.00 ┼─────╮                   ╭─── 
+//    8.20 ┤     │                  ╭╯    
+//    7.40 ┤     ╰╮                ╭╯     
+//    6.60 ┤      ╰╮              ╭╯      
+//    5.80 ┤       │              │       
+//    5.00 ┤       ╰──────────────╯ 
+
+// Alias: bound(), clip(), clamp()
 
 // Fold an array between low and high values
 // Higher/lower values will bounce back instead of wrap
-Util.fold([-1, 0, 1, 2, 3, 4, 5], 0, 3);
-//=> [ 1, 0, 1, 2, 3, 2, 1 ]
+Util.fold([0, [1, [2, 3]], [4, 5], 6], 2, 5);
+//=> [ 4, [ 3, [ 2, 3 ] ], [ 4, 5 ], 4 ]
+
+Util.fold(Gen.spreadFloat(30, -9, 13), 0, 1);
+//=>  1.00 ┼╮         ╭╮      ╭╮          
+//    0.80 ┤│ ╭╮   ╭╮ ││ ╭╮╭╮ ││ ╭╮   ╭╮  
+//    0.60 ┤│ ││╭─╮││ ││╭╯││╰╮││ ││╭─╮││  
+//    0.40 ┤│╭╯││ ││╰─╯││ ││ ││╰─╯││ ││╰╮ 
+//    0.20 ┤╰╯ ││ ╰╯   ╰╯ ││ ╰╯   ╰╯ ││ ╰ 
+//    0.00 ┤   ╰╯         ╰╯         ╰╯    
+
+// Alias: bounce()
 
 // Scale values from an input range to output range
-Util.map([0, 1, 2, 3, 4], 0, 4, -1, 1);
-//=> [ -1, -0.5, 0, 0.5, 1 ] 
+Util.map([0, [1, [2, 3]], 4], 0, 4, -1, 1);
+//=> [ -1, [ -0.5, [ 0, 0.5 ] ], 1 ] 
+
+// Alias: scale()
 ```
 
-Basic arithmetic methods that accept arrays in both arguments. Outputlength is always the length of the longest list. 
+Basic arithmetic methods that accept n-dimensional arrays in both arguments. Outputlength is always the length of the longest list. 
 
 ```js
 // Add two arrays sequentially
@@ -93,6 +125,25 @@ Util.sqrt([2, [9, [16, 25], 144]]);
 
 ```
 
+## arrayCalc
+
+Evaluate a function for a multi-dimensional array. Input the left and righthand side of the evaluation and set a function as third argument.
+
+**arguments**
+- {Array|Number} -> left hand input array
+- {Array|Number} -> right hand input array
+- {Function} -> function to Evaluate
+
+```js 
+
+Util.arrayCalc([0, 1, [2, 3]], [[5, 7], 10], (a,b) => { return (a+b)/2 });
+//=> [ [ 2.5, 3.5 ], 5.5, [ 3.5, 5 ] ]
+
+Util.arrayCalc([10, 2, 1, 5], [4, 9, 7, 3], (a,b) => { return Math.max(a,b) });
+//=> [ 10, 9, 7, 5 ] 
+
+```
+
 ## sum
 
 Return the sum of all values in an array. Ignores all non-numeric values.
@@ -117,7 +168,7 @@ Util.minimum([-38, -53, -6, 33, 88, 32, -8, 73]);
 Stat.minimum([-38, [-53, [-6, 33], 88, 32], [-8, 73]]);
 //=> -53 
 
-// Alternative: Util.min()
+// Alias: Util.min()
 ```
 
 ## maximum
@@ -132,7 +183,7 @@ Util.maximum([-38, -53, -6, 33, 88, 32, -8, 73]);
 Stat.maximum([-38, [-53, [-6, 33], 88, 32], [-8, 73]]);
 //=> 88 
 
-// Alternative: Util.max()
+// Alias: Util.max()
 ```
 
 ## normalize
