@@ -2291,7 +2291,7 @@ function hexBeat(){var hex=arguments.length>0&&arguments[0]!==undefined?argument
 // @param {Int} -> rotate (optional, default=0)
 // @return {Array}
 // 
-function fastEuclid(){var s=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var h=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var r=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var arr=[];var d=-1;for(var i=0;i<s;i++){var v=Math.floor(i*(h/s));arr[i]=v-d;d=v;}if(r){return Transform.rotate(arr,r);}return arr;}exports.fastEuclid=fastEuclid;// The Euclidean rhythm generator
+function fastEuclid(){var s=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var h=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var r=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var arr=[];var d=-1;for(var i=0;i<s;i++){var v=Math.floor(i*(h/s));arr[i]=Number(v!==d);d=v;}if(r){return Transform.rotate(arr,r);}return arr;}exports.fastEuclid=fastEuclid;// The Euclidean rhythm generator
 // Generate a euclidean rhythm evenly spacing n-beats amongst n-steps.
 // Inspired by Godfried Toussaints famous paper "The Euclidean Algorithm
 // Generates Traditional Musical Rhythms".
@@ -3172,7 +3172,7 @@ var chart=require('asciichart');var HALF_PI=Math.PI/2.0;var TWO_PI=Math.PI*2.0;v
 // 
 function wrap(a){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// calculate range and wrap the values
-var r=hi-lo;if(!Array.isArray(a)){return(a-lo%r+r)%r+lo;}return a.map(function(x){return(x-hi%r+r)%r+hi;});}(lo,hi);}exports.wrap=wrap;// Constrain a value between a low and high range
+if(!Array.isArray(a)){return _wrap(a,lo,hi);}return a.map(function(x){return wrap(x,lo,hi);});}(lo,hi);}exports.wrap=wrap;function _wrap(a,lo,hi){var r=hi-lo;return(a-lo%r+r)%r+lo;}// Constrain a value between a low and high range
 // 
 // @param {Number/Array} -> number to constrain
 // @param {Number} -> minimum value (optional, default=12)
@@ -3181,7 +3181,7 @@ var r=hi-lo;if(!Array.isArray(a)){return(a-lo%r+r)%r+lo;}return a.map(function(x
 // 
 function constrain(a){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// constrain the values
-if(!Array.isArray(a)){return Math.min(hi,Math.max(lo,a));}return a.map(function(x){return Math.min(hi,Math.max(lo,x));});}(lo,hi);}exports.constrain=constrain;exports.bound=constrain;// Fold a between a low and high range
+if(!Array.isArray(a)){return Math.min(hi,Math.max(lo,a));}return a.map(function(x){return constrain(x,lo,hi);});}(lo,hi);}exports.constrain=constrain;exports.bound=constrain;exports.clip=constrain;exports.clamp=constrain;// Fold a between a low and high range
 // When the value exceeds the range it is folded inwards
 // Has the effect of "bouncing" against the boundaries
 // 
@@ -3192,7 +3192,7 @@ if(!Array.isArray(a)){return Math.min(hi,Math.max(lo,a));}return a.map(function(
 // 
 function fold(a){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// fold the values
-if(!Array.isArray(a)){return _fold(a,lo,hi);}return a.map(function(x){return _fold(x,lo,hi);});}(lo,hi);}exports.fold=fold;exports.bounce=fold;function _fold(a,lo,hi){a=_map(a,lo,hi,-1,1);a=Math.asin(Math.sin(a*HALF_PI))/HALF_PI;return _map(a,-1,1,lo,hi);}// Map/scale a value or array from one input-range 
+if(!Array.isArray(a)){return _fold(a,lo,hi);}return a.map(function(x){return fold(x,lo,hi);});}(lo,hi);}exports.fold=fold;exports.bounce=fold;function _fold(a,lo,hi){a=_map(a,lo,hi,-1,1);a=Math.asin(Math.sin(a*HALF_PI))/HALF_PI;return _map(a,-1,1,lo,hi);}// Map/scale a value or array from one input-range 
 // to a given output-range
 // 
 // @param {Number/Array} -> value to be scaled
@@ -3203,7 +3203,7 @@ if(!Array.isArray(a)){return _fold(a,lo,hi);}return a.map(function(x){return _fo
 // @param {Number} -> exponent (optional, default=1)
 // @return {Number/Array}
 // 
-function map(a){for(var _len5=arguments.length,params=new Array(_len5>1?_len5-1:0),_key5=1;_key5<_len5;_key5++){params[_key5-1]=arguments[_key5];}if(!Array.isArray(a)){return _map.apply(void 0,[a].concat(params));}return a.map(function(x){return _map.apply(void 0,[x].concat(params));});}exports.map=map;exports.scale=map;function _map(a){var inLo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var inHi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var outLo=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var outHi=arguments.length>4&&arguments[4]!==undefined?arguments[4]:1;var exp=arguments.length>5&&arguments[5]!==undefined?arguments[5]:1;a=(a-inLo)/(inHi-inLo);if(exp!=1){var sign=a>=0.0?1:-1;a=Math.pow(Math.abs(a),exp)*sign;}return a*(outHi-outLo)+outLo;}// Interpolate / mix between 2 values
+function map(a){for(var _len5=arguments.length,params=new Array(_len5>1?_len5-1:0),_key5=1;_key5<_len5;_key5++){params[_key5-1]=arguments[_key5];}if(!Array.isArray(a)){return _map.apply(void 0,[a].concat(params));}return a.map(function(x){return map.apply(void 0,[x].concat(params));});}exports.map=map;exports.scale=map;function _map(a){var inLo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var inHi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var outLo=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var outHi=arguments.length>4&&arguments[4]!==undefined?arguments[4]:1;var exp=arguments.length>5&&arguments[5]!==undefined?arguments[5]:1;a=(a-inLo)/(inHi-inLo);if(exp!=1){var sign=a>=0.0?1:-1;a=Math.pow(Math.abs(a),exp)*sign;}return a*(outHi-outLo)+outLo;}// Interpolate / mix between 2 values
 // 
 // @param {Number} -> value 1
 // @param {Number} -> value 2
@@ -3226,7 +3226,7 @@ function _mix(a0,a1){var f=arguments.length>2&&arguments[2]!==undefined?argument
 // @param {Number/Array} -> value to add
 // @return {Number/Array}
 // 
-function add(a){var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){var a1=a[i%l1];var v1=v[i%l2];if(Array.isArray(a1)||Array.isArray(v1)){r[i]=add(a1,v1);}else{r[i]=a1+v1;}}return r;}if(!Array.isArray(a)){return a+v;}return a.map(function(x){if(Array.isArray(x)){return add(x,v);}return x+v;});}exports.add=add;// subtract 1 or more values from an array
+function add(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;return arrayCalc(a,v,function(a,b){return a+b;});}exports.add=add;// subtract 1 or more values from an array
 // preserves listlength of first argument
 // arguments are applied sequentially
 // 
@@ -3234,7 +3234,7 @@ function add(a){var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:
 // @param {Number/Array} -> value to subtract
 // @return {Number/Array}
 // 
-function subtract(a){var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){var a1=a[i%l1];var v1=v[i%l2];if(Array.isArray(a1)||Array.isArray(v1)){r[i]=subtract(a1,v1);}else{r[i]=a1-v1;}}return r;}if(!Array.isArray(a)){return a-v;}return a.map(function(x){if(Array.isArray(x)){return subtract(x,v);}return x-v;});}exports.subtract=subtract;exports.sub=subtract;// multiply 1 or more values from an array
+function subtract(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;return arrayCalc(a,v,function(a,b){return a-b;});}exports.subtract=subtract;exports.sub=subtract;// multiply 1 or more values from an array
 // preserves listlength of first argument
 // arguments are applied sequentially
 // 
@@ -3242,7 +3242,7 @@ function subtract(a){var v=arguments.length>1&&arguments[1]!==undefined?argument
 // @param {Number/Array} -> value to multiply with
 // @return {Number/Array}
 // 
-function multiply(a){var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){var a1=a[i%l1];var v1=v[i%l2];if(Array.isArray(a1)||Array.isArray(v1)){r[i]=multiply(a1,v1);}else{r[i]=a1*v1;}}return r;}if(!Array.isArray(a)){return a*v;}return a.map(function(x){if(Array.isArray(x)){return multiply(x,v);}return x*v;});}exports.multiply=multiply;exports.mul=multiply;// divide 1 or more values from an array
+function multiply(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;return arrayCalc(a,v,function(a,b){return a*b;});}exports.multiply=multiply;exports.mul=multiply;// divide 1 or more values from an array
 // preserves listlength of first argument
 // arguments are applied sequentially
 // 
@@ -3250,26 +3250,48 @@ function multiply(a){var v=arguments.length>1&&arguments[1]!==undefined?argument
 // @param {Number/Array} -> value to divide with
 // @return {Number/Array}
 // 
-function divide(a){var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){var a1=a[i%l1];var v1=v[i%l2];if(Array.isArray(a1)||Array.isArray(v1)){r[i]=divide(a1,v1);}else{r[i]=a1/v1;}}return r;}if(!Array.isArray(a)){return a/v;}return a.map(function(x){if(Array.isArray(x)){return divide(x,v);}return x/v;});}exports.divide=divide;exports.div=divide;// flatten a multidimensional array. Optionally set the depth
+function divide(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;return arrayCalc(a,v,function(a,b){return a/b;});}exports.divide=divide;exports.div=divide;// Return the remainder after division
+// also works in the negative direction, so wrap starts at 0
+// 
+// @param {Int/Array} -> input value
+// @param {Int/Array} -> divisor (optional, default=12)
+// @return {Int/Array} -> remainder after division
+// 
+function mod(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;return arrayCalc(a,v,function(a,b){return(a%b+b)%b;});}exports.mod=mod;// Raise a value of one array to the power of the value
+// from the right hand array
+// 
+// @param {Number/Array} -> base
+// @param {Number/Array} -> exponent 
+// @return {Number/Array} -> result from function
+// 
+function pow(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;return arrayCalc(a,v,function(a,b){return Math.pow(a,b);});}exports.pow=pow;// Return the squareroot of an array of values
+// 
+// @param {Number/Array} -> values
+// @return {Number/Array} -> result
+// 
+function sqrt(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;return arrayCalc(a,0,function(a){return Math.sqrt(a);});}exports.sqrt=sqrt;// Evaluate a function for a multi-dimensional array
+// 
+// @params {Array|Number} -> left hand input array
+// @params {Array|Number} -> right hand input array
+// @params {Function} -> function to evaluate
+// @return {Array|Number} -> result of evaluation
+// 
+function arrayCalc(a,v,func){// if righthand side is array
+if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){r[i]=arrayCalc(a[i%l1],v[i%l2],func);}return r;}// if both are single values
+if(!Array.isArray(a)){var _r=func(a,v);return isNaN(_r)?0:_r;}// if lefthand side is array
+return a.map(function(x){return arrayCalc(x,v,func);});}exports.arrayCalc=arrayCalc;// flatten a multidimensional array. Optionally set the depth
 // for the flattening
 //
 // @param {Array} -> array to flatten
 // @param {Number} -> depth of flatten
 // @return {Array} -> flattened array
 //
-function flatten(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var depth=arguments.length>1&&arguments[1]!==undefined?arguments[1]:Infinity;a=Array.isArray(a)?a:[a];return a.flat(depth);}exports.flatten=flatten;exports.flat=flatten;// Return the remainder after division
-// also works in the negative direction
-// 
-// @param {Int/Array} -> input value
-// @param {Int/Array} -> divisor (optional, default=12)
-// @return {Int/Array} -> remainder after division
-// 
-function mod(a){var mod=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;if(Array.isArray(mod)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=mod.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){var m=mod[i%l2];r[i]=(a[i%l1]%m+m)%m;}return r;}if(!Array.isArray(a)){return(a%mod+mod)%mod;}return a.map(function(x){return(x%mod+mod)%mod;});}exports.mod=mod;// Truncate all the values in an array towards 0,
+function flatten(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var depth=arguments.length>1&&arguments[1]!==undefined?arguments[1]:Infinity;a=Array.isArray(a)?a:[a];return a.flat(depth);}exports.flatten=flatten;exports.flat=flatten;// Truncate all the values in an array towards 0,
 // sometimes referred to as rounding down
 // 
 // @param {Number/Array} -> input value
 // @return {Int/Array} -> trucated value
-function truncate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return Math.trunc(a);}return a.map(function(x){return Math.trunc(x);});}exports.truncate=truncate;exports.trunc=truncate;exports["int"]=truncate;// Return the sum of all values in the array
+function truncate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return Math.trunc(a);}return a.map(function(x){return truncate(x);});}exports.truncate=truncate;exports.trunc=truncate;exports["int"]=truncate;// Return the sum of all values in the array
 // Ignore all non numeric values
 // 
 // @param {Array} -> input array
@@ -3289,10 +3311,10 @@ function minimum(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[
 // 
 // @param {Number/Array} -> input values
 // @return {Int/Array} -> normailzed values
-function normalize(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];a=!Array.isArray(a)?[a]:a;// get minimum and maximum
+function normalize(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];// get minimum and maximum
 var min=minimum(a);var range=maximum(a)-min;// if range 0 then range = min and min = 0
 if(!range){range=min,min=0;}// normalize and return
-return a.map(function(x){return(x-min)/range;});}exports.normalize=normalize;// Plot an array of values to the console in the form of an
+return divide(subtract(a,min),range);}exports.normalize=normalize;// Plot an array of values to the console in the form of an
 // ascii chart and return chart from function. If you just want the 
 // chart returned as text and not log to console set { log: false }.
 // Using the asciichart package by x84. 

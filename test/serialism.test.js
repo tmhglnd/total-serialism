@@ -64,13 +64,13 @@ fullTest();
 function fullTest(){
 	console.time('Total Time');
 
-	// testSerial();
-	// testGen();
-	// testAlgo();
-	// testRand();
-	// testMod();
-	// testStat();
-	// testTranslate();
+	testSerial();
+	testGen();
+	testAlgo();
+	testRand();
+	testMod();
+	testStat();
+	testTranslate();
 	testUtil();
 
 	pagebreak("All Tests Passed");

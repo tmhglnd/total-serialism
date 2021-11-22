@@ -7968,7 +7968,7 @@ function fastEuclid(s=8, h=4, r=0){
 	
 	for (let i=0; i<s; i++){
 		let v = Math.floor(i * (h / s));
-		arr[i] = v - d;
+		arr[i] = Number(v !== d);
 		d = v;
 	}
 	if (r){
@@ -10168,13 +10168,17 @@ function wrap(a, lo=12, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
 	// calculate range and wrap the values
-	let r = hi - lo;
 	if (!Array.isArray(a)){
-		return (((a - lo % r) + r) % r) + lo;
+		return _wrap(a, lo, hi);
 	}
-	return a.map(x => (((x - hi % r) + r) % r) + hi)
+	return a.map(x => wrap(x, lo, hi));
 }
 exports.wrap = wrap;
+
+function _wrap(a, lo, hi){
+	let r = hi - lo;
+	return (((a - lo % r) + r) % r) + lo;
+}
 
 // Constrain a value between a low and high range
 // 
@@ -10190,10 +10194,12 @@ function constrain(a, lo=12, hi=0){
 	if (!Array.isArray(a)){
 		return Math.min(hi, Math.max(lo, a));
 	}
-	return a.map(x => Math.min(hi, Math.max(lo, x)));
+	return a.map(x => constrain(x, lo, hi));
 }
 exports.constrain = constrain;
 exports.bound = constrain;
+exports.clip = constrain;
+exports.clamp = constrain;
 
 // Fold a between a low and high range
 // When the value exceeds the range it is folded inwards
@@ -10211,7 +10217,7 @@ function fold(a, lo=12, hi=0){
 	if (!Array.isArray(a)){
 		return _fold(a, lo, hi);
 	}
-	return a.map(x => _fold(x, lo, hi));
+	return a.map(x => fold(x, lo, hi));
 }
 exports.fold = fold;
 exports.bounce = fold;
@@ -10237,7 +10243,7 @@ function map(a, ...params){
 	if (!Array.isArray(a)){
 		return _map(a, ...params);
 	}
-	return a.map(x => _map(x, ...params));
+	return a.map(x => map(x, ...params));
 }
 exports.map = map;
 exports.scale = map;
@@ -10280,31 +10286,8 @@ exports.lerp = _mix;
 // @param {Number/Array} -> value to add
 // @return {Number/Array}
 // 
-function add(a, v=0){
-	if (Array.isArray(v)){
-		a = (Array.isArray(a))? a : [a];
-		let l1 = a.length, l2 = v.length, r = [];
-		let l = Math.max(l1, l2);
-		for (let i=0; i<l; i++){
-			let a1 = a[i % l1];
-			let v1 = v[i % l2];
-			if (Array.isArray(a1) || Array.isArray(v1)){
-				r[i] = add(a1, v1);
-			} else {
-				r[i] = a1 + v1;
-			}
-		}
-		return r;
-	}
-	if (!Array.isArray(a)){
-		return a + v;
-	}
-	return a.map(x => {
-		if (Array.isArray(x)){
-			return add(x, v);
-		}
-		return x + v;
-	});
+function add(a=0, v=0){
+	return arrayCalc(a, v, (a, b) => { return a + b });
 }
 exports.add = add;
 
@@ -10316,31 +10299,8 @@ exports.add = add;
 // @param {Number/Array} -> value to subtract
 // @return {Number/Array}
 // 
-function subtract(a, v=0){
-	if (Array.isArray(v)){
-		a = (Array.isArray(a))? a : [a];
-		let l1 = a.length, l2 = v.length, r = [];
-		let l = Math.max(l1, l2);
-		for (let i=0; i<l; i++){
-			let a1 = a[i % l1];
-			let v1 = v[i % l2];
-			if (Array.isArray(a1) || Array.isArray(v1)){
-				r[i] = subtract(a1, v1);
-			} else {
-				r[i] = a1 - v1;
-			}
-		}
-		return r;
-	}
-	if (!Array.isArray(a)){
-		return a - v;
-	}
-	return a.map(x => {
-		if (Array.isArray(x)){
-			return subtract(x, v);
-		}
-		return x - v;
-	});
+function subtract(a=0, v=0){
+	return arrayCalc(a, v, (a, b) => { return a - b });
 }
 exports.subtract = subtract;
 exports.sub = subtract;
@@ -10353,31 +10313,8 @@ exports.sub = subtract;
 // @param {Number/Array} -> value to multiply with
 // @return {Number/Array}
 // 
-function multiply(a, v=1){
-	if (Array.isArray(v)){
-		a = (Array.isArray(a))? a : [a];
-		let l1 = a.length, l2 = v.length, r = [];
-		let l = Math.max(l1, l2);
-		for (let i=0; i<l; i++){
-			let a1 = a[i % l1];
-			let v1 = v[i % l2];
-			if (Array.isArray(a1) || Array.isArray(v1)){
-				r[i] = multiply(a1, v1);
-			} else {
-				r[i] = a1 * v1;
-			}
-		}
-		return r;
-	}
-	if (!Array.isArray(a)){
-		return a * v;
-	}
-	return a.map(x => {
-		if (Array.isArray(x)){
-			return multiply(x, v);
-		}
-		return x * v;
-	});
+function multiply(a=0, v=1){
+	return arrayCalc(a, v, (a, b) => { return a * b });
 }
 exports.multiply = multiply;
 exports.mul = multiply;
@@ -10390,34 +10327,73 @@ exports.mul = multiply;
 // @param {Number/Array} -> value to divide with
 // @return {Number/Array}
 // 
-function divide(a, v=1){
+function divide(a=0, v=1){
+	return arrayCalc(a, v, (a, b) => { return a / b });
+}
+exports.divide = divide;
+exports.div = divide;
+
+// Return the remainder after division
+// also works in the negative direction, so wrap starts at 0
+// 
+// @param {Int/Array} -> input value
+// @param {Int/Array} -> divisor (optional, default=12)
+// @return {Int/Array} -> remainder after division
+// 
+function mod(a=0, v=12){
+	return arrayCalc(a, v, (a, b) => { return ((a % b) + b) % b });
+}
+exports.mod = mod;
+
+// Raise a value of one array to the power of the value
+// from the right hand array
+// 
+// @param {Number/Array} -> base
+// @param {Number/Array} -> exponent 
+// @return {Number/Array} -> result from function
+// 
+function pow(a=0, v=1){
+	return arrayCalc(a, v, (a, b) => { return Math.pow(a, b) });
+}
+exports.pow = pow;
+
+// Return the squareroot of an array of values
+// 
+// @param {Number/Array} -> values
+// @return {Number/Array} -> result
+// 
+function sqrt(a=0){
+	return arrayCalc(a, 0, (a) => { return Math.sqrt(a) });
+}
+exports.sqrt = sqrt;
+
+// Evaluate a function for a multi-dimensional array
+// 
+// @params {Array|Number} -> left hand input array
+// @params {Array|Number} -> right hand input array
+// @params {Function} -> function to evaluate
+// @return {Array|Number} -> result of evaluation
+// 
+function arrayCalc(a, v, func){
+	// if righthand side is array
 	if (Array.isArray(v)){
 		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			let a1 = a[i % l1];
-			let v1 = v[i % l2];
-			if (Array.isArray(a1) || Array.isArray(v1)){
-				r[i] = divide(a1, v1);
-			} else {
-				r[i] = a1 / v1;
-			}
+			r[i] = arrayCalc(a[i % l1], v[i % l2], func);
 		}
 		return r;
 	}
+	// if both are single values
 	if (!Array.isArray(a)){
-		return a / v;
+		let r = func(a, v);
+		return isNaN(r)? 0 : r;
 	}
-	return a.map(x => {
-		if (Array.isArray(x)){
-			return divide(x, v);
-		}
-		return x / v;
-	});
+	// if lefthand side is array
+	return a.map(x => arrayCalc(x, v, func));
 }
-exports.divide = divide;
-exports.div = divide;
+exports.arrayCalc = arrayCalc;
 
 // flatten a multidimensional array. Optionally set the depth
 // for the flattening
@@ -10433,31 +10409,6 @@ function flatten(a=[0], depth=Infinity){
 exports.flatten = flatten;
 exports.flat = flatten;
 
-// Return the remainder after division
-// also works in the negative direction
-// 
-// @param {Int/Array} -> input value
-// @param {Int/Array} -> divisor (optional, default=12)
-// @return {Int/Array} -> remainder after division
-// 
-function mod(a, mod=12){
-	if (Array.isArray(mod)){
-		a = (Array.isArray(a))? a : [a];
-		let l1 = a.length, l2 = mod.length, r = [];
-		let l = Math.max(l1, l2);
-		for (let i=0; i<l; i++){
-			let m = mod[i % l2];
-			r[i] = ((a[i % l1] % m) + m) % m;
-		}
-		return r;
-	}
-	if (!Array.isArray(a)){
-		return ((a % mod) + mod) % mod;
-	}
-	return a.map(x => ((x % mod) + mod) % mod);
-}
-exports.mod = mod;
-
 // Truncate all the values in an array towards 0,
 // sometimes referred to as rounding down
 // 
@@ -10467,7 +10418,7 @@ function truncate(a=[0]){
 	if (!Array.isArray(a)){
 		return Math.trunc(a);
 	}
-	return a.map(x => Math.trunc(x));
+	return a.map(x => truncate(x));
 }
 exports.truncate = truncate;
 exports.trunc = truncate;
@@ -10518,14 +10469,13 @@ exports.min = minimum;
 // @param {Number/Array} -> input values
 // @return {Int/Array} -> normailzed values
 function normalize(a=[0]){
-	a = (!Array.isArray(a))? [a] : a;
 	// get minimum and maximum
 	let min = minimum(a);
 	let range = maximum(a) - min;
 	// if range 0 then range = min and min = 0
 	if (!range) { range = min, min = 0; }
 	// normalize and return
-	return a.map(x => (x - min) / range);
+	return divide(subtract(a, min), range);
 }
 exports.normalize = normalize;
 
