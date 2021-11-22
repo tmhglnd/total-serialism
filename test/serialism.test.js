@@ -66,12 +66,12 @@ function fullTest(){
 
 	// testSerial();
 	// testGen();
-	testAlgo();
+	// testAlgo();
 	// testRand();
 	// testMod();
 	// testStat();
 	// testTranslate();
-	// testUtil();
+	testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -588,9 +588,6 @@ function testTranslate(){
 function testUtil(){
 	pagebreak("Utility");
 
-	test("Util.mod(7, 3)");
-	test("Util.mod([-2, 4, 3, 7], 5)");
-
 	test("Util.bound(10.34, 0, 3.14)");
 	test("Util.bound([-2, 4, 3, 7], 1, 5)");
 
@@ -603,25 +600,48 @@ function testUtil(){
 	test("Util.map(0.5, 0, 1, 0, 2, 0.5)");
 	test("Util.map([0, 1, 2, 3, 4], 0, 4, -1, 1)");
 
+	test("Util.add()");
 	test("Util.add(5, 2)");
 	test("Util.add([0, 3, 7], 2)");
-	test("Util.add([1, 2, 3, 4], [1, 2, 3])");
-	test("Util.add([1, 2], [1, 2, 3, 4])");
+	test("Util.add(2, [0, 3, 7])");
+	test("Util.add([1, 2, 3, 4], [10, 20, 30])");
+	test("Util.add([1, 2, 3], [10, 20, 30, 40])");
+	test("Util.add([1, [2, 3]], [10, [20, 30, 40]])");
+	test("Util.add([1, [2, 3], 4], [10, 20, 30])");
 	
+	test("Util.sub()");
 	test("Util.sub(5, 2)");
 	test("Util.sub([0, 3, 7], 2)");
-	test("Util.sub([1, 2, 3, 4], [1, 2, 3])");
-	test("Util.sub([1, 2], [1, 2, 3, 4])");
+	test("Util.sub(2, [0, 3, 7])");
+	test("Util.sub([1, 2, 3, 4], [10, 20, 30])");
+	test("Util.sub([1, 2, 3], [10, 20, 30, 40])");
+	test("Util.sub([1, [2, 3]], [10, [20, 30, 40]])");
+	test("Util.sub([1, [2, 3], 4], [10, 20, 30])");
 	
+	test("Util.mul()");
 	test("Util.mul(5, 2)");
 	test("Util.mul([0, 3, 7], 2)");
-	test("Util.mul([1, 2, 3, 4], [1, 2, 3])");
-	test("Util.mul([1, 2], [1, 2, 3, 4])");
+	test("Util.mul(2, [0, 3, 7])");
+	test("Util.mul([1, 2, 3, 4], [10, 20, 30])");
+	test("Util.mul([1, 2, 3], [10, 20, 30, 40])");
+	test("Util.mul([1, [2, 3]], [10, [20, 30, 40]])");
+	test("Util.mul([1, [2, 3], 4], [10, 20, 30])");
 	
+	test("Util.div()");
 	test("Util.div(5, 2)");
 	test("Util.div([0, 3, 7], 2)");
-	test("Util.div([1, 2, 3, 4], [1, 2, 3])");
-	test("Util.div([1, 2], [1, 2, 3, 4])");
+	test("Util.div(2, [0, 3, 7])");
+	test("Util.div([1, 2, 3, 4], [10, 20, 30])");
+	test("Util.div([1, 2, 3], [10, 20, 30, 40])");
+	test("Util.div([1, [2, 3]], [10, [20, 30, 40]])");
+	test("Util.div([1, [2, 3], 4], [10, 20, 30])");
+	
+	test("Util.mod()");
+	test("Util.mod(7, 3)");
+	test("Util.mod([0, 3, 7], 2)");
+	test("Util.mod(2, [0, 3, 7])");
+	test("Util.mod([-2, 4, 3, 7], 5)");
+	test("Util.mod([-2, [4, [3, 7]]], 5)");
 
 	test("Util.normalize(5)");
 	test("Util.normalize([0, 3, 7])");
@@ -630,6 +650,11 @@ function testUtil(){
 
 	test("Util.sum([1, 2, 3, 4])");
 	test("Util.sum([10, 'foo', 11, 'bar', 22])");
+
+	test("Util.trunc()");
+	test("Util.trunc([3.14, 5.12, 6.18])");
+	test("Util.trunc([[3.14, 5.12], 6.18])");
+	test("Util.trunc([[3.14, [5.12]], 6.18])");
 
 	let drawing = [];
 	Rand.seed(628);

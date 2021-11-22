@@ -55,17 +55,30 @@ Basic arithmetic methods that accept arrays in both arguments. Outputlength is a
 Util.add([1, 2, 3, 4], [1, 2, 3]);
 //=> [ 2, 4, 6, 5 ] 
 
+// Works with n-dimensional arrays
+Util.add([1, [2, 3]], [10, [20, 30, 40]]);
+//=> [ 11, [ 22, 33, 42 ] ] 
+
 // Subtract two arrays sequentially
 Util.subtract([1, 2, 3, 4], [1, 2, 3]);
 //=> [ 0, 0, 0, 3 ] 
+
+Util.sub([1, [2, 3]], [10, [20, 30, 40]]);
+//=> [ -9, [ -18, -27, -38 ] ] 
 
 // Multiply two arrays sequentially
 Util.multiply([1, 2, 3, 4], [1, 2, 3]);
 //=> [ 1, 4, 9, 4 ] 
 
+Util.mul([1, [2, 3]], [10, [20, 30, 40]]);
+//=> [ 10, [ 40, 90, 80 ] ] 
+
 // Divide two arrays sequentially
 Util.divide([1, 2, 3, 4], [1, 2, 3]);
 //=> [ 1, 1, 1, 4 ] 
+
+Util.div([1, [2, 3]], [10, [20, 30, 40]]);
+//=> [ 0.1, [ 0.1, 0.1, 0.05 ] ] 
 ```
 
 ## sum

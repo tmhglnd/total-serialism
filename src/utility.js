@@ -141,31 +141,23 @@ exports.lerp = _mix;
 // @param {Number/Array} -> value to add
 // @return {Number/Array}
 // 
-function add(a, v=0){
+function add(a=0, v=0){
+	// if righthand side is array
 	if (Array.isArray(v)){
 		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			let a1 = a[i % l1];
-			let v1 = v[i % l2];
-			if (Array.isArray(a1) || Array.isArray(v1)){
-				r[i] = add(a1, v1);
-			} else {
-				r[i] = a1 + v1;
-			}
+			r[i] = add(a[i % l1], v[i % l2]);
 		}
 		return r;
 	}
+	// if both are single values
 	if (!Array.isArray(a)){
 		return a + v;
 	}
-	return a.map(x => {
-		if (Array.isArray(x)){
-			return add(x, v);
-		}
-		return x + v;
-	});
+	// if lefthand side is array
+	return a.map(x => add(x, v));
 }
 exports.add = add;
 
@@ -177,31 +169,20 @@ exports.add = add;
 // @param {Number/Array} -> value to subtract
 // @return {Number/Array}
 // 
-function subtract(a, v=0){
+function subtract(a=0, v=0){
 	if (Array.isArray(v)){
 		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			let a1 = a[i % l1];
-			let v1 = v[i % l2];
-			if (Array.isArray(a1) || Array.isArray(v1)){
-				r[i] = subtract(a1, v1);
-			} else {
-				r[i] = a1 - v1;
-			}
+			r[i] = subtract(a[i % l1], v[i % l2]);
 		}
 		return r;
 	}
 	if (!Array.isArray(a)){
 		return a - v;
 	}
-	return a.map(x => {
-		if (Array.isArray(x)){
-			return subtract(x, v);
-		}
-		return x - v;
-	});
+	return a.map(x => subtract(x, v));
 }
 exports.subtract = subtract;
 exports.sub = subtract;
@@ -214,31 +195,20 @@ exports.sub = subtract;
 // @param {Number/Array} -> value to multiply with
 // @return {Number/Array}
 // 
-function multiply(a, v=1){
+function multiply(a=0, v=1){
 	if (Array.isArray(v)){
 		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			let a1 = a[i % l1];
-			let v1 = v[i % l2];
-			if (Array.isArray(a1) || Array.isArray(v1)){
-				r[i] = multiply(a1, v1);
-			} else {
-				r[i] = a1 * v1;
-			}
+			r[i] = multiply(a[i % l1], v[i % l2]);
 		}
 		return r;
 	}
 	if (!Array.isArray(a)){
 		return a * v;
 	}
-	return a.map(x => {
-		if (Array.isArray(x)){
-			return multiply(x, v);
-		}
-		return x * v;
-	});
+	return a.map(x => multiply(x, v));
 }
 exports.multiply = multiply;
 exports.mul = multiply;
@@ -251,31 +221,20 @@ exports.mul = multiply;
 // @param {Number/Array} -> value to divide with
 // @return {Number/Array}
 // 
-function divide(a, v=1){
+function divide(a=0, v=1){
 	if (Array.isArray(v)){
 		a = (Array.isArray(a))? a : [a];
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			let a1 = a[i % l1];
-			let v1 = v[i % l2];
-			if (Array.isArray(a1) || Array.isArray(v1)){
-				r[i] = divide(a1, v1);
-			} else {
-				r[i] = a1 / v1;
-			}
+			r[i] = divide(a[i % l1], v[i % l2]);
 		}
 		return r;
 	}
 	if (!Array.isArray(a)){
 		return a / v;
 	}
-	return a.map(x => {
-		if (Array.isArray(x)){
-			return divide(x, v);
-		}
-		return x / v;
-	});
+	return a.map(x => divide(x, v));
 }
 exports.divide = divide;
 exports.div = divide;
@@ -295,27 +254,27 @@ exports.flatten = flatten;
 exports.flat = flatten;
 
 // Return the remainder after division
-// also works in the negative direction
+// also works in the negative direction, so wrap starts at 0
 // 
 // @param {Int/Array} -> input value
 // @param {Int/Array} -> divisor (optional, default=12)
 // @return {Int/Array} -> remainder after division
 // 
-function mod(a, mod=12){
-	if (Array.isArray(mod)){
+function mod(a, m=12){
+	if (Array.isArray(m)){
 		a = (Array.isArray(a))? a : [a];
-		let l1 = a.length, l2 = mod.length, r = [];
+		let l1 = a.length, l2 = m.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
-			let m = mod[i % l2];
-			r[i] = ((a[i % l1] % m) + m) % m;
+			r[i] = mod(a[i % l1], m[i % l2]);
 		}
 		return r;
 	}
 	if (!Array.isArray(a)){
-		return ((a % mod) + mod) % mod;
+		let r = ((a % m) + m) % m;
+		return isNaN(r)? 0 : r;
 	}
-	return a.map(x => ((x % mod) + mod) % mod);
+	return a.map(x => mod(x, m));
 }
 exports.mod = mod;
 
@@ -328,7 +287,7 @@ function truncate(a=[0]){
 	if (!Array.isArray(a)){
 		return Math.trunc(a);
 	}
-	return a.map(x => Math.trunc(x));
+	return a.map(x => truncate(x));
 }
 exports.truncate = truncate;
 exports.trunc = truncate;
