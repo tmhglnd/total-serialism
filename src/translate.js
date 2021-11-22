@@ -145,6 +145,7 @@ function scaleNames(){
 	return Object.keys(Scales);
 }
 exports.scaleNames = scaleNames;
+exports.getScales = scaleNames;
 
 /* WORK IN PROGRESS
 // search scales based on an array of intervals

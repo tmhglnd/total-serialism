@@ -612,6 +612,10 @@ function testTranslate(){
 	test("TL.rtoc('11/5')");	
 	test("TL.rtoc(['2/1', ['3/2', ['4/3', '5/4']], '9/8'])");	
 
+	test("TL.scaleNames()");
+	test("TL.getScale()");
+	test("TL.getSettings()");
+
 	// console.log("var scala = new TL.Scala()");
 	// var scl = new TL.Scala();
 

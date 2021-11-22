@@ -18,21 +18,25 @@ const TL = require('total-serialism').Translate;
 
 # Methods
 
-- midiToNote
-- noteToMidi
-- midiToFreq
-- noteToFreq
-- relativeToMidi
-- relativeToFreq
+- midiToNote (mton)
+- midiToFreq (mtof)
+- noteToMidi (ntom)
+- noteToFreq (ntof)
+- freqToMidi (ftom)
+- freqToNote (fton)
+- relativeToMidi (rtom)
+- relativeToFreq (rtof)
+- ratioToCent (rtoc)
 - setTempo
-- divisionToMs
-- divisionToRatio
+- divisionToMs (dtoms)
+- divisionToRatio (dtor)
 - setScale
 - setRoot
 - getSettings
 - scaleNames
 - toScale
 - toMidi
+- toFreq
 - Scala
 - Scala.tune
 - Scale.center
