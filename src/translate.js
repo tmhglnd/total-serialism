@@ -342,6 +342,27 @@ function mapToFreq(a=[0], o=4){
 exports.mapToFreq = mapToFreq;
 exports.toFreq = mapToFreq;
 
+// Convert a frequency ratio string to a corresponding cents value
+// eq. ['2/1', '3/2'] => [1200, 701.95]
+// 
+// @param {Number/String/Array} -> ratios to convert
+// @return {Number/Array} -> cents output
+// 
+function ratioToCent(a=['1/1']){
+	let reg = /^[0-9]+(\/[0-9]+)?$/;
+	// let a = (!Array.isArray(ratio))? [ratio] : ratio;
+	a = Array.isArray(a)? a : [a];
+	return a.map(x => {
+		if (Array.isArray(x)){
+			return ratioToCent(x);
+		}
+		return Math.log(divRatio(x)) / Math.log(2) * 1200;
+	});
+	// return (!Array.isArray(a))? a[0] : a;
+}
+exports.ratioToCent = ratioToCent;
+exports.rtoc = ratioToCent;
+
 /* WORK IN PROGRESS
 // Convert a midi value to semitone intervals
 // provide octave offset
@@ -402,27 +423,6 @@ function divRatio(x){
 	let d = /^\d+(\/\d+)?$/;
 	return (typeof x === 'string' && d.test(x))? eval(x) : x;
 }
-
-// Convert a frequency ratio string to a corresponding cents value
-// eq. ['2/1', '3/2'] => [1200, 701.95]
-// 
-// @param {Number/String/Array} -> ratios to convert
-// @return {Number/Array} -> cents output
-// 
-function ratioToCent(a=['1/1']){
-	let reg = /^[0-9]+(\/[0-9]+)?$/;
-	// let a = (!Array.isArray(ratio))? [ratio] : ratio;
-	a = Array.isArray(a)? a : [a];
-	return a.map(x => {
-		if (Array.isArray(x)){
-			return ratioToCent(x);
-		}
-		return Math.log(divRatio(x)) / Math.log(2) * 1200;
-	});
-	// return (!Array.isArray(a))? a[0] : a;
-}
-exports.ratioToCent = ratioToCent;
-exports.rtoc = ratioToCent;
 
 //=======================================================================
 // Scala class
