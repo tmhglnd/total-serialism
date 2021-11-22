@@ -64,14 +64,14 @@ fullTest();
 function fullTest(){
 	console.time('Total Time');
 
-	testSerial();
-	testGen();
-	testAlgo();
-	testRand();
-	testMod();
-	testStat();
+	// testSerial();
+	// testGen();
+	// testAlgo();
+	// testRand();
+	// testMod();
+	// testStat();
 	testTranslate();
-	testUtil();
+	// testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -517,72 +517,106 @@ function testStat(){
 function testTranslate(){
 	pagebreak("Translate");
 
-	test("Srl.setBPM(110)");
-	test("Srl.setScale('minor_harmonic', 'a')");
+	// test("Srl.setBPM(110)");
+	// test("Srl.setScale('minor_harmonic', 'a')");
 
-	test("Srl.setRoot('Db')");
-	test("Srl.getSettings()");
+	// test("Srl.setRoot('Db')");
+	// test("Srl.getSettings()");
 
-	test("TL.scaleNames()");
+	// test("TL.scaleNames()");
 
-	test("TL.midiToNote(48)");
-	test("TL.midiToNote('c4')");
+	test("TL.midiToNote()");
+	test("TL.midiToNote(60)");
 	test("TL.mton([48, 55, 51, 43])");
-
-	test("TL.noteToMidi('c2')");
-	test("TL.noteToMidi(['c2','d2','f#2'])");
-	test("TL.ntom(['f-1','bb3','g#2'])");
-
-	test("TL.midiToFreq(60)");
-	test("TL.mtof([60, 67, 72])");
-
-	test("TL.noteToFreq('c2')");
-	test("TL.noteToFreq(['c2','d2','f#2'])");
-	test("TL.ntof(['f-1','bb3','g###2'])");
-
-	test("TL.rtom([-12, 0, 7, 12])");
-	test("TL.rtom([-12, 0, 7, 12], 4)");
-	test("TL.rtom([-12, 0, 7, 12], 'c3')");
-
-	test("TL.rtof([-12, 0, 7, 12])");
-	test("TL.rtof([-12, 0, 7, 12], 4)");
-	test("TL.rtof([-12, 0, 7, 12], 'c3')");
-
-	Srl.setScale('minor_harmonic', 'b');
-
-	test("TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);");
-	test("TL.toScale(Gen.sine(8, 3.5, -7, 24))");
-	test("TL.toScale([0, 4.1, 6.5, 7.1, 9.25])");
-
-	test("Srl.setRoot('c')");
-	test("Srl.getSettings()");
-
-	test("TL.toMidi([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);");
-	test("TL.toMidi(Gen.sine(8, 3.5, -7, 24), 4)");
-	test("TL.toMidi([0, 4.1, 6.5, 7.1, 9.25], 'c3')");
-
-	test("TL.setTempo(120)");
-	test("TL.divisionToMs()");
-	test("TL.dtoms(['1/4', '1/8', '3/16', '1/4', '1/6', '2'])");
-	test("TL.dtoms(['1/4', '1/8', '3/16', '1/4', '1/6', '2'], 100)");
-	test("TL.dtoms([0.25, 0.125, 0.1875, 0.25, 0.16667, 2])");
+	test("TL.mton([60, [63, 67, 69], [57, 65]])");
 	
-	test("TL.dtor(['1/4', '1/8', '3/16', '1/4', '1/6', '2'])");
+	test("TL.midiToFreq()");
+	test("TL.midiToFreq(60)");
+	test("TL.mtof([48, 55, 51, 43])");
+	test("TL.mtof([60, 67, 72])");
+	test("TL.mtof([60, [63, 67, 69], [57, 65]])");
+	test("TL.mtof([60.3, 67.4, 72.8])");
 
-	console.log("var scala = new TL.Scala()");
-	var scl = new TL.Scala();
+	test("TL.ftom()");
+	test("TL.ftom(261)");
+	test("TL.ftom([ 261, [ 311, 391, 440 ], [ 220, 349 ] ])");
+	test("TL.ftom([ 261, [ 311, 391, 440 ], [ 220, 349 ] ], true)");
+	
+	test("TL.fton()");
+	test("TL.fton(261)");
+	test("TL.fton([ 261, [ 311, 391, 440 ], [ 220, 349 ] ])");
 
-	scl.parse(fs.readFileSync('data/scl/12-TET.scl', 'utf8'));
-	scl.tune(261.6255653);
-	scl.center(60);
+	// test("TL.ftom([48, 55, 51, 43])");
+	// test("TL.ftom([60, 67, 72])");
+	// test("TL.ftom([60, [63, 67, 69], [57, 65]])");
+	// test("TL.ftom([60.3, 67.4, 72.8])");
 
-	console.log(scl.names.slice(0, 10));
-	console.log('//=>', scl.data);
+	// test("TL.noteToMidi()");
+	// test("TL.noteToMidi('c3')");
+	// test("TL.noteToMidi(['c3', 'g3', 'eb3', 'g2'])");
+	// test("TL.ntom(['f3','bb3','g#2'])");
+	// test("TL.ntom(['c4', ['eb4', 'g4', 'a4'], ['a3', 'f4']])");
 
-	console.log('scl.scalaToFreq([60, 63, 67, 69, 72, 81, 36, 48])')
-	console.log('//=>', scl.stof([60, 63, 67, 69, 72, 81, 36, 48]).map(x => x.toFixed(2)));
+	// test("TL.noteToFreq()");
+	// test("TL.noteToFreq('c3')");
+	// test("TL.noteToFreq(['c3', 'g3', 'eb3', 'g2'])");
+	// test("TL.ntof(['f3','bb3','g#2'])");
+	// test("TL.ntof(['c4', ['eb4', 'g4', 'a4'], ['a3', 'f4']])");
 
-	console.log(scl.search({ cents: ['4/3', '5/4', '11/9'], size: 11 }));
+	// test("TL.rtom()");
+	// test("TL.rtom([-12, 0, 7, 12])");
+	// test("TL.rtom([-12, 0, 7, 12], 4)");
+	// test("TL.rtom([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4')");
+	// test("TL.rtom([-12, 0, 7, 12], 'c3')");
+
+	// test("TL.rtof()");
+	// test("TL.rtof([-12, 0, 7, 12])");
+	// test("TL.rtof([-12, 0, 7, 12], 4)");
+	// test("TL.rtof([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4')");
+	// test("TL.rtof([-12, 0, 7, 12], 'c3')");
+
+	// Srl.setScale('minor_harmonic', 'b');
+
+	// test("TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);");
+	// test("TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]);");
+	// test("TL.mton(TL.toScale(Gen.spread(12, 48, 60)));");
+	// test("TL.toScale(Gen.sine(8, 3.5, -7, 24))");
+	// test("TL.toScale([0, 4.1, 6.5, 7.1, 9.25])");
+	
+	// test("Srl.setRoot('d')");
+	// test("Srl.setScale('major')");
+	// test("Srl.getSettings()");
+	
+	// test("TL.toMidi([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);");
+	// test("TL.toMidi([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]);");
+	// test("TL.mton(TL.toMidi([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]));");
+
+	// // test("TL.mton(TL.toScale(Gen.spread(12, 48, 60)));");
+	// test("TL.toFreq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 4);");
+	// test("TL.toFreq([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]);");
+	
+	// test("TL.setTempo(120)");
+	// test("TL.divisionToMs()");
+	// test("TL.dtoms(['1/4', '1/8', '3/16', '1/4', '1/6', '2'])");
+	// test("TL.dtoms(['1/4', '1/8', '3/16', '1/4', '1/6', '2'], 100)");
+	// test("TL.dtoms([0.25, 0.125, 0.1875, 0.25, 0.16667, 2])");
+	
+	// test("TL.dtor(['1/4', '1/8', '3/16', '1/4', '1/6', '2'])");
+
+	// console.log("var scala = new TL.Scala()");
+	// var scl = new TL.Scala();
+
+	// scl.parse(fs.readFileSync('data/scl/12-TET.scl', 'utf8'));
+	// scl.tune(261.6255653);
+	// scl.center(60);
+
+	// console.log(scl.names.slice(0, 10));
+	// console.log('//=>', scl.data);
+
+	// console.log('scl.scalaToFreq([60, 63, 67, 69, 72, 81, 36, 48])')
+	// console.log('//=>', scl.stof([60, 63, 67, 69, 72, 81, 36, 48]).map(x => x.toFixed(2)));
+
+	// console.log(scl.search({ cents: ['4/3', '5/4', '11/9'], size: 11 }));
 }
 
 function testUtil(){

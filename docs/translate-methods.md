@@ -39,44 +39,56 @@ const TL = require('total-serialism').Translate;
 - Scala.parse
 - Scala.scalaToFreq
 
-### Conversion between units
+### Conversion between pitch units
 
 Convert easily between relative-semitones, midinotes, notenames and frequencies with the methods below. Thankfully using the amazing `Tonal.js` package by `@danigb` for various functions.
 
 ```js
 // Convert Array or Int as midi-number to midi-notenames
-TL.midiToNote([60, 67, 70]);
-//=> [ 'C4', 'G4', 'Bb4' ]
-// Alternative: TL.mton()
-
-// Convert Array of String as midi-notenames to midi-pitch
-TL.noteToMidi(['c2','d2','f#2']);
-//=> [ 36, 38, 42 ] 
-// Alternative: TL.ntom()
+TL.midiToNote([60, [63, 67, 69], [57, 65]]);
+//=> [ 'c4', [ 'eb4', 'g4', 'a4' ], [ 'a3', 'f4' ] ] 
+// Alias: mton()
 
 // Convert midi-pitches to frequency (A4 = 440 Hz)
-TL.midiToFreq([60, 67, 72]);
-//=> [ 261.6255653005986, 391.99543598174927, 523.2511306011972 ] 
-// Alternative: TL.mtof()
+TL.midiToFreq([60, [63, 67, 69], [57, 65]]);
+//=> [ 261.63, [ 311.13, 391.995, 440 ], [ 220, 349.23 ] ] 
+// Alias: mtof()
+
+// Convert Array of String as midi-notenames to midi-pitch
+TL.noteToMidi(['c4', ['eb4', 'g4', 'a4'], ['a3', 'f4']]);
+//=> [ 60, [ 63, 67, 69 ], [ 57, 65 ] ] 
+// Alias: ntom()
 
 // Convert midi-notenames to frequency (A4 = 440 Hz)
-TL.noteToFreq(['c2','d2','f#2']);
-//=> [ 65.40639132514966, 73.41619197935188, 92.4986056779086 ] 
-// Alternative: TL.ntof()
+TL.noteToFreq(['c4', ['eb4', 'g4', 'a4'], ['a3', 'f4']]);
+//=> [ 261.63, [ 311.13, 391.995, 440 ], [ 220, 349.23 ] ] 
+// Alias: ntof()
+
+// Convert frequency to nearest midi note
+TL.freqToMidi([ 261, [ 311, 391, 440 ], [ 220, 349 ] ]);
+//=> [ 60, [ 63, 67, 69 ], [ 57, 65 ] ] 
+// Alias: ftom()
+
+// Set detune flag to true to get floating midi output for pitchbend
+TL.freqToMidi([ 261, [ 311, 391, 440 ], [ 220, 349 ] ], true);
+//=> [ 59.959, [ 62.993, 66.956, 69 ], [ 57, 64.989 ]] 
+
+// Convert frequency to nearest midi note name
+TL.freqToNote([ 261, [ 311, 391, 440 ], [ 220, 349 ] ]);
+//=> [ 'c4', [ 'eb4', 'g4', 'a4' ], [ 'a3', 'f4' ] ] 
+// Alias: fton()
 
 // Convert relative semitone values to midi-numbers
 // specify the octave as second argument (default = 'C3' = 4 => 48)
-TL.relativeToMidi([-12, 0, 7, 12], 4);
-//=> [ 36, 48, 55, 60 ] 
-// Alternative: TL.rtom()
+TL.relativeToMidi([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4');
+//=> [ [ 36, 39, 43 ], [ 48, 52, 55 ], [ 50, 53, 57 ] ] 
+// Alias: rtom()
 
 // Convert relative semitone values to frequency (A4 = 440 Hz)
 // specify the octave as second argument (default = 'C3' = 4 => 48)
-TL.relativeToFreq([-12, 0, 7, 12], 4);
-//=> [ 65.40639132514966,
-//   130.8127826502993,
-//   195.99771799087463,
-//   261.6255653005986 ] 
+TL.relativeToFreq([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4');
+//=> [ [ 130.81, 155.56, 196 ], [ 261.62, 329.63, 392 ], [ 293.66, 349.23, 440 ] ]
+// Alias: rtof()
 ```
 
 Convert between rhythmic notation such as divisions or ratios and milliseconds based on the set tempo in the global settings.
@@ -88,7 +100,7 @@ TL.setTempo(120);
 // convert beat division strings to milliseconds use bpm from global settings
 TL.divisionToMs(['1/4', '1/8', '3/16', '1/4', '1/6', '2']);
 //=> [ 500, 250, 375, 500, 333.33, 4000 ] 
-// Alternative: TL.dtoms()
+// Alias: TL.dtoms()
 
 // optional second argument sets bpm
 TL.divisionToMs(['1/4', '1/8', '3/16', '1/4', '1/6', '2'], 100);
@@ -101,7 +113,7 @@ TL.divisionToMs([0.25, 0.125, 0.1875, 0.25, 0.16667, 2]);
 // convert beat division strings to beat ratio floats
 TL.divisionToRatio(['1/4', '1/8', '3/16', '1/4', '1/6', '2']);
 //=> [ 0.25, 0.125, 0.1875, 0.25, 0.1667, 2 ] 
-// Alternative: TL.dtor()
+// Alias: TL.dtor()
 ```
 
 ### Working with predefined scale and root

@@ -17,6 +17,7 @@ const Scales = require('../data/scales.json');
 const ToneSet = require('../data/tones.json');
 
 const Mod = require('./transform.js');
+const Util = require('./utility.js');
 
 // global settings stored in object
 var notation = {
@@ -177,9 +178,9 @@ exports.searchScales = searchScales;*/
 // 
 function midiToNote(a=48){
 	if (!Array.isArray(a)){
-		return Note.fromMidi(a);
+		return Note.fromMidi(a).toLowerCase();
 	}
-	return a.map(x => Note.fromMidi(x));
+	return a.map(x => midiToNote(x));
 }
 exports.midiToNote = midiToNote;
 exports.mton = midiToNote;
@@ -192,12 +193,39 @@ exports.mton = midiToNote;
 // 
 function midiToFreq(a=48){
 	if (!Array.isArray(a)){
-		return Note.freq(Note.fromMidi(a));
+		return Math.pow(2, (a - 69) / 12) * 440;
 	}
-	return a.map(x => Note.freq(Note.fromMidi(x)));
+	return a.map(x => midiToFreq(x));
 }
 exports.midiToFreq = midiToFreq;
 exports.mtof = midiToFreq;
+
+// Convert a frequency to closest midi note (261.62 Hz => 60)
+// With default equal temperament tuning A4 = 440 Hz
+// Set the detune flag to return te exact floating point midi value
+// 
+// @param {Number/Array} -> frequency value
+// @param {Number/Array} -> frequency value
+// @return {Number/Array} -> midi note
+// 
+function freqToMidi(a=261, d=false){
+	if (!Array.isArray(a)){
+		let f = Math.log(a / 440) / Math.log(2) * 12 + 69;
+		if (!d) {
+			return Math.round(f);
+		}
+		return f;
+	}
+	return a.map(x => freqToMidi(x, d));
+}
+exports.freqToMidi = freqToMidi;
+exports.ftom = freqToMidi;
+
+function freqToNote(a=261){
+	return midiToNote(freqToMidi(a));
+}
+exports.freqToNote = freqToNote;
+exports.fton = freqToNote;
 
 // Convert a pitch name to a midi value (C4 => 60)
 // 
@@ -208,7 +236,7 @@ function noteToMidi(a='c4'){
 	if (!Array.isArray(a)){
 		return Note.midi(a);
 	}
-	return a.map(x => Note.midi(x));
+	return a.map(x => noteToMidi(x));
 }
 exports.noteToMidi = noteToMidi;
 exports.ntom = noteToMidi;
@@ -223,24 +251,24 @@ function noteToFreq(a='c4'){
 	if (!Array.isArray(a)){
 		return Note.freq(a);
 	}
-	return a.map(x => Note.freq(x));
+	return a.map(x => noteToFreq(x));
 }
 exports.noteToFreq = noteToFreq;
 exports.ntof = noteToFreq;
 
 // Convert a list of relative semitone intervals to midi
-// provide octave offset
+// provide octave offset with second argument
 // 
 // @param {Number/Array} -> relative
 // @param {Number/String} -> octave (optional, default=4)
 // @return {Number/Array}
 // 
 function relativeToMidi(a=0, o=4){
-	o = (typeof o === 'string')? Note.midi(o) : o * 12;
 	if (!Array.isArray(a)){
+		o = (typeof o === 'string')? Note.midi(o) : o * 12;
 		return a + o;
 	}
-	return a.map(x => x + o);
+	return a.map(x => relativeToMidi(x, o));
 }
 exports.relativeToMidi = relativeToMidi;
 exports.rtom = relativeToMidi;
@@ -253,12 +281,7 @@ exports.rtom = relativeToMidi;
 // @return {Number/Array}
 // 
 function relativeToFreq(a=0, o=4){
-	o = (typeof o === 'string')? Note.midi(o) : o * 12;
-	if (!Array.isArray(a)){
-		console.log(Note.freq(Note.fromMidi(a + o)));
-		return Note.freq(a + o);
-	}
-	return a.map(x => Note.freq(Note.fromMidi(x + o)));
+	return midiToFreq(relativeToMidi(a, o));
 }
 exports.relativeToFreq = relativeToFreq;
 exports.rtof = relativeToFreq;
@@ -271,8 +294,10 @@ exports.rtof = relativeToFreq;
 // @return {Array/Number} -> mapped to scale
 // 
 function mapToScale(a=[0]){
-	if (!Array.isArray(a)) return mapScale(a);
-	return a.map(x => mapScale(x));
+	if (!Array.isArray(a)) {
+		return mapScale(a);
+	}
+	return a.map(x => mapToScale(x));
 }
 exports.mapToScale = mapToScale;
 exports.toScale = mapToScale;
@@ -284,20 +309,32 @@ function mapScale(a){
 	return notation.map[s] + o * 12 + d;
 }
 
-// Map an array of reletive semitone intervals to scale and 
+// Map an array of relative semitone intervals to scale and 
 // output in specified octave as midi value
 // 
-// @param {Array/Int} -> 
-// @param {Int/String} -> octave 
+// @param {Array/Int} -> semitone intervals
+// @param {Int/String} -> octave range
 // @return {Array/Int} -> mapped midi values
 // 
 function mapToMidi(a=[0], o=4){
-	o = (typeof o === 'string')? Note.midi(o) : o * 12 + notation.rootInt;
-	if (!Array.isArray(a)) return a + o;
-	return a.map(x => mapScale(x) + o);
+	return Util.add(relativeToMidi(mapToScale(a), o), notation.rootInt);
 }
 exports.mapToMidi = mapToMidi;
 exports.toMidi = mapToMidi;
+
+// Map an array of relative semitone intervals to scale and 
+// output in frequency value
+// 
+// @param {Array/Int} -> semitone intervals
+// @param {Int/String} -> octave range
+// @return {Array/Int} -> mapped midi values
+//
+function mapToFreq(a=[0], o=4){
+	// return mapToMidi(a, o);
+	return midiToFreq(mapToMidi(a, o));
+}
+exports.mapToFreq = mapToFreq;
+exports.toFreq = mapToFreq;
 
 /* WORK IN PROGRESS
 // Convert a midi value to semitone intervals
