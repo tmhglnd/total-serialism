@@ -2898,7 +2898,7 @@ function unique(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 //==============================================================================
 // require API's
 var _require=require('@tonaljs/tonal'),Note=_require.Note;// require Scale Mappings
-var Scales=require('../data/scales.json');var ToneSet=require('../data/tones.json');var Mod=require('./transform.js');// global settings stored in object
+var Scales=require('../data/scales.json');var ToneSet=require('../data/tones.json');var Mod=require('./transform.js');var Util=require('./utility.js');// global settings stored in object
 var notation={"scale":"chromatic","root":"c","rootInt":0,"map":Scales["chromatic"],"bpm":120,"measureInMs":2000};// Return a dictionary with all the notational preferences:
 // scale, root, map, bpm, measureInMs
 // 
@@ -2953,7 +2953,7 @@ exports.setMapping = setMapping;*/ // returns an array of all available scale na
 // 
 // @return {Array} -> scale names
 // 
-function scaleNames(){return Object.keys(Scales);}exports.scaleNames=scaleNames;/* WORK IN PROGRESS
+function scaleNames(){return Object.keys(Scales);}exports.scaleNames=scaleNames;exports.getScales=scaleNames;/* WORK IN PROGRESS
 // search scales based on an array of intervals
 // 
 // @param {Array|String} -> array of intervals
@@ -2981,52 +2981,80 @@ exports.searchScales = searchScales;*/ // Convert a midi value to a note name (6
 // @param {Number/Array} -> midi values to convert
 // @return {String/Array} -> note name
 // 
-function midiToNote(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:48;if(!Array.isArray(a)){return Note.fromMidi(a);}return a.map(function(x){return Note.fromMidi(x);});}exports.midiToNote=midiToNote;exports.mton=midiToNote;// Convert a midi value to a frequency (60 => 261.63 Hz)
+function midiToNote(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:48;if(!Array.isArray(a)){return Note.fromMidi(a).toLowerCase();}return a.map(function(x){return midiToNote(x);});}exports.midiToNote=midiToNote;exports.mton=midiToNote;// Convert a midi value to a frequency (60 => 261.63 Hz)
 // With default equal temperament tuning A4 = 440 Hz
 // 
 // @param {Number/Array} -> midi values to convert
 // @return {Number/Array} -> frequency in Hz
 // 
-function midiToFreq(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:48;if(!Array.isArray(a)){return Note.freq(Note.fromMidi(a));}return a.map(function(x){return Note.freq(Note.fromMidi(x));});}exports.midiToFreq=midiToFreq;exports.mtof=midiToFreq;// Convert a pitch name to a midi value (C4 => 60)
+function midiToFreq(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:48;if(!Array.isArray(a)){return Math.pow(2,(a-69)/12)*440;}return a.map(function(x){return midiToFreq(x);});}exports.midiToFreq=midiToFreq;exports.mtof=midiToFreq;// Convert a frequency to closest midi note (261.62 Hz => 60)
+// With default equal temperament tuning A4 = 440 Hz
+// Set the detune flag to return te exact floating point midi value
+// 
+// @param {Number/Array} -> frequency value
+// @param {Number/Array} -> detune precision value (default=false)
+// @return {Number/Array} -> midi note
+// 
+function freqToMidi(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:261;var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;if(!Array.isArray(a)){var f=Math.log(a/440)/Math.log(2)*12+69;if(!d){return Math.round(f);}return f;}return a.map(function(x){return freqToMidi(x,d);});}exports.freqToMidi=freqToMidi;exports.ftom=freqToMidi;// Convert a frequency to closest note name (261.62 Hz => 'c4')
+// With default equal temperament tuning A4 = 440 Hz
+// 
+// @param {Number/Array} -> frequency value
+// @return {Number/Array} -> midi note
+// 
+function freqToNote(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:261;return midiToNote(freqToMidi(a));}exports.freqToNote=freqToNote;exports.fton=freqToNote;// Convert a pitch name to a midi value (C4 => 60)
 // 
 // @param {String/Array} -> pitch name to convert
 // @return {Number/Array} -> midi value
 // 
-function noteToMidi(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'c4';if(!Array.isArray(a)){return Note.midi(a);}return a.map(function(x){return Note.midi(x);});}exports.noteToMidi=noteToMidi;exports.ntom=noteToMidi;// Convert a pitch name to a frequency (C4 => 261.63 Hz)
+function noteToMidi(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'c4';if(!Array.isArray(a)){return Note.midi(a);}return a.map(function(x){return noteToMidi(x);});}exports.noteToMidi=noteToMidi;exports.ntom=noteToMidi;// Convert a pitch name to a frequency (C4 => 261.63 Hz)
 // With default equal temperament tuning A4 = 440 Hz
 // 
 // @param {String/Array} -> pitch name to convert
 // @return {Number/Array} -> frequency in Hz
 // 
-function noteToFreq(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'c4';if(!Array.isArray(a)){return Note.freq(a);}return a.map(function(x){return Note.freq(x);});}exports.noteToFreq=noteToFreq;exports.ntof=noteToFreq;// Convert a list of relative semitone intervals to midi
-// provide octave offset
+function noteToFreq(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'c4';if(!Array.isArray(a)){return Note.freq(a);}return a.map(function(x){return noteToFreq(x);});}exports.noteToFreq=noteToFreq;exports.ntof=noteToFreq;// Convert a list of relative semitone intervals to midi
+// provide octave offset with second argument
 // 
 // @param {Number/Array} -> relative
 // @param {Number/String} -> octave (optional, default=4)
 // @return {Number/Array}
 // 
-function relativeToMidi(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;o=typeof o==='string'?Note.midi(o):o*12;if(!Array.isArray(a)){return a+o;}return a.map(function(x){return x+o;});}exports.relativeToMidi=relativeToMidi;exports.rtom=relativeToMidi;// Convert a list of semitone intervals to frequency
+function relativeToMidi(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;if(!Array.isArray(a)){o=typeof o==='string'?Note.midi(o):o*12;return a+o;}return a.map(function(x){return relativeToMidi(x,o);});}exports.relativeToMidi=relativeToMidi;exports.rtom=relativeToMidi;// Convert a list of semitone intervals to frequency
 // provide octave offset
 // 
 // @param {Number/Array} -> semitones
 // @param {Number} -> octave (optional, default=4)
 // @return {Number/Array}
 // 
-function relativeToFreq(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;o=typeof o==='string'?Note.midi(o):o*12;if(!Array.isArray(a)){console.log(Note.freq(Note.fromMidi(a+o)));return Note.freq(a+o);}return a.map(function(x){return Note.freq(Note.fromMidi(x+o));});}exports.relativeToFreq=relativeToFreq;exports.rtof=relativeToFreq;// Map a list of relative semitone values to the selected
+function relativeToFreq(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;return midiToFreq(relativeToMidi(a,o));}exports.relativeToFreq=relativeToFreq;exports.rtof=relativeToFreq;// Map a list of relative semitone values to the selected
 // scale set with setScale(). Preserves detuning when a 
 // midi floating point value is used
 // 
 // @params {Array/Number} -> Array of relative semitones
 // @return {Array/Number} -> mapped to scale
 // 
-function mapToScale(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a))return mapScale(a);return a.map(function(x){return mapScale(x);});}exports.mapToScale=mapToScale;exports.toScale=mapToScale;function mapScale(a){var d=a-Math.floor(a);var s=Math.floor((a%12+12)%12);var o=Math.floor(a/12);return notation.map[s]+o*12+d;}// Map an array of reletive semitone intervals to scale and 
+function mapToScale(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return mapScale(a);}return a.map(function(x){return mapToScale(x);});}exports.mapToScale=mapToScale;exports.toScale=mapToScale;function mapScale(a){var d=a-Math.floor(a);var s=Math.floor((a%12+12)%12);var o=Math.floor(a/12);return notation.map[s]+o*12+d;}// Map an array of relative semitone intervals to scale and 
 // output in specified octave as midi value
 // 
-// @param {Array/Int} -> 
-// @param {Int/String} -> octave 
+// @param {Array/Int} -> semitone intervals
+// @param {Int/String} -> octave range
 // @return {Array/Int} -> mapped midi values
 // 
-function mapToMidi(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;o=typeof o==='string'?Note.midi(o):o*12+notation.rootInt;if(!Array.isArray(a))return a+o;return a.map(function(x){return mapScale(x)+o;});}exports.mapToMidi=mapToMidi;exports.toMidi=mapToMidi;/* WORK IN PROGRESS
+function mapToMidi(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;return Util.add(relativeToMidi(mapToScale(a),o),notation.rootInt);}exports.mapToMidi=mapToMidi;exports.toMidi=mapToMidi;// Map an array of relative semitone intervals to scale and 
+// output in frequency value
+// 
+// @param {Array/Int} -> semitone intervals
+// @param {Int/String} -> octave range
+// @return {Array/Int} -> mapped midi values
+//
+function mapToFreq(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;// return mapToMidi(a, o);
+return midiToFreq(mapToMidi(a,o));}exports.mapToFreq=mapToFreq;exports.toFreq=mapToFreq;// Convert a frequency ratio string to a corresponding cents value
+// eq. ['2/1', '3/2'] => [1200, 701.95]
+// 
+// @param {Number/String/Array} -> ratios to convert
+// @return {Number/Array} -> cents output
+// 
+function ratioToCent(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1/1'];a=Array.isArray(a)?a:[a];return a.map(function(x){if(Array.isArray(x)){return ratioToCent(x);}return Math.log(divRatio(x))/Math.log(2)*1200;});}exports.ratioToCent=ratioToCent;exports.rtoc=ratioToCent;/* WORK IN PROGRESS
 // Convert a midi value to semitone intervals
 // provide octave offset
 // 
@@ -3049,21 +3077,16 @@ exports.mtos = midiToSemi;
 // @param {Number} -> set the BPM (optional, default=globalBPM)
 // @return {Number/Array}
 //
-function divisionToMs(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1'];var bpm=arguments.length>1?arguments[1]:undefined;var measureMs=notation.measureInMs;if(bpm!==undefined){measureMs=60000.0/Math.max(1,Number(bpm))*4;}var v=!Array.isArray(a)?[a]:a;return v.map(function(x){// match all division symbols: eg. 1/4, 5/16
-var d=/^\d+(\/\d+)?$/;x=typeof x==='string'&&d.test(x)?eval(x):x;return x*measureMs;});}exports.divisionToMs=divisionToMs;exports.dtoms=divisionToMs;// Convert a beat ratio value to milliseconds based on the BPM
+function divisionToMs(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1'];var bpm=arguments.length>1?arguments[1]:undefined;var measureMs=notation.measureInMs;if(bpm){measureMs=60000/Math.max(1,Number(bpm))*4;}return Util.multiply(divisionToRatio(a),measureMs);}exports.divisionToMs=divisionToMs;exports.dtoms=divisionToMs;// Convert a beat ratio value to milliseconds based on the BPM
 // eg. [0.25, 0.125, 0.0625] => [500, 250, 125] @ BPM = 120
 // 
 // @param {Number/String/Array} -> beat ratio array
 // @return {Number/Array}
 //
-function divisionToRatio(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1'];var v=!Array.isArray(a)?[a]:a;return v.map(function(x){// match all division symbols: eg. 1/4, 5/16
-var d=/^\d+(\/\d+)?$/;return typeof x==='string'&&d.test(x)?eval(x):x;});}exports.divisionToRatio=divisionToRatio;exports.dtor=divisionToRatio;// Convert a frequency ratio string to a corresponding cents value
-// eq. ['2/1', '3/2'] => [1200, 701.95]
+function divisionToRatio(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1'];a=Array.isArray(a)?a:[a];return a.map(function(x){if(Array.isArray(x)){return divisionToRatio(x);}return divRatio(x);});}exports.divisionToRatio=divisionToRatio;exports.dtor=divisionToRatio;// Evaluate a division string to a ratio
 // 
-// @param {Number/String/Array} -> ratios to convert
-// @return {Number/Array} -> cents output
-// 
-function ratioToCent(){var ratio=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1/1'];var reg=/^[0-9]+(\/[0-9]+)?$/;var a=!Array.isArray(ratio)?[ratio]:ratio;a=a.map(function(x){if(typeof x==='string'&&reg.test(x)){x=eval(x);}return Math.log(x)/Math.log(2)*1200.0;});return!Array.isArray(ratio)?a[0]:a;}exports.ratioToCent=ratioToCent;exports.rtoc=ratioToCent;//=======================================================================
+function divRatio(x){// match all division symbols: eg. 1/4, 5/16
+var d=/^\d+(\/\d+)?$/;return typeof x==='string'&&d.test(x)?eval(x):x;}//=======================================================================
 // Scala class
 // 
 // Import a .scl file and convert to a JSON object. Use methods to 
@@ -3117,7 +3140,7 @@ if(k==='cents'){Object.keys(result).forEach(function(scl){var match=0;// tempora
 var tmpCents=result[scl][k];// append the octave ratio (or range)
 tmpCents.push(result[scl]['range']);// filter duplicates
 tmpCents=Mod.unique(tmpCents).map(function(x){return x.toFixed(f.decimals);});for(var i in s){// for all entered cent/ratio values
-var cent=typeof s[i]==='string'?ratioToCent(s[i]):s[i];// if equals cent from array increment match
+var cent=typeof s[i]==='string'?ratioToCent(s[i])[0]:s[i];// if equals cent from array increment match
 for(var c=0;c<tmpCents.length;c++){if(tmpCents[c]===cent.toFixed(f.decimals)){match+=1;}}}// result if matches equals amount of searches
 if(match===s.length){tmpRes[scl]=result[scl];}});result=tmpRes;}}});return result;}// read and parse a filestring (best imported with fs.readFileSync for 
 // local usage or fetch() in the browser) to use in the scale
@@ -3139,7 +3162,7 @@ this.scl['description']=line;}else if(l===1){// second non-comment line is numbe
 this.scl['size']=Number(line);}else{// remove leading, trailing and multiple whitespace
 // split line in array
 line=line.trim().replace(/\s+/g,' ').split(' ');if(n<this.scl.size){// if line is not a number then it's a ratio
-if(isNaN(Number(line[0]))){line=ratioToCent(line[0]);}else{// if line is negative then make absolute
+if(isNaN(Number(line[0]))){line=ratioToCent(line[0])[0];}else{// if line is negative then make absolute
 line=Number(line[0])<0?Math.abs(Number(line[0])):Number(line[0]);}// push notes to object and increment notecount
 this.scl.cents.push(line);n++;}}// increment linecount
 l++;}}// sort the cent values
@@ -3154,7 +3177,7 @@ this.scl['range']=this.scl.cents.pop();}// return an object with frequencies der
 },{key:"chart",value:function chart(){var _this2=this;var hi=arguments.length>0&&arguments[0]!==undefined?arguments[0]:127;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;return function(hi,lo){// swap lo and hi range if hi is smaller than lo
 if(hi<lo){var t=hi,hi=lo,lo=t;}var range=hi-lo;// empty object for frequencies
 var chart={};// calculate frequencies for values 0 to 127
-for(var i=0;i<range+1;i++){chart[i+lo]=_this2.scalaToFreq(i+lo);}return chart;}(hi,lo);}}]);return Scala;}();exports.Scala=Scala;},{"../data/scales.json":1,"../data/scldb.json":2,"../data/tones.json":3,"./transform.js":41,"@tonaljs/tonal":25}],43:[function(require,module,exports){//====================================================================
+for(var i=0;i<range+1;i++){chart[i+lo]=_this2.scalaToFreq(i+lo);}return chart;}(hi,lo);}}]);return Scala;}();exports.Scala=Scala;},{"../data/scales.json":1,"../data/scldb.json":2,"../data/tones.json":3,"./transform.js":41,"./utility.js":43,"@tonaljs/tonal":25}],43:[function(require,module,exports){//====================================================================
 // utility.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com

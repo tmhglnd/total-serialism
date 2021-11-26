@@ -4,9 +4,9 @@ const fs = require('fs');
 
 // test with different builds
 let entryPoint = "../index";
-// entryPoint = "../build/ts.bundle.js";
-// entryPoint = "../build/ts.es5.js";
-// entryPoint = "../build/ts.es5.min.js";
+entryPoint = "../build/ts.bundle.js";
+entryPoint = "../build/ts.es5.js";
+entryPoint = "../build/ts.es5.min.js";
 
 const Srl = require(entryPoint);
 const Gen = Srl.Generative;
@@ -616,20 +616,21 @@ function testTranslate(){
 	test("TL.getScale()");
 	test("TL.getSettings()");
 
-	// console.log("var scala = new TL.Scala()");
-	// var scl = new TL.Scala();
+	console.log("var scala = new TL.Scala()");
+	var scl = new TL.Scala();
 
-	// scl.parse(fs.readFileSync('data/scl/12-TET.scl', 'utf8'));
-	// scl.tune(261.6255653);
-	// scl.center(60);
+	scl.parse(fs.readFileSync('data/scl/12-TET.scl', 'utf8'));
+	scl.tune(261.6255653);
+	scl.center(60);
 
-	// console.log(scl.names.slice(0, 10));
-	// console.log('//=>', scl.data);
+	console.log(scl.names.slice(0, 10));
+	console.log('//=>', scl.data);
 
-	// console.log('scl.scalaToFreq([60, 63, 67, 69, 72, 81, 36, 48])')
-	// console.log('//=>', scl.stof([60, 63, 67, 69, 72, 81, 36, 48]).map(x => x.toFixed(2)));
+	console.log('scl.scalaToFreq([60, 63, 67, 69, 72, 81, 36, 48])')
+	// console.log('//=>', scl.stof([60, 63, 67, 69, 72, 81, 36, 48]));
+	console.log('//=>', scl.stof([60, 63, 67, 69, 72, 81, 36, 48]).map(x => x.toFixed(2)));
 
-	// console.log(scl.search({ cents: ['4/3', '5/4', '11/9'], size: 11 }));
+	console.log(scl.search({ cents: ['4/3', '5/4', '11/9'], size: 11 }));
 }
 
 function testUtil(){

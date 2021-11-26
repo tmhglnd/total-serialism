@@ -12,6 +12,7 @@
 
 // require API's
 const { Note } = require('@tonaljs/tonal');
+
 // require Scale Mappings
 const Scales = require('../data/scales.json');
 const ToneSet = require('../data/tones.json');
@@ -350,8 +351,6 @@ exports.toFreq = mapToFreq;
 // @return {Number/Array} -> cents output
 // 
 function ratioToCent(a=['1/1']){
-	let reg = /^[0-9]+(\/[0-9]+)?$/;
-	// let a = (!Array.isArray(ratio))? [ratio] : ratio;
 	a = Array.isArray(a)? a : [a];
 	return a.map(x => {
 		if (Array.isArray(x)){
@@ -359,7 +358,6 @@ function ratioToCent(a=['1/1']){
 		}
 		return Math.log(divRatio(x)) / Math.log(2) * 1200;
 	});
-	// return (!Array.isArray(a))? a[0] : a;
 }
 exports.ratioToCent = ratioToCent;
 exports.rtoc = ratioToCent;
@@ -579,11 +577,12 @@ class Scala {
 						// append the octave ratio (or range)
 						tmpCents.push(result[scl]['range']);
 						// filter duplicates
+						
 						tmpCents = Mod.unique(tmpCents).map(x => x.toFixed(f.decimals));
 
 						for (let i in s){
 							// for all entered cent/ratio values
-							let cent = (typeof s[i] === 'string')? ratioToCent(s[i]) : s[i];
+							let cent = (typeof s[i] === 'string')? ratioToCent(s[i])[0] : s[i];
 							// if equals cent from array increment match
 							for (let c=0; c<tmpCents.length; c++){
 								if (tmpCents[c] === cent.toFixed(f.decimals)){
@@ -642,7 +641,7 @@ class Scala {
 					if (n < this.scl.size){
 						// if line is not a number then it's a ratio
 						if (isNaN(Number(line[0]))) {
-							line = ratioToCent(line[0]);
+							line = ratioToCent(line[0])[0];
 						} else {
 							// if line is negative then make absolute
 							line = (Number(line[0]) < 0)? Math.abs(Number(line[0])) : Number(line[0]);

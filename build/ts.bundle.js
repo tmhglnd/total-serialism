@@ -9511,11 +9511,13 @@ exports.unique = unique;
 
 // require API's
 const { Note } = require('@tonaljs/tonal');
+
 // require Scale Mappings
 const Scales = require('../data/scales.json');
 const ToneSet = require('../data/tones.json');
 
 const Mod = require('./transform.js');
+const Util = require('./utility.js');
 
 // global settings stored in object
 var notation = {
@@ -9643,6 +9645,7 @@ function scaleNames(){
 	return Object.keys(Scales);
 }
 exports.scaleNames = scaleNames;
+exports.getScales = scaleNames;
 
 /* WORK IN PROGRESS
 // search scales based on an array of intervals
@@ -9676,9 +9679,9 @@ exports.searchScales = searchScales;*/
 // 
 function midiToNote(a=48){
 	if (!Array.isArray(a)){
-		return Note.fromMidi(a);
+		return Note.fromMidi(a).toLowerCase();
 	}
-	return a.map(x => Note.fromMidi(x));
+	return a.map(x => midiToNote(x));
 }
 exports.midiToNote = midiToNote;
 exports.mton = midiToNote;
@@ -9691,12 +9694,45 @@ exports.mton = midiToNote;
 // 
 function midiToFreq(a=48){
 	if (!Array.isArray(a)){
-		return Note.freq(Note.fromMidi(a));
+		return Math.pow(2, (a - 69) / 12) * 440;
 	}
-	return a.map(x => Note.freq(Note.fromMidi(x)));
+	return a.map(x => midiToFreq(x));
 }
 exports.midiToFreq = midiToFreq;
 exports.mtof = midiToFreq;
+
+// Convert a frequency to closest midi note (261.62 Hz => 60)
+// With default equal temperament tuning A4 = 440 Hz
+// Set the detune flag to return te exact floating point midi value
+// 
+// @param {Number/Array} -> frequency value
+// @param {Number/Array} -> detune precision value (default=false)
+// @return {Number/Array} -> midi note
+// 
+function freqToMidi(a=261, d=false){
+	if (!Array.isArray(a)){
+		let f = Math.log(a / 440) / Math.log(2) * 12 + 69;
+		if (!d) {
+			return Math.round(f);
+		}
+		return f;
+	}
+	return a.map(x => freqToMidi(x, d));
+}
+exports.freqToMidi = freqToMidi;
+exports.ftom = freqToMidi;
+
+// Convert a frequency to closest note name (261.62 Hz => 'c4')
+// With default equal temperament tuning A4 = 440 Hz
+// 
+// @param {Number/Array} -> frequency value
+// @return {Number/Array} -> midi note
+// 
+function freqToNote(a=261){
+	return midiToNote(freqToMidi(a));
+}
+exports.freqToNote = freqToNote;
+exports.fton = freqToNote;
 
 // Convert a pitch name to a midi value (C4 => 60)
 // 
@@ -9707,7 +9743,7 @@ function noteToMidi(a='c4'){
 	if (!Array.isArray(a)){
 		return Note.midi(a);
 	}
-	return a.map(x => Note.midi(x));
+	return a.map(x => noteToMidi(x));
 }
 exports.noteToMidi = noteToMidi;
 exports.ntom = noteToMidi;
@@ -9722,24 +9758,24 @@ function noteToFreq(a='c4'){
 	if (!Array.isArray(a)){
 		return Note.freq(a);
 	}
-	return a.map(x => Note.freq(x));
+	return a.map(x => noteToFreq(x));
 }
 exports.noteToFreq = noteToFreq;
 exports.ntof = noteToFreq;
 
 // Convert a list of relative semitone intervals to midi
-// provide octave offset
+// provide octave offset with second argument
 // 
 // @param {Number/Array} -> relative
 // @param {Number/String} -> octave (optional, default=4)
 // @return {Number/Array}
 // 
 function relativeToMidi(a=0, o=4){
-	o = (typeof o === 'string')? Note.midi(o) : o * 12;
 	if (!Array.isArray(a)){
+		o = (typeof o === 'string')? Note.midi(o) : o * 12;
 		return a + o;
 	}
-	return a.map(x => x + o);
+	return a.map(x => relativeToMidi(x, o));
 }
 exports.relativeToMidi = relativeToMidi;
 exports.rtom = relativeToMidi;
@@ -9752,12 +9788,7 @@ exports.rtom = relativeToMidi;
 // @return {Number/Array}
 // 
 function relativeToFreq(a=0, o=4){
-	o = (typeof o === 'string')? Note.midi(o) : o * 12;
-	if (!Array.isArray(a)){
-		console.log(Note.freq(Note.fromMidi(a + o)));
-		return Note.freq(a + o);
-	}
-	return a.map(x => Note.freq(Note.fromMidi(x + o)));
+	return midiToFreq(relativeToMidi(a, o));
 }
 exports.relativeToFreq = relativeToFreq;
 exports.rtof = relativeToFreq;
@@ -9770,8 +9801,10 @@ exports.rtof = relativeToFreq;
 // @return {Array/Number} -> mapped to scale
 // 
 function mapToScale(a=[0]){
-	if (!Array.isArray(a)) return mapScale(a);
-	return a.map(x => mapScale(x));
+	if (!Array.isArray(a)) {
+		return mapScale(a);
+	}
+	return a.map(x => mapToScale(x));
 }
 exports.mapToScale = mapToScale;
 exports.toScale = mapToScale;
@@ -9783,20 +9816,50 @@ function mapScale(a){
 	return notation.map[s] + o * 12 + d;
 }
 
-// Map an array of reletive semitone intervals to scale and 
+// Map an array of relative semitone intervals to scale and 
 // output in specified octave as midi value
 // 
-// @param {Array/Int} -> 
-// @param {Int/String} -> octave 
+// @param {Array/Int} -> semitone intervals
+// @param {Int/String} -> octave range
 // @return {Array/Int} -> mapped midi values
 // 
 function mapToMidi(a=[0], o=4){
-	o = (typeof o === 'string')? Note.midi(o) : o * 12 + notation.rootInt;
-	if (!Array.isArray(a)) return a + o;
-	return a.map(x => mapScale(x) + o);
+	return Util.add(relativeToMidi(mapToScale(a), o), notation.rootInt);
 }
 exports.mapToMidi = mapToMidi;
 exports.toMidi = mapToMidi;
+
+// Map an array of relative semitone intervals to scale and 
+// output in frequency value
+// 
+// @param {Array/Int} -> semitone intervals
+// @param {Int/String} -> octave range
+// @return {Array/Int} -> mapped midi values
+//
+function mapToFreq(a=[0], o=4){
+	// return mapToMidi(a, o);
+	return midiToFreq(mapToMidi(a, o));
+}
+exports.mapToFreq = mapToFreq;
+exports.toFreq = mapToFreq;
+
+// Convert a frequency ratio string to a corresponding cents value
+// eq. ['2/1', '3/2'] => [1200, 701.95]
+// 
+// @param {Number/String/Array} -> ratios to convert
+// @return {Number/Array} -> cents output
+// 
+function ratioToCent(a=['1/1']){
+	a = Array.isArray(a)? a : [a];
+	return a.map(x => {
+		if (Array.isArray(x)){
+			return ratioToCent(x);
+		}
+		return Math.log(divRatio(x)) / Math.log(2) * 1200;
+	});
+}
+exports.ratioToCent = ratioToCent;
+exports.rtoc = ratioToCent;
 
 /* WORK IN PROGRESS
 // Convert a midi value to semitone intervals
@@ -9825,16 +9888,10 @@ exports.mtos = midiToSemi;
 //
 function divisionToMs(a=['1'], bpm){
 	let measureMs = notation.measureInMs;
-	if (bpm !== undefined) {
-		measureMs = 60000.0 / Math.max(1, Number(bpm)) * 4;
-	}
-	let v = (!Array.isArray(a))? [a] : a; 
-	return v.map(x => {
-		// match all division symbols: eg. 1/4, 5/16
-		let d = /^\d+(\/\d+)?$/;
-		x = (typeof x === 'string' && d.test(x))? eval(x) : x;
-		return x * measureMs;
-	});
+	if (bpm) {
+		measureMs = 60000 / Math.max(1, Number(bpm)) * 4;
+	} 
+	return Util.multiply(divisionToRatio(a), measureMs);
 }
 exports.divisionToMs = divisionToMs;
 exports.dtoms = divisionToMs;
@@ -9846,36 +9903,24 @@ exports.dtoms = divisionToMs;
 // @return {Number/Array}
 //
 function divisionToRatio(a=['1']){
-	let v = (!Array.isArray(a))? [a] : a; 
-	return v.map(x => {
-		// match all division symbols: eg. 1/4, 5/16
-		let d = /^\d+(\/\d+)?$/;
-		return (typeof x === 'string' && d.test(x))? eval(x) : x;
+	a = Array.isArray(a)? a : [a];
+	return a.map(x => {
+		if (Array.isArray(x)){
+			return divisionToRatio(x);
+		}
+		return divRatio(x);
 	});
 }
 exports.divisionToRatio = divisionToRatio;
 exports.dtor = divisionToRatio;
 
-// Convert a frequency ratio string to a corresponding cents value
-// eq. ['2/1', '3/2'] => [1200, 701.95]
+// Evaluate a division string to a ratio
 // 
-// @param {Number/String/Array} -> ratios to convert
-// @return {Number/Array} -> cents output
-// 
-function ratioToCent(ratio=['1/1']){
-	let reg = /^[0-9]+(\/[0-9]+)?$/;
-	let a = (!Array.isArray(ratio))? [ratio] : ratio;
-
-	a = a.map(x => {
-		if (typeof x === 'string' && reg.test(x)){
-			x = eval(x);
-		}
-		return Math.log(x)/Math.log(2)*1200.0;
-	});
-	return (!Array.isArray(ratio))? a[0] : a;
+function divRatio(x){
+	// match all division symbols: eg. 1/4, 5/16
+	let d = /^\d+(\/\d+)?$/;
+	return (typeof x === 'string' && d.test(x))? eval(x) : x;
 }
-exports.ratioToCent = ratioToCent;
-exports.rtoc = ratioToCent;
 
 //=======================================================================
 // Scala class
@@ -10031,11 +10076,12 @@ class Scala {
 						// append the octave ratio (or range)
 						tmpCents.push(result[scl]['range']);
 						// filter duplicates
+						
 						tmpCents = Mod.unique(tmpCents).map(x => x.toFixed(f.decimals));
 
 						for (let i in s){
 							// for all entered cent/ratio values
-							let cent = (typeof s[i] === 'string')? ratioToCent(s[i]) : s[i];
+							let cent = (typeof s[i] === 'string')? ratioToCent(s[i])[0] : s[i];
 							// if equals cent from array increment match
 							for (let c=0; c<tmpCents.length; c++){
 								if (tmpCents[c] === cent.toFixed(f.decimals)){
@@ -10094,7 +10140,7 @@ class Scala {
 					if (n < this.scl.size){
 						// if line is not a number then it's a ratio
 						if (isNaN(Number(line[0]))) {
-							line = ratioToCent(line[0]);
+							line = ratioToCent(line[0])[0];
 						} else {
 							// if line is negative then make absolute
 							line = (Number(line[0]) < 0)? Math.abs(Number(line[0])) : Number(line[0]);
@@ -10136,7 +10182,7 @@ class Scala {
 }
 exports.Scala = Scala;
 
-},{"../data/scales.json":1,"../data/scldb.json":2,"../data/tones.json":3,"./transform.js":41,"@tonaljs/tonal":25}],43:[function(require,module,exports){
+},{"../data/scales.json":1,"../data/scldb.json":2,"../data/tones.json":3,"./transform.js":41,"./utility.js":43,"@tonaljs/tonal":25}],43:[function(require,module,exports){
 //====================================================================
 // utility.js
 // part of 'total-serialism' Package
