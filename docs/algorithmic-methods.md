@@ -11,6 +11,7 @@ const Algo = require('total-serialism').Algorithmic;
 # Methods
 
 - [euclid](#euclid)
+- [fastEuclid](#fastEuclid)
 - [hexBeat](#hexbeat)
 - [linden](#linden)
 - [cellular automaton](#cellular-automaton)

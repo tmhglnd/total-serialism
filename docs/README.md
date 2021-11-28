@@ -14,6 +14,7 @@
 	- [square / squareFloat](./generative-methods.md#square--squareFloat)
 - [Algorithmic Methods](./algorithmic-methods.md)
 	- [euclid](./algorithmic-methods.md#euclid)
+	- [fastEuclid](./algorithmic-methods.md#fastEuclid)
 	- [hexBeat](./algorithmic-methods.md#hexBeat)
 	- [linden](./algorithmic-methods.md#linden)
 	- [Automaton](./algorithmic-methods.md#cellular-automaton)
