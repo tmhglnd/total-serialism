@@ -5,32 +5,42 @@
 - [Generative Methods](./generative-methods.md)
 	- [spread / spreadFloat](./generative-methods.md#spread)
 	- [spreadInclusive / spreadInclusiveFloat](./generative-methods.md#spreadinclusive)
+	- [spreadExp / spreadExpFloat](./generative-methods.md#spreadExp)
+	- [spreadInclusiveExp / spreadInclusiveExpFloat](./generative-methods.md#spreadInclusiveExp)
 	- [fill](./generative-methods.md#fill)
 	- [sine / cosine](./generative-methods.md#sine--cosine)
-	- [sineFloat / cosineFloat](./generative-methods.md#sinefloat--cosinefloat)
-	- [saw / sawFloat](./generative-methods.md#saw--sawFloat);
+	- [sineFloat / cosineFloat](./generative-methods.md#sineFloat--cosineFloat)
+	- [saw / sawFloat](./generative-methods.md#saw--sawFloat)
 - [Algorithmic Methods](./algorithmic-methods.md)
-	- [Euclidean Rhythm](./algorithmic-methods.md#euclid)
-	- [Hexadecimal Rhythm](./algorithmic-methods.md#hexBeat)
-	- [Lindenmayer System](./algorithmic-methods.md#linden)
-	- [Cellular Automaton](./algorithmic-methods.md#cellular-automaton)
-	- [Fibonacci Sequence](./algorithmic-methods.md#fibonacci)
-	- [Pisano Period](./algorithmic-methods.md#pisano)
+	- [euclid](./algorithmic-methods.md#euclid)
+	- [hexBeat](./algorithmic-methods.md#hexBeat)
+	- [linden](./algorithmic-methods.md#linden)
+	- [Automaton](./algorithmic-methods.md#cellular-automaton)
+	- [fibonacci](./algorithmic-methods.md#fibonacci)
+	- [pisano](./algorithmic-methods.md#pisano)
+	- [pell](./algorithmic-methods.md#pell)
+	- [threeFibonacci](./algorithmic-methods.md#threefibonacci)
+	- [lucas](./algorithmic-methods.md#lucas)
 - [Stochastic Methods](./stochastic-methods.md)
-	- [Markov Chain](./stochastic-methods.md#markov-chain)
+	- [seed](./stochastic-methods.md#seed)
 	- [random](./stochastic-methods.md#random)
-	- [urn](./stochastic-methods.md#urn)
 	- [drunk](./stochastic-methods.md#drunk)
-	- [coin](./stochastic-methods.md#coin) 
+	- [coin](./stochastic-methods.md#coin)
 	- [dice](./stochastic-methods.md#dice)
+	- [urn](./stochastic-methods.md#urn)
+	- [twelveTone](./stochastic-methods.md#twelvetone)
 	- [shuffle](./stochastic-methods.md#shuffle)
-	- [pick](./stochastic-methods.md#pick)
 	- [choose](./stochastic-methods.md#choose)
+	- [pick](./stochastic-methods.md#pick)
+	- [clave](./stochastic-methods.md#clave)
+	- [expand](./stochastic-methods.md#expand)
+	- [MarkovChain](./stochastic-methods.md#markovchain)
 - [Transform Methods](./transform-methods.md)
 	- [clone](./transform-methods.md#clone)
 	- [join](./transform-methods.md#join)
 	- [copy](./transform-methods.md#copy)
 	- [every](./transform-methods.md#every)
+	- [flatten](./transform-methods.md#flatten)
 	- [filter](./transform-methods.md#filter)
 	- [filterType](./transform-methods.md#filterType)
 	- [invert](./transform-methods.md#invert)
@@ -38,59 +48,75 @@
 	- [lookup](./transform-methods.md#lookup)
 	- [merge](./transform-methods.md#merge)
 	- [palindrome](./transform-methods.md#palindrome)
+	- [repeat](./transform-methods.md#repeat)
 	- [reverse](./transform-methods.md#reverse)
 	- [rotate](./transform-methods.md#rotate)
 	- [sort](./transform-methods.md#sort)
 	- [spray](./transform-methods.md#spray)
+	- [slice](./transform-methods.md#slice)
+	- [split](./transform-methods.md#split)
 	- [stretch](./transform-methods.md#stretch)
 	- [unique](./transform-methods.md#unique)
 - [Statistic Methods](./statistic-methods.md)
 	- [sort](./statistic-methods.md#sort)
+	- [average](./statistic-methods.md#mean) (mean)
+	- [center](./statistic-methods.md#median) (median)
+	- [common](./statistic-methods.md#mode) (mode)
 	- [maximum](./statistic-methods.md#maximum)
 	- [minimum](./statistic-methods.md#minimum)
-	- [mean](./statistic-methods.md#mean)
-	- [median](./statistic-methods.md#median)
-	- [mode](./statistic-methods.md#mode)
 	- [change](./statistic-methods.md#change)
+	- [compare](#compare)
 - [Translate Methods](./translate-methods.md)
-	- [Scala Tuning](./translate-methods.md#using-scala-tuning-format)
-		- parse
-		- tune
-		- center
-		- scalaToFreq
-		- chart
-		- data
-		- names
-		- search
 	- [Conversion between units](./translate-methods.md#conversion-between-units)
-		- midiToNote / mton
-		- noteToMidi / ntom
-		- midiToFreq / mtof
-		- noteToFreq / ntof
-		- relativeToMidi / rtom
-		- relativeToFreq / rtof
-		- divisionToMs / dtoms
-		- divisionToRatio / dtor
+		- midiToNote (mton)
+		- midiToFreq (mtof)
+		- noteToMidi (ntom)
+		- noteToFreq (ntof)
+		- freqToMidi (ftom)
+		- freqToNote (fton)
+		- relativeToMidi (rtom)
+		- relativeToFreq (rtof)
+		- ratioToCent (rtoc)
+		- divisionToMs (dtoms)
+		- divisionToRatio (dtor)
+		- divisionToTicks (dtotk)
+		- timevalueToRatio (ttor)
+		- timevalueToTicks (ttotk)
+	- [Scala Tuning](./translate-methods.md#using-scala-tuning-format)
+		- Scala.parse
+		- Scala.tune
+		- Scala.center
+		- Scala.scalaToFreq
+		- Scala.chart
+		- Scala.data
+		- Scala.names
+		- Scala.search
 	- [Working with predefined scale and root](./translate-methods.md#working-with-predefined-scale-and-root)
 		- setTempo
 		- setScale
 		- setRoot
 		- getSettings
 		- scaleNames
-		- toScale
-		- toMidi
+		- relativeToScale (toScale)
+		- relativeToMidi (toMidi)
+		- relativeToFreq (toFreq)
 - [Utility Methods](./utility-methods.md)
-	- [wrap](./utility-methods.md#usage)
-	- [constrain](./utility-methods.md#usage)
-	- [fold](./utility-methods.md#usage)
-	- [map](./utility-methods.md#usage)
-	- [add](./utility-methods.md#usage)
-	- [subtract](./utility-methods.md#usage)
-	- [multiply](./utility-methods.md#usage)
-	- [divide](./utility-methods.md#usage)
-	- [mod](./utility-methods.md#usage)
+	- [wrap](./utility-methods.md#wrap)
+	- [constrain](./utility-methods.md#constrain)
+	- [fold](./utility-methods.md#fold)
+	- [scale](./utility-methods.md#scale)
+	- [add](./utility-methods.md#add)
+	- [subtract](./utility-methods.md#subtract)
+	- [multiply](./utility-methods.md#multiply)
+	- [divide](#divide)
+	- [mod](./utility-methods.md#mod)
+	- [pow](./utility-methods.md#pow)
+	- [sqrt](./utility-methods.md#sqrt)
+	- [arrayCalc](./utility-methods.md#arrayCalc)
+	- [sum](./utility-methods.md#sum)
 	- [minimum](./utility-methods.md#minimum)
 	- [maximum](./utility-methods.md#maximum)
 	- [normalize](./utility-methods.md#normalize)
+	- [flatten](./utility-methods.md#flatten)
 	- [plot](./utility-methods.md#plot)
 	- [draw](./utility-methods.md#draw)

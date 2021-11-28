@@ -10,26 +10,31 @@ const Util = require('total-serialism').Utility;
 
 # Methods
 
-- wrap
-- bound
-- fold
-- map
-- add
-- subtract
-- multiply
-- divide
-- mod
-- pow
-- sqrt
-- sum
-- minimum
-- maximum
-- normalize
-- flatten
-- plot
-- draw
+- [wrap](#wrap)
+- [constrain](#constrain)
+- [fold](#fold)
+- [scale](#scale)
+- [add](#add)
+- [subtract](#subtract)
+- [multiply](#multiply)
+- [divide](#divide)
+- [mod](#mod)
+- [pow](#pow)
+- [sqrt](#sqrt)
+- [arrayCalc](#arrayCalc)
+- [sum](#sum)
+- [minimum](#minimum)
+- [maximum](#maximum)
+- [normalize](#normalize)
+- [flatten](#flatten)
+- [plot](#plot)
+- [draw](#draw)
 
-Mapping and scaling methods
+# Mapping and scaling methods
+
+Various mapping and scaling methods to keep values of n-dimensional arrays within a specified range.
+
+## wrap
 
 ```js
 // Apply modulus (%) operation to an array
@@ -43,7 +48,11 @@ Util.wrap(Gen.spread(30), 2, 8);
 //    4.00 ┤ │ ╭╯  │ ╭╯  │ ╭╯  │ ╭╯  │ ╭╯ 
 //    3.00 ┤ │╭╯   │╭╯   │╭╯   │╭╯   │╭╯  
 //    2.00 ┤ ╰╯    ╰╯    ╰╯    ╰╯    ╰╯    
+```
 
+## constrain
+
+```js
 // Constrain an array between low and high values
 Util.constrain([0, [1, [2, 3]], [4, 5], 6], 2, 5);
 //=> [ 2, [ 2, [ 2, 3 ] ], [ 4, 5 ], 5 ] 
@@ -57,7 +66,11 @@ Util.constrain(Gen.cosine(30, 1), 5, 9);
 //    5.00 ┤       ╰──────────────╯ 
 
 // Alias: bound(), clip(), clamp()
+```
 
+## fold
+
+```js
 // Fold an array between low and high values
 // Higher/lower values will bounce back instead of wrap
 Util.fold([0, [1, [2, 3]], [4, 5], 6], 2, 5);
@@ -72,15 +85,23 @@ Util.fold(Gen.spreadFloat(30, -9, 13), 0, 1);
 //    0.00 ┤   ╰╯         ╰╯         ╰╯    
 
 // Alias: bounce()
-
-// Scale values from an input range to output range
-Util.map([0, [1, [2, 3]], 4], 0, 4, -1, 1);
-//=> [ -1, [ -0.5, [ 0, 0.5 ] ], 1 ] 
-
-// Alias: scale()
 ```
 
+## scale
+
+```js
+// Scale values from an input range to output range
+Util.scale([0, [1, [2, 3]], 4], 0, 4, -1, 1);
+//=> [ -1, [ -0.5, [ 0, 0.5 ] ], 1 ] 
+
+// Alias: map()
+```
+
+# Arithmetic
+
 Basic arithmetic methods that accept n-dimensional arrays in both arguments. Outputlength is always the length of the longest list. 
+
+## add
 
 ```js
 // Add two arrays sequentially
@@ -90,39 +111,58 @@ Util.add([1, 2, 3, 4], [1, 2, 3]);
 // Works with n-dimensional arrays
 Util.add([1, [2, 3]], [10, [20, 30, 40]]);
 //=> [ 11, [ 22, 33, 42 ] ] 
+```
 
+## subtract
+
+```js
 // Subtract two arrays sequentially
 Util.subtract([1, 2, 3, 4], [1, 2, 3]);
 //=> [ 0, 0, 0, 3 ] 
 
 Util.sub([1, [2, 3]], [10, [20, 30, 40]]);
 //=> [ -9, [ -18, -27, -38 ] ] 
+```
 
+## multiply
+
+```js
 // Multiply two arrays sequentially
 Util.multiply([1, 2, 3, 4], [1, 2, 3]);
 //=> [ 1, 4, 9, 4 ] 
 
 Util.mul([1, [2, 3]], [10, [20, 30, 40]]);
 //=> [ 10, [ 40, 90, 80 ] ] 
+```
 
+## divide
+
+```js
 // Divide two arrays sequentially
 Util.divide([1, 2, 3, 4], [1, 2, 3]);
 //=> [ 1, 1, 1, 4 ] 
 
 Util.div([1, [2, 3]], [10, [20, 30, 40]]);
 //=> [ 0.1, [ 0.1, 0.1, 0.05 ] ] 
+```
 
+## pow
+
+```js
 // Raise one array to the power of another
 Util.pow([1, 2, 3, 4], [2, 3, 4]);
 //=> [ 1, 8, 81, 16 ] 
 
 Util.pow([1, [2, 3]], [10, [2, 3, 4]]);
 //=> [ 1, [ 4, 27, 16 ] ] 
+```
 
+## sqrt
+
+```js
 // Return the squareroot of an array
 Util.sqrt([2, [9, [16, 25], 144]]);
 //=> [ 1.4142135623730951, [ 3, [ 4, 5 ], 12 ] ] 
-
 ```
 
 ## arrayCalc
