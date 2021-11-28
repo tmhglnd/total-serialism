@@ -422,11 +422,11 @@ Slice an array in one or multiple parts. Slice lengths are determined by the sec
 - {Bool} -> output rest flag (optional, default=false)
 
 ```js
-Mod.split(Gen.spread(8), [3, 2]);
+Mod.slice(Gen.spread(8), [3, 2]);
 //=> [ [ 0, 1, 2 ], [ 3, 4 ], [ 5, 6, 7 ] ] 
 
 // set rest-flag to false removes last slice 
-Mod.split(Gen.spread(24), [3, 2, -1, 5], false);
+Mod.slice(Gen.spread(24), [3, 2, -1, 5], false);
 //=> [ [ 0, 1, 2 ], [ 3, 4 ], [ 5, 6, 7, 8, 9 ] ] 
 ```
 

@@ -343,6 +343,7 @@ function testMod(){
 
 	test("Mod.filter()");
 	test("Mod.filter([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [3, 8, 10])");
+	test("Mod.filter([0, [1, 2], 3, [4, 5, 6], 7, 8, [9, 10]], [3, 8, 10])");
 	test("Mod.filter([0, 1.618, 2, 3.14, 4], 3.14)");
 	test("Mod.filter([0, 1, 'foo', 'bar', 2, 3], ['1', 'foo'])");
 	
