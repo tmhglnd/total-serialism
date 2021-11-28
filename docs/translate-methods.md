@@ -30,6 +30,9 @@ const TL = require('total-serialism').Translate;
 - setTempo
 - divisionToMs (dtoms)
 - divisionToRatio (dtor)
+- divisionToTicks (dtotk)
+- timevalueToRatio (ttor)
+- timevalueToTicks (ttotk)
 - setScale
 - setRoot
 - getSettings
@@ -124,6 +127,26 @@ TL.divisionToMs([0.25, 0.125, 0.1875, 0.25, 0.16667, 2]);
 TL.divisionToRatio(['1/4', '1/8', '3/16', '1/4', '1/6', '2']);
 //=> [ 0.25, 0.125, 0.1875, 0.25, 0.167, 2 ] 
 // Alias: TL.dtor()
+
+// convert beat division strings to ticks (1 tick = 1/480th quarter note)
+TL.dtotk(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2']);
+//=> [ 480, [ 240, [ 360, 480 ] ], 320, 3840 ] 
+// Alias: TL.dtotk()
+
+// convert beat ratio to ticks (1 tick = 1/480th quarter note)
+TL.rtotk([0.25, [0.125, [0.1875, 0.25]], 0.16667, 2]);
+//=> [ 480, [ 240, [ 360, 480 ] ], 320.00640000000004, 3840 ] 
+// Alias: TL.rtotk()
+
+// convert timevalue syntax to beat ratio floats
+TL.ttor(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m']);
+//=> [ 0.25, [ 0.08333333333333333, [ 0.09375, 0.75 ] ], 0.03125, 3 ] 
+// Alias: TL.ttor()
+
+// conver timevalue syntax to ticks (1 tick = 1/480th quarter note)
+TL.ttotk(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m']);
+//=> [ 480, [ 160, [ 180, 1440 ] ], 60, 5760 ]
+// Alias: TL.ttotk()
 ```
 
 ### Working with predefined scale and root

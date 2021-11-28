@@ -4,9 +4,9 @@ const fs = require('fs');
 
 // test with different builds
 let entryPoint = "../index";
-entryPoint = "../build/ts.bundle.js";
-entryPoint = "../build/ts.es5.js";
-entryPoint = "../build/ts.es5.min.js";
+// entryPoint = "../build/ts.bundle.js";
+// entryPoint = "../build/ts.es5.js";
+// entryPoint = "../build/ts.es5.min.js";
 
 const Srl = require(entryPoint);
 const Gen = Srl.Generative;
@@ -64,14 +64,14 @@ fullTest();
 function fullTest(){
 	console.time('Total Time');
 
-	// testSerial();
-	// testGen();
-	// testAlgo();
-	// testRand();
-	// testMod();
-	// testStat();
+	testSerial();
+	testGen();
+	testAlgo();
+	testRand();
+	testMod();
+	testStat();
 	testTranslate();
-	// testUtil();
+	testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -603,10 +603,18 @@ function testTranslate(){
 	test("TL.dtoms(['1/4', '1/8', '3/16', '1/4', '1/6', '2'])");
 	test("TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'])");
 	test("TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'], 100)");
+	test("TL.dtoms([0.25, [0.125, [0.1875, 0.25]], 0.1667, 2], 100)");
+	test("TL.rtoms([0.25, [0.125, [0.1875, 0.25]], 0.1667, 2], 100)");
 	// test("TL.dtoms([0.25, 0.125, 0.1875, 0.25, 0.16667, 2])");
 	
 	test("TL.dtor(['1/4', '1/8', '3/16', '1/4', '1/6', '2'])");
 	test("TL.dtor(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'])");
+	
+	test("TL.dtotk(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'])");
+	test("TL.rtotk([0.25, [0.125, [0.1875, 0.25]], 0.16667, 2])");
+
+	test("TL.ttor(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'])");
+	test("TL.ttotk(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'])");
 
 	test("TL.rtoc()");	
 	test("TL.rtoc('11/5')");	

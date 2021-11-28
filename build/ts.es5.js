@@ -3072,12 +3072,20 @@ exports.midiToSemi = midiToSemi;
 exports.mtos = midiToSemi;
 */ // Convert a beat division value to milliseconds based on the global BPM
 // eg. ['1/4', 1/8', '1/16'] => [500, 250, 125] @ BPM = 120
+// Also works with ratio floating values
 // 
 // @param {Number/String/Array} -> beat division or ratio array
 // @param {Number} -> set the BPM (optional, default=globalBPM)
 // @return {Number/Array}
 //
-function divisionToMs(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1'];var bpm=arguments.length>1?arguments[1]:undefined;var measureMs=notation.measureInMs;if(bpm){measureMs=60000/Math.max(1,Number(bpm))*4;}return Util.multiply(divisionToRatio(a),measureMs);}exports.divisionToMs=divisionToMs;exports.dtoms=divisionToMs;// Convert a beat ratio value to milliseconds based on the BPM
+function divisionToMs(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1'];var bpm=arguments.length>1?arguments[1]:undefined;return ratioToMs(divisionToRatio(a),bpm);}exports.divisionToMs=divisionToMs;exports.dtoms=divisionToMs;// Convert a beat ratio value to milliseconds based on the global BPM
+// eg. [0.25, 0.125, 0.0625] => [500, 250, 125] @ BPM = 120
+// 
+// @param {Number/String/Array} -> beat ratio array
+// @param {Number} -> set the BPM (optional, default=globalBPM)
+// @return {Number/Array}
+//
+function ratioToMs(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];var bpm=arguments.length>1?arguments[1]:undefined;var measureMs=notation.measureInMs;if(bpm){measureMs=60000/Math.max(1,Number(bpm))*4;}return Util.multiply(a,measureMs);}exports.ratioToMs=ratioToMs;exports.rtoms=ratioToMs;// Convert a beat ratio value to milliseconds based on the BPM
 // eg. [0.25, 0.125, 0.0625] => [500, 250, 125] @ BPM = 120
 // 
 // @param {Number/String/Array} -> beat ratio array
@@ -3086,7 +3094,30 @@ function divisionToMs(){var a=arguments.length>0&&arguments[0]!==undefined?argum
 function divisionToRatio(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1'];a=Array.isArray(a)?a:[a];return a.map(function(x){if(Array.isArray(x)){return divisionToRatio(x);}return divRatio(x);});}exports.divisionToRatio=divisionToRatio;exports.dtor=divisionToRatio;// Evaluate a division string to a ratio
 // 
 function divRatio(x){// match all division symbols: eg. 1/4, 5/16
-var d=/^\d+(\/\d+)?$/;return typeof x==='string'&&d.test(x)?eval(x):x;}//=======================================================================
+var d=/^\d+(\/\d+)?$/;// output a floating point value
+return typeof x==='string'&&d.test(x)?eval(x):x;}// Convert a division or ratio value to amount of ticks
+// Used in software like Ableton, M4L and MaxMSP
+// 
+// @param {Number/String/Array} -> division to convert
+// @return {Array}
+// 
+function divisionToTicks(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1'];// 1 tick = 1/480th of a quarter note, 
+// 1 bar = 1920 ticks
+return Util.multiply(divisionToRatio(a),1920);}exports.divisionToTicks=divisionToTicks;exports.dtotk=divisionToTicks;exports.ratioToTicks=divisionToTicks;exports.rtotk=divisionToTicks;// Convert timevalues to a ratio in floatingpoint
+// eg. 4n, 8nt, 16nd, 2m etc.
+// 
+// @param {String/Array} -> timevalues to convert
+// @return {Array}
+// 
+function timevalueToRatio(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1n'];a=Array.isArray(a)?a:[a];return a.map(function(x){if(Array.isArray(x)){return timevalueToRatio(x);}return timevalueRatio(x);});}exports.timevalueToRatio=timevalueToRatio;exports.ttor=timevalueToRatio;// Convert timevalues to ticks
+// 
+// @param {String/Array} -> timevalues to convert
+// @return {Array}
+// 
+function timevalueToTicks(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1n'];return Util.multiply(timevalueToRatio(a),1920);}exports.timevalueToTicks=timevalueToTicks;exports.ttotk=timevalueToTicks;function timevalueRatio(x){var r=/^(\d+)([nm])([dt]?)$/;var m=x.match(r);var v=1;if(m){var nm={'n':1,'m':m[1]*m[1]};var dt={'d':3/2,'t':2/3,'':1};v=1/m[1]*nm[m[2]]*dt[m[3]];}else{console.log("timevalueRatio(): ".concat(x," is not a valid timevalue"));}return v;}// Convert toneJS time values
+// function tonetimeRatio(x){
+// }
+//=======================================================================
 // Scala class
 // 
 // Import a .scl file and convert to a JSON object. Use methods to 
