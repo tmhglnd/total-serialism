@@ -1,4 +1,4 @@
-# Documentation
+# 📖 Documentation
 
 *This library and documentation is a work in progress. I'm always interested in receiving inspiration, suggestions, enhancements, literature and more. Feel free to file an [issue here](https://github.com/tmhglnd/total-serialism/issues) or make a pull request and I will gladly look into it!*
 
