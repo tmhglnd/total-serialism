@@ -67,7 +67,7 @@
 	- [change](./statistic-methods.md#change)
 	- [compare](#compare)
 - [Translate Methods](./translate-methods.md)
-	- [Conversion between units](./translate-methods.md#conversion-between-units)
+	- [Conversion between pitch units](./translate-methods.md#conversion-between-pitch-units)
 		- midiToNote (mton)
 		- midiToFreq (mtof)
 		- noteToMidi (ntom)
@@ -77,6 +77,7 @@
 		- relativeToMidi (rtom)
 		- relativeToFreq (rtof)
 		- ratioToCent (rtoc)
+	- [Conversion between time units](./translate-methods.md#conversion-between-time-units)
 		- divisionToMs (dtoms)
 		- divisionToRatio (dtor)
 		- divisionToTicks (dtotk)
@@ -91,7 +92,7 @@
 		- Scala.data
 		- Scala.names
 		- Scala.search
-	- [Working with predefined scale and root](./translate-methods.md#working-with-predefined-scale-and-root)
+	- [Working with predefined scale and root](./translate-methods.md#working-with-fixed-scale-and-root)
 		- setTempo
 		- setScale
 		- setRoot

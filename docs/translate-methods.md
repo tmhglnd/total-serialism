@@ -12,8 +12,9 @@ const TL = require('total-serialism').Translate;
 
 ## Usage
 
-- [Conversion between units](#conversion-between-units)
-- [Working with predefined scale and root](#working-with-predefined-scale-and-root)
+- [Conversion between pitch units](#conversion-between-pitch-units)
+- [Conversion between time units](#conversion-between-time-units)
+- [Working with predefined scale and root](#working-with-fixed-scale-and-root)
 - [Using Scala tuning format](#using-scala-tuning-format)
 
 # Methods
@@ -46,7 +47,7 @@ const TL = require('total-serialism').Translate;
 - Scala.parse
 - Scala.scalaToFreq
 
-### Conversion between pitch units
+## Conversion between pitch units
 
 Convert easily between relative-semitones, midinotes, notenames and frequencies with the methods below. Thankfully using the amazing `Tonal.js` package by `@danigb` for various functions.
 
@@ -104,6 +105,8 @@ TL.ratioToCent(['2/1', ['3/2', ['4/3', '5/4']], '9/8']);
 
 ```
 
+## Conversion between time units
+
 Convert between rhythmic notation such as divisions or ratios and milliseconds based on the set tempo in the global settings.
 
 ```js
@@ -149,7 +152,7 @@ TL.ttotk(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m']);
 // Alias: TL.ttotk()
 ```
 
-### Working with predefined scale and root
+## Working with fixed scale and root
 
 ```js
 // Set the global scale used with toScale() and toMidi() methods
@@ -203,7 +206,7 @@ TL.toFreq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 4);;
 
 ```
 
-### Using Scala tuning format
+## Using Scala tuning format
 
 Scala is a powerful tool for experimentation with musical tunings, such as just intonation scales, equal and historical temperaments, microtonal and macrotonal scales, and non-Western scales. Scala is ideal for the exploration of tunings and becoming familiar with the concepts involved. The `Scala` class supports:
 
