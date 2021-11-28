@@ -10524,7 +10524,10 @@ function arrayCalc(a, v, func){
 	// if both are single values
 	if (!Array.isArray(a)){
 		let r = func(a, v);
-		return isNaN(r)? 0 : r;
+		if (!isNaN(a) && !isNaN(v)){
+			return isNaN(r)? 0 : r;
+		}
+		return r;
 	}
 	// if lefthand side is array
 	return a.map(x => arrayCalc(x, v, func));

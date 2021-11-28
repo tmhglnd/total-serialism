@@ -3338,7 +3338,7 @@ function sqrt(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:
 // 
 function arrayCalc(a,v,func){// if righthand side is array
 if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){r[i]=arrayCalc(a[i%l1],v[i%l2],func);}return r;}// if both are single values
-if(!Array.isArray(a)){var _r=func(a,v);return isNaN(_r)?0:_r;}// if lefthand side is array
+if(!Array.isArray(a)){var _r=func(a,v);if(!isNaN(a)&&!isNaN(v)){return isNaN(_r)?0:_r;}return _r;}// if lefthand side is array
 return a.map(function(x){return arrayCalc(x,v,func);});}exports.arrayCalc=arrayCalc;// flatten a multidimensional array. Optionally set the depth
 // for the flattening
 //

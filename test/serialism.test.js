@@ -131,7 +131,7 @@ function testGen(){
 	test("Gen.fill([10, 20, 2, 15, 3, 20, 4])");
 
 	test("Util.plot(Gen.sinF(30, 1, -5, 5))");
-	test("Util.plot(Gen.cosF(30, Gen.sinF(30, 2), -5, 5))");
+	test("Util.plot(Gen.cosF(30, Gen.sinF(30, 2), -5, 5), {data: true})");
 	
 	test("Util.plot(Gen.saw(16, 8.5), {log: false})");
 	test("Util.plot(Gen.sawFloat(25, 2.5), {log: false, height: 5, data: true})");
@@ -316,6 +316,7 @@ function testMod(){
 	test('Mod.clone([0, 5, 7], [0, 12, -12])');
 	test("Mod.clone(['kick', 'snare', 'hat'], ['_808', '_909'])");
 	test("Mod.clone(['c', ['e', 'g']], ['4', '5', '#3'])");
+	test("Mod.clone(['c', ['e', 'g']], '4', '5', '#3')");
 	
 	test("Mod.combine()");
 	test("Mod.combine([0, 5], [[12, [19, 24]], 7])");
