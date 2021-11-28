@@ -2,24 +2,26 @@
 
 **A Toolbox full of Algorithmic Composition methods**
 
+[**🙏 Support Total Serialism by becoming a Patron**](https://www.patreon.com/bePatron?u=9649817) 
+
 *Visit the [Total Serialism Documentation](http://tmhglnd.github.io/total-serialism) for interactive examples.*
 
 `total-serialism` is a set of methods used for procedurally generating and transforming number sequences (mainly in the form of arrays). This library does not output anything else then numbers, but can therefore be nicely integrated with frameworks like [P5js](https://editor.p5js.org/), [ToneJS](https://tonejs.github.io/), [Node4Max](https://cycling74.com/products/extendmax), and any other javascript based project you want to generate arrays for. This library focusses mainly on algorithmic composition of music, but is absolutely not limited to only that and will be useful for any project that involves generation and manipulation of arrays and numbers. The library is a result of my research in algorithmic composition, livecoding and electronic music and was first prototyped with Max/MSP in the [Mercury](http://github.com/tmhglnd/mercury) livecoding environment. It is now also used in the web based [Mercury Playground](https://github.com/tmhglnd/mercury-playground)
 
 *This library is a work in progress. I'm always interested in receiving inspiration, suggestions, enhancements, literature and more. Feel free to file an [issue here](https://github.com/tmhglnd/total-serialism/issues) or make a pull request and I will gladly look into it!*
 
-# Table of Content
+# 📋 Table of Content
 
-- [Newest Features](#newest-features)
-- [Install](#install)
-- [Content](#content)
-- [Usage](#usage)
-- [Documentation](/docs/README.md)
-- [In Action](#in-action)
-- [Inspiration & Bibliography](#inspiration--bibliography)
-- [License](#license)
+- [👾 Newest Features](#-newest-features)
+- [🚀 Install](#-install)
+- [🔭 Content](#-content)
+- [📟 Usage](#-usage)
+- [📖 Documentation](/docs/README.md)
+- [🎮 In Action](#-in-action)
+- [✨ Inspiration & Bibliography](#-inspiration--bibliography)
+- [📄 License](#-license)
 
-# Newest features
+# 👾 Newest features
 
 ## cellular automaton
 
@@ -92,7 +94,7 @@ Rand.clave(16, 3, 1);
 //=> █  █  ██  █ █  █
 ```
 
-# Install
+# 🚀 Install
 
 ## Install in node_modules
 
@@ -135,18 +137,18 @@ const Srl = TotalSerialism;
 const Rand = TotalSerialism.Stochastic;
 ```
 
-# Content
+# 🔭 Content
 
 The library consists of a few subsets:
 - [`Generative`](docs/generative-methods.md) : Basic methods that generate arrays of number sequences, such as methods that generate an ascending array of numbers evenly spread between a low and high value.
 - [`Algorithmic`](docs/algorithmic-methods.md) : These are also generative methods, but are in general more complex algorithms, such as a euclidean rhythm generation, lindenmayer string expansion, cellular automata, fibonacci sequence, pisano periods and more.
-- [`Stochastic`](docs/stochastic-methods.md) : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more. Also includes Markov Chain.
+- [`Stochastic`](docs/stochastic-methods.md) : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (uniformly distributed), rolling a die, flipping a coin and more. Also includes Markov Chain.
 - [`Transform`](docs/transform-methods.md) : Methods that transform the array in some fashion. Think of methods such as reversing, palindrome, duplicating, inversing, interleaving and more.
 - [`Statistic`](docs/statistic-methods.md) : A set of methods from Statistics and Probability Theory that allow for analysis of number sequences for statistical purposes. For example getting the average value or the most common value from an array.
 - [`Translate`](docs/translate-methods.md) : Translate between different notation systems and tunings with Scala. For example convert midi values to frequency, or note names to midi integers. Or use a relative semitone notation system and convert to midi. Map values in an Array to a specified scale, and output the relative values in the specified scale, root and octave.
 - [`Utility`](docs/utility-methods.md) : Basic arithmetic and methods necessary to run functions in the libraries above. But can also be of help in your own algorithmic processes.
 
-# Usage
+# 📟 Usage
 
 The entire library
 
@@ -163,7 +165,7 @@ const Rand = require('total-serialism').Stochastic;
 const Util = require('total-serialism').Utility;
 ```
 
-# In Action
+# 🎮 In Action
 
 The following links redirect to p5.js sketches coded in the p5 browser editor. These sketches demonstrate some of the methods from this library, used in both sound (for algorithmic composing) and visuals. The sketches use the ts.es5.min.js bundled minified version of this package. See [install](#install) for instructions on how to include the minified version in the index.html and script.
 
@@ -183,7 +185,7 @@ A simple bass synthesizer with a 4 note progression, using euclidean rhythm gene
 
 A arpeggiator that uses a generated melody from multiple periods of a scaled cosine function and plays a rhythm generated by a hexadecimal value. Using: `Algo.hexBeat(), Gen.cosine()`
 
-# Inspiration & Bibliography
+# ✨ Inspiration & Bibliography
 
 This library is inspired by the composition techniques named `Serialism` and `Total Serialism`. The technique approaches the parameters that make up a piece of music as individual series of values. These parameters are (but not limited to) *pitch, duration/rhythm and velocity/dynamic*.
 
@@ -244,18 +246,18 @@ Some other interesting resources and papers that have been used for some of the 
 
 - [Markov Chain on wikipedia](https://en.wikipedia.org/wiki/Markov_chain)
 
-# Missing Something?
+# 🤓 Missing Something?
 
 This library is a work in progress, and I'm always interested to receive inspiration, suggestions, enhancements, literature and more. Feel free to file an [issue here](https://github.com/tmhglnd/total-serialism/issues) and I will gladly look into it!
 
-## Powered By
+## 🔋 Powered By
 
 Total Serialism is a result of research in algorithmic composition with the [Mercury](https://github.com/tmhglnd/mercury) live coding environment. 
 
 - Mercury has been granted funding from [**Creative Industries Fund NL**](https://stimuleringsfonds.nl/en/)
 - Mercury has been granted in-kind funding from [**Creative Coding Utrecht**](https://creativecodingutrecht.nl/)
 
-# License
+# 📄 License
 
 The MIT License
 
