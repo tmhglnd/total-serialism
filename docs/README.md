@@ -11,6 +11,7 @@
 	- [sine / cosine](./generative-methods.md#sine--cosine)
 	- [sineFloat / cosineFloat](./generative-methods.md#sineFloat--cosineFloat)
 	- [saw / sawFloat](./generative-methods.md#saw--sawFloat)
+	- [square / squareFloat](./generative-methods.md#square--squareFloat)
 - [Algorithmic Methods](./algorithmic-methods.md)
 	- [euclid](./algorithmic-methods.md#euclid)
 	- [hexBeat](./algorithmic-methods.md#hexBeat)

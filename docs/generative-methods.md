@@ -19,6 +19,7 @@ const Gen = require('total-serialism').Generative;
 - [sine / cosine](#sine--cosine)
 - [sineFloat / cosineFloat](#sineFloat--cosineFloat)
 - [saw / sawFloat](#saw--sawFloat)
+- [square / squareFloat](#square--squareFloat)
 
 ## spread
 
