@@ -1,4 +1,4 @@
-# regexpu-core [![Build status](https://travis-ci.org/mathiasbynens/regexpu-core.svg?branch=main)](https://travis-ci.org/mathiasbynens/regexpu-core) [![Code coverage status](https://img.shields.io/codecov/c/github/mathiasbynens/regexpu-core.svg)](https://codecov.io/gh/mathiasbynens/regexpu-core)
+# regexpu-core [![Build status](https://github.com/mathiasbynens/regexpu-core/workflows/run-checks/badge.svg)](https://github.com/mathiasbynens/regexpu-core/actions?query=workflow%3Arun-checks) [![regexpu-core on npm](https://img.shields.io/npm/v/regexpu-core)](https://www.npmjs.com/package/regexpu-core)
 
 _regexpu_ is a source code transpiler that enables the use of ES2015 Unicode regular expressions in JavaScript-of-today (ES5).
 
@@ -134,6 +134,28 @@ rewritePattern('\\p{Script_Extensions=Anatolian_Hieroglyphs}', 'u', {
 });
 // → '[\\u{14400}-\\u{14646}]'
 ```
+
+## For maintainers
+
+### How to publish a new release
+
+1. On the `main` branch, bump the version number in `package.json`:
+
+    ```sh
+    npm version patch -m 'Release v%s'
+    ```
+
+    Instead of `patch`, use `minor` or `major` [as needed](https://semver.org/).
+
+    Note that this produces a Git commit + tag.
+
+1. Push the release commit and tag:
+
+    ```sh
+    git push && git push --tags
+    ```
+
+    Our CI then automatically publishes the new release to npm.
 
 ## Author
 

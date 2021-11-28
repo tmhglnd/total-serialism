@@ -9971,6 +9971,18 @@ function timevalueToRatio(a=['1n']){
 exports.timevalueToRatio = timevalueToRatio;
 exports.ttor = timevalueToRatio;
 
+// Convert timevalues to milliseconds
+// 
+// @param {String/Array} -> timevalues to convert
+// @param {Number} -> bpm (optional, default=globalBPM)
+// @return {Array}
+// 
+function timevalueToMs(a=['1n'], bpm){
+	return ratioToMs(timevalueToRatio(a), bpm);
+}
+exports.timevalueToMs = timevalueToMs;
+exports.ttoms = timevalueToMs;
+
 // Convert timevalues to ticks
 // 
 // @param {String/Array} -> timevalues to convert

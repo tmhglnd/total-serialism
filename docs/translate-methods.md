@@ -114,7 +114,7 @@ Convert between rhythmic notation such as divisions or ratios and milliseconds b
 TL.setTempo(120);
 
 // convert beat division strings to milliseconds use bpm from global settings
-TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2']);
+TL.divisionToMs(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2']);
 //=> [ 500, [ 250, [ 375, 500 ] ], 333.33, 4000 ] 
 // Alias: TL.dtoms()
 
@@ -122,32 +122,38 @@ TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2']);
 TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'], 100);
 //=> [ 600, [ 300, [ 450, 600 ] ], 400, 4800 ]
 
-// convert beat ratio floats to milliseconds
-TL.divisionToMs([0.25, 0.125, 0.1875, 0.25, 0.16667, 2]);
-//=> [ 500, 250, 375, 500, 333.33, 4000 ] 
-
 // convert beat division strings to beat ratio floats
 TL.divisionToRatio(['1/4', '1/8', '3/16', '1/4', '1/6', '2']);
 //=> [ 0.25, 0.125, 0.1875, 0.25, 0.167, 2 ] 
 // Alias: TL.dtor()
 
+// convert beat ratio floats to milliseconds
+TL.ratioToMs([0.25, [0.125, [0.1875, 0.25]], 0.1667, 2], 100);
+//=> [ 600, [ 300, [ 450, 600 ] ], 400.08, 4800 ] 
+// Alias: TL.rtoms()
+
 // convert beat division strings to ticks (1 tick = 1/480th quarter note)
-TL.dtotk(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2']);
+TL.divisionToTicks(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2']);
 //=> [ 480, [ 240, [ 360, 480 ] ], 320, 3840 ] 
 // Alias: TL.dtotk()
 
 // convert beat ratio to ticks (1 tick = 1/480th quarter note)
-TL.rtotk([0.25, [0.125, [0.1875, 0.25]], 0.16667, 2]);
+TL.ratioToTicks([0.25, [0.125, [0.1875, 0.25]], 0.16667, 2]);
 //=> [ 480, [ 240, [ 360, 480 ] ], 320.00640000000004, 3840 ] 
 // Alias: TL.rtotk()
 
 // convert timevalue syntax to beat ratio floats
-TL.ttor(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m']);
+TL.timevalueToRatio(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m']);
 //=> [ 0.25, [ 0.08333333333333333, [ 0.09375, 0.75 ] ], 0.03125, 3 ] 
 // Alias: TL.ttor()
 
+// convert timevalue syntax to milliseconds at 100 BPM
+TL.timevalueToMs(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'], 100);
+//=> [ 600, [ 200, [ 225, 1800 ] ], 75, 7200 ] 
+// Alias. TL.ttoms()
+
 // conver timevalue syntax to ticks (1 tick = 1/480th quarter note)
-TL.ttotk(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m']);
+TL.timevalueToTicks(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m']);
 //=> [ 480, [ 160, [ 180, 1440 ] ], 60, 5760 ]
 // Alias: TL.ttotk()
 ```

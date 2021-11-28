@@ -1,4 +1,4 @@
-# regenerate-unicode-properties [![Build status](https://travis-ci.org/mathiasbynens/regenerate-unicode-properties.svg?branch=master)](https://travis-ci.org/mathiasbynens/regenerate-unicode-properties)
+# regenerate-unicode-properties [![Build status](https://travis-ci.org/mathiasbynens/regenerate-unicode-properties.svg?branch=main)](https://travis-ci.org/mathiasbynens/regenerate-unicode-properties) [![regenerate-unicode-properties on npm](https://img.shields.io/npm/v/regenerate-unicode-properties)](https://www.npmjs.com/package/regenerate-unicode-properties)
 
 _regenerate-unicode-properties_ is a collection of [Regenerate](https://github.com/mathiasbynens/regenerate) sets for [various Unicode properties](https://github.com/tc39/proposal-regexp-unicode-property-escapes).
 
@@ -31,6 +31,28 @@ To get the Unicode version the data was based on:
 ```js
 const unicodeVersion = require('regenerate-unicode-properties/unicode-version.js');
 ```
+
+## For maintainers
+
+### How to publish a new release
+
+1. On the `main` branch, bump the version number in `package.json`:
+
+    ```sh
+    npm version patch -m 'Release v%s'
+    ```
+
+    Instead of `patch`, use `minor` or `major` [as needed](https://semver.org/).
+
+    Note that this produces a Git commit + tag.
+
+1. Push the release commit and tag:
+
+    ```sh
+    git push && git push --tags
+    ```
+
+    Our CI then automatically publishes the new release to npm.
 
 ## Author
 

@@ -616,6 +616,9 @@ function testTranslate(){
 	test("TL.ttor(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'])");
 	test("TL.ttotk(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'])");
 
+	test("TL.ttoms(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'])");
+	test("TL.ttoms(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'], 100)");
+
 	test("TL.rtoc()");	
 	test("TL.rtoc('11/5')");	
 	test("TL.rtoc(['2/1', ['3/2', ['4/3', '5/4']], '9/8'])");	
