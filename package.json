@@ -1,6 +1,6 @@
 {
   "name": "total-serialism",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A set of methods for the generation and transformation of number sequences useful in algorithmic composition",
   "main": "index.js",
   "scripts": {
@@ -59,7 +59,6 @@
     "@tonaljs/tonal": "^3.7.5",
     "asciichart": "^1.5.25",
     "bignumber.js": "^9.0.1",
-    "save-dev": "0.0.1-security",
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
