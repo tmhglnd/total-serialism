@@ -339,7 +339,7 @@ function testMod(){
 	test("Mod.pad(['c', 'f', 'g'], 11, '-', 4)");
 
 	test("Util.flat(2)");
-	test("Util.flat([1, [2, 3, [4], 5], 6])");
+	test("Util.flatten([1, [2, 3, [4], 5], 6])");
 
 	test("Mod.filter()");
 	test("Mod.filter([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [3, 8, 10])");

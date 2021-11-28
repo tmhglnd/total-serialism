@@ -103,6 +103,7 @@ exports.every = every;
 // flatten a multidimensional array. Optionally set the depth
 // for the flattening
 //
+exports.flatten = Util.flatten;
 exports.flat = Util.flatten;
 
 // similar to every(), but instead of specifying bars/devisions
