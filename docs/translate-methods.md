@@ -89,7 +89,7 @@ TL.freqToNote([ 261, [ 311, 391, 440 ], [ 220, 349 ] ]);
 // Convert relative semitone values to midi-numbers
 // specify the octave as second argument (default = 'C3' = 4 => 48)
 TL.relativeToMidi([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4');
-//=> [ [ 36, 39, 43 ], [ 48, 52, 55 ], [ 50, 53, 57 ] ] 
+//=> [ [ 48, 51, 55 ], [ 60, 64, 67 ], [ 62, 65, 69 ] ]
 // Alias: rtom()
 
 // Convert relative semitone values to frequency (A4 = 440 Hz)
