@@ -23,6 +23,30 @@
 
 # 👾 Newest features
 
+## Support for n-dimensional arrays
+
+Most of the transform, translate and utility functions now support calculations with n-dimensional arrays.
+
+```js 
+TL.noteToMidi(['c4', ['eb4', 'g4', 'a4'], ['a3', 'f4']]);
+//=> [ 60, [ 63, 67, 69 ], [ 57, 65 ] ] 
+
+Mod.clone(['c', ['e', 'g']], ['4', '5', '#3']);
+//=> [ 'c4', [ 'e4', 'g4' ], 'c5', [ 'e5', 'g5' ], 'c#3', [ 'e#3', 'g#3' ] ]
+
+TL.relativeToMidi([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4');
+//=> [ [ 36, 39, 43 ], [ 48, 52, 55 ], [ 50, 53, 57 ] ] 
+
+Stat.compare(['c', ['e', 'g']], ['c', ['e', 'g']]);
+//=> true 
+
+Mod.flatten([1, [2, 3, [ 4 ], 5], 6]);
+//=> [ 1, 2, 3, 4, 5, 6 ] 
+
+Mod.lookup([0, [1, 1, [2, 3], 0], 2], ['c4', 'e4', 'f4', 'g4']);
+//=> [ 'c4', [ 'e4', 'e4', [ 'f4', 'g4' ], 'c4' ], 'f4' ] 
+```
+
 ## cellular automaton
 
 Generate an Elementary Cellular Automaton class. This is an one dimensional array (collection of cells) with states that are either dead or alive (0/1). By following a set of rules the next generation is calculated for every cell based on its neighbouring cells.
