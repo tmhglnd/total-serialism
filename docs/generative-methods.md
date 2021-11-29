@@ -50,7 +50,7 @@ Gen.spread(5, 12, 3);
 // generate an array of 5 floats between range 0-1
 Gen.spreadFloat(5); 
 //=> [ 0, 0.2, 0.4, 0.6, 0.8 ]
-// Alternative: Gen.spreadF()
+// Alias: Gen.spreadF()
 
 ```
 
@@ -69,7 +69,7 @@ Generate an array of n-length of evenly spaced values between a starting number 
 // generate an array of 5 ints between range 0-5 (5 inclusive)
 Gen.spreadInclusive(5);
 //=> [ 0, 1, 2, 3, 5 ] 
-// Alternative: Gen.spreadInc()
+// Alias: Gen.spreadInc()
 
 // change the range with a second argument to 0-12
 Gen.spreadInclusive(5, 12);
@@ -86,7 +86,7 @@ Gen.spreadInclusive(5, 12, 3);
 // generate an array of 5 floats (inclusive)
 Gen.spreadInclusiveFloat(5);
 //=> [ 0, 0.25, 0.5, 0.75, 1 ] 
-// Alternative: Gen.spreadIncF()
+// Alias: Gen.spreadIncF()
 
 ```
 
@@ -108,7 +108,7 @@ Gen.spreadExp(10, 0, 10, 2);
 // ] 
 
 Gen.spreadExpFloat();
-// Alternative: Gen.spreadExpF()
+// Alias: Gen.spreadExpF()
 ```
 
 ## spreadInclusiveExp
@@ -129,7 +129,7 @@ Gen.spreadInclusiveExp(10, 0, 10, 2);
 // ] 
 
 Gen.spreadInclusiveExpFloat();
-// Alternative: Gen.spreadIncExpF()
+// Alias: Gen.spreadIncExpF()
 ```
 
 ## fill
@@ -243,7 +243,7 @@ Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5));
 //   -0.80 ┤         ││    ││ ╰╯ │ │╰╯│ │     ╰─╯ │ 
 //   -1.00 ┤         ╰╯    ╰╯    ╰─╯  ╰─╯         ╰  
 
-// Alternative: Gen.sinF(), Gen.cosF()
+// Alias: Gen.sinF(), Gen.cosF()
 ```
 
 <iframe src="https://editor.p5js.org/tmhglnd/embed/CFOwE1yhW" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
@@ -297,7 +297,7 @@ Gen.saw(34, Gen.sinF(30, 2, 0, 100), 0, 12);
 //    1.00 ┤ ╭╯  ││   ╰╯  │╭╯   │ │      ╰─╮│ 
 //    0.00 ┼─╯   ╰╯       ╰╯    ╰─╯        ╰╯  
 
-// Alternative: Gen.sawF()
+// Alias: Gen.sawF()
 ```
 
 ## square / squareFloat
@@ -321,7 +321,7 @@ Gen.square(30, 4, 0, 1, 0.2);
 //=>  1.00 ┼─╮     ╭─╮    ╭─╮     ╭╮           
 //    0.00 ┤ ╰─────╯ ╰────╯ ╰─────╯╰─────  
 
-// Alternative: Gen.rect()
+// Alias: Gen.rect()
 
 // Frequency Modulation with Gen.sin
 Gen.squareFloat(30, Gen.sinF(30, 2, 1, 5));
@@ -332,6 +332,6 @@ Gen.squareFloat(30, Gen.sinF(30, 2, 1, 5));
 //    0.20 ┤   │     │  ││  │ │ │  │ │ │  
 //    0.00 ┤   ╰─────╯  ╰╯  ╰─╯ ╰──╯ ╰─╯   
 
-// Alternative: Gen.squareF(), Gen.rectFloat(), Gen.rectF()
+// Alias: Gen.squareF(), Gen.rectFloat(), Gen.rectF()
 
 ```

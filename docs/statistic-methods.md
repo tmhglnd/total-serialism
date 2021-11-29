@@ -53,7 +53,7 @@ Stat.average([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 Stat.average([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3]);
 //=> -0.0833
 
-// Alternative: Stat.mean()
+// Alias: Stat.mean()
 ```
 
 ## center
@@ -73,7 +73,7 @@ Stat.center([1, 5, 6, 9, 13]);
 Stat.center([1, 7, 4, 2, 9, 5]);
 //=> 4.5
 
-// Alternative: Stat.median()
+// Alias: Stat.median()
 ```
 
 ## common
@@ -95,7 +95,7 @@ Stat.common([8, [4, 3], 9, [9, 0, [2, 10], 5], 11, 0, 11]);
 Stat.common([8, 4, 3, 9, 9, 0, 2, 10, 5, 11, 0, 11]);
 //=> [ 0, 9, 11 ] 
 
-// Alternative: Stat.mode()
+// Alias: Stat.mode()
 ```
 
 ## minimum
@@ -110,7 +110,7 @@ Util.minimum([-38, -53, -6, 33, 88, 32, -8, 73]);
 Stat.minimum([-38, [-53, [-6, 33], 88, 32], [-8, 73]]);
 //=> -53 
 
-// Alternative: Util.min()
+// Alias: Util.min()
 ```
 
 ## maximum
@@ -125,7 +125,7 @@ Util.maximum([-38, -53, -6, 33, 88, 32, -8, 73]);
 Stat.maximum([-38, [-53, [-6, 33], 88, 32], [-8, 73]]);
 //=> 88 
 
-// Alternative: Util.max()
+// Alias: Util.max()
 ```
 
 ## change

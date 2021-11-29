@@ -46,7 +46,7 @@ Generate a ring of random integers between a specified range (excluding high val
 // generate an array of random floats in range -1 to 1
 Rand.randomFloat(3, -1, 1); 
 //=> [ 0.6291111850577886, 0.15153786227276944, 0.32814801081039646 ]
-// Alternative Rand.randomF();
+// Alias Rand.randomF();
 
 // generate an array of random integers in range
 Rand.random(5, 0, 12); 
