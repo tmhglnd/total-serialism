@@ -36,8 +36,14 @@ Various mapping and scaling methods to keep values of n-dimensional arrays withi
 
 ## wrap
 
+Wrap values from a list within a specified low and high range.
+
+**arguments**
+- {Array} -> Array to wrap
+- {Number} -> Low value (optional, default=12)
+- {Number} -> High value (optional, default=0)
+
 ```js
-// Apply modulus (%) operation to an array
 Util.wrap([0, [1, [2, 3]], [4, 5], 6], 2, 5);
 //=> [ 3, [ 4, [ 2, 3 ] ], [ 4, 2 ], 3 ] 
 
@@ -52,8 +58,14 @@ Util.wrap(Gen.spread(30), 2, 8);
 
 ## constrain
 
+Constrain values from a list within a specified low and high range.
+
+**arguments**
+- {Array} -> Array to constrain
+- {Number} -> Low value (optional default=12)
+- {Number} -> High value (optional default=0)
+
 ```js
-// Constrain an array between low and high values
 Util.constrain([0, [1, [2, 3]], [4, 5], 6], 2, 5);
 //=> [ 2, [ 2, [ 2, 3 ] ], [ 4, 5 ], 5 ] 
 
@@ -70,9 +82,14 @@ Util.constrain(Gen.cosine(30, 1), 5, 9);
 
 ## fold
 
+Fold values from a list within a specified low and high range.
+
+**arguments**
+- {Array} -> Array to fold
+- {Number} -> Low value (optional, default=12)
+- {Number} -> High value (optional, default=0)
+
 ```js
-// Fold an array between low and high values
-// Higher/lower values will bounce back instead of wrap
 Util.fold([0, [1, [2, 3]], [4, 5], 6], 2, 5);
 //=> [ 4, [ 3, [ 2, 3 ] ], [ 4, 5 ], 4 ]
 
@@ -89,12 +106,35 @@ Util.fold(Gen.spreadFloat(30, -9, 13), 0, 1);
 
 ## scale
 
+Rescale values from a list from a specified input range to a specified low and high output range.
+
+**arguments**
+- {Array} -> Array to wrap
+- {Number} -> Low value (optional, default=1)
+- {Number} -> High value (optional, default=0)
+- {Number} -> Low value (optional, default=1)
+- {Number} -> High value (optional, default=0)
+- {Number} -> Exponent value (optional, default=1)
+
 ```js
-// Scale values from an input range to output range
 Util.scale([0, [1, [2, 3]], 4], 0, 4, -1, 1);
 //=> [ -1, [ -0.5, [ 0, 0.5 ] ], 1 ] 
 
 // Alias: map()
+```
+
+## mod
+
+Return the remainder after division. Also works in the negative direction, so wrap starts at 0
+
+**arguments**
+- {Int/Array} -> input value
+- {Int/Array} -> divisor (optional, default=12)
+- {Int/Array} -> remainder after division
+
+```js
+Util.mod([-2, [4, [3, 7]]], 5);
+//=> [ 3, [ 4, [ 3, 2 ] ] ]
 ```
 
 # Arithmetic
