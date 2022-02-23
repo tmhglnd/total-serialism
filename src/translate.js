@@ -265,7 +265,8 @@ exports.noteToFreq = noteToFreq;
 exports.ntof = noteToFreq;
 
 // Convert a list of relative semitone intervals to midi
-// provide octave offset with second argument
+// provide octave offset with second argument. Octave offset
+// follows midi octave convention where 3 is 48, 4 is 60 etc.
 // 
 // @param {Number/Array} -> relative
 // @param {Number/String} -> octave (optional, default=4)
@@ -273,7 +274,7 @@ exports.ntof = noteToFreq;
 // 
 function relativeToMidi(a=0, o=4){
 	if (!Array.isArray(a)){
-		o = (typeof o === 'string')? Note.midi(o) : o * 12;
+		o = (typeof o === 'string')? Note.midi(o) : (o + 1) * 12;
 		return a + o;
 	}
 	return a.map(x => relativeToMidi(x, o));
