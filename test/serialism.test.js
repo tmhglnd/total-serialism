@@ -59,14 +59,7 @@ console.log();
 // markov.clear();
 // console.log(markov.table);
 
-
-// TL.setScale('minor_harmonic');
-// console.log(TL.getScale());
-// console.log(TL.getScales());
-// TL.setScale(Rand.shuffle(TL.getScales()).pop());
-// console.log(TL.getScale());
-
-// fullTest();
+fullTest();
 
 function fullTest(){
 	console.time('Total Time');
@@ -526,14 +519,6 @@ function testStat(){
 function testTranslate(){
 	pagebreak("Translate");
 
-	// test("Srl.setBPM(110)");
-	// test("Srl.setScale('minor_harmonic', 'a')");
-
-	// test("Srl.setRoot('Db')");
-	// test("Srl.getSettings()");
-
-	// test("TL.scaleNames()");
-
 	test("TL.midiToNote()");
 	test("TL.midiToNote(60)");
 	test("TL.mton([48, 55, 51, 43])");
@@ -639,6 +624,15 @@ function testTranslate(){
 	test("TL.scaleNames()");
 	test("TL.getScale()");
 	test("TL.getSettings()");
+
+	test("Srl.setRoot('db-')");
+	test("Srl.getSettings()");
+	test("Srl.setScale('minor_harmonic', 'a')");
+	test("Srl.getSettings()");
+
+	test("TL.setRoot('a-')");
+	test("TL.setScale('harmonic_minor')");
+	test("TL.toScale([0, [1, 2, 3], 4, 5, [6, 7, [8, 9], 10], 11, 12])");
 
 	console.log("var scala = new TL.Scala()");
 	var scl = new TL.Scala();

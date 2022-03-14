@@ -125,11 +125,18 @@ function setRoot(r='c'){
 	if (!isNaN(Number(r))){
 		notation.rootInt = Math.floor(r);
 		notation.root = Note.pitchClass(Note.fromMidi(notation.rootInt));
-	} else if (r in ToneSet){
-		notation.rootInt = ToneSet[r];
+	} 
+	// else if (r in ToneSet){
+	// 	notation.rootInt = chromaToRelative(r);
+	// 	// notation.rootInt = ToneSet[r];
+	// 	notation.root = r;
+	// } else {
+	// 	console.log('not a valid root');
+	// }
+	else {
+		notation.rootInt = chromaToRelative(r);
+		// notation.rootInt = ToneSet[r];
 		notation.root = r;
-	} else {
-		console.log('not a valid root');
 	}
 }
 exports.setRoot = setRoot;
@@ -351,26 +358,26 @@ exports.rtof = relativeToFreq;
 
 // Map a list of relative semitone values to the selected
 // scale set with setScale(). Preserves detuning when a 
-// midi floating point value is used
+// midi floating point value is used.
+// Also offsets the values with the root note selected
 // 
 // @params {Array/Number} -> Array of relative semitones
 // @return {Array/Number} -> mapped to scale
 // 
 function mapToScale(a=[0]){
 	if (!Array.isArray(a)) {
-		return mapScale(a);
+		// detuning float
+		let d = a - Math.floor(a);
+		// selected semitone
+		let s = Math.floor(((a % 12) + 12) % 12);
+		// octave offset
+		let o = Math.floor(a / 12) * 12;
+		return notation.map[s] + o + d + notation.rootInt;
 	}
 	return a.map(x => mapToScale(x));
 }
 exports.mapToScale = mapToScale;
 exports.toScale = mapToScale;
-
-function mapScale(a){
-	let d = a - Math.floor(a);
-	let s = Math.floor(((a % 12) + 12) % 12);
-	let o = Math.floor(a / 12);
-	return notation.map[s] + o * 12 + d;
-}
 
 // Map an array of relative semitone intervals to scale and 
 // output in specified octave as midi value
