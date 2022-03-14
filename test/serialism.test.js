@@ -59,7 +59,14 @@ console.log();
 // markov.clear();
 // console.log(markov.table);
 
-fullTest();
+
+// TL.setScale('minor_harmonic');
+// console.log(TL.getScale());
+// console.log(TL.getScales());
+// TL.setScale(Rand.shuffle(TL.getScales()).pop());
+// console.log(TL.getScale());
+
+// fullTest();
 
 function fullTest(){
 	console.time('Total Time');
@@ -575,6 +582,10 @@ function testTranslate(){
 	test("TL.rtof([-12, 0, 7, 12], 4)");
 	test("TL.rtof([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4')");
 	test("TL.rtof([-12, 0, 7, 12], 'c3')");
+
+	test("TL.ctor()");
+	test("TL.ctor(['f','bb','g#'])");
+	test("TL.ctor(['c', ['eb', 'g', 'ab'], ['a+', 'f-']]);")
 	
 	Srl.setScale('minor_harmonic', 'b');
 	

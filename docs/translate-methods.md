@@ -27,6 +27,7 @@ const TL = require('total-serialism').Translate;
 - freqToNote (fton)
 - relativeToMidi (rtom)
 - relativeToFreq (rtof)
+- chromaToRelative (ctor)
 - ratioToCent (rtoc)
 - setTempo
 - divisionToMs (dtoms)
@@ -87,16 +88,22 @@ TL.freqToNote([ 261, [ 311, 391, 440 ], [ 220, 349 ] ]);
 // Alias: fton()
 
 // Convert relative semitone values to midi-numbers
-// specify the octave as second argument (default = 'C3' = 4 => 48)
+// specify the octave as second argument (default = 'C4' = 4 => 48)
 TL.relativeToMidi([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4');
 //=> [ [ 48, 51, 55 ], [ 60, 64, 67 ], [ 62, 65, 69 ] ]
 // Alias: rtom()
 
 // Convert relative semitone values to frequency (A4 = 440 Hz)
-// specify the octave as second argument (default = 'C3' = 4 => 48)
+// specify the octave as second argument (default = 'C4' = 4 => 48)
 TL.relativeToFreq([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4');
 //=> [ [ 130.81, 155.56, 196 ], [ 261.62, 329.63, 392 ], [ 293.66, 349.23, 440 ] ]
 // Alias: rtof()
+
+// Convert a chroma value to a relative note number
+// Can also include octave offsets with -/+, case-insensitive
+TL.chromaToRelative(['c', ['eb', 'G', 'Ab'], ['a+', 'f-']]); 
+//=> [ 0, [ 3, 7, 8 ], [ 21, -7 ] ]
+// Alias: ctor()
 
 // Convert ratio to relative cents
 TL.ratioToCent(['2/1', ['3/2', ['4/3', '5/4']], '9/8']);

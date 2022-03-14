@@ -11,14 +11,34 @@
 //==============================================================================
 
 // require API's
-const { Note } = require('@tonaljs/tonal');
+const { Note, Scale } = require('@tonaljs/tonal');
 
 // require Scale Mappings
-const Scales = require('../data/scales.json');
+// const Scales = require('../data/scales.json');
 const ToneSet = require('../data/tones.json');
+const chromaSet = { c:0, d:2, e:4, f:5, g:7, a:9, b:11 };
 
 const Mod = require('./transform.js');
 const Util = require('./utility.js');
+
+// create a mapping list of scales for 12-TET from Tonal
+let Scales = {};
+
+Scale.names().forEach((s) => {
+	let scl = Scale.get(s);
+	let name = scl.name.replace(/\s+/g, '_').replace(/[#'-]+/g, '');
+	let chroma = scl.chroma.split('').map(x => Number(x));
+
+	let map = [];
+	for (let i=0; i<chroma.length; i++){
+		if (!chroma[i]){
+			map.push(map[map.length-1]);
+			continue;
+		}
+		map.push(i);
+	}
+	Scales[name] = map;
+});
 
 // global settings stored in object
 var notation = {
@@ -90,7 +110,9 @@ function getScale(){
 	return { 
 		"scale" : getSettings().scale, 
 		"root" : getSettings().root,
-		"rootInt" : getSettings().rootInt };
+		"rootInt" : getSettings().rootInt,
+		"mapping" : getSettings().map
+	};
 }
 exports.getScale = getScale;
 
@@ -143,7 +165,7 @@ exports.setMapping = setMapping;*/
 // @return {Array} -> scale names
 // 
 function scaleNames(){
-	return Object.keys(Scales);
+	return Object.keys(Scales).sort();
 }
 exports.scaleNames = scaleNames;
 exports.getScales = scaleNames;
@@ -263,6 +285,38 @@ function noteToFreq(a='c4'){
 }
 exports.noteToFreq = noteToFreq;
 exports.ntof = noteToFreq;
+
+// Convert a chromagram pitch class to a relative note number
+// 
+// @param {String/Array} -> pitchclass names to convert
+// @return {Number/Array} -> midi note number
+// 
+function chromaToRelative(c='c'){
+	if (!Array.isArray(c)){
+		let m = c.toLowerCase().match(/^[a-g]/);
+		let v = 0;
+		if (m){
+			v = chromaSet[m[0]];
+		} else {
+			console.log(`ctor(): '${c}' is not a valid chroma value`);
+			return 0;
+		}
+		let a = c.split('').slice(1);
+		a.forEach((a) => {
+			switch(a) {
+				case '#': v += 1; break;
+				case 'b': v -= 1; break;
+				case 'x': v += 2; break;
+				case '-': v -= 12; break;
+				case '+': v += 12; break;
+			}
+		});
+		return v;
+	}
+	return c.map(x => chromaToRelative(x));
+}
+exports.chromaToRelative = chromaToRelative;
+exports.ctor = chromaToRelative;
 
 // Convert a list of relative semitone intervals to midi
 // provide octave offset with second argument. Octave offset
