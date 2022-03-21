@@ -2900,7 +2900,8 @@ function unique(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 var _require=require('@tonaljs/tonal'),Note=_require.Note,Scale=_require.Scale;// require Scale Mappings
 // const Scales = require('../data/scales.json');
 var ToneSet=require('../data/tones.json');var chromaSet={c:0,d:2,e:4,f:5,g:7,a:9,b:11};var Mod=require('./transform.js');var Util=require('./utility.js');// create a mapping list of scales for 12-TET from Tonal
-var Scales={};Scale.names().forEach(function(s){var scl=Scale.get(s);var name=scl.name.replace(/\s+/g,'_').replace(/[#'-]+/g,'');var chroma=scl.chroma.split('').map(function(x){return Number(x);});var map=[];for(var i=0;i<chroma.length;i++){if(!chroma[i]){map.push(map[map.length-1]);continue;}map.push(i);}Scales[name]=map;});// global settings stored in object
+var Scales={};Scale.names().forEach(function(s){var scl=Scale.get(s);var name=scl.name.replace(/\s+/g,'_').replace(/[#'-]+/g,'');var chroma=scl.chroma.split('').map(function(x){return Number(x);});// rename aeolian to minor
+name=name==='aeolian'?'minor':name;var map=[];for(var i=0;i<chroma.length;i++){if(!chroma[i]){map.push(map[map.length-1]);continue;}map.push(i);}Scales[name]=map;});// global settings stored in object
 var notation={"scale":"chromatic","root":"c","rootInt":0,"map":Scales["chromatic"],"bpm":120,"measureInMs":2000};// Return a dictionary with all the notational preferences:
 // scale, root, map, bpm, measureInMs
 // 

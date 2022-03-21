@@ -9507,6 +9507,9 @@ Scale.names().forEach((s) => {
 	let name = scl.name.replace(/\s+/g, '_').replace(/[#'-]+/g, '');
 	let chroma = scl.chroma.split('').map(x => Number(x));
 
+	// rename aeolian to minor
+	name = (name === 'aeolian')? 'minor' : name;
+
 	let map = [];
 	for (let i=0; i<chroma.length; i++){
 		if (!chroma[i]){
