@@ -2607,7 +2607,7 @@ function expand(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 var p=Stat.change(a);var chg=pick(l-a.length,p);// console.log(chg);
 // empty output array and axiom for output
 var arr=a.slice();var acc=arr[arr.length-1];// accumulate the change and store in array
-for(var c in chg){arr.push(acc+=chg[c]);}return arr;}exports.expand=expand;exports.extrapolate=expand;// Initialize a Markov Chain Model (One of the simpelest forms of ML)
+for(var c=0;c<chg.length;c++){arr.push(acc+=chg[c]);}return arr;}exports.expand=expand;exports.extrapolate=expand;// Initialize a Markov Chain Model (One of the simpelest forms of ML)
 // A Markov chain is a stochastic model describing a sequence 
 // of possible events in which the probability of each event depends 
 // only on the state of the previous (multiple) events.

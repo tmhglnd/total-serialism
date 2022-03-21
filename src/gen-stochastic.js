@@ -314,7 +314,7 @@ function expand(a=[0, 0], l=1){
 	let arr = a.slice();
 	let acc = arr[arr.length-1];
 	// accumulate the change and store in array
-	for (let c in chg){
+	for (let c=0; c<chg.length; c++){
 		arr.push(acc += chg[c]);
 	}
 	return arr;
