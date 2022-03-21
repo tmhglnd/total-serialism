@@ -212,15 +212,15 @@ exports.invert = invert;
 function lace(...args){
 	if (!args.length){ return [0]; }
 	var l = 0;
-	for (let i in args){
+	for (let i=0; i<args.length; i++){
 		args[i] = Array.isArray(args[i])? args[i] : [args[i]];
 		l = Math.max(args[i].length, l);
 	}
 	var arr = [];
 	for (var i=0; i<l; i++){
-		for (var k in args){
+		for (var k=0; k<args.length; k++){
 			let v = args[k][i];
-			if (v != undefined){ arr.push(v); }
+			if (v !== undefined){ arr.push(v); }
 		}
 	}
 	return arr;
@@ -265,16 +265,16 @@ exports.lookup = lookup;
 function merge(...args){
 	if (!args.length){ return [0]; }
 	let l = 0;
-	for (let i in args){
+	for (let i=0; i<args.length; i++){
 		args[i] = Array.isArray(args[i])? args[i] : [args[i]];
 		l = Math.max(args[i].length, l);
 	}
 	let arr = [];
 	for (let i=0; i<l; i++){
 		let a = [];
-		for (let k in args){
+		for (let k=0; k<args.length; k++){
 			let v = args[k][i];
-			if (v != undefined){ 
+			if (v !== undefined){ 
 				if (Array.isArray(v)) a.push(...v);
 				else a.push(v);
 			}

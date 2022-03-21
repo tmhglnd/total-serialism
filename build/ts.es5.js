@@ -2799,7 +2799,7 @@ function invert(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array}
 //  
-function lace(){for(var _len3=arguments.length,args=new Array(_len3),_key3=0;_key3<_len3;_key3++){args[_key3]=arguments[_key3];}if(!args.length){return[0];}var l=0;for(var _i4 in args){args[_i4]=Array.isArray(args[_i4])?args[_i4]:[args[_i4]];l=Math.max(args[_i4].length,l);}var arr=[];for(var i=0;i<l;i++){for(var k in args){var v=args[k][i];if(v!=undefined){arr.push(v);}}}return arr;}exports.lace=lace;exports.zip=lace;// Build an array of items based on another array of indeces 
+function lace(){for(var _len3=arguments.length,args=new Array(_len3),_key3=0;_key3<_len3;_key3++){args[_key3]=arguments[_key3];}if(!args.length){return[0];}var l=0;for(var _i4=0;_i4<args.length;_i4++){args[_i4]=Array.isArray(args[_i4])?args[_i4]:[args[_i4]];l=Math.max(args[_i4].length,l);}var arr=[];for(var i=0;i<l;i++){for(var k=0;k<args.length;k++){var v=args[k][i];if(v!==undefined){arr.push(v);}}}return arr;}exports.lace=lace;exports.zip=lace;// Build an array of items based on another array of indeces 
 // The values are wrapped within the length of the lookup array
 // Works with n-dimensional arrays by applying a recursive lookup
 // 
@@ -2814,7 +2814,7 @@ function lookup(){var idx=arguments.length>0&&arguments[0]!==undefined?arguments
 // @params {Array0, Array1, ..., Array-n} -> Arrays to merge
 // @return {Array}
 // 
-function merge(){for(var _len4=arguments.length,args=new Array(_len4),_key4=0;_key4<_len4;_key4++){args[_key4]=arguments[_key4];}if(!args.length){return[0];}var l=0;for(var i in args){args[i]=Array.isArray(args[i])?args[i]:[args[i]];l=Math.max(args[i].length,l);}var arr=[];for(var _i5=0;_i5<l;_i5++){var a=[];for(var k in args){var v=args[k][_i5];if(v!=undefined){if(Array.isArray(v))a.push.apply(a,_toConsumableArray(v));else a.push(v);}}arr[_i5]=a;}return arr;}exports.merge=merge;// reverse an array and concatenate to the input
+function merge(){for(var _len4=arguments.length,args=new Array(_len4),_key4=0;_key4<_len4;_key4++){args[_key4]=arguments[_key4];}if(!args.length){return[0];}var l=0;for(var i=0;i<args.length;i++){args[i]=Array.isArray(args[i])?args[i]:[args[i]];l=Math.max(args[i].length,l);}var arr=[];for(var _i5=0;_i5<l;_i5++){var a=[];for(var k=0;k<args.length;k++){var v=args[k][_i5];if(v!==undefined){if(Array.isArray(v))a.push.apply(a,_toConsumableArray(v));else a.push(v);}}arr[_i5]=a;}return arr;}exports.merge=merge;// reverse an array and concatenate to the input
 // creating a palindrome of the array
 // 
 // @param {Array} -> array to make palindrome of

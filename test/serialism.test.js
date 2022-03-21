@@ -6,7 +6,7 @@ const fs = require('fs');
 let entryPoint = "../index";
 // entryPoint = "../build/ts.bundle.js";
 // entryPoint = "../build/ts.es5.js";
-// entryPoint = "../build/ts.es5.min.js";
+entryPoint = "../build/ts.es5.min.js";
 
 const Srl = require(entryPoint);
 const Gen = Srl.Generative;
@@ -58,6 +58,13 @@ console.log();
 
 // markov.clear();
 // console.log(markov.table);
+
+// let arr = Algo.euclid(8, 5);
+// let arr2 = Rand.clave(8);
+// console.log(arr);
+// console.log(arr2);
+// console.log(Mod.merge(arr, arr2));
+// console.log(Mod.lace(arr, arr2));
 
 fullTest();
 
