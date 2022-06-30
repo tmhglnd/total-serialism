@@ -221,6 +221,11 @@ function testAlgo(){
 	test('Algo.fibonacci()');
 	test("Algo.fibonacci(12)");
 	test("Algo.fibonacci(2, 100, true)");
+
+	pagebreak("Infinity Series");
+	test('Algo.infinitySeries()');
+	test('Algo.infinitySeries([0, 3])');
+	test('Algo.infinitySeries([0, 1], 8, 120)');
 	
 	test('Algo.pisano()');
 	test("Algo.pisano(12)");

@@ -69,6 +69,7 @@
     "fast-glob": "^3.2.7",
     "fs-extra": "^9.1.0",
     "nodemon": "^2.0.15",
-    "uglify-js": "^3.14.3"
+    "uglify-js": "^3.14.3",
+    "readdirp": "^3.6.0"
   }
 }

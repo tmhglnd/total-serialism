@@ -2370,7 +2370,28 @@ function nbonacci(){var len=arguments.length>0&&arguments[0]!==undefined?argumen
 // @param {Bool} -> numbers as strings (optional, default=false)
 // @return {String-Array} -> array of bignumbers as strings
 // 
-function fibonacci(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var offset=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var toString=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;var f=numBonacci(len+offset,0,1,1).map(function(x){return toString?x.toFixed():x.toNumber();});if(offset>0){return f.slice(offset,offset+len);}return f;}exports.fibonacci=fibonacci;// Generate the Pisano period sequence as an array of BigNumber objects
+function fibonacci(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var offset=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var toString=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;var f=numBonacci(len+offset,0,1,1).map(function(x){return toString?x.toFixed():x.toNumber();});if(offset>0){return f.slice(offset,offset+len);}return f;}exports.fibonacci=fibonacci;// Generate the Norgard infinity series sequence.
+//
+// @param seed the sequence's first two steps, defaults to 0, 1
+// @param size the length of the resulting Meldoy's steps, defaults to 16
+// @param offset offset in the returned sequence from which the sequence starts
+// @returns a Melody with the infinity series as its steps
+//
+function infinitySeries(){var seed=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0,1];var size=arguments.length>1&&arguments[1]!==undefined?arguments[1]:16;var offset=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var root=seed[0];var step1=seed[1];var seedInterval=step1-root;var steps=Array.from(new Array(size),function(n,i){return i+offset;}).map(function(step){return root+norgardInteger(step)*seedInterval;});return steps;}exports.infinitySeries=infinitySeries;// Returns the value for any index of the base infinity series sequence (0, 1 seed). This function enables
+// an efficient way to compute any arbitrary section of the infinity series without needing to compute
+// the entire sequence up to that point.
+//
+// This is the Infinity Series binary trick. Steps:
+//
+// 1. Convert the integer n to binary string
+// 2. Split the string and map as an Array of 1s and 0s
+// 3. Loop thru the digits, summing the 1s digits, and changing the negative/positve
+//    polarity **at each step** when a 0 is encounterd
+//
+// @param index the 0-based index of the infinity series
+// @returns the value in the infinity series at the given index.
+//
+function norgardInteger(index){var binaryDigits=index.toString(2).split("").map(function(bit){return parseInt(bit);});return binaryDigits.reduce(function(integer,digit){if(digit==1){integer+=1;}else{integer*=-1;}return integer;},0);}// Generate the Pisano period sequence as an array of BigNumber objects
 // Returns array of [0] if no period is found within the default length
 // of fibonacci numbers (256). Mod value is a minimum of 2
 // 
