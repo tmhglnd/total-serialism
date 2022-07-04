@@ -3,11 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = _default;
+exports.default = void 0;
 
 var _helperCreateRegexpFeaturesPlugin = require("@babel/helper-create-regexp-features-plugin");
 
-function _default(core, options) {
+var _helperPluginUtils = require("@babel/helper-plugin-utils");
+
+var _default = (0, _helperPluginUtils.declare)((api, options) => {
   const {
     runtime = true
   } = options;
@@ -23,4 +25,6 @@ function _default(core, options) {
       runtime
     }
   });
-}
+});
+
+exports.default = _default;

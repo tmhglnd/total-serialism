@@ -2,6 +2,18 @@
 
 All notable changes will be documented in this file.
 
+## [4.2.2] - 2022-06-16
+
+### Changes
+
+- Pin version of `rc` module to `1.2.8` to avoid malware in [compromised versions](https://github.com/advisories/GHSA-g2q5-5433-rhrf) (Espen Hovlandsdal)
+
+## [4.2.1] - 2020-11-10
+
+### Changes
+
+- Exclude tests from published npm files (Garrit Franke)
+
 ## [4.2.0] - 2020-07-13
 
 ### Changes

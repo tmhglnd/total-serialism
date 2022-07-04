@@ -3659,10 +3659,10 @@ exports.getRoot     = Translate.getRoot;
   'use strict';
 
 /*
- *      bignumber.js v9.0.1
+ *      bignumber.js v9.0.2
  *      A JavaScript library for arbitrary-precision arithmetic.
  *      https://github.com/MikeMcl/bignumber.js
- *      Copyright (c) 2020 Michael Mclaughlin <M8ch88l@gmail.com>
+ *      Copyright (c) 2021 Michael Mclaughlin <M8ch88l@gmail.com>
  *      MIT Licensed.
  *
  *      BigNumber.prototype methods     |  BigNumber methods
@@ -3802,7 +3802,7 @@ exports.getRoot     = Translate.getRoot;
 
       // The maximum number of significant digits of the result of the exponentiatedBy operation.
       // If POW_PRECISION is 0, there will be unlimited significant digits.
-      POW_PRECISION = 0,                    // 0 to MAX
+      POW_PRECISION = 0,                       // 0 to MAX
 
       // The format specification used by the BigNumber.prototype.toFormat method.
       FORMAT = {
@@ -3812,14 +3812,15 @@ exports.getRoot     = Translate.getRoot;
         groupSeparator: ',',
         decimalSeparator: '.',
         fractionGroupSize: 0,
-        fractionGroupSeparator: '\xA0',      // non-breaking space
+        fractionGroupSeparator: '\xA0',        // non-breaking space
         suffix: ''
       },
 
       // The alphabet used for base conversion. It must be at least 2 characters long, with no '+',
       // '-', '.', whitespace, or repeated character.
       // '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_'
-      ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyz';
+      ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyz',
+      alphabetHasNormalDecimalDigits = true;
 
 
     //------------------------------------------------------------------------------------------
@@ -3909,7 +3910,7 @@ exports.getRoot     = Translate.getRoot;
 
         // Allow exponential notation to be used with base 10 argument, while
         // also rounding to DECIMAL_PLACES as with other bases.
-        if (b == 10) {
+        if (b == 10 && alphabetHasNormalDecimalDigits) {
           x = new BigNumber(v);
           return round(x, DECIMAL_PLACES + x.e + 1, ROUNDING_MODE);
         }
@@ -4201,6 +4202,7 @@ exports.getRoot     = Translate.getRoot;
             // Disallow if less than two characters,
             // or if it contains '+', '-', '.', whitespace, or a repeated character.
             if (typeof v == 'string' && !/^.?$|[+\-.\s]|(.).*\1/.test(v)) {
+              alphabetHasNormalDecimalDigits = v.slice(0, 10) == '0123456789';
               ALPHABET = v;
             } else {
               throw Error
@@ -6375,7 +6377,7 @@ exports.getRoot     = Translate.getRoot;
           str = e <= TO_EXP_NEG || e >= TO_EXP_POS
            ? toExponential(coeffToString(n.c), e)
            : toFixedPoint(coeffToString(n.c), e, '0');
-        } else if (b === 10) {
+        } else if (b === 10 && alphabetHasNormalDecimalDigits) {
           n = round(new BigNumber(n), DECIMAL_PLACES + e + 1, ROUNDING_MODE);
           str = toFixedPoint(coeffToString(n.c), n.e, '0');
         } else {

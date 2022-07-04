@@ -28,13 +28,13 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
 
   api.assertVersion(7);
   const {
-    loose
+    loose = false
   } = options;
-  const setClassMethods = (_api$assumption = api.assumption("setClassMethods")) != null ? _api$assumption : options.loose;
-  const constantSuper = (_api$assumption2 = api.assumption("constantSuper")) != null ? _api$assumption2 : options.loose;
-  const superIsCallableConstructor = (_api$assumption3 = api.assumption("superIsCallableConstructor")) != null ? _api$assumption3 : options.loose;
-  const noClassCalls = (_api$assumption4 = api.assumption("noClassCalls")) != null ? _api$assumption4 : options.loose;
-  const VISITED = Symbol();
+  const setClassMethods = (_api$assumption = api.assumption("setClassMethods")) != null ? _api$assumption : loose;
+  const constantSuper = (_api$assumption2 = api.assumption("constantSuper")) != null ? _api$assumption2 : loose;
+  const superIsCallableConstructor = (_api$assumption3 = api.assumption("superIsCallableConstructor")) != null ? _api$assumption3 : loose;
+  const noClassCalls = (_api$assumption4 = api.assumption("noClassCalls")) != null ? _api$assumption4 : loose;
+  const VISITED = new WeakSet();
   return {
     name: "transform-classes",
     visitor: {
@@ -55,7 +55,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
         const {
           node
         } = path;
-        if (node[VISITED]) return;
+        if (VISITED.has(node)) return;
         const inferred = (0, _helperFunctionName.default)(path);
 
         if (inferred && inferred !== node) {
@@ -63,7 +63,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
           return;
         }
 
-        node[VISITED] = true;
+        VISITED.add(node);
         path.replaceWith((0, _transformClass.default)(path, state.file, builtinClasses, loose, {
           setClassMethods,
           constantSuper,

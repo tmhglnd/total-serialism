@@ -419,5 +419,14 @@ module.exports = new Map([
 		'White_Space',
 		'XID_Continue',
 		'XID_Start'
+	]],
+	['Property_of_Strings', [
+		'Basic_Emoji',
+		'Emoji_Keycap_Sequence',
+		'RGI_Emoji',
+		'RGI_Emoji_Flag_Sequence',
+		'RGI_Emoji_Modifier_Sequence',
+		'RGI_Emoji_Tag_Sequence',
+		'RGI_Emoji_ZWJ_Sequence'
 	]]
 ]);

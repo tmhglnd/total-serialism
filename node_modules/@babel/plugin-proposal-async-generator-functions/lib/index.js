@@ -15,10 +15,13 @@ var _core = require("@babel/core");
 
 var _forAwait = require("./for-await");
 
+var _helperEnvironmentVisitor = require("@babel/helper-environment-visitor");
+
 var _default = (0, _helperPluginUtils.declare)(api => {
   api.assertVersion(7);
-  const yieldStarVisitor = {
-    Function(path) {
+
+  const yieldStarVisitor = _core.traverse.visitors.merge([{
+    ArrowFunctionExpression(path) {
       path.skip();
     },
 
@@ -30,9 +33,10 @@ var _default = (0, _helperPluginUtils.declare)(api => {
       node.argument = _core.types.callExpression(callee, [_core.types.callExpression(state.addHelper("asyncIterator"), [node.argument]), state.addHelper("awaitAsyncGenerator")]);
     }
 
-  };
-  const forAwaitVisitor = {
-    Function(path) {
+  }, _helperEnvironmentVisitor.default]);
+
+  const forAwaitVisitor = _core.traverse.visitors.merge([{
+    ArrowFunctionExpression(path) {
       path.skip();
     },
 
@@ -57,7 +61,7 @@ var _default = (0, _helperPluginUtils.declare)(api => {
         block.body.push(declar);
       }
 
-      block.body.push(...node.body.body);
+      block.body.push(...path.node.body.body);
 
       _core.types.inherits(loop, node);
 
@@ -70,7 +74,8 @@ var _default = (0, _helperPluginUtils.declare)(api => {
       }
     }
 
-  };
+  }, _helperEnvironmentVisitor.default]);
+
   const visitor = {
     Function(path, state) {
       if (!path.node.async) return;

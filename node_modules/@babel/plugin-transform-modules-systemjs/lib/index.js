@@ -18,7 +18,7 @@ var _helperModuleTransforms = require("@babel/helper-module-transforms");
 
 var _helperValidatorIdentifier = require("@babel/helper-validator-identifier");
 
-const buildTemplate = (0, _core.template)(`
+const buildTemplate = _core.template.statement(`
   SYSTEM_REGISTER(MODULE_NAME, SOURCES, function (EXPORT_IDENTIFIER, CONTEXT_IDENTIFIER) {
     "use strict";
     BEFORE_BODY;
@@ -28,11 +28,13 @@ const buildTemplate = (0, _core.template)(`
     };
   });
 `);
-const buildExportAll = (0, _core.template)(`
+
+const buildExportAll = _core.template.statement(`
   for (var KEY in TARGET) {
     if (KEY !== "default" && KEY !== "__esModule") EXPORT_OBJ[KEY] = TARGET[KEY];
   }
 `);
+
 const MISSING_PLUGIN_WARNING = `\
 WARNING: Dynamic import() transformation must be enabled using the
          @babel/plugin-proposal-dynamic-import plugin. Babel 8 will
@@ -104,12 +106,12 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
     systemGlobal = "System",
     allowTopLevelThis = false
   } = options;
-  const IGNORE_REASSIGNMENT_SYMBOL = Symbol();
+  const reassignmentVisited = new WeakSet();
   const reassignmentVisitor = {
     "AssignmentExpression|UpdateExpression"(path) {
-      if (path.node[IGNORE_REASSIGNMENT_SYMBOL]) return;
-      path.node[IGNORE_REASSIGNMENT_SYMBOL] = true;
-      const arg = path.get(path.isAssignmentExpression() ? "left" : "argument");
+      if (reassignmentVisited.has(path.node)) return;
+      reassignmentVisited.add(path.node);
+      const arg = path.isAssignmentExpression() ? path.get("left") : path.get("argument");
 
       if (arg.isObjectPattern() || arg.isArrayPattern()) {
         const exprs = [path.node];
@@ -120,7 +122,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
           }
 
           const exportedNames = this.exports[name];
-          if (!exportedNames) return;
+          if (!exportedNames) continue;
 
           for (const exportedName of exportedNames) {
             exprs.push(this.buildCall(exportedName, _core.types.identifier(name)).expression);
@@ -137,7 +139,8 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       const exportedNames = this.exports[name];
       if (!exportedNames) return;
       let node = path.node;
-      const isPostUpdateExpression = path.isUpdateExpression({
+
+      const isPostUpdateExpression = _core.types.isUpdateExpression(node, {
         prefix: false
       });
 
@@ -253,6 +256,8 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
             } else if (path.isClassDeclaration()) {
               variableIds.push(_core.types.cloneNode(path.node.id));
               path.replaceWith(_core.types.expressionStatement(_core.types.assignmentExpression("=", _core.types.cloneNode(path.node.id), _core.types.toExpression(path.node))));
+            } else if (path.isVariableDeclaration()) {
+              path.node.kind = "var";
             } else if (path.isImportDeclaration()) {
               const source = path.node.source.value;
               pushModule(source, "imports", path.node.specifiers);
@@ -267,59 +272,65 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
               pushModule(path.node.source.value, "exports", path.node);
               path.remove();
             } else if (path.isExportDefaultDeclaration()) {
-              const declar = path.get("declaration");
-              const id = declar.node.id;
+              const declar = path.node.declaration;
 
-              if (declar.isClassDeclaration()) {
+              if (_core.types.isClassDeclaration(declar)) {
+                const id = declar.id;
+
                 if (id) {
                   exportNames.push("default");
                   exportValues.push(scope.buildUndefinedNode());
                   variableIds.push(_core.types.cloneNode(id));
                   addExportName(id.name, "default");
-                  path.replaceWith(_core.types.expressionStatement(_core.types.assignmentExpression("=", _core.types.cloneNode(id), _core.types.toExpression(declar.node))));
+                  path.replaceWith(_core.types.expressionStatement(_core.types.assignmentExpression("=", _core.types.cloneNode(id), _core.types.toExpression(declar))));
                 } else {
                   exportNames.push("default");
-                  exportValues.push(_core.types.toExpression(declar.node));
+                  exportValues.push(_core.types.toExpression(declar));
                   removedPaths.push(path);
                 }
-              } else if (declar.isFunctionDeclaration()) {
+              } else if (_core.types.isFunctionDeclaration(declar)) {
+                const id = declar.id;
+
                 if (id) {
-                  beforeBody.push(declar.node);
+                  beforeBody.push(declar);
                   exportNames.push("default");
                   exportValues.push(_core.types.cloneNode(id));
                   addExportName(id.name, "default");
                 } else {
                   exportNames.push("default");
-                  exportValues.push(_core.types.toExpression(declar.node));
+                  exportValues.push(_core.types.toExpression(declar));
                 }
 
                 removedPaths.push(path);
               } else {
-                path.replaceWith(buildExportCall("default", declar.node));
+                path.replaceWith(buildExportCall("default", declar));
               }
             } else if (path.isExportNamedDeclaration()) {
-              const declar = path.get("declaration");
+              const declar = path.node.declaration;
 
-              if (declar.node) {
+              if (declar) {
                 path.replaceWith(declar);
 
-                if (path.isFunction()) {
-                  const node = declar.node;
-                  const name = node.id.name;
+                if (_core.types.isFunction(declar)) {
+                  const name = declar.id.name;
                   addExportName(name, name);
-                  beforeBody.push(node);
+                  beforeBody.push(declar);
                   exportNames.push(name);
-                  exportValues.push(_core.types.cloneNode(node.id));
+                  exportValues.push(_core.types.cloneNode(declar.id));
                   removedPaths.push(path);
-                } else if (path.isClass()) {
-                  const name = declar.node.id.name;
+                } else if (_core.types.isClass(declar)) {
+                  const name = declar.id.name;
                   exportNames.push(name);
                   exportValues.push(scope.buildUndefinedNode());
-                  variableIds.push(_core.types.cloneNode(declar.node.id));
-                  path.replaceWith(_core.types.expressionStatement(_core.types.assignmentExpression("=", _core.types.cloneNode(declar.node.id), _core.types.toExpression(declar.node))));
+                  variableIds.push(_core.types.cloneNode(declar.id));
+                  path.replaceWith(_core.types.expressionStatement(_core.types.assignmentExpression("=", _core.types.cloneNode(declar.id), _core.types.toExpression(declar))));
                   addExportName(name, name);
                 } else {
-                  for (const name of Object.keys(declar.getBindingIdentifiers())) {
+                  if (_core.types.isVariableDeclaration(declar)) {
+                    declar.kind = "var";
+                  }
+
+                  for (const name of Object.keys(_core.types.getBindingIdentifiers(declar))) {
                     addExportName(name, name);
                   }
                 }
@@ -411,7 +422,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
                 exportValues.push(scope.buildUndefinedNode());
               }
             }
-          }, null);
+          });
 
           if (variableIds.length) {
             beforeBody.unshift(_core.types.variableDeclaration("var", variableIds.map(id => _core.types.variableDeclarator(id))));
