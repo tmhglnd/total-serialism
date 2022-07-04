@@ -237,7 +237,7 @@ function testAlgo(){
 	pagebreak("Infinity Series");
 	test('Algo.infinitySeries()');
 	test('Algo.infinitySeries(16, [0, 3])');
-	test('Algo.infinitySeries(8, [0, 1], 120)');
+	test('Algo.infSeries(8, [0, 1], 120)');
 }
 
 function testRand(){

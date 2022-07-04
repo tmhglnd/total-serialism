@@ -19,6 +19,9 @@
 // used by composer Iannis Xenakis and 'symbolic music'. See further 
 // reading in README.md. Also inspired by Numberphile videos on 
 // pisano period on youtube.
+// - infinitySeries(), contributed by Stephen Meyer and based on
+// https://www.lawtonhall.com/blog/2019/9/9/per-nrgrds-infinity-series#:~:text=Coding%20the%20Infinity%20Series
+// 
 //==============================================================================
 
 const Util = require('./utility.js');
@@ -433,6 +436,7 @@ function infinitySeries(size=16, seed=[0,1], offset=0){
 	return steps;
 }
 exports.infinitySeries = infinitySeries;
+exports.infSeries = infinitySeries;
 
 // Returns the value for any index of the base infinity series sequence 
 // (0, 1 seed). This function enables an efficient way to compute any 

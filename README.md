@@ -264,6 +264,10 @@ The collatz conjecture algorithm was inspired by a Numberphile and Coding Train 
 
 - [Collatz Conjecture on Numberphile](https://youtu.be/LqKpkdRRLZw)
 
+The Infinity Series is based on the work by composer Per Nørgård. The method takes its name from the endlessly self-similar nature of the resulting musical material, comparable to fractal geometry. Mathematically, the infinity series is an integer sequence. A great explanation can be found here:
+
+- [Per Nørgård's Infinity Series](https://www.lawtonhall.com/blog/2019/9/9/per-nrgrds-infinity-series#:~:text=Coding%20the%20Infinity%20Series)
+
 Some other interesting resources and papers that have been used for some of the methods within this library.
 
 - [Nick Collins - Algorithmic Composition Methods for Breakbeat Science](https://www.dmu.ac.uk/documents/technology-documents/research/mtirc/nowalls/mww-collins.pdf)

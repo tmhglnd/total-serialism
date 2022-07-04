@@ -343,7 +343,7 @@ Algo.infinitySeries(16, [0, 3]);
 //    6, -3, -9, 12
 // ] 
 
-Algo.infinitySeries(8, [0, 1], 120);
+Algo.infSeries(8, [0, 1], 120);
 //=> [
 //   -4,  5,  3, -2,
 //    5, -4, -6,  7
