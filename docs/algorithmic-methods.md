@@ -21,6 +21,7 @@ const Algo = require('total-serialism').Algorithmic;
 - [pell](#pell)
 - [threeFibonacci](#threefibonacci)
 - [lucas](#lucas)
+- [inifinity series](#infinity-series)
 
 ## euclid
 
@@ -314,4 +315,37 @@ Algo.nbonacci(10, 1, 3, 2);
 // this is the same as Algo.fibonacci(12)
 Algo.nbonacci(12, 0, 1, 1);
 //=> [ 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ]  
+```
+
+## infinitySeries
+
+Nørgård's music often features the use of the infinity series for serializing melody, harmony, and rhythm in musical composition. The method takes its name from the endlessly self-similar nature of the resulting musical material, comparable to fractal geometry. Mathematically, the infinity series is an integer sequence. "Invented in an attempt to unify in a perfect way repetition and variation," the first few terms of its simplest form are 0, 1, −1, 2, 1, 0, −2, 3, ….
+
+`OEIS: A004718` (Online Encyclopedia of Integer Sequences)
+
+**arguments**
+- {Int+} -> size the length of the resulting Meldoy's steps (default=16)
+- {Array} -> seed the sequence's first two steps (defaults = [0, 1])
+- {Int} -> offset from which the sequence starts
+
+```js
+Algo.infinitySeries();
+//=> [
+//    0,  1, -1, 2, 1, 0,
+//   -2,  3, -1, 2, 0, 1,
+//    2, -1, -3, 4
+// ] 
+
+Algo.infinitySeries(16, [0, 3]);
+//=> [
+//    0,  3, -3,  6, 3, 0,
+//   -6,  9, -3,  6, 0, 3,
+//    6, -3, -9, 12
+// ] 
+
+Algo.infinitySeries(8, [0, 1], 120);
+//=> [
+//   -4,  5,  3, -2,
+//    5, -4, -6,  7
+// ]
 ```

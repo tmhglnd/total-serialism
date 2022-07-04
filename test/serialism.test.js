@@ -6,7 +6,7 @@ const fs = require('fs');
 let entryPoint = "../index";
 // entryPoint = "../build/ts.bundle.js";
 // entryPoint = "../build/ts.es5.js";
-entryPoint = "../build/ts.es5.min.js";
+// entryPoint = "../build/ts.es5.min.js";
 
 const Srl = require(entryPoint);
 const Gen = Srl.Generative;
@@ -71,14 +71,14 @@ fullTest();
 function fullTest(){
 	console.time('Total Time');
 
-	testSerial();
-	testGen();
+	// testSerial();
+	// testGen();
 	testAlgo();
-	testRand();
-	testMod();
-	testStat();
-	testTranslate();
-	testUtil();
+	// testRand();
+	// testMod();
+	// testStat();
+	// testTranslate();
+	// testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -233,6 +233,11 @@ function testAlgo(){
 
 	test("Algo.nbonacci(10, 1, 3, 2)");
 	test("Algo.nbonacci(10, 0, 1, 1)");
+
+	pagebreak("Infinity Series");
+	test('Algo.infinitySeries()');
+	test('Algo.infinitySeries(16, [0, 3])');
+	test('Algo.infinitySeries(8, [0, 1], 120)');
 }
 
 function testRand(){

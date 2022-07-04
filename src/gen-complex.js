@@ -413,6 +413,49 @@ function lucas(len=1, offset=0, toString=false){
 }
 exports.lucas = lucas;
 
+// Generate the Nørgård infinity series sequence.
+//
+// @param {Int+} -> size the length of the resulting Meldoy's steps (default=16)
+// @param {Array} -> seed the sequence's first two steps (defaults = [0, 1])
+// @param {Int} -> offset from which the sequence starts
+// @return {Array} -> an Array with the infinity series as its steps
+//
+function infinitySeries(size=16, seed=[0,1], offset=0){
+	size = Math.max(1, size);
+	let root  = seed[0];
+	let step1 = seed[1];
+	let seedInterval = step1 - root;
+
+	let steps = Array.from(new Array(size), (n, i) => i + offset).map(step => {
+		return root + (norgardInteger(step) * seedInterval);
+	});
+
+	return steps;
+}
+exports.infinitySeries = infinitySeries;
+
+// Returns the value for any index of the base infinity series sequence 
+// (0, 1 seed). This function enables an efficient way to compute any 
+// arbitrary section of the infinity series without needing to compute
+// the entire sequence up to that point.
+//
+// This is the Infinity Series binary trick. Steps:
+// 1. Convert the integer n to binary string
+// 2. Split the string and map as an Array of 1s and 0s
+// 3. Loop thru the digits, summing the 1s digits, and changing the 
+//    negative/positve polarity **at each step** when a 0 is encounterd
+//
+// @param {Int} -> index the 0-based index of the infinity series
+// @return -> the value in the infinity series at the given index.
+//
+function norgardInteger(index) {
+	var binaryDigits = index.toString(2).split("").map(bit => parseInt(bit));
+
+	return binaryDigits.reduce((integer, digit) => {
+		return (digit === 1)? integer+=1 : integer*= -1;
+	}, 0);
+}
+
 // Generate an Elementary Cellular Automaton class
 // This is an one dimensional array (collection of cells) with states
 // that are either dead or alive (0/1). By following a set of rules the
