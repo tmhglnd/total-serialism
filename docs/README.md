@@ -23,7 +23,7 @@
 	- [pell](./algorithmic-methods.md#pell)
 	- [threeFibonacci](./algorithmic-methods.md#threefibonacci)
 	- [lucas](./algorithmic-methods.md#lucas)
-	- [infinitySeries](./algorithmic-methods.md#inifinity-series)
+	- [infinitySeries](./algorithmic-methods.md#inifinityseries)
 - [Stochastic Methods](./stochastic-methods.md)
 	- [seed](./stochastic-methods.md#seed)
 	- [random](./stochastic-methods.md#random)

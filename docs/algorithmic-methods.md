@@ -21,7 +21,7 @@ const Algo = require('total-serialism').Algorithmic;
 - [pell](#pell)
 - [threeFibonacci](#threefibonacci)
 - [lucas](#lucas)
-- [inifinity series](#infinity-series)
+- [inifinity series](#infinityseries)
 
 ## euclid
 

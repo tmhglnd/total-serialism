@@ -23,6 +23,19 @@
 
 # 👾 Newest features
 
+## Per Nørgård's Infinity Series
+
+Generate the self-similar infinity series by composer Per Nørgård. Choose the length output, the initial seed (two values as an array) and an optional offset.
+
+```js
+Algo.infinitySeries(16, [0, 1]);
+//=> [
+//    0,  1, -1, 2, 1, 0,
+//   -2,  3, -1, 2, 0, 1,
+//    2, -1, -3, 4
+// ] 
+```
+
 ## Support for n-dimensional arrays
 
 Most of the transform, translate and utility functions now support calculations with n-dimensional arrays.
