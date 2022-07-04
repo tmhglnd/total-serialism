@@ -6,7 +6,7 @@ const fs = require('fs');
 let entryPoint = "../index";
 // entryPoint = "../build/ts.bundle.js";
 // entryPoint = "../build/ts.es5.js";
-// entryPoint = "../build/ts.es5.min.js";
+entryPoint = "../build/ts.es5.min.js";
 
 const Srl = require(entryPoint);
 const Gen = Srl.Generative;

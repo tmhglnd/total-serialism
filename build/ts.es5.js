@@ -2271,6 +2271,9 @@ len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*pe
 // used by composer Iannis Xenakis and 'symbolic music'. See further 
 // reading in README.md. Also inspired by Numberphile videos on 
 // pisano period on youtube.
+// - infinitySeries(), contributed by Stephen Meyer and based on
+// https://www.lawtonhall.com/blog/2019/9/9/per-nrgrds-infinity-series#:~:text=Coding%20the%20Infinity%20Series
+// 
 //==============================================================================
 var Util=require('./utility.js');var Transform=require('./transform.js');var BigNumber=require('bignumber.js');// configure the bignumber settings
 BigNumber.config({DECIMAL_PLACES:20,EXPONENTIAL_AT:[-7,20]});// A hexadecimal rhythm generator. Generates values of 0 and 1
@@ -2423,7 +2426,7 @@ function lucas(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[
 // @param {Int} -> offset from which the sequence starts
 // @return {Array} -> an Array with the infinity series as its steps
 //
-function infinitySeries(){var size=arguments.length>0&&arguments[0]!==undefined?arguments[0]:16;var seed=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0,1];var offset=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;size=Math.max(1,size);var root=seed[0];var step1=seed[1];var seedInterval=step1-root;var steps=Array.from(new Array(size),function(n,i){return i+offset;}).map(function(step){return root+norgardInteger(step)*seedInterval;});return steps;}exports.infinitySeries=infinitySeries;// Returns the value for any index of the base infinity series sequence 
+function infinitySeries(){var size=arguments.length>0&&arguments[0]!==undefined?arguments[0]:16;var seed=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0,1];var offset=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;size=Math.max(1,size);var root=seed[0];var step1=seed[1];var seedInterval=step1-root;var steps=Array.from(new Array(size),function(n,i){return i+offset;}).map(function(step){return root+norgardInteger(step)*seedInterval;});return steps;}exports.infinitySeries=infinitySeries;exports.infSeries=infinitySeries;// Returns the value for any index of the base infinity series sequence 
 // (0, 1 seed). This function enables an efficient way to compute any 
 // arbitrary section of the infinity series without needing to compute
 // the entire sequence up to that point.
