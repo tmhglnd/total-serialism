@@ -1,12 +1,12 @@
 console.time('requires load');
 
-const fs = require('fs');
+// const fs = require('fs');
 
 // test with different builds
 let entryPoint = "../index";
 // entryPoint = "../build/ts.bundle.js";
 // entryPoint = "../build/ts.es5.js";
-entryPoint = "../build/ts.es5.min.js";
+// entryPoint = "../build/ts.es5.min.js";
 
 const Srl = require(entryPoint);
 const Gen = Srl.Generative;
@@ -18,7 +18,7 @@ const TL = Srl.Translate;
 const Util = Srl.Utility;
 
 console.timeEnd('requires load');
-console.log();
+// console.log();
 
 /*
 	Test criteria:
@@ -72,8 +72,8 @@ function fullTest(){
 	console.time('Total Time');
 
 	// testSerial();
-	// testGen();
-	testAlgo();
+	testGenerative();
+	// testAlgo();
 	// testRand();
 	// testMod();
 	// testStat();
@@ -102,68 +102,131 @@ function testSerial(){
 	test("Srl.Transform.lace([0, 1, 2], [3, 4, 5])");
 }
 
-function testGen(){
-	pagebreak("Generative");
+function testGenerative(){
+	test("Gen.spread()", () => {
+		expect(Gen.spread()).toStrictEqual([0]);
+	})
+	test("Gen.spread(6)", () => {
+		expect(Gen.spread(6)).toStrictEqual([0, 1, 2, 3, 4, 5]);
+	});
+	test("Gen.spread(6, 12)", () => {
+		expect(Gen.spread(6, 12)).toStrictEqual([0, 2, 4, 6, 8, 10]);
+	});
+	test("Gen.spread(6, -3, 12)", () => {
+		expect(Gen.spread(6, -3, 12)).toStrictEqual([-3, -1, 2, 4, 7, 9]);
+	});
+	test("Gen.spread(6, -12, 3)", () => {
+		expect(Gen.spread(6, -12, 3)).toStrictEqual([-12, -10, -7, -5, -2, 0]);
+	});
 
-	test("Gen.spread()");
-	test("Gen.spread(6)");
-	test("Gen.spread(6, 12)");
-	test("Gen.spread(6, -3, 12)");
-	test("Gen.spread(6, -12, 3)");
-
-	test("Gen.spreadFloat()");
-	test("Gen.spreadFloat(4)");
-	test("Gen.spreadFloat(4, 2)");
-	test("Gen.spreadFloat(4, -1, 1)");
+	test("Gen.spreadFloat()", () => {
+		expect(Gen.spreadFloat()).toStrictEqual([0]);
+	});
+	test("Gen.spreadFloat(4)", () => {
+		expect(Gen.spreadFloat(4)).toStrictEqual([0, 0.25, 0.5, 0.75]);
+	});
+	test("Gen.spreadFloat(4, 2)", () => {
+		expect(Gen.spreadFloat(4, 2)).toStrictEqual([0, 0.5, 1, 1.5]);
+	});
+	test("Gen.spreadFloat(4, -1, 1)", () => {
+		expect(Gen.spreadFloat(4, -1, 1)).toStrictEqual([-1, -0.5, 0, 0.5]);
+	});
 	
-	test("Gen.spreadInc()");
-	test("Gen.spreadInc(6)");
-	test("Gen.spreadInc(6, 12)");
-	test("Gen.spreadInc(6, -3, 12)");
-	test("Gen.spreadInc(6, -12, 3)");
+	test("Gen.spreadInc()", () => {
+		expect(Gen.spreadInc()).toStrictEqual([0]);
+	});
+	test("Gen.spreadInc(6)", () => {
+		expect(Gen.spreadInc(6)).toStrictEqual([0, 1, 2, 3, 4, 6]);
+	});
+	test("Gen.spreadInc(6, 12)", () => {
+		expect(Gen.spreadInc(6, 12)).toStrictEqual([0, 2, 4, 7, 9, 12]);
+	});
+	test("Gen.spreadInc(6, -3, 12)", () => {
+		expect(Gen.spreadInc(6, -3, 12)).toStrictEqual([-3, 0, 3, 6, 9, 12]);
+	});
+	test("Gen.spreadInc(6, -12, 3)", () => {
+		expect(Gen.spreadInc(6, -12, 3)).toStrictEqual([-12, -9, -6, -3, 0, 3]);
+	});
 	
-	test("Gen.spreadIncF()");
-	test("Gen.spreadIncF(5)");
-	test("Gen.spreadIncF(5, 2)");
-	test("Gen.spreadIncF(5, -1, 1)");
+	test("Gen.spreadIncF()", () => {
+		expect(Gen.spreadIncF()).toStrictEqual([0]);
+	});
+	test("Gen.spreadIncF(5)", () => {
+		expect(Gen.spreadIncF(5)).toStrictEqual([0, 0.25, 0.5, 0.75, 1]);
+	});
+	test("Gen.spreadIncF(5, 2)", () => {
+		expect(Gen.spreadIncF(5, 2)).toStrictEqual([0, 0.5, 1, 1.5, 2]);
+	});
+	test("Gen.spreadIncF(5, -1, 1)", () => {
+		expect(Gen.spreadIncF(5, -1, 1)).toStrictEqual([-1, -0.5, 0, 0.5, 1]);
+	});
 
-	test("Gen.spreadExp(10, 0, 10, 2)");
-	test("Gen.spreadIncExp(10, 0, 10, 2)");
-	test("Gen.spreadExpF(12, 0, 10, 0.5)");
-	test("Gen.spreadIncExpF(12, 0, 10, 0.5)");
+	test("Gen.spreadExp(10, 0, 10, 2)", () => {
+		expect(Gen.spreadExp(10, 0, 10, 2)).toStrictEqual([0, 0, 0, 0, 1, 2, 3, 4, 6, 8]);
+	});
+	test("Gen.spreadIncExp(10, 0, 10, 2)", () => {
+		expect(Gen.spreadIncExp(10, 0, 10, 2)).toStrictEqual([0, 0, 0, 1, 1, 3, 4, 6, 7, 10]);
+	});
+	test("Gen.spreadExpF(12, 0, 10, 0.5)", () => {
+		expect(Gen.spreadExpF(12, 0, 10, 0.5)).toStrictEqual([0, 2.8867513459481287, 4.08248290463863, 5, 5.773502691896257, 6.454972243679028, 7.0710678118654755, 7.637626158259733, 8.16496580927726, 8.660254037844386, 9.128709291752768, 9.574271077563381]);
+	});
+	test("Gen.spreadIncExpF(12, 0, 10, 0.5)", () => {
+		expect(Gen.spreadIncExpF(12, 0, 10, 0.5)).toStrictEqual([0, 3.0151134457776365, 4.264014327112209, 5.222329678670935, 6.030226891555273, 6.74199862463242, 7.385489458759964, 7.977240352174656, 8.528028654224418, 9.04534033733291, 9.534625892455924, 10]);
+	});
 
-	test("Gen.fill()");
-	test("Gen.fill(10, 2, 15, 3, 20, 4)");
-	test("Gen.fill([10, 20], 2, [15, [5, 3]], 3)");
-	test("Gen.fill([10, 20, 2, 15, 3, 20, 4])");
+	test("Gen.fill()", () => {
+		expect(Gen.fill()).toStrictEqual([0]);
+	});
+	test("Gen.fill(10, 2, 15, 3, 20, 4)", () => {
+		expect(Gen.fill(10, 2, 15, 3, 20, 4)).toStrictEqual([10, 10, 15, 15, 15, 20, 20, 20, 20]);
+	});
+	test("Gen.fill([10, 20], 2, [15, [5, 3]], 3)", () => {
+		expect(Gen.fill([10, 20], 2, [15, [5, 3]], 3)).toStrictEqual([[10, 20], [10, 20], [15, [5, 3]], [15, [5, 3]], [15, [5, 3]]]);
+	});
+	test("Gen.fill([10, 20, 2, 15, 3, 20, 4])", () => {
+		expect(Gen.fill([10, 20, 2, 15, 3, 20, 4])).toStrictEqual([0]);
+	});
 
-	test("Util.plot(Gen.sinF(30, 1, -5, 5))");
-	test("Util.plot(Gen.cosF(30, Gen.sinF(30, 2), -5, 5), {data: true})");
+	test("Gen.sine(8, 1, -5, 5)", () => {
+		expect(Gen.sine(8, 1, -5, 5)).toStrictEqual([0, 3, 5, 3, 0, -3, -5, -3,]);
+	})
+	test("Gen.cos(30, Gen.sinF(30, 2), -5, 5)", () => {
+		expect(Gen.cosine(8, Gen.sinF(8, 2), -5, 5)).toStrictEqual([ 5, 3, 5, -3, 5, -3, 5, 3,]);
+	})
 	
-	test("Util.plot(Gen.saw(16, 8.5), {log: false})");
-	test("Util.plot(Gen.sawFloat(25, 2.5), {log: false, height: 5, data: true})");
-	test("Util.plot(Gen.saw(34, Gen.sinF(30, 2), 0, 12))");
+	test("Gen.saw(8, 8.5)", () => {
+		expect(Gen.saw(8, 8.5)).toStrictEqual([ 0, 0, 1, 2, 3, 3, 4, 5,]);
+	});
+	test("Gen.sawF(8, 2.5)", () => {
+		expect(Gen.sawF(8, 2.5)).toStrictEqual([ -1, -0.375, 0.25, 0.875, -0.5, 0.125, 0.75, -0.625,]);
+	});
+	test("Gen.saw(8, Gen.sinF(8, 2), 0, 12))", () => {
+		expect(Gen.saw(8, Gen.sinF(8, 2), 0, 12)).toStrictEqual([0, 1, 0, 7, 11, 7, 0, 1,]);
+	});
 
-	test("Util.plot(Gen.squareFloat(30, 4, 0, 1, 0.2), {log: false, height: 2})");
-	test("Util.plot(Gen.square(30, 3, 0, 12, 0.8), {log: false, height: 2})");
-	test("Util.plot(Gen.squareFloat(30, Gen.sinF(30, 2, 1, 5)), {log: false, height: 5, data: true})");
+	test("Gen.square(8, 3, 0, 12, 0.8)", () => {
+		expect(Gen.square(8, 3, 0, 12, 0.8)).toStrictEqual([12, 12, 12, 12, 12, 0, 12, 12]);
+	});
+	test("Gen.squareF(8, 4, 0, 1, 0.2)", () => {
+		expect(Gen.squareF(8, 4, 0, 1, 0.2)).toStrictEqual([1, 0, 1, 0, 1, 0, 1, 0]);
+	});
+	test("Gen.squareF(8, Gen.sinF(8, 2, 1, 5))", () => {
+		expect(Gen.squareF(8, Gen.sinF(8, 2, 1, 5))).toStrictEqual([1, 0, 0, 1, 1, 1, 1, 0]);
+	});
 }
 
 function testAlgo(){
-	pagebreak("Generative Complex");
-	
-	pagebreak("Euclid");
-	test("Algo.euclid()");
-	test("Algo.euclid(10, 3)");
-	test("Algo.euclid(8, 5)");
+	test("Algo.euclid()", () => { 
+		expect(Algo.euclid()).toStrictEqual([0]); 
+	});
+	test("Algo.euclid(8, 5)", () => {
+		expect(Algo.euclid()).toStrictEqual([]);
+	});
 	test("Algo.euclid(16, 9, 1)");
-	test("Algo.euclid(31, 17)");
 
 	test("Algo.fastEuclid()");
-	test("Algo.fastEuclid(10, 3)");
 	test("Algo.fastEuclid(8, 5)");
 	test("Algo.fastEuclid(16, 9, 1)");
-	test("Algo.fastEuclid(31, 17)");
 	
 	pagebreak("HexBeat");
 	test("Algo.hexBeat()");
@@ -778,7 +841,7 @@ function testUtil(){
 	// console.log('Util.draw(harmonics, { extend: false });')
 	// Util.draw(harmonics, { extend: false });
 }
-
+/*
 function test(f){
 	// print the written function to console
 	console.log(f+";");
@@ -789,7 +852,7 @@ function test(f){
 	}
 	console.log("//=>", r, "\n");
 }
-
+*/
 function benchMark(f, iterations=10000){
 	console.time('benchmark time');
 	console.log(f+";");
