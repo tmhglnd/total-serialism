@@ -69,28 +69,19 @@ console.timeEnd('requires load');
 fullTest();
 
 function fullTest(){
-	console.time('Total Time');
+	// console.time('Total Time');
 
 	// testSerial();
-	testGenerative();
-	// testAlgo();
-	// testRand();
-	// testMod();
-	// testStat();
+	// testGenerative();
+	// testAlgorithmic();
+	testStochastic();
+	// testTransform();
+	// testStatistic();
 	// testTranslate();
-	// testUtil();
+	// testUtility();
 
-	pagebreak("All Tests Passed");
-	console.timeEnd('Total Time');
-}
-
-// Global vars for tests
-var complexRules = {
-	0: [0, 3, 7],
-	3: [-1, 0],
-	7: [12, 19, 0],
-	12: [12, 0, 0, 5], 
-	5: [0, -3, 0]
+	// pagebreak("All Tests Passed");
+	// console.timeEnd('Total Time');
 }
 
 // Test different sections of the package
@@ -215,169 +206,315 @@ function testGenerative(){
 	});
 }
 
-function testAlgo(){
+function testAlgorithmic(){
 	test("Algo.euclid()", () => { 
-		expect(Algo.euclid()).toStrictEqual([0]); 
+		expect(Algo.euclid()).toStrictEqual([1, 0, 1, 0, 1, 0, 1, 0]); 
 	});
 	test("Algo.euclid(8, 5)", () => {
-		expect(Algo.euclid()).toStrictEqual([]);
+		expect(Algo.euclid(8, 5)).toStrictEqual([1, 0, 1, 1, 0, 1, 1, 0]);
 	});
-	test("Algo.euclid(16, 9, 1)");
+	test("Algo.euclid(8, 3, 1)", () => {
+		expect(Algo.euclid(8, 3, 1)).toStrictEqual([ 0, 1, 0, 0, 1, 0, 0, 1])
+	});
 
-	test("Algo.fastEuclid()");
-	test("Algo.fastEuclid(8, 5)");
-	test("Algo.fastEuclid(16, 9, 1)");
+	test("Algo.fastEuclid()", () => {
+		expect(Algo.fastEuclid()).toStrictEqual([1, 0, 1, 0, 1, 0, 1, 0]);
+	});
+	test("Algo.fastEuclid(8, 5)", () => {
+		expect(Algo.fastEuclid(8, 5)).toStrictEqual([ 1, 0, 1, 0, 1, 1, 0, 1 ]);
+	});
+	test("Algo.fastEuclid(8, 3, 1)", () => {
+		expect(Algo.fastEuclid(8, 3, 1)).toStrictEqual([ 0, 1, 0, 0, 1, 0, 0, 1 ]);
+	});
 	
-	pagebreak("HexBeat");
-	test("Algo.hexBeat()");
-	test("Algo.hexBeat('f898')");
-	test("Algo.hexBeat('a9d2')");
-	test("Algo.hexBeat(573)");
-	test("Algo.hexBeat(['32fa'])");
-	test("Algo.hexBeat(['-zxyt'])");
-	test("Algo.hexBeat(0x89fc)");
+	test("Algo.hexBeat()", () => {
+		expect(Algo.hexBeat()).toStrictEqual([ 1, 0, 0, 0 ]);
+	});
+	test("Algo.hexBeat('f898')", () => {
+		expect(Algo.hexBeat('f898')).toStrictEqual([1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0]);
+	});
+	test("Algo.hexBeat('a9d2')", () => {
+		expect(Algo.hexBeat('a9d2')).toStrictEqual([1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0]);
+	});
+	test("Algo.hexBeat(573)", () => {
+		expect(Algo.hexBeat(573)).toStrictEqual([0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1]);
+	});
+	test("Algo.hexBeat(['32fa'])", () => {
+		expect(Algo.hexBeat(['32fa'])).toStrictEqual([0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0]);
+	});
+	test("Algo.hexBeat(['-zxyt'])", () => {
+		expect(Algo.hexBeat(['-zxyt'])).toStrictEqual([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+	});
+	test("Algo.hexBeat(0x89fc)", () => {
+		expect(Algo.hexBeat(0x89fc)).toStrictEqual([0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0]);
+	});
 	
-	pagebreak("Lindenmayer");
-	test("Algo.linden()");
+
+	test("Algo.linden()", () => {
+		expect(Algo.linden()).toStrictEqual([ 1, 0, 1, 1, 0 ]);
+	});
 	// koch curve
-	test("Algo.linden('F', 2, {F: 'F+F-F-F+F'})");
+	test("Algo.linden('F', 2, {F: 'F+F-F-F+F'})", () => {
+		expect(Algo.linden('F', 2, {F: 'F+F-F-F+F'})).toStrictEqual('F+F-F-F+F+F+F-F-F+F-F+F-F-F+F-F+F-F-F+F+F+F-F-F+F');
+	});
 	// cantor set
-	test("Algo.linden('A', 3, {A: 'ABA', B: 'BBB'})");
+	test("Algo.linden('A', 3, {A: 'ABA', B: 'BBB'})", () => {
+		expect(Algo.linden('A', 3, {A: 'ABA', B: 'BBB'})).toStrictEqual('ABABBBABABBBBBBBBBABABBBABA');
+	});
 	// cantor set as 0's and 1's in an array ruleset
-	test("Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]})");
+	test("Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]})", () => {
+		expect(Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]})).toStrictEqual([1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1]);
+	});
 	// Thue-Morse sequence
-	test("Algo.linden('A', 4, {A: 'AB', B: 'BA'})");
+	test("Algo.linden('A', 4, {A: 'AB', B: 'BA'})", () => {
+		expect(Algo.linden('A', 4, {A: 'AB', B: 'BA'})).toStrictEqual('ABBABAABBAABABBA');
+	});
 	// Thue-Morse sequence as 0's and 1's
-	test("Algo.linden(1, 4, {0: [0, 1], 1: [1, 0]})");
+	test("Algo.linden(1, 4, {0: [0, 1], 1: [1, 0]})", () => {
+		expect(Algo.linden(1, 4, {0: [0, 1], 1: [1, 0]})).toStrictEqual([1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1]);
+	});
 	// Sierpinski Triangle
-	test("Algo.linden('F-G-G', 1, {'F': 'F−G+F+G−F', 'G' : 'GG'})");
+	test("Algo.linden('F-G-G', 2, {'F': 'F−G+F+G−F', 'G' : 'GG'})", () => {
+		expect(Algo.linden('F-G-G', 2, {'F': 'F−G+F+G−F', 'G' : 'GG'})).toStrictEqual('F−G+F+G−F−GG+F−G+F+G−F+GG−F−G+F+G−F-GGGG-GGGG');
+	});
 	// usage with integers and arrays
-	test("Algo.linden([1, 0, 1], 3, {0: [1], 1: [0, 1]})");
+	test("Algo.linden([1, 0, 1], 3, {0: [1], 1: [0, 1]})", () => {
+		expect(Algo.linden([1, 0, 1], 3, {0: [1], 1: [0, 1]})).toStrictEqual([0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1]);
+	});
 	// more complex rules for semitone melodies (see above for rules)
-	test("Algo.linden(0, 3, complexRules)");
+	test("Algo.linden(0, 3, complexRules)", () => {
+		// Global vars for tests
+		var complexRules = {
+			0: [0, 3, 7],
+			3: [-1, 0],
+			7: [12, 19, 0],
+			12: [12, 0, 0, 5], 
+			5: [0, -3, 0] }
 
-	let ca = new Algo.Automaton();
-	ca.rule(122);
+		expect(Algo.linden(0, 3, complexRules)).toStrictEqual([0, 3, 7, -1, 0, 12, 19, 0, -1, 0, 3, 7, 12, 0, 0, 5, 19, 0, 3, 7]);
+	});
 
-	Rand.seed(0);
-	// ca.feed(Rand.randomFloat(40).map(x => Number(x > 0.5)));
-	ca.feed(Rand.coin(40));
-
-	caRes = [];
-	for (let i=0; i<10; i++){
-		caRes.push(ca.next());
-	}
-	Util.draw(caRes);
-
-	pagebreak("Collatz");
-	test('Algo.collatz()');
-	test('Algo.collatz(43)');
-	test('Algo.collatz(7)');
-	test('Algo.collatz(314)');
+	test('Algo.collatz()', () => {
+		expect(Algo.collatz()).toStrictEqual([ 1, 2, 4, 8, 16, 5, 10, 3, 6 ]);
+	});
+	test('Algo.collatz(7)', () => {
+		expect(Algo.collatz(7)).toStrictEqual([ 1, 2, 4, 8, 16, 5, 10, 20, 40, 13, 26, 52, 17, 34, 11, 22 ]);
+	});
+	test('Algo.collatz(314)', () => {
+		expect(Algo.collatz(314)).toStrictEqual([
+			1,   2,   4,  8,  16,   5,  10,  20,  40,
+		   13,  26,  52, 17,  34,  11,  22,  44,  88,
+		   29,  58,  19, 38,  76, 152, 304, 101, 202,
+		   67, 134, 268, 89, 178,  59, 118, 236, 472,
+		  157
+		]);
+	});
 	
-	test('Algo.collatzMod()');
-	test('Algo.collatzMod(43)');
-	test('Algo.collatzMod(7, 12)');
-	test('Algo.collatzMod(314, 5)');
+	test('Algo.collatzMod()', () => {
+		expect(Algo.collatzMod()).toStrictEqual([ 1, 0, 0, 0, 0, 1, 0, 1, 0 ]);
+	});
+	test('Algo.collatzMod(7, 12)', () => {
+		expect(Algo.collatzMod(7, 12)).toStrictEqual([ 1, 2, 4, 8, 4, 5, 10, 8, 4, 1, 2, 4, 5, 10, 11, 10 ]);
+	});
+	test('Algo.collatzMod(314, 5)', () => {
+		expect(Algo.collatzMod(314, 5)).toStrictEqual([
+			1, 2, 4, 3, 1, 0, 0, 0, 0, 3,
+			1, 2, 2, 4, 1, 2, 4, 3, 4, 3,
+			4, 3, 1, 2, 4, 1, 2, 2, 4, 3,
+			4, 3, 4, 3, 1, 2, 2
+		  ]);
+	});
 
-	pagebreak("Fibonacci");
-	test('Algo.fibonacci()');
-	test("Algo.fibonacci(12)");
-	test("Algo.fibonacci(2, 100, true)");
+	test('Algo.fibonacci()', () => {
+		expect(Algo.fibonacci()).toStrictEqual([0]);
+	});
+	test("Algo.fibonacci(12)", () => {
+		expect(Algo.fibonacci(12)).toStrictEqual([ 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ]);
+	});
+	test("Algo.fibonacci(2, 100, true)", () => {
+		expect(Algo.fibonacci(2, 100, true)).toStrictEqual([ '354224848179261915075', '573147844013817084101' ]);
+	});
 	
-	test('Algo.pisano()');
-	test("Algo.pisano(12)");
-	test("Algo.pisano(7)");
-	test("Algo.pisano(4, 10)");
+	test('Algo.pisano()', () => {
+		expect(Algo.pisano()).toStrictEqual([ 0, 1, 1, 2, 3, 5, 8, 1, 9, 10, 7, 5, 0, 5, 5, 10, 3, 1, 4, 5, 9, 2, 11, 1 ]);
+	});
+	test("Algo.pisano(7)", () => {
+		expect(Algo.pisano(7)).toStrictEqual([ 0, 1, 1, 2, 3, 5, 1, 6, 0, 6, 6, 5, 4, 2, 6, 1 ]);
+	});
+	test("Algo.pisano(4, 10)", () => {
+		expect(Algo.pisano(4, 10)).toStrictEqual([ 0, 1, 1, 2, 3, 1, 0, 1, 1, 2 ]);
+	});
 
-	test("Algo.pell(10)");
-	test("Algo.threeFibonacci(10)");
-	test("Algo.lucas(10)");
+	test("Algo.pell(10)", () => {
+		expect(Algo.pell(10)).toStrictEqual([ 0, 1, 2, 5, 12, 29, 70, 169, 408, 985 ]);
+	});
+	test("Algo.threeFibonacci(10)", () => {
+		expect(Algo.threeFibonacci(10)).toStrictEqual([ 0, 1, 3, 10, 33, 109, 360, 1189, 3927, 12970 ]);
+	});
+	test("Algo.lucas(10)", () => {
+		expect(Algo.lucas(10)).toStrictEqual([ 2, 1, 3, 4, 7, 11, 18, 29, 47, 76 ]);
+	});
 
-	test("Algo.nbonacci(10, 1, 3, 2)");
-	test("Algo.nbonacci(10, 0, 1, 1)");
+	test("Algo.nbonacci(10, 2, 1, 1)", () => {
+		expect(Algo.nbonacci(10, 2, 1, 1)).toStrictEqual(Algo.lucas(10));
+	});
+	test("Algo.nbonacci(10, 0, 1, 1)", () => {
+		expect(Algo.nbonacci(10, 0, 1, 1)).toStrictEqual(Algo.fibonacci(10));
+	});
 
-	pagebreak("Infinity Series");
-	test('Algo.infinitySeries()');
-	test('Algo.infinitySeries(16, [0, 3])');
-	test('Algo.infSeries(8, [0, 1], 120)');
+
+	test('Algo.infinitySeries()', () => {
+		expect(Algo.infinitySeries()).toStrictEqual([  0,  1, -1, 2, 1, 0, -2,  3, -1, 2, 0, 1, 2, -1, -3, 4 ]);
+	});
+	test('Algo.infinitySeries(16, [0, 3])', () => {
+		expect(Algo.infinitySeries(16, [0, 3])).toStrictEqual([ 0,  3, -3,  6, 3, 0, -6,  9, -3,  6, 0, 3, 6, -3, -9, 12]);
+	});
+	test('Algo.infSeries(8, [0, 1], 120)', () => {
+		expect(Algo.infinitySeries(8, [0, 1], 120)).toStrictEqual([ -4,  5,  3, -2, 5, -4, -6,  7]);
+	});
+
+	test('Algo.Automaton()', () => {
+		let ca = new Algo.Automaton();
+		ca.rule(122);	
+		Rand.seed(314);
+		// ca.feed(Rand.randomFloat(40).map(x => Number(x > 0.5)));
+		ca.feed(Rand.coin(10));
+		// caRes = [];
+		expect(ca.next()).toStrictEqual([0, 1, 1, 1, 0, 1, 1, 1, 0, 0]);
+		expect(ca.next()).toStrictEqual([1, 1, 0, 1, 1, 1, 0, 1, 1, 0]);
+		expect(ca.next()).toStrictEqual([1, 1, 1, 1, 0, 1, 1, 1, 1, 1]);
+		expect(ca.next()).toStrictEqual([0, 0, 0, 1, 1, 1, 0, 0, 0, 0]);
+		expect(ca.next()).toStrictEqual([0, 0, 1, 1, 0, 1, 1, 0, 0, 0]);
+		// Util.draw(caRes);
+	});
 }
 
-function testRand(){
-	pagebreak("Stochastic");
-
-	test("Rand.seed(19374)");
-	test("Rand.randomFloat(3, -1, 1)");
-	test("Rand.randomF(3, 0.2, 0.5)");
-
-	test("Rand.seed(4827)");
-	test("Rand.random(5, 2)");
-	test("Rand.random(5, 0, 12)");
-
-	test("Rand.seed(4827)");
-	test("Rand.random(5, 2)");
-	test("Rand.random(5, 0, 12)");
-
-	test("Rand.seed(1618)");
-	test("Rand.drunkFloat(5)");
-	console.log(Util.plot(Rand.drunkFloat(5, 1), {height: 5}));
+function testStochastic(){
+	test("Rand.seed(19374)", () => {
+		expect(Rand.seed(19374)).toBe(undefined);
+	});
+	test("Rand.randomFloat(3, -1, 1)", () => {
+		expect(Rand.randomFloat(3, -1, 1)).toStrictEqual([ 0.6291111850577886, 0.15153786227276944, 0.32814801081039646 ]);
+	});
+	test("Rand.randomF(3, 0.2, 0.5)", () => {
+		expect(Rand.randomF(3, 0.2, 0.5)).toStrictEqual([ 0.29801793054336634, 0.28391363035769457, 0.3928823791544367 ]);
+	});
+	test("Rand.random(5, 2)", () => {
+		Rand.seed(4827);
+		expect(Rand.random(5, 2)).toStrictEqual([ 1, 0, 1, 1, 0 ]);
+	});
+	test("Rand.random(5, 0, 12)", () => {
+		expect(Rand.random(5, 0, 12)).toStrictEqual([ 11, 8, 4, 10, 1 ]);
+	});
 	
-	test("Rand.drunk(10, 5, 0, 24)");
-	console.log(Util.plot(Rand.drunk(10, 24, 0, 24), {height: 5}));
+	test("Rand.random(5, 2)", () => {
+		Rand.seed(7632);
+		expect(Rand.random(5, 2)).toStrictEqual([ 0, 1, 1, 1, 1 ]);
+	});
+	test("Rand.random(5, 0, 12)", () => {
+		expect(Rand.random(5, 0, 12)).toStrictEqual([ 7, 1, 7, 10, 9 ]);
+	});
+	
+	test("Rand.drunkFloat(5)", () => {
+		Rand.seed(1618);
+		expect(Rand.drunkFloat(5)).toStrictEqual([ 0.49305378228860675, 0.4599542055791346, 0.8460817983354717, 0.9639116027672727, 0.4009600948886277 ]);
+	});
+	// console.log(Util.plot(Rand.drunkFloat(5, 1), {height: 5}));
+	test("Rand.drunk(10, 5, 0, 24)", () => {
+		expect(Rand.drunk(10, 5, 0, 24)).toStrictEqual([ 15, 14, 16, 19, 15, 17, 13, 17, 16, 18 ]);
+	});
+	// console.log(Util.plot(Rand.drunk(10, 24, 0, 24), {height: 5}));
+	test("Rand.drunk(10, 4, 0, 12, 6, false)", () => {
+		expect(Rand.drunk(10, 4, 0, 12, 6, false)).toStrictEqual([4,  6,  2,  1, -3, -2, -2, -4, -2, -2 ])
+	});
+	// console.log(Util.plot(Rand.drunk(10, 4, 0, 12, 1, false), {height: 5}));
 
-	test("Rand.drunk(10, 4, 0, 12, 6, false)");
-	console.log(Util.plot(Rand.drunk(10, 4, 0, 12, 1, false), {height: 5}));
+	test("Rand.coin(5)", () => {
+		Rand.seed(3141);
+		expect(Rand.coin(5)).toStrictEqual([ 0, 1, 0, 0, 1 ]);
+	});
 
-	test("Rand.seed(0)");
-	test("Rand.coin(10)");
-
-	test("Rand.dice(4)");
-	test("Rand.dice(4)");
+	test("Rand.dice(5)", () => {
+		expect(Rand.dice(5)).toStrictEqual([ 3, 6, 6, 4, 3 ]);
+	});
 
 	// var shufArr = [0, 5, 7, 12];
 	// console.log(Mod.shuffle(shufArr));
 	// console.log(shufArr);
-	test("Rand.shuffle()");
-	test("Rand.seed(1473)");
-	test("Rand.shuffle([0, 5, 7, 12])");
-	test("Rand.shuffle([0, 5, 7, 12])");
+	test("Rand.shuffle()", () => {
+		expect(Rand.shuffle()).toStrictEqual([0]);
+	});
+	test("Rand.shuffle([0, 5, 7, 12])", () => {
+		Rand.seed(1473);
+		expect(Rand.shuffle([0, 5, 7, 12])).toStrictEqual([ 12, 5, 7, 0 ]);
+	});
+	test("Rand.shuffle([0, 5, 7, 12])", () => {
+		expect(Rand.shuffle([0, 5, 7, 12])).toStrictEqual([ 7, 12, 0, 5 ]);
+	});
 
-	test("Rand.seed(1473)");
-	test("Rand.shuffle([0, 5, 7, 12])");
+	test("Rand.twelveTone()", () => {
+		Rand.seed(4923);
+		expect(Rand.twelveTone()).toStrictEqual([ 11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10 ]);
+	});
+	test("Rand.twelveTone()", () => {
+		expect(Rand.twelveTone()).toStrictEqual([ 2, 10, 4, 11, 7, 9, 6, 0,  8, 1, 3, 5 ]);
+	});
 
-	test("Rand.seed(4923)");
-	test("Rand.twelveTone()");
-	test("Rand.twelveTone()");
+	test("Rand.clave()", () => {
+		Rand.seed(7483);
+		expect(Rand.clave()).toStrictEqual([ 1, 0, 1, 0, 0, 1, 0, 1]);
+	});
+	test("Rand.clave(5)", () => {
+		expect(Rand.clave(5)).toStrictEqual([ 1, 0, 0, 1, 0 ]);
+	});
+	test("Rand.clave(8, 4)", () => {
+		expect(Rand.clave(8, 4)).toStrictEqual([ 1, 0, 1, 0, 1, 0, 0, 0 ]);
+	});
+	test("Rand.clave(8, 3, 1)", () => {
+		expect(Rand.clave(8, 3, 1)).toStrictEqual([ 1, 1, 0, 0, 1, 0, 1, 1 ]);
+	});
 
-	test("Rand.seed(7483)");
-	test("Rand.clave()");
-	test("Rand.clave(8)");
-	test("Rand.clave(16, 4)");
-	test("Rand.clave(16, 3, 1)");
+	test('Rand.urn(5)', () => {
+		Rand.seed(7563);
+		expect(Rand.urn(5)).toStrictEqual([ 5, 8, 3, 1, 7 ]);
+	});
+	test('Rand.urn(10, 5)', () => {
+		expect(Rand.urn(10, 5)).toStrictEqual([ 3, 0, 2, 1, 4, 2, 4, 3, 1, 0 ]);
+	});
+	test('Rand.urn(12, -3, 3)', () => {
+		expect(Rand.urn(12, -3, 3)).toStrictEqual([ 1,  0, -2, -1, 2, -3, -2, -3,  2, 1, 0, -1 ]);
+	});
 
-	test("Rand.seed(4923)");
-	test("Rand.twelveTone()");
-
-	test('Rand.seed(75631)');
-	test('Rand.urn(5)');
-	test('Rand.urn(10, 7)');
-	test('Rand.urn(12, -3, 3)');
-
-	test("Rand.choose(5, [0, 1, 2, 3, 5, 8, 13])");
-	test("Rand.choose(5, ['c', 'e', 'g'])");
-	test("Rand.pick(5, [0, 1, 2, 3, 5, 8, 13])");
-	test("Rand.pick(5, ['c', 'e', ['g', 'd']])");
-
-	let arr = [0, 9, 7, 3, 5, 0, -1];
-	Rand.seed(3141);
-	test("Rand.expand([0, 9, 7, 3, 5, 0, -1], 30)");
-
-	test('Rand.seed(3141)');
-	Util.plot(Rand.expand([0, 9, 7, 3, 5, 0, -1], 30), { height: 10 });
+	test("Rand.choose(5, [0, 1, 2, 3, 5, 8])", () => {
+		Rand.seed(9351);
+		expect(Rand.choose(5, [0, 1, 2, 3, 5, 8])).toStrictEqual([ 3, 5, 2, 5, 3 ]);
+	});
+	test("Rand.choose(5, ['c', 'e', 'g'])", () => {
+		expect(Rand.choose(5, ['c', 'e', 'g'])).toStrictEqual([ 'g', 'g', 'e', 'c', 'g' ]);
+	});
 	
-	test("Rand.seed(6181)");
-	console.log('Rand.expand(30, [0, 9, 7, 3, 5, 0, -1]')
-	Util.plot(Rand.expand([0, 9, 7, 3, 5, 0, -1], 30), { height: 10 });
+	test("Rand.pick(5, [0, 1, 2, 3, 5, 8])", () => {
+		Rand.seed(9351);
+		expect(Rand.pick(5, [0, 1, 2, 3, 5, 8])).toStrictEqual([ 3, 8, 1, 2, 5 ]);
+	});
+	test("Rand.pick(5, ['c', 'e', ['g', 'd']])", () => {
+		expect(Rand.pick(5, ['c', 'e', ['g', 'd']])).toStrictEqual([ [ 'g', 'd' ], 'e', 'c', 'e', 'c' ]);
+	});
+
+	test("Rand.expand(0)", () => {
+		expect(Rand.expand(0)).toStrictEqual([0]);
+	})
+	test("Rand.expand([0, 7, 3, 5, 0, -1], 10)", () => {
+		let arr = [0, 7, 3, 5, 0, -1];
+		Rand.seed(3141);
+		expect(Rand.expand(arr, 10)).toStrictEqual([ 0, 7, 3, 5, 0, -1, 6, 8, 7, 2 ]);
+	});
+	// test('Rand.seed(3141)');
+	// Util.plot(Rand.expand([0, 9, 7, 3, 5, 0, -1], 30), { height: 10 });
+	
+	// test("Rand.seed(6181)");
+	// console.log('Rand.expand(30, [0, 9, 7, 3, 5, 0, -1]')
+	// Util.plot(Rand.expand([0, 9, 7, 3, 5, 0, -1], 30), { height: 10 });
 }
 
 function testMod(){
