@@ -1,4 +1,3 @@
-console.time('requires load');
 
 // const fs = require('fs');
 
@@ -6,19 +5,20 @@ console.time('requires load');
 let entryPoint = "../index";
 // entryPoint = "../build/ts.bundle.js";
 // entryPoint = "../build/ts.es5.js";
-// entryPoint = "../build/ts.es5.min.js";
+let es5build = "../build/ts.es5.min.js";
 
-const Srl = require(entryPoint);
-const Gen = Srl.Generative;
-const Algo = Srl.Algorithmic;
-const Mod = Srl.Transform;
-const Rand = Srl.Stochastic;
-const Stat = Srl.Statistic;
-const TL = Srl.Translate;
-const Util = Srl.Utility;
+// load library from index.js;
+let TS = require(entryPoint);
+let Gen, Algo, Mod, Rand, Stat, TL, Util;
 
-console.timeEnd('requires load');
-// console.log();
+// run full test with ./index.js
+fullTest(TS);
+
+// reload library with es5.min.js build
+// TS = require(es5build);
+
+// and run full test with es5.min.js build;
+// fullTest(TS);
 
 /*
 	Test criteria:
@@ -66,14 +66,22 @@ console.timeEnd('requires load');
 // console.log(Mod.merge(arr, arr2));
 // console.log(Mod.lace(arr, arr2));
 
-fullTest();
+// fullTest();
 
-function fullTest(){
+function fullTest(Srl){
+	Gen = Srl.Generative;
+	Algo = Srl.Algorithmic;
+	Mod = Srl.Transform;
+	Rand = Srl.Stochastic;
+	Stat = Srl.Statistic;
+	TL = Srl.Translate;
+	Util = Srl.Utility;
+
 	// console.time('Total Time');
 
 	// testSerial();
-	// testGenerative();
-	// testAlgorithmic();
+	testGenerative();
+	testAlgorithmic();
 	testStochastic();
 	// testTransform();
 	// testStatistic();
@@ -377,15 +385,13 @@ function testAlgorithmic(){
 		let ca = new Algo.Automaton();
 		ca.rule(122);	
 		Rand.seed(314);
-		// ca.feed(Rand.randomFloat(40).map(x => Number(x > 0.5)));
 		ca.feed(Rand.coin(10));
-		// caRes = [];
+
 		expect(ca.next()).toStrictEqual([0, 1, 1, 1, 0, 1, 1, 1, 0, 0]);
 		expect(ca.next()).toStrictEqual([1, 1, 0, 1, 1, 1, 0, 1, 1, 0]);
 		expect(ca.next()).toStrictEqual([1, 1, 1, 1, 0, 1, 1, 1, 1, 1]);
 		expect(ca.next()).toStrictEqual([0, 0, 0, 1, 1, 1, 0, 0, 0, 0]);
 		expect(ca.next()).toStrictEqual([0, 0, 1, 1, 0, 1, 1, 0, 0, 0]);
-		// Util.draw(caRes);
 	});
 }
 
@@ -419,15 +425,12 @@ function testStochastic(){
 		Rand.seed(1618);
 		expect(Rand.drunkFloat(5)).toStrictEqual([ 0.49305378228860675, 0.4599542055791346, 0.8460817983354717, 0.9639116027672727, 0.4009600948886277 ]);
 	});
-	// console.log(Util.plot(Rand.drunkFloat(5, 1), {height: 5}));
 	test("Rand.drunk(10, 5, 0, 24)", () => {
 		expect(Rand.drunk(10, 5, 0, 24)).toStrictEqual([ 15, 14, 16, 19, 15, 17, 13, 17, 16, 18 ]);
 	});
-	// console.log(Util.plot(Rand.drunk(10, 24, 0, 24), {height: 5}));
 	test("Rand.drunk(10, 4, 0, 12, 6, false)", () => {
 		expect(Rand.drunk(10, 4, 0, 12, 6, false)).toStrictEqual([4,  6,  2,  1, -3, -2, -2, -4, -2, -2 ])
 	});
-	// console.log(Util.plot(Rand.drunk(10, 4, 0, 12, 1, false), {height: 5}));
 
 	test("Rand.coin(5)", () => {
 		Rand.seed(3141);
@@ -438,9 +441,6 @@ function testStochastic(){
 		expect(Rand.dice(5)).toStrictEqual([ 3, 6, 6, 4, 3 ]);
 	});
 
-	// var shufArr = [0, 5, 7, 12];
-	// console.log(Mod.shuffle(shufArr));
-	// console.log(shufArr);
 	test("Rand.shuffle()", () => {
 		expect(Rand.shuffle()).toStrictEqual([0]);
 	});
@@ -509,12 +509,6 @@ function testStochastic(){
 		Rand.seed(3141);
 		expect(Rand.expand(arr, 10)).toStrictEqual([ 0, 7, 3, 5, 0, -1, 6, 8, 7, 2 ]);
 	});
-	// test('Rand.seed(3141)');
-	// Util.plot(Rand.expand([0, 9, 7, 3, 5, 0, -1], 30), { height: 10 });
-	
-	// test("Rand.seed(6181)");
-	// console.log('Rand.expand(30, [0, 9, 7, 3, 5, 0, -1]')
-	// Util.plot(Rand.expand([0, 9, 7, 3, 5, 0, -1], 30), { height: 10 });
 }
 
 function testMod(){
@@ -978,8 +972,8 @@ function testUtil(){
 	// console.log('Util.draw(harmonics, { extend: false });')
 	// Util.draw(harmonics, { extend: false });
 }
-/*
-function test(f){
+
+function tester(f){
 	// print the written function to console
 	console.log(f+";");
 	// evaluate the function and print results
@@ -989,7 +983,7 @@ function test(f){
 	}
 	console.log("//=>", r, "\n");
 }
-*/
+
 function benchMark(f, iterations=10000){
 	console.time('benchmark time');
 	console.log(f+";");
