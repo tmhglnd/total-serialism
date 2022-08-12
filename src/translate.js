@@ -12,6 +12,8 @@
 
 // require API's
 const { Note, Scale } = require('@tonaljs/tonal');
+const { Chord } = require('@tonaljs/tonal');
+const { Progression } = require('@tonaljs/tonal');
 
 // require Scale Mappings
 // const Scales = require('../data/scales.json');
@@ -444,6 +446,58 @@ function midiToSemi(a=0, o=4){
 exports.midiToSemi = midiToSemi;
 exports.mtos = midiToSemi;
 */
+
+// Use a list of roman numerals to generate a chord progression
+// The function returns a 2d-array of chords, where every chord is
+// a separate array within the larger array. The chords are returned
+// as semitones from 0-12. Optionally with a second argument you can 
+// offset the chords based on a note name or midi value
+// eg. IIm with 'D' becomes [E, G, B] becomes => [4, 7, 11]
+// Valid chord numerals: I, II, III, ..., VII
+// Valid additions: m, M, 7, 9, sus2, sus4, maj7, m7, maj9, m9
+// 
+// @param - {Array/String} -> roman numerals to convert to chords
+// @param - {String/Number} -> root for chord progression
+// @return - {2d-Array} -> array of chords
+//
+function chordsFromNumerals(a=['i'], n='c'){
+	// make array if not array and flatten
+	a = Array.isArray(a)? a.flat(Infinity) : [a];
+	// check if n is notename
+	n = isNaN(n)? n : midiToNote(Util.wrap(n));
+	console.log(n);
+	// generate progression of chord names
+	let p = Progression.fromRomanNumerals(n, a);
+	// translate chordnames to semitones
+	return chordsFromNames(p);
+}
+exports.chordsFromNumerals = chordsFromNumerals;
+exports.chords = chordsFromNumerals;
+
+// Use a list of chord names to generate a chord progression
+// The function returns an array of chords and works on n-dimensional arrays
+// where every chord is a separate array within the larger array. 
+// The chords are returned as semitones from 0-12. 
+// eg. Em becomes => [4, 7, 11]
+// Valid note names: C, D, E ..., B
+// Valid additions: m, M, 7, 9, sus2, sus4, maj7, m7, maj9, m9
+// 
+// @param - {Array/String} -> chord names to convert to numbers
+// @return - {2d-Array} -> array of chords
+//
+function chordsFromNames(a=['c']){
+	// make array if not array and flatten
+	if (!Array.isArray(a)){
+		let ch = Chord.get(a);
+		if (ch.empty){
+			console.log(`Invalid chord name generated from numeral: ${a}`);
+			return [0];
+		}
+		return Util.wrap(chromaToRelative(ch.notes));
+	}
+	return a.map(c => chordsFromNames(c));
+}
+exports.chordsFromNames = chordsFromNames;
 
 // Convert a beat division value to milliseconds based on the global BPM
 // eg. ['1/4', 1/8', '1/16'] => [500, 250, 125] @ BPM = 120

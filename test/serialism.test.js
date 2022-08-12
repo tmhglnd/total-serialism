@@ -71,14 +71,14 @@ fullTest();
 function fullTest(){
 	console.time('Total Time');
 
-	// testSerial();
-	// testGen();
-	testAlgo();
-	// testRand();
-	// testMod();
-	// testStat();
-	// testTranslate();
-	// testUtil();
+	testSerial();
+	testGen();
+	testAlgo(); 
+	testRand();
+	testMod();
+	testStat();
+	testTranslate();
+	testUtil();
 
 	pagebreak("All Tests Passed");
 	console.timeEnd('Total Time');
@@ -645,6 +645,12 @@ function testTranslate(){
 	test("TL.setRoot('a-')");
 	test("TL.setScale('harmonic_minor')");
 	test("TL.toScale([0, [1, 2, 3], 4, 5, [6, 7, [8, 9], 10], 11, 12])");
+
+	test("TL.chords(['I', 'IIm', 'IVsus2', 'V7', 'VIm9'])");
+	test("TL.chordsFromNumerals(['I', 'IIm', 'IVsus2', 'V7', 'VIm9'], 'Eb')");
+	test("TL.chordsFromNumerals(['I', 'IIm', 'IVsus2', 'V7', 'VIm9'], 7)");
+
+	test("TL.chordsFromNames(['C', 'Dm', 'Fsus2', 'G7', 'Am9'])");
 
 	console.log("var scala = new TL.Scala()");
 	var scl = new TL.Scala();

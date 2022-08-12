@@ -38,7 +38,7 @@ exports.wrap = wrap;
 
 function _wrap(a, lo, hi){
 	let r = hi - lo;
-	return (((a - lo % r) + r) % r) + lo;
+	return ((((a - lo) % r) + r) % r) + lo;
 }
 
 // Constrain a value between a low and high range
