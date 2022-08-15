@@ -191,7 +191,7 @@ function invert(arr=[0], lo, hi){
 	arr = Array.isArray(arr)? arr : [arr];
 	if (lo === undefined){
 		hi = Util.max(arr);
-		lo = Util.max(arr);
+		lo = Util.min(arr);
 	} else if (hi === undefined){
 		hi = lo;
 	}
