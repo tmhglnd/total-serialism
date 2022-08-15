@@ -15,10 +15,10 @@ let Gen, Algo, Mod, Rand, Stat, TL, Util;
 fullTest(TS);
 
 // reload library with es5.min.js build
-// TS = require(es5build);
+TS = require(es5build);
 
 // and run full test with es5.min.js build;
-// fullTest(TS);
+fullTest(TS);
 
 /*
 	Test criteria:
@@ -80,9 +80,9 @@ function fullTest(Srl){
 	// console.time('Total Time');
 
 	// testSerial();
-	// testGenerative();
-	// testAlgorithmic();
-	// testStochastic();
+	testGenerative();
+	testAlgorithmic();
+	testStochastic();
 	testTransform();
 	// testStatistic();
 	// testTranslate();
@@ -593,178 +593,139 @@ function testTransform(){
 	});
 
 	test("Mod.invert()", () => {
-		expect().toStrictEqual([0]);
+		expect(Mod.invert()).toStrictEqual([0]);
 	});
-	test("Mod.invert()", () => {
-		expect().toStrictEqual([0]);
+	test("Mod.invert([-1, 2, 7, 14])", () => {
+		expect(Mod.invert([-1, 2, 7, 14])).toStrictEqual([ 14, 11, 6, -1 ]);
 	});
-	test("Mod.invert([-1, 2, 7, 9, 14])", () => {
-		expect().toStrictEqual([0]);
+	test("Mod.invert([-1, 2, 7, 14], 5)", () => {
+		expect(Mod.invert([-1, 2, 7, 14], 5)).toStrictEqual([ 11, 8, 3, -4 ]);
 	});
-	test("Mod.invert([-1, 2, 7, 9, 14], 5)", () => {
-		expect().toStrictEqual([0]);
-	});
-	test("Mod.invert([-1, 2, 7, 9, 14], 0, 12)", () => {
-		expect().toStrictEqual([0]);
-	});
-	test("Mod.invert([-1, 2, [[7, 9], 14]])", () => {
-		expect().toStrictEqual([0]);
+	test("Mod.invert([-1, [2, 7], 14], 0, 12)", () => {
+		expect(Mod.invert([-1, [2, 7], 14], 0, 12)).toStrictEqual([ 13, [10, 5], -2 ]);
 	});
 	
-	/*
-	// test("Mod.lace([0, 2, 4], [1, 3, 5], ['hello'])");
 	test("Mod.lace()", () => {
-		expect().toStrictEqual([0]);
+		expect(Mod.lace()).toStrictEqual([0]);
 	});
-	test("Mod.lace(2, 5)", () => {
-		expect().toStrictEqual([0]);
+	test("Mod.lace([0, 0], 7, [9, 9, 9])", () => {
+		expect(Mod.lace([0, 0], 7, [9, 9, 9])).toStrictEqual([ 0, 7, 9, 0, 9, 9 ]);
 	});
-	test("Mod.lace([0, 0, 0], [7, 7], [9, 9, 9, 9])", () => {
-		expect().toStrictEqual([0]);
-	});
-	test("Mod.lace([0, [0, 0]], [[7,7]], [9, [[9, 9], 9], 9])", () => {
-		expect().toStrictEqual([0]);
-	});
-	test("Mod.lace(['c', 'c', 'c', 'c'], ['g', 'g'], ['e'])", () => {
-		expect().toStrictEqual([0]);
-	});
-
+	
 	// test("Mod.lookup()");
 	test("Mod.lookup()", () => {
-		expect().toStrictEqual([0]);
+		expect(Mod.lookup()).toStrictEqual([0]);
 	});
-	test("Mod.lookup(10)", () => {
-		expect().toStrictEqual([0]);
+	test("Mod.lookup([0, [1, 1, [2, 3]], 1], ['c4', 'e4', 'f4', 'g4'])", () => {
+		expect(Mod.lookup([0, [1, 1, [2, 3]], 1], ['c4', 'e4', 'f4', 'g4'])).toStrictEqual([ 'c4', [ 'e4', 'e4', [ 'f4', 'g4' ] ], 'e4' ]);
 	});
-	test("Mod.lookup([0, 1, 1, 2, 0, 2, 2, 1], ['c4', 'e4', 'f4', 'g4'])", () => {
-		expect().toStrictEqual([0]);
-	});
-	test("Mod.lookup([0, [1, 1, [2, 3 ], 0], 2], ['c4', 'e4', 'f4', 'g4'])", () => {
-		expect().toStrictEqual([0]);
-	});
-	test("Mod.lookup([-2, 5, 7, 12], ['c4', 'e4', 'f4', 'g4'])", () => {
-		expect().toStrictEqual([0]);
-	});
-	test("Mod.lookup(Gen.cosine(16, 5.32, 0, 12), [0, 0, 2, 3, 3, 5, 7, 7, 8, 8, 11, 11])", () => {
-		expect().toStrictEqual([0]);
-	});
-	test("Mod.lookup([0, 'foo', ['1', 'bar']], [1, 2, 3])", () => {
-		expect().toStrictEqual([0]);
-	})
-
-	// var merArr1 = [0, 3, 7];
-	// var merArr2 = [3, 12];
-	// var merArr3 = [12, -1, 19, 5];
-	// console.log(Mod.merge(merArr1, merArr2, merArr3));
-	// console.log(merArr1, merArr2, merArr3);
+	
 	test("Mod.merge()", () => {
-		expect().toStrictEqual([0]);
-	});
-	test("Mod.merge(1, 2)", () => {
-		expect().toStrictEqual([0]);
+		expect(Mod.merge()).toStrictEqual([0]);
 	});
 	test("Mod.merge([0, 0, 0], [5, 5], [7, 7, 7, 7])", () => {
-		expect().toStrictEqual([0]);
+		expect(Mod.merge([0, 0, 0], [5, 5], [7, 7, 7, 7])).toStrictEqual([ [ 0, 5, 7 ], [ 0, 5, 7 ], [ 0, 7 ], [ 7 ] ]);
 	});
-	test("Mod.merge(['c4', 'c4'], ['f4'], ['g4', 'g4', 'g4'])", () => {
-		expect().toStrictEqual([0]);
-	});
-	test("Mod.merge([['c4', 'e4'], 'c4'], [['f4', 'a4']], ['g4', 'g4'])", () => {
-		expect().toStrictEqual([0]);
-	});
-	test("Mod.merge([[['c4', 'e4']], 'c4'], [['f4', 'a4']], ['g4', 'g4'])", () => {
-		expect().toStrictEqual([0]);
-	});
-
-	// var palArr = [0, 1, 2, 3];
-	// console.log(Mod.palindrome(palArr, false));
-	// console.log(palArr);
+	
 	test("Mod.palindrome()", () => {
-		expect().toStrictEqual([0]);
+		expect(Mod.palindrome()).toStrictEqual([0]);
 	});
-	test("Mod.palindrome(5)", () => {
-		expect().toStrictEqual([0]);
+	test("Mod.palindrome([0, [5, 7], 9, 12])", () => {
+		expect(Mod.palindrome([0, [5, 7], 9, 12])).toStrictEqual([ 0, [ 5, 7 ], 9, 12, 12, 9, [ 5, 7 ], 0 ]);
 	});
-	test("Mod.palindrome([0, 5, 7, 12])", () => {
-		expect().toStrictEqual([0]);
+	test("Mod.palindrome([0, [5, 7], 9, 12])", () => {
+		expect(Mod.palindrome([0, [5, 7], 9, 12], true)).toStrictEqual([ 0, [ 5, 7 ], 9, 12, 9, [ 5, 7 ] ]);
 	});
-	test("Mod.palindrome([0, [5, 7], 9, 12], true)", () => {
-		expect().toStrictEqual([0]);
-	});
-	test("Mod.palindrome(['c4', 'f4', 'g4'], true)", () => {
-		expect().toStrictEqual([0]);
-	});
-	// test("Mod.palindrome([0, 1, 2, 3], 1)");
 
-	test("Mod.repeat(1, 4)", () => {
-		expect().toStrictEqual([0]);
+	// test("Mod.palindrome([0, 1, 2, 3], 1)");
+	
+	test("Mod.repeat()", () => {
+		expect(Mod.repeat()).toStrictEqual([0]);
 	});
 	test("Mod.repeat([0, 5, 7], 3)", () => {
-		expect().toStrictEqual([0]);
+		expect(Mod.repeat([0, 5, 7], 3)).toStrictEqual([ 0, 0, 0, 5, 5, 5, 7, 7, 7 ]);
 	});
 	test("Mod.repeat(['c4', 'e4', 'f4', 'g4'], [1, 4, 2, 0])", () => {
-		expect().toStrictEqual([0]);
-	});
-	// test("Mod.repeat(['kick', 'hat'], [1, 4])");
-	test("Mod.repeat([[0, 5], [7, [9, 12]]], [2, 3])", () => {
-		expect().toStrictEqual([0]);
+		expect(Mod.repeat(['c4', 'e4', 'f4', 'g4'], [1, 4, 2, 0])).toStrictEqual([ 'c4', 'e4', 'e4', 'e4', 'e4', 'f4', 'f4' ]);
 	});
 
 	// var revArr = [0, 5, 7, 12];
 	// console.log(Mod.reverse(revArr));
 	// console.log(revArr);	
-	test("Mod.reverse()");
-	test("Mod.reverse(4)");
-	test("Mod.reverse([0, 5, 7, 12])");
-	test("Mod.reverse(['c4', ['e4', 'f4'], 'g4'])");
+	test("Mod.reverse()", () => {
+		expect(Mod.reverse()).toStrictEqual([0]);
+	});
+	test("Mod.reverse([0, 5, 7, 12])", () => {
+		expect(Mod.reverse([0, 5, 7, 12])).toStrictEqual([12, 7, 5, 0]);
+	});
 
-	// var rotArr = [0, 1, 2, 3];
-	// console.log(Mod.rotate(rotArr, -1));
-	// console.log(rotArr);
-	test("Mod.rotate()");
-	test("Mod.rotate(4, 1)");
-	test("Mod.rotate([0, 5, 7, 12], 1)");
-	test("Mod.rotate(['c4', ['e4', 'f4'], 'g4', 'a4'], -1)");
-
-	test("Mod.sort([-5, 7, 0, 3, 12, -7, 9], -1)");
-	test("Mod.sort(['e4', 'g3', 'c4', 'f3', 'b5'])");
-	test("Mod.sort([-5, [7, 0, 3], 12, -7, 9], -1)");
-
-	test("Mod.sort([-1, [3, 5, -2], 5, 10])");
-	test("Mod.sort(10)");
-
-	test("Mod.slice()");
-	test("Mod.slice(Gen.spread(8), [3, 2])");
-	test("Mod.slice(Gen.spread(24), [3, 2, -1, 5], false)");
-	test("Mod.slice([1, [2, 3], 4, [5, 6, [7, 8]]], [3, 2])");
-
-	test("Mod.split(Gen.spread(12), 3)");
-	test("Mod.split(Gen.spread(12), [3, 2, -1])");
-
-	// var sprArr1 = [12, 19, 24];
-	// var sprArr2 = [1, 0, 0, 1, 1, 0, 1, 0, 0.2];
-	// console.log(Mod.spray(sprArr1, sprArr2));
-	// console.log(sprArr1, sprArr2);
-	test("Mod.spray()");
-	test("Mod.spray(4, [0, 1, 1])");
-	test("Mod.spray([7, 9, 12], [1, 0, 0, 1, 1, 0, 1, 0])");
-	test("Mod.spray([[5, 7, 9], [12, 14]], [1, 0, 1, 1, 0])");
-	test("Mod.spray(['c4', 'f4', 'g4'], [1, 0, 0, 1, 1, 0, 1, 0])");
-	// test("Mod.spray([12, 19, 24], [1, 0, 0, 1, 1, 0, 1, 0.3, 0])");
-
-	test("Mod.stretch()");
-	test("Mod.stretch(5, 1)");
-	test("Mod.stretch([0, 12, 3, 7], 24)");
-	Util.plot(Mod.stretch([0, 12, 3, 7], 24), { height: 10 });
-	test("Util.plot(Mod.stretch([0, 12, 3, 7], 10, 'none'), { height: 5 })");
+	test("Mod.rotate()", () => {
+		expect(Mod.rotate()).toStrictEqual([0]);
+	});
+	test("Mod.rotate([0, 5, 7, 12], 1)", () => {
+		expect(Mod.rotate([0, 5, 7, 12], 1)).toStrictEqual([ 12, 0, 5, 7 ]);
+	});
 	
-	// var unArr = [5, 7, 5, 0, 12, 7, 5];
-	// console.log(Mod.unique(unArr));
-	// console.log(unArr);
-	test("Mod.unique()");
-	test("Mod.unique(4)");
-	test("Mod.unique([5, 7, 5, 0, 12, 7, 5])");
-	*/
+	test("Mod.sort()", () => {
+		expect(Mod.sort()).toStrictEqual([0]);
+	});
+	test("Mod.sort([-5, 7, 0, 3, 12, -7, 9], -1)", () => {
+		expect(Mod.sort([-5, 7, 0, 3, 12, -7], -1)).toStrictEqual([ 12, 7, 3, 0, -5, -7 ]);
+	});
+	test("Mod.sort(['e4', 'g3', 'c4', 'f3', 'b5'])", () => {
+		expect(Mod.sort(Mod.sort(['e4', 'g3', 'c4', 'f3', 'b5']))).toStrictEqual([ 'b5', 'c4', 'e4', 'f3', 'g3' ]);
+	});
+	
+	test("Mod.slice()", () => {
+		expect(Mod.slice()).toStrictEqual([[0],[]]);
+	});
+	test("Mod.slice(Gen.spread(8), [3, 2])", () => {
+		expect(Mod.slice(Gen.spread(8), [3, 2])).toStrictEqual([ [ 0, 1, 2 ], [ 3, 4 ], [ 5, 6, 7 ] ]);
+	});
+	test("Mod.slice(Gen.spread(24), [3, 2, -1, 5], false)", () => {
+		expect(Mod.slice(Gen.spread(24), [3, 2, -1, 5], false)).toStrictEqual([ [ 0, 1, 2 ], [ 3, 4 ], [ 5, 6, 7, 8, 9 ] ]);
+	});
+	
+	test("Mod.split()", () => {
+		expect(Mod.split()).toStrictEqual([[0]]);
+	})
+	test("Mod.split(Gen.spread(8), 3)", () => {
+		expect(Mod.split(Gen.spread(8), 3)).toStrictEqual([ [ 0, 1, 2 ], [ 3, 4, 5 ], [ 6, 7 ] ]);
+	});
+	test("Mod.split(Gen.spread(8), [3, 2, -1])", () => {
+		expect(Mod.split(Gen.spread(8), [3, 2, -1])).toStrictEqual([ [ 0, 1, 2 ], [ 3, 4 ], [ 5, 6, 7 ] ]);
+	});
+	
+	test("Mod.spray()", () => {
+		expect(Mod.spray()).toStrictEqual([0]);
+	});
+	test("Mod.spray([7, 9, 12], [1, 0, 0, 1, 1, 0, 1, 0])", () => {
+		expect(Mod.spray([7, 9, 12], [1, 0, 0, 1, 1, 0, 1, 0])).toStrictEqual([ 7, 0, 0, 9, 12, 0, 7, 0 ]);
+	});
+	test("Mod.spray([[5, 7, 9], [12, 14]], [1, 0, 1, 1, 0])", () => {
+		expect(Mod.spray([[5, 7, 9], [12, 14]], [1, 0, 1, 1, 0])).toStrictEqual([ [ 5, 7, 9 ], 0, [ 12, 14 ], [ 5, 7, 9 ], 0 ]);
+	});
+
+	test("Mod.stretch()", () => {
+		expect(Mod.stretch()).toStrictEqual([0]);
+	});
+	test("Mod.stretch([0, 12, 3, 7], 9)", () => {
+		expect(Mod.stretch([0, 12, 3, 7], 9)).toStrictEqual([ 0, 4.5, 9, 10.875, 7.5, 4.125, 4, 5.5, 7 ]);
+	});
+	
+	test("Mod.stretch([0, 12, 3, 7], 9, 'none')", () => {
+		expect(Mod.stretch([0, 12, 3, 7], 9, 'none')).toStrictEqual([ 0, 0, 0, 12, 12, 12, 3, 3, 7 ]);
+	});
+	
+	test("Mod.unique()", () => {
+		expect(Mod.unique()).toStrictEqual([0]);
+	});
+	test("Mod.unique([5, 7, 5, 0, 12, 7, 5])", () => {
+		expect(Mod.unique([5, 7, 5, 0, 12, 7, 5])).toStrictEqual([ 5, 7, 0, 12 ]);
+	});
+	test("Mod.unique(['c', 'c', 'g', 'f', 'f'])", () => {
+		expect(Mod.unique(['c', 'c', 'g', 'f', 'f'])).toStrictEqual([ 'c', 'g', 'f' ]);
+	});
 }
 
 function testStat(){

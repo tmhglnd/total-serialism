@@ -2818,7 +2818,7 @@ function filterType(){var a=arguments.length>0&&arguments[0]!==undefined?argumen
 // @param {Int} -> high range (optional)
 // @return {Array}
 // 
-function invert(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var lo=arguments.length>1?arguments[1]:undefined;var hi=arguments.length>2?arguments[2]:undefined;arr=Array.isArray(arr)?arr:[arr];if(lo===undefined){hi=Util.max(arr);lo=Util.max(arr);}else if(hi===undefined){hi=lo;}return arr.slice().map(function(v){if(Array.isArray(v)){return invert(v,lo,hi);}return hi-v+lo;});}exports.invert=invert;// interleave two or more arrays
+function invert(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var lo=arguments.length>1?arguments[1]:undefined;var hi=arguments.length>2?arguments[2]:undefined;arr=Array.isArray(arr)?arr:[arr];if(lo===undefined){hi=Util.max(arr);lo=Util.min(arr);}else if(hi===undefined){hi=lo;}return arr.slice().map(function(v){if(Array.isArray(v)){return invert(v,lo,hi);}return hi-v+lo;});}exports.invert=invert;// interleave two or more arrays
 // 
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array}
