@@ -486,7 +486,7 @@ exports.chords = chordsFromNumerals;
 // @return - {2d-Array} -> array of chords
 //
 function chordsFromNames(a=['c']){
-	// make array if not array and flatten
+	// if not an array, translate chordname to semitone array
 	if (!Array.isArray(a)){
 		let ch = Chord.get(a);
 		if (ch.empty){
