@@ -84,7 +84,7 @@ function fullTest(Srl){
 	testAlgorithmic();
 	testStochastic();
 	testTransform();
-	// testStatistic();
+	testStatistic();
 	// testTranslate();
 	// testUtility();
 
@@ -728,62 +728,95 @@ function testTransform(){
 	});
 }
 
-function testStat(){
-	pagebreak("Statistic");
+function testStatistic(){
+	test("Stat.sort()", () => {
+		expect(Stat.sort()).toStrictEqual([0]);
+	});
+	test("Stat.sort([-5, 7, 0, 3, 12, -7, 9], -1)", () => {
+		expect(Stat.sort([-5, 7, 0, 3, 12, -7], -1)).toStrictEqual([ 12, 7, 3, 0, -5, -7 ]);
+	});
+	test("Stat.sort(['e4', 'g3', 'c4', 'f3', 'b5'])", () => {
+		expect(Stat.sort(Stat.sort(['e4', 'g3', 'c4', 'f3', 'b5']))).toStrictEqual([ 'b5', 'c4', 'e4', 'f3', 'g3' ]);
+	});
 	
-	test("Stat.sort()");
-	test("Stat.sort(3.14)");
-	test("Stat.sort('foo')");
-	test("Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11], -1)");
-	test("Stat.sort([10, 3.14, 'foo', 'bar', 5, -6, 'foobar'])");
-	test("Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11])");
-	
-	test("Stat.mean()");
-	test("Stat.mean(3.14)");
-	test("Stat.mean('foo')");
-	test("Stat.mean([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3])");
-	test("Stat.mean([1, 2, 3, 4, 5, 6, 7, 8, 9])");
-	test("Stat.mean([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3])");
-	test("Stat.mean([2, [-6, 2, 0], [10, [9, -2], 5], -8, [-11, 1], -3])");
-	
-	test("Stat.median()");
-	test("Stat.median(3.14)");
-	test("Stat.median([1, 5, 6, 9, 13])");
-	test("Stat.median([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, -3])");
-	test("Stat.median([2, [-6, 2, 0], [10, [9, -2], 5], -8, [-11], -3])");
-	test("Stat.median([1, 5, 6, 'foo', 'bar', 13,])");
-	
-	test("Stat.center([1, 5, 11])");
-	test("Stat.center([1, 7, 4, 2, 9, 5])");
-	test("Stat.center([1, 7, 4, 2, 9, 5, 'foo', 'bar', true, true])");
-	
-	test("Stat.mode()");
-	test("Stat.common([8, 4, 3, 11, 9, 0, 11, 2, 10, 5, 11, 0])");
-	test("Stat.common([8, 4, 3, 9, 9, 0, 2, 10, 5, 11, 0, 11])");
-	test("Stat.common([8, [4, 3], 9, [9, 0, [2, 10], 5], 11, 0, 11])");
-	test("Stat.common([8, 4, 3, 'foo', 'foo', 0, 2, 10, 5, 11, 0, 11])");
-	
-	test("Stat.maximum()");
-	test("Stat.maximum(10)");
-	test("Stat.maximum([-38, -53, -6, 33, 88, 32, -8, 73])");
-	test("Stat.maximum([-38, [-53, [-6, 33], 88, 32], [-8, 73]])");
-	
-	test("Stat.minimum()");
-	test("Stat.minimum(10)");
-	test("Stat.minimum([-38, -53, -6, 33, 88, 32, -8, 73])");
-	test("Stat.minimum([-38, [-53, [-6, 33], 88, 32], [-8, 73]])");
-	// test("Stat.minimum([-38, -53, -6, 'foo', 33, 'bar'])");
-	
-	test("Stat.change()");
-	test("Stat.change(4)");
-	test("Stat.change([0, 3, 7, 0, 12, 9, 5, 7])");
+	test("Stat.mean()", () => {
+		expect(Stat.mean()).toStrictEqual(0);
+	});
+	test("Stat.mean([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -2])", () => {
+		expect(Stat.mean([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -2])).toStrictEqual(0);
+	});
+	test("Stat.mean([1, 2, 3, 4, 5, 6, 7, 8, 9])", () => {
+		expect(Stat.mean([1, 2, 3, 4, 5, 6, 7, 8, 9])).toStrictEqual(5);
+	});
+	test("Stat.mean([2, [-6, 2, 0], [10, [9, -2], 5], -8, [-11, 1], -2])", () => {
+		expect(Stat.mean([2, [-6, 2, 0], [10, [9, -2], 5], -8, [-11, 1], -2])).toStrictEqual(0);
+	});
 
-	test("Stat.compare()");
-	test("Stat.compare(2, 2)");
-	test("Stat.compare([0, 5, 7], [0, '5', 7])");
-	test("Stat.compare(3.1451, '3.1451')");
-	test("Stat.compare(['c', ['e', 'g']], ['c', ['e', 'g']])");
-	test("Stat.compare([0, [3, [7, 5]], 12], [0, [3, [7, 5]], 12])");
+	test("Stat.median()", () => {
+		expect(Stat.median()).toStrictEqual(0);
+	});
+	test("Stat.median([1, 5, 6, 9, 13])", () => {
+		expect(Stat.median([1, 5, 6, 9, 13])).toStrictEqual(6);
+	});
+	test("Stat.median([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, -2])", () => {
+		expect(Stat.median([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, -2])).toStrictEqual(0);
+	});
+	test("Stat.median([2, [-6, 2, 0], [10, [9, -2], 5], -8, [-11], -2])", () => {
+		expect(Stat.median([2, [-6, 2, 0], [10, [9, -2], 5], -8, [-11], -2])).toStrictEqual(0);
+	});
+	
+	test("Stat.mode()", () => {
+		expect(Stat.mode()).toStrictEqual([]);
+	});
+	test("Stat.mode([8, 4, 3, 11, 9, 0, 11, 2, 10, 5, 11, 0])", () => {
+		expect(Stat.mode([8, 4, 3, 11, 9, 0, 11, 2, 10, 5, 11, 0])).toStrictEqual([11]);
+	});
+	test("Stat.mode([8, 4, 3, 9, 9, 0, 2, 10, 5, 11, 0, 11])", () => {
+		expect(Stat.mode([8, 4, 3, 9, 9, 0, 2, 10, 5, 11, 0, 11])).toStrictEqual([0, 9, 11]);
+	});
+	test("Stat.mode([8, [4, 3], 9, [9, 0, [2, 10], 5], 11, 0, 11])", () => {
+		expect(Stat.mode([8, [4, 3], 9, [9, 0, [2, 10], 5], 11, 0, 11])).toStrictEqual([0, 9, 11]);
+	});
+	
+	test("Stat.max()", () => {
+		expect(Stat.max()).toStrictEqual(0);
+	});
+	test("Stat.max([-38, [-53, [-6, 33], 88, 32], [-8, 73]])", () => {
+		expect(Stat.max([-38, [-53, [-6, 33], 88, 32], [-8, 73]])).toStrictEqual(88);
+	});
+		
+	test("Stat.minimum()", () => {
+		expect(Stat.min([-38, -53, -6, 33, 88, 32, -8, 73])).toStrictEqual(-53);
+	});
+	test("Stat.minimum([-38, [-53, [-6, 33], 88, 32], [-8, 73]])", () => {
+		expect(Stat.min([-38, -53, -6, 33, 88, 32, -8, 73])).toStrictEqual(-53);
+	});
+
+	test("Stat.change()", () => {
+		expect(Stat.change()).toStrictEqual([0]);
+	});
+	test("Stat.change([4, 10])", () => {
+		expect(Stat.change([4, 10])).toStrictEqual([6]);
+	});
+	test("Stat.change([0, 3, 7, 0, 12, 9, 5, 7])", () => {
+		expect(Stat.change([0, 3, 7, 0, 12, 9, 5, 7])).toStrictEqual([ 3, 4, -7, 12, -3, -4, 2 ]);
+	});
+
+	test("Stat.compare()", () => {
+		expect(Stat.compare()).toStrictEqual(false);
+	});
+	test("Stat.compare(2, 2)", () => {
+		expect(Stat.compare(2, 2)).toStrictEqual(true);
+	});
+	test("Stat.compare([0, 5, 7], [0, 5, 7])", () => {
+		expect(Stat.compare([0, 5, 7], [0, 5, 7])).toStrictEqual(true);
+	});
+	test("Stat.compare(3.1451, '3.1451')", () => {
+		expect(Stat.compare(3.1451, '3.1451')).toStrictEqual(false);
+	});
+	test("Stat.compare(['c', ['e', 'g']], ['c', ['e', 'g']])", () => {
+		expect(Stat.compare(['c', ['e', 'g']], ['c', ['e', 'g']])).toStrictEqual(true);
+	});
 }
 
 function testTranslate(){
