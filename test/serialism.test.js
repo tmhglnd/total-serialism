@@ -1,5 +1,5 @@
 
-// const fs = require('fs');
+const fs = require('fs');
 
 // test with different builds
 let entryPoint = "../index";
@@ -85,7 +85,7 @@ function fullTest(Srl){
 	testStochastic();
 	testTransform();
 	testStatistic();
-	// testTranslate();
+	testTranslate();
 	// testUtility();
 
 	// pagebreak("All Tests Passed");
@@ -820,138 +820,293 @@ function testStatistic(){
 }
 
 function testTranslate(){
-	pagebreak("Translate");
+	test("TL.midiToNote()", () => {
+		expect(TL.mton()).toStrictEqual('c4');
+	});
+	test("TL.midiToNote(60)", () => {
+		expect(TL.mton(60)).toStrictEqual('c4');
+	});
+	test("TL.mton([48, 55, 51, 43])", () => {
+		expect(TL.mton([48, 55, 51, 43])).toStrictEqual([ 'c3', 'g3', 'eb3', 'g2' ]);
+	});
+	test("TL.mton([48, [[55, 51], 43]])", () => {
+		expect(TL.mton([48, [[55, 51], 43]])).toStrictEqual([ 'c3', [ [ 'g3', 'eb3' ], 'g2' ] ]);
+	});
 
-	test("TL.midiToNote()");
-	test("TL.midiToNote(60)");
-	test("TL.mton([48, 55, 51, 43])");
-	test("TL.mton([60, [63, 67, 69], [57, 65]])");
+	test("TL.midiToFreq()", () => {
+		expect(TL.mtof()).toStrictEqual(130.8127826502993);
+	});
+	test("TL.midiToFreq(60)", () => {
+		expect(TL.mtof(60)).toStrictEqual(261.6255653005986);
+	});
+	test("TL.mtof([48, 55, 51, 43])", () => {
+		expect(TL.mtof([48, 55, 51, 43])).toStrictEqual([ 130.8127826502993, 195.99771799087463, 155.56349186104043, 97.99885899543733 ]);
+	});
+	test("TL.mtof([48, [[55, 51], 43]])", () => {
+		expect(TL.mtof([48, [[55, 51], 43]])).toStrictEqual([ 130.8127826502993, [ [ 195.99771799087463, 155.56349186104043 ], 97.99885899543733 ] ]);
+	});
+	test("TL.mtof(60.3)", () => {
+		expect(TL.mtof(60.3)).toStrictEqual(266.19869962824436);
+	});
 
-	test("TL.midiToFreq()");
-	test("TL.midiToFreq(60)");
-	test("TL.mtof([48, 55, 51, 43])");
-	test("TL.mtof([60, 67, 72])");
-	test("TL.mtof([60, [63, 67, 69], [57, 65]])");
-	test("TL.mtof([60.3, 67.4, 72.8])");
+	test("TL.ftom()", () => {
+		expect(TL.ftom()).toStrictEqual(60);
+	});
+	test("TL.ftom(261)", () => {
+		expect(TL.ftom(261)).toStrictEqual(60);
+	});
+	test("TL.ftom([ 131, [[ 196, 156], 98] ])", () => {
+		expect(TL.ftom([ 131, [[ 196, 156], 98] ])).toStrictEqual([ 48, [ [ 55, 51 ], 43 ] ]);
+	});
+	test("TL.ftom([ 131, 196, 156, 98 ], true)", () => {
+		expect(TL.ftom([ 131, 196, 156, 98 ], true)).toStrictEqual([ 48.02475945615349, 55.00020156708658, 51.04851006405106, 43.00020156708658 ]);
+	});
 
-	test("TL.ftom()");
-	test("TL.ftom(261)");
-	test("TL.ftom([ 261, [ 311, 391, 440 ], [ 220, 349 ] ])");
-	test("TL.ftom([ 261, [ 311, 391, 440 ], [ 220, 349 ] ], true)");
-	// test("TL.ftom([48, 55, 51, 43])");
-	// test("TL.ftom([60, 67, 72])");
-	// test("TL.ftom([60, [63, 67, 69], [57, 65]])");
-	// test("TL.ftom([60.3, 67.4, 72.8])");
+	test("TL.fton()", () => {
+		expect(TL.fton()).toStrictEqual('c4');
+	});
+	test("TL.fton(261)", () => {
+		expect(TL.fton(261)).toStrictEqual('c4');
+	});
+	test("TL.fton([ 131, [[ 196, 156], 98] ])", () => {
+		expect(TL.fton([ 131, [[ 196, 156], 98] ])).toStrictEqual([ 'c3', [ [ 'g3', 'eb3' ], 'g2' ] ]);
+	});
 	
-	test("TL.fton()");
-	test("TL.fton(261)");
-	test("TL.fton([ 261, [ 311, 391, 440 ], [ 220, 349 ] ])");
+	test("TL.ntom()", () => {
+		expect(TL.ntom()).toStrictEqual(60);
+	});
+	test("TL.ntom('c4')", () => {
+		expect(TL.ntom()).toStrictEqual(60);
+	});
+	test("TL.ntom(['c3', [['g3', 'eb3'], 'g2']])", () => {
+		expect(TL.ntom(['c3', [['g3', 'eb3'], 'g2']])).toStrictEqual([48, [[55, 51], 43]]);
+	});
 	
-	test("TL.noteToMidi()");
-	test("TL.noteToMidi('c3')");
-	test("TL.noteToMidi(['c3', 'g3', 'eb3', 'g2'])");
-	test("TL.ntom(['f3','bb3','g#2'])");
-	test("TL.ntom(['c4', ['eb4', 'g4', 'a4'], ['a3', 'f4']])");
+	test("TL.ntof()", () => {
+		expect(TL.ntof()).toStrictEqual(261.6255653005986);
+	});
+	test("TL.ntof('c4')", () => {
+		expect(TL.ntof('c4')).toStrictEqual(261.6255653005986);
+	});
+	test("TL.ntof(['c3', [['g3', 'eb3'], 'g2']])", () => {
+		expect(TL.ntof(['c3', [['g3', 'eb3'], 'g2']])).toStrictEqual([ 130.8127826502993, [ [ 195.99771799087463, 155.56349186104043 ], 97.99885899543733 ] ]);
+	});
+
+	test("TL.ctor()", () => {
+		expect(TL.ctor()).toStrictEqual(0);
+	});
+	test("TL.ctor(['c3', [['g3', 'eb3'], 'g2']])", () => {
+		expect(TL.ctor(['c3', [['g3', 'eb3'], 'g2']])).toStrictEqual([ 0, [ [ 7, 3 ], 7 ] ]);
+	});
+	test("TL.ctor(['c#', [['gx', 'eb'], 'gbb']])", () => {
+		expect(TL.ctor(['c#', [['gx-', 'eb'], 'gbb+']])).toStrictEqual([ 1, [ [ -3, 3 ], 17 ] ]);
+	});
 	
-	test("TL.noteToFreq()");
-	test("TL.noteToFreq('c3')");
-	test("TL.noteToFreq(['c3', 'g3', 'eb3', 'g2'])");
-	test("TL.ntof(['f3','bb3','g#2'])");
-	test("TL.ntof(['c4', ['eb4', 'g4', 'a4'], ['a3', 'f4']])");
+	test("TL.rtom()", () => {
+		expect(TL.rtom()).toStrictEqual(60);
+	});
+	test("TL.rtom([-12, 0, 7, 12])", () => {
+		expect(TL.rtom([-12, 0, 7, 12])).toStrictEqual([ 48, 60, 67, 72 ]);
+	});
+	test("TL.rtom([-12, 0, 7, 12], 3)", () => {
+		expect(TL.rtom([-12, 0, 7, 12], 3)).toStrictEqual([ 36, 48, 55, 60 ]);
+	});
+	test("TL.rtom([-12, [[0, 7], 12]], 'c3')", () => {
+		expect(TL.rtom([-12, [[0, 7], 12]], 'c3')).toStrictEqual([ 36, [ [ 48, 55 ], 60 ] ]);
+	});
 	
-	test("TL.rtom()");
-	test("TL.rtom([-12, 0, 7, 12])");
-	test("TL.rtom([-12, 0, 7, 12], 4)");
-	test("TL.rtom([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4')");
-	test("TL.rtom([-12, 0, 7, 12], 'c3')");
+	test("TL.rtof()", () => {
+		expect(TL.rtof()).toStrictEqual(261.6255653005986);
+	});
+	test("TL.rtof([-12, 0, 7, 12])", () => {
+		expect(TL.rtof([-12, 0, 7, 12])).toStrictEqual([ 130.8127826502993, 261.6255653005986, 391.99543598174927, 523.2511306011972 ]);
+	});
+	test("TL.rtof([-12, 0, 7, 12], 3)", () => {
+		expect(TL.rtof([-12, 0, 7, 12], 3)).toStrictEqual([ 65.40639132514966, 130.8127826502993, 195.99771799087463, 261.6255653005986 ]);
+	});
+	test("TL.rtof([-12, [[0, 7], 12]], 'c3')", () => {
+		expect(TL.rtof([-12, [[0, 7], 12]], 'c3')).toStrictEqual([ 65.40639132514966, [[130.8127826502993, 195.99771799087463 ], 261.6255653005986 ]]);
+	});
+		
+	test("TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])", () => {
+		TL.setScale('harmonic_minor', 'c');
+		expect(TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])).toStrictEqual([ 0, 0, 2, 3, 3, 5,  5, 7, 8, 8, 8, 11 ]);
+	});
+	test("TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11])", () => {
+		TL.setScale('harmonic_minor', 'c');
+		expect(TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11])).toStrictEqual([ 0, [ 0, 2, 3 ], [ 3, 5, [ 5, 7 ], 8 ], 8, 8, 11 ]);
+	});
+
 	
-	test("TL.rtof()");
-	test("TL.rtof([-12, 0, 7, 12])");
-	test("TL.rtof([-12, 0, 7, 12], 4)");
-	test("TL.rtof([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4')");
-	test("TL.rtof([-12, 0, 7, 12], 'c3')");
+	test("TL.getSettings()", () => {
+		TL.setRoot('gb');
+		TL.setScale('minor_pentatonic');
+		TL.setTempo(100);
+		expect(TL.getSettings()).toStrictEqual({
+			scale: 'minor_pentatonic',
+			root: 'gb',
+			rootInt: 6,
+			map: [
+			   0,  0, 0, 3, 3,
+			   5,  5, 7, 7, 7,
+			  10, 10
+			],
+			bpm: 100,
+			measureInMs: 2400
+		  });
+	});
 
-	test("TL.ctor()");
-	test("TL.ctor(['f','bb','g#'])");
-	test("TL.ctor(['c', ['eb', 'g', 'ab'], ['a+', 'f-']]);")
+	test("TL.toMidi([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11])", () => {
+		TL.setScale('minor_pentatonic', 'c');
+		expect(TL.toMidi([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11])).toStrictEqual([ 60, [ 60, 60, 63 ], [ 63, 65, [ 65, 67 ], 67 ], 67, 70, 70 ]);
+	});
 	
-	Srl.setScale('minor_harmonic', 'b');
+	test("TL.toFreq([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]])", () => {
+		TL.setScale('minor_pentatonic', 'c');
+		expect(TL.toFreq([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11])).toStrictEqual([ 261.6255653005986, [ 261.6255653005986, 261.6255653005986, 311.12698372208087 ], [ 311.12698372208087, 349.2282314330039, [ 349.2282314330039, 391.99543598174927 ], 391.99543598174927 ], 391.99543598174927, 466.1637615180899, 466.1637615180899 ]);
+	});
 	
-	test("TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);");
-	test("TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]);");
-	test("TL.mton(TL.toScale(Gen.spread(12, 48, 60)));");
-	test("TL.toScale(Gen.sine(8, 3.5, -7, 24))");
-	test("TL.toScale([0, 4.1, 6.5, 7.1, 9.25])");
+	test("TL.rtoc()", () => {
+		expect(TL.rtoc()).toStrictEqual([ 0 ]);
+	});	
+	test("TL.rtoc('11/5')", () => {
+		expect(TL.rtoc('11/5')).toStrictEqual([ 1365.0042284999222 ]);
+	});	
+	test("TL.rtoc(['2/1', ['3/2', ['4/3', '5/4']], '9/8'])", () => {
+		expect(TL.rtoc(['2/1', ['3/2', ['4/3', '5/4']], '9/8'])).toStrictEqual([ 1200, [ 701.9550008653874, [ 498.04499913461245, 386.3137138648348 ] ], 203.91000173077484 ]);
+	});	
+
 	
-	test("Srl.setRoot('d')");
-	test("Srl.setScale('major')");
-	test("Srl.getSettings()");
+	test("TL.dtoms()", () => {
+		TL.setTempo(100);
+		expect(TL.dtoms()).toStrictEqual([2400]);
+	});
+	test("TL.dtoms('1/8', 115)", () => {
+		expect(TL.dtoms('1/8', 115)).toStrictEqual([260.8695652173913]);
+	});
+	test("TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'])", () => {
+		expect(TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'])).toStrictEqual([ 600, [ 300, [ 450, 600 ] ], 400, 4800 ]);
+	});
+	test("TL.dtoms([0.25, [0.125, [0.1875, 0.25]], 0.1667, 2])", () => {
+		expect(TL.dtoms([0.25, [0.125, [0.1875, 0.25]], 0.1667, 2])).toStrictEqual([ 600, [ 300, [ 450, 600 ] ], 400.08, 4800 ]);
+	});
+	test("TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'], 160)", () => {
+		expect(TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'], 160)).toStrictEqual([ 375, [ 187.5, [ 281.25, 375 ] ], 250, 3000 ]);
+	});
+
+	test("TL.rtoms()", () => {
+		expect(TL.rtoms()).toStrictEqual([2400])
+	});
+	test("TL.rtoms(0.125, 115)", () => {
+		expect(TL.rtoms(0.125, 115)).toStrictEqual(260.8695652173913);
+	});
+	test("TL.rtoms([0.25, [0.125, [0.1875, 0.25]], 0.1667, 2])", () => {
+		expect(TL.rtoms([0.25, [0.125, [0.1875, 0.25]], 0.1667, 2])).toStrictEqual([ 600, [ 300, [ 450, 600 ] ], 400.08, 4800 ]);
+	});
+
+	test("TL.dtor()", () => {
+		expect(TL.dtor()).toStrictEqual([1]);
+	});
+	test("TL.dtor(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'])", () => {
+		expect(TL.dtor(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'])).toStrictEqual([ 0.25, [ 0.125, [ 0.1875, 0.25 ] ], 0.16666666666666666, 2 ]);
+	});
+
+	test("TL.dtotk()", () => {
+		expect(TL.dtotk()).toStrictEqual([1920]);
+	});
+	test("TL.dtotk(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'])", () => {
+		expect(TL.dtotk(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'])).toStrictEqual([ 480, [ 240, [ 360, 480 ] ], 320, 3840 ]);
+	});
+	test("TL.rtotk([0.25, [0.125, [0.1875, 0.25]], 0.16667, 2])", () => {
+		expect(TL.dtotk([0.25, [0.125, [0.1875, 0.25]], 0.16666666666666666, 2])).toStrictEqual([ 480, [ 240, [ 360, 480 ] ], 320, 3840 ]);
+	});
+
+	test("TL.ttor()", () => {
+		expect(TL.ttor()).toStrictEqual([1]);
+	});
+	test("TL.ttor(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'])", () => {
+		expect(TL.ttor(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'])).toStrictEqual([ 0.25, [ 0.08333333333333333, [ 0.09375, 0.75 ] ], 0.03125, 3 ]);
+	});
+
+	test("TL.ttotk()", () => {
+		expect(TL.ttotk()).toStrictEqual([1920]);
+	});
+	test("TL.ttotk(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'])", () => {
+		expect(TL.ttotk(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'])).toStrictEqual([ 480, [ 160, [ 180, 1440 ] ], 60, 5760 ]);
+	});
+
+	test("TL.ttoms()", () => {
+		expect(TL.ttoms()).toStrictEqual([2400]);
+	});
+	test("TL.ttoms(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'])", () => {
+		expect(TL.ttoms(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'])).toStrictEqual([ 600, [ 200, [ 225, 1800 ] ], 75, 7200 ]);
+	});
+	test("TL.ttoms(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'], 160)", () => {
+		expect(TL.ttoms(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'], 160)).toStrictEqual([ 375, [ 125, [ 140.625, 1125 ] ], 46.875, 4500 ]);
+	});
+
+	var scl;
+	test("new TL.Scala()", () => {
+		scl = new TL.Scala();
+	});
+
+	test("Scala.parse()", () => {
+		scl.parse(fs.readFileSync('data/scl/12-TET.scl', 'utf8'));
+	});
+
+	test("Scala.names", () => {
+		expect(scl.names.slice(0, 10)).toStrictEqual([
+			'05-19', '05-22',
+			'05-24', '06-41',
+			'07-19', '07-31',
+			'07-37', '08-11',
+			'08-13', '08-19' ]);
+	});
+
+	test("Scala.data", () => {
+		scl.tune(261.6255653);
+		scl.center(60);
 	
-	test("TL.toMidi([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);");
-	test("TL.toMidi([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]);");
-	test("TL.mton(TL.toMidi([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]));");
+		expect(scl.data).toStrictEqual({
+			description: ' 12-TET or Tone Equal Temperatement divides an octave into 12 equal steps',
+			size: 12,
+			tune: 261.6255653,
+			center: 60,
+			range: 1200,
+			cents: [
+				0, 100,  200,  300,
+			  400, 500,  600,  700,
+			  800, 900, 1000, 1100
+			]
+		});
+	});
 	
-	// test("TL.mton(TL.toScale(Gen.spread(12, 48, 60)));");
-	test("TL.toFreq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 4);");
-	test("TL.toFreq([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]);");
-	test("TL.toFreq(Gen.sine(8, 1, -12, 12));");
-	test("TL.fton(TL.toFreq(Gen.sine(8, 1, -12, 12)));");
-	test("TL.fton(TL.toFreq([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11]));");
-	
-	test("TL.setTempo(120)");
-	test("TL.divisionToMs()");
-	test("TL.divisionToMs('1/8', 113)");
-	test("TL.dtoms(['1/4', '1/8', '3/16', '1/4', '1/6', '2'])");
-	test("TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'])");
-	test("TL.dtoms(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'], 100)");
-	test("TL.dtoms([0.25, [0.125, [0.1875, 0.25]], 0.1667, 2], 100)");
-	test("TL.rtoms([0.25, [0.125, [0.1875, 0.25]], 0.1667, 2], 100)");
-	// test("TL.dtoms([0.25, 0.125, 0.1875, 0.25, 0.16667, 2])");
-	
-	test("TL.dtor(['1/4', '1/8', '3/16', '1/4', '1/6', '2'])");
-	test("TL.dtor(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'])");
-	
-	test("TL.dtotk(['1/4', ['1/8', ['3/16', '1/4']], '1/6', '2'])");
-	test("TL.rtotk([0.25, [0.125, [0.1875, 0.25]], 0.16667, 2])");
+	test("Scala.stof()", () => {
+		expect(scl.stof([60, 63, 67, 69, 72, 81, 36, 48]).map(x => x.toFixed(2))).toStrictEqual([ '261.63', '311.13', '392.00', '440.00', '523.25', '880.00', '65.41', '130.81' ]);
+	});
 
-	test("TL.ttor(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'])");
-	test("TL.ttotk(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'])");
-
-	test("TL.ttoms(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'])");
-	test("TL.ttoms(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'], 100)");
-
-	test("TL.rtoc()");	
-	test("TL.rtoc('11/5')");	
-	test("TL.rtoc(['2/1', ['3/2', ['4/3', '5/4']], '9/8'])");	
-
-	test("TL.scaleNames()");
-	test("TL.getScale()");
-	test("TL.getSettings()");
-
-	test("Srl.setRoot('db-')");
-	test("Srl.getSettings()");
-	test("Srl.setScale('minor_harmonic', 'a')");
-	test("Srl.getSettings()");
-
-	test("TL.setRoot('a-')");
-	test("TL.setScale('harmonic_minor')");
-	test("TL.toScale([0, [1, 2, 3], 4, 5, [6, 7, [8, 9], 10], 11, 12])");
-
-	console.log("var scala = new TL.Scala()");
-	var scl = new TL.Scala();
-
-	scl.parse(fs.readFileSync('data/scl/12-TET.scl', 'utf8'));
-	scl.tune(261.6255653);
-	scl.center(60);
-
-	console.log(scl.names.slice(0, 10));
-	console.log('//=>', scl.data);
-
-	console.log('scl.scalaToFreq([60, 63, 67, 69, 72, 81, 36, 48])')
-	// console.log('//=>', scl.stof([60, 63, 67, 69, 72, 81, 36, 48]));
-	console.log('//=>', scl.stof([60, 63, 67, 69, 72, 81, 36, 48]).map(x => x.toFixed(2)));
-
-	console.log(scl.search({ cents: ['4/3', '5/4', '11/9'], size: 11 }));
+	// fix search bug in scala?
+	// test("Scala.search()", () => {
+	// 	expect(scl.search({ cents: ['4/3', '5/4', '11/9'], size: 11 })).toStrictEqual({
+	// 		yarman_rast: {
+	// 		  description: '11-tone Arabian and Turkish Rast/Penchgah by Ozan Yarman',
+	// 		  size: 11,
+	// 		  tune: 440,
+	// 		  center: 69,
+	// 		  range: 1200,
+	// 		  cents: [
+	// 							 0, 203.91000173077484,
+	// 			347.40794063398204,  386.3137138648348,
+	// 			498.04499913461245,    582.51219260429,
+	// 			 701.9550008653874,  905.8650025961623,
+	// 			 996.0899982692251, 1049.3629414993693,
+	// 			1088.2687147302222,               1200,
+	// 						  1200,               1200,
+	// 						  1200
+	// 		  ]
+	// 		}
+	// 	  });
+	// });
 }
 
 function testUtil(){
