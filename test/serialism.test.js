@@ -15,10 +15,10 @@ let Gen, Algo, Mod, Rand, Stat, TL, Util;
 fullTest(TS);
 
 // reload library with es5.min.js build
-TS = require(es5build);
+// TS = require(es5build);
 
 // and run full test with es5.min.js build;
-fullTest(TS);
+// fullTest(TS);
 
 /*
 	Test criteria:
@@ -86,7 +86,7 @@ function fullTest(Srl){
 	testTransform();
 	testStatistic();
 	testTranslate();
-	// testUtility();
+	testUtility();
 
 	// pagebreak("All Tests Passed");
 	// console.timeEnd('Total Time');
@@ -1109,120 +1109,182 @@ function testTranslate(){
 	// });
 }
 
-function testUtil(){
-	pagebreak("Utility");
+function testUtility(){
+	test("Util.arrayCalc()", () => {
+		expect(Util.arrayCalc()).toStrictEqual(0);
+	});
+	test("Util.arrayCalc(4, 3, (a,b)=>Math.sqrt(a*a+b*b))", () => {
+		expect(Util.arrayCalc(4, 3, (a,b)=>Math.sqrt(a*a+b*b))).toStrictEqual(5);
+	});
+	test("Util.arrayCalc([1, [3, 4]], [1, [4, 3, 2]], (a,b)=>Math.sqrt(a*a+b*b))", () => {
+		expect(Util.arrayCalc([1, [3, 4]], [1, [4, 3, 2]], (a,b)=>Math.sqrt(a*a+b*b))).toStrictEqual([ 1.4142135623730951, [ 5, 5, 3.605551275463989 ] ]);
+	});
 
-	test("Util.add()");
-	test("Util.add(5, 2)");
-	test("Util.add([0, 3, 7], 2)");
-	test("Util.add(2, [0, 3, 7])");
-	test("Util.add([1, 2, 3, 4], [10, 20, 30])");
-	test("Util.add([1, 2, 3], [10, 20, 30, 40])");
-	test("Util.add([1, [2, 3]], [10, [20, 30, 40]])");
-	test("Util.add([1, [2, 3], 4], [10, 20, 30])");
+	test("Util.add()", () => {
+		expect(Util.add()).toStrictEqual(0);
+	});
+	test("Util.add(5, 2)", () => {
+		expect(Util.add(5, 2)).toStrictEqual(7);
+	});
+	test("Util.add([-3, 0, 3, 7], 2)", () => {
+		expect(Util.add([-3, 0, 3, 7], 2)).toStrictEqual([-1, 2, 5, 9]);
+	});
+	test("Util.add(2, [-3, 0, 3, 7])", () => {
+		expect(Util.add(2, [-3, 0, 3, 7])).toStrictEqual([-1, 2, 5, 9]);
+	});
+	test("Util.add([1, 2, 3, 4], [10, 20, 30])", () => {
+		expect(Util.add([1, 2, 3, 4], [10, 20, 30])).toStrictEqual([11, 22, 33, 14]);
+	});
+	test("Util.add([1, [2, 3]], [10, [20, 30, 40]])", () => {
+		expect(Util.add([1, [2, 3]], [10, [20, 30, 40]])).toStrictEqual([11, [22, 33, 42]]);
+	});
 	
-	test("Util.sub()");
-	test("Util.sub(5, 2)");
-	test("Util.sub([0, 3, 7], 2)");
-	test("Util.sub(2, [0, 3, 7])");
-	test("Util.sub([1, 2, 3, 4], [10, 20, 30])");
-	test("Util.sub([1, 2, 3], [10, 20, 30, 40])");
-	test("Util.sub([1, [2, 3]], [10, [20, 30, 40]])");
-	test("Util.sub([1, [2, 3], 4], [10, 20, 30])");
-	
-	test("Util.mul()");
-	test("Util.mul(5, 2)");
-	test("Util.mul([0, 3, 7], 2)");
-	test("Util.mul(2, [0, 3, 7])");
-	test("Util.mul([1, 2, 3, 4], [10, 20, 30])");
-	test("Util.mul([1, 2, 3], [10, 20, 30, 40])");
-	test("Util.mul([1, [2, 3]], [10, [20, 30, 40]])");
-	test("Util.mul([1, [2, 3], 4], [10, 20, 30])");
-	
-	test("Util.div()");
-	test("Util.div(5, 2)");
-	test("Util.div([0, 3, 7], 2)");
-	test("Util.div(2, [0, 3, 7])");
-	test("Util.div([1, 2, 3, 4], [10, 20, 30])");
-	test("Util.div([1, 2, 3], [10, 20, 30, 40])");
-	test("Util.div([1, [2, 3]], [10, [20, 30, 40]])");
-	test("Util.div([1, [2, 3], 4], [10, 20, 30])");
+	test("Util.sub()", () => {
+		expect(Util.sub()).toStrictEqual(0);
+	});
+	test("Util.sub(5, 2)", () => {
+		expect(Util.sub(5, 2)).toStrictEqual(3);
+	});
+	test("Util.sub([-3, 0, 3, 7], 2)", () => {
+		expect(Util.sub([-3, 0, 3, 7], 2)).toStrictEqual([-5, -2, 1, 5]);
+	});
+	test("Util.sub([1, [2, 3]], [10, [20, 30, 40]])", () => {
+		expect(Util.sub([1, [2, 3]], [10, [20, 30, 40]])).toStrictEqual([-9, [-18, -27, -38]]);
+	});
 
-	test("Util.pow()");
-	test("Util.pow(5, 2)");
-	test("Util.pow([2, 3, 4, 6], 2)");
-	test("Util.pow(2, [2, 3, 4, 6])");
-	test("Util.pow([1, 2, 3, 4], [2, 3, 4])");
-	test("Util.pow([1, 2, 3], [2, 3, 4, 5])");
-	test("Util.pow([1, [2, 3]], [10, [2, 3, 4]])");
-	test("Util.pow([1, [2, 3], 4], [10, 2, 3])");
+	test("Util.mul()", () => {
+		expect(Util.mul()).toStrictEqual(0);
+	});
+	test("Util.mul(5, 2)", () => {
+		expect(Util.mul(5, 2)).toStrictEqual(10);
+	});
+	test("Util.mul([-3, 0, 3, 7], 2)", () => {
+		expect(Util.mul([-3, 0, 3, 7], 2)).toStrictEqual([-6, 0, 6, 14]);
+	});
+	test("Util.mul([1, [2, 3]], [10, [20, 30, 40]])", () => {
+		expect(Util.mul([1, [2, 3]], [10, [20, 30, 40]])).toStrictEqual([10, [40, 90, 80]]);
+	});
 
-	test("Util.sqrt()");
-	test("Util.sqrt(9)");
-	test("Util.sqrt([2, 9, 16, 27])");
-	test("Util.sqrt([2, [9, [16, 25], 144]])");
+	test("Util.div()", () => {
+		expect(Util.div()).toStrictEqual(0);
+	});
+	test("Util.div(5, 2)", () => {
+		expect(Util.div(5, 2)).toStrictEqual(2.5);
+	});
+	test("Util.div([-3, 0, 3, 7], 2)", () => {
+		expect(Util.div([-3, 0, 3, 7], 2)).toStrictEqual([-1.5, 0, 1.5, 3.5]);
+	});
+	test("Util.div([1, [2, 3]], [10, [20, 30, 40]])", () => {
+		expect(Util.div([1, [2, 3]], [10, [20, 30, 40]])).toStrictEqual([0.1, [0.1, 0.1, 0.05]]);
+	});
 	
-	test("Util.mod()");
-	test("Util.mod(7, 3)");
-	test("Util.mod([0, 3, 7], 2)");
-	test("Util.mod(2, [0, 3, 7])");
-	test("Util.mod([-2, 4, 3, 7], 5)");
-	test("Util.mod([-2, [4, [3, 7]]], 5)");
-	
-	test("Util.sum([1, 2, 3, 4])");
-	test("Util.sum([10, 'foo', 11, 'bar', 22])");
-	
-	test("Util.trunc()");
-	test("Util.trunc([3.14, 5.12, 6.18])");
-	test("Util.trunc([[3.14, 5.12], 6.18])");
-	test("Util.trunc([[3.14, [5.12]], 6.18])");
-	
-	test("Util.normalize()");
-	test("Util.normalize(5)");
-	test("Util.normalize([0, 3, 9, 12, 24])");
-	test("Util.normalize(Gen.spread(5, -10, 6))");
-	test("Util.normalize(Gen.spread(5, 50, 100))");
-	test("Util.normalize([5, [12, [4, 17]], 3, 1])");
+	test("Util.pow()", () => {
+		expect(Util.pow()).toStrictEqual(0);
+	});
+	test("Util.pow(5, 2)", () => {
+		expect(Util.pow(5, 2)).toStrictEqual(25);
+	});
+	test("Util.pow([2, 3, 4, 6], 2)", () => {
+		expect(Util.pow([2, 3, 4, 6], 2)).toStrictEqual([4, 9, 16, 36]);
+	});
+	test("Util.pow([1, [2, 3]], [10, [2, 3, 4]])", () => {
+		expect(Util.pow([1, [2, 3]], [10, [2, 3, 4]])).toStrictEqual([1, [4, 27, 16]]);
+	});
 
-	test("Util.map(0.5, 0, 1, 0, 2)");
-	test("Util.map(Gen.spread(5), 0, 5, 0, 1)");
-	Util.plot(Util.map(Gen.spreadF(30), 0, 1, 0, 1, 2), { height: 10 });
+	test("Util.sqrt()", () => {
+		expect(Util.sqrt()).toStrictEqual(0);
+	});
+	test("Util.sqrt(9)", () => {
+		expect(Util.sqrt(9)).toStrictEqual(3);
+	});
+	test("Util.sqrt([4, 9, 16, 25])", () => {
+		expect(Util.sqrt([4, 9, 16, 25])).toStrictEqual([2, 3, 4, 5]);
+	});
+	test("Util.sqrt([4, [9, [16, 25], 144]])", () => {
+		expect(Util.sqrt([4, [9, [16, 25], 144]])).toStrictEqual([2, [3, [4, 5], 12]]);
+	});
+
+	test("Util.mod()", () => {
+		expect(Util.mod()).toStrictEqual(0);
+	});
+	test("Util.mod(5, 2)", () => {
+		expect(Util.mod(5, 2)).toStrictEqual(1);
+	});
+	test("Util.mod([-3, 0, 3, 7], 2)", () => {
+		expect(Util.mod([-3, 0, 3, 7], 2)).toStrictEqual([1, 0, 1, 1]);
+	});
+	test("Util.mod([4, [9, [16, 25], 144]], [5, 3])", () => {
+		expect(Util.mod([4, [9, [16, 25], 144]], [5, 3])).toStrictEqual([ 4, [ 0, [ 1, 1 ], 0 ] ]);
+	});
 	
-	test("Util.map([0, 1, 2, 3, 4], 0, 4, -1, 1)");
-	test("Util.map([0, [1, [2, 3]], 4], 0, 4, -1, 1)");
 
-	test("Util.fold([0, [1, [2, 3]], [4, 5], 6], 2, 5)");
-	Util.plot(Util.fold(Gen.spreadFloat(30, -9, 13), 0, 1), {height: 5});
-	test("Util.fold(Gen.spreadFloat(20, -4, 6), -2, 3)");
-	Util.plot(Util.fold(Gen.sineFloat(20, 1, -5, 29), 0, 24), {height: 5});
+	test("Util.sum([1, 2, 3, 4])", () => {
+		expect(Util.sum([1, 2, 3, 4])).toStrictEqual(10);
+	});
+	test("Util.sum([10, 'foo', 11, 'bar', 22])", () => {
+		expect(Util.sum([10, 'foo', 11, 'bar', 22])).toStrictEqual(43);
+	});
+
+	test("Util.trunc()", () => {
+		expect(Util.trunc()).toStrictEqual([0]);
+	});
+	test("Util.trunc(3.14)", () => {
+		expect(Util.trunc(3.14)).toStrictEqual(3);
+	})
+	test("Util.trunc([3.14, [5.12, 6.18]])", () => {
+		expect(Util.trunc([3.14, [5.12, 6.18]])).toStrictEqual([3, [5, 6]]);
+	});
 	
-	test("Util.constrain(10.34, 0, 3.14)");
-	test("Util.constrain([0, [1, [2, 3]], [4, 5], 6], 2, 5)");
-	test("Util.constrain(Gen.cosine(30, 1), 5, 9)");
-	Util.plot(Util.constrain(Gen.cosine(30, 1), 5, 9), {height: 5});
+	test("Util.norm()", () => {
+		expect(Util.norm()).toStrictEqual([0]);
+	});
+	test("Util.norm(5)", () => {
+		expect(Util.norm(5)).toStrictEqual(1);
+	});
+	test("Util.norm([0, 3, 9, 12, 24])", () => {
+		expect(Util.norm([0, 3, 9, 12, 24])).toStrictEqual([ 0, 0.125, 0.375, 0.5, 1 ]);
+	});
+	test("Util.norm([5, [12, [4, 17]], 3, 1])", () => {
+		expect(Util.norm([5, [12, [4, 17]], 3, 1])).toStrictEqual([ 0.25, [ 0.6875, [ 0.1875, 1 ] ], 0.125, 0 ]);
+	});
+
+	test("Util.map()", () => {
+		expect(Util.map()).toStrictEqual(0);
+	});
+	test("Util.map(0.5, 0, 1, 0, 2)", () => {
+		expect(Util.map(0.5, 0, 1, 0, 2)).toStrictEqual(1);
+	});
+	test("Util.map([5, [12, [4, 17]], 3, 1], 1, 17, 0, 1)", () => {
+		expect(Util.map([5, [12, [4, 17]], 3, 1], 1, 17, 0, 1)).toStrictEqual([ 0.25, [ 0.6875, [ 0.1875, 1 ] ], 0.125, 0 ]);
+	});
+
+	test("Util.fold()", () => {
+		expect(Util.fold()).toStrictEqual(0);
+	})
+	test("Util.fold([0, [1, [2, 3]], [4, 5], 6], 2, 4)", () => {
+		expect(Util.fold([0, [1, [2, 3]], [4, 5], 6], 2, 4)).toStrictEqual([ 4, [ 3, [ 2, 3 ] ], [ 4, 3 ], 2 ]);
+	});
+
+	test("Util.constrain()", () => {
+		expect(Util.constrain()).toStrictEqual(0);
+	})
+	test("Util.constrain([0, [1, [2, 3]], [4, 5], 6], 2, 4)", () => {
+		expect(Util.constrain([0, [1, [2, 3]], [4, 5], 6], 2, 4)).toStrictEqual([ 2, [ 2, [ 2, 3 ] ], [ 4, 4 ], 4 ]);
+	});
 	
-	test("Util.wrap([0, [1, [2, 3]], [4, 5], 6], 2, 5)");
-
-	Util.plot(Util.wrap(Gen.spread(30), 2, 8), {height: 5});
-	test("Util.wrap(Gen.spread(30), 2, 8)");
-
-	test("Util.arrayCalc([0, 1, [2, 3]], [[5, 7], 10], (a,b)=>{ return (a+b)/2} )");
-	test("Util.arrayCalc([10, 2, 1, 5], [4, 9, 7, 3], (a,b)=>{ return Math.max(a,b) })");
-
-	let drawing = [];
-	Rand.seed(628);
-	for (let i=0; i<10; i++){
-		drawing.push(Rand.drunk(42, 3));
-	}
-	// console.log('Util.draw(drawing);');
-	// Util.draw(drawing);
-
-	let harmonics = [];
-	for (let i=0; i<10; i++){
-		harmonics.push(Gen.sine(42, i+1));
-	}
-	// console.log('Util.draw(harmonics, { extend: false });')
-	// Util.draw(harmonics, { extend: false });
+	test("Util.wrap()", () => {
+		expect(Util.wrap()).toStrictEqual(0);
+	})
+	test("Util.wrap([0, [1, [2, 3]], [4, 5], 6], 2, 5)", () => {
+		expect(Util.wrap([0, [1, [2, 3]], [4, 5], 6], 2, 5)).toStrictEqual([ 3, [ 4, [ 2, 3 ] ], [ 4, 2 ], 3 ]);
+	});
+	
+	test("Util.draw(Gen.cosine(25, 3, 0, 10))", () => {
+		expect(Util.draw(Gen.cosine(25, 3, 0, 10), {log: false})).toStrictEqual('█▓▒   ░▒▓▓▒    ▒▓▓▒░   ▒▓');
+	});
+	test("Util.draw(Gen.saw(25, 3, 0, 10), {extend: false})", () => {
+		expect(Util.draw(Gen.saw(25, 3, 0, 10), {log: false, extend: false})).toStrictEqual('  ..-==+# ..--==#  .--==+');
+	});
 }
 
 function tester(f){
