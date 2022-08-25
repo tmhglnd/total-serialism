@@ -2719,7 +2719,7 @@ function mode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:
 // @params {Array} -> compare array2
 // @return {Bool} -> true or false
 // 
-function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var a2=arguments.length>1?arguments[1]:undefined;a1=Array.isArray(a1)?a1:[a1];a2=Array.isArray(a2)?a2:[a2];if(a1.length!==a2.length){return false;}for(var i in a1){if(Array.isArray(a1[i])){return compare(a1[i],a2[i]);}else if(a1[i]!==a2[i]){return false;}}return true;}exports.compare=compare;// Return the difference between every consecutive value in an array
+function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var a2=arguments.length>1?arguments[1]:undefined;a1=Array.isArray(a1)?a1:[a1];a2=Array.isArray(a2)?a2:[a2];if(a1.length!==a2.length){return false;}for(var i in a1){if(Array.isArray(a1[i])){return compare(a1[i],a2[i]);}else if(a1[i]!==a2[i]){return false;}}return true;}exports.compare=compare;exports.equal=compare;// Return the difference between every consecutive value in an array
 // With melodic content from a chromatic scale this can be seen as
 // a list of intervals that, when followed from the same note, results
 // in the same melody.
@@ -2727,7 +2727,7 @@ function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments
 // @param {Array} -> array to calculate from
 // @return {Array} -> list of changes
 // 
-function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0,0];if(a.length<2||!Array.isArray(a)){return[0];}var len=a.length;var arr=[];for(var i=1;i<len;i++){arr.push(a[i]-a[i-1]);}return arr;}exports.change=change;exports.difference=change;},{"./transform":40,"./utility":42}],40:[function(require,module,exports){//=======================================================================
+function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0,0];if(a.length<2||!Array.isArray(a)){return[0];}var len=a.length;var arr=[];for(var i=1;i<len;i++){arr.push(a[i]-a[i-1]);}return arr;}exports.change=change;exports.delta=change;exports.difference=change;},{"./transform":40,"./utility":42}],40:[function(require,module,exports){//=======================================================================
 // transform.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2818,7 +2818,7 @@ function filterType(){var a=arguments.length>0&&arguments[0]!==undefined?argumen
 // @param {Int} -> high range (optional)
 // @return {Array}
 // 
-function invert(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var lo=arguments.length>1?arguments[1]:undefined;var hi=arguments.length>2?arguments[2]:undefined;arr=Array.isArray(arr)?arr:[arr];if(lo===undefined){hi=Util.max(arr);lo=Util.max(arr);}else if(hi===undefined){hi=lo;}return arr.slice().map(function(v){if(Array.isArray(v)){return invert(v,lo,hi);}return hi-v+lo;});}exports.invert=invert;// interleave two or more arrays
+function invert(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var lo=arguments.length>1?arguments[1]:undefined;var hi=arguments.length>2?arguments[2]:undefined;arr=Array.isArray(arr)?arr:[arr];if(lo===undefined){hi=Util.max(arr);lo=Util.min(arr);}else if(hi===undefined){hi=lo;}return arr.slice().map(function(v){if(Array.isArray(v)){return invert(v,lo,hi);}return hi-v+lo;});}exports.invert=invert;// interleave two or more arrays
 // 
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array}
@@ -3016,7 +3016,7 @@ exports.searchScales = searchScales;*/ // Convert a midi value to a note name (6
 // @param {Number/Array} -> midi values to convert
 // @return {String/Array} -> note name
 // 
-function midiToNote(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:48;if(!Array.isArray(a)){return Note.fromMidi(a).toLowerCase();}return a.map(function(x){return midiToNote(x);});}exports.midiToNote=midiToNote;exports.mton=midiToNote;// Convert a midi value to a frequency (60 => 261.63 Hz)
+function midiToNote(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:60;if(!Array.isArray(a)){return Note.fromMidi(a).toLowerCase();}return a.map(function(x){return midiToNote(x);});}exports.midiToNote=midiToNote;exports.mton=midiToNote;// Convert a midi value to a frequency (60 => 261.63 Hz)
 // With default equal temperament tuning A4 = 440 Hz
 // 
 // @param {Number/Array} -> midi values to convert

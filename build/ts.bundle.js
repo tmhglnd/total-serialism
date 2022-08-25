@@ -9013,6 +9013,7 @@ function compare(a1=[0], a2){
 	return true;
 }
 exports.compare = compare;
+exports.equal = compare;
 
 // Return the difference between every consecutive value in an array
 // With melodic content from a chromatic scale this can be seen as
@@ -9034,6 +9035,7 @@ function change(a=[0, 0]){
 	return arr;
 }
 exports.change = change;
+exports.delta = change;
 exports.difference = change;
 
 },{"./transform":40,"./utility":42}],40:[function(require,module,exports){
@@ -9230,7 +9232,7 @@ function invert(arr=[0], lo, hi){
 	arr = Array.isArray(arr)? arr : [arr];
 	if (lo === undefined){
 		hi = Util.max(arr);
-		lo = Util.max(arr);
+		lo = Util.min(arr);
 	} else if (hi === undefined){
 		hi = lo;
 	}
@@ -9737,7 +9739,7 @@ exports.searchScales = searchScales;*/
 // @param {Number/Array} -> midi values to convert
 // @return {String/Array} -> note name
 // 
-function midiToNote(a=48){
+function midiToNote(a=60){
 	if (!Array.isArray(a)){
 		return Note.fromMidi(a).toLowerCase();
 	}
