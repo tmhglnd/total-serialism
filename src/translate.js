@@ -212,7 +212,7 @@ exports.searchScales = searchScales;*/
 // @param {Number/Array} -> midi values to convert
 // @return {String/Array} -> note name
 // 
-function midiToNote(a=48){
+function midiToNote(a=60){
 	if (!Array.isArray(a)){
 		return Note.fromMidi(a).toLowerCase();
 	}
@@ -747,7 +747,8 @@ class Scala {
 
 		// console.log('search', f);
 		
-		let result = { ...db };
+		// let result = { ...db };
+		let result = JSON.parse(JSON.stringify(db));
 		Object.keys(f).forEach((k) => {
 			let tmpRes = {};
 			// only search the key if filter is added

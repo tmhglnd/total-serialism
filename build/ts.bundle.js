@@ -9013,6 +9013,7 @@ function compare(a1=[0], a2){
 	return true;
 }
 exports.compare = compare;
+exports.equal = compare;
 
 // Return the difference between every consecutive value in an array
 // With melodic content from a chromatic scale this can be seen as
@@ -9034,6 +9035,7 @@ function change(a=[0, 0]){
 	return arr;
 }
 exports.change = change;
+exports.delta = change;
 exports.difference = change;
 
 },{"./transform":40,"./utility":42}],40:[function(require,module,exports){
@@ -9230,7 +9232,7 @@ function invert(arr=[0], lo, hi){
 	arr = Array.isArray(arr)? arr : [arr];
 	if (lo === undefined){
 		hi = Util.max(arr);
-		lo = Util.max(arr);
+		lo = Util.min(arr);
 	} else if (hi === undefined){
 		hi = lo;
 	}
@@ -9739,7 +9741,7 @@ exports.searchScales = searchScales;*/
 // @param {Number/Array} -> midi values to convert
 // @return {String/Array} -> note name
 // 
-function midiToNote(a=48){
+function midiToNote(a=60){
 	if (!Array.isArray(a)){
 		return Note.fromMidi(a).toLowerCase();
 	}
@@ -10274,7 +10276,8 @@ class Scala {
 
 		// console.log('search', f);
 		
-		let result = { ...db };
+		// let result = { ...db };
+		let result = JSON.parse(JSON.stringify(db));
 		Object.keys(f).forEach((k) => {
 			let tmpRes = {};
 			// only search the key if filter is added
@@ -10447,7 +10450,7 @@ exports.PI = PI;
 // @param {Number} -> maximum value optional, (default=0)
 // @return {Number} -> remainder after division
 // 
-function wrap(a, lo=12, hi=0){
+function wrap(a=0, lo=12, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
 	// calculate range and wrap the values
@@ -10470,7 +10473,7 @@ function _wrap(a, lo, hi){
 // @param {Number} -> maximum value (optional, default=0)
 // @return {Number} -> constrained value
 // 
-function constrain(a, lo=12, hi=0){
+function constrain(a=0, lo=12, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
 	// constrain the values
@@ -10493,7 +10496,7 @@ exports.clamp = constrain;
 // @param {Number} -> maximum value (optional, default=0)
 // @return {Number} -> folder value
 // 
-function fold(a, lo=12, hi=0){
+function fold(a=0, lo=12, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
 	// fold the values
@@ -10522,7 +10525,7 @@ function _fold(a, lo, hi){
 // @param {Number} -> exponent (optional, default=1)
 // @return {Number/Array}
 // 
-function map(a, ...params){
+function map(a=0, ...params){
 	if (!Array.isArray(a)){
 		return _map(a, ...params);
 	}
@@ -10600,6 +10603,7 @@ function multiply(a=0, v=1){
 	return arrayCalc(a, v, (a, b) => { return a * b });
 }
 exports.multiply = multiply;
+exports.mult = multiply;
 exports.mul = multiply;
 
 // divide 1 or more values from an array
@@ -10657,7 +10661,7 @@ exports.sqrt = sqrt;
 // @params {Function} -> function to evaluate
 // @return {Array|Number} -> result of evaluation
 // 
-function arrayCalc(a, v, func){
+function arrayCalc(a=0, v=0, func=()=>{return a;}){
 	// if righthand side is array
 	if (Array.isArray(v)){
 		a = (Array.isArray(a))? a : [a];
@@ -10764,6 +10768,7 @@ function normalize(a=[0]){
 	return divide(subtract(a, min), range);
 }
 exports.normalize = normalize;
+exports.norm = normalize;
 
 // Plot an array of values to the console in the form of an
 // ascii chart and return chart from function. If you just want the 

@@ -2719,7 +2719,7 @@ function mode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:
 // @params {Array} -> compare array2
 // @return {Bool} -> true or false
 // 
-function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var a2=arguments.length>1?arguments[1]:undefined;a1=Array.isArray(a1)?a1:[a1];a2=Array.isArray(a2)?a2:[a2];if(a1.length!==a2.length){return false;}for(var i in a1){if(Array.isArray(a1[i])){return compare(a1[i],a2[i]);}else if(a1[i]!==a2[i]){return false;}}return true;}exports.compare=compare;// Return the difference between every consecutive value in an array
+function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var a2=arguments.length>1?arguments[1]:undefined;a1=Array.isArray(a1)?a1:[a1];a2=Array.isArray(a2)?a2:[a2];if(a1.length!==a2.length){return false;}for(var i in a1){if(Array.isArray(a1[i])){return compare(a1[i],a2[i]);}else if(a1[i]!==a2[i]){return false;}}return true;}exports.compare=compare;exports.equal=compare;// Return the difference between every consecutive value in an array
 // With melodic content from a chromatic scale this can be seen as
 // a list of intervals that, when followed from the same note, results
 // in the same melody.
@@ -2727,7 +2727,7 @@ function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments
 // @param {Array} -> array to calculate from
 // @return {Array} -> list of changes
 // 
-function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0,0];if(a.length<2||!Array.isArray(a)){return[0];}var len=a.length;var arr=[];for(var i=1;i<len;i++){arr.push(a[i]-a[i-1]);}return arr;}exports.change=change;exports.difference=change;},{"./transform":40,"./utility":42}],40:[function(require,module,exports){//=======================================================================
+function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0,0];if(a.length<2||!Array.isArray(a)){return[0];}var len=a.length;var arr=[];for(var i=1;i<len;i++){arr.push(a[i]-a[i-1]);}return arr;}exports.change=change;exports.delta=change;exports.difference=change;},{"./transform":40,"./utility":42}],40:[function(require,module,exports){//=======================================================================
 // transform.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2818,7 +2818,7 @@ function filterType(){var a=arguments.length>0&&arguments[0]!==undefined?argumen
 // @param {Int} -> high range (optional)
 // @return {Array}
 // 
-function invert(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var lo=arguments.length>1?arguments[1]:undefined;var hi=arguments.length>2?arguments[2]:undefined;arr=Array.isArray(arr)?arr:[arr];if(lo===undefined){hi=Util.max(arr);lo=Util.max(arr);}else if(hi===undefined){hi=lo;}return arr.slice().map(function(v){if(Array.isArray(v)){return invert(v,lo,hi);}return hi-v+lo;});}exports.invert=invert;// interleave two or more arrays
+function invert(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var lo=arguments.length>1?arguments[1]:undefined;var hi=arguments.length>2?arguments[2]:undefined;arr=Array.isArray(arr)?arr:[arr];if(lo===undefined){hi=Util.max(arr);lo=Util.min(arr);}else if(hi===undefined){hi=lo;}return arr.slice().map(function(v){if(Array.isArray(v)){return invert(v,lo,hi);}return hi-v+lo;});}exports.invert=invert;// interleave two or more arrays
 // 
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array}
@@ -3016,7 +3016,7 @@ exports.searchScales = searchScales;*/ // Convert a midi value to a note name (6
 // @param {Number/Array} -> midi values to convert
 // @return {String/Array} -> note name
 // 
-function midiToNote(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:48;if(!Array.isArray(a)){return Note.fromMidi(a).toLowerCase();}return a.map(function(x){return midiToNote(x);});}exports.midiToNote=midiToNote;exports.mton=midiToNote;// Convert a midi value to a frequency (60 => 261.63 Hz)
+function midiToNote(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:60;if(!Array.isArray(a)){return Note.fromMidi(a).toLowerCase();}return a.map(function(x){return midiToNote(x);});}exports.midiToNote=midiToNote;exports.mton=midiToNote;// Convert a midi value to a frequency (60 => 261.63 Hz)
 // With default equal temperament tuning A4 = 440 Hz
 // 
 // @param {Number/Array} -> midi values to convert
@@ -3242,7 +3242,8 @@ _createClass(Scala,[{key:"data",get:function get(){return _objectSpread({},this.
 // @return {Object -> All scala files matching the filter
 // 
 },{key:"search",value:function search(f){var db=require('../data/scldb.json');f=typeof f!=='undefined'?f:{};f.size=typeof f.size!=='undefined'?f.size:null;f.cents=typeof f.cents!=='undefined'?f.cents:null;f.description=typeof f.description!=='undefined'?f.description:null;f.decimals=typeof f.decimals!=='undefined'?f.decimals:3;// console.log('search', f);
-var result=_objectSpread({},db);Object.keys(f).forEach(function(k){var tmpRes={};// only search the key if filter is added
+// let result = { ...db };
+var result=JSON.parse(JSON.stringify(db));Object.keys(f).forEach(function(k){var tmpRes={};// only search the key if filter is added
 if(f[k]!==null){// allow arrays for multiple searches
 var s=!Array.isArray(f[k])?[f[k]]:f[k];// serach size with number match
 if(k==='size'){Object.keys(result).forEach(function(scl){s.forEach(function(v){if(result[scl][k]===Number(v)){tmpRes[scl]=result[scl];}});});result=tmpRes;}// search description with regular expression
@@ -3304,7 +3305,7 @@ var chart=require('asciichart');var HALF_PI=Math.PI/2.0;var TWO_PI=Math.PI*2.0;v
 // @param {Number} -> maximum value optional, (default=0)
 // @return {Number} -> remainder after division
 // 
-function wrap(a){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
+function wrap(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// calculate range and wrap the values
 if(!Array.isArray(a)){return _wrap(a,lo,hi);}return a.map(function(x){return wrap(x,lo,hi);});}(lo,hi);}exports.wrap=wrap;function _wrap(a,lo,hi){var r=hi-lo;return((a-lo)%r+r)%r+lo;}// Constrain a value between a low and high range
 // 
@@ -3313,7 +3314,7 @@ if(!Array.isArray(a)){return _wrap(a,lo,hi);}return a.map(function(x){return wra
 // @param {Number} -> maximum value (optional, default=0)
 // @return {Number} -> constrained value
 // 
-function constrain(a){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
+function constrain(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// constrain the values
 if(!Array.isArray(a)){return Math.min(hi,Math.max(lo,a));}return a.map(function(x){return constrain(x,lo,hi);});}(lo,hi);}exports.constrain=constrain;exports.bound=constrain;exports.clip=constrain;exports.clamp=constrain;// Fold a between a low and high range
 // When the value exceeds the range it is folded inwards
@@ -3324,7 +3325,7 @@ if(!Array.isArray(a)){return Math.min(hi,Math.max(lo,a));}return a.map(function(
 // @param {Number} -> maximum value (optional, default=0)
 // @return {Number} -> folder value
 // 
-function fold(a){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
+function fold(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// fold the values
 if(!Array.isArray(a)){return _fold(a,lo,hi);}return a.map(function(x){return fold(x,lo,hi);});}(lo,hi);}exports.fold=fold;exports.bounce=fold;function _fold(a,lo,hi){a=_map(a,lo,hi,-1,1);a=Math.asin(Math.sin(a*HALF_PI))/HALF_PI;return _map(a,-1,1,lo,hi);}// Map/scale a value or array from one input-range 
 // to a given output-range
@@ -3337,7 +3338,7 @@ if(!Array.isArray(a)){return _fold(a,lo,hi);}return a.map(function(x){return fol
 // @param {Number} -> exponent (optional, default=1)
 // @return {Number/Array}
 // 
-function map(a){for(var _len5=arguments.length,params=new Array(_len5>1?_len5-1:0),_key5=1;_key5<_len5;_key5++){params[_key5-1]=arguments[_key5];}if(!Array.isArray(a)){return _map.apply(void 0,[a].concat(params));}return a.map(function(x){return map.apply(void 0,[x].concat(params));});}exports.map=map;exports.scale=map;function _map(a){var inLo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var inHi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var outLo=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var outHi=arguments.length>4&&arguments[4]!==undefined?arguments[4]:1;var exp=arguments.length>5&&arguments[5]!==undefined?arguments[5]:1;a=(a-inLo)/(inHi-inLo);if(exp!=1){var sign=a>=0.0?1:-1;a=Math.pow(Math.abs(a),exp)*sign;}return a*(outHi-outLo)+outLo;}// Interpolate / mix between 2 values
+function map(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;for(var _len5=arguments.length,params=new Array(_len5>1?_len5-1:0),_key5=1;_key5<_len5;_key5++){params[_key5-1]=arguments[_key5];}if(!Array.isArray(a)){return _map.apply(void 0,[a].concat(params));}return a.map(function(x){return map.apply(void 0,[x].concat(params));});}exports.map=map;exports.scale=map;function _map(a){var inLo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var inHi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var outLo=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var outHi=arguments.length>4&&arguments[4]!==undefined?arguments[4]:1;var exp=arguments.length>5&&arguments[5]!==undefined?arguments[5]:1;a=(a-inLo)/(inHi-inLo);if(exp!=1){var sign=a>=0.0?1:-1;a=Math.pow(Math.abs(a),exp)*sign;}return a*(outHi-outLo)+outLo;}// Interpolate / mix between 2 values
 // 
 // @param {Number} -> value 1
 // @param {Number} -> value 2
@@ -3376,7 +3377,7 @@ function subtract(){var a=arguments.length>0&&arguments[0]!==undefined?arguments
 // @param {Number/Array} -> value to multiply with
 // @return {Number/Array}
 // 
-function multiply(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;return arrayCalc(a,v,function(a,b){return a*b;});}exports.multiply=multiply;exports.mul=multiply;// divide 1 or more values from an array
+function multiply(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;return arrayCalc(a,v,function(a,b){return a*b;});}exports.multiply=multiply;exports.mult=multiply;exports.mul=multiply;// divide 1 or more values from an array
 // preserves listlength of first argument
 // arguments are applied sequentially
 // 
@@ -3410,7 +3411,7 @@ function sqrt(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:
 // @params {Function} -> function to evaluate
 // @return {Array|Number} -> result of evaluation
 // 
-function arrayCalc(a,v,func){// if righthand side is array
+function arrayCalc(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var func=arguments.length>2&&arguments[2]!==undefined?arguments[2]:function(){return a;};// if righthand side is array
 if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){r[i]=arrayCalc(a[i%l1],v[i%l2],func);}return r;}// if both are single values
 if(!Array.isArray(a)){var _r=func(a,v);if(!isNaN(a)&&!isNaN(v)){return isNaN(_r)?0:_r;}return _r;}// if lefthand side is array
 return a.map(function(x){return arrayCalc(x,v,func);});}exports.arrayCalc=arrayCalc;// flatten a multidimensional array. Optionally set the depth
@@ -3448,7 +3449,7 @@ function minimum(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[
 function normalize(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];// get minimum and maximum
 var min=minimum(a);var range=maximum(a)-min;// if range 0 then range = min and min = 0
 if(!range){range=min,min=0;}// normalize and return
-return divide(subtract(a,min),range);}exports.normalize=normalize;// Plot an array of values to the console in the form of an
+return divide(subtract(a,min),range);}exports.normalize=normalize;exports.norm=normalize;// Plot an array of values to the console in the form of an
 // ascii chart and return chart from function. If you just want the 
 // chart returned as text and not log to console set { log: false }.
 // Using the asciichart package by x84. 

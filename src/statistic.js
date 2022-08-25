@@ -157,6 +157,7 @@ function compare(a1=[0], a2){
 	return true;
 }
 exports.compare = compare;
+exports.equal = compare;
 
 // Return the difference between every consecutive value in an array
 // With melodic content from a chromatic scale this can be seen as
@@ -178,4 +179,5 @@ function change(a=[0, 0]){
 	return arr;
 }
 exports.change = change;
+exports.delta = change;
 exports.difference = change;
