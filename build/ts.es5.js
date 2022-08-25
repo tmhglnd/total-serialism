@@ -3130,7 +3130,7 @@ exports.mtos = midiToSemi;
 //
 function chordsFromNumerals(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['i'];var n=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'c';// make array if not array and flatten
 a=Array.isArray(a)?a.flat(Infinity):[a];// check if n is notename
-n=isNaN(n)?n:midiToNote(Util.wrap(n));console.log(n);// generate progression of chord names
+n=isNaN(n)?n:midiToNote(Util.wrap(n));// generate progression of chord names
 var p=Progression.fromRomanNumerals(n,a);// translate chordnames to semitones
 return chordsFromNames(p);}exports.chordsFromNumerals=chordsFromNumerals;exports.chords=chordsFromNumerals;// Use a list of chord names to generate a chord progression
 // The function returns an array of chords and works on n-dimensional arrays
@@ -3143,7 +3143,7 @@ return chordsFromNames(p);}exports.chordsFromNumerals=chordsFromNumerals;exports
 // @param - {Array/String} -> chord names to convert to numbers
 // @return - {2d-Array} -> array of chords
 //
-function chordsFromNames(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['c'];// make array if not array and flatten
+function chordsFromNames(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['c'];// if not an array, translate chordname to semitone array
 if(!Array.isArray(a)){var ch=Chord.get(a);if(ch.empty){console.log("Invalid chord name generated from numeral: ".concat(a));return[0];}return Util.wrap(chromaToRelative(ch.notes));}return a.map(function(c){return chordsFromNames(c);});}exports.chordsFromNames=chordsFromNames;// Convert a beat division value to milliseconds based on the global BPM
 // eg. ['1/4', 1/8', '1/16'] => [500, 250, 125] @ BPM = 120
 // Also works with ratio floating values

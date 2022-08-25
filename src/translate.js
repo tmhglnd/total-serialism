@@ -465,7 +465,6 @@ function chordsFromNumerals(a=['i'], n='c'){
 	a = Array.isArray(a)? a.flat(Infinity) : [a];
 	// check if n is notename
 	n = isNaN(n)? n : midiToNote(Util.wrap(n));
-	console.log(n);
 	// generate progression of chord names
 	let p = Progression.fromRomanNumerals(n, a);
 	// translate chordnames to semitones

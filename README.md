@@ -23,6 +23,20 @@
 
 # 👾 Newest features
 
+## Chord progressions
+
+Generate chord progressions as 2d-array's of semitones from an array of Roman Numerals and an optional root note.
+
+```js
+// Convert a chord progression from roman numerals to semitones
+TL.chordsFromNumerals(['I', 'IIm', 'IVsus2', 'V7', 'VIm9'], 'c');
+// => [[ 0, 4, 7 ],
+//     [ 2, 5, 9 ],
+//     [ 5, 7, 0 ],
+//     [ 7, 11, 2, 5 ],
+//     [ 9, 0, 4, 7, 11 ]] 
+```
+
 ## Per Nørgård's Infinity Series
 
 Generate the self-similar infinity series by composer Per Nørgård. Choose the length output, the initial seed (two values as an array) and an optional offset.

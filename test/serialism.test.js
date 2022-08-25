@@ -85,9 +85,6 @@ function fullTest(Srl){
 	testStatistic();
 	testTranslate();
 	testUtility();
-
-	// pagebreak("All Tests Passed");
-	// console.timeEnd('Total Time');
 }
 
 // Test different sections of the package
@@ -1041,6 +1038,16 @@ function testTranslate(){
 	});
 	test("TL.ttoms(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'], 160)", () => {
 		expect(TL.ttoms(['4n', ['8nt', ['16nd', '2nd']], '32n', '3m'], 160)).toStrictEqual([ 375, [ 125, [ 140.625, 1125 ] ], 46.875, 4500 ]);
+	});
+
+	test("TL.chords()", () => {
+		expect(TL.chordsFromNumerals(['I', 'IIm', 'IVsus2', 'V7', 'VIm9'])).toStrictEqual([[ 0, 4, 7 ], [ 2, 5, 9 ], [ 5, 7, 0 ], [ 7, 11, 2, 5 ], [ 9, 0, 4, 7, 11 ]]);
+	});
+	test("TL.chords()", () => {
+		expect(TL.chordsFromNumerals(['I', 'IIm', 'IVsus2', 'V7', 'VIm9'], 'eb')).toStrictEqual([[ 3, 7, 10 ], [ 5, 8, 0 ], [ 8, 10, 3 ], [ 10, 2, 5, 8 ], [ 0, 3, 7, 10, 2 ]]);
+	});
+	test("TL.chords()", () => {
+		expect(TL.chordsFromNames(['C', 'Dm', 'Fsus2', 'G7', 'Am9'])).toStrictEqual([[ 0, 4, 7 ], [ 2, 5, 9 ], [ 5, 7, 0 ], [ 7, 11, 2, 5 ], [ 9, 0, 4, 7, 11 ]]);
 	});
 
 	var scl;
