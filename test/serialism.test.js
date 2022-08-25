@@ -77,8 +77,6 @@ function fullTest(Srl){
 	TL = Srl.Translate;
 	Util = Srl.Utility;
 
-	// console.time('Total Time');
-
 	// testSerial();
 	testGenerative();
 	testAlgorithmic();

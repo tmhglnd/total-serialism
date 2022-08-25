@@ -2921,7 +2921,7 @@ function unique(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 // - Using the amazing Tonal.js package by @danigb for various functions
 //==============================================================================
 // require API's
-var _require=require('@tonaljs/tonal'),Note=_require.Note,Scale=_require.Scale;// require Scale Mappings
+var _require=require('@tonaljs/tonal'),Note=_require.Note,Scale=_require.Scale;var _require2=require('@tonaljs/tonal'),Chord=_require2.Chord;var _require3=require('@tonaljs/tonal'),Progression=_require3.Progression;// require Scale Mappings
 // const Scales = require('../data/scales.json');
 var ToneSet=require('../data/tones.json');var chromaSet={c:0,d:2,e:4,f:5,g:7,a:9,b:11};var Mod=require('./transform.js');var Util=require('./utility.js');// create a mapping list of scales for 12-TET from Tonal
 var Scales={};Scale.names().forEach(function(s){var scl=Scale.get(s);var name=scl.name.replace(/\s+/g,'_').replace(/[#'-]+/g,'');var chroma=scl.chroma.split('').map(function(x){return Number(x);});// rename aeolian to minor
@@ -3115,7 +3115,36 @@ function midiToSemi(a=0, o=4){
 }
 exports.midiToSemi = midiToSemi;
 exports.mtos = midiToSemi;
-*/ // Convert a beat division value to milliseconds based on the global BPM
+*/ // Use a list of roman numerals to generate a chord progression
+// The function returns a 2d-array of chords, where every chord is
+// a separate array within the larger array. The chords are returned
+// as semitones from 0-12. Optionally with a second argument you can 
+// offset the chords based on a note name or midi value
+// eg. IIm with 'D' becomes [E, G, B] becomes => [4, 7, 11]
+// Valid chord numerals: I, II, III, ..., VII
+// Valid additions: m, M, 7, 9, sus2, sus4, maj7, m7, maj9, m9
+// 
+// @param - {Array/String} -> roman numerals to convert to chords
+// @param - {String/Number} -> root for chord progression
+// @return - {2d-Array} -> array of chords
+//
+function chordsFromNumerals(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['i'];var n=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'c';// make array if not array and flatten
+a=Array.isArray(a)?a.flat(Infinity):[a];// check if n is notename
+n=isNaN(n)?n:midiToNote(Util.wrap(n));console.log(n);// generate progression of chord names
+var p=Progression.fromRomanNumerals(n,a);// translate chordnames to semitones
+return chordsFromNames(p);}exports.chordsFromNumerals=chordsFromNumerals;exports.chords=chordsFromNumerals;// Use a list of chord names to generate a chord progression
+// The function returns an array of chords and works on n-dimensional arrays
+// where every chord is a separate array within the larger array. 
+// The chords are returned as semitones from 0-12. 
+// eg. Em becomes => [4, 7, 11]
+// Valid note names: C, D, E ..., B
+// Valid additions: m, M, 7, 9, sus2, sus4, maj7, m7, maj9, m9
+// 
+// @param - {Array/String} -> chord names to convert to numbers
+// @return - {2d-Array} -> array of chords
+//
+function chordsFromNames(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['c'];// make array if not array and flatten
+if(!Array.isArray(a)){var ch=Chord.get(a);if(ch.empty){console.log("Invalid chord name generated from numeral: ".concat(a));return[0];}return Util.wrap(chromaToRelative(ch.notes));}return a.map(function(c){return chordsFromNames(c);});}exports.chordsFromNames=chordsFromNames;// Convert a beat division value to milliseconds based on the global BPM
 // eg. ['1/4', 1/8', '1/16'] => [500, 250, 125] @ BPM = 120
 // Also works with ratio floating values
 // 
@@ -3278,7 +3307,7 @@ var chart=require('asciichart');var HALF_PI=Math.PI/2.0;var TWO_PI=Math.PI*2.0;v
 // 
 function wrap(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// calculate range and wrap the values
-if(!Array.isArray(a)){return _wrap(a,lo,hi);}return a.map(function(x){return wrap(x,lo,hi);});}(lo,hi);}exports.wrap=wrap;function _wrap(a,lo,hi){var r=hi-lo;return(a-lo%r+r)%r+lo;}// Constrain a value between a low and high range
+if(!Array.isArray(a)){return _wrap(a,lo,hi);}return a.map(function(x){return wrap(x,lo,hi);});}(lo,hi);}exports.wrap=wrap;function _wrap(a,lo,hi){var r=hi-lo;return((a-lo)%r+r)%r+lo;}// Constrain a value between a low and high range
 // 
 // @param {Number/Array} -> number to constrain
 // @param {Number} -> minimum value (optional, default=12)

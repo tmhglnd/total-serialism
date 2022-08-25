@@ -28,6 +28,8 @@ const TL = require('total-serialism').Translate;
 - relativeToMidi (rtom)
 - relativeToFreq (rtof)
 - chromaToRelative (ctor)
+- chordsFromNumerals (chords)
+- chordsFromNames
 - ratioToCent (rtoc)
 - setTempo
 - divisionToMs (dtoms)
@@ -50,7 +52,7 @@ const TL = require('total-serialism').Translate;
 
 ## Conversion between pitch units
 
-Convert easily between relative-semitones, midinotes, notenames and frequencies with the methods below. Thankfully using the amazing `Tonal.js` package by `@danigb` for various functions.
+Convert easily between relative-semitones, midinotes, notenames, chord-numerals, chordnames and frequencies with the methods below. Thankfully using the amazing `Tonal.js` package by `@danigb` for various functions.
 
 ```js
 // Convert Array or Int as midi-number to midi-notenames
@@ -110,6 +112,30 @@ TL.ratioToCent(['2/1', ['3/2', ['4/3', '5/4']], '9/8']);
 //=> [ 1200, [ 701.95, [ 498.04, 386.31 ] ], 203.91 ] 
 // Alias: rtoc()
 
+// Convert a chord progression from roman numerals to semitones
+TL.chordsFromNumerals(['I', 'IIm', 'IVsus2', 'V7', 'VIm9']);
+// => [[ 0, 4, 7 ],
+//     [ 2, 5, 9 ],
+//     [ 5, 7, 0 ],
+//     [ 7, 11, 2, 5 ],
+//     [ 9, 0, 4, 7, 11 ]] 
+// Alias: chords()
+
+// Add a root for the chord progression as optional argument
+TL.chordsFromNumerals(['I', 'IIm', 'IVsus2', 'V7'], 'eb');
+// => [[ 3, 7, 10 ],
+//     [ 5, 8, 0 ],
+//     [ 8, 10, 3 ],
+//     [ 10, 2, 5, 8 ],
+//     [ 0, 3, 7, 10, 2 ]]
+
+// Convert a chord progression from chordnames to semitones
+TL.chordsFromNames(['C', 'Dm', 'Fsus2', 'G7', 'Am9']);
+//=> [[ 0, 4, 7 ],
+//    [ 2, 5, 9 ],
+//    [ 5, 7, 0 ],
+//    [ 7, 11, 2, 5 ],
+//    [ 9, 0, 4, 7, 11 ]] 
 ```
 
 ## Conversion between time units
