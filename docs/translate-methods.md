@@ -112,7 +112,7 @@ TL.ratioToCent(['2/1', ['3/2', ['4/3', '5/4']], '9/8']);
 //=> [ 1200, [ 701.95, [ 498.04, 386.31 ] ], 203.91 ] 
 // Alias: rtoc()
 
-// Convert a chord progression in roman numerals to semitones
+// Convert a chord progression from roman numerals to semitones
 TL.chordsFromNumerals(['I', 'IIm', 'IVsus2', 'V7', 'VIm9']);
 // => [[ 0, 4, 7 ],
 //     [ 2, 5, 9 ],
@@ -120,6 +120,14 @@ TL.chordsFromNumerals(['I', 'IIm', 'IVsus2', 'V7', 'VIm9']);
 //     [ 7, 11, 2, 5 ],
 //     [ 9, 0, 4, 7, 11 ]] 
 // Alias: chords()
+
+// Add a root for the chord progression as optional argument
+TL.chordsFromNumerals(['I', 'IIm', 'IVsus2', 'V7'], 'eb');
+// => [[ 3, 7, 10 ],
+//     [ 5, 8, 0 ],
+//     [ 8, 10, 3 ],
+//     [ 10, 2, 5, 8 ],
+//     [ 0, 3, 7, 10, 2 ]]
 
 // Convert a chord progression from chordnames to semitones
 TL.chordsFromNames(['C', 'Dm', 'Fsus2', 'G7', 'Am9']);
