@@ -23,6 +23,7 @@ const Rand = require('total-serialism').Stochastic;
 - [clave](#clave)
 - [expand](#expand)
 - [MarkovChain](#markov-chain)
+- [DeepMarkovChain](#deep-markov-chain)
 
 ## seed
 
