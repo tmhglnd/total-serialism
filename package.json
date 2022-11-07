@@ -4,7 +4,7 @@
   "description": "A set of methods for the generation and transformation of number sequences useful in algorithmic composition",
   "main": "index.js",
   "scripts": {
-    "test": "jest test/serialism.test.js",
+    "test": "jest test/**.test.js",
     "build": "npm run database && npm run clean && npm run bundle && npm run build-es5 && npm run build-min",
     "clean": "rm -rf build",
     "bundle": "mkdir build && browserify --standalone TotalSerialism index.js > build/ts.bundle.js",
