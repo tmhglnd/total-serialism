@@ -349,18 +349,22 @@ This is an identical approach to the [Markov Chain](#markov-chain) while also of
 ```js
 const Rand = require('total-serialism').Stochastic;
 
-var pattern = [1, 2, 3, 4, 5];
+var pattern = [1, 2, 3, 1, 2, 4, 1, 2, 5, 2, 3, 4];
 // make a MarkovChain instance and optionally train with array
+// an optional second argument sets the order of the markov (default=2)
 let markov = new Rand.MarkovChain(pattern, 2);
 
 // view the transition table (stored as Map())
 // Keys are stored as stringis derived via JSON.stringify()
 console.log(markov.table);
-// {
-// 	'[1,2]' : [3],
-// 	'[2,3]' : [4],
-// 	'[3,4]' : [5],
-// 	'[4,5]' : [6]
+// Map(7) {
+//   '[1,2]' => [ 3, 4, 5 ],
+//   '[2,3]' => [ 1, 4 ],
+//   '[3,1]' => [ 2 ],
+//   '[2,4]' => [ 1 ],
+//   '[4,1]' => [ 2 ],
+//   '[2,5]' => [ 2 ],
+//   '[5,2]' => [ 3 ]
 // }
 
 // set the state of the model used as initial value
@@ -372,11 +376,11 @@ markov.seed(31415);
 
 // go to the next state based on the model probabilities
 markov.next();
-// => [3]
+// => 5
 
 // generate an array of 10 values 
-markov.chain(3);
-// => [[3], [4], [5]]
+markov.chain(10);
+// => [ 2, 3, 1, 2, 5, 2, 3, 4, 1, 2 ]
 
 // clear the model
 markov.clear();

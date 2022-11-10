@@ -327,15 +327,15 @@ exports.extrapolate = expand;
 // of possible events in which the probability of each event depends 
 // only on the state of the previous (multiple) events.
 // 
-// @get chain -> return transition table from Markov
+// @get table -> return transition table from Markov
 // @method clear() -> erase the transition table
 // @method train() -> train the markov model
 // 		@param {Array} -> array of values as training data
-// @method seed() -> seed the random number generator (scoped RNG)
+// @method seed() -> seed the random number generator (global RNG)
 // 		@param {Value} -> any value as random seed (0 = unpredictable seed)
-// @method axiom() -> set the initial value to start the chain
+// @method state() -> set the initial value to start the chain
 // @method next() -> generate the next value based state or set axiom
-// @method chain() -> generate an array of values
+// @method chain() -> generate an array of values (default length=2)
 // 
 class MarkovChain {
 	constructor(data){
@@ -356,7 +356,7 @@ class MarkovChain {
 	}
 	train(a){
 		if (!Array.isArray(a)){ 
-			return console.error('Error: train() expected array but received:', typeof a);
+			return console.error(`Error: train() expected array but received: ${typeof a}`);
 		}
 		// build a transition table from array of values
 		for (let i=1; i<a.length; i++){
@@ -374,7 +374,7 @@ class MarkovChain {
 	state(a){
 		// set the state
 		if (!this._table[a]){
-            console.error('Warning: state() value is not part of transition table');
+            console.error(`Warning: ${a} is not part of transition table`);
 		}
 		this._state = a;
 	}
@@ -402,6 +402,19 @@ class MarkovChain {
 }
 exports.MarkovChain = MarkovChain;
 
+// Initialize a Deep Markov Chain Model (with higher order n)
+// 
+// @get table -> return transition table from Markov
+// @method clear() -> erase the transition table
+// @method train() -> train the markov model
+// 		@param {Array} -> array of values as training data
+//		@param {Int+} -> order of markov analysis
+// @method seed() -> seed the random number generator (global RNG)
+// 		@param {Value} -> any value as random seed (0 = unpredictable seed)
+// @method state() -> set the initial value to start the chain
+// @method next() -> generate the next value based state or set axiom
+// @method chain() -> generate an array of values (default length=2)
+// 
 class DeepMarkovChain {
 	constructor(data){
 		// transition probabilities table
@@ -410,53 +423,50 @@ class DeepMarkovChain {
 		if (data) { this.train(data) };
 		// current state of markov chain
 		this._state = '';
-		// scoped random number generator
-		this.rng = seedrandom();
 	}
 	get table(){
 		// return copy of object
-		return this._table
+		return new Map(JSON.parse(JSON.stringify(Array.from(this._table))));
 	}
 	clear(){
 		// empty the transition probabilities
 		this._table = new Map();
 	}
-	train(a, win=2){
+	train(a, o=2){
 		if (!Array.isArray(a)){ 
-			return console.error('Error: train() expected array but received:', typeof a);
+			return console.error(`Error: train() expected array but received: ${typeof a}`);
+		}
+		if (o < 1){
+			return console.error(`Error: train() expected order greater then 1 but received ${o}`);
 		}
 		// build a transition table from array of values
-		for (let i=0; i < (a.length - win); i++) {
-			let slice = a.slice(i, i+win);
+		for (let i=0; i<(a.length-o); i++) {
+			let slice = a.slice(i, i+o);
 			let key = JSON.stringify(slice);
 
-			let next = a[i+win]
+			let next = a[i+o];
 
 			if (this._table.has(key)) {
-				let arr = this._table.get(key)
-				arr.push(next)
-				this._table.set(key, arr)
+				let arr = this._table.get(key);
+				arr.push(next);
+				this._table.set(key, arr);
 			} else {
-				this._table.set(key, [a[i+win]])
+				this._table.set(key, [a[i+o]]);
 			}
 		}
 	}
 	seed(s){
-		// set unpredictable seed if 0, null or undefined
-		if (s === 0 || s === null || s === undefined){
-			rng = seedrandom();
-		} else {
-			rng = seedrandom(s);
-		}
+		// deprecated, seed is now also be set for the global rng
+		seed(s);
 	}
 	state(a){
-		// set the state
 		// stringify the state
-		let stringed = JSON.stringify(a);
-		if (!this._table.has(stringed)) {
-			console.error('Warning: state() value is not part of transition table');
+		let s = JSON.stringify(a);
+		// set the state
+		if (!this._table.has(s)) {
+			console.error(`Warning: ${a} is not part of transition table`);
 		}
-		this._state = stringed;
+		this._state = s;
 	}
 	randomState() {
 		let keys = Array.from(this._table.keys())
@@ -480,7 +490,7 @@ class DeepMarkovChain {
 
 		return newState;
 	}
-	chain(l=1){
+	chain(l=2){
 		// return an array of values generated with next()
 		let c = [];
 		for (let i=0; i<l; i++){

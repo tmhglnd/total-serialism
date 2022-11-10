@@ -14,10 +14,10 @@ let TS = require(entryPoint);
 fullTest(TS);
 
 // reload library with es5.min.js build
-// TS = require(es5build);
+TS = require(es5build);
 
 // and run full test with es5.min.js build;
-// fullTest(TS);
+fullTest(TS);
 
 function fullTest(Srl){
 	const Rand = Srl.Stochastic;

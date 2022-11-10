@@ -2499,7 +2499,7 @@ var rng=seedrandom();// Set the seed for all the Random Number Generators.
 // @param {Number/String} -> the seed
 // @return {Void}
 // 
-function seed(){var v=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;if(v===0||v===null||v===undefined){rng=seedrandom();}else{rng=seedrandom(v);}}exports.seed=seed;// generate a list of random float values 
+function _seed(){var v=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;if(v===0||v===null||v===undefined){rng=seedrandom();}else{rng=seedrandom(v);}}exports.seed=_seed;// generate a list of random float values 
 // between a certain specified range (excluding high val)
 // 
 // @param {Int} -> number of values to output
@@ -2636,45 +2636,56 @@ for(var c=0;c<chg.length;c++){arr.push(acc+=chg[c]);}return arr;}exports.expand=
 // of possible events in which the probability of each event depends 
 // only on the state of the previous (multiple) events.
 // 
-// @get chain -> return transition table from Markov
+// @get table -> return transition table from Markov
 // @method clear() -> erase the transition table
 // @method train() -> train the markov model
 // 		@param {Array} -> array of values as training data
-// @method seed() -> seed the random number generator (scoped RNG)
+// @method seed() -> seed the random number generator (global RNG)
 // 		@param {Value} -> any value as random seed (0 = unpredictable seed)
-// @method axiom() -> set the initial value to start the chain
+// @method state() -> set the initial value to start the chain
 // @method next() -> generate the next value based state or set axiom
-// @method chain() -> generate an array of values
+// @method chain() -> generate an array of values (default length=2)
 // 
 var MarkovChain=/*#__PURE__*/function(){function MarkovChain(data){_classCallCheck(this,MarkovChain);// transition probabilities table
 this._table={};// train if dataset is provided
 if(data){this.train(data);};// current state of markov chain
-this._state;// scoped random number generator
-this.rng=seedrandom();}_createClass(MarkovChain,[{key:"table",get:function get(){// return copy of object
+this._state;}_createClass(MarkovChain,[{key:"table",get:function get(){// return copy of object
 return _objectSpread({},this._table);}},{key:"clear",value:function clear(){// empty the transition probabilities
-this._table={};}},{key:"train",value:function train(a){if(!Array.isArray(a)){return console.error('Error: train() expected array but received:',_typeof(a));}// build a transition table from array of values
-for(var i=1;i<a.length;i++){if(!this._table[a[i-1]]){this._table[a[i-1]]=[a[i]];}else{this._table[a[i-1]].push(a[i]);}}}},{key:"seed",value:function seed(s){// set unpredictable seed if 0, null or undefined
-if(s===0||s===null||s===undefined){rng=seedrandom();}else{rng=seedrandom(s);}}},{key:"state",value:function state(a){// set the state
-if(!this._table[a]){console.error('Warning: state() value is not part of transition table');}this._state=a;}},{key:"next",value:function next(){// if the state is undefined or has no transition in table
+this._table={};}},{key:"train",value:function train(a){if(!Array.isArray(a)){return console.error("Error: train() expected array but received: ".concat(_typeof(a)));}// build a transition table from array of values
+for(var i=1;i<a.length;i++){if(!this._table[a[i-1]]){this._table[a[i-1]]=[a[i]];}else{this._table[a[i-1]].push(a[i]);}}}},{key:"seed",value:function seed(s){// deprecated, seed is now also be set for the global rng
+_seed(s);}},{key:"state",value:function state(a){// set the state
+if(!this._table[a]){console.error("Warning: ".concat(a," is not part of transition table"));}this._state=a;}},{key:"next",value:function next(){// if the state is undefined or has no transition in table
 // randomly choose from all
 if(this._state===undefined||!this._table[this._state]){var states=Object.keys(this._table);this._state=states[Math.floor(rng()*states.length)];}// get probabilities based on state
 var probs=this._table[this._state];// select pseudorandomly next value
-this._state=probs[Math.floor(rng()*probs.length)];return this._state;}},{key:"chain",value:function chain(l){// return an array of values generated with next()
-var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return MarkovChain;}();exports.MarkovChain=MarkovChain;var DeepMarkovChain=/*#__PURE__*/function(){function DeepMarkovChain(data){_classCallCheck(this,DeepMarkovChain);// transition probabilities table
+this._state=probs[Math.floor(rng()*probs.length)];return this._state;}},{key:"chain",value:function chain(){var l=arguments.length>0&&arguments[0]!==undefined?arguments[0]:2;// return an array of values generated with next()
+var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return MarkovChain;}();exports.MarkovChain=MarkovChain;// Initialize a Deep Markov Chain Model (with higher order n)
+// 
+// @get table -> return transition table from Markov
+// @method clear() -> erase the transition table
+// @method train() -> train the markov model
+// 		@param {Array} -> array of values as training data
+//		@param {Int+} -> order of markov analysis
+// @method seed() -> seed the random number generator (global RNG)
+// 		@param {Value} -> any value as random seed (0 = unpredictable seed)
+// @method state() -> set the initial value to start the chain
+// @method next() -> generate the next value based state or set axiom
+// @method chain() -> generate an array of values (default length=2)
+// 
+var DeepMarkovChain=/*#__PURE__*/function(){function DeepMarkovChain(data){_classCallCheck(this,DeepMarkovChain);// transition probabilities table
 this._table=new Map();// train if dataset is provided
 if(data){this.train(data);};// current state of markov chain
-this._state='';// scoped random number generator
-this.rng=seedrandom();}_createClass(DeepMarkovChain,[{key:"table",get:function get(){// return copy of object
-return this._table;}},{key:"clear",value:function clear(){// empty the transition probabilities
-this._table=new Map();}},{key:"train",value:function train(a){var win=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;if(!Array.isArray(a)){return console.error('Error: train() expected array but received:',_typeof(a));}// build a transition table from array of values
-for(var i=0;i<a.length-win;i++){var slice=a.slice(i,i+win);var key=JSON.stringify(slice);var next=a[i+win];if(this._table.has(key)){var arr=this._table.get(key);arr.push(next);this._table.set(key,arr);}else{this._table.set(key,[a[i+win]]);}}}},{key:"seed",value:function seed(s){// set unpredictable seed if 0, null or undefined
-if(s===0||s===null||s===undefined){rng=seedrandom();}else{rng=seedrandom(s);}}},{key:"state",value:function state(a){// set the state
-// stringify the state
-var stringed=JSON.stringify(a);if(!this._table.has(stringed)){console.error('Warning: state() value is not part of transition table');}this._state=stringed;}},{key:"randomState",value:function randomState(){var keys=Array.from(this._table.keys());this._state=keys[Math.floor(rng()*keys.length)];}},{key:"next",value:function next(){// if the state is undefined or has no transition in table
+this._state='';}_createClass(DeepMarkovChain,[{key:"table",get:function get(){// return copy of object
+return new Map(JSON.parse(JSON.stringify(Array.from(this._table))));}},{key:"clear",value:function clear(){// empty the transition probabilities
+this._table=new Map();}},{key:"train",value:function train(a){var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;if(!Array.isArray(a)){return console.error("Error: train() expected array but received: ".concat(_typeof(a)));}if(o<1){return console.error("Error: train() expected order greater then 1 but received ".concat(o));}// build a transition table from array of values
+for(var i=0;i<a.length-o;i++){var slice=a.slice(i,i+o);var key=JSON.stringify(slice);var next=a[i+o];if(this._table.has(key)){var arr=this._table.get(key);arr.push(next);this._table.set(key,arr);}else{this._table.set(key,[a[i+o]]);}}}},{key:"seed",value:function seed(s){// deprecated, seed is now also be set for the global rng
+_seed(s);}},{key:"state",value:function state(a){// stringify the state
+var s=JSON.stringify(a);// set the state
+if(!this._table.has(s)){console.error("Warning: ".concat(a," is not part of transition table"));}this._state=s;}},{key:"randomState",value:function randomState(){var keys=Array.from(this._table.keys());this._state=keys[Math.floor(rng()*keys.length)];}},{key:"next",value:function next(){// if the state is undefined or has no transition in table
 // randomly choose from all
 if(this._state===undefined||!this._table.has(this._state)){this.randomState();}// get probabilities based on state
 var probs=this._table.get(this._state);var newState=probs[Math.floor(rng()*probs.length)];// Now recreate a nice string representation
-var prefix=JSON.parse(this._state);prefix.shift();prefix.push(newState);this._state=JSON.stringify(prefix);return newState;}},{key:"chain",value:function chain(){var l=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;// return an array of values generated with next()
+var prefix=JSON.parse(this._state);prefix.shift();prefix.push(newState);this._state=JSON.stringify(prefix);return newState;}},{key:"chain",value:function chain(){var l=arguments.length>0&&arguments[0]!==undefined?arguments[0]:2;// return an array of values generated with next()
 var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return DeepMarkovChain;}();exports.DeepMarkovChain=DeepMarkovChain;},{"./gen-basic.js":36,"./statistic.js":39,"./utility.js":42,"seedrandom":28}],39:[function(require,module,exports){//=======================================================================
 // statistic.js
 // part of 'total-serialism' Package
