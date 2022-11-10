@@ -22,7 +22,8 @@ const Rand = require('total-serialism').Stochastic;
 - [pick](#pick)
 - [clave](#clave)
 - [expand](#expand)
-- [MarkovChain](#markovchain)
+- [MarkovChain](#markov-chain)
+- [DeepMarkovChain](#deep-markov-chain)
 
 ## seed
 
@@ -335,6 +336,45 @@ markov.next();
 // generate an array of 10 values 
 markov.chain(10);
 // => [ 'f', 'd', 'e', 'g', 'a', 'b', 'g', 'a', 'c', 'e' ]
+
+// clear the model
+markov.clear();
+```
+
+### Deep Markov Chain
+
+This is an identical approach to the [Markov Chain](#markov-chain) while also offering the possibility of training to create n-length chains. In theory, longer chains preserve the original structure of the model, but won't generate as diverse outputs.
+
+```js
+const Rand = require('total-serialism').Stochastic;
+
+var pattern = [1, 2, 3, 4, 5];
+// make a MarkovChain instance and optionally train with array
+let markov = new Rand.MarkovChain(pattern, 2);
+
+// view the transition table (stored as Map())
+// Keys are stored as stringis derived via JSON.stringify()
+console.log(markov.table);
+// {
+// 	'[1,2]' : [3],
+// 	'[2,3]' : [4],
+// 	'[3,4]' : [5],
+// 	'[4,5]' : [6]
+// }
+
+// set the state of the model used as initial value
+markov.state([1, 2]);
+
+// set the seed for the scoped random number generator
+markov.seed(31415);
+
+// go to the next state based on the model probabilities
+markov.next();
+// => [3]
+
+// generate an array of 10 values 
+markov.chain(3);
+// => [[3], [4], [5]]
 
 // clear the model
 markov.clear();

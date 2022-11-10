@@ -407,3 +407,92 @@ class MarkovChain {
 	}
 }
 exports.MarkovChain = MarkovChain;
+
+class DeepMarkovChain {
+	constructor(data){
+		// transition probabilities table
+		this._table = new Map();
+		// train if dataset is provided
+		if (data) { this.train(data) };
+		// current state of markov chain
+		this._state = '';
+		// scoped random number generator
+		this.rng = seedrandom();
+	}
+	get table(){
+		// return copy of object
+		return this._table
+	}
+	clear(){
+		// empty the transition probabilities
+		this._table = new Map();
+	}
+	train(a, win=2){
+		if (!Array.isArray(a)){ 
+			return console.error('Error: train() expected array but received:', typeof a);
+		}
+		// build a transition table from array of values
+		for (let i=0; i < (a.length - win); i++) {
+			let slice = a.slice(i, i+win);
+			let key = JSON.stringify(slice);
+
+			let next = a[i+win]
+
+			if (this._table.has(key)) {
+				let arr = this._table.get(key)
+				arr.push(next)
+				this._table.set(key, arr)
+			} else {
+				this._table.set(key, [a[i+win]])
+			}
+		}
+	}
+	seed(s){
+		// set unpredictable seed if 0, null or undefined
+		if (s === 0 || s === null || s === undefined){
+			rng = seedrandom();
+		} else {
+			rng = seedrandom(s);
+		}
+	}
+	state(a){
+		// set the state
+		// stringify the state
+		let stringed = JSON.stringify(a);
+		if (!this._table.has(stringed)) {
+			console.error('Warning: state() value is not part of transition table');
+		}
+		this._state = stringed;
+	}
+	randomState() {
+		let keys = Array.from(this._table.keys())
+		this._state = keys[Math.floor(rng() * keys.length)]
+	}
+	next(){
+        // if the state is undefined or has no transition in table
+        // randomly choose from all
+		if (this._state === undefined || !this._table.has(this._state)) {
+			this.randomState()
+		}
+		// get probabilities based on state
+		let probs = this._table.get(this._state);
+		let newState = probs[Math.floor(rng() * probs.length)]
+
+		// Now recreate a nice string representation
+		let prefix = JSON.parse(this._state);
+		prefix.shift();
+		prefix.push(newState);
+		this._state = JSON.stringify(prefix);
+
+		return newState;
+	}
+	chain(l=1){
+		// return an array of values generated with next()
+		let c = [];
+		for (let i=0; i<l; i++){
+			c.push(this.next());
+		}
+		return c;
+	}
+}
+exports.DeepMarkovChain = DeepMarkovChain;
