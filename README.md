@@ -23,6 +23,39 @@
 
 # 👾 Newest features
 
+## n-Order Markov Chain
+
+This is an identical approach to the `MarkovChain` while also offering the possibility of training to create n-order chains. In theory, longer chains preserve the original structure of the model, but won't generate as diverse outputs. Thanks to [James Bradbury](https://www.jamesbradbury.net/)
+
+```js
+const Rand = require('total-serialism').Stochastic;
+
+let pattern = [1, 2, 3, 1, 2, 4, 1, 2, 5, 2, 3, 4];
+// make a MarkovChain instance and optionally train with array
+// an optional second argument sets the order of the markov (default=2)
+let markov = new Rand.MarkovChain(pattern, 2);
+
+// view the transition table (stored as Map())
+// Keys are stored as stringis derived via JSON.stringify()
+console.log(markov.table);
+// Map(7) {
+//   '[1,2]' => [ 3, 4, 5 ],
+//   '[2,3]' => [ 1, 4 ],
+//   '[3,1]' => [ 2 ],
+//   '[2,4]' => [ 1 ],
+//   '[4,1]' => [ 2 ],
+//   '[2,5]' => [ 2 ],
+//   '[5,2]' => [ 3 ]
+// }
+
+// set the state of the model used as initial value
+markov.state([1, 2]);
+
+// generate an array of 10 values 
+markov.chain(10);
+// => [ 2, 3, 1, 2, 5, 2, 3, 4, 1, 2 ]
+```
+
 ## Chord progressions
 
 Generate chord progressions as 2d-array's of semitones from an array of Roman Numerals and an optional root note.
@@ -35,19 +68,6 @@ TL.chordsFromNumerals(['I', 'IIm', 'IVsus2', 'V7', 'VIm9'], 'c');
 //     [ 5, 7, 0 ],
 //     [ 7, 11, 2, 5 ],
 //     [ 9, 0, 4, 7, 11 ]] 
-```
-
-## Per Nørgård's Infinity Series
-
-Generate the self-similar infinity series by composer Per Nørgård. Choose the length output, the initial seed (two values as an array) and an optional offset.
-
-```js
-Algo.infinitySeries(16, [0, 1]);
-//=> [
-//    0,  1, -1, 2, 1, 0,
-//   -2,  3, -1, 2, 0, 1,
-//    2, -1, -3, 4
-// ] 
 ```
 
 ## Support for n-dimensional arrays
