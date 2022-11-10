@@ -2660,7 +2660,22 @@ if(!this._table[a]){console.error('Warning: state() value is not part of transit
 if(this._state===undefined||!this._table[this._state]){var states=Object.keys(this._table);this._state=states[Math.floor(rng()*states.length)];}// get probabilities based on state
 var probs=this._table[this._state];// select pseudorandomly next value
 this._state=probs[Math.floor(rng()*probs.length)];return this._state;}},{key:"chain",value:function chain(l){// return an array of values generated with next()
-var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return MarkovChain;}();exports.MarkovChain=MarkovChain;},{"./gen-basic.js":36,"./statistic.js":39,"./utility.js":42,"seedrandom":28}],39:[function(require,module,exports){//=======================================================================
+var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return MarkovChain;}();var DeepMarkovChain=/*#__PURE__*/function(){function DeepMarkovChain(data){_classCallCheck(this,DeepMarkovChain);// transition probabilities table
+this._table=new Map();// train if dataset is provided
+if(data){this.train(data);};// current state of markov chain
+this._state='';// scoped random number generator
+this.rng=seedrandom();}_createClass(DeepMarkovChain,[{key:"table",get:function get(){// return copy of object
+return this._table;}},{key:"clear",value:function clear(){// empty the transition probabilities
+this._table=new Map();}},{key:"train",value:function train(a,win){if(!Array.isArray(a)){return console.error('Error: train() expected array but received:',_typeof(a));}// build a transition table from array of values
+for(var i=0;i<a.length-win;i++){var slice=a.slice(i,i+win);var key=JSON.stringify(slice);var next=a[i+win];if(this._table.has(key)){var arr=this._table.get(key);arr.push(next);this._table.set(key,arr);}else{this._table.set(key,[a[i+win]]);}}}},{key:"seed",value:function seed(s){// set unpredictable seed if 0, null or undefined
+if(s===0||s===null||s===undefined){rng=seedrandom();}else{rng=seedrandom(s);}}},{key:"state",value:function state(a){// set the state
+// stringify the state
+var stringed=JSON.stringify(a);if(!this._table.has(stringed)){console.error('Warning: state() value is not part of transition table');}this._state=stringed;}},{key:"randomState",value:function randomState(){var keys=Array.from(this._table.keys());this._state=keys[Math.floor(rng()*keys.length)];}},{key:"next",value:function next(){// if the state is undefined or has no transition in table
+// randomly choose from all
+if(this._state===undefined||!this._table.has(this._state)){this.randomState();}// get probabilities based on state
+var probs=this._table.get(this._state);var newState=probs[Math.floor(rng()*probs.length)];// Now recreate a nice string representation
+var prefix=JSON.parse(this._state);prefix.shift();prefix.push(newState);this._state=JSON.stringify(prefix);return newState;}},{key:"chain",value:function chain(l){// return an array of values generated with next()
+var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return DeepMarkovChain;}();exports.DeepMarkovChain=DeepMarkovChain;},{"./gen-basic.js":36,"./statistic.js":39,"./utility.js":42,"seedrandom":28}],39:[function(require,module,exports){//=======================================================================
 // statistic.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com

@@ -406,6 +406,7 @@ class MarkovChain {
 		return c;
 	}
 }
+exports.MarkovChain = MarkovChain;
 
 class DeepMarkovChain {
 	constructor(data){
@@ -426,7 +427,7 @@ class DeepMarkovChain {
 		// empty the transition probabilities
 		this._table = new Map();
 	}
-	train(a, win){
+	train(a, win=2){
 		if (!Array.isArray(a)){ 
 			return console.error('Error: train() expected array but received:', typeof a);
 		}
@@ -457,7 +458,7 @@ class DeepMarkovChain {
 	state(a){
 		// set the state
 		// stringify the state
-		let stringed = JSON.stringify(a)
+		let stringed = JSON.stringify(a);
 		if (!this._table.has(stringed)) {
 			console.error('Warning: state() value is not part of transition table');
 		}
@@ -483,9 +484,9 @@ class DeepMarkovChain {
 		prefix.push(newState);
 		this._state = JSON.stringify(prefix);
 
-		return newState
+		return newState;
 	}
-	chain(l){
+	chain(l=1){
 		// return an array of values generated with next()
 		let c = [];
 		for (let i=0; i<l; i++){
