@@ -300,7 +300,7 @@ Rand.expand([0, 9, 7, 3, 5, 0, -1], 30);
 
 ### Markov Chain
 
-Build a Markov Chain from a set of data and use it to generate new values or an array of values based on the probabilities of the transitions in the provided training dataset. A Markov Chain is a model that describes possible next events based on a current state (first order) and sometimes previous states (2nd, 3rd, ... n-order). The Markov Chain is a broadly used method in algorithmic music to generate new material (melodies, rhythms, but even words) based on a set of provided material.
+Build a Markov Chain from a set of datapoints and use it to generate new values or an array of values based on the probabilities of the transitions in the provided training dataset. A Markov Chain is a model that describes possible next events based on a current state (first order) and sometimes previous states (2nd, 3rd, ... n-order). The Markov Chain is a broadly used method in algorithmic music to generate new material (melodies, rhythms, but even words) based on a set of provided material, but can also be used in linguistics to analyze word or sentence structures.
 
 ```js
 const Rand = require('total-serialism').Stochastic;
@@ -326,10 +326,11 @@ console.log(markov.table);
 // set the state of the model used as initial value
 markov.state('c');
 
-// set the seed for the scoped random number generator
-markov.seed(31415);
+// set the seed for the global random number generator
+markov.seed(31415); 
+// same as works with Rand.seed()
 
-// go to the next state based on the model probabilities
+// go to the next state based on the models probabilities
 markov.next();
 // => 'e'
 
@@ -365,8 +366,9 @@ console.log(markov.table);
 // set the state of the model used as initial value
 markov.state([1, 2]);
 
-// set the seed for the scoped random number generator
-markov.seed(31415);
+// set the seed for the global random number generator
+markov.seed(31415); 
+// same as works with Rand.seed()
 
 // go to the next state based on the model probabilities
 markov.next();

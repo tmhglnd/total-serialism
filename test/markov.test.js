@@ -34,6 +34,14 @@ function fullTest(Srl){
 		expect(m.table[6]).toStrictEqual([2, 7]);
 	});
 
+	test("Train with strings", () => {
+		let m = new Rand.MarkovChain(['c', 'e', 'f', 'e', 'g', 'f', 'a', 'c']);
+		m.train(['g', 'a', 'b', 'g', 'a', 'f', 'd', 'e']);
+		m.state('c');
+		m.seed(1618);
+		expect(m.chain(5)).toStrictEqual([ 'e', 'f', 'e', 'f', 'd' ]);
+	});
+
 	test("Generating", () => {
 		let m = new Rand.MarkovChain();
 		m.train([1, 2, 3, 4]);
