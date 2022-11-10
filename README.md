@@ -33,7 +33,7 @@ const Rand = require('total-serialism').Stochastic;
 let pattern = [1, 2, 3, 1, 2, 4, 1, 2, 5, 2, 3, 4];
 // make a MarkovChain instance and optionally train with array
 // an optional second argument sets the order of the markov (default=2)
-let markov = new Rand.MarkovChain(pattern, 2);
+let markov = new Rand.DeepMarkov(pattern, 2);
 
 // view the transition table (stored as Map())
 // Keys are stored as stringis derived via JSON.stringify()

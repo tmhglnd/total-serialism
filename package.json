@@ -1,6 +1,6 @@
 {
   "name": "total-serialism",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "A set of methods for the generation and transformation of number sequences useful in algorithmic composition",
   "main": "index.js",
   "scripts": {

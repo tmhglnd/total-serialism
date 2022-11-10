@@ -344,7 +344,7 @@ markov.clear();
 
 ### Deep Markov Chain
 
-This is an identical approach to the [Markov Chain](#markov-chain) while also offering the possibility of training to create n-length chains. In theory, longer chains preserve the original structure of the model, but won't generate as diverse outputs.
+This is an identical approach to the [Markov Chain](#markov-chain) while also offering the possibility of training to create n-order chains. In theory, longer chains preserve the original structure of the model, but won't generate as diverse outputs.
 
 ```js
 const Rand = require('total-serialism').Stochastic;
@@ -352,7 +352,7 @@ const Rand = require('total-serialism').Stochastic;
 var pattern = [1, 2, 3, 1, 2, 4, 1, 2, 5, 2, 3, 4];
 // make a MarkovChain instance and optionally train with array
 // an optional second argument sets the order of the markov (default=2)
-let markov = new Rand.MarkovChain(pattern, 2);
+let markov = new Rand.DeepMarkov(pattern, 2);
 
 // view the transition table (stored as Map())
 // Keys are stored as stringis derived via JSON.stringify()

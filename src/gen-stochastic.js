@@ -415,7 +415,7 @@ exports.MarkovChain = MarkovChain;
 // @method next() -> generate the next value based state or set axiom
 // @method chain() -> generate an array of values (default length=2)
 // 
-class DeepMarkovChain {
+class DeepMarkov {
 	constructor(data){
 		// transition probabilities table
 		this._table = new Map();
@@ -499,4 +499,5 @@ class DeepMarkovChain {
 		return c;
 	}
 }
-exports.DeepMarkovChain = DeepMarkovChain;
+exports.DeepMarkov = DeepMarkov;
+exports.DeepMarkovChain = DeepMarkov;
