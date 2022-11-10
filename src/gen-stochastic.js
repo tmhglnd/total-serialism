@@ -345,8 +345,6 @@ class MarkovChain {
 		if (data) { this.train(data) };
 		// current state of markov chain
 		this._state;
-		// scoped random number generator
-		this.rng = seedrandom();
 	}
 	get table(){
 		// return copy of object
@@ -370,12 +368,8 @@ class MarkovChain {
 		}
 	}
 	seed(s){
-		// set unpredictable seed if 0, null or undefined
-		if (s === 0 || s === null || s === undefined){
-			rng = seedrandom();
-		} else {
-			rng = seedrandom(s);
-		}
+		// deprecated, seed is now also be set for the global rng
+		seed(s);
 	}
 	state(a){
 		// set the state
@@ -385,11 +379,11 @@ class MarkovChain {
 		this._state = a;
 	}
 	next(){
-        // if the state is undefined or has no transition in table
-        // randomly choose from all
+		// if the state is undefined or has no transition in table
+		// randomly choose from all
 		if (this._state === undefined || !this._table[this._state]){
 			let states = Object.keys(this._table);
-			this._state = states[Math.floor(rng() * states.length)]
+			this._state = states[Math.floor(rng() * states.length)];
 		}
 		// get probabilities based on state
 		let probs = this._table[this._state];
@@ -397,7 +391,7 @@ class MarkovChain {
 		this._state = probs[Math.floor(rng() * probs.length)];
 		return this._state;
 	}
-	chain(l){
+	chain(l=2){
 		// return an array of values generated with next()
 		let c = [];
 		for (let i=0; i<l; i++){
@@ -472,7 +466,7 @@ class DeepMarkovChain {
         // if the state is undefined or has no transition in table
         // randomly choose from all
 		if (this._state === undefined || !this._table.has(this._state)) {
-			this.randomState()
+			this.randomState();
 		}
 		// get probabilities based on state
 		let probs = this._table.get(this._state);
