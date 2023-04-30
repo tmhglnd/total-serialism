@@ -2250,7 +2250,15 @@ len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*pe
 function squareFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var pulse=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0.5;if(lo===undefined){lo=0;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
 periods=Array.isArray(periods)?periods:[periods];// array length minimum of 1
 len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*periods[i%periods.length]%1+1)%1;arr[i]=arr[i]<pulse;}return Util.map(arr,0,1,lo,hi);// return arr;
-}exports.squareFloat=squareFloat;exports.squareF=squareFloat;exports.rectFloat=squareFloat;exports.rectF=squareFloat;function square(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var pulse=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0.5;var arr=squareFloat(len,periods,lo,hi,pulse);return arr.map(function(v){return Math.trunc(v);});}exports.square=square;exports.rect=square;},{"./utility.js":42}],37:[function(require,module,exports){//==============================================================================
+}exports.squareFloat=squareFloat;exports.squareF=squareFloat;exports.rectFloat=squareFloat;exports.rectF=squareFloat;function square(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var pulse=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0.5;var arr=squareFloat(len,periods,lo,hi,pulse);return arr.map(function(v){return Math.trunc(v);});}exports.square=square;exports.rect=square;// Generate a binary rhythm from a positive integer number or an array 
+// of numbers. Returns the binary value as an array of separated 1's and 0's
+// useful for representing rhythmical patterns
+// The mode determines if negative values become absolute or clipped at 0
+// 
+// @param {Int+/Array} -> Array of numbers to convert to binary representation
+// @return {Array} -> Array of 1's and 0's
+//
+function binary(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var m=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;a=Array.isArray(a)?Util.flatten(a):[a];var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])){arr=arr.concat(0);}else{var v=m?Math.floor(Math.abs(a[i])):Math.floor(Math.max(a[i],0));arr=arr.concat(v.toString(2).split('').map(function(x){return Number(x);}));}}return arr;}exports.binary=binary;},{"./utility.js":42}],37:[function(require,module,exports){//==============================================================================
 // gen-complex.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com

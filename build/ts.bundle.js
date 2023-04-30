@@ -7877,6 +7877,29 @@ function square(len=1, periods=1, lo=12, hi, pulse=0.5){
 }
 exports.square = square;
 exports.rect = square;
+
+// Generate a binary rhythm from a positive integer number or an array 
+// of numbers. Returns the binary value as an array of separated 1's and 0's
+// useful for representing rhythmical patterns
+// The mode determines if negative values become absolute or clipped at 0
+// 
+// @param {Int+/Array} -> Array of numbers to convert to binary representation
+// @return {Array} -> Array of 1's and 0's
+//
+function binary(a=0, m=false){
+	a = Array.isArray(a) ? Util.flatten(a) : [a];
+	let arr = [];
+	for (let i=0; i<a.length; i++){
+		if (isNaN(a[i])){
+			arr = arr.concat(0);
+		} else {
+			let v = (m) ? Math.floor(Math.abs(a[i])) : Math.floor(Math.max(a[i], 0));
+			arr = arr.concat(v.toString(2).split('').map((x) => Number(x)));
+		}
+	}
+	return arr;
+}
+exports.binary = binary;
 },{"./utility.js":42}],37:[function(require,module,exports){
 //==============================================================================
 // gen-complex.js

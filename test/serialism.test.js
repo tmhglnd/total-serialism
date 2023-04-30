@@ -1,4 +1,5 @@
 
+const exp = require('constants');
 const fs = require('fs');
 
 // test with different builds
@@ -206,6 +207,18 @@ function testGenerative(){
 	});
 	test("Gen.squareF(8, Gen.sinF(8, 2, 1, 5))", () => {
 		expect(Gen.squareF(8, Gen.sinF(8, 2, 1, 5))).toStrictEqual([1, 0, 0, 1, 1, 1, 1, 0]);
+	});
+	test("Gen.binary(2)", () => {
+		expect(Gen.binary(2)).toStrictEqual([1, 0]);
+	});
+	test("Gen.binary(358)", () => {
+		expect(Gen.binary(358)).toStrictEqual([1, 0, 1, 1, 0, 0, 1, 1, 0]);
+	});
+	test("Gen.binary([4, 3, 5])", () => {
+		expect(Gen.binary([4, 3, 5])).toStrictEqual([1, 0, 0, 1, 1, 1, 0, 1]);
+	});
+	test("Gen.binary([-4, 4], true)", () => {
+		expect(Gen.binary([-4, 4], true)).toStrictEqual([1, 0, 0, 1, 0, 0]);
 	});
 }
 

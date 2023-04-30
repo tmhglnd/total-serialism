@@ -20,6 +20,7 @@ const Gen = require('total-serialism').Generative;
 - [sineFloat / cosineFloat](#sineFloat--cosineFloat)
 - [saw / sawFloat](#saw--sawFloat)
 - [square / squareFloat](#square--squareFloat)
+- [binary](#binary)
 
 ## spread
 
@@ -334,4 +335,25 @@ Gen.squareFloat(30, Gen.sinF(30, 2, 1, 5));
 
 // Alias: Gen.squareF(), Gen.rectFloat(), Gen.rectF()
 
+```
+
+## binary
+
+Generate a binary rhythm from a positive integer number or an array of numbers. Returns the binary value as an array of separated 1's and 0's useful for representing rhythmical patterns The mode determines if negative values become absolute or clipped at 0
+
+**arguments**
+- {Int+/Array} -> Array of numbers to convert to binary representation
+
+```js
+// generate a binary array from a single number
+Gen.binary(358);
+// => [1, 0, 1, 1, 0, 0, 1, 1, 0]
+
+// use an array of numbers and concatenate binary representations
+Gen.binary([4, 3, 5]);
+// => [1, 0, 0, 1, 1, 1, 0, 1]
+
+// set mode to true to make negative numbers absolute
+Gen.binary([-4, 4], true);
+// => [1, 0, 0, 1, 0, 0]
 ```
