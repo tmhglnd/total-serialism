@@ -651,7 +651,7 @@ class Scala {
 		// the converted file to dictionary
 		this.scl = {
 			'description' : 'Divide an octave into 12 equal steps',
-			'size' : 1,
+			'size' : 12,
 			'tune' : 440,
 			'center' :  69,
 			'range' : 1200,

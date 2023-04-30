@@ -23,6 +23,20 @@
 
 # 👾 Newest features
 
+## Binary & Spacing
+
+Generative rhythmical patterns of 1's and 0's by converting a number to binary or using the integer value as spacing between onsets
+
+```js
+const Gen = require('total-serialism').Generative;
+
+Gen.binary(358);
+//=> [1, 0, 1, 1, 0, 0, 1, 1, 0]
+
+Gen.space(2, 3, 2)
+//=> [1, 0, 1, 0, 0, 1, 0]
+```
+
 ## n-Order Markov Chain
 
 This is an identical approach to the `MarkovChain` while also offering the possibility of training to create n-order chains. In theory, longer chains preserve the original structure of the model, but won't generate as diverse outputs. Thanks to [James Bradbury](https://www.jamesbradbury.net/)
@@ -61,6 +75,8 @@ markov.chain(10);
 Generate chord progressions as 2d-array's of semitones from an array of Roman Numerals and an optional root note.
 
 ```js
+const TL = require('total-serialism').Translate;
+
 // Convert a chord progression from roman numerals to semitones
 TL.chordsFromNumerals(['I', 'IIm', 'IVsus2', 'V7', 'VIm9'], 'c');
 // => [[ 0, 4, 7 ],
@@ -75,6 +91,9 @@ TL.chordsFromNumerals(['I', 'IIm', 'IVsus2', 'V7', 'VIm9'], 'c');
 Most of the transform, translate and utility functions now support calculations with n-dimensional arrays.
 
 ```js 
+const TL = require('total-serialism').Translate;
+const Mod = require('total-serialism').Transform;
+
 TL.noteToMidi(['c4', ['eb4', 'g4', 'a4'], ['a3', 'f4']]);
 //=> [ 60, [ 63, 67, 69 ], [ 57, 65 ] ] 
 
@@ -99,6 +118,9 @@ Mod.lookup([0, [1, 1, [2, 3], 0], 2], ['c4', 'e4', 'f4', 'g4']);
 Generate an Elementary Cellular Automaton class. This is an one dimensional array (collection of cells) with states that are either dead or alive (0/1). By following a set of rules the next generation is calculated for every cell based on its neighbouring cells.
 
 ```js 
+const Algo = require('total-serialism').Algorithmic;
+const Rand = require('total-serialism').Stochastic;
+
 let ca = new Algo.Automaton();
 // feed with 40 randomly generated values 0-1
 ca.feed(Rand.coin(40));
@@ -131,8 +153,10 @@ Util.draw(gens);
 Use the `new TL.Scala()` class to import a *.scl* file (Scala tuning format) to work with custom tuning systems apart from the Western 12-TET (Equal Temperament) tuning or use one of the tunings from a database with over 5000 tunings from [Stichting Huygens-Fokker](http://www.huygens-fokker.org/scala/).
 
 ```js
+const { Scala } = require('total-serialism').Translate;
+
 // Create an instance of a Scala class
-let scl = new TL.Scala();
+let scl = new Scala();
 
 scl.scalaToFreq([60, 63, 67, 69, 72, 81, 36, 48]);
 //=> [ 261.63, 311.13, 392.00, 440.00, 523.25, 880.00, 65.41, 130.81 ]
@@ -156,11 +180,13 @@ scl.names;
 Use the `Rand.clave()` to generate binary beats with clave patterns
 
 ```js
-Rand.clave(16, 4);
+const { clave } = require('total-serialism').Stochastic;
+
+clave(16, 4);
 //=> [ 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1 ] 
 //=> █   █ █   █  █ █
 
-Rand.clave(16, 3, 1);
+clave(16, 3, 1);
 //=> [ 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1 ] 
 //=> █  █  ██  █ █  █
 ```
@@ -178,6 +204,8 @@ $ npm install total-serialism
 const Srl = require('total-serialism');
 // subset of library
 const Gen = require('total-serialism').Generative;
+// specific method from one of the libraries
+const { random, drunk } = require('total-serialism').Stochastic;
 ```
 
 ## Import es5 version
@@ -212,9 +240,9 @@ const Rand = TotalSerialism.Stochastic;
 
 The library consists of a few subsets:
 - [`Generative`](docs/generative-methods.md) : Basic methods that generate arrays of number sequences, such as methods that generate an ascending array of numbers evenly spread between a low and high value.
-- [`Algorithmic`](docs/algorithmic-methods.md) : These are also generative methods, but are in general more complex algorithms, such as a euclidean rhythm generation, lindenmayer string expansion, cellular automata, fibonacci sequence, pisano periods and more.
-- [`Stochastic`](docs/stochastic-methods.md) : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (uniformly distributed), rolling a die, flipping a coin and more. Also includes Markov Chain.
-- [`Transform`](docs/transform-methods.md) : Methods that transform the array in some fashion. Think of methods such as reversing, palindrome, duplicating, inversing, interleaving and more.
+- [`Algorithmic`](docs/algorithmic-methods.md) : These are also generative methods, but are in general more complex algorithms, such as a euclidean rhythm generator, lindenmayer string expansion, cellular automaton, fibonacci sequence, pisano periods and more.
+- [`Stochastic`](docs/stochastic-methods.md) : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (uniformly distributed), rolling a die, flipping a coin and more. Also includes a n-order Markov Chain.
+- [`Transform`](docs/transform-methods.md) : Methods that transform arrays. Think of methods such as reversing, palindrome, duplicating, inversing, interleaving and more.
 - [`Statistic`](docs/statistic-methods.md) : A set of methods from Statistics and Probability Theory that allow for analysis of number sequences for statistical purposes. For example getting the average value or the most common value from an array.
 - [`Translate`](docs/translate-methods.md) : Translate between different notation systems and tunings with Scala. For example convert midi values to frequency, or note names to midi integers. Or use a relative semitone notation system and convert to midi. Map values in an Array to a specified scale, and output the relative values in the specified scale, root and octave.
 - [`Utility`](docs/utility-methods.md) : Basic arithmetic and methods necessary to run functions in the libraries above. But can also be of help in your own algorithmic processes.
