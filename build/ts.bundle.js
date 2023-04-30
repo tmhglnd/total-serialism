@@ -380,10 +380,9 @@ exports.getRoot     = Translate.getRoot;
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/chord-type'), require('@tonaljs/core'), require('@tonaljs/pcset')) :
   typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/chord-type', '@tonaljs/core', '@tonaljs/pcset'], factory) :
-  (global = global || self, factory(global.ChordDetect = {}, global.chordType, global.core, global.pcset));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.ChordDetect = {}, global.chordType, global.core, global.pcset));
 }(this, (function (exports, chordType, core, pcset) { 'use strict';
 
-  var NotFound = { weight: 0, name: "" };
   var namedSet = function (notes) {
       var pcToName = notes.reduce(function (record, n) {
           var chroma = core.note(n).chroma;
@@ -409,20 +408,26 @@ exports.getRoot     = Translate.getRoot;
       var tonic = notes[0];
       var tonicChroma = core.note(tonic).chroma;
       var noteName = namedSet(notes);
+      // we need to test all chormas to get the correct baseNote
       var allModes = pcset.modes(notes, false);
-      var found = allModes.map(function (mode, chroma) {
-          var chordName = chordType.get(mode).aliases[0];
-          if (!chordName) {
-              return NotFound;
-          }
-          var baseNote = noteName(chroma);
-          var isInversion = chroma !== tonicChroma;
-          if (isInversion) {
-              return { weight: 0.5 * weight, name: "" + baseNote + chordName + "/" + tonic };
-          }
-          else {
-              return { weight: 1 * weight, name: "" + baseNote + chordName };
-          }
+      var found = [];
+      allModes.forEach(function (mode, index) {
+          // some chords could have the same chroma but different interval spelling
+          var chordTypes = chordType.all().filter(function (chordType) { return chordType.chroma === mode; });
+          chordTypes.forEach(function (chordType) {
+              var chordName = chordType.aliases[0];
+              var baseNote = noteName(index);
+              var isInversion = index !== tonicChroma;
+              if (isInversion) {
+                  found.push({
+                      weight: 0.5 * weight,
+                      name: "" + baseNote + chordName + "/" + tonic,
+                  });
+              }
+              else {
+                  found.push({ weight: 1 * weight, name: "" + baseNote + chordName });
+              }
+          });
       });
       return found;
   }
@@ -440,7 +445,7 @@ exports.getRoot     = Translate.getRoot;
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/core'), require('@tonaljs/pcset')) :
     typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/core', '@tonaljs/pcset'], factory) :
-    (global = global || self, factory(global.ChordType = {}, global.core, global.pcset));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.ChordType = {}, global.core, global.pcset));
 }(this, (function (exports, core, pcset) { 'use strict';
 
     /*! *****************************************************************************
@@ -477,27 +482,36 @@ exports.getRoot     = Translate.getRoot;
      */
     var CHORDS = [
         // ==Major==
-        ["1P 3M 5P", "major", "M "],
-        ["1P 3M 5P 7M", "major seventh", "maj7 Δ ma7 M7 Maj7"],
-        ["1P 3M 5P 7M 9M", "major ninth", "maj9 Δ9"],
-        ["1P 3M 5P 7M 9M 13M", "major thirteenth", "maj13 Maj13"],
+        ["1P 3M 5P", "major", "M ^ "],
+        ["1P 3M 5P 7M", "major seventh", "maj7 Δ ma7 M7 Maj7 ^7"],
+        ["1P 3M 5P 7M 9M", "major ninth", "maj9 Δ9 ^9"],
+        ["1P 3M 5P 7M 9M 13M", "major thirteenth", "maj13 Maj13 ^13"],
         ["1P 3M 5P 6M", "sixth", "6 add6 add13 M6"],
-        ["1P 3M 5P 6M 9M", "sixth/ninth", "6/9 69"],
-        ["1P 3M 5P 7M 11A", "lydian", "maj#4 Δ#4 Δ#11"],
-        ["1P 3M 6m 7M", "major seventh flat sixth", "M7b6"],
+        ["1P 3M 5P 6M 9M", "sixth/ninth", "6/9 69 M69"],
+        ["1P 3M 6m 7M", "major seventh flat sixth", "M7b6 ^7b6"],
+        [
+            "1P 3M 5P 7M 11A",
+            "major seventh sharp eleventh",
+            "maj#4 Δ#4 Δ#11 M7#11 ^7#11 maj7#11",
+        ],
         // ==Minor==
         // '''Normal'''
         ["1P 3m 5P", "minor", "m min -"],
         ["1P 3m 5P 7m", "minor seventh", "m7 min7 mi7 -7"],
-        ["1P 3m 5P 7M", "minor/major seventh", "m/ma7 m/maj7 mM7 mMaj7 m/M7 -Δ7 mΔ"],
-        ["1P 3m 5P 6M", "minor sixth", "m6"],
-        ["1P 3m 5P 7m 9M", "minor ninth", "m9"],
-        ["1P 3m 5P 7m 9M 11P", "minor eleventh", "m11"],
-        ["1P 3m 5P 7m 9M 13M", "minor thirteenth", "m13"],
+        [
+            "1P 3m 5P 7M",
+            "minor/major seventh",
+            "m/ma7 m/maj7 mM7 mMaj7 m/M7 -Δ7 mΔ -^7",
+        ],
+        ["1P 3m 5P 6M", "minor sixth", "m6 -6"],
+        ["1P 3m 5P 7m 9M", "minor ninth", "m9 -9"],
+        ["1P 3m 5P 7M 9M", "minor/major ninth", "mM9 mMaj9 -^9"],
+        ["1P 3m 5P 7m 9M 11P", "minor eleventh", "m11 -11"],
+        ["1P 3m 5P 7m 9M 13M", "minor thirteenth", "m13 -13"],
         // '''Diminished'''
         ["1P 3m 5d", "diminished", "dim ° o"],
         ["1P 3m 5d 7d", "diminished seventh", "dim7 °7 o7"],
-        ["1P 3m 5d 7m", "half-diminished", "m7b5 ø"],
+        ["1P 3m 5d 7m", "half-diminished", "m7b5 ø -7b5 h7 h"],
         // ==Dominant/Seventh==
         // '''Normal'''
         ["1P 3M 5P 7m", "dominant seventh", "7 dom"],
@@ -509,38 +523,47 @@ exports.getRoot     = Translate.getRoot;
         ["1P 3M 5P 7m 9A", "dominant sharp ninth", "7#9"],
         ["1P 3M 7m 9m", "altered", "alt7"],
         // '''Suspended'''
-        ["1P 4P 5P", "suspended fourth", "sus4"],
+        ["1P 4P 5P", "suspended fourth", "sus4 sus"],
         ["1P 2M 5P", "suspended second", "sus2"],
-        ["1P 4P 5P 7m", "suspended fourth seventh", "7sus4"],
+        ["1P 4P 5P 7m", "suspended fourth seventh", "7sus4 7sus"],
         ["1P 5P 7m 9M 11P", "eleventh", "11"],
-        ["1P 4P 5P 7m 9m", "suspended fourth flat ninth", "b9sus phryg"],
+        [
+            "1P 4P 5P 7m 9m",
+            "suspended fourth flat ninth",
+            "b9sus phryg 7b9sus 7b9sus4",
+        ],
         // ==Other==
         ["1P 5P", "fifth", "5"],
-        ["1P 3M 5A", "augmented", "aug + +5"],
-        ["1P 3M 5A 7M", "augmented seventh", "maj7#5 maj7+5 +maj7"],
-        ["1P 3M 5P 7M 9M 11A", "major sharp eleventh (lydian)", "maj9#11 Δ9#11"],
+        ["1P 3M 5A", "augmented", "aug + +5 ^#5"],
+        ["1P 3m 5A", "minor augmented", "m#5 -#5 m+"],
+        ["1P 3M 5A 7M", "augmented seventh", "maj7#5 maj7+5 +maj7 ^7#5"],
+        [
+            "1P 3M 5P 7M 9M 11A",
+            "major sharp eleventh (lydian)",
+            "maj9#11 Δ9#11 ^9#11",
+        ],
         // ==Legacy==
         ["1P 2M 4P 5P", "", "sus24 sus4add9"],
-        ["1P 3M 13m", "", "Mb6"],
         ["1P 3M 5A 7M 9M", "", "maj9#5 Maj9#5"],
-        ["1P 3M 5A 7m", "", "7#5 +7 7aug aug7"],
-        ["1P 3M 5A 7m 9A", "", "7#5#9 7alt"],
+        ["1P 3M 5A 7m", "", "7#5 +7 7+ 7aug aug7"],
+        ["1P 3M 5A 7m 9A", "", "7#5#9 7#9#5 7alt"],
         ["1P 3M 5A 7m 9M", "", "9#5 9+"],
         ["1P 3M 5A 7m 9M 11A", "", "9#5#11"],
-        ["1P 3M 5A 7m 9m", "", "7#5b9"],
+        ["1P 3M 5A 7m 9m", "", "7#5b9 7b9#5"],
         ["1P 3M 5A 7m 9m 11A", "", "7#5b9#11"],
         ["1P 3M 5A 9A", "", "+add#9"],
         ["1P 3M 5A 9M", "", "M#5add9 +add9"],
         ["1P 3M 5P 6M 11A", "", "M6#11 M6b5 6#11 6b5"],
         ["1P 3M 5P 6M 7M 9M", "", "M7add13"],
         ["1P 3M 5P 6M 9M 11A", "", "69#11"],
+        ["1P 3m 5P 6M 9M", "", "m69 -69"],
         ["1P 3M 5P 6m 7m", "", "7b6"],
         ["1P 3M 5P 7M 9A 11A", "", "maj7#9#11"],
         ["1P 3M 5P 7M 9M 11A 13M", "", "M13#11 maj13#11 M13+4 M13#4"],
         ["1P 3M 5P 7M 9m", "", "M7b9"],
         ["1P 3M 5P 7m 11A 13m", "", "7#11b13 7b5b13"],
         ["1P 3M 5P 7m 13M", "", "7add6 67 7add13"],
-        ["1P 3M 5P 7m 9A 11A", "", "7#9#11 7b5#9"],
+        ["1P 3M 5P 7m 9A 11A", "", "7#9#11 7b5#9 7#9b5"],
         ["1P 3M 5P 7m 9A 11A 13M", "", "13#9#11"],
         ["1P 3M 5P 7m 9A 11A 13m", "", "7#9#11b13"],
         ["1P 3M 5P 7m 9A 13M", "", "13#9"],
@@ -548,7 +571,7 @@ exports.getRoot     = Translate.getRoot;
         ["1P 3M 5P 7m 9M 11A", "", "9#11 9+4 9#4"],
         ["1P 3M 5P 7m 9M 11A 13M", "", "13#11 13+4 13#4"],
         ["1P 3M 5P 7m 9M 11A 13m", "", "9#11b13 9b5b13"],
-        ["1P 3M 5P 7m 9m 11A", "", "7b9#11 7b5b9"],
+        ["1P 3M 5P 7m 9m 11A", "", "7b9#11 7b5b9 7b9b5"],
         ["1P 3M 5P 7m 9m 11A 13M", "", "13b9#11"],
         ["1P 3M 5P 7m 9m 11A 13m", "", "7b9b13#11 7b9#11b13 7b5b9b13"],
         ["1P 3M 5P 7m 9m 13M", "", "13b9"],
@@ -568,11 +591,8 @@ exports.getRoot     = Translate.getRoot;
         ["1P 3M 7m 9M 13M", "", "13no5"],
         ["1P 3M 7m 9M 13m", "", "9b13"],
         ["1P 3m 4P 5P", "", "madd4"],
-        ["1P 3m 5A", "", "m#5 m+ mb6"],
-        ["1P 3m 5P 6M 9M", "", "m69"],
         ["1P 3m 5P 6m 7M", "", "mMaj7b6"],
         ["1P 3m 5P 6m 7M 9M", "", "mMaj9b6"],
-        ["1P 3m 5P 7M 9M", "", "mMaj9"],
         ["1P 3m 5P 7m 11P", "", "m7add11 m7add4"],
         ["1P 3m 5P 9M", "", "madd9"],
         ["1P 3m 5d 6M 7M", "", "o7M7"],
@@ -580,7 +600,7 @@ exports.getRoot     = Translate.getRoot;
         ["1P 3m 6m 7M", "", "mb6M7"],
         ["1P 3m 6m 7m", "", "m7#5"],
         ["1P 3m 6m 7m 9M", "", "m9#5"],
-        ["1P 3m 6m 7m 9M 11P", "", "m11A"],
+        ["1P 3m 5A 7m 9M 11P", "", "m11A"],
         ["1P 3m 6m 9m", "", "mb6b9"],
         ["1P 2M 3m 5d 7m", "", "m9b5"],
         ["1P 4P 5A 7M", "", "M7#5sus4"],
@@ -714,7 +734,7 @@ exports.getRoot     = Translate.getRoot;
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/chord-detect'), require('@tonaljs/chord-type'), require('@tonaljs/core'), require('@tonaljs/pcset'), require('@tonaljs/scale-type')) :
     typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/chord-detect', '@tonaljs/chord-type', '@tonaljs/core', '@tonaljs/pcset', '@tonaljs/scale-type'], factory) :
-    (global = global || self, factory(global.Chord = {}, global.chordDetect, global.chordType, global.core, global.pcset, global.scaleType));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Chord = {}, global.chordDetect, global.chordType, global.core, global.pcset, global.scaleType));
 }(this, (function (exports, chordDetect, chordType, core, pcset, scaleType) { 'use strict';
 
     /*! *****************************************************************************
@@ -835,14 +855,23 @@ exports.getRoot     = Translate.getRoot;
         if (!root.empty && !rootDegree) {
             return NoChord;
         }
+        var intervals = Array.from(type.intervals);
+        for (var i = 1; i < rootDegree; i++) {
+            var num = intervals[0][0];
+            var quality = intervals[0][1];
+            var newNum = parseInt(num, 10) + 7;
+            intervals.push("" + newNum + quality);
+            intervals.shift();
+        }
         var notes = tonic.empty
             ? []
-            : type.intervals.map(function (i) { return core.transpose(tonic, i); });
+            : intervals.map(function (i) { return core.transpose(tonic, i); });
         typeName = type.aliases.indexOf(typeName) !== -1 ? typeName : type.aliases[0];
-        var symbol = "" + (tonic.empty ? "" : tonic.pc) + typeName + (root.empty ? "" : "/" + root.pc);
-        var name = "" + (optionalTonic ? tonic.pc + " " : "") + type.name + (optionalRoot ? " over " + root.pc : "");
+        var symbol = "" + (tonic.empty ? "" : tonic.pc) + typeName + (root.empty || rootDegree <= 1 ? "" : "/" + root.pc);
+        var name = "" + (optionalTonic ? tonic.pc + " " : "") + type.name + (rootDegree > 1 && optionalRoot ? " over " + root.pc : "");
         return __assign(__assign({}, type), { name: name,
-            symbol: symbol, type: type.name, root: root.name, rootDegree: rootDegree, tonic: tonic.name, notes: notes });
+            symbol: symbol, type: type.name, root: root.name, intervals: intervals,
+            rootDegree: rootDegree, tonic: tonic.name, notes: notes });
     }
     var chord = core.deprecate("Chord.chord", "Chord.get", get);
     /**
@@ -2720,7 +2749,7 @@ exports.getRoot     = Translate.getRoot;
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/chord'), require('@tonaljs/core'), require('@tonaljs/roman-numeral')) :
   typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/chord', '@tonaljs/core', '@tonaljs/roman-numeral'], factory) :
-  (global = global || self, factory(global.Progression = {}, global.chord, global.core, global.romanNumeral));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Progression = {}, global.chord, global.core, global.romanNumeral));
 }(this, (function (exports, chord, core, romanNumeral) { 'use strict';
 
   /**
@@ -2764,14 +2793,14 @@ exports.getRoot     = Translate.getRoot;
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/collection'), require('@tonaljs/midi')) :
   typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/collection', '@tonaljs/midi'], factory) :
-  (global = global || self, factory(global.Range = {}, global.collection, global.midi));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Range = {}, global.collection, global.midi));
 }(this, (function (exports, collection, midi) { 'use strict';
 
   /**
    * Create a numeric range. You supply a list of notes or numbers and it will
    * be connected to create complex ranges.
    *
-   * @param {Array} array - the list of notes or numbers used
+   * @param {Array} notes - the list of notes or midi numbers used
    * @return {Array} an array of numbers or empty array if not valid parameters
    *
    * @example
@@ -2796,13 +2825,14 @@ exports.getRoot     = Translate.getRoot;
    * Create a range of chromatic notes. The altered notes will use flats.
    *
    * @function
-   * @param {String|Array} list - the list of notes or midi note numbers
+   * @param {Array} notes - the list of notes or midi note numbers to create a range from
+   * @param {Object} options - The same as `midiToNoteName` (`{ sharps: boolean, pitchClass: boolean }`)
    * @return {Array} an array of note names
    *
    * @example
-   * Range.chromatic("C2 E2 D2") // => ["C2", "Db2", "D2", "Eb2", "E2", "Eb2", "D2"]
+   * Range.chromatic(["C2, "E2", "D2"]) // => ["C2", "Db2", "D2", "Eb2", "E2", "Eb2", "D2"]
    * // with sharps
-   * Range.chromatic("C2 C3", true) // => [ "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", "A2", "A#2", "B2", "C3" ]
+   * Range.chromatic(["C2", "C3"], { sharps: true }) // => [ "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", "A2", "A#2", "B2", "C3" ]
    */
   function chromatic(notes, options) {
       return numeric(notes).map(function (midi$1) { return midi.midiToNoteName(midi$1, options); });
@@ -2996,7 +3026,7 @@ exports.getRoot     = Translate.getRoot;
         ["1P 2m 3M 4A 5P 6m 7M", "double harmonic lydian"],
         ["1P 2M 3m 4P 5P 6m 7M", "harmonic minor"],
         [
-            "1P 2m 3m 3M 5d 6m 7m",
+            "1P 2m 3m 4d 5d 6m 7m",
             "altered",
             "super locrian",
             "diminished whole tone",
@@ -3070,7 +3100,12 @@ exports.getRoot     = Translate.getRoot;
         ["1P 2M 3m 4P 5d 6m 6M 7M", "diminished", "whole-half diminished"],
         ["1P 2M 3M 4P 5d 5P 6M 7M", "ichikosucho"],
         ["1P 2M 3m 4P 5P 6m 6M 7M", "minor six diminished"],
-        ["1P 2m 3m 3M 4A 5P 6M 7m", "half-whole diminished", "dominant diminished", "messiaen's mode #2"],
+        [
+            "1P 2m 3m 3M 4A 5P 6M 7m",
+            "half-whole diminished",
+            "dominant diminished",
+            "messiaen's mode #2",
+        ],
         ["1P 3m 3M 4P 5P 6M 7m 7M", "kafi raga"],
         ["1P 2M 3M 4P 4A 5A 6A 7M", "messiaen's mode #6"],
         // 9-note scales
@@ -3176,7 +3211,7 @@ exports.getRoot     = Translate.getRoot;
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/chord-type'), require('@tonaljs/collection'), require('@tonaljs/core'), require('@tonaljs/note'), require('@tonaljs/pcset'), require('@tonaljs/scale-type')) :
     typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/chord-type', '@tonaljs/collection', '@tonaljs/core', '@tonaljs/note', '@tonaljs/pcset', '@tonaljs/scale-type'], factory) :
-    (global = global || self, factory(global.Scale = {}, global.chordType, global.collection, global.core, global.note, global.pcset, global.scaleType));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Scale = {}, global.chordType, global.collection, global.core, global.note, global.pcset, global.scaleType));
 }(this, (function (exports, chordType, collection, core, note, pcset, scaleType) { 'use strict';
 
     /*! *****************************************************************************
@@ -3364,6 +3399,33 @@ exports.getRoot     = Translate.getRoot;
         })
             .filter(function (x) { return x[0]; });
     }
+    function getNoteNameOf(scale) {
+        var names = Array.isArray(scale) ? scaleNotes(scale) : get(scale).notes;
+        var chromas = names.map(function (name) { return core.note(name).chroma; });
+        return function (noteOrMidi) {
+            var height = typeof noteOrMidi === "number" ? noteOrMidi : core.note(noteOrMidi).height;
+            if (height === undefined)
+                return undefined;
+            var chroma = height % 12;
+            var oct = Math.floor(height / 12) - 1;
+            var position = chromas.indexOf(chroma);
+            if (position === -1)
+                return undefined;
+            return names[position] + oct;
+        };
+    }
+    function rangeOf(scale) {
+        var getName = getNoteNameOf(scale);
+        return function (fromNote, toNote) {
+            var from = core.note(fromNote).height;
+            var to = core.note(toNote).height;
+            if (from === undefined || to === undefined)
+                return [];
+            return collection.range(from, to)
+                .map(getName)
+                .filter(function (x) { return x; });
+        };
+    }
     var index = {
         get: get,
         names: names,
@@ -3373,6 +3435,7 @@ exports.getRoot     = Translate.getRoot;
         scaleChords: scaleChords,
         scaleNotes: scaleNotes,
         tokenize: tokenize,
+        rangeOf: rangeOf,
         // deprecated
         scale: scale,
     };
@@ -3382,6 +3445,7 @@ exports.getRoot     = Translate.getRoot;
     exports.get = get;
     exports.modeNames = modeNames;
     exports.names = names;
+    exports.rangeOf = rangeOf;
     exports.reduced = reduced;
     exports.scale = scale;
     exports.scaleChords = scaleChords;
@@ -3659,10 +3723,10 @@ exports.getRoot     = Translate.getRoot;
   'use strict';
 
 /*
- *      bignumber.js v9.0.2
+ *      bignumber.js v9.1.1
  *      A JavaScript library for arbitrary-precision arithmetic.
  *      https://github.com/MikeMcl/bignumber.js
- *      Copyright (c) 2021 Michael Mclaughlin <M8ch88l@gmail.com>
+ *      Copyright (c) 2022 Michael Mclaughlin <M8ch88l@gmail.com>
  *      MIT Licensed.
  *
  *      BigNumber.prototype methods     |  BigNumber methods
@@ -5363,7 +5427,7 @@ exports.getRoot     = Translate.getRoot;
 
         // The sign of the result of pow when x is negative depends on the evenness of n.
         // If +n overflows to ±Infinity, the evenness of n would be not be known.
-        y = new BigNumber(Math.pow(+valueOf(x), nIsBig ? 2 - isOdd(n) : +valueOf(n)));
+        y = new BigNumber(Math.pow(+valueOf(x), nIsBig ? n.s * (2 - isOdd(n)) : +valueOf(n)));
         return m ? y.mod(m) : y;
       }
 
@@ -5664,7 +5728,12 @@ exports.getRoot     = Translate.getRoot;
       }
 
       // x < y? Point xc to the array of the bigger number.
-      if (xLTy) t = xc, xc = yc, yc = t, y.s = -y.s;
+      if (xLTy) {
+        t = xc;
+        xc = yc;
+        yc = t;
+        y.s = -y.s;
+      }
 
       b = (j = yc.length) - (i = xc.length);
 
@@ -5818,7 +5887,14 @@ exports.getRoot     = Translate.getRoot;
       ycL = yc.length;
 
       // Ensure xc points to longer array and xcL to its length.
-      if (xcL < ycL) zc = xc, xc = yc, yc = zc, i = xcL, xcL = ycL, ycL = i;
+      if (xcL < ycL) {
+        zc = xc;
+        xc = yc;
+        yc = zc;
+        i = xcL;
+        xcL = ycL;
+        ycL = i;
+      }
 
       // Initialise the result array with zeros.
       for (i = xcL + ycL, zc = []; i--; zc.push(0));
@@ -5939,7 +6015,12 @@ exports.getRoot     = Translate.getRoot;
       b = yc.length;
 
       // Point xc to the longer array, and b to the shorter length.
-      if (a - b < 0) t = yc, yc = xc, xc = t, b = a;
+      if (a - b < 0) {
+        t = yc;
+        yc = xc;
+        xc = t;
+        b = a;
+      }
 
       // Only start adding at yc.length - 1 as the further digits of xc can be ignored.
       for (a = 0; b;) {
@@ -6225,7 +6306,12 @@ exports.getRoot     = Translate.getRoot;
           intDigits = isNeg ? intPart.slice(1) : intPart,
           len = intDigits.length;
 
-        if (g2) i = g1, g1 = g2, g2 = i, len -= i;
+        if (g2) {
+          i = g1;
+          g1 = g2;
+          g2 = i;
+          len -= i;
+        }
 
         if (g1 > 0 && len > 0) {
           i = len % g1 || g1;
@@ -7702,11 +7788,16 @@ exports.spreadIncExp = spreadInclusiveExp;
 // fill an array with values. Arguments are pairs.
 // Every pair consists of <value, amount>
 // The value is repeated n-amount times in the list
+// Also accepts an array as a single argument
 // 
 // @params {value0, amount0, value1, amount1, ... value-n, amount-n}
 // @return {Array}
 // 
 function fill(...args){
+	// also accepts a single array as argument containing the pairs
+	if (args.length === 1){
+		args = args[0];
+	}
 	// when arguments uneven strip last argument
 	if (args.length % 2){ args.pop(); }
 	// when no arguments return array of 0
@@ -7888,7 +7979,7 @@ exports.rect = square;
 function binary(...a){
 	if (!a.length) { return [0]; }
 	a = Util.flatten(a);
-	
+
 	let arr = [];
 	for (let i=0; i<a.length; i++){
 		if (isNaN(a[i])){
@@ -10325,7 +10416,7 @@ class Scala {
 		// the converted file to dictionary
 		this.scl = {
 			'description' : 'Divide an octave into 12 equal steps',
-			'size' : 1,
+			'size' : 12,
 			'tune' : 440,
 			'center' :  69,
 			'range' : 1200,
@@ -10687,26 +10778,19 @@ function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 	return a * (outHi - outLo) + outLo;
 }
 
-// Interpolate / mix between 2 values
+// Lerp (Linear interpolation) two values or arrays
+// Both sides can be a single value or an array
+// Set the interpolation factor as third argument
 // 
-// @param {Number} -> value 1
-// @param {Number} -> value 2
-// @param {Number} -> interpolation factor (0-1, optional, default=0.5)
-// @return {Number}
+// @param {Number/Array} -> input 1 to be mixed
+// @param {Number/Array} -> input 2 to be mixed
+// @param {Number} -> interpolation factor (optional, default=0.5)
+// @return {Number/Array}
 // 
-// function mix(arr0, arr1=[0], f=0.5){
-// 	arr1 = (Array.isArray())? arr1 : [arr1];
-// 	// if (!Array.isArray(arr0) && !Array.isArray(arr1)){
-// 	// 	return _mix(arr0, arr1, f);
-// 	// }
-// }
-// exports.mix = mix;
-// exports.interpolate = mix;
-
-function _mix(a0, a1, f=0.5, mode='linear'){
-	return a0 * (1-f) + a1 * f;
+function lerp(a=0, v=0, f=0.5){
+	return arrayCalc(a, v, (a, b) => { return a * (1 - f) + b * f });
 }
-exports.lerp = _mix;
+exports.lerp = lerp;
 
 // add 1 or more values to an array, 
 // preserves listlength of first argument

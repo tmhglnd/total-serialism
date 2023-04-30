@@ -19,7 +19,7 @@ fullTest(TS);
 TS = require(es5build);
 
 // and run full test with es5.min.js build;
-// fullTest(TS);
+fullTest(TS);
 
 /*
 	Test criteria:
