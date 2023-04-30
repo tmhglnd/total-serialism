@@ -136,16 +136,20 @@ Gen.spreadInclusiveExpFloat();
 
 ## fill
 
-Fill an array with values. Arguments are in pairs. Every pair consists of `<value, amount>` The value is repeated n-amount of times in the array.
+Fill an array with values. Arguments are in pairs. Every pair consists of `<value, amount>` The value is repeated n-amount of times in the array. Also accepts an array as a single argument containing the pairs.
 
 **arguments**
 - {Value} -> value to duplicate
 - {Int+} -> amount of duplicates
 - ... -> repeat n-times
+- {Array} -> array containing value/amount pairs
 
 ```js
 // fill an array with duplicates of a value
 Gen.fill(10, 2, 15, 3, 20, 4); 
+//=> [ 10, 10, 15, 15, 15, 20, 20, 20, 20 ]
+
+Gen.fill([10, 2, 15, 3, 20, 4]);
 //=> [ 10, 10, 15, 15, 15, 20, 20, 20, 20 ]
 ```
 

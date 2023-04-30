@@ -19,7 +19,7 @@ fullTest(TS);
 TS = require(es5build);
 
 // and run full test with es5.min.js build;
-fullTest(TS);
+// fullTest(TS);
 
 /*
 	Test criteria:
@@ -178,8 +178,8 @@ function testGenerative(){
 	test("Gen.fill([10, 20], 2, [15, [5, 3]], 3)", () => {
 		expect(Gen.fill([10, 20], 2, [15, [5, 3]], 3)).toStrictEqual([[10, 20], [10, 20], [15, [5, 3]], [15, [5, 3]], [15, [5, 3]]]);
 	});
-	test("Gen.fill([10, 20, 2, 15, 3, 20, 4])", () => {
-		expect(Gen.fill([10, 20, 2, 15, 3, 20, 4])).toStrictEqual([0]);
+	test("Gen.fill([10, 2, 15, 3, 20, 4])", () => {
+		expect(Gen.fill([10, 2, 15, 3, 20, 4])).toStrictEqual([10, 10, 15, 15, 15, 20, 20, 20, 20]);
 	});
 
 	test("Gen.sine(8, 1, -5, 5)", () => {

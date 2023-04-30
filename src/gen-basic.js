@@ -181,11 +181,16 @@ exports.spreadIncExp = spreadInclusiveExp;
 // fill an array with values. Arguments are pairs.
 // Every pair consists of <value, amount>
 // The value is repeated n-amount times in the list
+// Also accepts an array as a single argument
 // 
 // @params {value0, amount0, value1, amount1, ... value-n, amount-n}
 // @return {Array}
 // 
 function fill(...args){
+	// also accepts a single array as argument containing the pairs
+	if (args.length === 1){
+		args = args[0];
+	}
 	// when arguments uneven strip last argument
 	if (args.length % 2){ args.pop(); }
 	// when no arguments return array of 0
@@ -367,7 +372,7 @@ exports.rect = square;
 function binary(...a){
 	if (!a.length) { return [0]; }
 	a = Util.flatten(a);
-	
+
 	let arr = [];
 	for (let i=0; i<a.length; i++){
 		if (isNaN(a[i])){
