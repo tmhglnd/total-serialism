@@ -360,22 +360,50 @@ exports.rect = square;
 // Generate a binary rhythm from a positive integer number or an array 
 // of numbers. Returns the binary value as an array of separated 1's and 0's
 // useful for representing rhythmical patterns
-// The mode determines if negative values become absolute or clipped at 0
 // 
 // @param {Int+/Array} -> Array of numbers to convert to binary representation
 // @return {Array} -> Array of 1's and 0's
 //
-function binary(a=0, m=false){
-	a = Array.isArray(a) ? Util.flatten(a) : [a];
+function binary(...a){
+	if (!a.length) { return [0]; }
+	a = Util.flatten(a);
+	
 	let arr = [];
 	for (let i=0; i<a.length; i++){
 		if (isNaN(a[i])){
 			arr = arr.concat(0);
 		} else {
-			let v = (m) ? Math.floor(Math.abs(a[i])) : Math.floor(Math.max(a[i], 0));
+			let v = Math.floor(Math.max(a[i], 0));
 			arr = arr.concat(v.toString(2).split('').map((x) => Number(x)));
 		}
 	}
 	return arr;
 }
 exports.binary = binary;
+
+// Generate an array of 1's and 0's based on a positive integer number or array
+// Every number in the array will be replaced by a 1 with a specified amount of 
+// 0's appended to it. Eg. a 2 => 1 0, a 4 => 1 0 0 0, etc. This technique is
+// useful to generate a rhythm based on spacing length between onsets
+//
+// @param {Int+/Array} -> Array of numbers to convert to spaced rhythm
+// @return {Array} -> Array of 1's and 0's representing a rhythm
+//
+function spacing(...a){
+	if (!a.length) { return [0]; }
+	a = Util.flatten(a);
+
+	let arr = [];
+	for (let i=0; i<a.length; i++){
+		if (isNaN(a[i]) || a[i] < 1){
+			arr = arr.concat(0);
+		} else {
+			for (let j=0; j<Math.floor(a[i]); j++){
+				arr.push(!j ? 1 : 0);
+			}
+		}
+	}
+	return arr;
+}
+exports.space = spacing;
+exports.spacing = spacing;

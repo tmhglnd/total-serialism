@@ -2253,12 +2253,19 @@ len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*pe
 }exports.squareFloat=squareFloat;exports.squareF=squareFloat;exports.rectFloat=squareFloat;exports.rectF=squareFloat;function square(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var pulse=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0.5;var arr=squareFloat(len,periods,lo,hi,pulse);return arr.map(function(v){return Math.trunc(v);});}exports.square=square;exports.rect=square;// Generate a binary rhythm from a positive integer number or an array 
 // of numbers. Returns the binary value as an array of separated 1's and 0's
 // useful for representing rhythmical patterns
-// The mode determines if negative values become absolute or clipped at 0
 // 
 // @param {Int+/Array} -> Array of numbers to convert to binary representation
 // @return {Array} -> Array of 1's and 0's
 //
-function binary(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var m=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;a=Array.isArray(a)?Util.flatten(a):[a];var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])){arr=arr.concat(0);}else{var v=m?Math.floor(Math.abs(a[i])):Math.floor(Math.max(a[i],0));arr=arr.concat(v.toString(2).split('').map(function(x){return Number(x);}));}}return arr;}exports.binary=binary;},{"./utility.js":42}],37:[function(require,module,exports){//==============================================================================
+function binary(){for(var _len2=arguments.length,a=new Array(_len2),_key2=0;_key2<_len2;_key2++){a[_key2]=arguments[_key2];}if(!a.length){return[0];}a=Util.flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])){arr=arr.concat(0);}else{var v=Math.floor(Math.max(a[i],0));arr=arr.concat(v.toString(2).split('').map(function(x){return Number(x);}));}}return arr;}exports.binary=binary;// Generate an array of 1's and 0's based on a positive integer number or array
+// Every number in the array will be replaced by a 1 with a specified amount of 
+// 0's appended to it. Eg. a 2 => 1 0, a 4 => 1 0 0 0, etc. This technique is
+// useful to generate a rhythm based on spacing length between onsets
+//
+// @param {Int+/Array} -> Array of numbers to convert to spaced rhythm
+// @return {Array} -> Array of 1's and 0's representing a rhythm
+//
+function spacing(){for(var _len3=arguments.length,a=new Array(_len3),_key3=0;_key3<_len3;_key3++){a[_key3]=arguments[_key3];}if(!a.length){return[0];}a=Util.flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])||a[i]<1){arr=arr.concat(0);}else{for(var j=0;j<Math.floor(a[i]);j++){arr.push(!j?1:0);}}}return arr;}exports.space=spacing;exports.spacing=spacing;},{"./utility.js":42}],37:[function(require,module,exports){//==============================================================================
 // gen-complex.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2790,7 +2797,7 @@ var Stat=require('./statistic');var Util=require('./utility');// Duplicate an ar
 // @param {Int, Int2, ... Int-n} -> amount of clones with integer offset
 // 								 -> or string concatenation
 // 
-function clone(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];for(var _len2=arguments.length,c=new Array(_len2>1?_len2-1:0),_key2=1;_key2<_len2;_key2++){c[_key2-1]=arguments[_key2];}a=Array.isArray(a)?a:[a];// flatten clone array if multi-dimensional
+function clone(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];for(var _len4=arguments.length,c=new Array(_len4>1?_len4-1:0),_key4=1;_key4<_len4;_key4++){c[_key4-1]=arguments[_key4];}a=Array.isArray(a)?a:[a];// flatten clone array if multi-dimensional
 if(!c.length){return a;}else{c=Util.flatten(c);}var arr=[];var _loop=function _loop(i){arr=arr.concat(a.map(function(v){return Util.add(v,c[i]);}));};for(var i=0;i<c.length;i++){_loop(i);}return arr;}exports.clone=clone;// combine arrays into one array
 // multiple arrays as arguments possible
 // 
@@ -2857,7 +2864,7 @@ function invert(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array}
 //  
-function lace(){for(var _len3=arguments.length,args=new Array(_len3),_key3=0;_key3<_len3;_key3++){args[_key3]=arguments[_key3];}if(!args.length){return[0];}var l=0;for(var _i4=0;_i4<args.length;_i4++){args[_i4]=Array.isArray(args[_i4])?args[_i4]:[args[_i4]];l=Math.max(args[_i4].length,l);}var arr=[];for(var i=0;i<l;i++){for(var k=0;k<args.length;k++){var v=args[k][i];if(v!==undefined){arr.push(v);}}}return arr;}exports.lace=lace;exports.zip=lace;// Build an array of items based on another array of indeces 
+function lace(){for(var _len5=arguments.length,args=new Array(_len5),_key5=0;_key5<_len5;_key5++){args[_key5]=arguments[_key5];}if(!args.length){return[0];}var l=0;for(var _i4=0;_i4<args.length;_i4++){args[_i4]=Array.isArray(args[_i4])?args[_i4]:[args[_i4]];l=Math.max(args[_i4].length,l);}var arr=[];for(var i=0;i<l;i++){for(var k=0;k<args.length;k++){var v=args[k][i];if(v!==undefined){arr.push(v);}}}return arr;}exports.lace=lace;exports.zip=lace;// Build an array of items based on another array of indeces 
 // The values are wrapped within the length of the lookup array
 // Works with n-dimensional arrays by applying a recursive lookup
 // 
@@ -2872,7 +2879,7 @@ function lookup(){var idx=arguments.length>0&&arguments[0]!==undefined?arguments
 // @params {Array0, Array1, ..., Array-n} -> Arrays to merge
 // @return {Array}
 // 
-function merge(){for(var _len4=arguments.length,args=new Array(_len4),_key4=0;_key4<_len4;_key4++){args[_key4]=arguments[_key4];}if(!args.length){return[0];}var l=0;for(var i=0;i<args.length;i++){args[i]=Array.isArray(args[i])?args[i]:[args[i]];l=Math.max(args[i].length,l);}var arr=[];for(var _i5=0;_i5<l;_i5++){var a=[];for(var k=0;k<args.length;k++){var v=args[k][_i5];if(v!==undefined){if(Array.isArray(v))a.push.apply(a,_toConsumableArray(v));else a.push(v);}}arr[_i5]=a;}return arr;}exports.merge=merge;// reverse an array and concatenate to the input
+function merge(){for(var _len6=arguments.length,args=new Array(_len6),_key6=0;_key6<_len6;_key6++){args[_key6]=arguments[_key6];}if(!args.length){return[0];}var l=0;for(var i=0;i<args.length;i++){args[i]=Array.isArray(args[i])?args[i]:[args[i]];l=Math.max(args[i].length,l);}var arr=[];for(var _i5=0;_i5<l;_i5++){var a=[];for(var k=0;k<args.length;k++){var v=args[k][_i5];if(v!==undefined){if(Array.isArray(v))a.push.apply(a,_toConsumableArray(v));else a.push(v);}}arr[_i5]=a;}return arr;}exports.merge=merge;// reverse an array and concatenate to the input
 // creating a palindrome of the array
 // 
 // @param {Array} -> array to make palindrome of
@@ -3372,7 +3379,7 @@ if(!Array.isArray(a)){return _fold(a,lo,hi);}return a.map(function(x){return fol
 // @param {Number} -> exponent (optional, default=1)
 // @return {Number/Array}
 // 
-function map(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;for(var _len5=arguments.length,params=new Array(_len5>1?_len5-1:0),_key5=1;_key5<_len5;_key5++){params[_key5-1]=arguments[_key5];}if(!Array.isArray(a)){return _map.apply(void 0,[a].concat(params));}return a.map(function(x){return map.apply(void 0,[x].concat(params));});}exports.map=map;exports.scale=map;function _map(a){var inLo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var inHi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var outLo=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var outHi=arguments.length>4&&arguments[4]!==undefined?arguments[4]:1;var exp=arguments.length>5&&arguments[5]!==undefined?arguments[5]:1;a=(a-inLo)/(inHi-inLo);if(exp!=1){var sign=a>=0.0?1:-1;a=Math.pow(Math.abs(a),exp)*sign;}return a*(outHi-outLo)+outLo;}// Interpolate / mix between 2 values
+function map(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;for(var _len7=arguments.length,params=new Array(_len7>1?_len7-1:0),_key7=1;_key7<_len7;_key7++){params[_key7-1]=arguments[_key7];}if(!Array.isArray(a)){return _map.apply(void 0,[a].concat(params));}return a.map(function(x){return map.apply(void 0,[x].concat(params));});}exports.map=map;exports.scale=map;function _map(a){var inLo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var inHi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var outLo=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var outHi=arguments.length>4&&arguments[4]!==undefined?arguments[4]:1;var exp=arguments.length>5&&arguments[5]!==undefined?arguments[5]:1;a=(a-inLo)/(inHi-inLo);if(exp!=1){var sign=a>=0.0?1:-1;a=Math.pow(Math.abs(a),exp)*sign;}return a*(outHi-outLo)+outLo;}// Interpolate / mix between 2 values
 // 
 // @param {Number} -> value 1
 // @param {Number} -> value 2

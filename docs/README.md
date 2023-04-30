@@ -12,6 +12,8 @@
 	- [sineFloat / cosineFloat](./generative-methods.md#sineFloat--cosineFloat)
 	- [saw / sawFloat](./generative-methods.md#saw--sawFloat)
 	- [square / squareFloat](./generative-methods.md#square--squareFloat)
+	- [binary](./generative-methods.md#binary)
+	- [space](./generative-methods.md#space)
 - [Algorithmic Methods](./algorithmic-methods.md)
 	- [euclid](./algorithmic-methods.md#euclid)
 	- [fastEuclid](./algorithmic-methods.md#fastEuclid)
