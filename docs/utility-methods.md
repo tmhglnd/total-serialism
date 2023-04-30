@@ -148,7 +148,13 @@ Lerp (linear interpolation) two values or arrays. Both sides can be a single val
 - {Number} -> interpolation factor (optional, default=0.5)
 
 ```js
+Util.lerp(2, 10, 0.5)
+//=> 6
 
+Util.lerp([-2, 4, 6], [10, 20, 30], 0.5)
+//=> [4, 12, 18]
+
+// Alias: mix
 ```
 
 # Arithmetic

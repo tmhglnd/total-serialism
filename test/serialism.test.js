@@ -30,45 +30,6 @@ fullTest(TS);
 	- test for strings vs numbers
 */
 
-// Util.plot(Gen.saw(20, 4), { height: 10, data: false, plot: false });
-// Util.plot(Gen.saw(35, Gen.sineFloat(35, 1, 2, 4)), { height: 10 });
-
-// console.log(Util.plot(Gen.saw(30, 1), { height: 10}));
-// console.log(Util.plot(Gen.saw(30, 1), { height: 10 }));
-
-// var markov = new Rand.MarkovChain();
-// var set = [0, 1, 1, 2, 1, 3, 2, 3, 1, 3, 0];
-// var set2 = [0, 7, 5, 7, 7, 9, 3, 3, 5, 0, 0, 1];
-
-// var melody = ['c', 'e', 'f', 'e', 'g', 'f', 'a', 'c'];
-// var melody2 = ['g', 'a', 'g', 'a', 'f', 'd', 'e', 'b'];
-
-// // train with an array of values
-// markov.train(melody);
-// // add more to the training
-// markov.train(melody2);
-// console.log(markov.table);
-// // var mark2 = new Rand.MarkovChain(markov.table);
-// // console.log('chain 2', mark2.table);
-// // markov.state(2);
-// markov.state('c');
-// // markov.seed(58392);
-// markov.seed(31415);
-// console.log(markov.next());
-// console.log('result', markov.chain(10));
-
-// markov.clear();
-// console.log(markov.table);
-
-// let arr = Algo.euclid(8, 5);
-// let arr2 = Rand.clave(8);
-// console.log(arr);
-// console.log(arr2);
-// console.log(Mod.merge(arr, arr2));
-// console.log(Mod.lace(arr, arr2));
-
-// fullTest();
-
 function fullTest(Srl){
 	Gen = Srl.Generative;
 	Algo = Srl.Algorithmic;

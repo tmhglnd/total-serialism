@@ -131,6 +131,7 @@ function lerp(a=0, v=0, f=0.5){
 	return arrayCalc(a, v, (a, b) => { return a * (1 - f) + b * f });
 }
 exports.lerp = lerp;
+exports.mix = lerp;
 
 // add 1 or more values to an array, 
 // preserves listlength of first argument
