@@ -1248,7 +1248,16 @@ function testUtility(){
 	test("Util.mod([4, [9, [16, 25], 144]], [5, 3])", () => {
 		expect(Util.mod([4, [9, [16, 25], 144]], [5, 3])).toStrictEqual([ 4, [ 0, [ 1, 1 ], 0 ] ]);
 	});
-	
+
+	test("Util.lerp()", () => {
+		expect(Util.lerp()).toStrictEqual(0);
+	});
+	test("Util.lerp()", () => {
+		expect(Util.lerp(2, 10, 0.5)).toStrictEqual(6);
+	});
+	test("Util.lerp()", () => {
+		expect(Util.lerp([-2, 4, 6], [10, 20, 30], 0.5)).toStrictEqual([4, 12, 18]);
+	});
 
 	test("Util.sum([1, 2, 3, 4])", () => {
 		expect(Util.sum([1, 2, 3, 4])).toStrictEqual(10);

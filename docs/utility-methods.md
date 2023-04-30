@@ -14,6 +14,7 @@ const Util = require('total-serialism').Utility;
 - [constrain](#constrain)
 - [fold](#fold)
 - [scale](#scale)
+- [lerp](#lerp)
 - [add](#add)
 - [subtract](#subtract)
 - [multiply](#multiply)
@@ -137,6 +138,19 @@ Util.mod([-2, [4, [3, 7]]], 5);
 //=> [ 3, [ 4, [ 3, 2 ] ] ]
 ```
 
+## lerp
+
+Lerp (linear interpolation) two values or arrays. Both sides can be a single value or an array. Set the interpolation factor as third argument.
+
+**arguments**
+- {Number/Array} -> input 1 to be mixed
+- {Number/Array} -> input 2 to be mixed
+- {Number} -> interpolation factor (optional, default=0.5)
+
+```js
+
+```
+
 # Arithmetic
 
 Basic arithmetic methods that accept n-dimensional arrays in both arguments. Outputlength is always the length of the longest list. 
@@ -215,13 +229,11 @@ Evaluate a function for a multi-dimensional array. Input the left and righthand 
 - {Function} -> function to Evaluate
 
 ```js 
-
 Util.arrayCalc([0, 1, [2, 3]], [[5, 7], 10], (a,b) => { return (a+b)/2 });
 //=> [ [ 2.5, 3.5 ], 5.5, [ 3.5, 5 ] ]
 
 Util.arrayCalc([10, 2, 1, 5], [4, 9, 7, 3], (a,b) => { return Math.max(a,b) });
 //=> [ 10, 9, 7, 5 ] 
-
 ```
 
 ## sum

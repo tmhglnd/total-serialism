@@ -118,26 +118,19 @@ function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 	return a * (outHi - outLo) + outLo;
 }
 
-// Interpolate / mix between 2 values
+// Lerp (Linear interpolation) two values or arrays
+// Both sides can be a single value or an array
+// Set the interpolation factor as third argument
 // 
-// @param {Number} -> value 1
-// @param {Number} -> value 2
-// @param {Number} -> interpolation factor (0-1, optional, default=0.5)
-// @return {Number}
+// @param {Number/Array} -> input 1 to be mixed
+// @param {Number/Array} -> input 2 to be mixed
+// @param {Number} -> interpolation factor (optional, default=0.5)
+// @return {Number/Array}
 // 
-// function mix(arr0, arr1=[0], f=0.5){
-// 	arr1 = (Array.isArray())? arr1 : [arr1];
-// 	// if (!Array.isArray(arr0) && !Array.isArray(arr1)){
-// 	// 	return _mix(arr0, arr1, f);
-// 	// }
-// }
-// exports.mix = mix;
-// exports.interpolate = mix;
-
-function _mix(a0, a1, f=0.5, mode='linear'){
-	return a0 * (1-f) + a1 * f;
+function lerp(a=0, v=0, f=0.5){
+	return arrayCalc(a, v, (a, b) => { return a * (1 - f) + b * f });
 }
-exports.lerp = _mix;
+exports.lerp = lerp;
 
 // add 1 or more values to an array, 
 // preserves listlength of first argument
