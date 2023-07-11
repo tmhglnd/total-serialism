@@ -380,7 +380,10 @@ function testAlgorithmic(){
 
 function testStochastic(){
 	test("Rand.seed(19374)", () => {
-		expect(Rand.seed(19374)).toBe(undefined);
+		expect(Rand.seed(19374)).toBe(19374);
+	});
+	test("Rand.getSeed()", () => {
+		expect(Rand.getSeed()).toBe(19374);
 	});
 	test("Rand.randomFloat(3, -1, 1)", () => {
 		expect(Rand.randomFloat(3, -1, 1)).toStrictEqual([ 0.6291111850577886, 0.15153786227276944, 0.32814801081039646 ]);

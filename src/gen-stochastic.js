@@ -20,8 +20,9 @@ const Stat = require('./statistic.js');
 // require seedrandom package
 let seedrandom = require('seedrandom');
 
-// local pseudorandom number generator
+// local pseudorandom number generator and seed storage
 let rng = seedrandom();
+let _seed = 0;
 
 // Set the seed for all the Random Number Generators. 
 // 0 sets to unpredictable seeding
@@ -32,11 +33,24 @@ let rng = seedrandom();
 function seed(v=0){
 	if (v === 0 || v === null || v === undefined){
 		rng = seedrandom();
+		_seed = 0;
 	} else {
 		rng = seedrandom(v);
+		_seed = v;
 	}
+	// also return the seed that has been set
+	return getSeed();
 }
 exports.seed = seed;
+
+// Return the seed that was set
+//
+// @return {Value} -> the seed
+//
+function getSeed(){
+	return _seed;
+}
+exports.getSeed = getSeed;
 
 // generate a list of random float values 
 // between a certain specified range (excluding high val)

@@ -7992,6 +7992,7 @@ function binary(...a){
 	return arr;
 }
 exports.binary = binary;
+exports.binaryBeat = binary;
 
 // Generate an array of 1's and 0's based on a positive integer number or array
 // Every number in the array will be replaced by a 1 with a specified amount of 
@@ -8019,6 +8020,7 @@ function spacing(...a){
 }
 exports.space = spacing;
 exports.spacing = spacing;
+exports.spacingBeat = spacing;
 },{"./utility.js":42}],37:[function(require,module,exports){
 //==============================================================================
 // gen-complex.js
@@ -8608,8 +8610,9 @@ const Stat = require('./statistic.js');
 // require seedrandom package
 let seedrandom = require('seedrandom');
 
-// local pseudorandom number generator
+// local pseudorandom number generator and seed storage
 let rng = seedrandom();
+let _seed = 0;
 
 // Set the seed for all the Random Number Generators. 
 // 0 sets to unpredictable seeding
@@ -8620,11 +8623,24 @@ let rng = seedrandom();
 function seed(v=0){
 	if (v === 0 || v === null || v === undefined){
 		rng = seedrandom();
+		_seed = 0;
 	} else {
 		rng = seedrandom(v);
+		_seed = v;
 	}
+	// also return the seed that has been set
+	return getSeed();
 }
 exports.seed = seed;
+
+// Return the seed that was set
+//
+// @return {Value} -> the seed
+//
+function getSeed(){
+	return _seed;
+}
+exports.getSeed = getSeed;
 
 // generate a list of random float values 
 // between a certain specified range (excluding high val)
@@ -10791,6 +10807,7 @@ function lerp(a=0, v=0, f=0.5){
 	return arrayCalc(a, v, (a, b) => { return a * (1 - f) + b * f });
 }
 exports.lerp = lerp;
+exports.mix = lerp;
 
 // add 1 or more values to an array, 
 // preserves listlength of first argument

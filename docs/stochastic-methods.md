@@ -11,6 +11,7 @@ const Rand = require('total-serialism').Stochastic;
 # Methods
 
 - [seed](#seed)
+- [getSeed](#getSeed)
 - [random](#random)
 - [drunk](#drunk)
 - [coin](#coin)
@@ -27,11 +28,21 @@ const Rand = require('total-serialism').Stochastic;
 
 ## seed
 
-Set the seed for the Random Number Genrators. A value of `0` sets to unpredictable seeding. The seed can only be set **once** for every import of the library.
+Set the seed for the Random Number Genrators. A value of `0` sets to unpredictable seeding. The seed can only be set **once** for every import of the library. However, seed can be reset between function calls.
 
 ```js
 // set the random number generator seed
 Rand.seed(19374);
+```
+
+## getSeed
+
+Get the seed from the Random Number Generator. Returns the value that was latest set with `seed()`.
+
+```js
+// get the random number generator seed
+Rand.getSeed();
+// => 19374
 ```
 
 ## random

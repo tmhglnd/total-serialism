@@ -20,7 +20,7 @@ const Gen = require('total-serialism').Generative;
 - [sineFloat / cosineFloat](#sineFloat--cosineFloat)
 - [saw / sawFloat](#saw--sawFloat)
 - [square / squareFloat](#square--squareFloat)
-- [binary](#binary)
+- [binaryBeat](#binaryBeat)
 - [spacing](#spacing)
 
 ## spread
@@ -342,7 +342,7 @@ Gen.squareFloat(30, Gen.sinF(30, 2, 1, 5));
 
 ```
 
-## binary
+## binaryBeat
 
 Generate a binary rhythm from a positive integer number or an array of numbers. Returns the binary value as an array of separated 1's and 0's useful for representing rhythmical patterns.
 
@@ -351,19 +351,21 @@ Generate a binary rhythm from a positive integer number or an array of numbers. 
 
 ```js
 // generate a binary array from a single number
-Gen.binary(358);
+Gen.binaryBeat(358);
 //=> [1, 0, 1, 1, 0, 0, 1, 1, 0]
 
 // use an array of numbers and concatenate binary representations
-Gen.binary([4, 3, 5]);
+Gen.binaryBeat([4, 3, 5]);
 //=> [1, 0, 0, 1, 1, 1, 0, 1]
 
 // negative values are clipped to 0
-Gen.binary([-4, 4]);
+Gen.binaryBeat([-4, 4]);
 //=> [0, 1, 0, 0]
+
+// Alias: binary
 ```
 
-## space
+## spacingBeat
 
 Generate an array of 1's and 0's based on a positive integer number or array. Every number in the array will be replaced by a 1 with a specified amount of 0's appended to it. Eg. a 2 => 1 0, a 4 => 1 0 0 0, etc. This technique is useful to generate a rhythm based on spacing length between onsets
 
@@ -372,12 +374,12 @@ Generate an array of 1's and 0's based on a positive integer number or array. Ev
 
 ```js
 // generate a rhythm based on numbered spacings
-Gen.space(2, 3, 2)
+Gen.spacingBeat(2, 3, 2)
 //=> [1, 0, 1, 0, 0, 1, 0]
 
 // also works with an array as input
-Gen.space([4, 2, 0])
+Gen.spacingBeat([4, 2, 0])
 //=> [1, 0, 0, 0, 1, 0, 0]
 
-// Alias: spacing
+// Alias: space, spacing
 ```

@@ -385,6 +385,7 @@ function binary(...a){
 	return arr;
 }
 exports.binary = binary;
+exports.binaryBeat = binary;
 
 // Generate an array of 1's and 0's based on a positive integer number or array
 // Every number in the array will be replaced by a 1 with a specified amount of 
@@ -412,3 +413,4 @@ function spacing(...a){
 }
 exports.space = spacing;
 exports.spacing = spacing;
+exports.spacingBeat = spacing;

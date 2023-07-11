@@ -2262,7 +2262,7 @@ len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*pe
 // @param {Int+/Array} -> Array of numbers to convert to binary representation
 // @return {Array} -> Array of 1's and 0's
 //
-function binary(){for(var _len2=arguments.length,a=new Array(_len2),_key2=0;_key2<_len2;_key2++){a[_key2]=arguments[_key2];}if(!a.length){return[0];}a=Util.flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])){arr=arr.concat(0);}else{var v=Math.floor(Math.max(a[i],0));arr=arr.concat(v.toString(2).split('').map(function(x){return Number(x);}));}}return arr;}exports.binary=binary;// Generate an array of 1's and 0's based on a positive integer number or array
+function binary(){for(var _len2=arguments.length,a=new Array(_len2),_key2=0;_key2<_len2;_key2++){a[_key2]=arguments[_key2];}if(!a.length){return[0];}a=Util.flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])){arr=arr.concat(0);}else{var v=Math.floor(Math.max(a[i],0));arr=arr.concat(v.toString(2).split('').map(function(x){return Number(x);}));}}return arr;}exports.binary=binary;exports.binaryBeat=binary;// Generate an array of 1's and 0's based on a positive integer number or array
 // Every number in the array will be replaced by a 1 with a specified amount of 
 // 0's appended to it. Eg. a 2 => 1 0, a 4 => 1 0 0 0, etc. This technique is
 // useful to generate a rhythm based on spacing length between onsets
@@ -2270,7 +2270,7 @@ function binary(){for(var _len2=arguments.length,a=new Array(_len2),_key2=0;_key
 // @param {Int+/Array} -> Array of numbers to convert to spaced rhythm
 // @return {Array} -> Array of 1's and 0's representing a rhythm
 //
-function spacing(){for(var _len3=arguments.length,a=new Array(_len3),_key3=0;_key3<_len3;_key3++){a[_key3]=arguments[_key3];}if(!a.length){return[0];}a=Util.flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])||a[i]<1){arr=arr.concat(0);}else{for(var j=0;j<Math.floor(a[i]);j++){arr.push(!j?1:0);}}}return arr;}exports.space=spacing;exports.spacing=spacing;},{"./utility.js":42}],37:[function(require,module,exports){//==============================================================================
+function spacing(){for(var _len3=arguments.length,a=new Array(_len3),_key3=0;_key3<_len3;_key3++){a[_key3]=arguments[_key3];}if(!a.length){return[0];}a=Util.flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])||a[i]<1){arr=arr.concat(0);}else{for(var j=0;j<Math.floor(a[i]);j++){arr.push(!j?1:0);}}}return arr;}exports.space=spacing;exports.spacing=spacing;exports.spacingBeat=spacing;},{"./utility.js":42}],37:[function(require,module,exports){//==============================================================================
 // gen-complex.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2512,14 +2512,19 @@ var c={};for(var i=0;i<8;i++){c[(7-i).toString(2).padStart(3,'0')]=Number(r[i]);
 //=======================================================================
 // require Generative methods
 var Gen=require('./gen-basic.js');var Util=require('./utility.js');var Stat=require('./statistic.js');// require seedrandom package
-var seedrandom=require('seedrandom');// local pseudorandom number generator
-var rng=seedrandom();// Set the seed for all the Random Number Generators. 
+var seedrandom=require('seedrandom');// local pseudorandom number generator and seed storage
+var rng=seedrandom();var _seed=0;// Set the seed for all the Random Number Generators. 
 // 0 sets to unpredictable seeding
 // 
 // @param {Number/String} -> the seed
 // @return {Void}
 // 
-function _seed(){var v=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;if(v===0||v===null||v===undefined){rng=seedrandom();}else{rng=seedrandom(v);}}exports.seed=_seed;// generate a list of random float values 
+function _seed2(){var v=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;if(v===0||v===null||v===undefined){rng=seedrandom();_seed=0;}else{rng=seedrandom(v);_seed=v;}// also return the seed that has been set
+return getSeed();}exports.seed=_seed2;// Return the seed that was set
+//
+// @return {Value} -> the seed
+//
+function getSeed(){return _seed;}exports.getSeed=getSeed;// generate a list of random float values 
 // between a certain specified range (excluding high val)
 // 
 // @param {Int} -> number of values to output
@@ -2673,7 +2678,7 @@ this._state;}_createClass(MarkovChain,[{key:"table",get:function get(){// return
 return _objectSpread({},this._table);}},{key:"clear",value:function clear(){// empty the transition probabilities
 this._table={};}},{key:"train",value:function train(a){if(!Array.isArray(a)){return console.error("Error: train() expected array but received: ".concat(_typeof(a)));}// build a transition table from array of values
 for(var i=1;i<a.length;i++){if(!this._table[a[i-1]]){this._table[a[i-1]]=[a[i]];}else{this._table[a[i-1]].push(a[i]);}}}},{key:"seed",value:function seed(s){// deprecated, seed is now also be set for the global rng
-_seed(s);}},{key:"state",value:function state(a){// set the state
+_seed2(s);}},{key:"state",value:function state(a){// set the state
 if(!this._table[a]){console.error("Warning: ".concat(a," is not part of transition table"));}this._state=a;}},{key:"next",value:function next(){// if the state is undefined or has no transition in table
 // randomly choose from all
 if(this._state===undefined||!this._table[this._state]){var states=Object.keys(this._table);this._state=states[Math.floor(rng()*states.length)];}// get probabilities based on state
@@ -2699,7 +2704,7 @@ this._state='';}_createClass(DeepMarkov,[{key:"table",get:function get(){// retu
 return new Map(JSON.parse(JSON.stringify(Array.from(this._table))));}},{key:"clear",value:function clear(){// empty the transition probabilities
 this._table=new Map();}},{key:"train",value:function train(a){var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;if(!Array.isArray(a)){return console.error("Error: train() expected array but received: ".concat(_typeof(a)));}if(o<1){return console.error("Error: train() expected order greater then 1 but received ".concat(o));}// build a transition table from array of values
 for(var i=0;i<a.length-o;i++){var slice=a.slice(i,i+o);var key=JSON.stringify(slice);var next=a[i+o];if(this._table.has(key)){var arr=this._table.get(key);arr.push(next);this._table.set(key,arr);}else{this._table.set(key,[a[i+o]]);}}}},{key:"seed",value:function seed(s){// deprecated, seed is now also be set for the global rng
-_seed(s);}},{key:"state",value:function state(a){// stringify the state
+_seed2(s);}},{key:"state",value:function state(a){// stringify the state
 var s=JSON.stringify(a);// set the state
 if(!this._table.has(s)){console.error("Warning: ".concat(a," is not part of transition table"));}this._state=s;}},{key:"randomState",value:function randomState(){var keys=Array.from(this._table.keys());this._state=keys[Math.floor(rng()*keys.length)];}},{key:"next",value:function next(){// if the state is undefined or has no transition in table
 // randomly choose from all
@@ -3393,7 +3398,7 @@ function map(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0
 // @param {Number} -> interpolation factor (optional, default=0.5)
 // @return {Number/Array}
 // 
-function lerp(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var f=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0.5;return arrayCalc(a,v,function(a,b){return a*(1-f)+b*f;});}exports.lerp=lerp;// add 1 or more values to an array, 
+function lerp(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var f=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0.5;return arrayCalc(a,v,function(a,b){return a*(1-f)+b*f;});}exports.lerp=lerp;exports.mix=lerp;// add 1 or more values to an array, 
 // preserves listlength of first argument
 // arguments are applied sequentially
 // 
