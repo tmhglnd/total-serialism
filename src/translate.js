@@ -20,8 +20,8 @@ const { Progression } = require('@tonaljs/tonal');
 const ToneSet = require('../data/tones.json');
 const chromaSet = { c:0, d:2, e:4, f:5, g:7, a:9, b:11 };
 
-const Mod = require('./transform.js');
-const Util = require('./utility.js');
+const { unique } = require('./transform');
+const { add, wrap, multiply, toArray } = require('./utility');
 
 // create a mapping list of scales for 12-TET from Tonal
 let Scales = {};
@@ -392,7 +392,7 @@ exports.toScale = mapToScale;
 // @return {Array/Int} -> mapped midi values
 // 
 function mapToMidi(a=[0], o=4){
-	return Util.add(relativeToMidi(mapToScale(a), o), notation.rootInt);
+	return add(relativeToMidi(mapToScale(a), o), notation.rootInt);
 }
 exports.mapToMidi = mapToMidi;
 exports.toMidi = mapToMidi;
@@ -418,7 +418,7 @@ exports.toFreq = mapToFreq;
 // @return {Number/Array} -> cents output
 // 
 function ratioToCent(a=['1/1']){
-	a = Array.isArray(a)? a : [a];
+	a = toArray(a);
 	return a.map(x => {
 		if (Array.isArray(x)){
 			return ratioToCent(x);
@@ -464,7 +464,7 @@ function chordsFromNumerals(a=['i'], n='c'){
 	// make array if not array and flatten
 	a = Array.isArray(a)? a.flat(Infinity) : [a];
 	// check if n is notename
-	n = isNaN(n)? n : midiToNote(Util.wrap(n));
+	n = isNaN(n)? n : midiToNote(wrap(n));
 	// generate progression of chord names
 	let p = Progression.fromRomanNumerals(n, a);
 	// translate chordnames to semitones
@@ -492,7 +492,7 @@ function chordsFromNames(a=['c']){
 			console.log(`Invalid chord name generated from numeral: ${a}`);
 			return [0];
 		}
-		return Util.wrap(chromaToRelative(ch.notes));
+		return wrap(chromaToRelative(ch.notes));
 	}
 	return a.map(c => chordsFromNames(c));
 }
@@ -524,7 +524,7 @@ function ratioToMs(a=[1], bpm){
 	if (bpm){
 		measureMs = 60000 / Math.max(1, Number(bpm)) * 4;
 	}
-	return Util.multiply(a, measureMs);
+	return multiply(a, measureMs);
 }
 exports.ratioToMs = ratioToMs;
 exports.rtoms = ratioToMs;
@@ -536,7 +536,7 @@ exports.rtoms = ratioToMs;
 // @return {Number/Array}
 //
 function divisionToRatio(a=['1']){
-	a = Array.isArray(a)? a : [a];
+	a = toArray(a);
 	return a.map(x => {
 		if (Array.isArray(x)){
 			return divisionToRatio(x);
@@ -565,7 +565,7 @@ function divRatio(x){
 function divisionToTicks(a=['1']){
 	// 1 tick = 1/480th of a quarter note, 
 	// 1 bar = 1920 ticks
-	return Util.multiply(divisionToRatio(a), 1920);
+	return multiply(divisionToRatio(a), 1920);
 }
 exports.divisionToTicks = divisionToTicks;
 exports.dtotk = divisionToTicks;
@@ -579,7 +579,7 @@ exports.rtotk = divisionToTicks;
 // @return {Array}
 // 
 function timevalueToRatio(a=['1n']){
-	a = Array.isArray(a)? a : [a];
+	a = toArray(a);
 	return a.map(x => {
 		if (Array.isArray(x)){
 			return timevalueToRatio(x);
@@ -608,7 +608,7 @@ exports.ttoms = timevalueToMs;
 // @return {Array}
 // 
 function timevalueToTicks(a=['1n']){
-	return Util.multiply(timevalueToRatio(a), 1920);
+	return multiply(timevalueToRatio(a), 1920);
 }
 exports.timevalueToTicks = timevalueToTicks;
 exports.ttotk = timevalueToTicks;
@@ -787,7 +787,7 @@ class Scala {
 						tmpCents.push(result[scl]['range']);
 						// filter duplicates
 						
-						tmpCents = Mod.unique(tmpCents).map(x => x.toFixed(f.decimals));
+						tmpCents = unique(tmpCents).map(x => x.toFixed(f.decimals));
 
 						for (let i in s){
 							// for all entered cent/ratio values

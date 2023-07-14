@@ -24,8 +24,8 @@
 // 
 //==============================================================================
 
-const Util = require('./utility.js');
-const Transform = require('./transform.js');
+const { mod } = require('./utility');
+const { rotate } = require('./transform');
 const BigNumber = require('bignumber.js');
 
 // configure the bignumber settings
@@ -75,7 +75,7 @@ function fastEuclid(s=8, h=4, r=0){
 		d = v;
 	}
 	if (r){
-		return Transform.rotate(arr, r);
+		return rotate(arr, r);
 	}
 	return arr;
 }
@@ -111,7 +111,7 @@ function euclid(steps=8, beats=4, rot=0){
     counts.push(divisor);
 	build(level);
 
-	return Transform.rotate(pattern, rot - pattern.indexOf(1));
+	return rotate(pattern, rot - pattern.indexOf(1));
 }
 exports.euclid = euclid;
 
@@ -197,7 +197,7 @@ exports.collatz = collatz;
 // @param {Int+} -> modulus
 // 
 function collatzMod(n=12, m=2){
-	return Util.mod(collatz(n), Math.min(m, Math.floor(m)));
+	return mod(collatz(n), Math.min(m, Math.floor(m)));
 }
 exports.collatzMod = collatzMod;
 

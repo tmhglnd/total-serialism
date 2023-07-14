@@ -1224,7 +1224,7 @@ function testUtility(){
 	});
 
 	test("Util.toArray()", () => {
-		expect(Util.toArray()).toStrictEqual([0]);
+		expect(Util.toArray()).toStrictEqual([undefined]);
 	});
 	test("Util.toArray(1)", () => {
 		expect(Util.toArray(1)).toStrictEqual([1]);

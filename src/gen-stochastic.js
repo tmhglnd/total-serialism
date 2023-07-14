@@ -13,9 +13,9 @@
 //=======================================================================
 
 // require Generative methods
-const Gen = require('./gen-basic.js');
-const Util = require('./utility.js');
-const Stat = require('./statistic.js');
+const { spread } = require('./gen-basic.js');
+const { fold } = require('./utility');
+const { change } = require('./statistic');
 
 // require seedrandom package
 let seedrandom = require('seedrandom');
@@ -115,7 +115,7 @@ function drunkFloat(len=1, step=1, lo=1, hi=0, p, bound=true){
 		p += rng() * step * dir;
 
 		if (bound && (p > hi || p < lo)){
-			p = Util.fold(p, lo, hi);
+			p = fold(p, lo, hi);
 		}
 		arr.push(p);
 	}
@@ -229,7 +229,7 @@ exports.shuffle = shuffle;
 // @return {Array} -> twelve-tone series
 // 
 function twelveTone(){
-	return shuffle(Gen.spread(12));
+	return shuffle(spread(12));
 }
 exports.twelveTone = twelveTone;
 
@@ -249,7 +249,7 @@ function urn(len=1, hi=12, lo=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
 	// generate array with values and pick
-	return pick(len, Gen.spread(hi-lo, lo, hi));
+	return pick(len, spread(hi-lo, lo, hi));
 }
 exports.urn = urn;
 
@@ -321,7 +321,7 @@ exports.pick = pick;
 function expand(a=[0, 0], l=1){
 	a = (Array.isArray(a))? a : [a];
 	// get the differences and pick the expansion options
-	let p = Stat.change(a);
+	let p = change(a);
 	let chg = pick(l-a.length, p);
 	// console.log(chg);
 	// empty output array and axiom for output

@@ -7623,7 +7623,8 @@ if ((typeof module) == 'object' && module.exports) {
 // - spread-methods inspired by Max8's MC functions spread and spreadinclusive
 //==========================================================================
 
-const Util = require('./utility.js');
+// const Util = require('./utility.js');
+const { map, flatten, toArray } = require('./utility');
 
 // Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
@@ -7834,7 +7835,7 @@ function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	if (lo === undefined){ lo = -1; hi = 1; }
 	else if (hi === undefined){ hi = lo, lo = 0; }
 	// make periods array
-	periods = Array.isArray(periods)? periods : [periods];
+	periods = toArray(periods);
 	// if no range specified
 	// if (lo === undefined){ lo = -1; hi = 1; }
 	// swap if lo > hi
@@ -7852,7 +7853,7 @@ function sineFloat(len=1, periods=1, lo, hi, phase=0){
 		let a = twoPI * periods[i % periods.length] / len;
 		arr[i] = Math.sin(a * i + p);
 	}
-	return Util.map(arr, -1, 1, lo, hi);
+	return map(arr, -1, 1, lo, hi);
 }
 exports.sineFloat = sineFloat;
 exports.sineF = sineFloat;
@@ -7910,7 +7911,7 @@ function sawFloat(len=1, periods=1, lo, hi, phase=0){
 	if (lo === undefined){ lo = -1; hi = 1; }
 	else if (hi === undefined){ hi = lo, lo = 0; }
 	// make periods array
-	periods = Array.isArray(periods)? periods : [periods];
+	periods = toArray(periods);
 
 	// array length minimum of 1
 	len = Math.max(1, len);
@@ -7920,7 +7921,7 @@ function sawFloat(len=1, periods=1, lo, hi, phase=0){
 	for (let i=0; i<len; i++){
 		arr[i] = ((i * a * periods[i % periods.length]) % 1.0 + 1.0) % 1.0;
 	}
-	return Util.map(arr, 0, 1, lo, hi);
+	return map(arr, 0, 1, lo, hi);
 	// return arr;
 }
 exports.sawFloat = sawFloat;
@@ -7948,7 +7949,7 @@ function squareFloat(len=1, periods=1, lo, hi, pulse=0.5){
 	if (lo === undefined){ lo = 0; hi = 1; }
 	else if (hi === undefined){ hi = lo, lo = 0; }
 	// make periods array
-	periods = Array.isArray(periods)? periods : [periods];
+	periods = toArray(periods);
 
 	// array length minimum of 1
 	len = Math.max(1, len);
@@ -7959,7 +7960,7 @@ function squareFloat(len=1, periods=1, lo, hi, pulse=0.5){
 		arr[i] = ((i * a * periods[i % periods.length]) % 1 + 1) % 1;
 		arr[i] = arr[i] < pulse;
 	}
-	return Util.map(arr, 0, 1, lo, hi);
+	return map(arr, 0, 1, lo, hi);
 	// return arr;
 }
 exports.squareFloat = squareFloat;
@@ -7983,7 +7984,7 @@ exports.rect = square;
 //
 function binary(...a){
 	if (!a.length) { return [0]; }
-	a = Util.flatten(a);
+	a = flatten(a);
 
 	let arr = [];
 	for (let i=0; i<a.length; i++){
@@ -8009,7 +8010,7 @@ exports.binaryBeat = binary;
 //
 function spacing(...a){
 	if (!a.length) { return [0]; }
-	a = Util.flatten(a);
+	a = flatten(a);
 
 	let arr = [];
 	for (let i=0; i<a.length; i++){
@@ -8026,7 +8027,7 @@ function spacing(...a){
 exports.space = spacing;
 exports.spacing = spacing;
 exports.spacingBeat = spacing;
-},{"./utility.js":42}],37:[function(require,module,exports){
+},{"./utility":42}],37:[function(require,module,exports){
 //==============================================================================
 // gen-complex.js
 // part of 'total-serialism' Package
@@ -8053,8 +8054,8 @@ exports.spacingBeat = spacing;
 // 
 //==============================================================================
 
-const Util = require('./utility.js');
-const Transform = require('./transform.js');
+const { mod } = require('./utility');
+const { rotate } = require('./transform');
 const BigNumber = require('bignumber.js');
 
 // configure the bignumber settings
@@ -8104,7 +8105,7 @@ function fastEuclid(s=8, h=4, r=0){
 		d = v;
 	}
 	if (r){
-		return Transform.rotate(arr, r);
+		return rotate(arr, r);
 	}
 	return arr;
 }
@@ -8140,7 +8141,7 @@ function euclid(steps=8, beats=4, rot=0){
     counts.push(divisor);
 	build(level);
 
-	return Transform.rotate(pattern, rot - pattern.indexOf(1));
+	return rotate(pattern, rot - pattern.indexOf(1));
 }
 exports.euclid = euclid;
 
@@ -8226,7 +8227,7 @@ exports.collatz = collatz;
 // @param {Int+} -> modulus
 // 
 function collatzMod(n=12, m=2){
-	return Util.mod(collatz(n), Math.min(m, Math.floor(m)));
+	return mod(collatz(n), Math.min(m, Math.floor(m)));
 }
 exports.collatzMod = collatzMod;
 
@@ -8592,7 +8593,7 @@ class Automaton {
 	}
 }
 exports.Automaton = Automaton;
-},{"./transform.js":40,"./utility.js":42,"bignumber.js":26}],38:[function(require,module,exports){
+},{"./transform":40,"./utility":42,"bignumber.js":26}],38:[function(require,module,exports){
 //=======================================================================
 // gen-stochastic.js
 // part of 'total-serialism' Package
@@ -8608,9 +8609,9 @@ exports.Automaton = Automaton;
 //=======================================================================
 
 // require Generative methods
-const Gen = require('./gen-basic.js');
-const Util = require('./utility.js');
-const Stat = require('./statistic.js');
+const { spread } = require('./gen-basic.js');
+const { fold } = require('./utility');
+const { change } = require('./statistic');
 
 // require seedrandom package
 let seedrandom = require('seedrandom');
@@ -8710,7 +8711,7 @@ function drunkFloat(len=1, step=1, lo=1, hi=0, p, bound=true){
 		p += rng() * step * dir;
 
 		if (bound && (p > hi || p < lo)){
-			p = Util.fold(p, lo, hi);
+			p = fold(p, lo, hi);
 		}
 		arr.push(p);
 	}
@@ -8824,7 +8825,7 @@ exports.shuffle = shuffle;
 // @return {Array} -> twelve-tone series
 // 
 function twelveTone(){
-	return shuffle(Gen.spread(12));
+	return shuffle(spread(12));
 }
 exports.twelveTone = twelveTone;
 
@@ -8844,7 +8845,7 @@ function urn(len=1, hi=12, lo=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
 	// generate array with values and pick
-	return pick(len, Gen.spread(hi-lo, lo, hi));
+	return pick(len, spread(hi-lo, lo, hi));
 }
 exports.urn = urn;
 
@@ -8916,7 +8917,7 @@ exports.pick = pick;
 function expand(a=[0, 0], l=1){
 	a = (Array.isArray(a))? a : [a];
 	// get the differences and pick the expansion options
-	let p = Stat.change(a);
+	let p = change(a);
 	let chg = pick(l-a.length, p);
 	// console.log(chg);
 	// empty output array and axiom for output
@@ -9110,7 +9111,7 @@ class DeepMarkov {
 }
 exports.DeepMarkov = DeepMarkov;
 exports.DeepMarkovChain = DeepMarkov;
-},{"./gen-basic.js":36,"./statistic.js":39,"./utility.js":42,"seedrandom":28}],39:[function(require,module,exports){
+},{"./gen-basic.js":36,"./statistic":39,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){
 //=======================================================================
 // statistic.js
 // part of 'total-serialism' Package
@@ -9122,7 +9123,8 @@ exports.DeepMarkovChain = DeepMarkov;
 //=======================================================================
 
 const Mod = require('./transform');
-const Util = require('./utility');
+
+const { maximum, minimum, flatten, toArray } = require('./utility');
 
 // sort an array of numbers or strings. sorts ascending
 // or descending in numerical and alphabetical order
@@ -9132,7 +9134,7 @@ const Util = require('./utility');
 // @return {Array} -> sorted array, object includes order-indeces
 // 
 function sort(a=[0], d=1){
-	a = Array.isArray(a)? a : [a];
+	a = toArray(a);
 	let arr;
 	if (a.map(x => typeof x).includes('string')){
 		arr = a.slice().sort();
@@ -9151,16 +9153,16 @@ exports.sort = sort;
 // @param {NumberArray} -> input array
 // @return {Number} -> biggest value
 // 
-exports.maximum = Util.maximum;
-exports.max = Util.maximum;
+exports.maximum = maximum;
+exports.max = maximum;
 
 // Return the lowest value from an array
 // 
 // @param {NumberArray} -> input array
 // @return {Number} -> lowest value
 // 
-exports.minimum = Util.minimum;
-exports.min = Util.minimum;
+exports.minimum = minimum;
+exports.min = minimum;
 
 // Return the average (artihmetic mean value) from an array
 // The mean is a measure of central tendency
@@ -9171,7 +9173,7 @@ exports.min = Util.minimum;
 // 
 function mean(a=[0], d=true){
 	if (!Array.isArray(a)) { return a; }
-	if (d) { a = Util.flatten(a); }
+	if (d) { a = flatten(a); }
 
 	let s = 0;
 	for (let i in a){
@@ -9194,7 +9196,7 @@ exports.average = mean;
 // 
 function median(a=[0], d=true){
 	if (!Array.isArray(a)) { return a; }
-	if (d) { a = Util.flatten(a); }
+	if (d) { a = flatten(a); }
 
 	let arr = a.slice();
 	if (arr.map(x => typeof x).includes('string')) { 
@@ -9221,7 +9223,7 @@ exports.center = median;
 //
 function mode(a=[0], d=true){
 	if (!Array.isArray(a)) { return a; }
-	if (d) { a = Util.flatten(a); }
+	if (d) { a = flatten(a); }
 
 	let arr = a.slice().sort((a,b) => { return a-b; });
 
@@ -9255,8 +9257,8 @@ exports.common = mode;
 // @return {Bool} -> true or false
 // 
 function compare(a1=[0], a2){
-	a1 = (Array.isArray(a1))? a1 : [a1];
-	a2 = (Array.isArray(a2))? a2 : [a2];
+	a1 = toArray(a1);
+	a2 = toArray(a2);
 	if (a1.length !== a2.length){
 		return false;
 	}
@@ -9317,8 +9319,8 @@ exports.difference = change;
 
 // require the Utility methods
 // const Rand = require('./gen-stochastic');
-const Stat = require('./statistic');
-const Util = require('./utility');
+const { sort } = require('./statistic');
+const { flatten, add, max, min, lerp, toArray } = require('./utility');
 
 // Duplicate an array multiple times,
 // optionaly add an offset to every value when duplicating
@@ -9330,16 +9332,16 @@ const Util = require('./utility');
 // 								 -> or string concatenation
 // 
 function clone(a=[0], ...c){
-	a = Array.isArray(a)? a : [a];
+	a = toArray(a);
 	// flatten clone array if multi-dimensional
 	if (!c.length) { 
 		return a;
 	} else { 
-		c = Util.flatten(c); 
+		c = flatten(c); 
 	}
 	let arr = [];
 	for (let i=0; i<c.length; i++){
-		arr = arr.concat(a.map(v => Util.add(v, c[i])));
+		arr = arr.concat(a.map(v => add(v, c[i])));
 	}
 	return arr;
 }
@@ -9401,8 +9403,8 @@ exports.every = every;
 // flatten a multidimensional array. Optionally set the depth
 // for the flattening
 //
-exports.flatten = Util.flatten;
-exports.flat = Util.flatten;
+exports.flatten = flatten;
+exports.flat = flatten;
 
 // similar to every(), but instead of specifying bars/devisions
 // this method allows you to specify the exact length of the array
@@ -9415,7 +9417,7 @@ exports.flat = Util.flatten;
 // return {Array}
 //
 function padding(a=[0], length=16, pad=0, shift=0){
-	a = Array.isArray(a)? a : [a];	
+	a = toArray(a);	
 	let len = length - a.length;
 	if (len < 1) {
 		return a;
@@ -9434,9 +9436,9 @@ exports.pad = padding;
 // 
 function filter(a=[0], f){
 	let arr = (Array.isArray(a))? a.slice() : [a];
-	f = (Array.isArray(f))? f : [f];
+	f = toArray(f);
 
-	for (let i in f){
+	for (var i=0; i<f.length; i++){
 		let index = arr.indexOf(f[i]);
 		while (index >= 0){
 			arr.splice(index, 1);
@@ -9456,7 +9458,7 @@ exports.filter = filter;
 // 
 function filterType(a=[0], t='number'){
 	a = (Array.isArray(a))? a.slice() : [a];
-	t = (Array.isArray(t))? t : [t];
+	t = toArray(t);
 
 	let types = a.map(x => typeof x);	
 	let arr = [];
@@ -9485,15 +9487,16 @@ exports.tFilter = filterType;
 // @param {Int} -> high range (optional)
 // @return {Array}
 // 
-function invert(arr=[0], lo, hi){
-	arr = Array.isArray(arr)? arr : [arr];
+function invert(a=[0], lo, hi){
+	a = toArray(a);
+
 	if (lo === undefined){
-		hi = Util.max(arr);
-		lo = Util.min(arr);
+		hi = max(a);
+		lo = min(a);
 	} else if (hi === undefined){
 		hi = lo;
 	}
-	return arr.slice().map(v => {
+	return a.slice().map(v => {
 		if (Array.isArray(v)){
 			return invert(v, lo, hi);
 		}
@@ -9511,7 +9514,7 @@ function lace(...args){
 	if (!args.length){ return [0]; }
 	var l = 0;
 	for (let i=0; i<args.length; i++){
-		args[i] = Array.isArray(args[i])? args[i] : [args[i]];
+		args[i] = toArray(args[i]);
 		l = Math.max(args[i].length, l);
 	}
 	var arr = [];
@@ -9535,8 +9538,8 @@ exports.zip = lace;
 // @return {Array} -> Looked up values
 // 
 function lookup(idx=0, arr=[0]){
-	idx = (Array.isArray(idx)) ? idx : [idx];
-	arr = (Array.isArray(arr)) ? arr : [arr];
+	idx = toArray(idx);
+	arr = toArray(arr);
 	let a = [];
 	let len = arr.length;
 	for (let i in idx){
@@ -9564,7 +9567,7 @@ function merge(...args){
 	if (!args.length){ return [0]; }
 	let l = 0;
 	for (let i=0; i<args.length; i++){
-		args[i] = Array.isArray(args[i])? args[i] : [args[i]];
+		args[i] = toArray(args[i]);
 		l = Math.max(args[i].length, l);
 	}
 	let arr = [];
@@ -9611,8 +9614,8 @@ exports.mirror = palindrome;
 // @return {Array}
 // 
 function repeat(arr=[0], rep=1){
-	arr = (Array.isArray(arr))? arr : [arr];
-	rep = (Array.isArray(rep))? rep : [rep];
+	arr = toArray(arr);
+	rep = toArray(rep);
 	
 	let a = [];
 	for (let i in arr){
@@ -9659,7 +9662,7 @@ exports.rotate = rotate;
 // placeholder for the sort() method found in 
 // statistic.js
 // 
-exports.sort = Stat.sort;
+exports.sort = sort;
 
 // slice an array in one or multiple parts 
 // slice lengths are determined by the second argument array
@@ -9670,8 +9673,8 @@ exports.sort = Stat.sort;
 // @return {Array}
 // 
 function slice(a=[0], s=[1], r=true){
-	a = Array.isArray(a)? a : [a];
-	s = Array.isArray(s)? s : [s];
+	a = toArray(a);
+	s = toArray(s);
 
 	let arr = [];
 	let _s = 0;
@@ -9698,8 +9701,8 @@ exports.slice = slice;
 // @return {Array} -> 2D array of splitted values
 // 
 function split(a=[0], s=[1]){
-	a = Array.isArray(a)? a : [a];
-	s = Array.isArray(s)? s : [s];
+	a = toArray(a);
+	s = toArray(s);
 
 	return _split(a, s);
 }
@@ -9725,8 +9728,8 @@ function _split(a, s){
 // return {Array}
 // 
 function spray(values=[0], beats=[0]){
-	values = Array.isArray(values)? values : [values];
-	beats = Array.isArray(beats)? beats : [beats];
+	values = toArray(values);
+	beats = toArray(beats);
 
 	var arr = beats.slice();
 	var c = 0;
@@ -9748,7 +9751,7 @@ exports.spray = spray;
 // param {String/Int} -> interpolation function (optional, default=linear)
 // 
 function stretch(a=[0], len=1, mode='linear'){
-	a = Array.isArray(a)? a : [a];
+	a = toArray(a);
 	if (len < 2){ return a; }
 	
 	let arr = [];
@@ -9764,7 +9767,7 @@ function stretch(a=[0], len=1, mode='linear'){
 			arr.push(a0);
 		} else {
 			// interpolate between the values according to decimal place
-			arr.push(Util.lerp(a0, a1, val % 1));
+			arr.push(lerp(a0, a1, val % 1));
 		}
 	}
 	return arr;
@@ -9778,8 +9781,7 @@ exports.stretch = stretch;
 // @return {Array}
 // 
 function unique(a=[0]){
-	a = Array.isArray(a)? a : [a];
-	return [...new Set(a)];
+	return [...new Set(toArray(a))];
 }
 exports.unique = unique;
 
@@ -9806,8 +9808,8 @@ const { Progression } = require('@tonaljs/tonal');
 const ToneSet = require('../data/tones.json');
 const chromaSet = { c:0, d:2, e:4, f:5, g:7, a:9, b:11 };
 
-const Mod = require('./transform.js');
-const Util = require('./utility.js');
+const { unique } = require('./transform');
+const { add, wrap, multiply, toArray } = require('./utility');
 
 // create a mapping list of scales for 12-TET from Tonal
 let Scales = {};
@@ -10178,7 +10180,7 @@ exports.toScale = mapToScale;
 // @return {Array/Int} -> mapped midi values
 // 
 function mapToMidi(a=[0], o=4){
-	return Util.add(relativeToMidi(mapToScale(a), o), notation.rootInt);
+	return add(relativeToMidi(mapToScale(a), o), notation.rootInt);
 }
 exports.mapToMidi = mapToMidi;
 exports.toMidi = mapToMidi;
@@ -10204,7 +10206,7 @@ exports.toFreq = mapToFreq;
 // @return {Number/Array} -> cents output
 // 
 function ratioToCent(a=['1/1']){
-	a = Array.isArray(a)? a : [a];
+	a = toArray(a);
 	return a.map(x => {
 		if (Array.isArray(x)){
 			return ratioToCent(x);
@@ -10250,7 +10252,7 @@ function chordsFromNumerals(a=['i'], n='c'){
 	// make array if not array and flatten
 	a = Array.isArray(a)? a.flat(Infinity) : [a];
 	// check if n is notename
-	n = isNaN(n)? n : midiToNote(Util.wrap(n));
+	n = isNaN(n)? n : midiToNote(wrap(n));
 	// generate progression of chord names
 	let p = Progression.fromRomanNumerals(n, a);
 	// translate chordnames to semitones
@@ -10278,7 +10280,7 @@ function chordsFromNames(a=['c']){
 			console.log(`Invalid chord name generated from numeral: ${a}`);
 			return [0];
 		}
-		return Util.wrap(chromaToRelative(ch.notes));
+		return wrap(chromaToRelative(ch.notes));
 	}
 	return a.map(c => chordsFromNames(c));
 }
@@ -10310,7 +10312,7 @@ function ratioToMs(a=[1], bpm){
 	if (bpm){
 		measureMs = 60000 / Math.max(1, Number(bpm)) * 4;
 	}
-	return Util.multiply(a, measureMs);
+	return multiply(a, measureMs);
 }
 exports.ratioToMs = ratioToMs;
 exports.rtoms = ratioToMs;
@@ -10322,7 +10324,7 @@ exports.rtoms = ratioToMs;
 // @return {Number/Array}
 //
 function divisionToRatio(a=['1']){
-	a = Array.isArray(a)? a : [a];
+	a = toArray(a);
 	return a.map(x => {
 		if (Array.isArray(x)){
 			return divisionToRatio(x);
@@ -10351,7 +10353,7 @@ function divRatio(x){
 function divisionToTicks(a=['1']){
 	// 1 tick = 1/480th of a quarter note, 
 	// 1 bar = 1920 ticks
-	return Util.multiply(divisionToRatio(a), 1920);
+	return multiply(divisionToRatio(a), 1920);
 }
 exports.divisionToTicks = divisionToTicks;
 exports.dtotk = divisionToTicks;
@@ -10365,7 +10367,7 @@ exports.rtotk = divisionToTicks;
 // @return {Array}
 // 
 function timevalueToRatio(a=['1n']){
-	a = Array.isArray(a)? a : [a];
+	a = toArray(a);
 	return a.map(x => {
 		if (Array.isArray(x)){
 			return timevalueToRatio(x);
@@ -10394,7 +10396,7 @@ exports.ttoms = timevalueToMs;
 // @return {Array}
 // 
 function timevalueToTicks(a=['1n']){
-	return Util.multiply(timevalueToRatio(a), 1920);
+	return multiply(timevalueToRatio(a), 1920);
 }
 exports.timevalueToTicks = timevalueToTicks;
 exports.ttotk = timevalueToTicks;
@@ -10573,7 +10575,7 @@ class Scala {
 						tmpCents.push(result[scl]['range']);
 						// filter duplicates
 						
-						tmpCents = Mod.unique(tmpCents).map(x => x.toFixed(f.decimals));
+						tmpCents = unique(tmpCents).map(x => x.toFixed(f.decimals));
 
 						for (let i in s){
 							// for all entered cent/ratio values
@@ -10678,7 +10680,7 @@ class Scala {
 }
 exports.Scala = Scala;
 
-},{"../data/scldb.json":1,"../data/tones.json":2,"./transform.js":40,"./utility.js":42,"@tonaljs/tonal":24}],42:[function(require,module,exports){
+},{"../data/scldb.json":1,"../data/tones.json":2,"./transform":40,"./utility":42,"@tonaljs/tonal":24}],42:[function(require,module,exports){
 //====================================================================
 // utility.js
 // part of 'total-serialism' Package
@@ -10704,7 +10706,7 @@ exports.PI = PI;
 // @param {Value} -> input to be checked
 // @return {Array} -> the input as an array
 //
-function toArray(a=0){
+function toArray(a){
 	return Array.isArray(a) ? a : [a];
 }
 exports.toArray = toArray;

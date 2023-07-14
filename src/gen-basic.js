@@ -11,7 +11,8 @@
 // - spread-methods inspired by Max8's MC functions spread and spreadinclusive
 //==========================================================================
 
-const Util = require('./utility.js');
+// const Util = require('./utility.js');
+const { map, flatten, toArray } = require('./utility');
 
 // Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
@@ -222,7 +223,7 @@ function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	if (lo === undefined){ lo = -1; hi = 1; }
 	else if (hi === undefined){ hi = lo, lo = 0; }
 	// make periods array
-	periods = Array.isArray(periods)? periods : [periods];
+	periods = toArray(periods);
 	// if no range specified
 	// if (lo === undefined){ lo = -1; hi = 1; }
 	// swap if lo > hi
@@ -240,7 +241,7 @@ function sineFloat(len=1, periods=1, lo, hi, phase=0){
 		let a = twoPI * periods[i % periods.length] / len;
 		arr[i] = Math.sin(a * i + p);
 	}
-	return Util.map(arr, -1, 1, lo, hi);
+	return map(arr, -1, 1, lo, hi);
 }
 exports.sineFloat = sineFloat;
 exports.sineF = sineFloat;
@@ -298,7 +299,7 @@ function sawFloat(len=1, periods=1, lo, hi, phase=0){
 	if (lo === undefined){ lo = -1; hi = 1; }
 	else if (hi === undefined){ hi = lo, lo = 0; }
 	// make periods array
-	periods = Array.isArray(periods)? periods : [periods];
+	periods = toArray(periods);
 
 	// array length minimum of 1
 	len = Math.max(1, len);
@@ -308,7 +309,7 @@ function sawFloat(len=1, periods=1, lo, hi, phase=0){
 	for (let i=0; i<len; i++){
 		arr[i] = ((i * a * periods[i % periods.length]) % 1.0 + 1.0) % 1.0;
 	}
-	return Util.map(arr, 0, 1, lo, hi);
+	return map(arr, 0, 1, lo, hi);
 	// return arr;
 }
 exports.sawFloat = sawFloat;
@@ -336,7 +337,7 @@ function squareFloat(len=1, periods=1, lo, hi, pulse=0.5){
 	if (lo === undefined){ lo = 0; hi = 1; }
 	else if (hi === undefined){ hi = lo, lo = 0; }
 	// make periods array
-	periods = Array.isArray(periods)? periods : [periods];
+	periods = toArray(periods);
 
 	// array length minimum of 1
 	len = Math.max(1, len);
@@ -347,7 +348,7 @@ function squareFloat(len=1, periods=1, lo, hi, pulse=0.5){
 		arr[i] = ((i * a * periods[i % periods.length]) % 1 + 1) % 1;
 		arr[i] = arr[i] < pulse;
 	}
-	return Util.map(arr, 0, 1, lo, hi);
+	return map(arr, 0, 1, lo, hi);
 	// return arr;
 }
 exports.squareFloat = squareFloat;
@@ -371,7 +372,7 @@ exports.rect = square;
 //
 function binary(...a){
 	if (!a.length) { return [0]; }
-	a = Util.flatten(a);
+	a = flatten(a);
 
 	let arr = [];
 	for (let i=0; i<a.length; i++){
@@ -397,7 +398,7 @@ exports.binaryBeat = binary;
 //
 function spacing(...a){
 	if (!a.length) { return [0]; }
-	a = Util.flatten(a);
+	a = flatten(a);
 
 	let arr = [];
 	for (let i=0; i<a.length; i++){

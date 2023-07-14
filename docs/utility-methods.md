@@ -23,6 +23,7 @@ const Util = require('total-serialism').Utility;
 - [pow](#pow)
 - [sqrt](#sqrt)
 - [arrayCalc](#arrayCalc)
+- [toArray](#toArray)
 - [sum](#sum)
 - [minimum](#minimum)
 - [maximum](#maximum)
@@ -155,6 +156,28 @@ Util.lerp([-2, 4, 6], [10, 20, 30], 0.5)
 //=> [4, 12, 18]
 
 // Alias: mix
+```
+
+## toArray
+
+check if the value is an array or not
+if not transform into an array and output
+
+**arguments**
+- {Value} -> input to be checked
+
+**return**
+- {Array} -> the input as an array
+
+```js
+Util.toArray();
+//=> []
+
+Util.toArray(1);
+//=> [ 1 ]
+
+Util.toArray([1, 2, 3]);
+//=> [ 1, 2, 3 ]
 ```
 
 # Arithmetic

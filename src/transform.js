@@ -19,8 +19,8 @@
 
 // require the Utility methods
 // const Rand = require('./gen-stochastic');
-const Stat = require('./statistic');
-const Util = require('./utility');
+const { sort } = require('./statistic');
+const { flatten, add, max, min, lerp, toArray } = require('./utility');
 
 // Duplicate an array multiple times,
 // optionaly add an offset to every value when duplicating
@@ -32,16 +32,16 @@ const Util = require('./utility');
 // 								 -> or string concatenation
 // 
 function clone(a=[0], ...c){
-	a = Array.isArray(a)? a : [a];
+	a = toArray(a);
 	// flatten clone array if multi-dimensional
 	if (!c.length) { 
 		return a;
 	} else { 
-		c = Util.flatten(c); 
+		c = flatten(c); 
 	}
 	let arr = [];
 	for (let i=0; i<c.length; i++){
-		arr = arr.concat(a.map(v => Util.add(v, c[i])));
+		arr = arr.concat(a.map(v => add(v, c[i])));
 	}
 	return arr;
 }
@@ -103,8 +103,8 @@ exports.every = every;
 // flatten a multidimensional array. Optionally set the depth
 // for the flattening
 //
-exports.flatten = Util.flatten;
-exports.flat = Util.flatten;
+exports.flatten = flatten;
+exports.flat = flatten;
 
 // similar to every(), but instead of specifying bars/devisions
 // this method allows you to specify the exact length of the array
@@ -117,7 +117,7 @@ exports.flat = Util.flatten;
 // return {Array}
 //
 function padding(a=[0], length=16, pad=0, shift=0){
-	a = Array.isArray(a)? a : [a];	
+	a = toArray(a);	
 	let len = length - a.length;
 	if (len < 1) {
 		return a;
@@ -136,9 +136,9 @@ exports.pad = padding;
 // 
 function filter(a=[0], f){
 	let arr = (Array.isArray(a))? a.slice() : [a];
-	f = (Array.isArray(f))? f : [f];
+	f = toArray(f);
 
-	for (let i in f){
+	for (var i=0; i<f.length; i++){
 		let index = arr.indexOf(f[i]);
 		while (index >= 0){
 			arr.splice(index, 1);
@@ -158,7 +158,7 @@ exports.filter = filter;
 // 
 function filterType(a=[0], t='number'){
 	a = (Array.isArray(a))? a.slice() : [a];
-	t = (Array.isArray(t))? t : [t];
+	t = toArray(t);
 
 	let types = a.map(x => typeof x);	
 	let arr = [];
@@ -187,15 +187,16 @@ exports.tFilter = filterType;
 // @param {Int} -> high range (optional)
 // @return {Array}
 // 
-function invert(arr=[0], lo, hi){
-	arr = Array.isArray(arr)? arr : [arr];
+function invert(a=[0], lo, hi){
+	a = toArray(a);
+
 	if (lo === undefined){
-		hi = Util.max(arr);
-		lo = Util.min(arr);
+		hi = max(a);
+		lo = min(a);
 	} else if (hi === undefined){
 		hi = lo;
 	}
-	return arr.slice().map(v => {
+	return a.slice().map(v => {
 		if (Array.isArray(v)){
 			return invert(v, lo, hi);
 		}
@@ -213,7 +214,7 @@ function lace(...args){
 	if (!args.length){ return [0]; }
 	var l = 0;
 	for (let i=0; i<args.length; i++){
-		args[i] = Array.isArray(args[i])? args[i] : [args[i]];
+		args[i] = toArray(args[i]);
 		l = Math.max(args[i].length, l);
 	}
 	var arr = [];
@@ -237,8 +238,8 @@ exports.zip = lace;
 // @return {Array} -> Looked up values
 // 
 function lookup(idx=0, arr=[0]){
-	idx = (Array.isArray(idx)) ? idx : [idx];
-	arr = (Array.isArray(arr)) ? arr : [arr];
+	idx = toArray(idx);
+	arr = toArray(arr);
 	let a = [];
 	let len = arr.length;
 	for (let i in idx){
@@ -266,7 +267,7 @@ function merge(...args){
 	if (!args.length){ return [0]; }
 	let l = 0;
 	for (let i=0; i<args.length; i++){
-		args[i] = Array.isArray(args[i])? args[i] : [args[i]];
+		args[i] = toArray(args[i]);
 		l = Math.max(args[i].length, l);
 	}
 	let arr = [];
@@ -313,8 +314,8 @@ exports.mirror = palindrome;
 // @return {Array}
 // 
 function repeat(arr=[0], rep=1){
-	arr = (Array.isArray(arr))? arr : [arr];
-	rep = (Array.isArray(rep))? rep : [rep];
+	arr = toArray(arr);
+	rep = toArray(rep);
 	
 	let a = [];
 	for (let i in arr){
@@ -361,7 +362,7 @@ exports.rotate = rotate;
 // placeholder for the sort() method found in 
 // statistic.js
 // 
-exports.sort = Stat.sort;
+exports.sort = sort;
 
 // slice an array in one or multiple parts 
 // slice lengths are determined by the second argument array
@@ -372,8 +373,8 @@ exports.sort = Stat.sort;
 // @return {Array}
 // 
 function slice(a=[0], s=[1], r=true){
-	a = Array.isArray(a)? a : [a];
-	s = Array.isArray(s)? s : [s];
+	a = toArray(a);
+	s = toArray(s);
 
 	let arr = [];
 	let _s = 0;
@@ -400,8 +401,8 @@ exports.slice = slice;
 // @return {Array} -> 2D array of splitted values
 // 
 function split(a=[0], s=[1]){
-	a = Array.isArray(a)? a : [a];
-	s = Array.isArray(s)? s : [s];
+	a = toArray(a);
+	s = toArray(s);
 
 	return _split(a, s);
 }
@@ -427,8 +428,8 @@ function _split(a, s){
 // return {Array}
 // 
 function spray(values=[0], beats=[0]){
-	values = Array.isArray(values)? values : [values];
-	beats = Array.isArray(beats)? beats : [beats];
+	values = toArray(values);
+	beats = toArray(beats);
 
 	var arr = beats.slice();
 	var c = 0;
@@ -450,7 +451,7 @@ exports.spray = spray;
 // param {String/Int} -> interpolation function (optional, default=linear)
 // 
 function stretch(a=[0], len=1, mode='linear'){
-	a = Array.isArray(a)? a : [a];
+	a = toArray(a);
 	if (len < 2){ return a; }
 	
 	let arr = [];
@@ -466,7 +467,7 @@ function stretch(a=[0], len=1, mode='linear'){
 			arr.push(a0);
 		} else {
 			// interpolate between the values according to decimal place
-			arr.push(Util.lerp(a0, a1, val % 1));
+			arr.push(lerp(a0, a1, val % 1));
 		}
 	}
 	return arr;
@@ -480,7 +481,6 @@ exports.stretch = stretch;
 // @return {Array}
 // 
 function unique(a=[0]){
-	a = Array.isArray(a)? a : [a];
-	return [...new Set(a)];
+	return [...new Set(toArray(a))];
 }
 exports.unique = unique;

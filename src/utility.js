@@ -23,7 +23,7 @@ exports.PI = PI;
 // @param {Value} -> input to be checked
 // @return {Array} -> the input as an array
 //
-function toArray(a=0){
+function toArray(a){
 	return Array.isArray(a) ? a : [a];
 }
 exports.toArray = toArray;

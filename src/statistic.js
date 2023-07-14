@@ -9,7 +9,8 @@
 //=======================================================================
 
 const Mod = require('./transform');
-const Util = require('./utility');
+
+const { maximum, minimum, flatten, toArray } = require('./utility');
 
 // sort an array of numbers or strings. sorts ascending
 // or descending in numerical and alphabetical order
@@ -19,7 +20,7 @@ const Util = require('./utility');
 // @return {Array} -> sorted array, object includes order-indeces
 // 
 function sort(a=[0], d=1){
-	a = Array.isArray(a)? a : [a];
+	a = toArray(a);
 	let arr;
 	if (a.map(x => typeof x).includes('string')){
 		arr = a.slice().sort();
@@ -38,16 +39,16 @@ exports.sort = sort;
 // @param {NumberArray} -> input array
 // @return {Number} -> biggest value
 // 
-exports.maximum = Util.maximum;
-exports.max = Util.maximum;
+exports.maximum = maximum;
+exports.max = maximum;
 
 // Return the lowest value from an array
 // 
 // @param {NumberArray} -> input array
 // @return {Number} -> lowest value
 // 
-exports.minimum = Util.minimum;
-exports.min = Util.minimum;
+exports.minimum = minimum;
+exports.min = minimum;
 
 // Return the average (artihmetic mean value) from an array
 // The mean is a measure of central tendency
@@ -58,7 +59,7 @@ exports.min = Util.minimum;
 // 
 function mean(a=[0], d=true){
 	if (!Array.isArray(a)) { return a; }
-	if (d) { a = Util.flatten(a); }
+	if (d) { a = flatten(a); }
 
 	let s = 0;
 	for (let i in a){
@@ -81,7 +82,7 @@ exports.average = mean;
 // 
 function median(a=[0], d=true){
 	if (!Array.isArray(a)) { return a; }
-	if (d) { a = Util.flatten(a); }
+	if (d) { a = flatten(a); }
 
 	let arr = a.slice();
 	if (arr.map(x => typeof x).includes('string')) { 
@@ -108,7 +109,7 @@ exports.center = median;
 //
 function mode(a=[0], d=true){
 	if (!Array.isArray(a)) { return a; }
-	if (d) { a = Util.flatten(a); }
+	if (d) { a = flatten(a); }
 
 	let arr = a.slice().sort((a,b) => { return a-b; });
 
@@ -142,8 +143,8 @@ exports.common = mode;
 // @return {Bool} -> true or false
 // 
 function compare(a1=[0], a2){
-	a1 = (Array.isArray(a1))? a1 : [a1];
-	a2 = (Array.isArray(a2))? a2 : [a2];
+	a1 = toArray(a1);
+	a2 = toArray(a2);
 	if (a1.length !== a2.length){
 		return false;
 	}

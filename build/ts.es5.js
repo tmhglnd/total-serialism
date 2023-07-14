@@ -2105,7 +2105,8 @@ Math// math: package containing random, pow, and seedrandom
 // credits:
 // - spread-methods inspired by Max8's MC functions spread and spreadinclusive
 //==========================================================================
-var Util=require('./utility.js');// Generate a list of n-length starting at one value
+// const Util = require('./utility.js');
+var _require=require('./utility'),map=_require.map,flatten=_require.flatten,toArray=_require.toArray;// Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
 // Evenly spaced values in between in floating-point
 // Defaults to range of 0 - 1 for Float
@@ -2206,14 +2207,14 @@ if(!args.length){return[0];}var len=args.length/2;var arr=[];for(var i=0;i<len;i
 // @return {Array} -> Sine function
 // 
 function sineFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;if(lo===undefined){lo=-1;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
-periods=Array.isArray(periods)?periods:[periods];// if no range specified
+periods=toArray(periods);// if no range specified
 // if (lo === undefined){ lo = -1; hi = 1; }
 // swap if lo > hi
 // if (lo > hi){ var t=lo, lo=hi, hi=t; }
 // array length minimum of 1
 len=Math.max(1,len);var arr=[];var twoPI=Math.PI*2.0;// let a = Math.PI * 2.0 * periods / len;
 var p=Math.PI*phase*2.0;for(var i=0;i<len;i++){// arr[i] = Math.sin(a * i + p);
-var a=twoPI*periods[i%periods.length]/len;arr[i]=Math.sin(a*i+p);}return Util.map(arr,-1,1,lo,hi);}exports.sineFloat=sineFloat;exports.sineF=sineFloat;exports.sinF=sineFloat;// Generate an integer array with n-periods of a sine function
+var a=twoPI*periods[i%periods.length]/len;arr[i]=Math.sin(a*i+p);}return map(arr,-1,1,lo,hi);}exports.sineFloat=sineFloat;exports.sineF=sineFloat;exports.sinF=sineFloat;// Generate an integer array with n-periods of a sine function
 // Optional last arguments set lo and hi range
 // 
 // @param {Int} -> Length of output array
@@ -2243,8 +2244,8 @@ function cosine(){var len=arguments.length>0&&arguments[0]!==undefined?arguments
 // @return {Array} -> wave-function as array
 //  
 function sawFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;if(lo===undefined){lo=-1;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
-periods=Array.isArray(periods)?periods:[periods];// array length minimum of 1
-len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*periods[i%periods.length]%1.0+1.0)%1.0;}return Util.map(arr,0,1,lo,hi);// return arr;
+periods=toArray(periods);// array length minimum of 1
+len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*periods[i%periods.length]%1.0+1.0)%1.0;}return map(arr,0,1,lo,hi);// return arr;
 }exports.sawFloat=sawFloat;exports.phasor=sawFloat;exports.sawF=sawFloat;function saw(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var arr=sawFloat(len,periods,lo,hi,phase);return arr.map(function(v){return Math.trunc(v);});}exports.saw=saw;// Generate an array with n-periods of a pulse/squarewave function
 // Optional last arguments set lo and hi range and pulse width
 // Only setting first range argument sets the low-range to 0
@@ -2257,8 +2258,8 @@ len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*pe
 // @return {Array} -> wave-function as array
 //  
 function squareFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var pulse=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0.5;if(lo===undefined){lo=0;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
-periods=Array.isArray(periods)?periods:[periods];// array length minimum of 1
-len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*periods[i%periods.length]%1+1)%1;arr[i]=arr[i]<pulse;}return Util.map(arr,0,1,lo,hi);// return arr;
+periods=toArray(periods);// array length minimum of 1
+len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*periods[i%periods.length]%1+1)%1;arr[i]=arr[i]<pulse;}return map(arr,0,1,lo,hi);// return arr;
 }exports.squareFloat=squareFloat;exports.squareF=squareFloat;exports.rectFloat=squareFloat;exports.rectF=squareFloat;function square(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var pulse=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0.5;var arr=squareFloat(len,periods,lo,hi,pulse);return arr.map(function(v){return Math.trunc(v);});}exports.square=square;exports.rect=square;// Generate a binary rhythm from a positive integer number or an array 
 // of numbers. Returns the binary value as an array of separated 1's and 0's
 // useful for representing rhythmical patterns
@@ -2266,7 +2267,7 @@ len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*pe
 // @param {Int+/Array} -> Array of numbers to convert to binary representation
 // @return {Array} -> Array of 1's and 0's
 //
-function binary(){for(var _len2=arguments.length,a=new Array(_len2),_key2=0;_key2<_len2;_key2++){a[_key2]=arguments[_key2];}if(!a.length){return[0];}a=Util.flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])){arr=arr.concat(0);}else{var v=Math.floor(Math.max(a[i],0));arr=arr.concat(v.toString(2).split('').map(function(x){return Number(x);}));}}return arr;}exports.binary=binary;exports.binaryBeat=binary;// Generate an array of 1's and 0's based on a positive integer number or array
+function binary(){for(var _len2=arguments.length,a=new Array(_len2),_key2=0;_key2<_len2;_key2++){a[_key2]=arguments[_key2];}if(!a.length){return[0];}a=flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])){arr=arr.concat(0);}else{var v=Math.floor(Math.max(a[i],0));arr=arr.concat(v.toString(2).split('').map(function(x){return Number(x);}));}}return arr;}exports.binary=binary;exports.binaryBeat=binary;// Generate an array of 1's and 0's based on a positive integer number or array
 // Every number in the array will be replaced by a 1 with a specified amount of 
 // 0's appended to it. Eg. a 2 => 1 0, a 4 => 1 0 0 0, etc. This technique is
 // useful to generate a rhythm based on spacing length between onsets
@@ -2274,7 +2275,7 @@ function binary(){for(var _len2=arguments.length,a=new Array(_len2),_key2=0;_key
 // @param {Int+/Array} -> Array of numbers to convert to spaced rhythm
 // @return {Array} -> Array of 1's and 0's representing a rhythm
 //
-function spacing(){for(var _len3=arguments.length,a=new Array(_len3),_key3=0;_key3<_len3;_key3++){a[_key3]=arguments[_key3];}if(!a.length){return[0];}a=Util.flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])||a[i]<1){arr=arr.concat(0);}else{for(var j=0;j<Math.floor(a[i]);j++){arr.push(!j?1:0);}}}return arr;}exports.space=spacing;exports.spacing=spacing;exports.spacingBeat=spacing;},{"./utility.js":42}],37:[function(require,module,exports){//==============================================================================
+function spacing(){for(var _len3=arguments.length,a=new Array(_len3),_key3=0;_key3<_len3;_key3++){a[_key3]=arguments[_key3];}if(!a.length){return[0];}a=flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])||a[i]<1){arr=arr.concat(0);}else{for(var j=0;j<Math.floor(a[i]);j++){arr.push(!j?1:0);}}}return arr;}exports.space=spacing;exports.spacing=spacing;exports.spacingBeat=spacing;},{"./utility":42}],37:[function(require,module,exports){//==============================================================================
 // gen-complex.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2299,7 +2300,7 @@ function spacing(){for(var _len3=arguments.length,a=new Array(_len3),_key3=0;_ke
 // https://www.lawtonhall.com/blog/2019/9/9/per-nrgrds-infinity-series#:~:text=Coding%20the%20Infinity%20Series
 // 
 //==============================================================================
-var Util=require('./utility.js');var Transform=require('./transform.js');var BigNumber=require('bignumber.js');// configure the bignumber settings
+var _require2=require('./utility'),mod=_require2.mod;var _require3=require('./transform'),rotate=_require3.rotate;var BigNumber=require('bignumber.js');// configure the bignumber settings
 BigNumber.config({DECIMAL_PLACES:20,EXPONENTIAL_AT:[-7,20]});// A hexadecimal rhythm generator. Generates values of 0 and 1
 // based on the input of a hexadecimal character string
 //
@@ -2318,7 +2319,7 @@ function hexBeat(){var hex=arguments.length>0&&arguments[0]!==undefined?argument
 // @param {Int} -> rotate (optional, default=0)
 // @return {Array}
 // 
-function fastEuclid(){var s=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var h=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var r=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var arr=[];var d=-1;for(var i=0;i<s;i++){var v=Math.floor(i*(h/s));arr[i]=Number(v!==d);d=v;}if(r){return Transform.rotate(arr,r);}return arr;}exports.fastEuclid=fastEuclid;// The Euclidean rhythm generator
+function fastEuclid(){var s=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var h=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var r=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var arr=[];var d=-1;for(var i=0;i<s;i++){var v=Math.floor(i*(h/s));arr[i]=Number(v!==d);d=v;}if(r){return rotate(arr,r);}return arr;}exports.fastEuclid=fastEuclid;// The Euclidean rhythm generator
 // Generate a euclidean rhythm evenly spacing n-beats amongst n-steps.
 // Inspired by Godfried Toussaints famous paper "The Euclidean Algorithm
 // Generates Traditional Musical Rhythms".
@@ -2328,7 +2329,7 @@ function fastEuclid(){var s=arguments.length>0&&arguments[0]!==undefined?argumen
 // @param {Int} -> rotate (optional, default=0)
 // @return {Array}
 // 
-var pattern,counts,remainders;function euclid(){var steps=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var rot=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;pattern=[];counts=[];remainders=[];var level=0;var divisor=steps-beats;remainders.push(beats);while(remainders[level]>1){counts.push(Math.floor(divisor/remainders[level]));remainders.push(divisor%remainders[level]);divisor=remainders[level];level++;}counts.push(divisor);build(level);return Transform.rotate(pattern,rot-pattern.indexOf(1));}exports.euclid=euclid;function build(l){var level=l;if(level==-1){pattern.push(0);}else if(level==-2){pattern.push(1);}else{for(var i=0;i<counts[level];i++){build(level-1);}if(remainders[level]!=0){build(level-2);}}}// Lindemayer String expansion
+var pattern,counts,remainders;function euclid(){var steps=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var rot=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;pattern=[];counts=[];remainders=[];var level=0;var divisor=steps-beats;remainders.push(beats);while(remainders[level]>1){counts.push(Math.floor(divisor/remainders[level]));remainders.push(divisor%remainders[level]);divisor=remainders[level];level++;}counts.push(divisor);build(level);return rotate(pattern,rot-pattern.indexOf(1));}exports.euclid=euclid;function build(l){var level=l;if(level==-1){pattern.push(0);}else if(level==-2){pattern.push(1);}else{for(var i=0;i<counts[level];i++){build(level-1);}if(remainders[level]!=0){build(level-2);}}}// Lindemayer String expansion
 // a recursive fractal algorithm to generate botanic (and more)
 // Default rule is 1 -> 10, 0 -> 1, where 1=A and 0=B
 // Rules are specified as a JS object consisting of strings or arrays
@@ -2354,7 +2355,7 @@ function collatz(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[
 // @param {Int+} -> starting number
 // @param {Int+} -> modulus
 // 
-function collatzMod(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var m=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;return Util.mod(collatz(n),Math.min(m,Math.floor(m)));}exports.collatzMod=collatzMod;// The collatz conjecture with BigNumber library
+function collatzMod(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var m=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;return mod(collatz(n),Math.min(m,Math.floor(m)));}exports.collatzMod=collatzMod;// The collatz conjecture with BigNumber library
 // 
 function bigCollatz(n){var num=new BigNumber(n);var sequence=[];while(num.gt(1)){if(num.mod(2).eq(1)){num=num.times(3);num=num.plus(1);}else{num=num.div(2);}sequence.push(num.toFixed());}return sequence.reverse();}exports.bigCollatz=bigCollatz;// Return the modulus of a collatz conjecture sequence
 // Set the modulo
@@ -2501,7 +2502,7 @@ for(var i=0;i<l;i++){var left=this._state[(i-1%l+l)%l];var right=this._state[(i+
 n[i]=this._table[[left,this._state[i],right].join('')];}// store in state and return result as array
 return this._state=n;}},{key:"ruleToBinary",value:function ruleToBinary(r){// convert a rule number to binary sequence 
 return r.toString(2).padStart(8,'0');}},{key:"binaryToTable",value:function binaryToTable(r){// store binary sequence in lookup table
-var c={};for(var i=0;i<8;i++){c[(7-i).toString(2).padStart(3,'0')]=Number(r[i]);}return c;}}]);return Automaton;}();exports.Automaton=Automaton;},{"./transform.js":40,"./utility.js":42,"bignumber.js":26}],38:[function(require,module,exports){//=======================================================================
+var c={};for(var i=0;i<8;i++){c[(7-i).toString(2).padStart(3,'0')]=Number(r[i]);}return c;}}]);return Automaton;}();exports.Automaton=Automaton;},{"./transform":40,"./utility":42,"bignumber.js":26}],38:[function(require,module,exports){//=======================================================================
 // gen-stochastic.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2515,7 +2516,7 @@ var c={};for(var i=0;i<8;i++){c[(7-i).toString(2).padStart(3,'0')]=Number(r[i]);
 // - Gratefully using the seedrandom package by David Bau
 //=======================================================================
 // require Generative methods
-var Gen=require('./gen-basic.js');var Util=require('./utility.js');var Stat=require('./statistic.js');// require seedrandom package
+var _require4=require('./gen-basic.js'),spread=_require4.spread;var _require5=require('./utility'),fold=_require5.fold;var _require6=require('./statistic'),change=_require6.change;// require seedrandom package
 var seedrandom=require('seedrandom');// local pseudorandom number generator and seed storage
 var rng=seedrandom();var _seed=0;// Set the seed for all the Random Number Generators. 
 // 0 sets to unpredictable seeding
@@ -2562,7 +2563,7 @@ function random(){var len=arguments.length>0&&arguments[0]!==undefined?arguments
 function drunkFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var step=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var hi=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var p=arguments.length>4?arguments[4]:undefined;var bound=arguments.length>5&&arguments[5]!==undefined?arguments[5]:true;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}p=!p?(lo+hi)/2:p;var arr=[];for(var i=0;i<Math.max(1,len);i++){// direction of next random number (+ / -)
 var dir=(rng()>0.5)*2-1;// prev + random value * step * direction
-p+=rng()*step*dir;if(bound&&(p>hi||p<lo)){p=Util.fold(p,lo,hi);}arr.push(p);}return arr;}(lo,hi);}exports.drunkFloat=drunkFloat;exports.walkFloat=drunkFloat;// generate a list of random integer values but the next random 
+p+=rng()*step*dir;if(bound&&(p>hi||p<lo)){p=fold(p,lo,hi);}arr.push(p);}return arr;}(lo,hi);}exports.drunkFloat=drunkFloat;exports.walkFloat=drunkFloat;// generate a list of random integer values but the next random 
 // value is within a limited range of the previous value generating
 // a random "drunk" walk, also referred to as brownian motion.
 // Inspired by the [drunk]-object in MaxMSP
@@ -2612,7 +2613,7 @@ function shuffle(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[
 // 
 // @return {Array} -> twelve-tone series
 // 
-function twelveTone(){return shuffle(Gen.spread(12));}exports.twelveTone=twelveTone;// Generate a list of unique random integer values between a 
+function twelveTone(){return shuffle(spread(12));}exports.twelveTone=twelveTone;// Generate a list of unique random integer values between a 
 // certain specified range (excluding high val). An 'urn' is filled
 // with values and when one is picked it is removed from the urn. 
 // If the outputlist is longer then the range, the urn refills when
@@ -2626,7 +2627,7 @@ function twelveTone(){return shuffle(Gen.spread(12));}exports.twelveTone=twelveT
 // 
 function urn(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var hi=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(hi,lo){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// generate array with values and pick
-return pick(len,Gen.spread(hi-lo,lo,hi));}(hi,lo);}exports.urn=urn;// Choose random items from an array provided
+return pick(len,spread(hi-lo,lo,hi));}(hi,lo);}exports.urn=urn;// Choose random items from an array provided
 // The default array is an array of 0 and 1
 // 
 // @param {Int} -> output length
@@ -2657,7 +2658,7 @@ var v,p,arr=[];for(var i=0;i<Math.max(1,len);i++){v=s.pop();if(v===undefined){s=
 // @return {Array}
 // 
 function expand(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0,0];var l=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;a=Array.isArray(a)?a:[a];// get the differences and pick the expansion options
-var p=Stat.change(a);var chg=pick(l-a.length,p);// console.log(chg);
+var p=change(a);var chg=pick(l-a.length,p);// console.log(chg);
 // empty output array and axiom for output
 var arr=a.slice();var acc=arr[arr.length-1];// accumulate the change and store in array
 for(var c=0;c<chg.length;c++){arr.push(acc+=chg[c]);}return arr;}exports.expand=expand;exports.extrapolate=expand;// Initialize a Markov Chain Model (One of the simpelest forms of ML)
@@ -2715,7 +2716,7 @@ if(!this._table.has(s)){console.error("Warning: ".concat(a," is not part of tran
 if(this._state===undefined||!this._table.has(this._state)){this.randomState();}// get probabilities based on state
 var probs=this._table.get(this._state);var newState=probs[Math.floor(rng()*probs.length)];// Now recreate a nice string representation
 var prefix=JSON.parse(this._state);prefix.shift();prefix.push(newState);this._state=JSON.stringify(prefix);return newState;}},{key:"chain",value:function chain(){var l=arguments.length>0&&arguments[0]!==undefined?arguments[0]:2;// return an array of values generated with next()
-var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return DeepMarkov;}();exports.DeepMarkov=DeepMarkov;exports.DeepMarkovChain=DeepMarkov;},{"./gen-basic.js":36,"./statistic.js":39,"./utility.js":42,"seedrandom":28}],39:[function(require,module,exports){//=======================================================================
+var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return DeepMarkov;}();exports.DeepMarkov=DeepMarkov;exports.DeepMarkovChain=DeepMarkov;},{"./gen-basic.js":36,"./statistic":39,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){//=======================================================================
 // statistic.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2724,31 +2725,31 @@ var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return DeepMark
 // Statistical related methods and algorithms that can be helpful in
 // analysis of number sequences, melodies, rhythms and more
 //=======================================================================
-var Mod=require('./transform');var Util=require('./utility');// sort an array of numbers or strings. sorts ascending
+var Mod=require('./transform');var _require7=require('./utility'),maximum=_require7.maximum,minimum=_require7.minimum,flatten=_require7.flatten,toArray=_require7.toArray;// sort an array of numbers or strings. sorts ascending
 // or descending in numerical and alphabetical order
 // 
 // @param {Array} -> array to sort
 // @param {Int} -> sort direction (positive value is ascending)
 // @return {Array} -> sorted array, object includes order-indeces
 // 
-function sort(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;a=Array.isArray(a)?a:[a];var arr;if(a.map(function(x){return _typeof(x);}).includes('string')){arr=a.slice().sort();}else{arr=a.slice().sort(function(a,b){return a-b;});}if(d<0){return arr.reverse();}return arr;}exports.sort=sort;// Return the biggest value from an array
+function sort(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;a=toArray(a);var arr;if(a.map(function(x){return _typeof(x);}).includes('string')){arr=a.slice().sort();}else{arr=a.slice().sort(function(a,b){return a-b;});}if(d<0){return arr.reverse();}return arr;}exports.sort=sort;// Return the biggest value from an array
 // 
 // @param {NumberArray} -> input array
 // @return {Number} -> biggest value
 // 
-exports.maximum=Util.maximum;exports.max=Util.maximum;// Return the lowest value from an array
+exports.maximum=maximum;exports.max=maximum;// Return the lowest value from an array
 // 
 // @param {NumberArray} -> input array
 // @return {Number} -> lowest value
 // 
-exports.minimum=Util.minimum;exports.min=Util.minimum;// Return the average (artihmetic mean value) from an array
+exports.minimum=minimum;exports.min=minimum;// Return the average (artihmetic mean value) from an array
 // The mean is a measure of central tendency
 // 
 // @param {NumberArray} -> input array of n-numbers
 // @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
 // @return {Number} -> mean
 // 
-function mean(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=Util.flatten(a);}var s=0;for(var i in a){s+=isNaN(a[i])?0:a[i];}return s/a.length;}exports.mean=mean;exports.average=mean;// Return the median (center value) from an array
+function mean(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=flatten(a);}var s=0;for(var i in a){s+=isNaN(a[i])?0:a[i];}return s/a.length;}exports.mean=mean;exports.average=mean;// Return the median (center value) from an array
 // The median is a measure of central tendency
 // If array is even number of values the median is the
 // average of the two center values
@@ -2758,7 +2759,7 @@ function mean(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:
 // @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
 // @return {Number} -> median
 // 
-function median(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=Util.flatten(a);}var arr=a.slice();if(arr.map(function(x){return _typeof(x);}).includes('string')){arr=Mod.filterType(arr,['number','boolean']);}arr=arr.sort(function(a,b){return a-b;});var c=Math.floor(arr.length/2);if(!(arr.length%2)){return(arr[c]+arr[c-1])/2;}return arr[c];}exports.median=median;exports.center=median;// Returns the mode(s) (most common value) from an array
+function median(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=flatten(a);}var arr=a.slice();if(arr.map(function(x){return _typeof(x);}).includes('string')){arr=Mod.filterType(arr,['number','boolean']);}arr=arr.sort(function(a,b){return a-b;});var c=Math.floor(arr.length/2);if(!(arr.length%2)){return(arr[c]+arr[c-1])/2;}return arr[c];}exports.median=median;exports.center=median;// Returns the mode(s) (most common value) from an array
 // The mode is a measure of central tendency
 // Returns an array when multi-modal system
 // 
@@ -2766,7 +2767,7 @@ function median(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 // @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
 // @return {Number/Array} -> the mode or modes
 //
-function mode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=Util.flatten(a);}var arr=a.slice().sort(function(a,b){return a-b;});var amount=1;var streak=0;var modes=[];for(var i=1;i<arr.length;i++){if(arr[i-1]!=arr[i]){amount=0;}amount++;if(amount>streak){streak=amount;modes=[arr[i]];}else if(amount==streak){modes.push(arr[i]);}}return modes;}exports.mode=mode;exports.common=mode;// Compare two arrays recursively and if all values
+function mode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=flatten(a);}var arr=a.slice().sort(function(a,b){return a-b;});var amount=1;var streak=0;var modes=[];for(var i=1;i<arr.length;i++){if(arr[i-1]!=arr[i]){amount=0;}amount++;if(amount>streak){streak=amount;modes=[arr[i]];}else if(amount==streak){modes.push(arr[i]);}}return modes;}exports.mode=mode;exports.common=mode;// Compare two arrays recursively and if all values
 // of the array and subarrays are equal to eachother
 // return a true boolean
 // 
@@ -2774,7 +2775,7 @@ function mode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:
 // @params {Array} -> compare array2
 // @return {Bool} -> true or false
 // 
-function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var a2=arguments.length>1?arguments[1]:undefined;a1=Array.isArray(a1)?a1:[a1];a2=Array.isArray(a2)?a2:[a2];if(a1.length!==a2.length){return false;}for(var i in a1){if(Array.isArray(a1[i])){return compare(a1[i],a2[i]);}else if(a1[i]!==a2[i]){return false;}}return true;}exports.compare=compare;exports.equal=compare;// Return the difference between every consecutive value in an array
+function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var a2=arguments.length>1?arguments[1]:undefined;a1=toArray(a1);a2=toArray(a2);if(a1.length!==a2.length){return false;}for(var i in a1){if(Array.isArray(a1[i])){return compare(a1[i],a2[i]);}else if(a1[i]!==a2[i]){return false;}}return true;}exports.compare=compare;exports.equal=compare;// Return the difference between every consecutive value in an array
 // With melodic content from a chromatic scale this can be seen as
 // a list of intervals that, when followed from the same note, results
 // in the same melody.
@@ -2802,7 +2803,7 @@ function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 //=======================================================================
 // require the Utility methods
 // const Rand = require('./gen-stochastic');
-var Stat=require('./statistic');var Util=require('./utility');// Duplicate an array multiple times,
+var _require8=require('./statistic'),sort=_require8.sort;var _require9=require('./utility'),flatten=_require9.flatten,add=_require9.add,max=_require9.max,min=_require9.min,lerp=_require9.lerp,toArray=_require9.toArray;// Duplicate an array multiple times,
 // optionaly add an offset to every value when duplicating
 // Also works with 2-dimensonal arrays
 // If string the values will be concatenated
@@ -2811,8 +2812,8 @@ var Stat=require('./statistic');var Util=require('./utility');// Duplicate an ar
 // @param {Int, Int2, ... Int-n} -> amount of clones with integer offset
 // 								 -> or string concatenation
 // 
-function clone(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];for(var _len4=arguments.length,c=new Array(_len4>1?_len4-1:0),_key4=1;_key4<_len4;_key4++){c[_key4-1]=arguments[_key4];}a=Array.isArray(a)?a:[a];// flatten clone array if multi-dimensional
-if(!c.length){return a;}else{c=Util.flatten(c);}var arr=[];var _loop=function _loop(i){arr=arr.concat(a.map(function(v){return Util.add(v,c[i]);}));};for(var i=0;i<c.length;i++){_loop(i);}return arr;}exports.clone=clone;// combine arrays into one array
+function clone(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];for(var _len4=arguments.length,c=new Array(_len4>1?_len4-1:0),_key4=1;_key4<_len4;_key4++){c[_key4-1]=arguments[_key4];}a=toArray(a);// flatten clone array if multi-dimensional
+if(!c.length){return a;}else{c=flatten(c);}var arr=[];var _loop=function _loop(i){arr=arr.concat(a.map(function(v){return add(v,c[i]);}));};for(var i=0;i<c.length;i++){_loop(i);}return arr;}exports.clone=clone;// combine arrays into one array
 // multiple arrays as arguments possible
 // 
 // @params {Array0, Array1, ..., Array-n} -> Arrays to join
@@ -2839,7 +2840,7 @@ function every(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]
 // flatten a multidimensional array. Optionally set the depth
 // for the flattening
 //
-exports.flatten=Util.flatten;exports.flat=Util.flatten;// similar to every(), but instead of specifying bars/devisions
+exports.flatten=flatten;exports.flat=flatten;// similar to every(), but instead of specifying bars/devisions
 // this method allows you to specify the exact length of the array
 // and the shift is not a ratio but in whole integer steps
 //
@@ -2849,20 +2850,20 @@ exports.flatten=Util.flatten;exports.flat=Util.flatten;// similar to every(), bu
 // param {Value} -> padding argument (optional, default=0)
 // return {Array}
 //
-function padding(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var length=arguments.length>1&&arguments[1]!==undefined?arguments[1]:16;var pad=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var shift=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;a=Array.isArray(a)?a:[a];var len=length-a.length;if(len<1){return a;}var arr=new Array(len).fill(pad);return rotate(a.concat(arr),shift);}exports.padding=padding;exports.pad=padding;// filter one or multiple values from an array
+function padding(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var length=arguments.length>1&&arguments[1]!==undefined?arguments[1]:16;var pad=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var shift=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;a=toArray(a);var len=length-a.length;if(len<1){return a;}var arr=new Array(len).fill(pad);return rotate(a.concat(arr),shift);}exports.padding=padding;exports.pad=padding;// filter one or multiple values from an array
 // 
 // @param {Array} -> array to filter
 // @param {Number/String/Array} -> values to filter
 // @return (Array} -> filtered array
 // 
-function filter(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var f=arguments.length>1?arguments[1]:undefined;var arr=Array.isArray(a)?a.slice():[a];f=Array.isArray(f)?f:[f];for(var i in f){var index=arr.indexOf(f[i]);while(index>=0){arr.splice(index,1);index=arr.indexOf(f[i]);}}return arr;}exports.filter=filter;// filter one or multiple datatypes from an array
+function filter(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var f=arguments.length>1?arguments[1]:undefined;var arr=Array.isArray(a)?a.slice():[a];f=toArray(f);for(var i=0;i<f.length;i++){var index=arr.indexOf(f[i]);while(index>=0){arr.splice(index,1);index=arr.indexOf(f[i]);}}return arr;}exports.filter=filter;// filter one or multiple datatypes from an array
 // In this case the input type is the type that is output
 // 
 // @param {Array} -> array to filter
 // @param {String/Array} -> types to filter (default = number)
 // @return (Array} -> filtered array
 // 
-function filterType(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var t=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'number';a=Array.isArray(a)?a.slice():[a];t=Array.isArray(t)?t:[t];var types=a.map(function(x){return _typeof(x);});var arr=[];for(var i in t){var index=types.indexOf(t[i]);while(index>=0){arr.push(a[index]);a.splice(index,1);types.splice(index,1);index=types.indexOf(t[i]);}}return arr;}exports.filterType=filterType;exports.tFilter=filterType;// invert a list of values by mapping the lowest value
+function filterType(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var t=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'number';a=Array.isArray(a)?a.slice():[a];t=toArray(t);var types=a.map(function(x){return _typeof(x);});var arr=[];for(var i in t){var index=types.indexOf(t[i]);while(index>=0){arr.push(a[index]);a.splice(index,1);types.splice(index,1);index=types.indexOf(t[i]);}}return arr;}exports.filterType=filterType;exports.tFilter=filterType;// invert a list of values by mapping the lowest value
 // to the highest value and vice versa, flipping everything
 // in between. 
 // Second optional argument sets the center to flip values against. 
@@ -2873,12 +2874,12 @@ function filterType(){var a=arguments.length>0&&arguments[0]!==undefined?argumen
 // @param {Int} -> high range (optional)
 // @return {Array}
 // 
-function invert(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var lo=arguments.length>1?arguments[1]:undefined;var hi=arguments.length>2?arguments[2]:undefined;arr=Array.isArray(arr)?arr:[arr];if(lo===undefined){hi=Util.max(arr);lo=Util.min(arr);}else if(hi===undefined){hi=lo;}return arr.slice().map(function(v){if(Array.isArray(v)){return invert(v,lo,hi);}return hi-v+lo;});}exports.invert=invert;// interleave two or more arrays
+function invert(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var lo=arguments.length>1?arguments[1]:undefined;var hi=arguments.length>2?arguments[2]:undefined;a=toArray(a);if(lo===undefined){hi=max(a);lo=min(a);}else if(hi===undefined){hi=lo;}return a.slice().map(function(v){if(Array.isArray(v)){return invert(v,lo,hi);}return hi-v+lo;});}exports.invert=invert;// interleave two or more arrays
 // 
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array}
 //  
-function lace(){for(var _len5=arguments.length,args=new Array(_len5),_key5=0;_key5<_len5;_key5++){args[_key5]=arguments[_key5];}if(!args.length){return[0];}var l=0;for(var _i4=0;_i4<args.length;_i4++){args[_i4]=Array.isArray(args[_i4])?args[_i4]:[args[_i4]];l=Math.max(args[_i4].length,l);}var arr=[];for(var i=0;i<l;i++){for(var k=0;k<args.length;k++){var v=args[k][i];if(v!==undefined){arr.push(v);}}}return arr;}exports.lace=lace;exports.zip=lace;// Build an array of items based on another array of indeces 
+function lace(){for(var _len5=arguments.length,args=new Array(_len5),_key5=0;_key5<_len5;_key5++){args[_key5]=arguments[_key5];}if(!args.length){return[0];}var l=0;for(var _i4=0;_i4<args.length;_i4++){args[_i4]=toArray(args[_i4]);l=Math.max(args[_i4].length,l);}var arr=[];for(var i=0;i<l;i++){for(var k=0;k<args.length;k++){var v=args[k][i];if(v!==undefined){arr.push(v);}}}return arr;}exports.lace=lace;exports.zip=lace;// Build an array of items based on another array of indeces 
 // The values are wrapped within the length of the lookup array
 // Works with n-dimensional arrays by applying a recursive lookup
 // 
@@ -2886,14 +2887,14 @@ function lace(){for(var _len5=arguments.length,args=new Array(_len5),_key5=0;_ke
 // @param {Array} -> Array with values returned from lookup
 // @return {Array} -> Looked up values
 // 
-function lookup(){var idx=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var arr=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];idx=Array.isArray(idx)?idx:[idx];arr=Array.isArray(arr)?arr:[arr];var a=[];var len=arr.length;for(var i in idx){if(Array.isArray(idx[i])){a.push(lookup(idx[i],arr));}else{if(!isNaN(idx[i])){var look=(idx[i]%len+len)%len;a.push(arr[look]);}}}return a;}exports.lookup=lookup;// merge all values of two arrays on the same index
+function lookup(){var idx=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var arr=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];idx=toArray(idx);arr=toArray(arr);var a=[];var len=arr.length;for(var i in idx){if(Array.isArray(idx[i])){a.push(lookup(idx[i],arr));}else{if(!isNaN(idx[i])){var look=(idx[i]%len+len)%len;a.push(arr[look]);}}}return a;}exports.lookup=lookup;// merge all values of two arrays on the same index
 // into a 2D array. preserves length of longest list
 // flattens multidimensional arrays to 2 dimensions on merge
 // 
 // @params {Array0, Array1, ..., Array-n} -> Arrays to merge
 // @return {Array}
 // 
-function merge(){for(var _len6=arguments.length,args=new Array(_len6),_key6=0;_key6<_len6;_key6++){args[_key6]=arguments[_key6];}if(!args.length){return[0];}var l=0;for(var i=0;i<args.length;i++){args[i]=Array.isArray(args[i])?args[i]:[args[i]];l=Math.max(args[i].length,l);}var arr=[];for(var _i5=0;_i5<l;_i5++){var a=[];for(var k=0;k<args.length;k++){var v=args[k][_i5];if(v!==undefined){if(Array.isArray(v))a.push.apply(a,_toConsumableArray(v));else a.push(v);}}arr[_i5]=a;}return arr;}exports.merge=merge;// reverse an array and concatenate to the input
+function merge(){for(var _len6=arguments.length,args=new Array(_len6),_key6=0;_key6<_len6;_key6++){args[_key6]=arguments[_key6];}if(!args.length){return[0];}var l=0;for(var i=0;i<args.length;i++){args[i]=toArray(args[i]);l=Math.max(args[i].length,l);}var arr=[];for(var _i5=0;_i5<l;_i5++){var a=[];for(var k=0;k<args.length;k++){var v=args[k][_i5];if(v!==undefined){if(Array.isArray(v))a.push.apply(a,_toConsumableArray(v));else a.push(v);}}arr[_i5]=a;}return arr;}exports.merge=merge;// reverse an array and concatenate to the input
 // creating a palindrome of the array
 // 
 // @param {Array} -> array to make palindrome of
@@ -2907,7 +2908,7 @@ function palindrome(arr){var noDouble=arguments.length>1&&arguments[1]!==undefin
 // @param {Int/Array} -> array or number of repetitions per value
 // @return {Array}
 // 
-function repeat(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var rep=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;arr=Array.isArray(arr)?arr:[arr];rep=Array.isArray(rep)?rep:[rep];var a=[];for(var i in arr){var r=rep[i%rep.length];r=isNaN(r)||r<0?0:r;for(var k=0;k<r;k++){a.push(arr[i]);}}return a;}exports.repeat=repeat;// reverse the order of items in an Array
+function repeat(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var rep=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;arr=toArray(arr);rep=toArray(rep);var a=[];for(var i in arr){var r=rep[i%rep.length];r=isNaN(r)||r<0?0:r;for(var k=0;k<r;k++){a.push(arr[i]);}}return a;}exports.repeat=repeat;// reverse the order of items in an Array
 // 
 // @param {Array} -> array to reverse
 // @return {Array}
@@ -2923,7 +2924,7 @@ function rotate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 arr[i]=a[((i-r)%l+l)%l];}return arr;}exports.rotate=rotate;// placeholder for the sort() method found in 
 // statistic.js
 // 
-exports.sort=Stat.sort;// slice an array in one or multiple parts 
+exports.sort=sort;// slice an array in one or multiple parts 
 // slice lengths are determined by the second argument array
 // outputs an array of arrays of the result
 //
@@ -2931,7 +2932,7 @@ exports.sort=Stat.sort;// slice an array in one or multiple parts
 // @params {Number|Array} -> slice points
 // @return {Array}
 // 
-function slice(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var s=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[1];var r=arguments.length>2&&arguments[2]!==undefined?arguments[2]:true;a=Array.isArray(a)?a:[a];s=Array.isArray(s)?s:[s];var arr=[];var _s=0;for(var i=0;i<s.length;i++){if(s[i]>0){var _t=_s+s[i];arr.push(a.slice(_s,_t));_s=_t;}}if(r){arr.push(a.slice(_s,a.length));}return arr;}exports.slice=slice;// Similar to slice in that it also splits an array
+function slice(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var s=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[1];var r=arguments.length>2&&arguments[2]!==undefined?arguments[2]:true;a=toArray(a);s=toArray(s);var arr=[];var _s=0;for(var i=0;i<s.length;i++){if(s[i]>0){var _t=_s+s[i];arr.push(a.slice(_s,_t));_s=_t;}}if(r){arr.push(a.slice(_s,a.length));}return arr;}exports.slice=slice;// Similar to slice in that it also splits an array
 // excepts slice recursively splits until the array is
 // completely empty 
 // 
@@ -2939,7 +2940,7 @@ function slice(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]
 // @params {Number/Array} -> split sizes to iterate over
 // @return {Array} -> 2D array of splitted values
 // 
-function split(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var s=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[1];a=Array.isArray(a)?a:[a];s=Array.isArray(s)?s:[s];return _split(a,s);}exports.split=split;function _split(a,s){if(s[0]>0){var arr=a.slice(0,s[0]);var res=a.slice(s[0],a.length);if(res.length<1){return[arr];}return[arr].concat(_toConsumableArray(split(res,rotate(s,-1))));}return _toConsumableArray(split(a,rotate(s,-1)));}// spray the values of one array on the 
+function split(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var s=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[1];a=toArray(a);s=toArray(s);return _split(a,s);}exports.split=split;function _split(a,s){if(s[0]>0){var arr=a.slice(0,s[0]);var res=a.slice(s[0],a.length);if(res.length<1){return[arr];}return[arr].concat(_toConsumableArray(split(res,rotate(s,-1))));}return _toConsumableArray(split(a,rotate(s,-1)));}// spray the values of one array on the 
 // places of values of another array if 
 // the value is greater than 0
 // 
@@ -2947,7 +2948,7 @@ function split(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]
 // param {Array} -> positions to spread to
 // return {Array}
 // 
-function spray(){var values=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];values=Array.isArray(values)?values:[values];beats=Array.isArray(beats)?beats:[beats];var arr=beats.slice();var c=0;for(var i in beats){if(beats[i]>0){arr[i]=values[c++%values.length];}}return arr;}exports.spray=spray;// stretch (or shrink) an array of numbers to a specified length
+function spray(){var values=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];values=toArray(values);beats=toArray(beats);var arr=beats.slice();var c=0;for(var i in beats){if(beats[i]>0){arr[i]=values[c++%values.length];}}return arr;}exports.spray=spray;// stretch (or shrink) an array of numbers to a specified length
 // interpolating the values to fill in the gaps. 
 // TO-DO: Interpolations options are: none, linear, cosine, cubic
 // 
@@ -2955,16 +2956,16 @@ function spray(){var values=arguments.length>0&&arguments[0]!==undefined?argumen
 // param {Array} -> outputlength of array
 // param {String/Int} -> interpolation function (optional, default=linear)
 // 
-function stretch(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var mode=arguments.length>2&&arguments[2]!==undefined?arguments[2]:'linear';a=Array.isArray(a)?a:[a];if(len<2){return a;}var arr=[];var l=a.length;for(var i=0;i<len;i++){// construct a lookup interpolation position for new array
+function stretch(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var mode=arguments.length>2&&arguments[2]!==undefined?arguments[2]:'linear';a=toArray(a);if(len<2){return a;}var arr=[];var l=a.length;for(var i=0;i<len;i++){// construct a lookup interpolation position for new array
 var val=i/(len-1)*(l-1);// lookup nearest neighbour left/right
 var a0=a[Math.max(Math.trunc(val),0)];var a1=a[Math.min(Math.trunc(val)+1,l-1)%a.length];if(mode==='none'||mode===null||mode===false){arr.push(a0);}else{// interpolate between the values according to decimal place
-arr.push(Util.lerp(a0,a1,val%1));}}return arr;}exports.stretch=stretch;// filter duplicate items from an array
+arr.push(lerp(a0,a1,val%1));}}return arr;}exports.stretch=stretch;// filter duplicate items from an array
 // does not account for 2-dimensional arrays in the array
 // 
 // @param {Array} -> array to filter
 // @return {Array}
 // 
-function unique(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];a=Array.isArray(a)?a:[a];return _toConsumableArray(new Set(a));}exports.unique=unique;},{"./statistic":39,"./utility":42}],41:[function(require,module,exports){//==============================================================================
+function unique(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];return _toConsumableArray(new Set(toArray(a)));}exports.unique=unique;},{"./statistic":39,"./utility":42}],41:[function(require,module,exports){//==============================================================================
 // translate.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2976,9 +2977,9 @@ function unique(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 // - Using the amazing Tonal.js package by @danigb for various functions
 //==============================================================================
 // require API's
-var _require=require('@tonaljs/tonal'),Note=_require.Note,Scale=_require.Scale;var _require2=require('@tonaljs/tonal'),Chord=_require2.Chord;var _require3=require('@tonaljs/tonal'),Progression=_require3.Progression;// require Scale Mappings
+var _require10=require('@tonaljs/tonal'),Note=_require10.Note,Scale=_require10.Scale;var _require11=require('@tonaljs/tonal'),Chord=_require11.Chord;var _require12=require('@tonaljs/tonal'),Progression=_require12.Progression;// require Scale Mappings
 // const Scales = require('../data/scales.json');
-var ToneSet=require('../data/tones.json');var chromaSet={c:0,d:2,e:4,f:5,g:7,a:9,b:11};var Mod=require('./transform.js');var Util=require('./utility.js');// create a mapping list of scales for 12-TET from Tonal
+var ToneSet=require('../data/tones.json');var chromaSet={c:0,d:2,e:4,f:5,g:7,a:9,b:11};var _require13=require('./transform'),unique=_require13.unique;var _require14=require('./utility'),add=_require14.add,wrap=_require14.wrap,multiply=_require14.multiply,toArray=_require14.toArray;// create a mapping list of scales for 12-TET from Tonal
 var Scales={};Scale.names().forEach(function(s){var scl=Scale.get(s);var name=scl.name.replace(/\s+/g,'_').replace(/[#'-]+/g,'');var chroma=scl.chroma.split('').map(function(x){return Number(x);});// rename aeolian to minor
 name=name==='aeolian'?'minor':name;var map=[];for(var i=0;i<chroma.length;i++){if(!chroma[i]){map.push(map[map.length-1]);continue;}map.push(i);}Scales[name]=map;});// global settings stored in object
 var notation={"scale":"chromatic","root":"c","rootInt":0,"map":Scales["chromatic"],"bpm":120,"measureInMs":2000};// Return a dictionary with all the notational preferences:
@@ -3140,7 +3141,7 @@ var o=Math.floor(a/12)*12;return notation.map[s]+o+d+notation.rootInt;}return a.
 // @param {Int/String} -> octave range
 // @return {Array/Int} -> mapped midi values
 // 
-function mapToMidi(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;return Util.add(relativeToMidi(mapToScale(a),o),notation.rootInt);}exports.mapToMidi=mapToMidi;exports.toMidi=mapToMidi;// Map an array of relative semitone intervals to scale and 
+function mapToMidi(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;return add(relativeToMidi(mapToScale(a),o),notation.rootInt);}exports.mapToMidi=mapToMidi;exports.toMidi=mapToMidi;// Map an array of relative semitone intervals to scale and 
 // output in frequency value
 // 
 // @param {Array/Int} -> semitone intervals
@@ -3154,7 +3155,7 @@ return midiToFreq(mapToMidi(a,o));}exports.mapToFreq=mapToFreq;exports.toFreq=ma
 // @param {Number/String/Array} -> ratios to convert
 // @return {Number/Array} -> cents output
 // 
-function ratioToCent(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1/1'];a=Array.isArray(a)?a:[a];return a.map(function(x){if(Array.isArray(x)){return ratioToCent(x);}return Math.log(divRatio(x))/Math.log(2)*1200;});}exports.ratioToCent=ratioToCent;exports.rtoc=ratioToCent;/* WORK IN PROGRESS
+function ratioToCent(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1/1'];a=toArray(a);return a.map(function(x){if(Array.isArray(x)){return ratioToCent(x);}return Math.log(divRatio(x))/Math.log(2)*1200;});}exports.ratioToCent=ratioToCent;exports.rtoc=ratioToCent;/* WORK IN PROGRESS
 // Convert a midi value to semitone intervals
 // provide octave offset
 // 
@@ -3185,7 +3186,7 @@ exports.mtos = midiToSemi;
 //
 function chordsFromNumerals(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['i'];var n=arguments.length>1&&arguments[1]!==undefined?arguments[1]:'c';// make array if not array and flatten
 a=Array.isArray(a)?a.flat(Infinity):[a];// check if n is notename
-n=isNaN(n)?n:midiToNote(Util.wrap(n));// generate progression of chord names
+n=isNaN(n)?n:midiToNote(wrap(n));// generate progression of chord names
 var p=Progression.fromRomanNumerals(n,a);// translate chordnames to semitones
 return chordsFromNames(p);}exports.chordsFromNumerals=chordsFromNumerals;exports.chords=chordsFromNumerals;// Use a list of chord names to generate a chord progression
 // The function returns an array of chords and works on n-dimensional arrays
@@ -3199,7 +3200,7 @@ return chordsFromNames(p);}exports.chordsFromNumerals=chordsFromNumerals;exports
 // @return - {2d-Array} -> array of chords
 //
 function chordsFromNames(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['c'];// if not an array, translate chordname to semitone array
-if(!Array.isArray(a)){var ch=Chord.get(a);if(ch.empty){console.log("Invalid chord name generated from numeral: ".concat(a));return[0];}return Util.wrap(chromaToRelative(ch.notes));}return a.map(function(c){return chordsFromNames(c);});}exports.chordsFromNames=chordsFromNames;// Convert a beat division value to milliseconds based on the global BPM
+if(!Array.isArray(a)){var ch=Chord.get(a);if(ch.empty){console.log("Invalid chord name generated from numeral: ".concat(a));return[0];}return wrap(chromaToRelative(ch.notes));}return a.map(function(c){return chordsFromNames(c);});}exports.chordsFromNames=chordsFromNames;// Convert a beat division value to milliseconds based on the global BPM
 // eg. ['1/4', 1/8', '1/16'] => [500, 250, 125] @ BPM = 120
 // Also works with ratio floating values
 // 
@@ -3214,13 +3215,13 @@ function divisionToMs(){var a=arguments.length>0&&arguments[0]!==undefined?argum
 // @param {Number} -> set the BPM (optional, default=globalBPM)
 // @return {Number/Array}
 //
-function ratioToMs(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];var bpm=arguments.length>1?arguments[1]:undefined;var measureMs=notation.measureInMs;if(bpm){measureMs=60000/Math.max(1,Number(bpm))*4;}return Util.multiply(a,measureMs);}exports.ratioToMs=ratioToMs;exports.rtoms=ratioToMs;// Convert a beat ratio value to milliseconds based on the BPM
+function ratioToMs(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];var bpm=arguments.length>1?arguments[1]:undefined;var measureMs=notation.measureInMs;if(bpm){measureMs=60000/Math.max(1,Number(bpm))*4;}return multiply(a,measureMs);}exports.ratioToMs=ratioToMs;exports.rtoms=ratioToMs;// Convert a beat ratio value to milliseconds based on the BPM
 // eg. [0.25, 0.125, 0.0625] => [500, 250, 125] @ BPM = 120
 // 
 // @param {Number/String/Array} -> beat ratio array
 // @return {Number/Array}
 //
-function divisionToRatio(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1'];a=Array.isArray(a)?a:[a];return a.map(function(x){if(Array.isArray(x)){return divisionToRatio(x);}return divRatio(x);});}exports.divisionToRatio=divisionToRatio;exports.dtor=divisionToRatio;// Evaluate a division string to a ratio
+function divisionToRatio(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1'];a=toArray(a);return a.map(function(x){if(Array.isArray(x)){return divisionToRatio(x);}return divRatio(x);});}exports.divisionToRatio=divisionToRatio;exports.dtor=divisionToRatio;// Evaluate a division string to a ratio
 // 
 function divRatio(x){// match all division symbols: eg. 1/4, 5/16
 var d=/^\d+(\/\d+)?$/;// output a floating point value
@@ -3232,13 +3233,13 @@ return typeof x==='string'&&d.test(x)?eval(x):x;}// Convert a division or ratio 
 // 
 function divisionToTicks(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1'];// 1 tick = 1/480th of a quarter note, 
 // 1 bar = 1920 ticks
-return Util.multiply(divisionToRatio(a),1920);}exports.divisionToTicks=divisionToTicks;exports.dtotk=divisionToTicks;exports.ratioToTicks=divisionToTicks;exports.rtotk=divisionToTicks;// Convert timevalues to a ratio in floatingpoint
+return multiply(divisionToRatio(a),1920);}exports.divisionToTicks=divisionToTicks;exports.dtotk=divisionToTicks;exports.ratioToTicks=divisionToTicks;exports.rtotk=divisionToTicks;// Convert timevalues to a ratio in floatingpoint
 // eg. 4n, 8nt, 16nd, 2m etc.
 // 
 // @param {String/Array} -> timevalues to convert
 // @return {Array}
 // 
-function timevalueToRatio(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1n'];a=Array.isArray(a)?a:[a];return a.map(function(x){if(Array.isArray(x)){return timevalueToRatio(x);}return timevalueRatio(x);});}exports.timevalueToRatio=timevalueToRatio;exports.ttor=timevalueToRatio;// Convert timevalues to milliseconds
+function timevalueToRatio(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1n'];a=toArray(a);return a.map(function(x){if(Array.isArray(x)){return timevalueToRatio(x);}return timevalueRatio(x);});}exports.timevalueToRatio=timevalueToRatio;exports.ttor=timevalueToRatio;// Convert timevalues to milliseconds
 // 
 // @param {String/Array} -> timevalues to convert
 // @param {Number} -> bpm (optional, default=globalBPM)
@@ -3249,7 +3250,7 @@ function timevalueToMs(){var a=arguments.length>0&&arguments[0]!==undefined?argu
 // @param {String/Array} -> timevalues to convert
 // @return {Array}
 // 
-function timevalueToTicks(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1n'];return Util.multiply(timevalueToRatio(a),1920);}exports.timevalueToTicks=timevalueToTicks;exports.ttotk=timevalueToTicks;function timevalueRatio(x){var r=/^(\d+)([nm])([dt]?)$/;var m=x.match(r);var v=1;if(m){var nm={'n':1,'m':m[1]*m[1]};var dt={'d':3/2,'t':2/3,'':1};v=1/m[1]*nm[m[2]]*dt[m[3]];}else{console.log("timevalueRatio(): ".concat(x," is not a valid timevalue"));}return v;}// Convert toneJS time values
+function timevalueToTicks(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1n'];return multiply(timevalueToRatio(a),1920);}exports.timevalueToTicks=timevalueToTicks;exports.ttotk=timevalueToTicks;function timevalueRatio(x){var r=/^(\d+)([nm])([dt]?)$/;var m=x.match(r);var v=1;if(m){var nm={'n':1,'m':m[1]*m[1]};var dt={'d':3/2,'t':2/3,'':1};v=1/m[1]*nm[m[2]]*dt[m[3]];}else{console.log("timevalueRatio(): ".concat(x," is not a valid timevalue"));}return v;}// Convert toneJS time values
 // function tonetimeRatio(x){
 // }
 //=======================================================================
@@ -3306,7 +3307,7 @@ if(k==='description'){Object.keys(result).forEach(function(scl){s.forEach(functi
 if(k==='cents'){Object.keys(result).forEach(function(scl){var match=0;// temporary cents array
 var tmpCents=result[scl][k];// append the octave ratio (or range)
 tmpCents.push(result[scl]['range']);// filter duplicates
-tmpCents=Mod.unique(tmpCents).map(function(x){return x.toFixed(f.decimals);});for(var i in s){// for all entered cent/ratio values
+tmpCents=unique(tmpCents).map(function(x){return x.toFixed(f.decimals);});for(var i in s){// for all entered cent/ratio values
 var cent=typeof s[i]==='string'?ratioToCent(s[i])[0]:s[i];// if equals cent from array increment match
 for(var c=0;c<tmpCents.length;c++){if(tmpCents[c]===cent.toFixed(f.decimals)){match+=1;}}}// result if matches equals amount of searches
 if(match===s.length){tmpRes[scl]=result[scl];}});result=tmpRes;}}});return result;}// read and parse a filestring (best imported with fs.readFileSync for 
@@ -3344,7 +3345,7 @@ this.scl['range']=this.scl.cents.pop();}// return an object with frequencies der
 },{key:"chart",value:function chart(){var _this2=this;var hi=arguments.length>0&&arguments[0]!==undefined?arguments[0]:127;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;return function(hi,lo){// swap lo and hi range if hi is smaller than lo
 if(hi<lo){var t=hi,hi=lo,lo=t;}var range=hi-lo;// empty object for frequencies
 var chart={};// calculate frequencies for values 0 to 127
-for(var i=0;i<range+1;i++){chart[i+lo]=_this2.scalaToFreq(i+lo);}return chart;}(hi,lo);}}]);return Scala;}();exports.Scala=Scala;},{"../data/scldb.json":1,"../data/tones.json":2,"./transform.js":40,"./utility.js":42,"@tonaljs/tonal":24}],42:[function(require,module,exports){//====================================================================
+for(var i=0;i<range+1;i++){chart[i+lo]=_this2.scalaToFreq(i+lo);}return chart;}(hi,lo);}}]);return Scala;}();exports.Scala=Scala;},{"../data/scldb.json":1,"../data/tones.json":2,"./transform":40,"./utility":42,"@tonaljs/tonal":24}],42:[function(require,module,exports){//====================================================================
 // utility.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -3358,7 +3359,7 @@ var chart=require('asciichart');var HALF_PI=Math.PI/2.0;var TWO_PI=Math.PI*2.0;v
 // @param {Value} -> input to be checked
 // @return {Array} -> the input as an array
 //
-function toArray(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;return Array.isArray(a)?a:[a];}exports.toArray=toArray;// Wrap a value between a low and high range
+function toArray(a){return Array.isArray(a)?a:[a];}exports.toArray=toArray;// Wrap a value between a low and high range
 // Similar to mod, expect the low range is also adjustable
 // 
 // @param {Number/Array} -> input value
