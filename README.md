@@ -202,10 +202,25 @@ $ npm install total-serialism
 ```js
 // entire package
 const Srl = require('total-serialism');
+// function calls: Srl.Generative.spread(4), Srl.Stochastic.random(4)
+
 // subset of library
 const Gen = require('total-serialism').Generative;
+// function calls: Gen.spread(4)
+
 // specific method from one of the libraries
 const { random, drunk } = require('total-serialism').Stochastic;
+// function calls: random(4), drunk(4)
+
+// expose multiple sub-libraries to the main package with
+const TS = require('total-serialism');
+Object.assign(TS, TS.Generative, TS.Stochastic);
+// function calls: TS.spread(4), TS.random(4)
+
+// expose multiple sub-libraries to the global scope
+const TS = require('total-serialism');
+Object.assign(globalThis, TS.Generative, TS.Stochastic);
+// function calls: spread(4), random(4)
 ```
 
 ## Import es5 version
