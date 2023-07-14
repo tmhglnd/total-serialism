@@ -202,25 +202,12 @@ $ npm install total-serialism
 ```js
 // entire package
 const Srl = require('total-serialism');
-// function calls: Srl.Generative.spread(4), Srl.Stochastic.random(4)
 
 // subset of library
 const Gen = require('total-serialism').Generative;
-// function calls: Gen.spread(4)
 
-// specific method from one of the libraries
-const { random, drunk } = require('total-serialism').Stochastic;
-// function calls: random(4), drunk(4)
-
-// expose multiple sub-libraries to the main package with
-const TS = require('total-serialism');
-Object.assign(TS, TS.Generative, TS.Stochastic);
-// function calls: TS.spread(4), TS.random(4)
-
-// expose multiple sub-libraries to the global scope
-const TS = require('total-serialism');
-Object.assign(globalThis, TS.Generative, TS.Stochastic);
-// function calls: spread(4), random(4)
+// specific methods
+const { spread, fill } = require('total-serialism').Generative;
 ```
 
 ## Import es5 version
@@ -267,7 +254,11 @@ The library consists of a few subsets:
 The entire library
 
 ```js
-const Serialism = require('total-serialism');
+const TS = require('total-serialism');
+
+// function calls look like:
+TS.Generative.spread(4);
+TS.Stochastic.random(4);
 ```
 Or an individual section
 
@@ -277,6 +268,46 @@ const Algo = require('total-serialism').Algorithmic;
 const Mod  = require('total-serialism').Transform;
 const Rand = require('total-serialism').Stochastic;
 const Util = require('total-serialism').Utility;
+
+// function calls look like:
+Gen.spread(4);
+Rand.random(4);
+```
+
+Or an individual function
+
+```js
+const { spread } = require('total-serialism').Generative;
+const { random } = require('total-serialism').Stochastic;
+
+// function calls look like:
+spread(4);
+random(4);
+```
+
+It's also possible to expose entire subsets to the main package 
+
+```js
+// expose multiple sub-libraries to the main package with
+const TS = require('total-serialism');
+Object.assign(TS, TS.Generative, TS.Stochastic);
+
+// function calls look like:
+TS.spread(4);
+TS.random(4);
+```
+
+Or expose entire subsets to the global namespace. (not recommended, this can lead to name collisions with other functions/packages)
+
+```js
+// expose multiple sub-libraries to the global scope
+const TS = require('total-serialism');
+Object.assign(globalThis, TS.Generative, TS.Stochastic);
+
+// function calls look like:
+spread(4);
+random(4);
+// etc...
 ```
 
 # 🎮 In Action
