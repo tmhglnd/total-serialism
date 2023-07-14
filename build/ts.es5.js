@@ -11,7 +11,11 @@
 // require the various libraries
 var Generative=require('./src/gen-basic.js');var Algorithmic=require('./src/gen-complex.js');var Stochastic=require('./src/gen-stochastic.js');var Transform=require('./src/transform.js');var Statistic=require('./src/statistic.js');var Translate=require('./src/translate.js');var Utility=require('./src/utility.js');// export the various libraries
 exports.Generative=Generative;exports.Algorithmic=Algorithmic;exports.Stochastic=Stochastic;exports.Transform=Transform;exports.Statistic=Statistic;exports.Translate=Translate;exports.Utility=Utility;// Methods exposed to global scope
-exports.getSettings=Translate.getSettings;exports.setTempo=Translate.setTempo;exports.getTempo=Translate.getTempo;exports.setBPM=Translate.setTempo;exports.getBPM=Translate.getTempo;exports.setScale=Translate.setScale;exports.getScale=Translate.getScale;exports.setRoot=Translate.setRoot;exports.getRoot=Translate.getRoot;},{"./src/gen-basic.js":36,"./src/gen-complex.js":37,"./src/gen-stochastic.js":38,"./src/statistic.js":39,"./src/transform.js":40,"./src/translate.js":41,"./src/utility.js":42}],4:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core'],factory):(global=global||self,factory(global.AbcNotation={},global.core));})(this,function(exports,core){'use strict';var fillStr=function fillStr(character,times){return Array(times+1).join(character);};var REGEX=/^(_{1,}|=|\^{1,}|)([abcdefgABCDEFG])([,']*)$/;function tokenize(str){var m=REGEX.exec(str);if(!m){return["","",""];}return[m[1],m[2],m[3]];}/**
+exports.getSettings=Translate.getSettings;exports.setTempo=Translate.setTempo;exports.getTempo=Translate.getTempo;exports.setBPM=Translate.setTempo;exports.getBPM=Translate.getTempo;exports.setScale=Translate.setScale;exports.getScale=Translate.getScale;exports.setRoot=Translate.setRoot;exports.getRoot=Translate.getRoot;// Include all methods as part of the main library
+// This allows you to use everything without having to specify the 
+// various libraries
+// Object.assign(this, Generative, Algorithmic, Stochastic, Transform, Statistic, Translate, Utility);
+},{"./src/gen-basic.js":36,"./src/gen-complex.js":37,"./src/gen-stochastic.js":38,"./src/statistic.js":39,"./src/transform.js":40,"./src/translate.js":41,"./src/utility.js":42}],4:[function(require,module,exports){(function(global,factory){_typeof(exports)==='object'&&typeof module!=='undefined'?factory(exports,require('@tonaljs/core')):typeof define==='function'&&define.amd?define(['exports','@tonaljs/core'],factory):(global=global||self,factory(global.AbcNotation={},global.core));})(this,function(exports,core){'use strict';var fillStr=function fillStr(character,times){return Array(times+1).join(character);};var REGEX=/^(_{1,}|=|\^{1,}|)([abcdefgABCDEFG])([,']*)$/;function tokenize(str){var m=REGEX.exec(str);if(!m){return["","",""];}return[m[1],m[2],m[3]];}/**
    * Convert a (string) note in ABC notation into a (string) note in scientific notation
    *
    * @example
@@ -3348,7 +3352,13 @@ for(var i=0;i<range+1;i++){chart[i+lo]=_this2.scalaToFreq(i+lo);}return chart;}(
 //
 // Utility functions
 //====================================================================
-var chart=require('asciichart');var HALF_PI=Math.PI/2.0;var TWO_PI=Math.PI*2.0;var PI=Math.PI;exports.HALF_PI=HALF_PI;exports.TWO_PI=TWO_PI;exports.PI=PI;// Wrap a value between a low and high range
+var chart=require('asciichart');var HALF_PI=Math.PI/2.0;var TWO_PI=Math.PI*2.0;var PI=Math.PI;exports.HALF_PI=HALF_PI;exports.TWO_PI=TWO_PI;exports.PI=PI;// check if the value is an array or not
+// if not transform into an array and output
+//
+// @param {Value} -> input to be checked
+// @return {Array} -> the input as an array
+//
+function toArray(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;return Array.isArray(a)?a:[a];}exports.toArray=toArray;// Wrap a value between a low and high range
 // Similar to mod, expect the low range is also adjustable
 // 
 // @param {Number/Array} -> input value
@@ -3457,7 +3467,7 @@ function sqrt(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:
 // @return {Array|Number} -> result of evaluation
 // 
 function arrayCalc(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var func=arguments.length>2&&arguments[2]!==undefined?arguments[2]:function(){return a;};// if righthand side is array
-if(Array.isArray(v)){a=Array.isArray(a)?a:[a];var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){r[i]=arrayCalc(a[i%l1],v[i%l2],func);}return r;}// if both are single values
+if(Array.isArray(v)){a=toArray(a);var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){r[i]=arrayCalc(a[i%l1],v[i%l2],func);}return r;}// if both are single values
 if(!Array.isArray(a)){var _r=func(a,v);if(!isNaN(a)&&!isNaN(v)){return isNaN(_r)?0:_r;}return _r;}// if lefthand side is array
 return a.map(function(x){return arrayCalc(x,v,func);});}exports.arrayCalc=arrayCalc;// flatten a multidimensional array. Optionally set the depth
 // for the flattening
@@ -3466,7 +3476,7 @@ return a.map(function(x){return arrayCalc(x,v,func);});}exports.arrayCalc=arrayC
 // @param {Number} -> depth of flatten
 // @return {Array} -> flattened array
 //
-function flatten(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var depth=arguments.length>1&&arguments[1]!==undefined?arguments[1]:Infinity;a=Array.isArray(a)?a:[a];return a.flat(depth);}exports.flatten=flatten;exports.flat=flatten;// Truncate all the values in an array towards 0,
+function flatten(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var depth=arguments.length>1&&arguments[1]!==undefined?arguments[1]:Infinity;return toArray(a).flat(depth);}exports.flatten=flatten;exports.flat=flatten;// Truncate all the values in an array towards 0,
 // sometimes referred to as rounding down
 // 
 // @param {Number/Array} -> input value
@@ -3476,7 +3486,7 @@ function truncate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments
 // 
 // @param {Array} -> input array
 // @return {Number} -> summed array
-function sum(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];a=Array.isArray(a)?a:[a];var s=0;a.forEach(function(v){s+=isNaN(v)?0:v;});return s;}exports.sum=sum;// Return the biggest value from an array
+function sum(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var s=0;toArray(a).forEach(function(v){s+=isNaN(v)?0:v;});return s;}exports.sum=sum;// Return the biggest value from an array
 // 
 // @param {NumberArray} -> input array
 // @return {Number} -> biggest value
@@ -3508,7 +3518,7 @@ return divide(subtract(a,min),range);}exports.normalize=normalize;exports.norm=n
 //                    See the asciichart documentation
 // 
 function plot(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var prefs=arguments.length>1?arguments[1]:undefined;// if a is not an Array
-a=Array.isArray(a)?a:[a];// empty object if no preferences
+a=toArray(a);// empty object if no preferences
 prefs=typeof prefs!=='undefined'?prefs:{};prefs.log=typeof prefs.log!=='undefined'?prefs.log:true;prefs.data=typeof prefs.data!=='undefined'?prefs.data:false;prefs.decimals=typeof prefs.decimals!=='undefined'?prefs.decimals:2;var p=chart.plot(a,prefs);if(prefs.data){console.log('chart data: [',a.map(function(x){return x.toFixed(prefs.decimals);}).join(", "),"]\n");}if(prefs.log){console.log(chart.plot(a,prefs),"\n");}return p;}exports.plot=plot;// Draw a 2D-array of values to the console in the form of an
 // ascii gray-scaleimage and return chart from function. 
 // If you just want the chart returned as text and not log to console 
@@ -3521,7 +3531,7 @@ prefs=typeof prefs!=='undefined'?prefs:{};prefs.log=typeof prefs.log!=='undefine
 //                 -> { error: false } use error character for error reporting
 // 
 function draw(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var prefs=arguments.length>1?arguments[1]:undefined;// if a is not an array
-a=Array.isArray(a)?a:[a];// if a is not an 2d-array
+a=toArray(a);// if a is not an 2d-array
 a=Array.isArray(a[0])?a:[a];// empty object if no preferences
 prefs=typeof prefs!=='undefined'?prefs:{};prefs.log=typeof prefs.log!=='undefined'?prefs.log:true;prefs.extend=typeof prefs.extend!=='undefined'?prefs.extend:true;prefs.error=typeof prefs.error!=='undefined'?prefs.error:false;// when using extended ascii set
 var chars=prefs.extend?' ░▒▓█'.split(''):' .-=+#'.split('');// when flagging NaN values

@@ -17,6 +17,17 @@ exports.HALF_PI = HALF_PI;
 exports.TWO_PI = TWO_PI;
 exports.PI = PI;
 
+// check if the value is an array or not
+// if not transform into an array and output
+//
+// @param {Value} -> input to be checked
+// @return {Array} -> the input as an array
+//
+function toArray(a=0){
+	return Array.isArray(a) ? a : [a];
+}
+exports.toArray = toArray;
+
 // Wrap a value between a low and high range
 // Similar to mod, expect the low range is also adjustable
 // 
@@ -233,7 +244,7 @@ exports.sqrt = sqrt;
 function arrayCalc(a=0, v=0, func=()=>{return a;}){
 	// if righthand side is array
 	if (Array.isArray(v)){
-		a = (Array.isArray(a))? a : [a];
+		a = toArray(a);
 		let l1 = a.length, l2 = v.length, r = [];
 		let l = Math.max(l1, l2);
 		for (let i=0; i<l; i++){
@@ -262,8 +273,7 @@ exports.arrayCalc = arrayCalc;
 // @return {Array} -> flattened array
 //
 function flatten(a=[0], depth=Infinity){
-	a = Array.isArray(a)? a : [a];
-	return a.flat(depth);
+	return toArray(a).flat(depth);
 }
 exports.flatten = flatten;
 exports.flat = flatten;
@@ -289,9 +299,8 @@ exports.int = truncate;
 // @param {Array} -> input array
 // @return {Number} -> summed array
 function sum(a=[0]){
-	a = Array.isArray(a)? a : [a];
 	let s = 0;
-	a.forEach((v) => {
+	toArray(a).forEach((v) => {
 		s += isNaN(v)? 0 : v;
 	});
 	return s;
@@ -354,7 +363,7 @@ exports.norm = normalize;
 // 
 function plot(a=[0], prefs){
 	// if a is not an Array
-	a = (Array.isArray(a)) ? a : [a]; 
+	a = toArray(a);
 	// empty object if no preferences
 	prefs = (typeof prefs !== 'undefined') ? prefs : {};
 
@@ -386,7 +395,7 @@ exports.plot = plot;
 // 
 function draw(a=[0], prefs){
 	// if a is not an array
-	a = (Array.isArray(a)) ? a : [a];
+	a = toArray(a);
 	// if a is not an 2d-array
 	a = (Array.isArray(a[0])) ? a : [a];
 

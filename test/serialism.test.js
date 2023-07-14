@@ -1223,6 +1223,16 @@ function testUtility(){
 		expect(Util.lerp([-2, 4, 6], [10, 20, 30], 0.5)).toStrictEqual([4, 12, 18]);
 	});
 
+	test("Util.toArray()", () => {
+		expect(Util.toArray()).toStrictEqual([0]);
+	});
+	test("Util.toArray(1)", () => {
+		expect(Util.toArray(1)).toStrictEqual([1]);
+	});
+	test("Util.toArray([1,2,3])", () => {
+		expect(Util.toArray([1,2,3])).toStrictEqual([1, 2, 3]);
+	});
+
 	test("Util.sum([1, 2, 3, 4])", () => {
 		expect(Util.sum([1, 2, 3, 4])).toStrictEqual(10);
 	});
