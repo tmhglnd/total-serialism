@@ -28,6 +28,25 @@ function toArray(a){
 }
 exports.toArray = toArray;
 
+// Return the length/size of an array if the argument is an array
+// if argument is a number return the number as integer
+// if argument is not a number return 1
+// The method can be used to input arrays as arguments for other functions
+// 
+// @param {Value/Array} -> input value to check
+// @return {Int} -> the array length
+// 
+function length(a){
+	if (Array.isArray(a)){
+		// return array length if argument is array
+		return a.length;
+	}
+	// else return 1 if NaN or positive integer if Number
+	return isNaN(a) ? 1 : Math.max(1, Math.floor(a));
+}
+exports.length = length;
+exports.size = length;
+
 // Wrap a value between a low and high range
 // Similar to mod, expect the low range is also adjustable
 // 

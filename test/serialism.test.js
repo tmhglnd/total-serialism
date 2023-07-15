@@ -1233,6 +1233,25 @@ function testUtility(){
 		expect(Util.toArray([1,2,3])).toStrictEqual([1, 2, 3]);
 	});
 
+	test("Util.length()", () => {
+		expect(Util.length()).toStrictEqual(1);
+	});
+	test("Util.length([1, 2, 3, 4, 5])", () => {
+		expect(Util.length([1, 2, 3, 4, 5])).toStrictEqual(5);
+	});
+	test("Util.size(8)", () => {
+		expect(Util.size(8)).toStrictEqual(8);
+	});
+	test("Util.size(Math.PI)", () => {
+		expect(Util.size(Math.PI)).toStrictEqual(3);
+	});
+	test("Util.size(-Math.PI)", () => {
+		expect(Util.size(-Math.PI)).toStrictEqual(1);
+	});
+	test("Util.size('foo')", () => {
+		expect(Util.size('foo')).toStrictEqual(1);
+	});
+
 	test("Util.sum([1, 2, 3, 4])", () => {
 		expect(Util.sum([1, 2, 3, 4])).toStrictEqual(10);
 	});

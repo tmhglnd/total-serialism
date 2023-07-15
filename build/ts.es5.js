@@ -2104,9 +2104,10 @@ Math// math: package containing random, pow, and seedrandom
 // 
 // credits:
 // - spread-methods inspired by Max8's MC functions spread and spreadinclusive
+// - cosine/sine array generation inspired by workshop by Steven Yi at ICLC
 //==========================================================================
 // const Util = require('./utility.js');
-var _require=require('./utility'),map=_require.map,flatten=_require.flatten,toArray=_require.toArray;// Generate a list of n-length starting at one value
+var _require=require('./utility'),map=_require.map,flatten=_require.flatten,toArray=_require.toArray,TWO_PI=_require.TWO_PI;// Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
 // Evenly spaced values in between in floating-point
 // Defaults to range of 0 - 1 for Float
@@ -2206,15 +2207,17 @@ if(!args.length){return[0];}var len=args.length/2;var arr=[];for(var i=0;i<len;i
 // @param {Number} -> Phase offset (optional, default=0)
 // @return {Array} -> Sine function
 // 
-function sineFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;if(lo===undefined){lo=-1;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
-periods=toArray(periods);// if no range specified
-// if (lo === undefined){ lo = -1; hi = 1; }
+function sineFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;// if no range specified
+if(lo===undefined){lo=-1;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
+periods=toArray(periods);// if (lo === undefined){ lo = -1; hi = 1; }
 // swap if lo > hi
 // if (lo > hi){ var t=lo, lo=hi, hi=t; }
 // array length minimum of 1
-len=Math.max(1,len);var arr=[];var twoPI=Math.PI*2.0;// let a = Math.PI * 2.0 * periods / len;
-var p=Math.PI*phase*2.0;for(var i=0;i<len;i++){// arr[i] = Math.sin(a * i + p);
-var a=twoPI*periods[i%periods.length]/len;arr[i]=Math.sin(a*i+p);}return map(arr,-1,1,lo,hi);}exports.sineFloat=sineFloat;exports.sineF=sineFloat;exports.sinF=sineFloat;// Generate an integer array with n-periods of a sine function
+len=Math.max(1,len);var arr=[];// let twoPI = Math.PI * 2.0;
+// let a = Math.PI * 2.0 * periods / len;
+// let p = Math.PI * phase * 2.0;
+var p=TWO_PI*phase;for(var i=0;i<len;i++){// arr[i] = Math.sin(a * i + p);
+var a=TWO_PI*periods[i%periods.length]/len;arr[i]=Math.sin(a*i+p);}return map(arr,-1,1,lo,hi);}exports.sineFloat=sineFloat;exports.sineF=sineFloat;exports.sinF=sineFloat;// Generate an integer array with n-periods of a sine function
 // Optional last arguments set lo and hi range
 // 
 // @param {Int} -> Length of output array
@@ -2267,7 +2270,10 @@ len=Math.max(1,len);var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*pe
 // @param {Int+/Array} -> Array of numbers to convert to binary representation
 // @return {Array} -> Array of 1's and 0's
 //
-function binary(){for(var _len2=arguments.length,a=new Array(_len2),_key2=0;_key2<_len2;_key2++){a[_key2]=arguments[_key2];}if(!a.length){return[0];}a=flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])){arr=arr.concat(0);}else{var v=Math.floor(Math.max(a[i],0));arr=arr.concat(v.toString(2).split('').map(function(x){return Number(x);}));}}return arr;}exports.binary=binary;exports.binaryBeat=binary;// Generate an array of 1's and 0's based on a positive integer number or array
+function binary(){for(var _len2=arguments.length,a=new Array(_len2),_key2=0;_key2<_len2;_key2++){a[_key2]=arguments[_key2];}// if no arguments return else flatten array to 1 dimension
+if(!a.length){return[0];}a=flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])){arr=arr.concat(0);}else{// make the value into a whole number
+var v=Math.floor(Math.max(a[i],0));// convert the number to binary string, split, convert to numbers
+arr=arr.concat(v.toString(2).split('').map(function(x){return Number(x);}));}}return arr;}exports.binary=binary;exports.binaryBeat=binary;// Generate an array of 1's and 0's based on a positive integer number or array
 // Every number in the array will be replaced by a 1 with a specified amount of 
 // 0's appended to it. Eg. a 2 => 1 0, a 4 => 1 0 0 0, etc. This technique is
 // useful to generate a rhythm based on spacing length between onsets
@@ -2275,7 +2281,10 @@ function binary(){for(var _len2=arguments.length,a=new Array(_len2),_key2=0;_key
 // @param {Int+/Array} -> Array of numbers to convert to spaced rhythm
 // @return {Array} -> Array of 1's and 0's representing a rhythm
 //
-function spacing(){for(var _len3=arguments.length,a=new Array(_len3),_key3=0;_key3<_len3;_key3++){a[_key3]=arguments[_key3];}if(!a.length){return[0];}a=flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])||a[i]<1){arr=arr.concat(0);}else{for(var j=0;j<Math.floor(a[i]);j++){arr.push(!j?1:0);}}}return arr;}exports.space=spacing;exports.spacing=spacing;exports.spacingBeat=spacing;},{"./utility":42}],37:[function(require,module,exports){//==============================================================================
+function spacing(){for(var _len3=arguments.length,a=new Array(_len3),_key3=0;_key3<_len3;_key3++){a[_key3]=arguments[_key3];}// if no arguments return else flatten array to 1 dimension
+if(!a.length){return[0];}a=flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])||a[i]<1){// if no number or less than 1 append 0
+arr=arr.concat(0);}else{// for every integer push a 1 followed by 0's
+for(var j=0;j<Math.floor(a[i]);j++){arr.push(!j?1:0);}}}return arr;}exports.space=spacing;exports.spacing=spacing;exports.spacingBeat=spacing;},{"./utility":42}],37:[function(require,module,exports){//==============================================================================
 // gen-complex.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2307,7 +2316,7 @@ BigNumber.config({DECIMAL_PLACES:20,EXPONENTIAL_AT:[-7,20]});// A hexadecimal rh
 // @param {String} -> hexadecimal characters (0 t/m f)
 // @return {Array} -> rhythm
 // 
-function hexBeat(){var hex=arguments.length>0&&arguments[0]!==undefined?arguments[0]:"8";if(!hex.isNaN){hex=hex.toString();}var a=[];for(var i in hex){var binary=parseInt("0x"+hex[i]).toString(2);binary=isNaN(binary)?'0000':binary;var padding=binary.padStart(4,'0');a=a.concat(padding.split('').map(function(x){return Number(x);}));}return a;}exports.hexBeat=hexBeat;// A fast euclidean rhythm algorithm
+function hexBeat(){var hex=arguments.length>0&&arguments[0]!==undefined?arguments[0]:"8";if(!hex.isNaN){hex=hex.toString();}var a=[];for(var i=0;i<hex.length;i++){var binary=parseInt("0x"+hex[i]).toString(2);binary=isNaN(binary)?'0000':binary;var padding=binary.padStart(4,'0');a=a.concat(padding.split('').map(function(x){return Number(x);}));}return a;}exports.hexBeat=hexBeat;exports.hex=hexBeat;// A fast euclidean rhythm algorithm
 // Uses the downsampling of a line drawn between two points in a 
 // 2-dimensional grid to divide the squares into an evenly distributed
 // amount of steps. Generates correct distribution, but the distribution 
@@ -2319,7 +2328,7 @@ function hexBeat(){var hex=arguments.length>0&&arguments[0]!==undefined?argument
 // @param {Int} -> rotate (optional, default=0)
 // @return {Array}
 // 
-function fastEuclid(){var s=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var h=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var r=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var arr=[];var d=-1;for(var i=0;i<s;i++){var v=Math.floor(i*(h/s));arr[i]=Number(v!==d);d=v;}if(r){return rotate(arr,r);}return arr;}exports.fastEuclid=fastEuclid;// The Euclidean rhythm generator
+function fastEuclid(){var s=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var h=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var r=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var arr=[];var d=-1;for(var i=0;i<s;i++){var v=Math.floor(i*(h/s));arr[i]=Number(v!==d);d=v;}if(r){return rotate(arr,r);}return arr;}exports.fastEuclidean=fastEuclid;exports.fastEuclid=fastEuclid;// The Euclidean rhythm generator
 // Generate a euclidean rhythm evenly spacing n-beats amongst n-steps.
 // Inspired by Godfried Toussaints famous paper "The Euclidean Algorithm
 // Generates Traditional Musical Rhythms".
@@ -2329,7 +2338,7 @@ function fastEuclid(){var s=arguments.length>0&&arguments[0]!==undefined?argumen
 // @param {Int} -> rotate (optional, default=0)
 // @return {Array}
 // 
-var pattern,counts,remainders;function euclid(){var steps=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var rot=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;pattern=[];counts=[];remainders=[];var level=0;var divisor=steps-beats;remainders.push(beats);while(remainders[level]>1){counts.push(Math.floor(divisor/remainders[level]));remainders.push(divisor%remainders[level]);divisor=remainders[level];level++;}counts.push(divisor);build(level);return rotate(pattern,rot-pattern.indexOf(1));}exports.euclid=euclid;function build(l){var level=l;if(level==-1){pattern.push(0);}else if(level==-2){pattern.push(1);}else{for(var i=0;i<counts[level];i++){build(level-1);}if(remainders[level]!=0){build(level-2);}}}// Lindemayer String expansion
+var pattern,counts,remainders;function euclid(){var steps=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var rot=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;pattern=[];counts=[];remainders=[];var level=0;var divisor=steps-beats;remainders.push(beats);while(remainders[level]>1){counts.push(Math.floor(divisor/remainders[level]));remainders.push(divisor%remainders[level]);divisor=remainders[level];level++;}counts.push(divisor);build(level);return rotate(pattern,rot-pattern.indexOf(1));}exports.euclidean=euclid;exports.euclid=euclid;function build(l){var level=l;if(level==-1){pattern.push(0);}else if(level==-2){pattern.push(1);}else{for(var i=0;i<counts[level];i++){build(level-1);}if(remainders[level]!=0){build(level-2);}}}// Lindemayer String expansion
 // a recursive fractal algorithm to generate botanic (and more)
 // Default rule is 1 -> 10, 0 -> 1, where 1=A and 0=B
 // Rules are specified as a JS object consisting of strings or arrays
@@ -2408,7 +2417,7 @@ function fibonacci(){var len=arguments.length>0&&arguments[0]!==undefined?argume
 // @param {Int} -> modulus for pisano period
 // @return {Int-Array} -> array of integers
 // 
-function pisano(){var mod=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:-1;if(mod<2){return[0];}if(len<1){return pisanoPeriod(mod);}else{return numBonacci(len,0,1,1).map(function(x){return x.mod(mod).toNumber();});}}exports.pisano=pisano;function pisanoPeriod(){var mod=arguments.length>0&&arguments[0]!==undefined?arguments[0]:2;var length=arguments.length>1&&arguments[1]!==undefined?arguments[1]:32;// console.log('pisano', '@mod', mod, '@length', length);
+function pisano(){var mod=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:-1;if(mod<2){return[0];}if(len<1){return pisanoPeriod(mod);}else{return numBonacci(len,0,1,1).map(function(x){return x.mod(mod).toNumber();});}}exports.pisanoPeriod=pisano;exports.pisano=pisano;function pisanoPeriod(){var mod=arguments.length>0&&arguments[0]!==undefined?arguments[0]:2;var length=arguments.length>1&&arguments[1]!==undefined?arguments[1]:32;// console.log('pisano', '@mod', mod, '@length', length);
 var seq=numBonacci(length,0,1,1).map(function(x){return x.mod(mod).toNumber();});var p=[],l=0;for(var i=0;i<seq.length;i++){// console.log(i, seq[i]);
 p.push(seq[i]);if(p.length>2){var c=[0,1,1];var equals=0;// compare last 3 values with [0, 1, 1]
 for(var k=0;k<p.length;k++){equals+=p[k]===c[k];// console.log('>>', equals);
@@ -2539,7 +2548,7 @@ function getSeed(){return _seed;}exports.getSeed=getSeed;// generate a list of r
 // 
 function randomFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// len is positive and minimum of 1
-len=Math.max(1,len);var arr=new Array(len);for(var i=0;i<len;i++){arr[i]=rng()*(hi-lo)+lo;}return arr;}(lo,hi);}exports.randomFloat=randomFloat;exports.randomF=randomFloat;// generate a list of random integer values 
+len=Math.max(1,len);var arr=[];for(var i=0;i<len;i++){arr[i]=rng()*(hi-lo)+lo;}return arr;}(lo,hi);}exports.randomFloat=randomFloat;exports.randomF=randomFloat;// generate a list of random integer values 
 // between a certain specified range (excluding high val)
 // 
 // @param {Int} -> number of values to output
@@ -3359,7 +3368,17 @@ var chart=require('asciichart');var HALF_PI=Math.PI/2.0;var TWO_PI=Math.PI*2.0;v
 // @param {Value} -> input to be checked
 // @return {Array} -> the input as an array
 //
-function toArray(a){return Array.isArray(a)?a:[a];}exports.toArray=toArray;// Wrap a value between a low and high range
+function toArray(a){return Array.isArray(a)?a:[a];}exports.toArray=toArray;// Return the length/size of an array if the argument is an array
+// if argument is a number return the number as integer
+// if argument is not a number return 1
+// The method can be used to input arrays as arguments for other functions
+// 
+// @param {Value/Array} -> input value to check
+// @return {Int} -> the array length
+// 
+function length(a){if(Array.isArray(a)){// return array length if argument is array
+return a.length;}// else return 1 if NaN or positive integer if Number
+return isNaN(a)?1:Math.max(1,Math.floor(a));}exports.length=length;exports.size=length;// Wrap a value between a low and high range
 // Similar to mod, expect the low range is also adjustable
 // 
 // @param {Number/Array} -> input value

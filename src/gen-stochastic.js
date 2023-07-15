@@ -66,7 +66,7 @@ function randomFloat(len=1, lo=1, hi=0){
 	// len is positive and minimum of 1
 	len = Math.max(1, len);
 	
-	var arr = new Array(len);
+	var arr = [];
 	for (var i=0; i<len; i++){
 		arr[i] = (rng() * (hi - lo)) + lo;
 	}

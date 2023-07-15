@@ -7621,10 +7621,11 @@ if ((typeof module) == 'object' && module.exports) {
 // 
 // credits:
 // - spread-methods inspired by Max8's MC functions spread and spreadinclusive
+// - cosine/sine array generation inspired by workshop by Steven Yi at ICLC
 //==========================================================================
 
 // const Util = require('./utility.js');
-const { map, flatten, toArray } = require('./utility');
+const { map, flatten, toArray, TWO_PI } = require('./utility');
 
 // Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
@@ -7832,11 +7833,12 @@ exports.fill = fill;
 // @return {Array} -> Sine function
 // 
 function sineFloat(len=1, periods=1, lo, hi, phase=0){
+	// if no range specified
 	if (lo === undefined){ lo = -1; hi = 1; }
 	else if (hi === undefined){ hi = lo, lo = 0; }
 	// make periods array
 	periods = toArray(periods);
-	// if no range specified
+	
 	// if (lo === undefined){ lo = -1; hi = 1; }
 	// swap if lo > hi
 	// if (lo > hi){ var t=lo, lo=hi, hi=t; }
@@ -7845,12 +7847,13 @@ function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	len = Math.max(1, len);
 	let arr = [];
 
-	let twoPI = Math.PI * 2.0;
+	// let twoPI = Math.PI * 2.0;
 	// let a = Math.PI * 2.0 * periods / len;
-	let p = Math.PI * phase * 2.0;
+	// let p = Math.PI * phase * 2.0;
+	let p = TWO_PI * phase;
 	for (let i=0; i<len; i++){
 		// arr[i] = Math.sin(a * i + p);
-		let a = twoPI * periods[i % periods.length] / len;
+		let a = TWO_PI * periods[i % periods.length] / len;
 		arr[i] = Math.sin(a * i + p);
 	}
 	return map(arr, -1, 1, lo, hi);
@@ -7983,6 +7986,7 @@ exports.rect = square;
 // @return {Array} -> Array of 1's and 0's
 //
 function binary(...a){
+	// if no arguments return else flatten array to 1 dimension
 	if (!a.length) { return [0]; }
 	a = flatten(a);
 
@@ -7991,7 +7995,9 @@ function binary(...a){
 		if (isNaN(a[i])){
 			arr = arr.concat(0);
 		} else {
+			// make the value into a whole number
 			let v = Math.floor(Math.max(a[i], 0));
+			// convert the number to binary string, split, convert to numbers
 			arr = arr.concat(v.toString(2).split('').map((x) => Number(x)));
 		}
 	}
@@ -8009,14 +8015,17 @@ exports.binaryBeat = binary;
 // @return {Array} -> Array of 1's and 0's representing a rhythm
 //
 function spacing(...a){
+	// if no arguments return else flatten array to 1 dimension
 	if (!a.length) { return [0]; }
 	a = flatten(a);
 
 	let arr = [];
 	for (let i=0; i<a.length; i++){
 		if (isNaN(a[i]) || a[i] < 1){
+			// if no number or less than 1 append 0
 			arr = arr.concat(0);
 		} else {
+			// for every integer push a 1 followed by 0's
 			for (let j=0; j<Math.floor(a[i]); j++){
 				arr.push(!j ? 1 : 0);
 			}
@@ -8073,7 +8082,7 @@ BigNumber.config({
 function hexBeat(hex="8"){
 	if (!hex.isNaN){ hex = hex.toString(); }
 	let a = [];
-	for (let i in hex){
+	for (let i=0; i<hex.length; i++){
 		let binary = parseInt("0x"+hex[i]).toString(2);
 		binary = isNaN(binary)? '0000' : binary;
 		let padding = binary.padStart(4, '0');
@@ -8082,6 +8091,7 @@ function hexBeat(hex="8"){
 	return a;
 }
 exports.hexBeat = hexBeat;
+exports.hex = hexBeat;
 
 // A fast euclidean rhythm algorithm
 // Uses the downsampling of a line drawn between two points in a 
@@ -8109,6 +8119,7 @@ function fastEuclid(s=8, h=4, r=0){
 	}
 	return arr;
 }
+exports.fastEuclidean = fastEuclid;
 exports.fastEuclid = fastEuclid;
 
 // The Euclidean rhythm generator
@@ -8143,6 +8154,7 @@ function euclid(steps=8, beats=4, rot=0){
 
 	return rotate(pattern, rot - pattern.indexOf(1));
 }
+exports.euclidean = euclid;
 exports.euclid = euclid;
 
 function build(l){
@@ -8352,6 +8364,7 @@ function pisano(mod=12, len=-1){
 		return numBonacci(len, 0, 1, 1).map(x => x.mod(mod).toNumber());
 	}
 }
+exports.pisanoPeriod = pisano;
 exports.pisano = pisano;
 
 function pisanoPeriod(mod=2, length=32){
@@ -8662,7 +8675,7 @@ function randomFloat(len=1, lo=1, hi=0){
 	// len is positive and minimum of 1
 	len = Math.max(1, len);
 	
-	var arr = new Array(len);
+	var arr = [];
 	for (var i=0; i<len; i++){
 		arr[i] = (rng() * (hi - lo)) + lo;
 	}
@@ -10710,6 +10723,25 @@ function toArray(a){
 	return Array.isArray(a) ? a : [a];
 }
 exports.toArray = toArray;
+
+// Return the length/size of an array if the argument is an array
+// if argument is a number return the number as integer
+// if argument is not a number return 1
+// The method can be used to input arrays as arguments for other functions
+// 
+// @param {Value/Array} -> input value to check
+// @return {Int} -> the array length
+// 
+function length(a){
+	if (Array.isArray(a)){
+		// return array length if argument is array
+		return a.length;
+	}
+	// else return 1 if NaN or positive integer if Number
+	return isNaN(a) ? 1 : Math.max(1, Math.floor(a));
+}
+exports.length = length;
+exports.size = length;
 
 // Wrap a value between a low and high range
 // Similar to mod, expect the low range is also adjustable

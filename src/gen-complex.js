@@ -43,7 +43,7 @@ BigNumber.config({
 function hexBeat(hex="8"){
 	if (!hex.isNaN){ hex = hex.toString(); }
 	let a = [];
-	for (let i in hex){
+	for (let i=0; i<hex.length; i++){
 		let binary = parseInt("0x"+hex[i]).toString(2);
 		binary = isNaN(binary)? '0000' : binary;
 		let padding = binary.padStart(4, '0');
@@ -52,6 +52,7 @@ function hexBeat(hex="8"){
 	return a;
 }
 exports.hexBeat = hexBeat;
+exports.hex = hexBeat;
 
 // A fast euclidean rhythm algorithm
 // Uses the downsampling of a line drawn between two points in a 
@@ -79,6 +80,7 @@ function fastEuclid(s=8, h=4, r=0){
 	}
 	return arr;
 }
+exports.fastEuclidean = fastEuclid;
 exports.fastEuclid = fastEuclid;
 
 // The Euclidean rhythm generator
@@ -113,6 +115,7 @@ function euclid(steps=8, beats=4, rot=0){
 
 	return rotate(pattern, rot - pattern.indexOf(1));
 }
+exports.euclidean = euclid;
 exports.euclid = euclid;
 
 function build(l){
@@ -322,6 +325,7 @@ function pisano(mod=12, len=-1){
 		return numBonacci(len, 0, 1, 1).map(x => x.mod(mod).toNumber());
 	}
 }
+exports.pisanoPeriod = pisano;
 exports.pisano = pisano;
 
 function pisanoPeriod(mod=2, length=32){

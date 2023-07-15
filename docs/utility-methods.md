@@ -24,6 +24,7 @@ const Util = require('total-serialism').Utility;
 - [sqrt](#sqrt)
 - [arrayCalc](#arrayCalc)
 - [toArray](#toArray)
+- [size](#size)
 - [sum](#sum)
 - [minimum](#minimum)
 - [maximum](#maximum)
@@ -155,7 +156,7 @@ Util.lerp(2, 10, 0.5)
 Util.lerp([-2, 4, 6], [10, 20, 30], 0.5)
 //=> [4, 12, 18]
 
-// Alias: mix
+// Alias: mix()
 ```
 
 ## toArray
@@ -178,6 +179,30 @@ Util.toArray(1);
 
 Util.toArray([1, 2, 3]);
 //=> [ 1, 2, 3 ]
+```
+
+## size
+
+Return the length/size of an array if the argument is an array. If the argument is a number return the number as a positive integer greater than 0. If the argument is not a number return 1. The method can be used to input arrays as arguments for other functions
+
+**arguments**
+- @param {Value/Array} -> input value to check
+- @return {Int} -> the array length
+
+```js
+Util.size([5, 7, 3, 2, 9]);
+//=> 5
+
+Util.size(8);
+//=> 8
+
+Util.size(3.1415);
+//=> 3
+
+Util.size('foo');
+//=> 1
+
+// Alias: length()
 ```
 
 # Arithmetic
@@ -205,6 +230,8 @@ Util.subtract([1, 2, 3, 4], [1, 2, 3]);
 
 Util.sub([1, [2, 3]], [10, [20, 30, 40]]);
 //=> [ -9, [ -18, -27, -38 ] ] 
+
+// Alias: sub()
 ```
 
 ## multiply
@@ -216,6 +243,8 @@ Util.multiply([1, 2, 3, 4], [1, 2, 3]);
 
 Util.mul([1, [2, 3]], [10, [20, 30, 40]]);
 //=> [ 10, [ 40, 90, 80 ] ] 
+
+// Alias: mul(), mult()
 ```
 
 ## divide
@@ -227,6 +256,8 @@ Util.divide([1, 2, 3, 4], [1, 2, 3]);
 
 Util.div([1, [2, 3]], [10, [20, 30, 40]]);
 //=> [ 0.1, [ 0.1, 0.1, 0.05 ] ] 
+
+// Alias: div()
 ```
 
 ## pow

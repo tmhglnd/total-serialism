@@ -9,10 +9,11 @@
 // 
 // credits:
 // - spread-methods inspired by Max8's MC functions spread and spreadinclusive
+// - cosine/sine array generation inspired by workshop by Steven Yi at ICLC
 //==========================================================================
 
 // const Util = require('./utility.js');
-const { map, flatten, toArray } = require('./utility');
+const { map, flatten, toArray, TWO_PI } = require('./utility');
 
 // Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
@@ -220,11 +221,12 @@ exports.fill = fill;
 // @return {Array} -> Sine function
 // 
 function sineFloat(len=1, periods=1, lo, hi, phase=0){
+	// if no range specified
 	if (lo === undefined){ lo = -1; hi = 1; }
 	else if (hi === undefined){ hi = lo, lo = 0; }
 	// make periods array
 	periods = toArray(periods);
-	// if no range specified
+	
 	// if (lo === undefined){ lo = -1; hi = 1; }
 	// swap if lo > hi
 	// if (lo > hi){ var t=lo, lo=hi, hi=t; }
@@ -233,12 +235,13 @@ function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	len = Math.max(1, len);
 	let arr = [];
 
-	let twoPI = Math.PI * 2.0;
+	// let twoPI = Math.PI * 2.0;
 	// let a = Math.PI * 2.0 * periods / len;
-	let p = Math.PI * phase * 2.0;
+	// let p = Math.PI * phase * 2.0;
+	let p = TWO_PI * phase;
 	for (let i=0; i<len; i++){
 		// arr[i] = Math.sin(a * i + p);
-		let a = twoPI * periods[i % periods.length] / len;
+		let a = TWO_PI * periods[i % periods.length] / len;
 		arr[i] = Math.sin(a * i + p);
 	}
 	return map(arr, -1, 1, lo, hi);
@@ -371,6 +374,7 @@ exports.rect = square;
 // @return {Array} -> Array of 1's and 0's
 //
 function binary(...a){
+	// if no arguments return else flatten array to 1 dimension
 	if (!a.length) { return [0]; }
 	a = flatten(a);
 
@@ -379,7 +383,9 @@ function binary(...a){
 		if (isNaN(a[i])){
 			arr = arr.concat(0);
 		} else {
+			// make the value into a whole number
 			let v = Math.floor(Math.max(a[i], 0));
+			// convert the number to binary string, split, convert to numbers
 			arr = arr.concat(v.toString(2).split('').map((x) => Number(x)));
 		}
 	}
@@ -397,14 +403,17 @@ exports.binaryBeat = binary;
 // @return {Array} -> Array of 1's and 0's representing a rhythm
 //
 function spacing(...a){
+	// if no arguments return else flatten array to 1 dimension
 	if (!a.length) { return [0]; }
 	a = flatten(a);
 
 	let arr = [];
 	for (let i=0; i<a.length; i++){
 		if (isNaN(a[i]) || a[i] < 1){
+			// if no number or less than 1 append 0
 			arr = arr.concat(0);
 		} else {
+			// for every integer push a 1 followed by 0's
 			for (let j=0; j<Math.floor(a[i]); j++){
 				arr.push(!j ? 1 : 0);
 			}
