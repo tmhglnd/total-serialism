@@ -28,7 +28,7 @@ const Gen = require('total-serialism').Generative;
 Generate an array of n-length of evenly spaced values between a starting number up until (but excluding) the 3th argument. Flipping the low and high range will result in the same values but descending.
 
 **arguments**
-- {Int+} -> Length of array
+- {Int+/Array} -> Length of output array (uses length of Array if input)
 - {Number} -> Low value (optional, default=0)
 - {Number} -> High value (exclusive, optional, default=length)
 
@@ -63,7 +63,7 @@ Gen.spreadFloat(5);
 Generate an array of n-length of evenly spaced values between a starting number up to (and including) the 3th argument. Flipping the low and high range will result in the same values but descending.
 
 **arguments**
-- {Int+} -> Length of array
+- {Int+/Array} -> Length of output array (uses length of Array if input)
 - {Number} -> Low value (optional)
 - {Number} -> High value (inclusive, optional)
 
@@ -97,7 +97,7 @@ Gen.spreadInclusiveFloat(5);
 Similar to spread and spreadFloat but with an optional exponent as 4th argument.
 
 **arguments**
-- {Int+} -> Length of array
+- {Int+/Array} -> Length of output array (uses length of Array if input)
 - {Number} -> Low value (optional, default=0)
 - {Number} -> High value (exclusive, optional, default=length)
 - {Number} -> Exponent (optional, default=1)
@@ -118,7 +118,7 @@ Gen.spreadExpFloat();
 Similar to spreadInclusive and spreadInclusiveFloat but with an optional exponent as 4th argument.
 
 **arguments**
-- {Int+} -> Length of array
+- {Int+/Array} -> Length of output array (uses length of Array if input)
 - {Number} -> Low value (optional)
 - {Number} -> High value (inclusive, optional)
 - {Number} -> Exponent (optional, default=1)
@@ -160,7 +160,7 @@ Gen.fill([10, 2, 15, 3, 20, 4]);
 Generate an array with n-periods of a (co)sine function with integer values. Optional last arguments set lo and hi range and phase offset. Default range is 0 to 12. Wave can be inverted by swapping the arguments
 
 **arguments**
-- {Int+} -> Length of array
+- {Int+/Array} -> Length of output array (uses length of Array if input)
 - {Number} -> Periods of (co)sine-wave (optional, default=1)
 - {Number} -> Low range of values (optional, default=0)
 - {Number} -> High range of values (optional, default=12)
@@ -204,7 +204,7 @@ Gen.sine(11, 4, 0, 7);
 Generate an array with n-periods of a (co)sine function with floating-point values. Optional last arguments set lo and hi range and phase offset. Default range is -1 to 1. Only setting first range argument sets the low-range to 0. Wave can be inverted by swapping the arguments.
 
 **arguments**
-- {Int+} -> Length of array
+- {Int+/Array} -> Length of output array (uses length of Array if input)
 - {Number} -> Periods of (co)sine-wave (optional, default=1)
 - {Number} -> Low range of values (optional, default=-1)
 - {Number} -> High range of values (optional, default=1)
@@ -259,7 +259,7 @@ Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5));
 Generate an array with n-periods of a saw/phasor function. Optional last arguments set lo and hi range and phase offset. Only setting first range argument sets the low-range to 0
 
 **arguments**
-- {Int} -> Length of output array (resolution)
+- {Int+/Array} -> Length of output array (uses length of Array if input)
 - {Number/Array} -> Periods of the wave (option, default=1)
 - {Number} -> Low range of values (optional, default=-1) 
 - {Number} -> High range of values (optional, default=1)
@@ -311,7 +311,7 @@ Gen.saw(34, Gen.sinF(30, 2, 0, 100), 0, 12);
 Generate an array with n-periods of a square/pulse wave function. Optional last arguments set lo and hi range and pulse width. Only setting first range argument sets the low-range to 0.
 
 **arguments**
-- {Int} -> Length of output array (resolution)
+- {Int+/Array} -> Length of output array (uses length of Array if input)
 - {Number/Array} -> Periods of the wave (option, default=1)
 - {Number} -> Low range of values (optional, default=0) 
 - {Number} -> High range of values (optional, default=1)

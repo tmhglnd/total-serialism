@@ -13,7 +13,7 @@
 //==========================================================================
 
 // const Util = require('./utility.js');
-const { map, flatten, toArray, TWO_PI } = require('./utility');
+const { map, flatten, toArray, size, TWO_PI } = require('./utility');
 
 // Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
@@ -32,8 +32,8 @@ function spreadFloat(len=1, lo=1, hi){
 	let r = hi - lo; 
 	// lo is actual lowest value
 	lo = Math.min(lo, hi);
-	// len is minimum of 1
-	len = Math.max(1, len);
+	// len is minimum of 1 or length of array
+	len = size(len);
 	if (len === 1){ return [0]; }
 	// stepsize
 	let s = Math.abs(r) / len;
@@ -52,7 +52,7 @@ exports.spreadF = spreadFloat;
 // @params {length, low-output, high-output}
 // @return {Array}
 //
-function spread(len, lo=len, hi){
+function spread(len, lo=size(len), hi){
 	let arr = spreadFloat(len, lo, hi);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
@@ -74,7 +74,8 @@ function spreadExpFloat(len=1, lo=1, hi, exp=1){
 	// lo is actual lowest value
 	lo = Math.min(lo, hi);
 	// len is minimum of 1
-	len = Math.max(1, len);
+	len = size(len);
+	// len = Math.max(1, len);
 	if (len === 1){ return [0]; }
 	// generate array
 	let arr = [];
@@ -92,7 +93,7 @@ exports.spreadExpF = spreadExpFloat;
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadExp(len, lo=len, hi, exp){
+function spreadExp(len, lo=size(len), hi, exp){
 	let arr = spreadExpFloat(len, lo, hi, exp);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
@@ -114,7 +115,8 @@ function spreadInclusiveFloat(len=1, lo=1, hi){
 	// lo is actual lowest value
 	lo = Math.min(lo, hi);
 	// len is minimum of 1
-	len = Math.max(1, len);
+	len = size(len);
+	// len = Math.max(1, len);
 	if (len === 1){ return [0]; }
 	// stepsize
 	let s = Math.abs(r) / (len - 1);
@@ -133,7 +135,7 @@ exports.spreadIncF = spreadInclusiveFloat;
 // @params {length, low-output, high-output}
 // @return {Array}
 //
-function spreadInclusive(len, lo=len, hi){
+function spreadInclusive(len, lo=size(len), hi){
 	var arr = spreadInclusiveFloat(len, lo, hi);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
@@ -156,7 +158,8 @@ function spreadInclusiveExpFloat(len=1, lo=1, hi, exp=1){
 	// lo is actual lowest value
 	lo = Math.min(lo, hi);
 	// len is minimum of 1
-	len = Math.max(1, len);
+	len = size(len);
+	// len = Math.max(1, len);
 	// generate array
 	let arr = [];
 	for (let i=0; i<len; i++){
@@ -173,7 +176,7 @@ exports.spreadIncExpF = spreadInclusiveExpFloat;
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadInclusiveExp(len, lo=len, hi, exp){
+function spreadInclusiveExp(len, lo=size(len), hi, exp){
 	var arr = spreadInclusiveExpFloat(len, lo, hi, exp);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
@@ -232,7 +235,8 @@ function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	// if (lo > hi){ var t=lo, lo=hi, hi=t; }
 
 	// array length minimum of 1
-	len = Math.max(1, len);
+	len = size(len);
+	// len = Math.max(1, len);
 	let arr = [];
 
 	// let twoPI = Math.PI * 2.0;
@@ -305,7 +309,8 @@ function sawFloat(len=1, periods=1, lo, hi, phase=0){
 	periods = toArray(periods);
 
 	// array length minimum of 1
-	len = Math.max(1, len);
+	len = size(len);
+	// len = Math.max(1, len);
 	let arr = [];
 
 	let a = 1 / len;
@@ -343,7 +348,8 @@ function squareFloat(len=1, periods=1, lo, hi, pulse=0.5){
 	periods = toArray(periods);
 
 	// array length minimum of 1
-	len = Math.max(1, len);
+	len = size(len);
+	// len = Math.max(1, len);
 	let arr = [];
 
 	let a = 1 / len;

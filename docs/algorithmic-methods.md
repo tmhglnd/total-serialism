@@ -25,11 +25,11 @@ const Algo = require('total-serialism').Algorithmic;
 
 ## euclid
 
-Generate a euclidean rhythm evenly spacing n-beats amongst n-steps.Inspired by Godfried Toussaints famous paper "The Euclidean Algorithm Generates Traditional Musical Rhythms".
+Generate a euclidean rhythm evenly spacing n-hits amongst n-steps. Inspired by Godfried Toussaints famous paper "The Euclidean Algorithm Generates Traditional Musical Rhythms".
 
 **arguments**
-- {Int+} -> length of array (optional, default=8)
-- {Int+} -> beats (optional, default=4)
+- {Int+/Array} -> length of array (optional, default=8, uses length of Array if input)
+- {Int+/Array} -> hits (optional, default=4, uses length of Array if input)
 - {Int} -> rotate (optional, default=0)
 
 ```js
@@ -40,15 +40,15 @@ Algo.euclid(16, 9, 1);
 //=> [ 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1 ]
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/xS8sKejzG" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/xS8sKejzG" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ## fastEuclid
 
-A fast euclidean rhythm algorithm. Uses the downsampling of a line drawn between two points in a 2-dimensional grid to divide the squares into an evenly distributed amount of steps. Generates correct distribution, but the distribution may differ a bit from the recursive method `euclid()` above.
+A fast euclidean rhythm algorithm. Uses the downsampling of a line drawn between two points in a 2-dimensional grid to divide the squares into an evenly distributed amount of steps. Generates correct distribution, but the rotation/order may differ a bit from the recursive `euclid()` method above.
 
 **arguments**
-- {Int} -> steps (optional, default=8)
-- {Int} -> beats (optional, default=4)
+- {Int+/Array} -> length of array (optional, default=8, uses length of Array if input)
+- {Int+/Array} -> hits (optional, default=4, uses length of Array if input)
 - {Int} -> rotate (optional, default=0)
 
 ```js
@@ -76,7 +76,7 @@ Algo.hexBeat(573);
 //=> [ 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1 ] 
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/2iav0oh9K" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/2iav0oh9K" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 - [Learn hex beats by Steven Yi](https://kunstmusik.github.io/learn-hex-beats/)
 
@@ -116,7 +116,7 @@ Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]});
 //=> [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1 ]
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/1jFaQ3vuG" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/1jFaQ3vuG" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ```js
 // Set more complex rules for generating semitones for example
@@ -132,7 +132,7 @@ Algo.linden(0, 2, complexRules);
 //=> [ 0, 3, 7, -1, 0, 12, 19, 0, -1, 0, 3, 7, 12, 0, 0, 5, 19, 0, 3, 7 ]
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/_X0duWOvn" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/_X0duWOvn" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ## cellular automaton
 
@@ -260,7 +260,7 @@ Algo.fibonacci(2, 100, true);
 //=> [ '354224848179261915075', '573147844013817084101' ] 
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/5dICbZv7b" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/5dICbZv7b" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ## pisano
 
@@ -280,7 +280,7 @@ Algo.pisano(4, 10);
 //=> [ 0, 1, 1, 2, 3, 1, 0, 1, 1, 2, 3, 1 ]
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/gputPJXWN" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/gputPJXWN" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ## pell
 

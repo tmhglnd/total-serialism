@@ -24,7 +24,7 @@
 // 
 //==============================================================================
 
-const { mod } = require('./utility');
+const { mod, size } = require('./utility');
 const { rotate } = require('./transform');
 const BigNumber = require('bignumber.js');
 
@@ -69,6 +69,9 @@ exports.hex = hexBeat;
 function fastEuclid(s=8, h=4, r=0){
 	let arr = [];
 	let d = -1;
+	// steps/hits is minimum of 1 or array length
+	s = size(s);
+	h = size(h);
 	
 	for (let i=0; i<s; i++){
 		let v = Math.floor(i * (h / s));
@@ -96,6 +99,10 @@ exports.fastEuclid = fastEuclid;
 var pattern, counts, remainders;
 
 function euclid(steps=8, beats=4, rot=0){
+	// steps/hits is minimum of 1 or array length
+	steps = size(steps);
+	beats = size(beats);
+
 	pattern = [];
 	counts = [];
 	remainders = [];

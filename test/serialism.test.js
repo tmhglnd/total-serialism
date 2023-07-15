@@ -65,6 +65,9 @@ function testGenerative(){
 	test("Gen.spread(6)", () => {
 		expect(Gen.spread(6)).toStrictEqual([0, 1, 2, 3, 4, 5]);
 	});
+	test("Gen.spread([1,2,3,4,5,6])", () => {
+		expect(Gen.spread([1,2,3,4,5,6])).toStrictEqual([0, 1, 2, 3, 4, 5]);
+	});
 	test("Gen.spread(6, 12)", () => {
 		expect(Gen.spread(6, 12)).toStrictEqual([0, 2, 4, 6, 8, 10]);
 	});
@@ -81,6 +84,9 @@ function testGenerative(){
 	test("Gen.spreadFloat(4)", () => {
 		expect(Gen.spreadFloat(4)).toStrictEqual([0, 0.25, 0.5, 0.75]);
 	});
+	test("Gen.spreadFloat([1,2,3,4])", () => {
+		expect(Gen.spreadFloat([1,2,3,4])).toStrictEqual([0, 0.25, 0.5, 0.75]);
+	});
 	test("Gen.spreadFloat(4, 2)", () => {
 		expect(Gen.spreadFloat(4, 2)).toStrictEqual([0, 0.5, 1, 1.5]);
 	});
@@ -93,6 +99,9 @@ function testGenerative(){
 	});
 	test("Gen.spreadInc(6)", () => {
 		expect(Gen.spreadInc(6)).toStrictEqual([0, 1, 2, 3, 4, 6]);
+	});
+	test("Gen.spreadInc([1,2,3,4,5,6])", () => {
+		expect(Gen.spreadInc([1,2,3,4,5,6])).toStrictEqual([0, 1, 2, 3, 4, 6]);
 	});
 	test("Gen.spreadInc(6, 12)", () => {
 		expect(Gen.spreadInc(6, 12)).toStrictEqual([0, 2, 4, 7, 9, 12]);
@@ -110,6 +119,9 @@ function testGenerative(){
 	test("Gen.spreadIncF(5)", () => {
 		expect(Gen.spreadIncF(5)).toStrictEqual([0, 0.25, 0.5, 0.75, 1]);
 	});
+	test("Gen.spreadIncF([1,2,3,4,5])", () => {
+		expect(Gen.spreadIncF([1,2,3,4,5])).toStrictEqual([0, 0.25, 0.5, 0.75, 1]);
+	});
 	test("Gen.spreadIncF(5, 2)", () => {
 		expect(Gen.spreadIncF(5, 2)).toStrictEqual([0, 0.5, 1, 1.5, 2]);
 	});
@@ -120,6 +132,9 @@ function testGenerative(){
 	test("Gen.spreadExp(10, 0, 10, 2)", () => {
 		expect(Gen.spreadExp(10, 0, 10, 2)).toStrictEqual([0, 0, 0, 0, 1, 2, 3, 4, 6, 8]);
 	});
+	test("Gen.spreadExp(new Array(10), 0, 10, 2)", () => {
+		expect(Gen.spreadExp(new Array(10), 0, 10, 2)).toStrictEqual([0, 0, 0, 0, 1, 2, 3, 4, 6, 8]);
+	});
 	test("Gen.spreadIncExp(10, 0, 10, 2)", () => {
 		expect(Gen.spreadIncExp(10, 0, 10, 2)).toStrictEqual([0, 0, 0, 1, 1, 3, 4, 6, 7, 10]);
 	});
@@ -128,6 +143,9 @@ function testGenerative(){
 	});
 	test("Gen.spreadIncExpF(12, 0, 10, 0.5)", () => {
 		expect(Gen.spreadIncExpF(12, 0, 10, 0.5)).toStrictEqual([0, 3.0151134457776365, 4.264014327112209, 5.222329678670935, 6.030226891555273, 6.74199862463242, 7.385489458759964, 7.977240352174656, 8.528028654224418, 9.04534033733291, 9.534625892455924, 10]);
+	});
+	test("Gen.spreadIncExpF(new Array(12), 0, 10, 0.5)", () => {
+		expect(Gen.spreadIncExpF(new Array(12), 0, 10, 0.5)).toStrictEqual([0, 3.0151134457776365, 4.264014327112209, 5.222329678670935, 6.030226891555273, 6.74199862463242, 7.385489458759964, 7.977240352174656, 8.528028654224418, 9.04534033733291, 9.534625892455924, 10]);
 	});
 
 	test("Gen.fill()", () => {
@@ -146,12 +164,18 @@ function testGenerative(){
 	test("Gen.sine(8, 1, -5, 5)", () => {
 		expect(Gen.sine(8, 1, -5, 5)).toStrictEqual([0, 3, 5, 3, 0, -3, -5, -3,]);
 	})
+	test("Gen.sine(Array(8), 1, -5, 5)", () => {
+		expect(Gen.sine(Array(8), 1, -5, 5)).toStrictEqual([0, 3, 5, 3, 0, -3, -5, -3,]);
+	})
 	test("Gen.cos(30, Gen.sinF(30, 2), -5, 5)", () => {
 		expect(Gen.cosine(8, Gen.sinF(8, 2), -5, 5)).toStrictEqual([ 5, 3, 5, -3, 5, -3, 5, 3,]);
 	})
 	
 	test("Gen.saw(8, 8.5)", () => {
 		expect(Gen.saw(8, 8.5)).toStrictEqual([ 0, 0, 1, 2, 3, 3, 4, 5,]);
+	});
+	test("Gen.saw(Array(8), 8.5)", () => {
+		expect(Gen.saw(Array(8), 8.5)).toStrictEqual([ 0, 0, 1, 2, 3, 3, 4, 5,]);
 	});
 	test("Gen.sawF(8, 2.5)", () => {
 		expect(Gen.sawF(8, 2.5)).toStrictEqual([ -1, -0.375, 0.25, 0.875, -0.5, 0.125, 0.75, -0.625,]);
@@ -162,6 +186,9 @@ function testGenerative(){
 
 	test("Gen.square(8, 3, 0, 12, 0.8)", () => {
 		expect(Gen.square(8, 3, 0, 12, 0.8)).toStrictEqual([12, 12, 12, 12, 12, 0, 12, 12]);
+	});
+	test("Gen.square(Array(8), 3, 0, 12, 0.8)", () => {
+		expect(Gen.square(Array(8), 3, 0, 12, 0.8)).toStrictEqual([12, 12, 12, 12, 12, 0, 12, 12]);
 	});
 	test("Gen.squareF(8, 4, 0, 1, 0.2)", () => {
 		expect(Gen.squareF(8, 4, 0, 1, 0.2)).toStrictEqual([1, 0, 1, 0, 1, 0, 1, 0]);
@@ -204,6 +231,9 @@ function testAlgorithmic(){
 	test("Algo.euclid(8, 5)", () => {
 		expect(Algo.euclid(8, 5)).toStrictEqual([1, 0, 1, 1, 0, 1, 1, 0]);
 	});
+	test("Algo.euclid(Array(8), Array(5))", () => {
+		expect(Algo.euclid(Array(8), Array(5))).toStrictEqual([1, 0, 1, 1, 0, 1, 1, 0]);
+	});
 	test("Algo.euclid(8, 3, 1)", () => {
 		expect(Algo.euclid(8, 3, 1)).toStrictEqual([ 0, 1, 0, 0, 1, 0, 0, 1])
 	});
@@ -213,6 +243,9 @@ function testAlgorithmic(){
 	});
 	test("Algo.fastEuclid(8, 5)", () => {
 		expect(Algo.fastEuclid(8, 5)).toStrictEqual([ 1, 0, 1, 0, 1, 1, 0, 1 ]);
+	});
+	test("Algo.fastEuclid(Array(8), Array(5))", () => {
+		expect(Algo.fastEuclid(Array(8), Array(5))).toStrictEqual([ 1, 0, 1, 0, 1, 1, 0, 1 ]);
 	});
 	test("Algo.fastEuclid(8, 3, 1)", () => {
 		expect(Algo.fastEuclid(8, 3, 1)).toStrictEqual([ 0, 1, 0, 0, 1, 0, 0, 1 ]);
@@ -332,6 +365,9 @@ function testAlgorithmic(){
 	test("Algo.pisano(7)", () => {
 		expect(Algo.pisano(7)).toStrictEqual([ 0, 1, 1, 2, 3, 5, 1, 6, 0, 6, 6, 5, 4, 2, 6, 1 ]);
 	});
+	// test("Algo.pisano(Array(7))", () => {
+	// 	expect(Algo.pisano(Array(7))).toStrictEqual([ 0, 1, 1, 2, 3, 5, 1, 6, 0, 6, 6, 5, 4, 2, 6, 1 ]);
+	// });
 	test("Algo.pisano(4, 10)", () => {
 		expect(Algo.pisano(4, 10)).toStrictEqual([ 0, 1, 1, 2, 3, 1, 0, 1, 1, 2 ]);
 	});
@@ -398,6 +434,10 @@ function testStochastic(){
 	test("Rand.random(5, 0, 12)", () => {
 		expect(Rand.random(5, 0, 12)).toStrictEqual([ 11, 8, 4, 10, 1 ]);
 	});
+	test("Rand.random([1,2,3,4,5], 2)", () => {
+		Rand.seed(4827);
+		expect(Rand.random([1,2,3,4,5], 2)).toStrictEqual([ 1, 0, 1, 1, 0 ]);
+	});
 	
 	test("Rand.random(5, 2)", () => {
 		Rand.seed(7632);
@@ -417,6 +457,10 @@ function testStochastic(){
 	test("Rand.drunk(10, 4, 0, 12, 6, false)", () => {
 		expect(Rand.drunk(10, 4, 0, 12, 6, false)).toStrictEqual([4,  6,  2,  1, -3, -2, -2, -4, -2, -2 ])
 	});
+	test("Rand.drunkFloat([1,2,3,4,5])", () => {
+		Rand.seed(1618);
+		expect(Rand.drunkFloat([1,2,3,4,5])).toStrictEqual([ 0.49305378228860675, 0.4599542055791346, 0.8460817983354717, 0.9639116027672727, 0.4009600948886277 ]);
+	});
 
 	test("Rand.coin(5)", () => {
 		Rand.seed(3141);
@@ -425,6 +469,15 @@ function testStochastic(){
 
 	test("Rand.dice(5)", () => {
 		expect(Rand.dice(5)).toStrictEqual([ 3, 6, 6, 4, 3 ]);
+	});
+	
+	test("Rand.coin([1,2,3,4,5])", () => {
+		Rand.seed(3141);
+		expect(Rand.coin([1,2,3,4,5])).toStrictEqual([ 0, 1, 0, 0, 1 ]);
+	});
+
+	test("Rand.dice([1,2,3,4,5])", () => {
+		expect(Rand.dice([1,2,3,4,5])).toStrictEqual([ 3, 6, 6, 4, 3 ]);
 	});
 
 	test("Rand.shuffle()", () => {
@@ -450,6 +503,10 @@ function testStochastic(){
 		Rand.seed(7483);
 		expect(Rand.clave()).toStrictEqual([ 1, 0, 1, 0, 0, 1, 0, 1]);
 	});
+	test("Rand.clave([1,2,3,4,5,6,7,8])", () => {
+		Rand.seed(7483);
+		expect(Rand.clave([1,2,3,4,5,6,7,8])).toStrictEqual([ 1, 0, 1, 0, 0, 1, 0, 1]);
+	});
 	test("Rand.clave(5)", () => {
 		expect(Rand.clave(5)).toStrictEqual([ 1, 0, 0, 1, 0 ]);
 	});
@@ -464,6 +521,10 @@ function testStochastic(){
 		Rand.seed(7563);
 		expect(Rand.urn(5)).toStrictEqual([ 5, 8, 3, 1, 7 ]);
 	});
+	test('Rand.urn([1,2,3,4,5])', () => {
+		Rand.seed(7563);
+		expect(Rand.urn([1,2,3,4,5])).toStrictEqual([ 5, 8, 3, 1, 7 ]);
+	});
 	test('Rand.urn(10, 5)', () => {
 		expect(Rand.urn(10, 5)).toStrictEqual([ 3, 0, 2, 1, 4, 2, 4, 3, 1, 0 ]);
 	});
@@ -475,6 +536,10 @@ function testStochastic(){
 		Rand.seed(9351);
 		expect(Rand.choose(5, [0, 1, 2, 3, 5, 8])).toStrictEqual([ 3, 5, 2, 5, 3 ]);
 	});
+	test("Rand.choose([1,2,3,4,5], [0, 1, 2, 3, 5, 8])", () => {
+		Rand.seed(9351);
+		expect(Rand.choose([1,2,3,4,5], [0, 1, 2, 3, 5, 8])).toStrictEqual([ 3, 5, 2, 5, 3 ]);
+	});
 	test("Rand.choose(5, ['c', 'e', 'g'])", () => {
 		expect(Rand.choose(5, ['c', 'e', 'g'])).toStrictEqual([ 'g', 'g', 'e', 'c', 'g' ]);
 	});
@@ -482,6 +547,10 @@ function testStochastic(){
 	test("Rand.pick(5, [0, 1, 2, 3, 5, 8])", () => {
 		Rand.seed(9351);
 		expect(Rand.pick(5, [0, 1, 2, 3, 5, 8])).toStrictEqual([ 3, 8, 1, 2, 5 ]);
+	});
+	test("Rand.pick([1,2,3,4,5], [0, 1, 2, 3, 5, 8])", () => {
+		Rand.seed(9351);
+		expect(Rand.pick([1,2,3,4,5], [0, 1, 2, 3, 5, 8])).toStrictEqual([ 3, 8, 1, 2, 5 ]);
 	});
 	test("Rand.pick(5, ['c', 'e', ['g', 'd']])", () => {
 		expect(Rand.pick(5, ['c', 'e', ['g', 'd']])).toStrictEqual([ [ 'g', 'd' ], 'e', 'c', 'e', 'c' ]);
@@ -494,6 +563,12 @@ function testStochastic(){
 		let arr = [0, 7, 3, 5, 0, -1];
 		Rand.seed(3141);
 		expect(Rand.expand(arr, 10)).toStrictEqual([ 0, 7, 3, 5, 0, -1, 6, 8, 7, 2 ]);
+	});
+	test("Rand.expand([0, 7, 3, 5, 0, -1], Gen.spread(10))", () => {
+		let arr = [0, 7, 3, 5, 0, -1];
+		let arr2 = Gen.spread(10);
+		Rand.seed(3141);
+		expect(Rand.expand(arr, arr2)).toStrictEqual([ 0, 7, 3, 5, 0, -1, 6, 8, 7, 2 ]);
 	});
 }
 

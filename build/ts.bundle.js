@@ -7625,7 +7625,7 @@ if ((typeof module) == 'object' && module.exports) {
 //==========================================================================
 
 // const Util = require('./utility.js');
-const { map, flatten, toArray, TWO_PI } = require('./utility');
+const { map, flatten, toArray, size, TWO_PI } = require('./utility');
 
 // Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
@@ -7644,8 +7644,8 @@ function spreadFloat(len=1, lo=1, hi){
 	let r = hi - lo; 
 	// lo is actual lowest value
 	lo = Math.min(lo, hi);
-	// len is minimum of 1
-	len = Math.max(1, len);
+	// len is minimum of 1 or length of array
+	len = size(len);
 	if (len === 1){ return [0]; }
 	// stepsize
 	let s = Math.abs(r) / len;
@@ -7664,7 +7664,7 @@ exports.spreadF = spreadFloat;
 // @params {length, low-output, high-output}
 // @return {Array}
 //
-function spread(len, lo=len, hi){
+function spread(len, lo=size(len), hi){
 	let arr = spreadFloat(len, lo, hi);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
@@ -7686,7 +7686,8 @@ function spreadExpFloat(len=1, lo=1, hi, exp=1){
 	// lo is actual lowest value
 	lo = Math.min(lo, hi);
 	// len is minimum of 1
-	len = Math.max(1, len);
+	len = size(len);
+	// len = Math.max(1, len);
 	if (len === 1){ return [0]; }
 	// generate array
 	let arr = [];
@@ -7704,7 +7705,7 @@ exports.spreadExpF = spreadExpFloat;
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadExp(len, lo=len, hi, exp){
+function spreadExp(len, lo=size(len), hi, exp){
 	let arr = spreadExpFloat(len, lo, hi, exp);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
@@ -7726,7 +7727,8 @@ function spreadInclusiveFloat(len=1, lo=1, hi){
 	// lo is actual lowest value
 	lo = Math.min(lo, hi);
 	// len is minimum of 1
-	len = Math.max(1, len);
+	len = size(len);
+	// len = Math.max(1, len);
 	if (len === 1){ return [0]; }
 	// stepsize
 	let s = Math.abs(r) / (len - 1);
@@ -7745,7 +7747,7 @@ exports.spreadIncF = spreadInclusiveFloat;
 // @params {length, low-output, high-output}
 // @return {Array}
 //
-function spreadInclusive(len, lo=len, hi){
+function spreadInclusive(len, lo=size(len), hi){
 	var arr = spreadInclusiveFloat(len, lo, hi);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
@@ -7768,7 +7770,8 @@ function spreadInclusiveExpFloat(len=1, lo=1, hi, exp=1){
 	// lo is actual lowest value
 	lo = Math.min(lo, hi);
 	// len is minimum of 1
-	len = Math.max(1, len);
+	len = size(len);
+	// len = Math.max(1, len);
 	// generate array
 	let arr = [];
 	for (let i=0; i<len; i++){
@@ -7785,7 +7788,7 @@ exports.spreadIncExpF = spreadInclusiveExpFloat;
 // @params {length, low-output, high-output, exponent}
 // @return {Array}
 //
-function spreadInclusiveExp(len, lo=len, hi, exp){
+function spreadInclusiveExp(len, lo=size(len), hi, exp){
 	var arr = spreadInclusiveExpFloat(len, lo, hi, exp);
 	return arr.map(v => Math.floor(Number(v.toPrecision(15))));
 }
@@ -7844,7 +7847,8 @@ function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	// if (lo > hi){ var t=lo, lo=hi, hi=t; }
 
 	// array length minimum of 1
-	len = Math.max(1, len);
+	len = size(len);
+	// len = Math.max(1, len);
 	let arr = [];
 
 	// let twoPI = Math.PI * 2.0;
@@ -7917,7 +7921,8 @@ function sawFloat(len=1, periods=1, lo, hi, phase=0){
 	periods = toArray(periods);
 
 	// array length minimum of 1
-	len = Math.max(1, len);
+	len = size(len);
+	// len = Math.max(1, len);
 	let arr = [];
 
 	let a = 1 / len;
@@ -7955,7 +7960,8 @@ function squareFloat(len=1, periods=1, lo, hi, pulse=0.5){
 	periods = toArray(periods);
 
 	// array length minimum of 1
-	len = Math.max(1, len);
+	len = size(len);
+	// len = Math.max(1, len);
 	let arr = [];
 
 	let a = 1 / len;
@@ -8063,7 +8069,7 @@ exports.spacingBeat = spacing;
 // 
 //==============================================================================
 
-const { mod } = require('./utility');
+const { mod, size } = require('./utility');
 const { rotate } = require('./transform');
 const BigNumber = require('bignumber.js');
 
@@ -8108,6 +8114,9 @@ exports.hex = hexBeat;
 function fastEuclid(s=8, h=4, r=0){
 	let arr = [];
 	let d = -1;
+	// steps/hits is minimum of 1 or array length
+	s = size(s);
+	h = size(h);
 	
 	for (let i=0; i<s; i++){
 		let v = Math.floor(i * (h / s));
@@ -8135,6 +8144,10 @@ exports.fastEuclid = fastEuclid;
 var pattern, counts, remainders;
 
 function euclid(steps=8, beats=4, rot=0){
+	// steps/hits is minimum of 1 or array length
+	steps = size(steps);
+	beats = size(beats);
+
 	pattern = [];
 	counts = [];
 	remainders = [];
@@ -8623,7 +8636,7 @@ exports.Automaton = Automaton;
 
 // require Generative methods
 const { spread } = require('./gen-basic.js');
-const { fold } = require('./utility');
+const { fold, size, toArray } = require('./utility');
 const { change } = require('./statistic');
 
 // require seedrandom package
@@ -8673,8 +8686,8 @@ function randomFloat(len=1, lo=1, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
 	// len is positive and minimum of 1
-	len = Math.max(1, len);
-	
+	len = size(len);
+
 	var arr = [];
 	for (var i=0; i<len; i++){
 		arr[i] = (rng() * (hi - lo)) + lo;
@@ -8692,7 +8705,7 @@ exports.randomF = randomFloat;
 // @param {Number} -> maximum range (optional, defautl=2)
 // @return {Array}
 // 
-function random(len=1, lo=2, hi=0){
+function random(len=1, lo=12, hi=0){
 	var arr = randomFloat(len, lo, hi);
 	return arr.map(v => Math.floor(v));
 }
@@ -8715,9 +8728,11 @@ function drunkFloat(len=1, step=1, lo=1, hi=0, p, bound=true){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
 	p = (!p)? (lo+hi)/2 : p;
+	// len is positive and minimum of 1
+	len = size(len);
 
 	var arr = [];
-	for (var i=0; i<Math.max(1,len); i++){
+	for (var i=0; i<len; i++){
 		// direction of next random number (+ / -)
 		var dir = (rng() > 0.5) * 2 - 1;
 		// prev + random value * step * direction
@@ -8787,8 +8802,9 @@ exports.dice = dice;
 // 
 function clave(len=8, max=3, min=2){
 	let arr = [];
-	// limit list length
-	len = Math.max(1, len);
+	// set list length to minimum of 1
+	len = size(len);
+
 	// swap if lo > hi
 	if (min > max){ var t=min, min=max; max=t; }
 	// limit lower ranges
@@ -8821,6 +8837,7 @@ exports.clave = clave;
 // @return {Array}
 // 
 function shuffle(a=[0]){
+	// slice array to avoid changing the original array
 	var arr = a.slice();
 	for (var i=arr.length-1; i>0; i-=1) {
 		var j = Math.floor(rng() * (i + 1));
@@ -8841,6 +8858,7 @@ function twelveTone(){
 	return shuffle(spread(12));
 }
 exports.twelveTone = twelveTone;
+exports.toneRow = twelveTone;
 
 // Generate a list of unique random integer values between a 
 // certain specified range (excluding high val). An 'urn' is filled
@@ -8871,10 +8889,12 @@ exports.urn = urn;
 // 
 function choose(len=1, a=[0, 1]){
 	// if a is no Array make it an array
-	a = (!Array.isArray(a))? [a] : a;
+	a = toArray(a);
+	// set the size to minimum of 1 or based on array length
+	len = size(len);
 
 	var arr = [];
-	for (var i=0; i<Math.max(1,len); i++){
+	for (var i=0; i<len; i++){
 		arr.push(a[Math.floor(rng()*a.length)]);
 	}
 	return arr;
@@ -8892,8 +8912,11 @@ exports.choose = choose;
 // @return {Array} -> randomly selected items
 // 
 function pick(len=1, a=[0, 1]){
+	// set the size to minimum of 1 or based on array length
+	len = size(len);
 	// fill the jar with the input
 	var jar = (!Array.isArray(a))? [a] : a;
+
 	if (jar.length < 2){
 		return new Array(len).fill(jar[0]);
 	}
@@ -8901,7 +8924,7 @@ function pick(len=1, a=[0, 1]){
 	var s = shuffle(jar);
 	// value, previous, output-array
 	var v, p, arr = [];	
-	for (var i=0; i<Math.max(1,len); i++){
+	for (var i=0; i<len; i++){
 		v = s.pop();
 		if (v === undefined){
 			s = shuffle(jar);
@@ -8927,12 +8950,14 @@ exports.pick = pick;
 // @param {Number} -> the resulting array length
 // @return {Array}
 // 
-function expand(a=[0, 0], l=1){
-	a = (Array.isArray(a))? a : [a];
+function expand(a=[0, 0], l=0){
+	a = toArray(a);
+	l = size(l);
+	// return a if output length is smaller/equal then input array
+	if (l <= a.length){ return a; }
 	// get the differences and pick the expansion options
 	let p = change(a);
 	let chg = pick(l-a.length, p);
-	// console.log(chg);
 	// empty output array and axiom for output
 	let arr = a.slice();
 	let acc = arr[arr.length-1];
