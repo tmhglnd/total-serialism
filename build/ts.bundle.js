@@ -8479,13 +8479,13 @@ exports.lucas = lucas;
 // @param {Int} -> offset from which the sequence starts
 // @return {Array} -> an Array with the infinity series as its steps
 //
-function infinitySeries(size=16, seed=[0,1], offset=0){
-	size = Math.max(1, size);
+function infinitySeries(len=16, seed=[0,1], offset=0){
+	len = size(len);
 	let root  = seed[0];
 	let step1 = seed[1];
 	let seedInterval = step1 - root;
 
-	let steps = Array.from(new Array(size), (n, i) => i + offset).map(step => {
+	let steps = Array.from(new Array(len), (n, i) => i + offset).map(step => {
 		return root + (norgardInteger(step) * seedInterval);
 	});
 
@@ -9358,7 +9358,7 @@ exports.difference = change;
 // require the Utility methods
 // const Rand = require('./gen-stochastic');
 const { sort } = require('./statistic');
-const { flatten, add, max, min, lerp, toArray } = require('./utility');
+const { flatten, add, max, min, lerp, toArray, size } = require('./utility');
 
 // Duplicate an array multiple times,
 // optionaly add an offset to every value when duplicating
@@ -9456,6 +9456,8 @@ exports.flat = flatten;
 //
 function padding(a=[0], length=16, pad=0, shift=0){
 	a = toArray(a);	
+	length = size(length);
+	
 	let len = length - a.length;
 	if (len < 1) {
 		return a;
@@ -9642,6 +9644,7 @@ function palindrome(arr, noDouble=false){
 	return arr.concat(rev);
 }
 exports.palindrome = palindrome;
+exports.palin = palindrome;
 exports.mirror = palindrome;
 
 // repeat the values of an array n-times
@@ -9791,6 +9794,7 @@ exports.spray = spray;
 function stretch(a=[0], len=1, mode='linear'){
 	a = toArray(a);
 	if (len < 2){ return a; }
+	len = size(len);
 	
 	let arr = [];
 	let l = a.length;

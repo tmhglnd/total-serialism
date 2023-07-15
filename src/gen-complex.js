@@ -434,13 +434,13 @@ exports.lucas = lucas;
 // @param {Int} -> offset from which the sequence starts
 // @return {Array} -> an Array with the infinity series as its steps
 //
-function infinitySeries(size=16, seed=[0,1], offset=0){
-	size = Math.max(1, size);
+function infinitySeries(len=16, seed=[0,1], offset=0){
+	len = size(len);
 	let root  = seed[0];
 	let step1 = seed[1];
 	let seedInterval = step1 - root;
 
-	let steps = Array.from(new Array(size), (n, i) => i + offset).map(step => {
+	let steps = Array.from(new Array(len), (n, i) => i + offset).map(step => {
 		return root + (norgardInteger(step) * seedInterval);
 	});
 

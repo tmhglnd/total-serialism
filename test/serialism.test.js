@@ -396,6 +396,9 @@ function testAlgorithmic(){
 	test('Algo.infinitySeries(16, [0, 3])', () => {
 		expect(Algo.infinitySeries(16, [0, 3])).toStrictEqual([ 0,  3, -3,  6, 3, 0, -6,  9, -3,  6, 0, 3, 6, -3, -9, 12]);
 	});
+	test('Algo.infinitySeries(Array(16), [0, 3])', () => {
+		expect(Algo.infinitySeries(Array(16), [0, 3])).toStrictEqual([ 0,  3, -3,  6, 3, 0, -6,  9, -3,  6, 0, 3, 6, -3, -9, 12]);
+	});
 	test('Algo.infSeries(8, [0, 1], 120)', () => {
 		expect(Algo.infinitySeries(8, [0, 1], 120)).toStrictEqual([ -4,  5,  3, -2, 5, -4, -6,  7]);
 	});
@@ -622,6 +625,9 @@ function testTransform(){
 	test("Mod.pad([3, 7, 12], 8)", () => {
 		expect(Mod.pad([3, 7, 12], 8)).toStrictEqual([ 3, 7, 12, 0, 0, 0, 0, 0 ]);
 	});
+	test("Mod.pad([3, 7, 12], Array(8))", () => {
+		expect(Mod.pad([3, 7, 12], Array(8))).toStrictEqual([ 3, 7, 12, 0, 0, 0, 0, 0 ]);
+	});
 	test("Mod.pad(['c', 'f', 'g'], 8, '-', 4)", () => {
 		expect(Mod.pad(['c', 'f', 'g'], 8, '-', 4)).toStrictEqual([ '-', '-', '-', '-', 'c', 'f', 'g', '-' ]);
 	});
@@ -772,6 +778,9 @@ function testTransform(){
 	});
 	test("Mod.stretch([0, 12, 3, 7], 9)", () => {
 		expect(Mod.stretch([0, 12, 3, 7], 9)).toStrictEqual([ 0, 4.5, 9, 10.875, 7.5, 4.125, 4, 5.5, 7 ]);
+	});
+	test("Mod.stretch([0, 12, 3, 7], Array(9))", () => {
+		expect(Mod.stretch([0, 12, 3, 7], Array(9))).toStrictEqual([ 0, 4.5, 9, 10.875, 7.5, 4.125, 4, 5.5, 7 ]);
 	});
 	
 	test("Mod.stretch([0, 12, 3, 7], 9, 'none')", () => {

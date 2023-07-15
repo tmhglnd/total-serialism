@@ -2468,7 +2468,7 @@ function lucas(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[
 // @param {Int} -> offset from which the sequence starts
 // @return {Array} -> an Array with the infinity series as its steps
 //
-function infinitySeries(){var size=arguments.length>0&&arguments[0]!==undefined?arguments[0]:16;var seed=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0,1];var offset=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;size=Math.max(1,size);var root=seed[0];var step1=seed[1];var seedInterval=step1-root;var steps=Array.from(new Array(size),function(n,i){return i+offset;}).map(function(step){return root+norgardInteger(step)*seedInterval;});return steps;}exports.infinitySeries=infinitySeries;exports.infSeries=infinitySeries;// Returns the value for any index of the base infinity series sequence 
+function infinitySeries(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:16;var seed=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0,1];var offset=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;len=size(len);var root=seed[0];var step1=seed[1];var seedInterval=step1-root;var steps=Array.from(new Array(len),function(n,i){return i+offset;}).map(function(step){return root+norgardInteger(step)*seedInterval;});return steps;}exports.infinitySeries=infinitySeries;exports.infSeries=infinitySeries;// Returns the value for any index of the base infinity series sequence 
 // (0, 1 seed). This function enables an efficient way to compute any 
 // arbitrary section of the infinity series without needing to compute
 // the entire sequence up to that point.
@@ -2824,7 +2824,7 @@ function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 //=======================================================================
 // require the Utility methods
 // const Rand = require('./gen-stochastic');
-var _require8=require('./statistic'),sort=_require8.sort;var _require9=require('./utility'),flatten=_require9.flatten,add=_require9.add,max=_require9.max,min=_require9.min,lerp=_require9.lerp,toArray=_require9.toArray;// Duplicate an array multiple times,
+var _require8=require('./statistic'),sort=_require8.sort;var _require9=require('./utility'),flatten=_require9.flatten,add=_require9.add,max=_require9.max,min=_require9.min,lerp=_require9.lerp,toArray=_require9.toArray,size=_require9.size;// Duplicate an array multiple times,
 // optionaly add an offset to every value when duplicating
 // Also works with 2-dimensonal arrays
 // If string the values will be concatenated
@@ -2871,7 +2871,7 @@ exports.flatten=flatten;exports.flat=flatten;// similar to every(), but instead 
 // param {Value} -> padding argument (optional, default=0)
 // return {Array}
 //
-function padding(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var length=arguments.length>1&&arguments[1]!==undefined?arguments[1]:16;var pad=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var shift=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;a=toArray(a);var len=length-a.length;if(len<1){return a;}var arr=new Array(len).fill(pad);return rotate(a.concat(arr),shift);}exports.padding=padding;exports.pad=padding;// filter one or multiple values from an array
+function padding(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var length=arguments.length>1&&arguments[1]!==undefined?arguments[1]:16;var pad=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var shift=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;a=toArray(a);length=size(length);var len=length-a.length;if(len<1){return a;}var arr=new Array(len).fill(pad);return rotate(a.concat(arr),shift);}exports.padding=padding;exports.pad=padding;// filter one or multiple values from an array
 // 
 // @param {Array} -> array to filter
 // @param {Number/String/Array} -> values to filter
@@ -2922,7 +2922,7 @@ function merge(){for(var _len6=arguments.length,args=new Array(_len6),_key6=0;_k
 // @param {Bool} -> no-double flag (optional, default=false)
 // @return {Array}
 // 
-function palindrome(arr){var noDouble=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;if(arr===undefined){return[0];};if(!Array.isArray(arr)){return[arr];};var rev=arr.slice().reverse();if(noDouble){rev=rev.slice(1,rev.length-1);}return arr.concat(rev);}exports.palindrome=palindrome;exports.mirror=palindrome;// repeat the values of an array n-times
+function palindrome(arr){var noDouble=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;if(arr===undefined){return[0];};if(!Array.isArray(arr)){return[arr];};var rev=arr.slice().reverse();if(noDouble){rev=rev.slice(1,rev.length-1);}return arr.concat(rev);}exports.palindrome=palindrome;exports.palin=palindrome;exports.mirror=palindrome;// repeat the values of an array n-times
 // Using a second array for repeat times iterates over that array
 // 
 // @param {Array} -> array with values to repeat
@@ -2977,7 +2977,7 @@ function spray(){var values=arguments.length>0&&arguments[0]!==undefined?argumen
 // param {Array} -> outputlength of array
 // param {String/Int} -> interpolation function (optional, default=linear)
 // 
-function stretch(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var mode=arguments.length>2&&arguments[2]!==undefined?arguments[2]:'linear';a=toArray(a);if(len<2){return a;}var arr=[];var l=a.length;for(var i=0;i<len;i++){// construct a lookup interpolation position for new array
+function stretch(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var mode=arguments.length>2&&arguments[2]!==undefined?arguments[2]:'linear';a=toArray(a);if(len<2){return a;}len=size(len);var arr=[];var l=a.length;for(var i=0;i<len;i++){// construct a lookup interpolation position for new array
 var val=i/(len-1)*(l-1);// lookup nearest neighbour left/right
 var a0=a[Math.max(Math.trunc(val),0)];var a1=a[Math.min(Math.trunc(val)+1,l-1)%a.length];if(mode==='none'||mode===null||mode===false){arr.push(a0);}else{// interpolate between the values according to decimal place
 arr.push(lerp(a0,a1,val%1));}}return arr;}exports.stretch=stretch;// filter duplicate items from an array

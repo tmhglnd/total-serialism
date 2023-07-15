@@ -324,7 +324,7 @@ Nørgård's music often features the use of the infinity series for serializing 
 `OEIS: A004718` (Online Encyclopedia of Integer Sequences)
 
 **arguments**
-- {Int+} -> size the length of the resulting Meldoy's steps (default=16)
+- {Int+/Array} -> output length of the Meldoy's steps (default=16, uses length of Array if input)
 - {Array} -> seed the sequence's first two steps (defaults = [0, 1])
 - {Int} -> offset from which the sequence starts
 

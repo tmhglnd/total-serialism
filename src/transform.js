@@ -20,7 +20,7 @@
 // require the Utility methods
 // const Rand = require('./gen-stochastic');
 const { sort } = require('./statistic');
-const { flatten, add, max, min, lerp, toArray } = require('./utility');
+const { flatten, add, max, min, lerp, toArray, size } = require('./utility');
 
 // Duplicate an array multiple times,
 // optionaly add an offset to every value when duplicating
@@ -118,6 +118,8 @@ exports.flat = flatten;
 //
 function padding(a=[0], length=16, pad=0, shift=0){
 	a = toArray(a);	
+	length = size(length);
+	
 	let len = length - a.length;
 	if (len < 1) {
 		return a;
@@ -304,6 +306,7 @@ function palindrome(arr, noDouble=false){
 	return arr.concat(rev);
 }
 exports.palindrome = palindrome;
+exports.palin = palindrome;
 exports.mirror = palindrome;
 
 // repeat the values of an array n-times
@@ -453,6 +456,7 @@ exports.spray = spray;
 function stretch(a=[0], len=1, mode='linear'){
 	a = toArray(a);
 	if (len < 2){ return a; }
+	len = size(len);
 	
 	let arr = [];
 	let l = a.length;
