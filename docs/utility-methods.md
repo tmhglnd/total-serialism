@@ -207,7 +207,7 @@ Util.size('foo');
 
 # Arithmetic
 
-Basic arithmetic methods that accept n-dimensional arrays in both arguments. Outputlength is always the length of the longest list. 
+Basic arithmetic methods that accept n-dimensional arrays in both arguments. Outputlength is always the length of the longest list. Values that are `NaN` will be returned as `0`
 
 ## add
 
@@ -298,7 +298,7 @@ Util.arrayCalc([10, 2, 1, 5], [4, 9, 7, 3], (a,b) => { return Math.max(a,b) });
 
 ## sum
 
-Return the sum of all values in an array. Ignores all non-numeric values.
+Return the sum of all values in an array. Ignores all non-numeric values. Works with n-dimensional arrays.
 
 ```js
 Util.sum([1, 2, 3, 4]);
@@ -306,6 +306,9 @@ Util.sum([1, 2, 3, 4]);
 
 Util.sum([10, 'foo', 11, 'bar', 22]);
 //=> 43 
+
+Util.sum([1, 2, [3, 4, [5, 6], 7], 8]);
+//=> 36
 ```
 
 ## minimum
@@ -345,15 +348,37 @@ The highest value will be 1, the lowest value will be 0.
 
 **arguments**
 - {Number/Array} -> input values
-- {Int/Array} -> normailzed values
+- {Int/Array} -> normalized values
 
 ```js
 Util.normalize([0, 1, 2, 3, 4]);
 //=> [ 0, 0.25, 0.5, 0.75, 1 ]
 
 // works with n-dimensional arrays
-Util.normalize([5, [12, [4, 17]], 3, 1]);
+Util.norm([5, [12, [4, 17]], 3, 1]);
 //=> [ 0.25, [ 0.6875, [ 0.1875, 1 ] ], 0.125, 0 ]  
+
+// Alias: norm()
+```
+
+## signedNormalize
+
+Signed Normalize all the values in an array between -1. and 1.
+The highest value will be 1, the lowest value will be -1.
+
+**arguments**
+- {Number/Array} -> input values
+- {Int/Array} -> signed normalized values
+
+```js
+Util.signedNormalize([0, 1, 2, 3, 4]);
+//=> [ -1, -0.75, -0.25, 0, 1 ]
+
+// works with n-dimensional arrays
+Util.snorm([5, [12, [4, 17]], 3, 1]);
+//=> [ -0.5, [ 0.375, [ -0.625, 1 ] ], -0.75, -1 ]
+
+// Alias: snorm()
 ```
 
 ## flatten

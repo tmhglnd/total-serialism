@@ -314,13 +314,15 @@ exports.int = truncate;
 
 // Return the sum of all values in the array
 // Ignore all non numeric values
+// Works with multidimensional arrays by flattening first
 // 
 // @param {Array} -> input array
 // @return {Number} -> summed array
+//
 function sum(a=[0]){
 	let s = 0;
-	toArray(a).forEach((v) => {
-		s += isNaN(v)? 0 : v;
+	flatten(toArray(a)).forEach((v) => {
+		s += isNaN(v) ? 0 : v;
 	});
 	return s;
 }
@@ -354,7 +356,8 @@ exports.min = minimum;
 // The highest value will be 1, the lowest value will be 0.
 // 
 // @param {Number/Array} -> input values
-// @return {Int/Array} -> normailzed values
+// @return {Number/Array} -> normalized values
+// 
 function normalize(a=[0]){
 	// get minimum and maximum
 	let min = minimum(a);
@@ -366,6 +369,18 @@ function normalize(a=[0]){
 }
 exports.normalize = normalize;
 exports.norm = normalize;
+
+// Signed Normalize all the values in an array between -1. and 1.
+// The highest value will be 1, the lowest value will be -1.
+//
+// @param {Number/Array} -> input values
+// @return {Number/Array} -> signed normalized values
+// 
+function signedNormalize(a=[0]){
+	return subtract(multiply(normalize(a), 2), 1);
+}
+exports.signedNormalize = signedNormalize;
+exports.snorm = signedNormalize;
 
 // Plot an array of values to the console in the form of an
 // ascii chart and return chart from function. If you just want the 

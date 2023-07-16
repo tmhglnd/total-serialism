@@ -8746,6 +8746,7 @@ function drunkFloat(len=1, step=1, lo=1, hi=0, p, bound=true){
 	return arr;
 }
 exports.drunkFloat = drunkFloat;
+exports.drunkF = drunkFloat;
 exports.walkFloat = drunkFloat;
 
 // generate a list of random integer values but the next random 
@@ -9899,7 +9900,7 @@ exports.getSettings = getSettings;
 // Also calculates the length of a 4/4 measure in milliseconds
 // 
 // @param {Number} -> the tempo in Beats/Minute (BPM)
-// @return {Void}
+// @return {Number} -> the tempo in Beats/Minute (BPM)
 // 
 function setTempo(t=100){
 	if (Array.isArray(t)){
@@ -9907,13 +9908,14 @@ function setTempo(t=100){
 	}
 	notation.bpm = Math.max(1, Number(t));
 	notation.measureInMs = 60000.0 / notation.bpm * 4;
+	return getTempo();
 }
 exports.setTempo = setTempo;
 exports.setBPM = setTempo;
 
 // Get the current used tempo
 // 
-// @return -> tempo in Beats/Minute (BPM)
+// @return {Number} -> tempo in Beats/Minute (BPM)
 // 
 function getTempo(){
 	return getSettings().bpm;
@@ -9925,7 +9927,7 @@ exports.getBPM = getTempo;
 // 
 // @param {String} -> scale name
 // @param {Int/String} -> root of the scale (optional, default=c)
-// @return {Void}
+// @return {Object} -> the scale, root and rootInt
 // 
 function setScale(s="chromatic", r){
 	if (Scales[s]){
@@ -9933,13 +9935,13 @@ function setScale(s="chromatic", r){
 		if (r !== undefined) { setRoot(r); }
 		notation.map = Scales[s];
 	}
+	return getScale();
 }
 exports.setScale = setScale;
 
 // returns the scale and root as object
 // 
 // @return {Object} -> the scale, root and rootInt
-// @return {Void}
 // 
 function getScale(){
 	return { 
@@ -9954,7 +9956,7 @@ exports.getScale = getScale;
 // Set the root of a scale to use for mapping integer sequences
 // 
 // @param {Int/String} -> root of the scale (optional, default=c)
-// @return {Void}
+// @return {Object} -> the scale, root and rootInt
 // 
 function setRoot(r='c'){
 	if (!isNaN(Number(r))){
@@ -9973,13 +9975,13 @@ function setRoot(r='c'){
 		// notation.rootInt = ToneSet[r];
 		notation.root = r;
 	}
+	return getScale();
 }
 exports.setRoot = setRoot;
 
 // returns the root of the scale as String and integer
 // 
 // @return {Object} -> the scale and root
-// @return {Void}
 // 
 function getRoot(){
 	return { "root" : getSettings().root, "rootInt" : getSettings().rootInt };
@@ -10053,15 +10055,20 @@ exports.mton = midiToNote;
 
 // Convert a midi value to a frequency (60 => 261.63 Hz)
 // With default equal temperament tuning A4 = 440 Hz
+// Adjust the tuning with optional second argument
+// Adjust the amount of notes per octave (12-TET, 5-TET) with third argument
+// Adjust the center c4 midi value with optional fourth argument
 // 
 // @param {Number/Array} -> midi values to convert
+// @param {Number} -> tuning
+// @param {Number} -> octave division
 // @return {Number/Array} -> frequency in Hz
 // 
-function midiToFreq(a=48){
+function midiToFreq(a=48, t=440, n=12, c=69){
 	if (!Array.isArray(a)){
-		return Math.pow(2, (a - 69) / 12) * 440;
+		return Math.pow(2, (a - c) / n) * t;
 	}
-	return a.map(x => midiToFreq(x));
+	return a.map(x => midiToFreq(x, t, n, c));
 }
 exports.midiToFreq = midiToFreq;
 exports.mtof = midiToFreq;
@@ -11039,13 +11046,15 @@ exports.int = truncate;
 
 // Return the sum of all values in the array
 // Ignore all non numeric values
+// Works with multidimensional arrays by flattening first
 // 
 // @param {Array} -> input array
 // @return {Number} -> summed array
+//
 function sum(a=[0]){
 	let s = 0;
-	toArray(a).forEach((v) => {
-		s += isNaN(v)? 0 : v;
+	flatten(toArray(a)).forEach((v) => {
+		s += isNaN(v) ? 0 : v;
 	});
 	return s;
 }
@@ -11079,7 +11088,8 @@ exports.min = minimum;
 // The highest value will be 1, the lowest value will be 0.
 // 
 // @param {Number/Array} -> input values
-// @return {Int/Array} -> normailzed values
+// @return {Number/Array} -> normalized values
+// 
 function normalize(a=[0]){
 	// get minimum and maximum
 	let min = minimum(a);
@@ -11091,6 +11101,18 @@ function normalize(a=[0]){
 }
 exports.normalize = normalize;
 exports.norm = normalize;
+
+// Signed Normalize all the values in an array between -1. and 1.
+// The highest value will be 1, the lowest value will be -1.
+//
+// @param {Number/Array} -> input values
+// @return {Number/Array} -> signed normalized values
+// 
+function signedNormalize(a=[0]){
+	return subtract(multiply(normalize(a), 2), 1);
+}
+exports.signedNormalize = signedNormalize;
+exports.snorm = signedNormalize;
 
 // Plot an array of values to the console in the form of an
 // ascii chart and return chart from function. If you just want the 

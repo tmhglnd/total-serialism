@@ -2581,7 +2581,7 @@ function drunkFloat(){var len=arguments.length>0&&arguments[0]!==undefined?argum
 if(lo>hi){var t=lo,lo=hi,hi=t;}p=!p?(lo+hi)/2:p;// len is positive and minimum of 1
 len=size(len);var arr=[];for(var i=0;i<len;i++){// direction of next random number (+ / -)
 var dir=(rng()>0.5)*2-1;// prev + random value * step * direction
-p+=rng()*step*dir;if(bound&&(p>hi||p<lo)){p=fold(p,lo,hi);}arr.push(p);}return arr;}(lo,hi);}exports.drunkFloat=drunkFloat;exports.walkFloat=drunkFloat;// generate a list of random integer values but the next random 
+p+=rng()*step*dir;if(bound&&(p>hi||p<lo)){p=fold(p,lo,hi);}arr.push(p);}return arr;}(lo,hi);}exports.drunkFloat=drunkFloat;exports.drunkF=drunkFloat;exports.walkFloat=drunkFloat;// generate a list of random integer values but the next random 
 // value is within a limited range of the previous value generating
 // a random "drunk" walk, also referred to as brownian motion.
 // Inspired by the [drunk]-object in MaxMSP
@@ -3012,27 +3012,26 @@ function getSettings(){return _objectSpread({},notation);}exports.getSettings=ge
 // Also calculates the length of a 4/4 measure in milliseconds
 // 
 // @param {Number} -> the tempo in Beats/Minute (BPM)
-// @return {Void}
+// @return {Number} -> the tempo in Beats/Minute (BPM)
 // 
-function setTempo(){var t=arguments.length>0&&arguments[0]!==undefined?arguments[0]:100;if(Array.isArray(t)){t=t[0];}notation.bpm=Math.max(1,Number(t));notation.measureInMs=60000.0/notation.bpm*4;}exports.setTempo=setTempo;exports.setBPM=setTempo;// Get the current used tempo
+function setTempo(){var t=arguments.length>0&&arguments[0]!==undefined?arguments[0]:100;if(Array.isArray(t)){t=t[0];}notation.bpm=Math.max(1,Number(t));notation.measureInMs=60000.0/notation.bpm*4;return getTempo();}exports.setTempo=setTempo;exports.setBPM=setTempo;// Get the current used tempo
 // 
-// @return -> tempo in Beats/Minute (BPM)
+// @return {Number} -> tempo in Beats/Minute (BPM)
 // 
 function getTempo(){return getSettings().bpm;}exports.getTempo=getTempo;exports.getBPM=getTempo;// Set the scale to use for mapping integer sequences to
 // 
 // @param {String} -> scale name
 // @param {Int/String} -> root of the scale (optional, default=c)
-// @return {Void}
+// @return {Object} -> the scale, root and rootInt
 // 
-function setScale(){var s=arguments.length>0&&arguments[0]!==undefined?arguments[0]:"chromatic";var r=arguments.length>1?arguments[1]:undefined;if(Scales[s]){notation.scale=s;if(r!==undefined){setRoot(r);}notation.map=Scales[s];}}exports.setScale=setScale;// returns the scale and root as object
+function setScale(){var s=arguments.length>0&&arguments[0]!==undefined?arguments[0]:"chromatic";var r=arguments.length>1?arguments[1]:undefined;if(Scales[s]){notation.scale=s;if(r!==undefined){setRoot(r);}notation.map=Scales[s];}return getScale();}exports.setScale=setScale;// returns the scale and root as object
 // 
 // @return {Object} -> the scale, root and rootInt
-// @return {Void}
 // 
 function getScale(){return{"scale":getSettings().scale,"root":getSettings().root,"rootInt":getSettings().rootInt,"mapping":getSettings().map};}exports.getScale=getScale;// Set the root of a scale to use for mapping integer sequences
 // 
 // @param {Int/String} -> root of the scale (optional, default=c)
-// @return {Void}
+// @return {Object} -> the scale, root and rootInt
 // 
 function setRoot(){var r=arguments.length>0&&arguments[0]!==undefined?arguments[0]:'c';if(!isNaN(Number(r))){notation.rootInt=Math.floor(r);notation.root=Note.pitchClass(Note.fromMidi(notation.rootInt));}// else if (r in ToneSet){
 // 	notation.rootInt = chromaToRelative(r);
@@ -3042,10 +3041,9 @@ function setRoot(){var r=arguments.length>0&&arguments[0]!==undefined?arguments[
 // 	console.log('not a valid root');
 // }
 else{notation.rootInt=chromaToRelative(r);// notation.rootInt = ToneSet[r];
-notation.root=r;}}exports.setRoot=setRoot;// returns the root of the scale as String and integer
+notation.root=r;}return getScale();}exports.setRoot=setRoot;// returns the root of the scale as String and integer
 // 
 // @return {Object} -> the scale and root
-// @return {Void}
 // 
 function getRoot(){return{"root":getSettings().root,"rootInt":getSettings().rootInt};}exports.getRoot=getRoot;/* WORK IN PROGRESS
 // set a custom mapping for a non existing scale
@@ -3095,11 +3093,16 @@ exports.searchScales = searchScales;*/ // Convert a midi value to a note name (6
 // 
 function midiToNote(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:60;if(!Array.isArray(a)){return Note.fromMidi(a).toLowerCase();}return a.map(function(x){return midiToNote(x);});}exports.midiToNote=midiToNote;exports.mton=midiToNote;// Convert a midi value to a frequency (60 => 261.63 Hz)
 // With default equal temperament tuning A4 = 440 Hz
+// Adjust the tuning with optional second argument
+// Adjust the amount of notes per octave (12-TET, 5-TET) with third argument
+// Adjust the center c4 midi value with optional fourth argument
 // 
 // @param {Number/Array} -> midi values to convert
+// @param {Number} -> tuning
+// @param {Number} -> octave division
 // @return {Number/Array} -> frequency in Hz
 // 
-function midiToFreq(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:48;if(!Array.isArray(a)){return Math.pow(2,(a-69)/12)*440;}return a.map(function(x){return midiToFreq(x);});}exports.midiToFreq=midiToFreq;exports.mtof=midiToFreq;// Convert a frequency to closest midi note (261.62 Hz => 60)
+function midiToFreq(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:48;var t=arguments.length>1&&arguments[1]!==undefined?arguments[1]:440;var n=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var c=arguments.length>3&&arguments[3]!==undefined?arguments[3]:69;if(!Array.isArray(a)){return Math.pow(2,(a-c)/n)*t;}return a.map(function(x){return midiToFreq(x,t,n,c);});}exports.midiToFreq=midiToFreq;exports.mtof=midiToFreq;// Convert a frequency to closest midi note (261.62 Hz => 60)
 // With default equal temperament tuning A4 = 440 Hz
 // Set the detune flag to return te exact floating point midi value
 // 
@@ -3515,10 +3518,12 @@ function flatten(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[
 // @return {Int/Array} -> trucated value
 function truncate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return Math.trunc(a);}return a.map(function(x){return truncate(x);});}exports.truncate=truncate;exports.trunc=truncate;exports["int"]=truncate;// Return the sum of all values in the array
 // Ignore all non numeric values
+// Works with multidimensional arrays by flattening first
 // 
 // @param {Array} -> input array
 // @return {Number} -> summed array
-function sum(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var s=0;toArray(a).forEach(function(v){s+=isNaN(v)?0:v;});return s;}exports.sum=sum;// Return the biggest value from an array
+//
+function sum(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var s=0;flatten(toArray(a)).forEach(function(v){s+=isNaN(v)?0:v;});return s;}exports.sum=sum;// Return the biggest value from an array
 // 
 // @param {NumberArray} -> input array
 // @return {Number} -> biggest value
@@ -3532,11 +3537,18 @@ function minimum(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[
 // The highest value will be 1, the lowest value will be 0.
 // 
 // @param {Number/Array} -> input values
-// @return {Int/Array} -> normailzed values
+// @return {Number/Array} -> normalized values
+// 
 function normalize(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];// get minimum and maximum
 var min=minimum(a);var range=maximum(a)-min;// if range 0 then range = min and min = 0
 if(!range){range=min,min=0;}// normalize and return
-return divide(subtract(a,min),range);}exports.normalize=normalize;exports.norm=normalize;// Plot an array of values to the console in the form of an
+return divide(subtract(a,min),range);}exports.normalize=normalize;exports.norm=normalize;// Signed Normalize all the values in an array between -1. and 1.
+// The highest value will be 1, the lowest value will be -1.
+//
+// @param {Number/Array} -> input values
+// @return {Number/Array} -> signed normalized values
+// 
+function signedNormalize(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];return subtract(multiply(normalize(a),2),1);}exports.signedNormalize=signedNormalize;exports.snorm=signedNormalize;// Plot an array of values to the console in the form of an
 // ascii chart and return chart from function. If you just want the 
 // chart returned as text and not log to console set { log: false }.
 // Using the asciichart package by x84. 

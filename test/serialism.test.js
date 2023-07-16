@@ -1342,6 +1342,9 @@ function testUtility(){
 	test("Util.sum([10, 'foo', 11, 'bar', 22])", () => {
 		expect(Util.sum([10, 'foo', 11, 'bar', 22])).toStrictEqual(43);
 	});
+	test("Util.sum([1,2,[3,4,[5,6],7],8])", () => {
+		expect(Util.sum([1,2,[3,4,[5,6],7],8])).toStrictEqual(36);
+	});
 
 	test("Util.trunc()", () => {
 		expect(Util.trunc()).toStrictEqual([0]);
@@ -1364,6 +1367,12 @@ function testUtility(){
 	});
 	test("Util.norm([5, [12, [4, 17]], 3, 1])", () => {
 		expect(Util.norm([5, [12, [4, 17]], 3, 1])).toStrictEqual([ 0.25, [ 0.6875, [ 0.1875, 1 ] ], 0.125, 0 ]);
+	});
+	test("Util.snorm([0, 3, 9, 12, 24])", () => {
+		expect(Util.snorm([0, 3, 9, 12, 24])).toStrictEqual([ -1, -0.75, -0.25, 0, 1 ]);
+	});
+	test("Util.snorm([5, [12, [4, 17]], 3, 1])", () => {
+		expect(Util.snorm([5, [12, [4, 17]], 3, 1])).toStrictEqual([ -0.5, [ 0.375, [ -0.625, 1 ] ], -0.75, -1 ]);
 	});
 
 	test("Util.map()", () => {

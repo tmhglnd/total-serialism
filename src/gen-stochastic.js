@@ -124,6 +124,7 @@ function drunkFloat(len=1, step=1, lo=1, hi=0, p, bound=true){
 	return arr;
 }
 exports.drunkFloat = drunkFloat;
+exports.drunkF = drunkFloat;
 exports.walkFloat = drunkFloat;
 
 // generate a list of random integer values but the next random 
