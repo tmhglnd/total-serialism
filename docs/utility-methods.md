@@ -1,6 +1,6 @@
 # Utility
 
-Basic arithmetic and methods necessary to run functions in the libraries above. Can also be of help in your own algorithmic processes. Also includes a `plot()` method which generates an asciichart of the array printed to the console.
+Basic arithmetic and methods necessary to run functions in the libraries above. Can also be of help in your own algorithmic processes. Also includes a `plot()` and `draw()` method which generates an asciichart or ascii-image of the array printed to the console.
 
 ## Include
 
@@ -161,8 +161,7 @@ Util.lerp([-2, 4, 6], [10, 20, 30], 0.5)
 
 ## toArray
 
-check if the value is an array or not
-if not transform into an array and output
+Check if the value is an array or not and if not transform into an array.
 
 **arguments**
 - {Value} -> input to be checked
@@ -172,13 +171,35 @@ if not transform into an array and output
 
 ```js
 Util.toArray();
-//=> []
+//=> [undefined]
 
 Util.toArray(1);
 //=> [ 1 ]
 
 Util.toArray([1, 2, 3]);
 //=> [ 1, 2, 3 ]
+```
+
+## fromArray
+
+Check if the value is an array or not and if it is an array output the first value
+
+**arguments**
+- {Value} -> intput to be checked
+- {Int+} -> index to return from Array (optional, default=0)
+
+**return**
+- {Value} -> single value output
+
+```js
+Util.fromArray();
+//=> undefined
+
+Util.fromArray([1, 2, 3]);
+//=> 1
+
+Util.fromArray([1, 2, 3], 2);
+//=> 3
 ```
 
 ## size

@@ -28,6 +28,18 @@ function toArray(a){
 }
 exports.toArray = toArray;
 
+// check if the value is an array or not
+// if it is an array output the first value
+// 
+// @param {Value} -> intput to be checked
+// @param {Int+} -> index to return from Array (optional, default=0)
+// @return {Value} -> single value output
+//
+function fromArray(a, i=0){
+	return Array.isArray(a) ? a[i] : a;
+}
+exports.fromArray = fromArray;
+
 // Return the length/size of an array if the argument is an array
 // if argument is a number return the number as integer
 // if argument is not a number return 1

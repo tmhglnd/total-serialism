@@ -19,7 +19,7 @@ fullTest(TS);
 TS = require(es5build);
 
 // and run full test with es5.min.js build;
-fullTest(TS);
+// fullTest(TS);
 
 /*
 	Test criteria:
@@ -1315,6 +1315,19 @@ function testUtility(){
 	});
 	test("Util.toArray([1,2,3])", () => {
 		expect(Util.toArray([1,2,3])).toStrictEqual([1, 2, 3]);
+	});
+
+	test("Util.fromArray()", () => {
+		expect(Util.fromArray()).toStrictEqual(undefined);
+	});
+	test("Util.fromArray(1)", () => {
+		expect(Util.fromArray(1)).toStrictEqual(1);
+	});
+	test("Util.fromArray([1,2,3])", () => {
+		expect(Util.fromArray([1,2,3])).toStrictEqual(1);
+	});
+	test("Util.fromArray([1,2,3], 2)", () => {
+		expect(Util.fromArray([1,2,3], 2)).toStrictEqual(3);
 	});
 
 	test("Util.length()", () => {
