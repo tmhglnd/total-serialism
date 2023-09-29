@@ -1,6 +1,6 @@
 # Algorithmic
 
-These are also generative methods, but are in general more complex algorithms, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci sequence, pisano periods and more.
+More generative methods, but in general more complex algorithms, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci number sequence, pisano periods and more.
 
 ## Include
 
@@ -8,10 +8,14 @@ These are also generative methods, but are in general more complex algorithms, s
 const Algo = require('total-serialism').Algorithmic;
 ```
 
+```js
+const { euclid, fibonacci } = require('total-serialism').Algorithmic;
+```
+
 # Methods
 
-- [euclid](#euclid)
-- [fastEuclid](#fastEuclid)
+- [euclidean](#euclidean)
+- [fastEuclidean](#fasteuclidean)
 - [hexBeat](#hexbeat)
 - [linden](#linden)
 - [cellular automaton](#cellular-automaton)
@@ -23,9 +27,13 @@ const Algo = require('total-serialism').Algorithmic;
 - [lucas](#lucas)
 - [inifinity series](#infinityseries)
 
-## euclid
+## euclidean
+
+**I recommend using `fastEuclid()` instead**
 
 Generate a euclidean rhythm evenly spacing n-hits amongst n-steps. Inspired by Godfried Toussaints famous paper "The Euclidean Algorithm Generates Traditional Musical Rhythms".
+
+Alias: `euclid()`
 
 **arguments**
 - {Int+/Array} -> length of array (optional, default=8, uses length of Array if input)
@@ -42,9 +50,11 @@ Algo.euclid(16, 9, 1);
 
 <!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/xS8sKejzG" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
-## fastEuclid
+## fastEuclidean
 
-A fast euclidean rhythm algorithm. Uses the downsampling of a line drawn between two points in a 2-dimensional grid to divide the squares into an evenly distributed amount of steps. Generates correct distribution, but the rotation/order may differ a bit from the recursive `euclid()` method above.
+A fast euclidean rhythm generating algorithm. Uses the downsampling of a line drawn between two points in a 2-dimensional grid to divide the squares into an evenly distributed amount of steps. Generates the correct distribution, but the rotation/order may differ a bit from the recursive `euclid()` method above.
+
+Alias: `fastEuclid()`
 
 **arguments**
 - {Int+/Array} -> length of array (optional, default=8, uses length of Array if input)
@@ -61,7 +71,9 @@ Algo.fastEuclid(16, 9, 1);
 
 ## hexBeat
 
-Generate hexadecimal rhythms. Hexadecimal beats make use of hexadecimal values (0 - f) that are a base-16 number system. Because one digit in a base-16 number system has 16 possible values (0 - 15) these can be converted to 4 bits that therefore can be seen as groups of 4 16th notes. These hexadecimal values will then represent any permutation of 1's and 0's in a 4 bit number, where 0 = 0 0 0 0, 7 = 0 1 1 1, b = 1 0 1 1, f = 1 1 1 1 and all possible values in between.
+Generate hexadecimal rhythms. Hexadecimal beats make use of hexadecimal values (0 - f) that are a base-16 number system. Because one digit in a base-16 number system has 16 possible values (0 - 15) these can be converted to 4 bits that therefore can be seen as groups of 4 16th notes. These hexadecimal values will then represent any permutation of 1's and 0's in a 4 bit number, where 0 = 0 0 0 0, 7 = 0 1 1 1, b = 1 0 1 1, f = 1 1 1 1 and all possible values in between. This method does not work with hexadecimal notation (`0x...`), for that use the `binary()` as an alternative.
+
+Alias: `hex()`
 
 **arguments**
 - {String | Number} -> hexadecimal characters (0-f) (optional, default=8)
@@ -82,7 +94,7 @@ Algo.hexBeat(573);
 
 ## linden
 
-The original Lindenmayer string expansion returns a string of characters based on a set of rules and an axiom specified as strings.
+The original Lindenmayer string expansion returns a string of characters based on a set of rules and an axiom specified as strings. This is useful to generate fractal like structures and simulate natural growth.
 
 **arguments**
 - {Value} -> The axiom to start with (generation 0)

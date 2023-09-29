@@ -36,16 +36,20 @@ BigNumber.config({
 
 // A hexadecimal rhythm generator. Generates values of 0 and 1
 // based on the input of a hexadecimal character string
+// Does not work with `0x` hexadecimal notation, for that use binary()
 //
-// @param {String} -> hexadecimal characters (0 t/m f)
+// @param {String/Number} -> hexadecimal characters (0 t/m f)
 // @return {Array} -> rhythm
 // 
 function hexBeat(hex="8"){
+	// convert to string if a number
 	if (!hex.isNaN){ hex = hex.toString(); }
 	let a = [];
+	// for every char in string get binary expansion
 	for (let i=0; i<hex.length; i++){
-		let binary = parseInt("0x"+hex[i]).toString(2);
+		let binary = parseInt("0x" + hex[i]).toString(2);
 		binary = isNaN(binary)? '0000' : binary;
+		// pad with leading 0's to ensure 4 values
 		let padding = binary.padStart(4, '0');
 		a = a.concat(padding.split('').map(x => Number(x)));
 	}
@@ -96,7 +100,7 @@ exports.fastEuclid = fastEuclid;
 // @param {Int} -> rotate (optional, default=0)
 // @return {Array}
 // 
-var pattern, counts, remainders;
+let pattern, counts, remainders;
 
 function euclid(steps=8, beats=4, rot=0){
 	// steps/hits is minimum of 1 or array length
@@ -142,7 +146,7 @@ function build(l){
 	}
 }
 
-// Lindemayer String expansion
+// Lindenmayer String expansion
 // a recursive fractal algorithm to generate botanic (and more)
 // Default rule is 1 -> 10, 0 -> 1, where 1=A and 0=B
 // Rules are specified as a JS object consisting of strings or arrays
@@ -156,6 +160,9 @@ function linden(axiom=[1], iteration=3, rules={1: [1, 0], 0: [1]}){
 	axiom = (typeof axiom === 'number')? [axiom] : axiom;
 	let asString = typeof axiom === 'string';
 	let res;
+
+	// return axiom of iterations is < 1
+	if (iteration < 1){ return axiom };
 
 	for(let n=0; n<iteration; n++){
 		res = (asString)? "" : [];
@@ -213,7 +220,7 @@ exports.collatzMod = collatzMod;
 
 // The collatz conjecture with BigNumber library
 // 
-function bigCollatz(n){
+function bigCollatz(n=12){
 	let num = new BigNumber(n);
 	let sequence = [];
 
@@ -257,12 +264,13 @@ function numBonacci(len=1, s1=0, s2=1, t=1){
 	var n1 = new BigNumber(s2); //startvalue n-1
 	var n2 = new BigNumber(s1); //startvalue n-2
 
-	len = Math.max(1, len-2);
 	var cur = 0, arr = [n2, n1];
-
-	if (len < 2) {
+	
+	if (len < 3) {
+		// return arr;
 		return arr.slice(0, len);
 	} else {
+		len = Math.max(1, len-2);
 		for (var i=0; i<len; i++){	
 			// general method for nbonacci sequences
 			// Fn = t * Fn-1 + Fn-2

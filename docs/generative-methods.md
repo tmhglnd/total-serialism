@@ -9,6 +9,10 @@ Basic methods that generate arrays of number sequences, such as methods that gen
 const Gen = require('total-serialism').Generative;
 ```
 
+```js
+const { spread, fill } = require('total-serialism').Generative;
+```
+
 # Methods
 
 - [spread / spreadFloat](#spread-spreadfloat)

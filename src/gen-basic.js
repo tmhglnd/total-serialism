@@ -27,7 +27,7 @@ const { map, flatten, toArray, size, TWO_PI } = require('./utility');
 //
 function spreadFloat(len=1, lo=1, hi){
 	// if hi undefined set lo to 0 and hi=lo
-	if (hi === undefined){ let t=lo, lo=0, hi=t; }
+	if (hi === undefined){ var t=lo, lo=0, hi=t; }
 	// calculate the range
 	let r = hi - lo; 
 	// lo is actual lowest value
@@ -68,7 +68,7 @@ exports.spread = spread;
 //
 function spreadExpFloat(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
-	if (hi === undefined){ let t=lo, lo=0, hi=t; }
+	if (hi === undefined){ var t=lo, lo=0, hi=t; }
 	// calculate the range
 	let r = hi - lo; 
 	// lo is actual lowest value
@@ -109,7 +109,7 @@ exports.spreadExp = spreadExp;
 //
 function spreadInclusiveFloat(len=1, lo=1, hi){
 	// if hi undefined set lo to 0 and hi=lo
-	if (hi === undefined){ let t=lo, lo=0, hi=t; }
+	if (hi === undefined){ var t=lo, lo=0, hi=t; }
 	// calculate the range
 	let r = hi - lo; 
 	// lo is actual lowest value
@@ -152,7 +152,7 @@ exports.spreadInc = spreadInclusive;
 //
 function spreadInclusiveExpFloat(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
-	if (hi === undefined){ let t=lo, lo=0, hi=t; }
+	if (hi === undefined){ var t=lo, lo=0, hi=t; }
 	// calculate the range
 	let r = hi - lo; 
 	// lo is actual lowest value
