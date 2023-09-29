@@ -158,7 +158,7 @@ function compare(a1=[0], a2){
 	return true;
 }
 exports.compare = compare;
-exports.equal = compare;
+// exports.equal = compare; (deprecated for equal in utility operator)
 
 // Return the difference between every consecutive value in an array
 // With melodic content from a chromatic scale this can be seen as
@@ -166,9 +166,10 @@ exports.equal = compare;
 // in the same melody.
 // 
 // @param {Array} -> array to calculate from
+// @param {Bool} -> returns diff between first and last (optional, default=false)
 // @return {Array} -> list of changes
 // 
-function change(a=[0, 0]){
+function change(a=[0, 0], l=false){
 	if (a.length < 2 || !Array.isArray(a)){
 		return [0];
 	}
@@ -177,8 +178,11 @@ function change(a=[0, 0]){
 	for (let i=1; i<len; i++){
 		arr.push(a[i] - a[i-1]);
 	}
+	// optionally also return diff from first and last value
+	if (l){ arr.push(a[0] - a[a.length-1]); }
 	return arr;
 }
 exports.change = change;
 exports.delta = change;
 exports.difference = change;
+exports.diff = change;

@@ -9,6 +9,10 @@ A set of methods from Statistics and Probability Theory that allow for analysis 
 const Stat = require('total-serialism').Statistic;
 ```
 
+```js
+const { sort, average } = require('total-serialism').Statistic;
+```
+
 # Methods
 
 - [sort](#sort)
@@ -21,6 +25,12 @@ const Stat = require('total-serialism').Statistic;
 - [compare](#compare)
 
 ## sort
+
+Sort an array in ascending or descending order. When strings are included they are sorted in alphabetical order with all numbers in the beginning.
+
+**arguments**
+- {Array} -> the array to sort
+- {Int} -> postive/negative value for sorting direction (optional, default=1)
 
 ```js
 // Sort an array of numbers ascending 
@@ -36,11 +46,12 @@ Stat.sort([10, 3.14, 'snare', 'kick', 5, -6, 'hat']);
 //=> [ -6, 10, 3.14, 5, 'hat', 'kick', 'snare' ] 
 ```
 
-Measures of central tendencies (Mean, Median, Mode)
 
 ## average
 
-Get the average (the artihmetic mean) value from an array
+Get the average (the arithmetic mean) value from an array. This is one method of the three measures of central tendencies (Mean, Median, Mode).
+
+Alias: `mean()`
 
 **arguments**
 - {Array} -> the array to take the average of
@@ -50,15 +61,15 @@ Get the average (the artihmetic mean) value from an array
 Stat.average([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 //=> 5
 
-Stat.average([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3]);
+Stat.mean([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3]);
 //=> -0.0833
-
-// Alias: Stat.mean()
 ```
 
 ## center
 
-Return the center value (the median) from an array
+Return the center value (the median) from an array. This is one method of the three measures of central tendencies (Mean, Median, Mode).
+
+Alias: `median()`
 
 **arguments**
 - {Array} -> the array to get the median from
@@ -70,15 +81,15 @@ Stat.center([1, 5, 6, 9, 13]);
 
 // Returns average of 2 middle values for even listlengths
 // works with "official" statistics terminology
-Stat.center([1, 7, 4, 2, 9, 5]);
+Stat.median([1, 7, 4, 2, 9, 5]);
 //=> 4.5
-
-// Alias: Stat.median()
 ```
 
 ## common
 
-Returns the most common value (the mode) from an array as an array
+Returns the most common value (the mode) from an array as an array. This is one method of the three measures of central tendencies (Mean, Median, Mode).
+
+Alias: `mode()`
 
 **arguments**
 - {Array} -> the array to get the mode from
@@ -92,54 +103,72 @@ Stat.common([8, [4, 3], 9, [9, 0, [2, 10], 5], 11, 0, 11]);
 //=> [ 11 ] 
 
 // In the case of a multi-modal system the array contains all common values
-Stat.common([8, 4, 3, 9, 9, 0, 2, 10, 5, 11, 0, 11]);
-//=> [ 0, 9, 11 ] 
-
-// Alias: Stat.mode()
+Stat.mode([8, 4, 3, 9, 9, 0, 2, 10, 5, 11, 0, 11]);
+//=> [ 0, 9, 11 ]
 ```
 
 ## minimum
 
 Return the minimum value from an array (Also part of `.Statistic`)
 
+Alias: `min()`
+
+**arguments**
+- {Array} -> the array to get the minimum from
+
 ```js
 Util.minimum([-38, -53, -6, 33, 88, 32, -8, 73]);
 //=> -53 
 
 // Also works with n-dimensional arrays
-Stat.minimum([-38, [-53, [-6, 33], 88, 32], [-8, 73]]);
+Stat.min([-38, [-53, [-6, 33], 88, 32], [-8, 73]]);
 //=> -53 
-
-// Alias: Util.min()
 ```
 
 ## maximum
 
 Return the maximum value from an array (Also part of `.Statistic`)
 
+Alias: `max()`
+
+**arguments**
+- {Array} -> the array to get the maximum from
+
 ```js
 Util.maximum([-38, -53, -6, 33, 88, 32, -8, 73]);
 //=> 88 
 
 // Also works with n-dimensional arrays
-Stat.maximum([-38, [-53, [-6, 33], 88, 32], [-8, 73]]);
-//=> 88 
-
-// Alias: Util.max()
+Stat.max([-38, [-53, [-6, 33], 88, 32], [-8, 73]]);
+//=> 88
 ```
 
 ## change
 
-Return the difference between consecutive numbers in an array
+Return the difference between consecutive numbers in an array. With an optional flag set to true as second argument the function also returns the difference between the first and last value in the array.
+
+Alias: `delta()`, `difference()`, `diff()`
+
+**arguments**
+- {Array} -> the array to get the difference between each value from
+- {Bool} -> returns diff between first and last (optional, default=false)
 
 ```js 
 Util.change([0, 3, 7, 0, 12, 9, 5, 7]);
 //=> [ 3, 4, -7, 12, -3, -4, 2 ] 
+
+// also returns difference between last and first value in array
+Util.change([0, 3, 7, 0, 12, 9, 5, 7], true);
+//=> [ 3, 4, -7, 12, -3, -4, 2, -7 ] 
 ```
 
 ## compare
 
 Compare two arrays recursively and if all values of the array and subarrays are equal to eachother return a `true` boolean, else returns `false`. 
+
+**arguments**
+- {Array} -> the first array to compare
+- {Array} -> the second array to compare
 
 ```js
 // works with multidimensional arrays

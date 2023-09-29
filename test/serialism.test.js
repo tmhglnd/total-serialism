@@ -871,6 +871,9 @@ function testStatistic(){
 	test("Stat.change([0, 3, 7, 0, 12, 9, 5, 7])", () => {
 		expect(Stat.change([0, 3, 7, 0, 12, 9, 5, 7])).toStrictEqual([ 3, 4, -7, 12, -3, -4, 2 ]);
 	});
+	test("Stat.change([0, 3, 7, 0, 12, 9, 5, 7], true)", () => {
+		expect(Stat.change([0, 3, 7, 0, 12, 9, 5, 7], true)).toStrictEqual([ 3, 4, -7, 12, -3, -4, 2, -7 ]);
+	});
 
 	test("Stat.compare()", () => {
 		expect(Stat.compare()).toStrictEqual(false);
