@@ -2121,7 +2121,7 @@ function spreadFloat(){var len=arguments.length>0&&arguments[0]!==undefined?argu
 if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
 var r=hi-lo;// lo is actual lowest value
 lo=Math.min(lo,hi);// len is minimum of 1 or length of array
-len=size(len);if(len===1){return[0];}// stepsize
+len=size(len);if(len===1){return[lo];}// stepsize
 var s=Math.abs(r)/len;// generate array
 var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadFloat=spreadFloat;exports.spreadF=spreadFloat;// Spread function rounded to integers
 // 
@@ -2141,7 +2141,7 @@ if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
 var r=hi-lo;// lo is actual lowest value
 lo=Math.min(lo,hi);// len is minimum of 1
 len=size(len);// len = Math.max(1, len);
-if(len===1){return[0];}// generate array
+if(len===1){return[lo];}// generate array
 var arr=[];for(var i=0;i<len;i++){arr[i]=Math.pow(i/len,exp)*Math.abs(r)+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadFloatExp=spreadExpFloat;// deprecated
 exports.spreadExpFloat=spreadExpFloat;exports.spreadExpF=spreadExpFloat;// Spread function floored to integers
 // 
@@ -2161,7 +2161,7 @@ if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
 var r=hi-lo;// lo is actual lowest value
 lo=Math.min(lo,hi);// len is minimum of 1
 len=size(len);// len = Math.max(1, len);
-if(len===1){return[0];}// stepsize
+if(len===1){return[lo];}// stepsize
 var s=Math.abs(r)/(len-1);// generate array
 var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadInclusiveFloat=spreadInclusiveFloat;exports.spreadIncF=spreadInclusiveFloat;// spreadinclusiveFloat function floored to integers
 // 
@@ -2181,7 +2181,7 @@ if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
 var r=hi-lo;// lo is actual lowest value
 lo=Math.min(lo,hi);// len is minimum of 1
 len=size(len);// len = Math.max(1, len);
-// generate array
+if(len===1){return[lo];}// generate array
 var arr=[];for(var i=0;i<len;i++){arr[i]=Math.pow(i/(len-1),exp)*Math.abs(r)+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadInclusiveFloatExp=spreadInclusiveExpFloat;//deprecated
 exports.spreadInclusiveExpFloat=spreadInclusiveExpFloat;exports.spreadIncExpF=spreadInclusiveExpFloat;// spreadinclusiveFloatExp function floored to integers
 // 
@@ -2318,11 +2318,15 @@ for(var j=0;j<Math.floor(a[i]);j++){arr.push(!j?1:0);}}}return arr;}exports.spac
 var _require2=require('./utility'),mod=_require2.mod,size=_require2.size;var _require3=require('./transform'),rotate=_require3.rotate;var BigNumber=require('bignumber.js');// configure the bignumber settings
 BigNumber.config({DECIMAL_PLACES:20,EXPONENTIAL_AT:[-7,20]});// A hexadecimal rhythm generator. Generates values of 0 and 1
 // based on the input of a hexadecimal character string
+// Does not work with `0x` hexadecimal notation, for that use binary()
 //
-// @param {String} -> hexadecimal characters (0 t/m f)
+// @param {String/Number} -> hexadecimal characters (0 t/m f)
 // @return {Array} -> rhythm
 // 
-function hexBeat(){var hex=arguments.length>0&&arguments[0]!==undefined?arguments[0]:"8";if(!hex.isNaN){hex=hex.toString();}var a=[];for(var i=0;i<hex.length;i++){var binary=parseInt("0x"+hex[i]).toString(2);binary=isNaN(binary)?'0000':binary;var padding=binary.padStart(4,'0');a=a.concat(padding.split('').map(function(x){return Number(x);}));}return a;}exports.hexBeat=hexBeat;exports.hex=hexBeat;// A fast euclidean rhythm algorithm
+function hexBeat(){var hex=arguments.length>0&&arguments[0]!==undefined?arguments[0]:"8";// convert to string if a number
+if(!hex.isNaN){hex=hex.toString();}var a=[];// for every char in string get binary expansion
+for(var i=0;i<hex.length;i++){var binary=parseInt("0x"+hex[i]).toString(2);binary=isNaN(binary)?'0000':binary;// pad with leading 0's to ensure 4 values
+var padding=binary.padStart(4,'0');a=a.concat(padding.split('').map(function(x){return Number(x);}));}return a;}exports.hexBeat=hexBeat;exports.hex=hexBeat;// A fast euclidean rhythm algorithm
 // Uses the downsampling of a line drawn between two points in a 
 // 2-dimensional grid to divide the squares into an evenly distributed
 // amount of steps. Generates correct distribution, but the distribution 
@@ -2346,7 +2350,7 @@ s=size(s);h=size(h);for(var i=0;i<s;i++){var v=Math.floor(i*(h/s));arr[i]=Number
 // @return {Array}
 // 
 var pattern,counts,remainders;function euclid(){var steps=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var rot=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;// steps/hits is minimum of 1 or array length
-steps=size(steps);beats=size(beats);pattern=[];counts=[];remainders=[];var level=0;var divisor=steps-beats;remainders.push(beats);while(remainders[level]>1){counts.push(Math.floor(divisor/remainders[level]));remainders.push(divisor%remainders[level]);divisor=remainders[level];level++;}counts.push(divisor);build(level);return rotate(pattern,rot-pattern.indexOf(1));}exports.euclidean=euclid;exports.euclid=euclid;function build(l){var level=l;if(level==-1){pattern.push(0);}else if(level==-2){pattern.push(1);}else{for(var i=0;i<counts[level];i++){build(level-1);}if(remainders[level]!=0){build(level-2);}}}// Lindemayer String expansion
+steps=size(steps);beats=size(beats);pattern=[];counts=[];remainders=[];var level=0;var divisor=steps-beats;remainders.push(beats);while(remainders[level]>1){counts.push(Math.floor(divisor/remainders[level]));remainders.push(divisor%remainders[level]);divisor=remainders[level];level++;}counts.push(divisor);build(level);return rotate(pattern,rot-pattern.indexOf(1));}exports.euclidean=euclid;exports.euclid=euclid;function build(l){var level=l;if(level==-1){pattern.push(0);}else if(level==-2){pattern.push(1);}else{for(var i=0;i<counts[level];i++){build(level-1);}if(remainders[level]!=0){build(level-2);}}}// Lindenmayer String expansion
 // a recursive fractal algorithm to generate botanic (and more)
 // Default rule is 1 -> 10, 0 -> 1, where 1=A and 0=B
 // Rules are specified as a JS object consisting of strings or arrays
@@ -2356,7 +2360,8 @@ steps=size(steps);beats=size(beats);pattern=[];counts=[];remainders=[];var level
 // @param {Object} -> production rules
 // @return {String/Array} -> axiom determins string or array output
 // 
-function linden(){var axiom=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];var iteration=arguments.length>1&&arguments[1]!==undefined?arguments[1]:3;var rules=arguments.length>2&&arguments[2]!==undefined?arguments[2]:{1:[1,0],0:[1]};axiom=typeof axiom==='number'?[axiom]:axiom;var asString=typeof axiom==='string';var res;for(var n=0;n<iteration;n++){res=asString?"":[];for(var ch in axiom){var _char2=axiom[ch];var rule=rules[_char2];if(rule){res=asString?res+rule:res.concat(rule);}else{res=asString?res+_char2:res.concat(_char2);}}axiom=res;}return res;}exports.linden=linden;// Generate a single sequence of the Collatz Conjecture given
+function linden(){var axiom=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];var iteration=arguments.length>1&&arguments[1]!==undefined?arguments[1]:3;var rules=arguments.length>2&&arguments[2]!==undefined?arguments[2]:{1:[1,0],0:[1]};axiom=typeof axiom==='number'?[axiom]:axiom;var asString=typeof axiom==='string';var res;// return axiom of iterations is < 1
+if(iteration<1){return axiom;};for(var n=0;n<iteration;n++){res=asString?"":[];for(var ch in axiom){var _char2=axiom[ch];var rule=rules[_char2];if(rule){res=asString?res+rule:res.concat(rule);}else{res=asString?res+_char2:res.concat(_char2);}}axiom=res;}return res;}exports.linden=linden;// Generate a single sequence of the Collatz Conjecture given
 // a starting value greater than 1
 // The conjecture states that any giving positive integer will
 // eventually reach zero after iteratively applying the following rules
@@ -2374,7 +2379,7 @@ function collatz(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[
 // 
 function collatzMod(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var m=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;return mod(collatz(n),Math.min(m,Math.floor(m)));}exports.collatzMod=collatzMod;// The collatz conjecture with BigNumber library
 // 
-function bigCollatz(n){var num=new BigNumber(n);var sequence=[];while(num.gt(1)){if(num.mod(2).eq(1)){num=num.times(3);num=num.plus(1);}else{num=num.div(2);}sequence.push(num.toFixed());}return sequence.reverse();}exports.bigCollatz=bigCollatz;// Return the modulus of a collatz conjecture sequence
+function bigCollatz(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var num=new BigNumber(n);var sequence=[];while(num.gt(1)){if(num.mod(2).eq(1)){num=num.times(3);num=num.plus(1);}else{num=num.div(2);}sequence.push(num.toFixed());}return sequence.reverse();}exports.bigCollatz=bigCollatz;// Return the modulus of a collatz conjecture sequence
 // Set the modulo
 // 
 function bigCollatzMod(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var m=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;var arr=bigCollatz(n);for(var i in arr){arr[i]=new BigNumber(arr[i]);arr[i]=arr[i].mod(m).toNumber();}return arr;}exports.bigCollatzMod=bigCollatzMod;// Generate any n-bonacci sequence as an array of BigNumber objects
@@ -2389,7 +2394,8 @@ function bigCollatzMod(){var n=arguments.length>0&&arguments[0]!==undefined?argu
 // 
 function numBonacci(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var s1=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var s2=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var t=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;var n1=new BigNumber(s2);//startvalue n-1
 var n2=new BigNumber(s1);//startvalue n-2
-len=Math.max(1,len-2);var cur=0,arr=[n2,n1];if(len<2){return arr.slice(0,len);}else{for(var i=0;i<len;i++){// general method for nbonacci sequences
+var cur=0,arr=[n2,n1];if(len<3){// return arr;
+return arr.slice(0,len);}else{len=Math.max(1,len-2);for(var i=0;i<len;i++){// general method for nbonacci sequences
 // Fn = t * Fn-1 + Fn-2
 cur=n1.times(t).plus(n2);n2=n1;// store n-1 as n-2
 n1=cur;// store current number as n-1
@@ -2533,7 +2539,7 @@ var c={};for(var i=0;i<8;i++){c[(7-i).toString(2).padStart(3,'0')]=Number(r[i]);
 // - Gratefully using the seedrandom package by David Bau
 //=======================================================================
 // require Generative methods
-var _require4=require('./gen-basic.js'),spread=_require4.spread;var _require5=require('./utility'),fold=_require5.fold,size=_require5.size,toArray=_require5.toArray;var _require6=require('./statistic'),change=_require6.change;// require seedrandom package
+var _require4=require('./gen-basic.js'),spread=_require4.spread;var _require5=require('./transform.js'),lookup=_require5.lookup;var _require6=require('./utility'),fold=_require6.fold,size=_require6.size,toArray=_require6.toArray;var _require7=require('./statistic'),change=_require7.change;// require seedrandom package
 var seedrandom=require('seedrandom');// local pseudorandom number generator and seed storage
 var rng=seedrandom();var _seed=0;// Set the seed for all the Random Number Generators. 
 // 0 sets to unpredictable seeding
@@ -2627,7 +2633,7 @@ rtm.forEach(function(g){for(var i=0;i<g;i++){arr.push(!i?1:0);}});return arr.sli
 // @return {Array}
 // 
 function shuffle(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];// slice array to avoid changing the original array
-var arr=a.slice();for(var i=arr.length-1;i>0;i-=1){var j=Math.floor(rng()*(i+1));var t=arr[i];arr[i]=arr[j];arr[j]=t;}return arr;}exports.shuffle=shuffle;// Generate a list of 12 semitones
+var arr=a.slice();for(var i=arr.length-1;i>0;i-=1){var j=Math.floor(rng()*(i+1));var t=arr[i];arr[i]=arr[j];arr[j]=t;}return arr;}exports.shuffle=shuffle;exports.scramble=shuffle;// Generate a list of 12 semitones
 // then shuffle the list based on a random seed
 // 
 // @return {Array} -> twelve-tone series
@@ -2667,7 +2673,8 @@ len=size(len);var arr=[];for(var i=0;i<len;i++){arr.push(a[Math.floor(rng()*a.le
 // 
 function pick(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var a=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0,1];// set the size to minimum of 1 or based on array length
 len=size(len);// fill the jar with the input
-var jar=!Array.isArray(a)?[a]:a;if(jar.length<2){return new Array(len).fill(jar[0]);}// shuffle the jar
+// var jar = (!Array.isArray(a))? [a] : a;
+var jar=toArray(a);if(jar.length<2){return new Array(len).fill(jar[0]);}// shuffle the jar
 var s=shuffle(jar);// value, previous, output-array
 var v,p,arr=[];for(var i=0;i<len;i++){v=s.pop();if(v===undefined){s=shuffle(jar);v=s.pop();if(v===p){v=s.pop();s.push(p);}}arr[i]=v;p=v;}return arr;}exports.pick=pick;// expand an array based upon the pattern within an array
 // the pattern is derived from the rate in change between values
@@ -2700,14 +2707,15 @@ for(var c=0;c<chg.length;c++){arr.push(acc+=chg[c]);}return arr;}exports.expand=
 var MarkovChain=/*#__PURE__*/function(){function MarkovChain(data){_classCallCheck(this,MarkovChain);// transition probabilities table
 this._table={};// train if dataset is provided
 if(data){this.train(data);};// current state of markov chain
-this._state;}_createClass(MarkovChain,[{key:"table",get:function get(){// return copy of object
-return _objectSpread({},this._table);}},{key:"clear",value:function clear(){// empty the transition probabilities
+this._state;}_createClass(MarkovChain,[{key:"table",get:function get(){// output a copy of the table as an object
+return _objectSpread({},this._table);}},{key:"read",value:function read(t){// read a markov chain table from a json file
+if(Array.isArray(t)||_typeof(t)!=='object'){return console.error("Error: input is not a valid json formatted table. If your input is an array use train() instead.");}this._table=t;}},{key:"clear",value:function clear(){// empty the transition probabilities
 this._table={};}},{key:"train",value:function train(a){if(!Array.isArray(a)){return console.error("Error: train() expected array but received: ".concat(_typeof(a)));}// build a transition table from array of values
 for(var i=1;i<a.length;i++){if(!this._table[a[i-1]]){this._table[a[i-1]]=[a[i]];}else{this._table[a[i-1]].push(a[i]);}}}},{key:"seed",value:function seed(s){// deprecated, seed is now also be set for the global rng
 _seed2(s);}},{key:"state",value:function state(a){// set the state
-if(!this._table[a]){console.error("Warning: ".concat(a," is not part of transition table"));}this._state=a;}},{key:"next",value:function next(){// if the state is undefined or has no transition in table
+if(!this._table[a]){console.error("Warning: ".concat(a," is not part of transition table"));}this._state=a;}},{key:"randomState",value:function randomState(){var states=Object.keys(this._table);this._state=states[Math.floor(rng()*states.length)];}},{key:"next",value:function next(){// if the state is undefined or has no transition in table
 // randomly choose from all
-if(this._state===undefined||!this._table[this._state]){var states=Object.keys(this._table);this._state=states[Math.floor(rng()*states.length)];}// get probabilities based on state
+if(this._state===undefined||!this._table[this._state]){this.randomState();}// get probabilities based on state
 var probs=this._table[this._state];// select pseudorandomly next value
 this._state=probs[Math.floor(rng()*probs.length)];return this._state;}},{key:"chain",value:function chain(){var l=arguments.length>0&&arguments[0]!==undefined?arguments[0]:2;// return an array of values generated with next()
 var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return MarkovChain;}();exports.MarkovChain=MarkovChain;// Initialize a Deep Markov Chain Model (with higher order n)
@@ -2737,7 +2745,7 @@ if(!this._table.has(s)){console.error("Warning: ".concat(a," is not part of tran
 if(this._state===undefined||!this._table.has(this._state)){this.randomState();}// get probabilities based on state
 var probs=this._table.get(this._state);var newState=probs[Math.floor(rng()*probs.length)];// Now recreate a nice string representation
 var prefix=JSON.parse(this._state);prefix.shift();prefix.push(newState);this._state=JSON.stringify(prefix);return newState;}},{key:"chain",value:function chain(){var l=arguments.length>0&&arguments[0]!==undefined?arguments[0]:2;// return an array of values generated with next()
-var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return DeepMarkov;}();exports.DeepMarkov=DeepMarkov;exports.DeepMarkovChain=DeepMarkov;},{"./gen-basic.js":36,"./statistic":39,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){//=======================================================================
+var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return DeepMarkov;}();exports.DeepMarkov=DeepMarkov;exports.DeepMarkovChain=DeepMarkov;},{"./gen-basic.js":36,"./statistic":39,"./transform.js":40,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){//=======================================================================
 // statistic.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2746,7 +2754,7 @@ var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return DeepMark
 // Statistical related methods and algorithms that can be helpful in
 // analysis of number sequences, melodies, rhythms and more
 //=======================================================================
-var Mod=require('./transform');var _require7=require('./utility'),maximum=_require7.maximum,minimum=_require7.minimum,flatten=_require7.flatten,toArray=_require7.toArray;// sort an array of numbers or strings. sorts ascending
+var Mod=require('./transform');var _require8=require('./utility'),maximum=_require8.maximum,minimum=_require8.minimum,flatten=_require8.flatten,toArray=_require8.toArray;// sort an array of numbers or strings. sorts ascending
 // or descending in numerical and alphabetical order
 // 
 // @param {Array} -> array to sort
@@ -2796,15 +2804,18 @@ function mode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:
 // @params {Array} -> compare array2
 // @return {Bool} -> true or false
 // 
-function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var a2=arguments.length>1?arguments[1]:undefined;a1=toArray(a1);a2=toArray(a2);if(a1.length!==a2.length){return false;}for(var i in a1){if(Array.isArray(a1[i])){return compare(a1[i],a2[i]);}else if(a1[i]!==a2[i]){return false;}}return true;}exports.compare=compare;exports.equal=compare;// Return the difference between every consecutive value in an array
+function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var a2=arguments.length>1?arguments[1]:undefined;a1=toArray(a1);a2=toArray(a2);if(a1.length!==a2.length){return false;}for(var i in a1){if(Array.isArray(a1[i])){return compare(a1[i],a2[i]);}else if(a1[i]!==a2[i]){return false;}}return true;}exports.compare=compare;// exports.equal = compare; (deprecated for equal in utility operator)
+// Return the difference between every consecutive value in an array
 // With melodic content from a chromatic scale this can be seen as
 // a list of intervals that, when followed from the same note, results
 // in the same melody.
 // 
 // @param {Array} -> array to calculate from
+// @param {Bool} -> returns diff between first and last (optional, default=false)
 // @return {Array} -> list of changes
 // 
-function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0,0];if(a.length<2||!Array.isArray(a)){return[0];}var len=a.length;var arr=[];for(var i=1;i<len;i++){arr.push(a[i]-a[i-1]);}return arr;}exports.change=change;exports.delta=change;exports.difference=change;},{"./transform":40,"./utility":42}],40:[function(require,module,exports){//=======================================================================
+function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0,0];var l=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;if(a.length<2||!Array.isArray(a)){return[0];}var len=a.length;var arr=[];for(var i=1;i<len;i++){arr.push(a[i]-a[i-1]);}// optionally also return diff from first and last value
+if(l){arr.push(a[0]-a[a.length-1]);}return arr;}exports.change=change;exports.delta=change;exports.difference=change;exports.diff=change;},{"./transform":40,"./utility":42}],40:[function(require,module,exports){//=======================================================================
 // transform.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2824,7 +2835,7 @@ function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 //=======================================================================
 // require the Utility methods
 // const Rand = require('./gen-stochastic');
-var _require8=require('./statistic'),sort=_require8.sort;var _require9=require('./utility'),flatten=_require9.flatten,add=_require9.add,max=_require9.max,min=_require9.min,lerp=_require9.lerp,toArray=_require9.toArray,size=_require9.size;// Duplicate an array multiple times,
+var _require9=require('./statistic'),sort=_require9.sort;var _require10=require('./utility'),flatten=_require10.flatten,add=_require10.add,max=_require10.max,min=_require10.min,lerp=_require10.lerp,toArray=_require10.toArray,size=_require10.size;// Duplicate an array multiple times,
 // optionaly add an offset to every value when duplicating
 // Also works with 2-dimensonal arrays
 // If string the values will be concatenated
@@ -2908,7 +2919,7 @@ function lace(){for(var _len5=arguments.length,args=new Array(_len5),_key5=0;_ke
 // @param {Array} -> Array with values returned from lookup
 // @return {Array} -> Looked up values
 // 
-function lookup(){var idx=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var arr=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];idx=toArray(idx);arr=toArray(arr);var a=[];var len=arr.length;for(var i in idx){if(Array.isArray(idx[i])){a.push(lookup(idx[i],arr));}else{if(!isNaN(idx[i])){var look=(idx[i]%len+len)%len;a.push(arr[look]);}}}return a;}exports.lookup=lookup;// merge all values of two arrays on the same index
+function lookup(){var idx=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var arr=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];idx=toArray(idx);arr=toArray(arr);var a=[];var len=arr.length;for(var i in idx){if(Array.isArray(idx[i])){a.push(lookup(idx[i],arr));}else{if(!isNaN(idx[i])){var look=(idx[i]%len+len)%len;a.push(arr[look]);}}}return a;}exports.lookup=lookup;// merge all values of two arrays on the same index
 // into a 2D array. preserves length of longest list
 // flattens multidimensional arrays to 2 dimensions on merge
 // 
@@ -2998,9 +3009,9 @@ function unique(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 // - Using the amazing Tonal.js package by @danigb for various functions
 //==============================================================================
 // require API's
-var _require10=require('@tonaljs/tonal'),Note=_require10.Note,Scale=_require10.Scale;var _require11=require('@tonaljs/tonal'),Chord=_require11.Chord;var _require12=require('@tonaljs/tonal'),Progression=_require12.Progression;// require Scale Mappings
+var _require11=require('@tonaljs/tonal'),Note=_require11.Note,Scale=_require11.Scale;var _require12=require('@tonaljs/tonal'),Chord=_require12.Chord;var _require13=require('@tonaljs/tonal'),Progression=_require13.Progression;// require Scale Mappings
 // const Scales = require('../data/scales.json');
-var ToneSet=require('../data/tones.json');var chromaSet={c:0,d:2,e:4,f:5,g:7,a:9,b:11};var _require13=require('./transform'),unique=_require13.unique;var _require14=require('./utility'),add=_require14.add,wrap=_require14.wrap,multiply=_require14.multiply,toArray=_require14.toArray;// create a mapping list of scales for 12-TET from Tonal
+var ToneSet=require('../data/tones.json');var chromaSet={c:0,d:2,e:4,f:5,g:7,a:9,b:11};var _require14=require('./transform'),unique=_require14.unique;var _require15=require('./utility'),add=_require15.add,wrap=_require15.wrap,multiply=_require15.multiply,toArray=_require15.toArray;// create a mapping list of scales for 12-TET from Tonal
 var Scales={};Scale.names().forEach(function(s){var scl=Scale.get(s);var name=scl.name.replace(/\s+/g,'_').replace(/[#'-]+/g,'');var chroma=scl.chroma.split('').map(function(x){return Number(x);});// rename aeolian to minor
 name=name==='aeolian'?'minor':name;var map=[];for(var i=0;i<chroma.length;i++){if(!chroma[i]){map.push(map[map.length-1]);continue;}map.push(i);}Scales[name]=map;});// global settings stored in object
 var notation={"scale":"chromatic","root":"c","rootInt":0,"map":Scales["chromatic"],"bpm":120,"measureInMs":2000};// Return a dictionary with all the notational preferences:
@@ -3383,7 +3394,14 @@ var chart=require('asciichart');var HALF_PI=Math.PI/2.0;var TWO_PI=Math.PI*2.0;v
 // @param {Value} -> input to be checked
 // @return {Array} -> the input as an array
 //
-function toArray(a){return Array.isArray(a)?a:[a];}exports.toArray=toArray;// Return the length/size of an array if the argument is an array
+function toArray(a){return Array.isArray(a)?a:[a];}exports.toArray=toArray;// check if the value is an array or not
+// if it is an array output the first value
+// 
+// @param {Value} -> intput to be checked
+// @param {Int+} -> index to return from Array (optional, default=0)
+// @return {Value} -> single value output
+//
+function fromArray(a){var i=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;return Array.isArray(a)?a[i]:a;}exports.fromArray=fromArray;// Return the length/size of an array if the argument is an array
 // if argument is a number return the number as integer
 // if argument is not a number return 1
 // The method can be used to input arrays as arguments for other functions

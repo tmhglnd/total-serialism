@@ -7646,7 +7646,7 @@ function spreadFloat(len=1, lo=1, hi){
 	lo = Math.min(lo, hi);
 	// len is minimum of 1 or length of array
 	len = size(len);
-	if (len === 1){ return [0]; }
+	if (len === 1){ return [lo]; }
 	// stepsize
 	let s = Math.abs(r) / len;
 	// generate array
@@ -7688,7 +7688,7 @@ function spreadExpFloat(len=1, lo=1, hi, exp=1){
 	// len is minimum of 1
 	len = size(len);
 	// len = Math.max(1, len);
-	if (len === 1){ return [0]; }
+	if (len === 1){ return [lo]; }
 	// generate array
 	let arr = [];
 	for (let i=0; i<len; i++){
@@ -7729,7 +7729,7 @@ function spreadInclusiveFloat(len=1, lo=1, hi){
 	// len is minimum of 1
 	len = size(len);
 	// len = Math.max(1, len);
-	if (len === 1){ return [0]; }
+	if (len === 1){ return [lo]; }
 	// stepsize
 	let s = Math.abs(r) / (len - 1);
 	// generate array
@@ -7772,6 +7772,7 @@ function spreadInclusiveExpFloat(len=1, lo=1, hi, exp=1){
 	// len is minimum of 1
 	len = size(len);
 	// len = Math.max(1, len);
+	if (len === 1){ return [lo]; }
 	// generate array
 	let arr = [];
 	for (let i=0; i<len; i++){
@@ -8081,16 +8082,20 @@ BigNumber.config({
 
 // A hexadecimal rhythm generator. Generates values of 0 and 1
 // based on the input of a hexadecimal character string
+// Does not work with `0x` hexadecimal notation, for that use binary()
 //
-// @param {String} -> hexadecimal characters (0 t/m f)
+// @param {String/Number} -> hexadecimal characters (0 t/m f)
 // @return {Array} -> rhythm
 // 
 function hexBeat(hex="8"){
+	// convert to string if a number
 	if (!hex.isNaN){ hex = hex.toString(); }
 	let a = [];
+	// for every char in string get binary expansion
 	for (let i=0; i<hex.length; i++){
-		let binary = parseInt("0x"+hex[i]).toString(2);
+		let binary = parseInt("0x" + hex[i]).toString(2);
 		binary = isNaN(binary)? '0000' : binary;
+		// pad with leading 0's to ensure 4 values
 		let padding = binary.padStart(4, '0');
 		a = a.concat(padding.split('').map(x => Number(x)));
 	}
@@ -8141,7 +8146,7 @@ exports.fastEuclid = fastEuclid;
 // @param {Int} -> rotate (optional, default=0)
 // @return {Array}
 // 
-var pattern, counts, remainders;
+let pattern, counts, remainders;
 
 function euclid(steps=8, beats=4, rot=0){
 	// steps/hits is minimum of 1 or array length
@@ -8187,7 +8192,7 @@ function build(l){
 	}
 }
 
-// Lindemayer String expansion
+// Lindenmayer String expansion
 // a recursive fractal algorithm to generate botanic (and more)
 // Default rule is 1 -> 10, 0 -> 1, where 1=A and 0=B
 // Rules are specified as a JS object consisting of strings or arrays
@@ -8201,6 +8206,9 @@ function linden(axiom=[1], iteration=3, rules={1: [1, 0], 0: [1]}){
 	axiom = (typeof axiom === 'number')? [axiom] : axiom;
 	let asString = typeof axiom === 'string';
 	let res;
+
+	// return axiom of iterations is < 1
+	if (iteration < 1){ return axiom };
 
 	for(let n=0; n<iteration; n++){
 		res = (asString)? "" : [];
@@ -8258,7 +8266,7 @@ exports.collatzMod = collatzMod;
 
 // The collatz conjecture with BigNumber library
 // 
-function bigCollatz(n){
+function bigCollatz(n=12){
 	let num = new BigNumber(n);
 	let sequence = [];
 
@@ -8302,12 +8310,13 @@ function numBonacci(len=1, s1=0, s2=1, t=1){
 	var n1 = new BigNumber(s2); //startvalue n-1
 	var n2 = new BigNumber(s1); //startvalue n-2
 
-	len = Math.max(1, len-2);
 	var cur = 0, arr = [n2, n1];
-
-	if (len < 2) {
+	
+	if (len < 3) {
+		// return arr;
 		return arr.slice(0, len);
 	} else {
+		len = Math.max(1, len-2);
 		for (var i=0; i<len; i++){	
 			// general method for nbonacci sequences
 			// Fn = t * Fn-1 + Fn-2
@@ -8636,6 +8645,7 @@ exports.Automaton = Automaton;
 
 // require Generative methods
 const { spread } = require('./gen-basic.js');
+const { lookup } = require('./transform.js');
 const { fold, size, toArray } = require('./utility');
 const { change } = require('./statistic');
 
@@ -8849,6 +8859,7 @@ function shuffle(a=[0]){
 	return arr;
 }
 exports.shuffle = shuffle;
+exports.scramble = shuffle;
 
 // Generate a list of 12 semitones
 // then shuffle the list based on a random seed
@@ -8916,16 +8927,17 @@ function pick(len=1, a=[0, 1]){
 	// set the size to minimum of 1 or based on array length
 	len = size(len);
 	// fill the jar with the input
-	var jar = (!Array.isArray(a))? [a] : a;
+	// var jar = (!Array.isArray(a))? [a] : a;
+	let jar = toArray(a);
 
 	if (jar.length < 2){
 		return new Array(len).fill(jar[0]);
 	}
 	// shuffle the jar
-	var s = shuffle(jar);
+	let s = shuffle(jar);
 	// value, previous, output-array
-	var v, p, arr = [];	
-	for (var i=0; i<len; i++){
+	let v, p, arr = [];	
+	for (let i=0; i<len; i++){
 		v = s.pop();
 		if (v === undefined){
 			s = shuffle(jar);
@@ -8996,8 +9008,15 @@ class MarkovChain {
 		this._state;
 	}
 	get table(){
-		// return copy of object
+		// output a copy of the table as an object
 		return { ...this._table };
+	}
+	read(t){
+		// read a markov chain table from a json file
+		if (Array.isArray(t) || typeof t !== 'object'){
+			return console.error(`Error: input is not a valid json formatted table. If your input is an array use train() instead.`);
+		}
+		this._table = t;
 	}
 	clear(){
 		// empty the transition probabilities
@@ -9027,12 +9046,15 @@ class MarkovChain {
 		}
 		this._state = a;
 	}
+	randomState(){
+		let states = Object.keys(this._table);
+		this._state = states[Math.floor(rng() * states.length)];
+	}
 	next(){
 		// if the state is undefined or has no transition in table
 		// randomly choose from all
 		if (this._state === undefined || !this._table[this._state]){
-			let states = Object.keys(this._table);
-			this._state = states[Math.floor(rng() * states.length)];
+			this.randomState();
 		}
 		// get probabilities based on state
 		let probs = this._table[this._state];
@@ -9150,7 +9172,7 @@ class DeepMarkov {
 }
 exports.DeepMarkov = DeepMarkov;
 exports.DeepMarkovChain = DeepMarkov;
-},{"./gen-basic.js":36,"./statistic":39,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){
+},{"./gen-basic.js":36,"./statistic":39,"./transform.js":40,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){
 //=======================================================================
 // statistic.js
 // part of 'total-serialism' Package
@@ -9311,7 +9333,7 @@ function compare(a1=[0], a2){
 	return true;
 }
 exports.compare = compare;
-exports.equal = compare;
+// exports.equal = compare; (deprecated for equal in utility operator)
 
 // Return the difference between every consecutive value in an array
 // With melodic content from a chromatic scale this can be seen as
@@ -9319,9 +9341,10 @@ exports.equal = compare;
 // in the same melody.
 // 
 // @param {Array} -> array to calculate from
+// @param {Bool} -> returns diff between first and last (optional, default=false)
 // @return {Array} -> list of changes
 // 
-function change(a=[0, 0]){
+function change(a=[0, 0], l=false){
 	if (a.length < 2 || !Array.isArray(a)){
 		return [0];
 	}
@@ -9330,11 +9353,14 @@ function change(a=[0, 0]){
 	for (let i=1; i<len; i++){
 		arr.push(a[i] - a[i-1]);
 	}
+	// optionally also return diff from first and last value
+	if (l){ arr.push(a[0] - a[a.length-1]); }
 	return arr;
 }
 exports.change = change;
 exports.delta = change;
 exports.difference = change;
+exports.diff = change;
 
 },{"./transform":40,"./utility":42}],40:[function(require,module,exports){
 //=======================================================================
@@ -9578,7 +9604,7 @@ exports.zip = lace;
 // @param {Array} -> Array with values returned from lookup
 // @return {Array} -> Looked up values
 // 
-function lookup(idx=0, arr=[0]){
+function lookup(idx=[0], arr=[0]){
 	idx = toArray(idx);
 	arr = toArray(arr);
 	let a = [];
@@ -10759,6 +10785,18 @@ function toArray(a){
 	return Array.isArray(a) ? a : [a];
 }
 exports.toArray = toArray;
+
+// check if the value is an array or not
+// if it is an array output the first value
+// 
+// @param {Value} -> intput to be checked
+// @param {Int+} -> index to return from Array (optional, default=0)
+// @return {Value} -> single value output
+//
+function fromArray(a, i=0){
+	return Array.isArray(a) ? a[i] : a;
+}
+exports.fromArray = fromArray;
 
 // Return the length/size of an array if the argument is an array
 // if argument is a number return the number as integer
