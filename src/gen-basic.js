@@ -27,14 +27,14 @@ const { map, flatten, toArray, size, TWO_PI } = require('./utility');
 //
 function spreadFloat(len=1, lo=1, hi){
 	// if hi undefined set lo to 0 and hi=lo
-	if (hi === undefined){ var t=lo, lo=0, hi=t; }
+	if (hi === undefined){ let t=lo, lo=0, hi=t; }
 	// calculate the range
 	let r = hi - lo; 
 	// lo is actual lowest value
 	lo = Math.min(lo, hi);
 	// len is minimum of 1 or length of array
 	len = size(len);
-	if (len === 1){ return [0]; }
+	if (len === 1){ return [lo]; }
 	// stepsize
 	let s = Math.abs(r) / len;
 	// generate array
@@ -68,7 +68,7 @@ exports.spread = spread;
 //
 function spreadExpFloat(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
-	if (hi === undefined){ var t=lo, lo=0, hi=t; }
+	if (hi === undefined){ let t=lo, lo=0, hi=t; }
 	// calculate the range
 	let r = hi - lo; 
 	// lo is actual lowest value
@@ -76,7 +76,7 @@ function spreadExpFloat(len=1, lo=1, hi, exp=1){
 	// len is minimum of 1
 	len = size(len);
 	// len = Math.max(1, len);
-	if (len === 1){ return [0]; }
+	if (len === 1){ return [lo]; }
 	// generate array
 	let arr = [];
 	for (let i=0; i<len; i++){
@@ -109,7 +109,7 @@ exports.spreadExp = spreadExp;
 //
 function spreadInclusiveFloat(len=1, lo=1, hi){
 	// if hi undefined set lo to 0 and hi=lo
-	if (hi === undefined){ var t=lo, lo=0, hi=t; }
+	if (hi === undefined){ let t=lo, lo=0, hi=t; }
 	// calculate the range
 	let r = hi - lo; 
 	// lo is actual lowest value
@@ -117,7 +117,7 @@ function spreadInclusiveFloat(len=1, lo=1, hi){
 	// len is minimum of 1
 	len = size(len);
 	// len = Math.max(1, len);
-	if (len === 1){ return [0]; }
+	if (len === 1){ return [lo]; }
 	// stepsize
 	let s = Math.abs(r) / (len - 1);
 	// generate array
@@ -152,7 +152,7 @@ exports.spreadInc = spreadInclusive;
 //
 function spreadInclusiveExpFloat(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
-	if (hi === undefined){ var t=lo, lo=0, hi=t; }
+	if (hi === undefined){ let t=lo, lo=0, hi=t; }
 	// calculate the range
 	let r = hi - lo; 
 	// lo is actual lowest value
@@ -160,6 +160,7 @@ function spreadInclusiveExpFloat(len=1, lo=1, hi, exp=1){
 	// len is minimum of 1
 	len = size(len);
 	// len = Math.max(1, len);
+	if (len === 1){ return [lo]; }
 	// generate array
 	let arr = [];
 	for (let i=0; i<len; i++){

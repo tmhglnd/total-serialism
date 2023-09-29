@@ -11,24 +11,26 @@ const Gen = require('total-serialism').Generative;
 
 # Methods
 
-- [spread / spreadFloat](#spread)
-- [spreadInclusive / spreadInclusiveFloat](#spreadinclusive)
-- [spreadExp / spreadExpFloat](#spreadExp)
-- [spreadInclusiveExp / spreadInclusiveExpFloat](spreadInclusiveExp)
+- [spread / spreadFloat](#spread-spreadfloat)
+- [spreadInclusive / spreadInclusiveFloat](#spreadinclusive-spreadinclusivefloat)
+- [spreadExp / spreadExpFloat](#spreadexp-spreadexpfloat)
+- [spreadInclusiveExp / spreadInclusiveExpFloat](#spreadinclusiveexp-spreadinclusiveexpfloat)
 - [fill](#fill)
 - [sine / cosine](#sine--cosine)
-- [sineFloat / cosineFloat](#sineFloat--cosineFloat)
-- [saw / sawFloat](#saw--sawFloat)
-- [square / squareFloat](#square--squareFloat)
-- [binaryBeat](#binaryBeat)
-- [spacing](#spacing)
+- [sineFloat / cosineFloat](#sinefloat--cosinefloat)
+- [saw / sawFloat](#saw--sawfloat)
+- [square / squareFloat](#square--squarefloat)
+- [binaryBeat](#binarybeat)
+- [spacing](#spacingbeat)
 
-## spread
+## spread spreadFloat
 
 Generate an array of n-length of evenly spaced values between a starting number up until (but excluding) the 3th argument. Flipping the low and high range will result in the same values but descending.
 
+Alias: `spreadF`
+
 **arguments**
-- {Int+/Array} -> Length of output array (uses length of Array if input)
+- {Int+/Array} -> Length of output array (uses length of Array if argument is array)
 - {Number} -> Low value (optional, default=0)
 - {Number} -> High value (exclusive, optional, default=length)
 
@@ -52,15 +54,15 @@ Gen.spread(5, 12, 3);
 // generate an array of 5 floats between range 0-1
 Gen.spreadFloat(5); 
 //=> [ 0, 0.2, 0.4, 0.6, 0.8 ]
-// Alias: Gen.spreadF()
-
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/TT6XGijrR" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/TT6XGijrR" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
-## spreadInclusive
+## spreadInclusive spreadInclusiveFloat
 
 Generate an array of n-length of evenly spaced values between a starting number up to (and including) the 3th argument. Flipping the low and high range will result in the same values but descending.
+
+Alias: `spreadInc`, `spreadIncF`
 
 **arguments**
 - {Int+/Array} -> Length of output array (uses length of Array if input)
@@ -70,8 +72,7 @@ Generate an array of n-length of evenly spaced values between a starting number 
 ```js
 // generate an array of 5 ints between range 0-5 (5 inclusive)
 Gen.spreadInclusive(5);
-//=> [ 0, 1, 2, 3, 5 ] 
-// Alias: Gen.spreadInc()
+//=> [ 0, 1, 2, 3, 5 ]
 
 // change the range with a second argument to 0-12
 Gen.spreadInclusive(5, 12);
@@ -88,13 +89,13 @@ Gen.spreadInclusive(5, 12, 3);
 // generate an array of 5 floats (inclusive)
 Gen.spreadInclusiveFloat(5);
 //=> [ 0, 0.25, 0.5, 0.75, 1 ] 
-// Alias: Gen.spreadIncF()
-
 ```
 
-## spreadExp
+## spreadExp spreadExpFloat
 
 Similar to spread and spreadFloat but with an optional exponent as 4th argument.
+
+Alias: `spreadExpF`
 
 **arguments**
 - {Int+/Array} -> Length of output array (uses length of Array if input)
@@ -110,12 +111,13 @@ Gen.spreadExp(10, 0, 10, 2);
 // ] 
 
 Gen.spreadExpFloat();
-// Alias: Gen.spreadExpF()
 ```
 
-## spreadInclusiveExp
+## spreadInclusiveExp spreadInclusiveExpFloat
 
 Similar to spreadInclusive and spreadInclusiveFloat but with an optional exponent as 4th argument.
+
+Alias: `spreadIncExp`, `spreadIncExpF`
 
 **arguments**
 - {Int+/Array} -> Length of output array (uses length of Array if input)
@@ -129,9 +131,6 @@ Gen.spreadInclusiveExp(10, 0, 10, 2);
 //   0, 0, 0, 1,  1,
 //   3, 4, 6, 7, 10
 // ] 
-
-Gen.spreadInclusiveExpFloat();
-// Alias: Gen.spreadIncExpF()
 ```
 
 ## fill
@@ -153,7 +152,7 @@ Gen.fill([10, 2, 15, 3, 20, 4]);
 //=> [ 10, 10, 15, 15, 15, 20, 20, 20, 20 ]
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/-qtEfC8Zm" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/-qtEfC8Zm" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ## sine / cosine
 
@@ -194,14 +193,15 @@ Gen.sine(11, 4, 0, 7);
 //        2.00 ┤ ││ ││╰╮││ 
 //        1.00 ┤ ││ ││ ╰╯│ 
 //        0.00 ┤ ╰╯ ╰╯   ╰  
-
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/PdywLSgcO" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/PdywLSgcO" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ## sineFloat / cosineFloat
 
 Generate an array with n-periods of a (co)sine function with floating-point values. Optional last arguments set lo and hi range and phase offset. Default range is -1 to 1. Only setting first range argument sets the low-range to 0. Wave can be inverted by swapping the arguments.
+
+Alias: `sineF`, `sinF`, `cosineF`, `cosF`
 
 **arguments**
 - {Int+/Array} -> Length of output array (uses length of Array if input)
@@ -248,15 +248,15 @@ Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5));
 //   -0.60 ┤         ││ ╰╯ ││ ││ │ ││││ │     │ │ │ 
 //   -0.80 ┤         ││    ││ ╰╯ │ │╰╯│ │     ╰─╯ │ 
 //   -1.00 ┤         ╰╯    ╰╯    ╰─╯  ╰─╯         ╰  
-
-// Alias: Gen.sinF(), Gen.cosF()
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/CFOwE1yhW" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/CFOwE1yhW" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ## saw / sawFloat
 
 Generate an array with n-periods of a saw/phasor function. Optional last arguments set lo and hi range and phase offset. Only setting first range argument sets the low-range to 0
+
+Alias: `sawF`
 
 **arguments**
 - {Int+/Array} -> Length of output array (uses length of Array if input)
@@ -302,13 +302,13 @@ Gen.saw(34, Gen.sinF(30, 2, 0, 100), 0, 12);
 //    2.00 ┤  │  ││   ││ ╰╮ │   │ │  ╰╯  │  │ 
 //    1.00 ┤ ╭╯  ││   ╰╯  │╭╯   │ │      ╰─╮│ 
 //    0.00 ┼─╯   ╰╯       ╰╯    ╰─╯        ╰╯  
-
-// Alias: Gen.sawF()
 ```
 
 ## square / squareFloat
 
 Generate an array with n-periods of a square/pulse wave function. Optional last arguments set lo and hi range and pulse width. Only setting first range argument sets the low-range to 0.
+
+Alias: `squareF`, `rect`, `rectFloat`, `rectF` 
 
 **arguments**
 - {Int+/Array} -> Length of output array (uses length of Array if input)
@@ -337,14 +337,13 @@ Gen.squareFloat(30, Gen.sinF(30, 2, 1, 5));
 //    0.40 ┤   │     │  ││  │ │ │  │ │ │  
 //    0.20 ┤   │     │  ││  │ │ │  │ │ │  
 //    0.00 ┤   ╰─────╯  ╰╯  ╰─╯ ╰──╯ ╰─╯   
-
-// Alias: Gen.squareF(), Gen.rectFloat(), Gen.rectF()
-
 ```
 
 ## binaryBeat
 
 Generate a binary rhythm from a positive integer number or an array of numbers. Returns the binary value as an array of separated 1's and 0's useful for representing rhythmical patterns.
+
+Alias: `binary`
 
 **arguments**
 - {Int+/Array} -> Array of numbers to convert to binary representation
@@ -361,13 +360,13 @@ Gen.binaryBeat([4, 3, 5]);
 // negative values are clipped to 0
 Gen.binaryBeat([-4, 4]);
 //=> [0, 1, 0, 0]
-
-// Alias: binary
 ```
 
 ## spacingBeat
 
 Generate an array of 1's and 0's based on a positive integer number or array. Every number in the array will be replaced by a 1 with a specified amount of 0's appended to it. Eg. a 2 => 1 0, a 4 => 1 0 0 0, etc. This technique is useful to generate a rhythm based on spacing length between onsets
+
+Alias: `spacing`, `space`
 
 **arguments**
 - {Int+/Array} -> Array of numbers to convert to spaced rhythm
@@ -380,6 +379,4 @@ Gen.spacingBeat(2, 3, 2)
 // also works with an array as input
 Gen.spacingBeat([4, 2, 0])
 //=> [1, 0, 0, 0, 1, 0, 0]
-
-// Alias: space, spacing
 ```
