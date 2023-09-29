@@ -377,8 +377,15 @@ class MarkovChain {
 		this._state;
 	}
 	get table(){
-		// return copy of object
+		// output a copy of the table as an object
 		return { ...this._table };
+	}
+	read(t){
+		// read a markov chain table from a json file
+		if (Array.isArray(t) || typeof t !== 'object'){
+			return console.error(`Error: input is not a valid json formatted table. If your input is an array use train() instead.`);
+		}
+		this._table = t;
 	}
 	clear(){
 		// empty the transition probabilities

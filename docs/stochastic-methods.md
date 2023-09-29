@@ -335,6 +335,7 @@ var melody2 = ['g', 'a', 'b', 'g', 'a', 'f', 'd', 'e'];
 markov.train(melody2);
 
 // view the transition table (stored as dictionary)
+// can also be used to export the table to a file
 console.log(markov.table);
 // { c: [ 'e' ],
 //   e: [ 'f', 'g' ],
@@ -361,6 +362,9 @@ markov.chain(10);
 
 // clear the model
 markov.clear();
+
+// read a model from a json/object structure
+markov.read({ c: ['e'], e: ['f', 'g' ]});
 ```
 
 ### DeepMarkovChain
