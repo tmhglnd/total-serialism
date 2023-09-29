@@ -11,9 +11,9 @@ const Rand = require('total-serialism').Stochastic;
 # Methods
 
 - [seed](#seed)
-- [getSeed](#getSeed)
-- [random](#random)
-- [drunk](#drunk)
+- [getSeed](#getseed)
+- [random / randomFloat](#random-randomfloat)
+- [drunk / drunkFloat](#drunk-drunkfloat)
 - [coin](#coin)
 - [dice](#dice)
 - [urn](#urn)
@@ -23,8 +23,8 @@ const Rand = require('total-serialism').Stochastic;
 - [pick](#pick)
 - [clave](#clave)
 - [expand](#expand)
-- [MarkovChain](#markov-chain)
-- [DeepMarkovChain](#deep-markov-chain)
+- [MarkovChain](#markovchain)
+- [DeepMarkovChain](#deepmarkovchain)
 
 ## seed
 
@@ -45,9 +45,11 @@ Rand.getSeed();
 // => 19374
 ```
 
-## random
+## random randomFloat
 
-Generate a ring of random integers between a specified range (excluding high value).
+Generate a list of random integers or floating points between a specified range (excluding high value).
+
+Alias: `randomF`
 
 **arguments**
 - {Int+} -> number of values to output
@@ -55,21 +57,22 @@ Generate a ring of random integers between a specified range (excluding high val
 - {Number} -> maximum range (optional, default=2)
 
 ```js
-// generate an array of random floats in range -1 to 1
-Rand.randomFloat(3, -1, 1); 
-//=> [ 0.6291111850577886, 0.15153786227276944, 0.32814801081039646 ]
-// Alias Rand.randomF();
-
 // generate an array of random integers in range
 Rand.random(5, 0, 12); 
 //=> [ 3, 3, 7, 1, 0 ]
+
+// generate an array of random floats in range -1 to 1
+Rand.randomFloat(3, -1, 1); 
+//=> [ 0.6291111850577886, 0.15153786227276944, 0.32814801081039646 ]
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/gzWOFUorY" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/gzWOFUorY" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
-## drunk
+## drunk drunkFloat
 
-Generate a list of random float values but the next random value is within a limited range of the previous value generating a random "drunk" walk, also referred to as brownian motion. Inspired by the [drunk]-object in MaxMSP
+Generate a list of random values (int/float) but the next random value is within a limited step-range of the previous value generating a random "drunk" walk, also referred to as brownian motion. Inspired by the `[drunk]`-object in MaxMSP
+
+Alias: `drunkF`
 
 **arguments**
 
@@ -125,26 +128,31 @@ Rand.coin(10);
 //=> [ 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 ]
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/kz7YmtUr4" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/kz7YmtUr4" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ## dice
 
-Generate a list of random integer values 1 to 6 like the roll of a dice.
+Generate a list of dice rolls, resulting in random integer values from 1 to 6. Optionally use a second argument to set the amount of sides for the die.
 
 **arguments**
 - {Int+} -> number of dice rolls to output as list
+- {Int+} -> set the sides of the die (optional, default=6)
 
 ```js
 // generate an array of dice rolls
 Rand.dice(4); 
 //=> [ 4, 4, 2, 3 ] 
+
+// optionally set the amount of sides for the die
+Rand.dice(4, 8); 
+//=> [ 8, 3, 7, 1 ]
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/cVZU239Ez" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/cVZU239Ez" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ## urn
 
-Generate a list of unique random integer values between a certain specified range (excluding high val). An 'urn' is filled with values and when one is picked it is removed from the urn. If the outputlist is longer then the range, the urn refills when empty. On refill it is made sure no repeating value can be picked.
+Generate a list of unique random integer values between a certain specified range (excluding high val). An 'urn' is filled with values and when one is picked it is removed from the urn. If the outputlist is longer then the range, the urn refills when empty. On refill it is made sure no repeating value can be picked. Inspired by the `[urn]`-object in MaxMSP.
 
 **arguments**
 - {Int+} -> number of values to output
@@ -168,7 +176,7 @@ Rand.urn(12, -3, 3);
 //=> [ -3, 1, -1, 2, 0, -2, 2, -2, 0, -1, -3, 1 ]
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/rEIdr2nWx" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/rEIdr2nWx" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ## twelveTone
 
@@ -184,11 +192,13 @@ Rand.twelveTone();
 //=> [ 11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10 ]
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/IEIoLt9cZ" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/IEIoLt9cZ" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ## shuffle
 
 Shuffle an array, influenced by the random seed. Based on the Fisher-Yates shuffle algorithm by Ronald Fisher and Frank Yates in 1938. The algorithm has run time complexity of O(n)
+
+Alias: `scramble()`
 
 **arguments**
 - {Array} -> Array to shuffle
@@ -199,7 +209,7 @@ Rand.shuffle([0, 5, 7, 12]);
 //=> [ 7, 5, 0, 12 ]
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/S5zPwX6B0" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/S5zPwX6B0" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ## choose 
 
@@ -219,7 +229,7 @@ Rand.choose(5, ['c', 'e', 'g']);
 //=> [ 'c', 'c', 'g', 'e', 'g' ] 
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/lz7RgC4tS" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/lz7RgC4tS" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ## pick
 
@@ -240,7 +250,7 @@ Rand.pick(5, ['c', 'e', ['g', 'd']]);
 //=> [ 'e', [ 'g', 'd' ], 'c', [ 'g', 'd' ], 'e' ] 
 ```
 
-<iframe src="https://editor.p5js.org/tmhglnd/embed/6QcjbpzNr" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe>
+<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/6QcjbpzNr" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
 
 ## clave
 
@@ -309,7 +319,7 @@ Rand.expand([0, 9, 7, 3, 5, 0, -1], 30);
 //  -13.00 ┤                      ╰╯      
 ```
 
-### Markov Chain
+### MarkovChain
 
 Build a Markov Chain from a set of datapoints and use it to generate new values or an array of values based on the probabilities of the transitions in the provided training dataset. A Markov Chain is a model that describes possible next events based on a current state (first order) and sometimes previous states (2nd, 3rd, ... n-order). The Markov Chain is a broadly used method in algorithmic music to generate new material (melodies, rhythms, but even words) based on a set of provided material, but can also be used in linguistics to analyze word or sentence structures.
 
@@ -353,9 +363,11 @@ markov.chain(10);
 markov.clear();
 ```
 
-### Deep Markov Chain
+### DeepMarkovChain
 
 This is an identical approach to the [Markov Chain](#markov-chain) while also offering the possibility of training to create n-order chains. In theory, longer chains preserve the original structure of the model, but won't generate as diverse outputs.
+
+Alias: `DeepMarkov()`
 
 ```js
 const Rand = require('total-serialism').Stochastic;

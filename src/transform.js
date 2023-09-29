@@ -239,7 +239,7 @@ exports.zip = lace;
 // @param {Array} -> Array with values returned from lookup
 // @return {Array} -> Looked up values
 // 
-function lookup(idx=0, arr=[0]){
+function lookup(idx=[0], arr=[0]){
 	idx = toArray(idx);
 	arr = toArray(arr);
 	let a = [];

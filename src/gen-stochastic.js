@@ -14,6 +14,7 @@
 
 // require Generative methods
 const { spread } = require('./gen-basic.js');
+const { lookup } = require('./transform.js');
 const { fold, size, toArray } = require('./utility');
 const { change } = require('./statistic');
 
@@ -227,6 +228,7 @@ function shuffle(a=[0]){
 	return arr;
 }
 exports.shuffle = shuffle;
+exports.scramble = shuffle;
 
 // Generate a list of 12 semitones
 // then shuffle the list based on a random seed
@@ -294,16 +296,17 @@ function pick(len=1, a=[0, 1]){
 	// set the size to minimum of 1 or based on array length
 	len = size(len);
 	// fill the jar with the input
-	var jar = (!Array.isArray(a))? [a] : a;
+	// var jar = (!Array.isArray(a))? [a] : a;
+	let jar = toArray(a);
 
 	if (jar.length < 2){
 		return new Array(len).fill(jar[0]);
 	}
 	// shuffle the jar
-	var s = shuffle(jar);
+	let s = shuffle(jar);
 	// value, previous, output-array
-	var v, p, arr = [];	
-	for (var i=0; i<len; i++){
+	let v, p, arr = [];	
+	for (let i=0; i<len; i++){
 		v = s.pop();
 		if (v === undefined){
 			s = shuffle(jar);
