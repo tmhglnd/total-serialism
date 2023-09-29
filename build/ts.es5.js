@@ -3206,7 +3206,7 @@ function midiToSemi(a=0, o=4){
 }
 exports.midiToSemi = midiToSemi;
 exports.mtos = midiToSemi;
-*/ // Use a list of roman numerals to generate a chord progression
+*/ // Use a list of roman numerals to translate a chord progression
 // The function returns a 2d-array of chords, where every chord is
 // a separate array within the larger array. The chords are returned
 // as semitones from 0-12. Optionally with a second argument you can 
@@ -3235,7 +3235,8 @@ return chordsFromNames(p);}exports.chordsFromNumerals=chordsFromNumerals;exports
 // @return - {2d-Array} -> array of chords
 //
 function chordsFromNames(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['c'];// if not an array, translate chordname to semitone array
-if(!Array.isArray(a)){var ch=Chord.get(a);if(ch.empty){console.log("Invalid chord name generated from numeral: ".concat(a));return[0];}return wrap(chromaToRelative(ch.notes));}return a.map(function(c){return chordsFromNames(c);});}exports.chordsFromNames=chordsFromNames;// Convert a beat division value to milliseconds based on the global BPM
+if(!Array.isArray(a)){var ch=Chord.get(a);if(ch.empty){console.log("Invalid chord name generated from numeral: ".concat(a));return[0];}// return wrap(chromaToRelative(ch.notes));
+return chromaToRelative(ch.notes);}return a.map(function(c){return chordsFromNames(c);});}exports.chordsFromNames=chordsFromNames;// Convert a beat division value to milliseconds based on the global BPM
 // eg. ['1/4', 1/8', '1/16'] => [500, 250, 125] @ BPM = 120
 // Also works with ratio floating values
 // 

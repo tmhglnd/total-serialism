@@ -453,7 +453,7 @@ exports.midiToSemi = midiToSemi;
 exports.mtos = midiToSemi;
 */
 
-// Use a list of roman numerals to generate a chord progression
+// Use a list of roman numerals to translate a chord progression
 // The function returns a 2d-array of chords, where every chord is
 // a separate array within the larger array. The chords are returned
 // as semitones from 0-12. Optionally with a second argument you can 
@@ -498,7 +498,8 @@ function chordsFromNames(a=['c']){
 			console.log(`Invalid chord name generated from numeral: ${a}`);
 			return [0];
 		}
-		return wrap(chromaToRelative(ch.notes));
+		// return wrap(chromaToRelative(ch.notes));
+		return chromaToRelative(ch.notes);
 	}
 	return a.map(c => chordsFromNames(c));
 }
