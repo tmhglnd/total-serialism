@@ -25,6 +25,7 @@ const { euclid, fibonacci } = require('total-serialism').Algorithmic;
 - [pell](#pell)
 - [threeFibonacci](#threefibonacci)
 - [lucas](#lucas)
+- [nbonacci](#nbonacci)
 - [inifinity series](#infinityseries)
 
 ## euclidean
@@ -115,7 +116,7 @@ Algo.linden('F-G-G', 1, {'F': 'F−G+F+G−F', 'G' : 'GG'});
 //=> 'F−G+F+G−F-GG-GG'
 ```
 
-## L-System returning Array of ints
+### linden returning Array of ints
 
 A more useful version that works nicely with the rest of the library. By returning an array of integers it can be quickly put to use in combination with other methods to generate rhythms, melodies and more based on custom rulesets.
 
@@ -148,7 +149,7 @@ Algo.linden(0, 2, complexRules);
 
 ## cellular automaton
 
-Generate an Elementary Cellular Automaton class. This is an one dimensional array (collection of cells) with states that are either dead or alive (0/1). By following a set of rules the next generation is calculated for every cell based on its neighbouring cells. Invoke the next() method to iterate the generations. Set the first generation with the feed() method (usually random values work quite well). Change the rule() based on a decimal number or an array of digits.
+Generate an Elementary Cellular Automaton class (1D). This is a one-dimensional array (collection of cells) with states that are either dead or alive (0/1). By following a set of rules the next generation is calculated for every cell based on its neighbouring cells. Invoke the `next()` method to iterate the generations. Set the first generation with the `feed()` method (usually random values work quite well). Change the `rule()` based on a decimal number or an array of digits.
 
 **methods**
 
@@ -161,10 +162,13 @@ Generate an Elementary Cellular Automaton class. This is an one dimensional arra
 
 ```js 
 let ca = new Algo.Automaton();
+
 // feed with 40 randomly generated values 0-1
 ca.feed(Rand.coin(40));
+
 // set the rule with a decimal representation
 ca.rule(122);
+
 // generate the next generation and store in array
 let gen = ca.next();
 
@@ -215,7 +219,6 @@ ca.rule(9);
 //  ███ █     ██████████ █         █████ █ 
 //  █     ███ █            ███████ █       
 //    ███ █     ██████████ █         ██████
-
 ```
 
 ## collatz conjecture
@@ -224,6 +227,7 @@ Generate an array of numbers from the Collatz Conjecture, also known as the `3n+
 
 **arguments**
 - {Int+} -> starting point
+- {Int+} -> modulus (optional, for `collatzMod`, default=2)
 
 ```js
 // the collatz sequence for the number 15
@@ -317,6 +321,8 @@ Algo.lucas(10);
 //=> [ 2, 1, 3, 4, 7, 11, 18, 29, 47, 76 ]  
 ```
 
+## nbonacci
+
 Set a custom starting pair of numbers to generate an n-bonacci sequence according to the following method: `F[n] = t * F[n-1] + F[n-2]`
 
 ```js
@@ -334,6 +340,8 @@ Algo.nbonacci(12, 0, 1, 1);
 Nørgård's music often features the use of the infinity series for serializing melody, harmony, and rhythm in musical composition. The method takes its name from the endlessly self-similar nature of the resulting musical material, comparable to fractal geometry. Mathematically, the infinity series is an integer sequence. "Invented in an attempt to unify in a perfect way repetition and variation," the first few terms of its simplest form are 0, 1, −1, 2, 1, 0, −2, 3, ….
 
 `OEIS: A004718` (Online Encyclopedia of Integer Sequences)
+
+Alias: `infSeries()`
 
 **arguments**
 - {Int+/Array} -> output length of the Meldoy's steps (default=16, uses length of Array if input)
