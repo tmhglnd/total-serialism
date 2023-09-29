@@ -411,4 +411,10 @@ markov.chain(10);
 
 // clear the model
 markov.clear();
+
+// TO DO:
+// read/write a model from a json/object/map structure
+// for storage to file or transfer between DeepMarkov instances
+// markov.write()
+// markov.read()
 ```

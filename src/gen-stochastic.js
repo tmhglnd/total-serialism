@@ -415,12 +415,15 @@ class MarkovChain {
 		}
 		this._state = a;
 	}
+	randomState(){
+		let states = Object.keys(this._table);
+		this._state = states[Math.floor(rng() * states.length)];
+	}
 	next(){
 		// if the state is undefined or has no transition in table
 		// randomly choose from all
 		if (this._state === undefined || !this._table[this._state]){
-			let states = Object.keys(this._table);
-			this._state = states[Math.floor(rng() * states.length)];
+			this.randomState();
 		}
 		// get probabilities based on state
 		let probs = this._table[this._state];
