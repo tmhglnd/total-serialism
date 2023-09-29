@@ -22,7 +22,7 @@ const Util = require('total-serialism').Utility;
 - [mod](#mod)
 - [pow](#pow)
 - [sqrt](#sqrt)
-- [arrayCalc](#arrayCalc)
+- [arrayCalc](#arraycalc)
 - [toArray](#toArray)
 - [size](#size)
 - [sum](#sum)
@@ -305,8 +305,8 @@ Util.sqrt([2, [9, [16, 25], 144]]);
 Evaluate a function for a multi-dimensional array. Input the left and righthand side of the evaluation and set a function as third argument.
 
 **arguments**
-- {Array|Number} -> left hand input array
-- {Array|Number} -> right hand input array
+- {Array/Number} -> left hand input array
+- {Array/Number} -> right hand input array
 - {Function} -> function to Evaluate
 
 ```js 
