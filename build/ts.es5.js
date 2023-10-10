@@ -2919,7 +2919,7 @@ function lace(){for(var _len5=arguments.length,args=new Array(_len5),_key5=0;_ke
 // @param {Array} -> Array with values returned from lookup
 // @return {Array} -> Looked up values
 // 
-function lookup(){var idx=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var arr=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];idx=toArray(idx);arr=toArray(arr);var a=[];var len=arr.length;for(var i in idx){if(Array.isArray(idx[i])){a.push(lookup(idx[i],arr));}else{if(!isNaN(idx[i])){var look=(idx[i]%len+len)%len;a.push(arr[look]);}}}return a;}exports.lookup=lookup;// merge all values of two arrays on the same index
+function lookup(){var idx=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var arr=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];idx=toArray(idx);arr=toArray(arr);var a=[];var len=arr.length;for(var i in idx){if(Array.isArray(idx[i])){a.push(lookup(idx[i],arr));}else{if(!isNaN(idx[i])){var look=(Math.floor(idx[i])%len+len)%len;a.push(arr[look]);}}}return a;}exports.lookup=lookup;// merge all values of two arrays on the same index
 // into a 2D array. preserves length of longest list
 // flattens multidimensional arrays to 2 dimensions on merge
 // 

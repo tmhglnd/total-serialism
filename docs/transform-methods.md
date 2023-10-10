@@ -286,6 +286,10 @@ Mod.lookup([0, [1, 1, [2, 3], 0], 2], ['c4', 'e4', 'f4', 'g4']);
 Mod.lookup([-2, 5, 7, 12], ['c4', 'e4', 'f4', 'g4']);
 //=> [ 'f4', 'e4', 'g4', 'c4' ] 
 
+// indices are floored if floating point values
+Mod.lookup([0.999, 2.78, 3.14, 1.54], ['c4', 'e4', 'f4', 'g4']);
+//=> [ 'c4', 'f4', 'g4', 'e4' ] 
+
 // ignores non-numeric values
 Mod.lookup([0, 'foo', ['1', 'bar']], [1, 2, 3]);
 //=> [ 1, [ 2 ] ] 
@@ -418,7 +422,7 @@ Slice an array in one or multiple parts. Slice lengths are determined by the sec
 
 **arguments**
 - {Array} -> array to slice in parts
-- {Number | Array} -> slice lengths to slice array into
+- {Number/Array} -> slice lengths to slice array into
 - {Bool} -> output rest flag (optional, default=false)
 
 ```js
@@ -436,7 +440,7 @@ Similar to slice in that it also splits an array, except that slice recursively 
 
 **arguments**
 - {Array} -> array to split in parts
-- {Number | Array} -> split lengths to split array into
+- {Number/Array} -> split lengths to split array into
 
 ```js
 Mod.split(Gen.spread(12), 3);

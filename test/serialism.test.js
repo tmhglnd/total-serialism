@@ -686,6 +686,9 @@ function testTransform(){
 	test("Mod.lookup([0, [1, 1, [2, 3]], 1], ['c4', 'e4', 'f4', 'g4'])", () => {
 		expect(Mod.lookup([0, [1, 1, [2, 3]], 1], ['c4', 'e4', 'f4', 'g4'])).toStrictEqual([ 'c4', [ 'e4', 'e4', [ 'f4', 'g4' ] ], 'e4' ]);
 	});
+	test("Mod.lookup([0.999, [1.32, 1.91, [2.78, 3.14]], 1.54], ['c4', 'e4', 'f4', 'g4'])", () => {
+		expect(Mod.lookup([0.999, [1.32, 1.91, [2.78, 3.14]], 1.54], ['c4', 'e4', 'f4', 'g4'])).toStrictEqual([ 'c4', [ 'e4', 'e4', [ 'f4', 'g4' ] ], 'e4' ]);
+	});
 	
 	test("Mod.merge()", () => {
 		expect(Mod.merge()).toStrictEqual([0]);

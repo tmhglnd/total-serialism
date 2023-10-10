@@ -249,7 +249,7 @@ function lookup(idx=[0], arr=[0]){
 			a.push(lookup(idx[i], arr));
 		} else {
 			if (!isNaN(idx[i])){
-				let look = (idx[i] % len + len) % len;
+				let look = (Math.floor(idx[i]) % len + len) % len;
 				a.push(arr[look]);
 			}
 		}
