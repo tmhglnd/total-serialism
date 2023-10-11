@@ -2868,11 +2868,11 @@ function duplicate(){var a=arguments.length>0&&arguments[0]!==undefined?argument
 // param {Number} -> shift the output by n-divs (optional, default=0)
 // return {Array}
 //
-function every(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var bars=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var div=arguments.length>2&&arguments[2]!==undefined?arguments[2]:16;var pad=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var shift=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var len=Math.floor(bars*div)-a.length;var sft=Math.floor(shift*div);return padding(a,len,pad,sft);}exports.every=every;// Import from the Util.flatten
+function every(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var bars=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var div=arguments.length>2&&arguments[2]!==undefined?arguments[2]:16;var pad=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var shift=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var len=Math.floor(bars*div);var sft=Math.floor(shift*div);return padding(a,len,pad,sft);}exports.every=every;// Import from the Util.flatten
 // flatten a multidimensional array. Optionally set the depth
 // for the flattening
 //
-exports.flatten=flatten;exports.flat=flatten;// similar to every(), but instead of specifying bars/devisions
+exports.flatten=flatten;exports.flat=flatten;// similar to every(), but instead of specifying bars/divisions
 // this method allows you to specify the exact length of the array
 // and the shift is not a ratio but in whole integer steps
 //
@@ -2882,7 +2882,7 @@ exports.flatten=flatten;exports.flat=flatten;// similar to every(), but instead 
 // param {Value} -> padding argument (optional, default=0)
 // return {Array}
 //
-function padding(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var length=arguments.length>1&&arguments[1]!==undefined?arguments[1]:16;var pad=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var shift=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;a=toArray(a);length=size(length);var len=length-a.length;if(len<1){return a;}var arr=new Array(len).fill(pad);return rotate(a.concat(arr),shift);}exports.padding=padding;exports.pad=padding;// filter one or multiple values from an array
+function padding(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var length=arguments.length>1&&arguments[1]!==undefined?arguments[1]:16;var pad=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var shift=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;a=toArray(a);length=size(length);var len=length-a.length;if(len<1){return a.slice(0,length);}var arr=new Array(len).fill(pad);return rotate(a.concat(arr),shift);}exports.padding=padding;exports.pad=padding;// filter one or multiple values from an array
 // 
 // @param {Array} -> array to filter
 // @param {Number/String/Array} -> values to filter

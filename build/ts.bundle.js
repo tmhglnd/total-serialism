@@ -9458,7 +9458,7 @@ exports.dup = duplicate;
 // return {Array}
 //
 function every(a=[0], bars=1, div=16, pad=0, shift=0){
-	let len = Math.floor(bars * div) - a.length;
+	let len = Math.floor(bars * div);
 	let sft = Math.floor(shift * div);
 	return padding(a, len, pad, sft);
 }
@@ -9471,7 +9471,7 @@ exports.every = every;
 exports.flatten = flatten;
 exports.flat = flatten;
 
-// similar to every(), but instead of specifying bars/devisions
+// similar to every(), but instead of specifying bars/divisions
 // this method allows you to specify the exact length of the array
 // and the shift is not a ratio but in whole integer steps
 //
@@ -9487,7 +9487,7 @@ function padding(a=[0], length=16, pad=0, shift=0){
 	
 	let len = length - a.length;
 	if (len < 1) {
-		return a;
+		return a.slice(0, length);
 	}
 	let arr = new Array(len).fill(pad);
 	return rotate(a.concat(arr), shift);

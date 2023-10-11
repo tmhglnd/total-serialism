@@ -607,16 +607,16 @@ function testTransform(){
 	});
 
 	test("Mod.every()", () => {
-		expect(Mod.every()).toStrictEqual([ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]);
+		expect(Mod.every()).toStrictEqual([ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]);
 	});
 	test("Mod.every([1, 0, 1, 1, 1], 2, 8)", () => {
-		expect(Mod.every([1, 0, 1, 1, 1], 2, 8)).toStrictEqual([ 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0 ]);
+		expect(Mod.every([1, 0, 1, 1, 1], 2, 8)).toStrictEqual([ 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]);
 	});
 	test("Mod.every([1, 1, 0, 1], 4, 4, 0, -1)", () => {
-		expect(Mod.every([1, 1, 0, 1], 4, 4, 0, -1)).toStrictEqual([ 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1 ]);
+		expect(Mod.every([1, 1, 0, 1], 4, 4, 0, -1)).toStrictEqual([ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1 ]);
 	});
 	test("Mod.every([3, [0, 7]], 2, 4, 12)", () => {
-		expect(Mod.every([3, [0, 7]], 2, 4, 12)).toStrictEqual([ 3, [ 0, 7 ], 12, 12, 12, 12 ]);
+		expect(Mod.every([3, [0, 7]], 2, 4, 12)).toStrictEqual([ 3, [ 0, 7 ], 12, 12, 12, 12, 12, 12 ]);
 	});
 	
 	test("Mod.pad()", () => {

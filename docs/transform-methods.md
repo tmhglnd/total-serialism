@@ -111,7 +111,7 @@ Mod.copy(['c', 'f', 'g'], 3);
 
 ## padding
 
-Pad an array with zeroes (or any other value) up to the length specified. The padding value can optionally be changed and the shift argument rotates the list n-steps left or right (negative). This method is similar to `every()` except arguments are not specified in musical bars/divisions.
+Pad an array with zeroes (or any other value) up to the length specified. The padding value can optionally be changed and the shift argument rotates the list n-steps left or right (negative). This method is similar to `every()` except arguments are not specified in musical bars/divisions but in array length. A shorter length than input list will slice the output list.
 
 **arguments**
 - {NumberArrray} -> Array to use every n-bars
@@ -133,10 +133,10 @@ Add zeroes to an array with a number sequence. The division determines the amoun
 
 **arguments**
 - {NumberArrray} -> Array to use every n-bars
-- {Int} -> amount of bars (optional, default=4)
+- {Int} -> amount of bars (optional, default=1)
 - {Int} -> amount of values per bar (optional, defaul=16)
 - {Value} -> padding value for the added items (optional, default=0)
-- {Number} -> optional shift in n-divisions (optional, default=0)
+- {Number} -> optional shift in n-bars (optional, default=0)
 
 ```js
 // add zeroes to a rhythm to make it play once over a certain amount of bars
@@ -148,8 +148,8 @@ Mod.every([3, 0, 7, 9, 11], 2, 8, 12);
 //=> [ 3, 0, 7, 9, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12 ]
 
 // change the shift (rotation) with an optional 4th argument
-Mod.every([1, 0, 0, 1, 1], 1.5, 8, 0, 0.5);
-//=> [ 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0 ]
+Mod.every([1, 0, 0, 1, 1], 2, 8, 0, 1);
+//=> [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0 ]
 
 // works with 2D-array
 Mod.every([3, [0, 7, 9], 11], 1, 12);
