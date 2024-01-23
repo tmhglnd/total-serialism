@@ -363,8 +363,9 @@ exports.reverse = reverse;
 // 
 function rotate(a=[0], r=0){
 	if (!Array.isArray(a)){ return [a]; }
+	var l = a.length;
 	var arr = [];
-	for (var i=0; i<a.length; i++){
+	for (var i=0; i<l; i++){
 		// arr[i] = a[Util.mod((i - r), l)];
 		arr[i] = a[((i - r) % l + l) % l];
 	}
