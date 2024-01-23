@@ -4,7 +4,11 @@
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
 // MIT License
 //
-// Basic methods that can transform number sequences
+// Methods that transform number sequences
+// These are called the "transformers"
+// A transformer always takes an input list as the first argument
+// A transformer never destructively changes the input list
+// The output of the transformer is the modified input list(s)
 // 
 // TODO:
 // - make invert() work with note-values 'c' etc.
@@ -33,10 +37,11 @@ const { flatten, add, max, min, lerp, toArray, size } = require('./utility');
 // 
 function clone(a=[0], ...c){
 	a = toArray(a);
-	// flatten clone array if multi-dimensional
 	if (!c.length) { 
+		// return input if no clone arguments
 		return a;
 	} else { 
+		// flatten clone array if multi-dimensional
 		c = flatten(c); 
 	}
 	let arr = [];
@@ -53,11 +58,11 @@ exports.clone = clone;
 // @params {Array0, Array1, ..., Array-n} -> Arrays to join
 // @return {Array}
 // 
-function combine(...args){
-	if (!args.length){ return [0]; }
+function combine(...arrs){
+	if (!arrs.length){ return [0]; }
 	let arr = [];
-	for (let i=0; i<args.length; i++){
-		arr = arr.concat(args[i]);
+	for (let i=0; i<arrs.length; i++){
+		arr = arr.concat(arrs[i]);
 	}
 	return arr;
 }
@@ -193,12 +198,15 @@ function invert(a=[0], lo, hi){
 	a = toArray(a);
 
 	if (lo === undefined){
+		// if no center value set lo/hi based on min/max
 		hi = max(a);
 		lo = min(a);
 	} else if (hi === undefined){
+		// if no hi defined set hi to be same as lo
 		hi = lo;
 	}
 	return a.slice().map(v => {
+		// apply the algorithm recursively for all items
 		if (Array.isArray(v)){
 			return invert(v, lo, hi);
 		}
@@ -212,17 +220,19 @@ exports.invert = invert;
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array}
 //  
-function lace(...args){
-	if (!args.length){ return [0]; }
+function lace(...arrs){
+	if (!arrs.length){ return [0]; }
+	// get the length of longest list
 	var l = 0;
-	for (let i=0; i<args.length; i++){
-		args[i] = toArray(args[i]);
-		l = Math.max(args[i].length, l);
+	for (let i=0; i<arrs.length; i++){
+		arrs[i] = toArray(arrs[i]);
+		l = Math.max(arrs[i].length, l);
 	}
+	// for the max length push all values of the various lists
 	var arr = [];
 	for (var i=0; i<l; i++){
-		for (var k=0; k<args.length; k++){
-			let v = args[k][i];
+		for (var k=0; k<arrs.length; k++){
+			let v = arrs[k][i];
 			if (v !== undefined){ arr.push(v); }
 		}
 	}
@@ -244,7 +254,8 @@ function lookup(idx=[0], arr=[0]){
 	arr = toArray(arr);
 	let a = [];
 	let len = arr.length;
-	for (let i in idx){
+	for (let i=0; i<idx.length; i++){
+		// recursively lookup values for multidimensional arrays
 		if (Array.isArray(idx[i])){
 			a.push(lookup(idx[i], arr));
 		} else {
@@ -265,18 +276,18 @@ exports.lookup = lookup;
 // @params {Array0, Array1, ..., Array-n} -> Arrays to merge
 // @return {Array}
 // 
-function merge(...args){
-	if (!args.length){ return [0]; }
+function merge(...arrs){
+	if (!arrs.length){ return [0]; }
 	let l = 0;
-	for (let i=0; i<args.length; i++){
-		args[i] = toArray(args[i]);
-		l = Math.max(args[i].length, l);
+	for (let i=0; i<arrs.length; i++){
+		arrs[i] = toArray(arrs[i]);
+		l = Math.max(arrs[i].length, l);
 	}
 	let arr = [];
 	for (let i=0; i<l; i++){
 		let a = [];
-		for (let k=0; k<args.length; k++){
-			let v = args[k][i];
+		for (let k=0; k<arrs.length; k++){
+			let v = arrs[k][i];
 			if (v !== undefined){ 
 				if (Array.isArray(v)) a.push(...v);
 				else a.push(v);
@@ -321,7 +332,7 @@ function repeat(arr=[0], rep=1){
 	rep = toArray(rep);
 	
 	let a = [];
-	for (let i in arr){
+	for (let i=0; i<arr.length; i++){
 		let r = rep[i % rep.length];
 		r = (isNaN(r) || r < 0)? 0 : r;
 		for (let k=0; k<r; k++){
@@ -352,9 +363,8 @@ exports.reverse = reverse;
 // 
 function rotate(a=[0], r=0){
 	if (!Array.isArray(a)){ return [a]; }
-	var l = a.length;
 	var arr = [];
-	for (var i=0; i<l; i++){
+	for (var i=0; i<a.length; i++){
 		// arr[i] = a[Util.mod((i - r), l)];
 		arr[i] = a[((i - r) % l + l) % l];
 	}
@@ -375,7 +385,7 @@ exports.sort = sort;
 // @params {Number|Array} -> slice points
 // @return {Array}
 // 
-function slice(a=[0], s=[1], r=true){
+function slice(a=[0], s=[0], r=true){
 	a = toArray(a);
 	s = toArray(s);
 
@@ -389,7 +399,9 @@ function slice(a=[0], s=[1], r=true){
 		}
 	}
 	if (r){
-		arr.push(a.slice(_s, a.length));
+		let rest = a.slice(_s, a.length);
+		// attach the rest if not an empty array and r=true
+		if (rest.length > 0){ arr.push(rest); }
 	}
 	return arr;
 }
