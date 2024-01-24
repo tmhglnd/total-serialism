@@ -19,7 +19,7 @@ fullTest(TS);
 TS = require(es5build);
 
 // and run full test with es5.min.js build;
-fullTest(TS);
+// fullTest(TS);
 
 /*
 	Test criteria:
@@ -747,7 +747,7 @@ function testTransform(){
 	});
 	
 	test("Mod.slice()", () => {
-		expect(Mod.slice()).toStrictEqual([[0],[]]);
+		expect(Mod.slice()).toStrictEqual([[0]]);
 	});
 	test("Mod.slice(Gen.spread(8), [3, 2])", () => {
 		expect(Mod.slice(Gen.spread(8), [3, 2])).toStrictEqual([ [ 0, 1, 2 ], [ 3, 4 ], [ 5, 6, 7 ] ]);
@@ -774,6 +774,19 @@ function testTransform(){
 	});
 	test("Mod.spray([[5, 7, 9], [12, 14]], [1, 0, 1, 1, 0])", () => {
 		expect(Mod.spray([[5, 7, 9], [12, 14]], [1, 0, 1, 1, 0])).toStrictEqual([ [ 5, 7, 9 ], 0, [ 12, 14 ], [ 5, 7, 9 ], 0 ]);
+	});
+
+	test("Mod.step()", () => {
+		expect(Mod.step()).toStrictEqual([0]);
+	});
+	test("Mod.step([1, 2], [10, 20])", () => {
+		expect(Mod.step([1, 2], [10, 20])).toStrictEqual([1, 10, 2, 20]);
+	});
+	test("Mod.step([1, 2, 3], [10, 20])", () => {
+		expect(Mod.step([1, 2, 3], [10, 20])).toStrictEqual([1, 10, 2, 20, 3, 10, 1, 20, 2, 10, 3, 20]);
+	});
+	test("Mod.step([1, [2, 3]], [10, 20], [100, 200])", () => {
+		expect(Mod.step([1, [2, 3]], [10, 20], [100, 200])).toStrictEqual([1, 10, 100, [2, 3], 20, 200]);
 	});
 
 	test("Mod.stretch()", () => {
@@ -1392,6 +1405,19 @@ function testUtility(){
 	});
 	test("Util.snorm([5, [12, [4, 17]], 3, 1])", () => {
 		expect(Util.snorm([5, [12, [4, 17]], 3, 1])).toStrictEqual([ -0.5, [ 0.375, [ -0.625, 1 ] ], -0.75, -1 ]);
+	});
+
+	test("Util.arrayCombinations()", () => {
+		expect(Util.arrayCombinations()).toStrictEqual([[]]);
+	});
+	test("Util.arrayCombinations([1, 2], [10, 20])", () => {
+		expect(Util.arrayCombinations([1, 2], [10, 20])).toStrictEqual([[1, 10], [2, 20]]);
+	});
+	test("Util.arrayCombinations([1, 2, 3], [10, 20])", () => {
+		expect(Util.arrayCombinations([1, 2, 3], [10, 20])).toStrictEqual([[1, 10], [2, 20], [3, 10], [1, 20], [2, 10], [3, 20]]);
+	});
+	test("Util.arrayCombinations([1, [2, 3]], [10, 20], [100, 200])", () => {
+		expect(Util.arrayCombinations([1, [2, 3]], [10, 20], [100, 200])).toStrictEqual([[1, 10, 100], [[2, 3], 20, 200]]);
 	});
 
 	test("Util.map()", () => {

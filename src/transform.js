@@ -24,7 +24,7 @@
 // require the Utility methods
 // const Rand = require('./gen-stochastic');
 const { sort } = require('./statistic');
-const { flatten, add, max, min, lerp, toArray, size } = require('./utility');
+const { flat, add, max, min, lerp, toArray, size, unique, arrayCombinations } = require('./utility');
 
 // Duplicate an array multiple times,
 // optionaly add an offset to every value when duplicating
@@ -42,7 +42,7 @@ function clone(a=[0], ...c){
 		return a;
 	} else { 
 		// flatten clone array if multi-dimensional
-		c = flatten(c); 
+		c = flat(c); 
 	}
 	let arr = [];
 	for (let i=0; i<c.length; i++){
@@ -108,8 +108,8 @@ exports.every = every;
 // flatten a multidimensional array. Optionally set the depth
 // for the flattening
 //
-exports.flatten = flatten;
-exports.flat = flatten;
+exports.flatten = flat;
+exports.flat = flat;
 
 // similar to every(), but instead of specifying bars/divisions
 // this method allows you to specify the exact length of the array
@@ -458,6 +458,20 @@ function spray(values=[0], beats=[0]){
 }
 exports.spray = spray;
 
+// Alternate through 2 or multiple lists consecutively
+// Gives a similar result as lace except the output
+// length is the lowest common denominator of the input lists
+// so that every combination of consecutive values is included
+//
+// @param {Array0, Array1, ..., Array-n} -> arrays to interleave
+// @return {Array} -> array of results 1 dimension less
+//
+function step(...arrs){
+	if (!arrs.length){ return [ 0 ] }
+	return flat(arrayCombinations(...arrs), 1);
+}
+exports.step = step;
+
 // stretch (or shrink) an array of numbers to a specified length
 // interpolating the values to fill in the gaps. 
 // TO-DO: Interpolations options are: none, linear, cosine, cubic
@@ -491,13 +505,7 @@ function stretch(a=[0], len=1, mode='linear'){
 }
 exports.stretch = stretch;
 
+// placeholder for unique from Utils.js
 // filter duplicate items from an array
 // does not account for 2-dimensional arrays in the array
-// 
-// @param {Array} -> array to filter
-// @return {Array}
-// 
-function unique(a=[0]){
-	return [...new Set(toArray(a))];
-}
 exports.unique = unique;
