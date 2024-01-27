@@ -348,7 +348,7 @@ Serialism originated from the `twelve-tone` technique, described in 1919 by Jose
 
 For many of the functions programmed much inspiration was gained from Laurie Spiegels paper on "Manipulation of Musical Patterns" (1981) in which she suggests to *"extract a basic "library" consisting of the most elemental  transformations which have consistently been successfully used on musical patterns, a basic group of "tried-and-true" musical manipulations."* Specifically the stretch and expand methods were inspired by Laurie Spiegels writings in this paper. Stretch is a method that is *"inserting a smooth ramp between discretely separated values"* and expand is an interpretation of *"Extension beyond that which already exists in such a way as to preserve continuity with it, to project from it"* 
 
-- [Laurie Spiegel - Manipulations of Musical Patterns](http://retiary.org/ls/writings/musical_manip.html)
+- [Laurie Spiegel - Manipulations of Musical Patterns](https://github.com/calpicasso/Manipulations-of-musical-patterns/blob/master/Manipulations%20of%20Musical%20Patterns.md)
 
 The euclidean rhythm generator was inspired by the famous paper by Godfried Toussaint.
 
