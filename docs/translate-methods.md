@@ -225,6 +225,14 @@ TL.toScale([8, 14, -2, 22, -7, 22, -2, 14]);
 TL.toScale([0, 4.1, 6.5, 7.1, 9.25]);
 //=> [ 0, 3.1, 7.5, 7.1, 8.25 ] 
 
+// It is also possible to provide a scale as argument to allow 
+// for multiple scales than 1 global one
+TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 'major');
+//=> [ 0, 0, 2, 2, 4, 5, 5, 7, 7, 9, 9, 11 ]
+
+TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 'minor', 'eb');
+//=> [ 3, 3, 5, 6, 6, 8, 8, 10, 11, 11, 13, 13 ]
+
 // Map relative numbers to a specified scale class (including root)
 // output as midi value. Specify an octave (default = 'C3' = 4 => 48)
 TL.toMidi([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 4);;

@@ -373,22 +373,43 @@ exports.rtof = relativeToFreq;
 // Also offsets the values with the root note selected
 // 
 // @params {Array/Number} -> Array of relative semitones
+// @params {String} -> Scale name (optional)
+// @params {String/Int} -> Root offset
 // @return {Array/Number} -> mapped to scale
 // 
-function mapToScale(a=[0]){
-	if (!Array.isArray(a)) {
-		// detuning float
-		let d = a - Math.floor(a);
-		// selected semitone
-		let s = Math.floor(((a % 12) + 12) % 12);
-		// octave offset
-		let o = Math.floor(a / 12) * 12;
-		return notation.map[s] + o + d + notation.rootInt;
+function mapToScale(a=[0], s, r){
+	// get the global settings 
+	let scale = getSettings().map;
+	let root = getSettings().rootInt;
+	// if a scale is provided and is not undefined
+	if (s && Scales[s]){
+		scale = Scales[s];
 	}
-	return a.map(x => mapToScale(x));
+	// if a root is provided
+	if (r) { 
+		root = isNaN(Number(r)) ? chromaToRelative(r) : Math.floor(r);
+	}
+	// apply recursively through the entire array
+	return _mapToScale(a, scale, root);
 }
 exports.mapToScale = mapToScale;
 exports.toScale = mapToScale;
+
+// private function for mapToScale()
+// 
+function _mapToScale(arr, scale, root){
+	if (!Array.isArray(arr)) {
+		// detuning float
+		let d = arr - Math.floor(arr);
+		// selected semitone
+		let s = Math.floor(((arr % 12) + 12) % 12);
+		// octave offset
+		let o = Math.floor(arr / 12) * 12;
+		// return notation.map[s] + o + d + notation.rootInt;
+		return scale[s] + o + d + root;
+	}
+	return arr.map(x => _mapToScale(x, scale, root));
+}
 
 // Map an array of relative semitone intervals to scale and 
 // output in specified octave as midi value

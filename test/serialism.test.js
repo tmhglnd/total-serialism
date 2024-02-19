@@ -16,7 +16,7 @@ let Gen, Algo, Mod, Rand, Stat, TL, Util;
 fullTest(TS);
 
 // reload library with es5.min.js build
-TS = require(es5build);
+// TS = require(es5build);
 
 // and run full test with es5.min.js build;
 // fullTest(TS);
@@ -1022,10 +1022,21 @@ function testTranslate(){
 		expect(TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])).toStrictEqual([ 0, 0, 2, 3, 3, 5,  5, 7, 8, 8, 8, 11 ]);
 	});
 	test("TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11])", () => {
-		TL.setScale('harmonic_minor', 'c');
-		expect(TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11])).toStrictEqual([ 0, [ 0, 2, 3 ], [ 3, 5, [ 5, 7 ], 8 ], 8, 8, 11 ]);
+		TL.setScale('harmonic_minor', 'd');
+		expect(TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11])).toStrictEqual([ 2, [ 2, 4, 5 ], [ 5, 7, [ 7, 9 ], 10 ], 10, 10, 13 ]);
 	});
-
+	test("TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11], 'harmonic_minor')", () => {
+		TL.setRoot('chromatic', 'c');
+		// TL.setScale('harmonic_minor', 'c');
+		expect(TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11], 'harmonic_minor')).toStrictEqual([ 0, [ 0, 2, 3 ], [ 3, 5, [ 5, 7 ], 8 ], 8, 8, 11 ]);
+	});
+	test("TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11], 'harmonic_minor', 'd')", () => {
+		expect(TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11], 'harmonic_minor', 'd')).toStrictEqual([ 2, [ 2, 4, 5 ], [ 5, 7, [ 7, 9 ], 10 ], 10, 10, 13 ]);
+	});
+	test("TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11], 'harmonic_minor', 'd')", () => {
+		TL.setScale('harmonic_minor', 'c');
+		expect(TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 'scale_does_not_exist', 'y')).toStrictEqual([ 0, 0, 2, 3, 3, 5, 5, 7, 8, 8, 8, 11 ]);
+	});
 	
 	test("TL.getSettings()", () => {
 		TL.setRoot('gb');
