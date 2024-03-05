@@ -2821,7 +2821,11 @@ if(l){arr.push(a[0]-a[a.length-1]);}return arr;}exports.change=change;exports.de
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
 // MIT License
 //
-// Basic methods that can transform number sequences
+// Methods that transform number sequences
+// These are called the "transformers"
+// A transformer always takes an input list as the first argument
+// A transformer never destructively changes the input list
+// The output of the transformer is the modified input list(s)
 // 
 // TODO:
 // - make invert() work with note-values 'c' etc.
@@ -2835,7 +2839,7 @@ if(l){arr.push(a[0]-a[a.length-1]);}return arr;}exports.change=change;exports.de
 //=======================================================================
 // require the Utility methods
 // const Rand = require('./gen-stochastic');
-var _require9=require('./statistic'),sort=_require9.sort;var _require10=require('./utility'),flatten=_require10.flatten,add=_require10.add,max=_require10.max,min=_require10.min,lerp=_require10.lerp,toArray=_require10.toArray,size=_require10.size;// Duplicate an array multiple times,
+var _require9=require('./statistic'),sort=_require9.sort;var _require10=require('./utility'),flat=_require10.flat,add=_require10.add,max=_require10.max,min=_require10.min,lerp=_require10.lerp,toArray=_require10.toArray,size=_require10.size,unique=_require10.unique,arrayCombinations=_require10.arrayCombinations;// Duplicate an array multiple times,
 // optionaly add an offset to every value when duplicating
 // Also works with 2-dimensonal arrays
 // If string the values will be concatenated
@@ -2844,8 +2848,9 @@ var _require9=require('./statistic'),sort=_require9.sort;var _require10=require(
 // @param {Int, Int2, ... Int-n} -> amount of clones with integer offset
 // 								 -> or string concatenation
 // 
-function clone(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];for(var _len4=arguments.length,c=new Array(_len4>1?_len4-1:0),_key4=1;_key4<_len4;_key4++){c[_key4-1]=arguments[_key4];}a=toArray(a);// flatten clone array if multi-dimensional
-if(!c.length){return a;}else{c=flatten(c);}var arr=[];var _loop=function _loop(i){arr=arr.concat(a.map(function(v){return add(v,c[i]);}));};for(var i=0;i<c.length;i++){_loop(i);}return arr;}exports.clone=clone;// combine arrays into one array
+function clone(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];for(var _len4=arguments.length,c=new Array(_len4>1?_len4-1:0),_key4=1;_key4<_len4;_key4++){c[_key4-1]=arguments[_key4];}a=toArray(a);if(!c.length){// return input if no clone arguments
+return a;}else{// flatten clone array if multi-dimensional
+c=flat(c);}var arr=[];var _loop=function _loop(i){arr=arr.concat(a.map(function(v){return add(v,c[i]);}));};for(var i=0;i<c.length;i++){_loop(i);}return arr;}exports.clone=clone;// combine arrays into one array
 // multiple arrays as arguments possible
 // 
 // @params {Array0, Array1, ..., Array-n} -> Arrays to join
@@ -2872,7 +2877,7 @@ function every(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]
 // flatten a multidimensional array. Optionally set the depth
 // for the flattening
 //
-exports.flatten=flatten;exports.flat=flatten;// similar to every(), but instead of specifying bars/divisions
+exports.flatten=flat;exports.flat=flat;// similar to every(), but instead of specifying bars/divisions
 // this method allows you to specify the exact length of the array
 // and the shift is not a ratio but in whole integer steps
 //
@@ -2906,12 +2911,17 @@ function filterType(){var a=arguments.length>0&&arguments[0]!==undefined?argumen
 // @param {Int} -> high range (optional)
 // @return {Array}
 // 
-function invert(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var lo=arguments.length>1?arguments[1]:undefined;var hi=arguments.length>2?arguments[2]:undefined;a=toArray(a);if(lo===undefined){hi=max(a);lo=min(a);}else if(hi===undefined){hi=lo;}return a.slice().map(function(v){if(Array.isArray(v)){return invert(v,lo,hi);}return hi-v+lo;});}exports.invert=invert;// interleave two or more arrays
+function invert(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var lo=arguments.length>1?arguments[1]:undefined;var hi=arguments.length>2?arguments[2]:undefined;a=toArray(a);if(lo===undefined){// if no center value set lo/hi based on min/max
+hi=max(a);lo=min(a);}else if(hi===undefined){// if no hi defined set hi to be same as lo
+hi=lo;}return a.slice().map(function(v){// apply the algorithm recursively for all items
+if(Array.isArray(v)){return invert(v,lo,hi);}return hi-v+lo;});}exports.invert=invert;// interleave two or more arrays
 // 
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array}
 //  
-function lace(){for(var _len5=arguments.length,args=new Array(_len5),_key5=0;_key5<_len5;_key5++){args[_key5]=arguments[_key5];}if(!args.length){return[0];}var l=0;for(var _i4=0;_i4<args.length;_i4++){args[_i4]=toArray(args[_i4]);l=Math.max(args[_i4].length,l);}var arr=[];for(var i=0;i<l;i++){for(var k=0;k<args.length;k++){var v=args[k][i];if(v!==undefined){arr.push(v);}}}return arr;}exports.lace=lace;exports.zip=lace;// Build an array of items based on another array of indeces 
+function lace(){for(var _len5=arguments.length,arrs=new Array(_len5),_key5=0;_key5<_len5;_key5++){arrs[_key5]=arguments[_key5];}if(!arrs.length){return[0];}// get the length of longest list
+var l=0;for(var _i4=0;_i4<arrs.length;_i4++){arrs[_i4]=toArray(arrs[_i4]);l=Math.max(arrs[_i4].length,l);}// for the max length push all values of the various lists
+var arr=[];for(var i=0;i<l;i++){for(var k=0;k<arrs.length;k++){var v=arrs[k][i];if(v!==undefined){arr.push(v);}}}return arr;}exports.lace=lace;exports.zip=lace;// Build an array of items based on another array of indeces 
 // The values are wrapped within the length of the lookup array
 // Works with n-dimensional arrays by applying a recursive lookup
 // 
@@ -2919,14 +2929,15 @@ function lace(){for(var _len5=arguments.length,args=new Array(_len5),_key5=0;_ke
 // @param {Array} -> Array with values returned from lookup
 // @return {Array} -> Looked up values
 // 
-function lookup(){var idx=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var arr=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];idx=toArray(idx);arr=toArray(arr);var a=[];var len=arr.length;for(var i in idx){if(Array.isArray(idx[i])){a.push(lookup(idx[i],arr));}else{if(!isNaN(idx[i])){var look=(Math.floor(idx[i])%len+len)%len;a.push(arr[look]);}}}return a;}exports.lookup=lookup;// merge all values of two arrays on the same index
+function lookup(){var idx=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var arr=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];idx=toArray(idx);arr=toArray(arr);var a=[];var len=arr.length;for(var i=0;i<idx.length;i++){// recursively lookup values for multidimensional arrays
+if(Array.isArray(idx[i])){a.push(lookup(idx[i],arr));}else{if(!isNaN(idx[i])){var look=(Math.floor(idx[i])%len+len)%len;a.push(arr[look]);}}}return a;}exports.lookup=lookup;// merge all values of two arrays on the same index
 // into a 2D array. preserves length of longest list
 // flattens multidimensional arrays to 2 dimensions on merge
 // 
 // @params {Array0, Array1, ..., Array-n} -> Arrays to merge
 // @return {Array}
 // 
-function merge(){for(var _len6=arguments.length,args=new Array(_len6),_key6=0;_key6<_len6;_key6++){args[_key6]=arguments[_key6];}if(!args.length){return[0];}var l=0;for(var i=0;i<args.length;i++){args[i]=toArray(args[i]);l=Math.max(args[i].length,l);}var arr=[];for(var _i5=0;_i5<l;_i5++){var a=[];for(var k=0;k<args.length;k++){var v=args[k][_i5];if(v!==undefined){if(Array.isArray(v))a.push.apply(a,_toConsumableArray(v));else a.push(v);}}arr[_i5]=a;}return arr;}exports.merge=merge;// reverse an array and concatenate to the input
+function merge(){for(var _len6=arguments.length,arrs=new Array(_len6),_key6=0;_key6<_len6;_key6++){arrs[_key6]=arguments[_key6];}if(!arrs.length){return[0];}var l=0;for(var i=0;i<arrs.length;i++){arrs[i]=toArray(arrs[i]);l=Math.max(arrs[i].length,l);}var arr=[];for(var _i5=0;_i5<l;_i5++){var a=[];for(var k=0;k<arrs.length;k++){var v=arrs[k][_i5];if(v!==undefined){if(Array.isArray(v))a.push.apply(a,_toConsumableArray(v));else a.push(v);}}arr[_i5]=a;}return arr;}exports.merge=merge;// reverse an array and concatenate to the input
 // creating a palindrome of the array
 // 
 // @param {Array} -> array to make palindrome of
@@ -2940,7 +2951,7 @@ function palindrome(arr){var noDouble=arguments.length>1&&arguments[1]!==undefin
 // @param {Int/Array} -> array or number of repetitions per value
 // @return {Array}
 // 
-function repeat(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var rep=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;arr=toArray(arr);rep=toArray(rep);var a=[];for(var i in arr){var r=rep[i%rep.length];r=isNaN(r)||r<0?0:r;for(var k=0;k<r;k++){a.push(arr[i]);}}return a;}exports.repeat=repeat;// reverse the order of items in an Array
+function repeat(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var rep=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;arr=toArray(arr);rep=toArray(rep);var a=[];for(var i=0;i<arr.length;i++){var r=rep[i%rep.length];r=isNaN(r)||r<0?0:r;for(var k=0;k<r;k++){a.push(arr[i]);}}return a;}exports.repeat=repeat;// reverse the order of items in an Array
 // 
 // @param {Array} -> array to reverse
 // @return {Array}
@@ -2964,7 +2975,8 @@ exports.sort=sort;// slice an array in one or multiple parts
 // @params {Number|Array} -> slice points
 // @return {Array}
 // 
-function slice(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var s=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[1];var r=arguments.length>2&&arguments[2]!==undefined?arguments[2]:true;a=toArray(a);s=toArray(s);var arr=[];var _s=0;for(var i=0;i<s.length;i++){if(s[i]>0){var _t=_s+s[i];arr.push(a.slice(_s,_t));_s=_t;}}if(r){arr.push(a.slice(_s,a.length));}return arr;}exports.slice=slice;// Similar to slice in that it also splits an array
+function slice(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var s=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];var r=arguments.length>2&&arguments[2]!==undefined?arguments[2]:true;a=toArray(a);s=toArray(s);var arr=[];var _s=0;for(var i=0;i<s.length;i++){if(s[i]>0){var _t=_s+s[i];arr.push(a.slice(_s,_t));_s=_t;}}if(r){var rest=a.slice(_s,a.length);// attach the rest if not an empty array and r=true
+if(rest.length>0){arr.push(rest);}}return arr;}exports.slice=slice;// Similar to slice in that it also splits an array
 // excepts slice recursively splits until the array is
 // completely empty 
 // 
@@ -2980,7 +2992,15 @@ function split(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]
 // param {Array} -> positions to spread to
 // return {Array}
 // 
-function spray(){var values=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];values=toArray(values);beats=toArray(beats);var arr=beats.slice();var c=0;for(var i in beats){if(beats[i]>0){arr[i]=values[c++%values.length];}}return arr;}exports.spray=spray;// stretch (or shrink) an array of numbers to a specified length
+function spray(){var values=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];values=toArray(values);beats=toArray(beats);var arr=beats.slice();var c=0;for(var i in beats){if(beats[i]>0){arr[i]=values[c++%values.length];}}return arr;}exports.spray=spray;// Alternate through 2 or multiple lists consecutively
+// Gives a similar result as lace except the output
+// length is the lowest common denominator of the input lists
+// so that every combination of consecutive values is included
+//
+// @param {Array0, Array1, ..., Array-n} -> arrays to interleave
+// @return {Array} -> array of results 1 dimension less
+//
+function step(){if(!arguments.length){return[0];}return flat(arrayCombinations.apply(void 0,arguments),1);}exports.step=step;// stretch (or shrink) an array of numbers to a specified length
 // interpolating the values to fill in the gaps. 
 // TO-DO: Interpolations options are: none, linear, cosine, cubic
 // 
@@ -2991,13 +3011,10 @@ function spray(){var values=arguments.length>0&&arguments[0]!==undefined?argumen
 function stretch(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var mode=arguments.length>2&&arguments[2]!==undefined?arguments[2]:'linear';a=toArray(a);if(len<2){return a;}len=size(len);var arr=[];var l=a.length;for(var i=0;i<len;i++){// construct a lookup interpolation position for new array
 var val=i/(len-1)*(l-1);// lookup nearest neighbour left/right
 var a0=a[Math.max(Math.trunc(val),0)];var a1=a[Math.min(Math.trunc(val)+1,l-1)%a.length];if(mode==='none'||mode===null||mode===false){arr.push(a0);}else{// interpolate between the values according to decimal place
-arr.push(lerp(a0,a1,val%1));}}return arr;}exports.stretch=stretch;// filter duplicate items from an array
+arr.push(lerp(a0,a1,val%1));}}return arr;}exports.stretch=stretch;// placeholder for unique from Utils.js
+// filter duplicate items from an array
 // does not account for 2-dimensional arrays in the array
-// 
-// @param {Array} -> array to filter
-// @return {Array}
-// 
-function unique(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];return _toConsumableArray(new Set(toArray(a)));}exports.unique=unique;},{"./statistic":39,"./utility":42}],41:[function(require,module,exports){//==============================================================================
+exports.unique=unique;},{"./statistic":39,"./utility":42}],41:[function(require,module,exports){//==============================================================================
 // translate.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -3164,12 +3181,21 @@ function relativeToFreq(){var a=arguments.length>0&&arguments[0]!==undefined?arg
 // Also offsets the values with the root note selected
 // 
 // @params {Array/Number} -> Array of relative semitones
+// @params {String} -> Scale name (optional)
+// @params {String/Int} -> Root offset
 // @return {Array/Number} -> mapped to scale
 // 
-function mapToScale(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){// detuning float
-var d=a-Math.floor(a);// selected semitone
-var s=Math.floor((a%12+12)%12);// octave offset
-var o=Math.floor(a/12)*12;return notation.map[s]+o+d+notation.rootInt;}return a.map(function(x){return mapToScale(x);});}exports.mapToScale=mapToScale;exports.toScale=mapToScale;// Map an array of relative semitone intervals to scale and 
+function mapToScale(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var s=arguments.length>1?arguments[1]:undefined;var r=arguments.length>2?arguments[2]:undefined;// get the global settings 
+var scale=getSettings().map;var root=getSettings().rootInt;// if a scale is provided and is not undefined
+if(s&&Scales[s]){scale=Scales[s];}// if a root is provided
+if(r){root=isNaN(Number(r))?chromaToRelative(r):Math.floor(r);}// apply recursively through the entire array
+return _mapToScale(a,scale,root);}exports.mapToScale=mapToScale;exports.toScale=mapToScale;// private function for mapToScale()
+// 
+function _mapToScale(arr,scale,root){if(!Array.isArray(arr)){// detuning float
+var d=arr-Math.floor(arr);// selected semitone
+var s=Math.floor((arr%12+12)%12);// octave offset
+var o=Math.floor(arr/12)*12;// return notation.map[s] + o + d + notation.rootInt;
+return scale[s]+o+d+root;}return arr.map(function(x){return _mapToScale(x,scale,root);});}// Map an array of relative semitone intervals to scale and 
 // output in specified octave as midi value
 // 
 // @param {Array/Int} -> semitone intervals
@@ -3289,7 +3315,14 @@ function timevalueToMs(){var a=arguments.length>0&&arguments[0]!==undefined?argu
 function timevalueToTicks(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:['1n'];return multiply(timevalueToRatio(a),1920);}exports.timevalueToTicks=timevalueToTicks;exports.ttotk=timevalueToTicks;function timevalueRatio(x){var r=/^(\d+)([nm])([dt]?)$/;var m=x.match(r);var v=1;if(m){var nm={'n':1,'m':m[1]*m[1]};var dt={'d':3/2,'t':2/3,'':1};v=1/m[1]*nm[m[2]]*dt[m[3]];}else{console.log("timevalueRatio(): ".concat(x," is not a valid timevalue"));}return v;}// Convert toneJS time values
 // function tonetimeRatio(x){
 // }
-//=======================================================================
+// Convert a string or array of strings to the 
+// ASCII code values that belong to those characters
+// ASCII is the American Standard Code for Information Interchange
+// 
+// @param {String/Array} -> string to convert
+// @return {Array} -> array of integers
+//
+function textToCode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return String(a).split('').map(function(c){return c.charCodeAt(0);});}return a.map(function(x){return textToCode(x);});}exports.textToCode=textToCode;exports.textCode=textToCode;exports.ttoc=textToCode;//=======================================================================
 // Scala class
 // 
 // Import a .scl file and convert to a JSON object. Use methods to 
@@ -3523,7 +3556,19 @@ function sqrt(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:
 function arrayCalc(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var func=arguments.length>2&&arguments[2]!==undefined?arguments[2]:function(){return a;};// if righthand side is array
 if(Array.isArray(v)){a=toArray(a);var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){r[i]=arrayCalc(a[i%l1],v[i%l2],func);}return r;}// if both are single values
 if(!Array.isArray(a)){var _r=func(a,v);if(!isNaN(a)&&!isNaN(v)){return isNaN(_r)?0:_r;}return _r;}// if lefthand side is array
-return a.map(function(x){return arrayCalc(x,v,func);});}exports.arrayCalc=arrayCalc;// flatten a multidimensional array. Optionally set the depth
+return a.map(function(x){return arrayCalc(x,v,func);});}exports.arrayCalc=arrayCalc;// Alternate through 2 or multiple lists consecutively
+// The output length is the lowest common denominator of the input lists
+// so that every combination of consecutive values is included
+// This function is used to allow arrays as input for Generators
+// And for the step function for algorithmic composition
+//
+// @param {Array0, Array1, ..., Array-n} -> arrays to interleave
+// @return {Array} -> outputs a 2D array of the results
+//
+function arrayCombinations(){for(var _len8=arguments.length,arrs=new Array(_len8),_key8=0;_key8<_len8;_key8++){arrs[_key8]=arguments[_key8];}// make sure all values are array
+arrs=arrs.map(function(a){return toArray(a);});// the output is the unique list sizes multiplied
+var sizes=unique(arrs.map(function(a){return a.length;}));var iters=1;sizes.forEach(function(l){return iters*=l;});// iterate over the total amount pushing the items to array
+var arr=[];var _loop2=function _loop2(i){arr.push(arrs.map(function(e){return e[i%e.length];}));};for(var i=0;i<iters;i++){_loop2(i);}return arr;}exports.arrayCombinations=arrayCombinations;// flatten a multidimensional array. Optionally set the depth
 // for the flattening
 //
 // @param {Array} -> array to flatten
@@ -3567,7 +3612,13 @@ return divide(subtract(a,min),range);}exports.normalize=normalize;exports.norm=n
 // @param {Number/Array} -> input values
 // @return {Number/Array} -> signed normalized values
 // 
-function signedNormalize(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];return subtract(multiply(normalize(a),2),1);}exports.signedNormalize=signedNormalize;exports.snorm=signedNormalize;// Plot an array of values to the console in the form of an
+function signedNormalize(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];return subtract(multiply(normalize(a),2),1);}exports.signedNormalize=signedNormalize;exports.snorm=signedNormalize;// filter duplicate items from an array
+// does not account for 2-dimensional arrays in the array
+// 
+// @param {Array} -> array to filter
+// @return {Array}
+// 
+function unique(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];return _toConsumableArray(new Set(toArray(a)));}exports.unique=unique;// Plot an array of values to the console in the form of an
 // ascii chart and return chart from function. If you just want the 
 // chart returned as text and not log to console set { log: false }.
 // Using the asciichart package by x84. 

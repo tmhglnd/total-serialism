@@ -16,10 +16,10 @@ let Gen, Algo, Mod, Rand, Stat, TL, Util;
 fullTest(TS);
 
 // reload library with es5.min.js build
-// TS = require(es5build);
+TS = require(es5build);
 
 // and run full test with es5.min.js build;
-// fullTest(TS);
+fullTest(TS);
 
 /*
 	Test criteria:
@@ -1153,6 +1153,14 @@ function testTranslate(){
 	});
 	test("TL.chords()", () => {
 		expect(TL.chordsFromNames(['C', 'Dm', 'Fsus2', 'G7', 'Am9'])).toStrictEqual([[ 0, 4, 7 ], [ 2, 5, 9 ], [ 5, 7, 0 ], [ 7, 11, 2, 5 ], [ 9, 0, 4, 7, 11 ]]);
+	});
+
+	test("TL.textToCode()", () => {
+		expect(TL.textToCode('bach cage')).toStrictEqual([ 98, 97, 99, 104, 32, 99, 97, 103, 101 ]);
+	});
+
+	test("TL.textToCode()", () => {
+		expect(TL.textToCode(['bach', 'cage'])).toStrictEqual([ [ 98, 97, 99, 104 ], [ 99, 97, 103, 101 ] ]);
 	});
 
 	var scl;

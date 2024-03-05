@@ -37,6 +37,7 @@ const TL = require('total-serialism').Translate;
 - divisionToTicks (dtotk)
 - timevalueToRatio (ttor)
 - timevalueToTicks (ttotk)
+- [textToCode (ttoc)](#textToCode)
 - setScale
 - setRoot
 - getSettings
@@ -251,6 +252,25 @@ TL.toMidi([0, 4.1, 6.5, 7.1, 9.25], 'c3');
 TL.toFreq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 4);;
 //=> [ 146.83, 146.83, 164.81, 164.81, 184.99, 195.99, 195.99, 220, 220, 246.94, 246.94, 277.18 ]
 
+```
+
+## textToCode
+
+Convert a string or array of strings to their ASCII code integer representation. The ASCII code is the American Standard Code for Information Interchange. In this code every unique character/symbol/number is represented by a whole number (integer). For example `a=97`, but `A=65` and `SPACE=32`.
+
+Alias: `textCode`, `ttoc`
+
+**arguments**
+- {String/Array} -> input to convert to ASCII 
+
+```js
+// single string input
+TL.textToCode('bach cage');
+//=> [ 98, 97, 99, 104, 32, 99, 97, 103, 101 ]);
+
+// multiple strings in an array results in a 2D array output
+TL.textToCode(['bach', 'cage']);
+//=> [ [ 98, 97, 99, 104 ], [ 99, 97, 103, 101 ] ]);
 ```
 
 ## Using Scala tuning format

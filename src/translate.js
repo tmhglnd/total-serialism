@@ -659,6 +659,23 @@ function timevalueRatio(x){
 // function tonetimeRatio(x){
 // }
 
+// Convert a string or array of strings to the 
+// ASCII code values that belong to those characters
+// ASCII is the American Standard Code for Information Interchange
+// 
+// @param {String/Array} -> string to convert
+// @return {Array} -> array of integers
+//
+function textToCode(a=[0]){
+	if (!Array.isArray(a)){
+		return String(a).split('').map(c => c.charCodeAt(0));
+	}
+	return a.map(x => textToCode(x));
+}
+exports.textToCode = textToCode;
+exports.textCode = textToCode;
+exports.ttoc = textToCode;
+
 //=======================================================================
 // Scala class
 // 

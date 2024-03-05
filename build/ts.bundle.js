@@ -9369,7 +9369,11 @@ exports.diff = change;
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
 // MIT License
 //
-// Basic methods that can transform number sequences
+// Methods that transform number sequences
+// These are called the "transformers"
+// A transformer always takes an input list as the first argument
+// A transformer never destructively changes the input list
+// The output of the transformer is the modified input list(s)
 // 
 // TODO:
 // - make invert() work with note-values 'c' etc.
@@ -9385,7 +9389,7 @@ exports.diff = change;
 // require the Utility methods
 // const Rand = require('./gen-stochastic');
 const { sort } = require('./statistic');
-const { flatten, add, max, min, lerp, toArray, size } = require('./utility');
+const { flat, add, max, min, lerp, toArray, size, unique, arrayCombinations } = require('./utility');
 
 // Duplicate an array multiple times,
 // optionaly add an offset to every value when duplicating
@@ -9398,11 +9402,12 @@ const { flatten, add, max, min, lerp, toArray, size } = require('./utility');
 // 
 function clone(a=[0], ...c){
 	a = toArray(a);
-	// flatten clone array if multi-dimensional
 	if (!c.length) { 
+		// return input if no clone arguments
 		return a;
 	} else { 
-		c = flatten(c); 
+		// flatten clone array if multi-dimensional
+		c = flat(c); 
 	}
 	let arr = [];
 	for (let i=0; i<c.length; i++){
@@ -9418,11 +9423,11 @@ exports.clone = clone;
 // @params {Array0, Array1, ..., Array-n} -> Arrays to join
 // @return {Array}
 // 
-function combine(...args){
-	if (!args.length){ return [0]; }
+function combine(...arrs){
+	if (!arrs.length){ return [0]; }
 	let arr = [];
-	for (let i=0; i<args.length; i++){
-		arr = arr.concat(args[i]);
+	for (let i=0; i<arrs.length; i++){
+		arr = arr.concat(arrs[i]);
 	}
 	return arr;
 }
@@ -9468,8 +9473,8 @@ exports.every = every;
 // flatten a multidimensional array. Optionally set the depth
 // for the flattening
 //
-exports.flatten = flatten;
-exports.flat = flatten;
+exports.flatten = flat;
+exports.flat = flat;
 
 // similar to every(), but instead of specifying bars/divisions
 // this method allows you to specify the exact length of the array
@@ -9558,12 +9563,15 @@ function invert(a=[0], lo, hi){
 	a = toArray(a);
 
 	if (lo === undefined){
+		// if no center value set lo/hi based on min/max
 		hi = max(a);
 		lo = min(a);
 	} else if (hi === undefined){
+		// if no hi defined set hi to be same as lo
 		hi = lo;
 	}
 	return a.slice().map(v => {
+		// apply the algorithm recursively for all items
 		if (Array.isArray(v)){
 			return invert(v, lo, hi);
 		}
@@ -9577,17 +9585,19 @@ exports.invert = invert;
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array}
 //  
-function lace(...args){
-	if (!args.length){ return [0]; }
+function lace(...arrs){
+	if (!arrs.length){ return [0]; }
+	// get the length of longest list
 	var l = 0;
-	for (let i=0; i<args.length; i++){
-		args[i] = toArray(args[i]);
-		l = Math.max(args[i].length, l);
+	for (let i=0; i<arrs.length; i++){
+		arrs[i] = toArray(arrs[i]);
+		l = Math.max(arrs[i].length, l);
 	}
+	// for the max length push all values of the various lists
 	var arr = [];
 	for (var i=0; i<l; i++){
-		for (var k=0; k<args.length; k++){
-			let v = args[k][i];
+		for (var k=0; k<arrs.length; k++){
+			let v = arrs[k][i];
 			if (v !== undefined){ arr.push(v); }
 		}
 	}
@@ -9609,7 +9619,8 @@ function lookup(idx=[0], arr=[0]){
 	arr = toArray(arr);
 	let a = [];
 	let len = arr.length;
-	for (let i in idx){
+	for (let i=0; i<idx.length; i++){
+		// recursively lookup values for multidimensional arrays
 		if (Array.isArray(idx[i])){
 			a.push(lookup(idx[i], arr));
 		} else {
@@ -9630,18 +9641,18 @@ exports.lookup = lookup;
 // @params {Array0, Array1, ..., Array-n} -> Arrays to merge
 // @return {Array}
 // 
-function merge(...args){
-	if (!args.length){ return [0]; }
+function merge(...arrs){
+	if (!arrs.length){ return [0]; }
 	let l = 0;
-	for (let i=0; i<args.length; i++){
-		args[i] = toArray(args[i]);
-		l = Math.max(args[i].length, l);
+	for (let i=0; i<arrs.length; i++){
+		arrs[i] = toArray(arrs[i]);
+		l = Math.max(arrs[i].length, l);
 	}
 	let arr = [];
 	for (let i=0; i<l; i++){
 		let a = [];
-		for (let k=0; k<args.length; k++){
-			let v = args[k][i];
+		for (let k=0; k<arrs.length; k++){
+			let v = arrs[k][i];
 			if (v !== undefined){ 
 				if (Array.isArray(v)) a.push(...v);
 				else a.push(v);
@@ -9686,7 +9697,7 @@ function repeat(arr=[0], rep=1){
 	rep = toArray(rep);
 	
 	let a = [];
-	for (let i in arr){
+	for (let i=0; i<arr.length; i++){
 		let r = rep[i % rep.length];
 		r = (isNaN(r) || r < 0)? 0 : r;
 		for (let k=0; k<r; k++){
@@ -9740,7 +9751,7 @@ exports.sort = sort;
 // @params {Number|Array} -> slice points
 // @return {Array}
 // 
-function slice(a=[0], s=[1], r=true){
+function slice(a=[0], s=[0], r=true){
 	a = toArray(a);
 	s = toArray(s);
 
@@ -9754,7 +9765,9 @@ function slice(a=[0], s=[1], r=true){
 		}
 	}
 	if (r){
-		arr.push(a.slice(_s, a.length));
+		let rest = a.slice(_s, a.length);
+		// attach the rest if not an empty array and r=true
+		if (rest.length > 0){ arr.push(rest); }
 	}
 	return arr;
 }
@@ -9810,6 +9823,20 @@ function spray(values=[0], beats=[0]){
 }
 exports.spray = spray;
 
+// Alternate through 2 or multiple lists consecutively
+// Gives a similar result as lace except the output
+// length is the lowest common denominator of the input lists
+// so that every combination of consecutive values is included
+//
+// @param {Array0, Array1, ..., Array-n} -> arrays to interleave
+// @return {Array} -> array of results 1 dimension less
+//
+function step(...arrs){
+	if (!arrs.length){ return [ 0 ] }
+	return flat(arrayCombinations(...arrs), 1);
+}
+exports.step = step;
+
 // stretch (or shrink) an array of numbers to a specified length
 // interpolating the values to fill in the gaps. 
 // TO-DO: Interpolations options are: none, linear, cosine, cubic
@@ -9843,15 +9870,9 @@ function stretch(a=[0], len=1, mode='linear'){
 }
 exports.stretch = stretch;
 
+// placeholder for unique from Utils.js
 // filter duplicate items from an array
 // does not account for 2-dimensional arrays in the array
-// 
-// @param {Array} -> array to filter
-// @return {Array}
-// 
-function unique(a=[0]){
-	return [...new Set(toArray(a))];
-}
 exports.unique = unique;
 
 },{"./statistic":39,"./utility":42}],41:[function(require,module,exports){
@@ -10230,22 +10251,43 @@ exports.rtof = relativeToFreq;
 // Also offsets the values with the root note selected
 // 
 // @params {Array/Number} -> Array of relative semitones
+// @params {String} -> Scale name (optional)
+// @params {String/Int} -> Root offset
 // @return {Array/Number} -> mapped to scale
 // 
-function mapToScale(a=[0]){
-	if (!Array.isArray(a)) {
-		// detuning float
-		let d = a - Math.floor(a);
-		// selected semitone
-		let s = Math.floor(((a % 12) + 12) % 12);
-		// octave offset
-		let o = Math.floor(a / 12) * 12;
-		return notation.map[s] + o + d + notation.rootInt;
+function mapToScale(a=[0], s, r){
+	// get the global settings 
+	let scale = getSettings().map;
+	let root = getSettings().rootInt;
+	// if a scale is provided and is not undefined
+	if (s && Scales[s]){
+		scale = Scales[s];
 	}
-	return a.map(x => mapToScale(x));
+	// if a root is provided
+	if (r) { 
+		root = isNaN(Number(r)) ? chromaToRelative(r) : Math.floor(r);
+	}
+	// apply recursively through the entire array
+	return _mapToScale(a, scale, root);
 }
 exports.mapToScale = mapToScale;
 exports.toScale = mapToScale;
+
+// private function for mapToScale()
+// 
+function _mapToScale(arr, scale, root){
+	if (!Array.isArray(arr)) {
+		// detuning float
+		let d = arr - Math.floor(arr);
+		// selected semitone
+		let s = Math.floor(((arr % 12) + 12) % 12);
+		// octave offset
+		let o = Math.floor(arr / 12) * 12;
+		// return notation.map[s] + o + d + notation.rootInt;
+		return scale[s] + o + d + root;
+	}
+	return arr.map(x => _mapToScale(x, scale, root));
+}
 
 // Map an array of relative semitone intervals to scale and 
 // output in specified octave as midi value
@@ -10494,6 +10536,23 @@ function timevalueRatio(x){
 // Convert toneJS time values
 // function tonetimeRatio(x){
 // }
+
+// Convert a string or array of strings to the 
+// ASCII code values that belong to those characters
+// ASCII is the American Standard Code for Information Interchange
+// 
+// @param {String/Array} -> string to convert
+// @return {Array} -> array of integers
+//
+function textToCode(a=[0]){
+	if (!Array.isArray(a)){
+		return String(a).split('').map(c => c.charCodeAt(0));
+	}
+	return a.map(x => textToCode(x));
+}
+exports.textToCode = textToCode;
+exports.textCode = textToCode;
+exports.ttoc = textToCode;
 
 //=======================================================================
 // Scala class
@@ -11055,6 +11114,31 @@ function arrayCalc(a=0, v=0, func=()=>{return a;}){
 }
 exports.arrayCalc = arrayCalc;
 
+// Alternate through 2 or multiple lists consecutively
+// The output length is the lowest common denominator of the input lists
+// so that every combination of consecutive values is included
+// This function is used to allow arrays as input for Generators
+// And for the step function for algorithmic composition
+//
+// @param {Array0, Array1, ..., Array-n} -> arrays to interleave
+// @return {Array} -> outputs a 2D array of the results
+//
+function arrayCombinations(...arrs){
+	// make sure all values are array
+	arrs = arrs.map(a => toArray(a));
+	// the output is the unique list sizes multiplied
+	let sizes = unique(arrs.map(a => a.length));
+	let iters = 1;	
+	sizes.forEach((l) => iters *= l);
+	// iterate over the total amount pushing the items to array
+	let arr = [];
+	for (let i=0; i<iters; i++){
+		arr.push(arrs.map((e) => e[i % e.length] ));
+	}
+	return arr;
+}
+exports.arrayCombinations = arrayCombinations;
+
 // flatten a multidimensional array. Optionally set the depth
 // for the flattening
 //
@@ -11152,6 +11236,17 @@ function signedNormalize(a=[0]){
 }
 exports.signedNormalize = signedNormalize;
 exports.snorm = signedNormalize;
+
+// filter duplicate items from an array
+// does not account for 2-dimensional arrays in the array
+// 
+// @param {Array} -> array to filter
+// @return {Array}
+// 
+function unique(a=[0]){
+	return [...new Set(toArray(a))];
+}
+exports.unique = unique;
 
 // Plot an array of values to the console in the form of an
 // ascii chart and return chart from function. If you just want the 
