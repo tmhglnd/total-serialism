@@ -2709,7 +2709,7 @@ this._table={};// train if dataset is provided
 if(data){this.train(data);};// current state of markov chain
 this._state;}_createClass(MarkovChain,[{key:"table",get:function get(){// output a copy of the table as an object
 return _objectSpread({},this._table);}},{key:"read",value:function read(t){// read a markov chain table from a json file
-if(Array.isArray(t)||_typeof(t)!=='object'){return console.error("Error: input is not a valid json formatted table. If your input is an array use train() instead.");}this._table=t;}},{key:"clear",value:function clear(){// empty the transition probabilities
+if(Array.isArray(t)||_typeof(t)!=='object'){console.error("Error: input is not a valid json formatted table. If your input is an array use train() instead.");return false;}this._table=t;return true;}},{key:"clear",value:function clear(){// empty the transition probabilities
 this._table={};}},{key:"train",value:function train(a){if(!Array.isArray(a)){return console.error("Error: train() expected array but received: ".concat(_typeof(a)));}// build a transition table from array of values
 for(var i=1;i<a.length;i++){if(!this._table[a[i-1]]){this._table[a[i-1]]=[a[i]];}else{this._table[a[i-1]].push(a[i]);}}}},{key:"seed",value:function seed(s){// deprecated, seed is now also be set for the global rng
 _seed2(s);}},{key:"state",value:function state(a){// set the state
@@ -2731,11 +2731,14 @@ var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return MarkovCh
 // @method next() -> generate the next value based state or set axiom
 // @method chain() -> generate an array of values (default length=2)
 // 
-var DeepMarkov=/*#__PURE__*/function(){function DeepMarkov(data){_classCallCheck(this,DeepMarkov);// transition probabilities table
+var DeepMarkov=/*#__PURE__*/function(){function DeepMarkov(data,order){_classCallCheck(this,DeepMarkov);// transition probabilities table
 this._table=new Map();// train if dataset is provided
-if(data){this.train(data);};// current state of markov chain
-this._state='';}_createClass(DeepMarkov,[{key:"table",get:function get(){// return copy of object
-return new Map(JSON.parse(JSON.stringify(Array.from(this._table))));}},{key:"clear",value:function clear(){// empty the transition probabilities
+if(data){this.train(data,order);};// current state of markov chain
+this._state='';}_createClass(DeepMarkov,[{key:"table",get:function get(){// return copy of Map object
+return new Map(JSON.parse(JSON.stringify(Array.from(this._table))));}},{key:"read",value:function read(t){// read a markov chain table from a Map() generated with DeepMarkov
+if(Array.isArray(t)||t instanceof Map===false){console.error("Error: input is not a valid Map() formatted table. If your input is an array use train() instead.");return false;}this._table=t;return true;}},{key:"stringify",value:function stringify(){// return stringified version of the DeepMarkov table
+return JSON.stringify(this._table,replacer);}},{key:"parse",value:function parse(p){// parse an incoming string to a Map() for transition table
+try{var parsed=JSON.parse(p,reviver);if(parsed instanceof Map===false){console.error("Error: input is not a valid string that can be parsed to a Map().");return false;}this._table=parsed;return true;}catch(e){console.error("Error: input is not a valid string that can be parsed to a Map().");return false;}}},{key:"clear",value:function clear(){// empty the transition probabilities
 this._table=new Map();}},{key:"train",value:function train(a){var o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;if(!Array.isArray(a)){return console.error("Error: train() expected array but received: ".concat(_typeof(a)));}if(o<1){return console.error("Error: train() expected order greater then 1 but received ".concat(o));}// build a transition table from array of values
 for(var i=0;i<a.length-o;i++){var slice=a.slice(i,i+o);var key=JSON.stringify(slice);var next=a[i+o];if(this._table.has(key)){var arr=this._table.get(key);arr.push(next);this._table.set(key,arr);}else{this._table.set(key,[a[i+o]]);}}}},{key:"seed",value:function seed(s){// deprecated, seed is now also be set for the global rng
 _seed2(s);}},{key:"state",value:function state(a){// stringify the state
@@ -2745,7 +2748,12 @@ if(!this._table.has(s)){console.error("Warning: ".concat(a," is not part of tran
 if(this._state===undefined||!this._table.has(this._state)){this.randomState();}// get probabilities based on state
 var probs=this._table.get(this._state);var newState=probs[Math.floor(rng()*probs.length)];// Now recreate a nice string representation
 var prefix=JSON.parse(this._state);prefix.shift();prefix.push(newState);this._state=JSON.stringify(prefix);return newState;}},{key:"chain",value:function chain(){var l=arguments.length>0&&arguments[0]!==undefined?arguments[0]:2;// return an array of values generated with next()
-var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return DeepMarkov;}();exports.DeepMarkov=DeepMarkov;exports.DeepMarkovChain=DeepMarkov;},{"./gen-basic.js":36,"./statistic":39,"./transform.js":40,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){//=======================================================================
+var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return DeepMarkov;}();exports.DeepMarkov=DeepMarkov;exports.DeepMarkovChain=DeepMarkov;// functions thanks to:
+// https://stackoverflow.com/questions/29085197/how-do-you-json-stringify-an-es6-map
+// helper function for Stringifying a Map() in DeepMarkov
+function replacer(key,value){if(value instanceof Map){return{dataType:'Map',value:_toConsumableArray(value)// value: [Array.from(value.entries())], 
+};}return value;}// helper function for parsing a Map() in DeepMarkov
+function reviver(key,value){if(_typeof(value)==='object'&&value!==null){if(value.dataType==='Map'){return new Map(value.value);}}return value;}},{"./gen-basic.js":36,"./statistic":39,"./transform.js":40,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){//=======================================================================
 // statistic.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
