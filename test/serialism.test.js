@@ -1420,6 +1420,31 @@ function testUtility(){
 		expect(Util.arrayCombinations([1, [2, 3]], [10, 20], [100, 200])).toStrictEqual([[1, 10, 100], [[2, 3], 20, 200]]);
 	});
 
+	let amounts = 8;
+	let hits = [3, 5, 7];
+	// let highs = [12, 24];
+	console.log(Util.multiCall(Gen.spreadInc, 5, [12, 24, 36]));
+	console.log(Util.multiCall(Algo.fastEuclid, 8, [3, 5, 7]));
+
+	console.log(Util.multiCall(Mod.rotate, [Algo.hex('ed6')], [0, -1, -2]));
+
+	console.log(Util.arrayCombinations([0, 3, 7, 12], [0, 12]));
+	console.log(Util.multiCall(Util.add, [[0, 3, 7, 12]], [0, 12, 24]));
+
+	// let times = Util.arrayCombinations(amounts, hits);
+	// let results = Util.flatten(times.map((t) => Gen.spread(...t) ), 1);
+	// let results = Util.flatten(times.map((t) => Algo.fastEuclid(...t) ), 1);
+	// let arr = Gen.spread(10, 3, 12);
+	// console.log(times);
+	// console.log(results);
+
+	// let someList = [[10, 20], [[30, 300], 40], [50, [600, 60] ]];
+	// let someList = [[10, 20], [30, 300, 40], [50, 600, 60 ]];
+	// console.log(someList)
+	// console.log(Util.flat(someList, 1))
+
+	// Util.arrayCombinations([])
+
 	test("Util.map()", () => {
 		expect(Util.map()).toStrictEqual(0);
 	});

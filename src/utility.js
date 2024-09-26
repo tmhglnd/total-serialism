@@ -307,10 +307,7 @@ function multiCall(func, ...a){
 	// call the function for all the argument combinations
 	args = args.map((a) => func(...a));
 	// combine into a single list but preserving multi-dimensional arrays
-	let out = [];
-	for (let i=0; i<args.length; i++){
-		out = out.concat(args[i]);
-	}
+	let out = flatten(args, 1);
 	return out;
 }
 exports.multiCall = multiCall;
