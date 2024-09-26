@@ -1420,16 +1420,29 @@ function testUtility(){
 		expect(Util.arrayCombinations([1, [2, 3]], [10, 20], [100, 200])).toStrictEqual([[1, 10, 100], [[2, 3], 20, 200]]);
 	});
 
-	let amounts = 8;
-	let hits = [3, 5, 7];
-	// let highs = [12, 24];
-	console.log(Util.multiCall(Gen.spreadInc, 5, [12, 24, 36]));
-	console.log(Util.multiCall(Algo.fastEuclid, 8, [3, 5, 7]));
+	test("Util.multiCall(Gen.spreadInc, 5, [12, 24])", () => {
+		expect(Util.multiCall(Gen.spreadInc, 5, [12, 24])).toStrictEqual([0, 3, 6, 9, 12, 0, 6, 12, 18, 24]);
+	});
+	test("Util.multiCall(Algo.fastEuclid, 8, [3, 5])", () => {
+		expect(Util.multiCall(Algo.fastEuclid, 8, [3, 5])).toStrictEqual([1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1]);
+	});
+	test("Util.multiCall(Util.add, [[0, 3, 7, 12]], [0, 12])", () => {
+		expect(Util.multiCall(Mod.rotate, [Algo.hex('ed6')], [0, -1])).toStrictEqual([1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1]);
+	});
+	test("Util.multiCall(Util.add, [[0, 3, 7, 12]], [0, 12])", () => {
+		expect(Util.multiCall(Util.add, [[0, 3, 7, 12]], [0, 12])).toStrictEqual([0, 3, 7, 12, 12, 15, 19, 24]);
+	});
 
-	console.log(Util.multiCall(Mod.rotate, [Algo.hex('ed6')], [0, -1, -2]));
+	// let amounts = 8;
+	// let hits = [3, 5, 7];
+	// // let highs = [12, 24];
+	// console.log(Util.multiCall(Gen.spreadInc, 5, [12, 24, 36]));
+	// console.log(Util.multiCall(Algo.fastEuclid, 8, [3, 5, 7]));
 
-	console.log(Util.arrayCombinations([0, 3, 7, 12], [0, 12]));
-	console.log(Util.multiCall(Util.add, [[0, 3, 7, 12]], [0, 12, 24]));
+	// console.log(Util.multiCall(Mod.rotate, [Algo.hex('ed6')], [0, -1, -2]));
+
+	// console.log(Util.arrayCombinations([0, 3, 7, 12], [0, 12]));
+	// console.log(Util.multiCall(Util.add, [[0, 3, 7, 12]], [0, 12, 24]));
 
 	// let times = Util.arrayCombinations(amounts, hits);
 	// let results = Util.flatten(times.map((t) => Gen.spread(...t) ), 1);
