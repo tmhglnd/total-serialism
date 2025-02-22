@@ -1416,6 +1416,9 @@ function testUtility(){
 	test("Util.arrayCombinations([1, 2, 3], [10, 20])", () => {
 		expect(Util.arrayCombinations([1, 2, 3], [10, 20])).toStrictEqual([[1, 10], [2, 20], [3, 10], [1, 20], [2, 10], [3, 20]]);
 	});
+	test("Util.arrayCombinations([1, 2, 3, 4], [10, 20])", () => {
+		expect(Util.arrayCombinations([1, 2, 3, 4], [10, 20])).toStrictEqual([[1, 10], [2, 20], [3, 10], [4, 20], [1, 10], [2, 20], [3, 10], [4, 20]]);
+	});
 	test("Util.arrayCombinations([1, [2, 3]], [10, 20], [100, 200])", () => {
 		expect(Util.arrayCombinations([1, [2, 3]], [10, 20], [100, 200])).toStrictEqual([[1, 10, 100], [[2, 3], 20, 200]]);
 	});
@@ -1426,11 +1429,14 @@ function testUtility(){
 	test("Util.multiCall(Algo.fastEuclid, 8, [3, 5])", () => {
 		expect(Util.multiCall(Algo.fastEuclid, 8, [3, 5])).toStrictEqual([1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1]);
 	});
-	test("Util.multiCall(Util.add, [[0, 3, 7, 12]], [0, 12])", () => {
+	test("Util.multiCall(Mod.rotate, [Algo.hex('ed6')], [0, -1])", () => {
 		expect(Util.multiCall(Mod.rotate, [Algo.hex('ed6')], [0, -1])).toStrictEqual([1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1]);
 	});
 	test("Util.multiCall(Util.add, [[0, 3, 7, 12]], [0, 12])", () => {
-		expect(Util.multiCall(Util.add, [[0, 3, 7, 12]], [0, 12])).toStrictEqual([0, 3, 7, 12, 12, 15, 19, 24]);
+		expect(Util.multiCall(Util.add, [[ 0, 3, 7, 12 ]], [0, 12])).toStrictEqual([0, 3, 7, 12, 12, 15, 19, 24]);
+	});
+	test("Util.multiCall(Util.add, [0, 3, 7, 12], [0, 12])", () => {
+		expect(Util.multiCall(Util.add, [0, 3, 7, 12], [0, 12])).toStrictEqual([0, 15, 7, 24, 0, 15, 7, 24]);
 	});
 
 	// let amounts = 8;
