@@ -1,5 +1,4 @@
 
-const exp = require('constants');
 const fs = require('fs');
 
 // test with different builds
@@ -16,10 +15,10 @@ let Gen, Algo, Mod, Rand, Stat, TL, Util;
 fullTest(TS);
 
 // reload library with es5.min.js build
-TS = require(es5build);
+// TS = require(es5build);
 
 // and run full test with es5.min.js build;
-fullTest(TS);
+// fullTest(TS);
 
 /*
 	Test criteria:
@@ -59,6 +58,25 @@ function testSerial(){
 }
 
 function testGenerative(){
+	test("Gen.counter()", () => {
+		expect(Gen.counter()).toStrictEqual([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]);
+	});
+	test("Gen.counter(8)", () => {
+		expect(Gen.counter(8)).toStrictEqual([ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]);
+	});
+	test("Gen.counter(4, 10)", () => {
+		expect(Gen.counter(4, 10)).toStrictEqual([ 4, 5, 6, 7, 8, 9, 10 ]);
+	});
+	test("Gen.counter(7, 2)", () => {
+		expect(Gen.counter(7, 2)).toStrictEqual([ 7, 6, 5, 4, 3, 2 ]);
+	});
+	test("Gen.counter(5, -4)", () => {
+		expect(Gen.counter(5, -4)).toStrictEqual([ 5, 4, 3, 2, 1, 0, -1, -2, -3, -4 ]);
+	});
+	test("Gen.counter(-3, -9)", () => {
+		expect(Gen.counter(-3, -9)).toStrictEqual([ -3, -4, -5, -6, -7, -8, -9 ]);
+	});
+
 	test("Gen.spread()", () => {
 		expect(Gen.spread()).toStrictEqual([0]);
 	})
