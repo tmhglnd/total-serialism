@@ -2107,7 +2107,20 @@ Math// math: package containing random, pow, and seedrandom
 // - cosine/sine array generation inspired by workshop by Steven Yi at ICLC
 //==========================================================================
 // const Util = require('./utility.js');
-var _require=require('./utility'),map=_require.map,flatten=_require.flatten,toArray=_require.toArray,size=_require.size,TWO_PI=_require.TWO_PI;// Generate a list of n-length starting at one value
+var _require=require('./utility'),map=_require.map,flatten=_require.flatten,toArray=_require.toArray,size=_require.size,TWO_PI=_require.TWO_PI;// Generate a list of n-length that counts integers
+// If only one argument provided the function counts from 0 to x
+// If two arguments provided the function counts from x to y
+//
+// @param {Int+} -> count (or count from, default=12)
+// @param {Int+} -> count from (optional, default=undefined)
+// @return -> {IntArray}
+// 
+function count(){var from=arguments.length>0&&arguments[0]!==undefined?arguments[0]:11;var to=arguments.length>1?arguments[1]:undefined;return function(from,to){// if to is undefined set to 0
+if(to===undefined){var t=from,from=0,to=t;}// calculate the range
+var range=Math.abs(to-from);// calculate direction
+var dir=from<to?1:-1;// start with the from value
+var arr=[from];// next value is the current + the direction
+for(var i=0;i<range;i++){arr.push(arr[i]+dir);}return arr;}(from,to);}exports.counter=count;exports.count=count;// Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
 // Evenly spaced values in between in floating-point
 // Defaults to range of 0 - 1 for Float
@@ -3564,7 +3577,15 @@ function sqrt(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:
 function arrayCalc(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var v=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var func=arguments.length>2&&arguments[2]!==undefined?arguments[2]:function(){return a;};// if righthand side is array
 if(Array.isArray(v)){a=toArray(a);var l1=a.length,l2=v.length,r=[];var l=Math.max(l1,l2);for(var i=0;i<l;i++){r[i]=arrayCalc(a[i%l1],v[i%l2],func);}return r;}// if both are single values
 if(!Array.isArray(a)){var _r=func(a,v);if(!isNaN(a)&&!isNaN(v)){return isNaN(_r)?0:_r;}return _r;}// if lefthand side is array
-return a.map(function(x){return arrayCalc(x,v,func);});}exports.arrayCalc=arrayCalc;// Alternate through 2 or multiple lists consecutively
+return a.map(function(x){return arrayCalc(x,v,func);});}exports.arrayCalc=arrayCalc;// Call a list function with provided arguments
+// The difference is that first all the possible combinations of the arrays
+// are calculated allowing arrays as arguments to generate
+// multiple versions of the function and joining them together
+//
+function multiCall(func){for(var _len8=arguments.length,a=new Array(_len8>1?_len8-1:0),_key8=1;_key8<_len8;_key8++){a[_key8-1]=arguments[_key8];}// calculate the array combinations
+var args=arrayCombinations.apply(void 0,a);// call the function for all the argument combinations
+args=args.map(function(a){return func.apply(void 0,_toConsumableArray(a));});// combine into a single list but preserving multi-dimensional arrays
+var out=flatten(args,1);return out;}exports.multiCall=multiCall;// Alternate through 2 or multiple lists consecutively
 // The output length is the lowest common denominator of the input lists
 // so that every combination of consecutive values is included
 // This function is used to allow arrays as input for Generators
@@ -3573,9 +3594,10 @@ return a.map(function(x){return arrayCalc(x,v,func);});}exports.arrayCalc=arrayC
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array} -> outputs a 2D array of the results
 //
-function arrayCombinations(){for(var _len8=arguments.length,arrs=new Array(_len8),_key8=0;_key8<_len8;_key8++){arrs[_key8]=arguments[_key8];}// make sure all values are array
-arrs=arrs.map(function(a){return toArray(a);});// the output is the unique list sizes multiplied
-var sizes=unique(arrs.map(function(a){return a.length;}));var iters=1;sizes.forEach(function(l){return iters*=l;});// iterate over the total amount pushing the items to array
+function arrayCombinations(){for(var _len9=arguments.length,arrs=new Array(_len9),_key9=0;_key9<_len9;_key9++){arrs[_key9]=arguments[_key9];}// make sure all items are an array of at least 1 item
+arrs=arrs.map(function(a){return toArray(a);});// get the lengths, but remove duplicate lengths
+var sizes=unique(arrs.map(function(a){return a.length;}));// multiply to get total of possible iterations
+var iters=1;sizes.forEach(function(l){return iters*=l;});// iterate over the total amount pushing the items to array
 var arr=[];var _loop2=function _loop2(i){arr.push(arrs.map(function(e){return e[i%e.length];}));};for(var i=0;i<iters;i++){_loop2(i);}return arr;}exports.arrayCombinations=arrayCombinations;// flatten a multidimensional array. Optionally set the depth
 // for the flattening
 //

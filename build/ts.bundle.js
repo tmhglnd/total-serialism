@@ -7627,6 +7627,32 @@ if ((typeof module) == 'object' && module.exports) {
 // const Util = require('./utility.js');
 const { map, flatten, toArray, size, TWO_PI } = require('./utility');
 
+// Generate a list of n-length that counts integers
+// If only one argument provided the function counts from 0 to x
+// If two arguments provided the function counts from x to y
+//
+// @param {Int+} -> count (or count from, default=12)
+// @param {Int+} -> count from (optional, default=undefined)
+// @return -> {IntArray}
+// 
+function count(from=11, to){
+	// if to is undefined set to 0
+	if (to === undefined){ var t=from, from=0, to=t; }
+	// calculate the range
+	let range = Math.abs(to - from);
+	// calculate direction
+	let dir = (from < to) ? 1 : -1;
+	// start with the from value
+	let arr = [ from ];
+	// next value is the current + the direction
+	for (let i=0; i<range; i++){
+		arr.push( arr[i] + dir );
+	}
+	return arr;
+}
+exports.counter = count;
+exports.count = count;
+
 // Generate a list of n-length starting at one value
 // up until (but excluding) the 3th argument. 
 // Evenly spaced values in between in floating-point
@@ -11168,6 +11194,22 @@ function arrayCalc(a=0, v=0, func=()=>{return a;}){
 }
 exports.arrayCalc = arrayCalc;
 
+// Call a list function with provided arguments
+// The difference is that first all the possible combinations of the arrays
+// are calculated allowing arrays as arguments to generate
+// multiple versions of the function and joining them together
+//
+function multiCall(func, ...a){
+	// calculate the array combinations
+	let args = arrayCombinations(...a);
+	// call the function for all the argument combinations
+	args = args.map((a) => func(...a));
+	// combine into a single list but preserving multi-dimensional arrays
+	let out = flatten(args, 1);
+	return out;
+}
+exports.multiCall = multiCall;
+
 // Alternate through 2 or multiple lists consecutively
 // The output length is the lowest common denominator of the input lists
 // so that every combination of consecutive values is included
@@ -11178,16 +11220,19 @@ exports.arrayCalc = arrayCalc;
 // @return {Array} -> outputs a 2D array of the results
 //
 function arrayCombinations(...arrs){
-	// make sure all values are array
+	// make sure all items are an array of at least 1 item
 	arrs = arrs.map(a => toArray(a));
-	// the output is the unique list sizes multiplied
+	// get the lengths, but remove duplicate lengths
 	let sizes = unique(arrs.map(a => a.length));
+	// multiply to get total of possible iterations
 	let iters = 1;	
 	sizes.forEach((l) => iters *= l);
 	// iterate over the total amount pushing the items to array
 	let arr = [];
 	for (let i=0; i<iters; i++){
-		arr.push(arrs.map((e) => e[i % e.length] ));
+		arr.push(arrs.map((e) => {
+			return e[i % e.length]
+		}));
 	}
 	return arr;
 }
