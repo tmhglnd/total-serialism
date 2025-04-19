@@ -344,6 +344,7 @@ function thumbUp(arr=[0]){
 	return out;
 }
 exports.thumbUp = thumbUp;
+exports.thumb = thumbUp;
 
 // Similar to thumb-up, but in reverse order
 // For instance [0 3 7 12 19] results in [0 19 0 12 0 7 0 3]
@@ -371,8 +372,8 @@ exports.thumbUpDown = thumbUpDown;
 // The pinkyUp technique takes an array and outputs
 // a transformed array where the last value alternates
 // between every other previous value in a left to right order.
-// This is based on the Ableton arpeggiator algorithms.
-// For example [0 3 7 12 19] results in [0 3 0 7 0 12 0 19]
+// This is inspired by the Ableton arpeggiator algorithms.
+// For example [0 3 7 12 19] results in [0 19 3 19 7 19 12 19]
 // 
 // @param {Array} -> array to transform
 // @return {Array}
@@ -392,6 +393,7 @@ function pinkyUp(arr=[0]){
 	return out;
 }
 exports.pinkyUp = pinkyUp;
+exports.pinky = pinkyUp;
 
 function pinkyDown(arr=[0]){
 	if (arr === undefined){ return [0] };
