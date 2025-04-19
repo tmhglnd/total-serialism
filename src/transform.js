@@ -395,6 +395,9 @@ function pinkyUp(arr=[0]){
 exports.pinkyUp = pinkyUp;
 exports.pinky = pinkyUp;
 
+// PinkyDown is similar to pinkyUp, but in reverse order. 
+// For instance `[0 3 7 12 19]` results in `[12 19 7 19 3 19 0 19]`
+// 
 function pinkyDown(arr=[0]){
 	if (arr === undefined){ return [0] };
 	arr = toArray(arr);
@@ -404,6 +407,10 @@ function pinkyDown(arr=[0]){
 }
 exports.pinkyDown = pinkyDown;
 
+// PinkyUpDown is similar to pinkyUp and pinkyDown and is basically 
+// a combination of both. For instance `[0 3 7 12 19]` results 
+// in `[0 19 3 19 7 19 12 19 7 19 3 19]`.
+// 
 function pinkyUpDown(arr=[0]){
 	if (arr === undefined){ return [0] };
 	arr = toArray(arr);
