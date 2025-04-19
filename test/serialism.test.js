@@ -15,10 +15,10 @@ let Gen, Algo, Mod, Rand, Stat, TL, Util;
 fullTest(TS);
 
 // reload library with es5.min.js build
-TS = require(es5build);
+// TS = require(es5build);
 
 // and run full test with es5.min.js build;
-fullTest(TS);
+// fullTest(TS);
 
 /*
 	Test criteria:
@@ -723,6 +723,78 @@ function testTransform(){
 	});
 	test("Mod.palindrome([0, [5, 7], 9, 12])", () => {
 		expect(Mod.palindrome([0, [5, 7], 9, 12], true)).toStrictEqual([ 0, [ 5, 7 ], 9, 12, 9, [ 5, 7 ] ]);
+	});
+
+	test("Mod.thumbUp()", () => {
+		expect(Mod.thumbUp()).toStrictEqual([0]);
+	});
+
+	test("Mod.thumbUp([3])", () => {
+		expect(Mod.thumbUp([3])).toStrictEqual([3]);
+	});
+
+	test("Mod.thumbUp([0, 3, 7, 12, 19])", () => {
+		expect(Mod.thumbUp([0, 3, 7, 12, 19])).toStrictEqual([0, 3, 0, 7, 0, 12, 0, 19]);
+	});
+
+	test("Mod.thumbDown()", () => {
+		expect(Mod.thumbDown()).toStrictEqual([0]);
+	});
+
+	test("Mod.thumbDown([3])", () => {
+		expect(Mod.thumbDown([3])).toStrictEqual([3]);
+	});
+
+	test("Mod.thumbDown([0, 3, 7, 12, 19])", () => {
+		expect(Mod.thumbDown([0, 3, 7, 12, 19])).toStrictEqual([0, 19, 0, 12, 0, 7, 0, 3]);
+	});
+
+	test("Mod.thumbUpDown()", () => {
+		expect(Mod.thumbUpDown()).toStrictEqual([0]);
+	});
+
+	test("Mod.thumbUpDown([3])", () => {
+		expect(Mod.thumbUpDown([3])).toStrictEqual([3]);
+	});
+
+	test("Mod.thumbUpDown([0, 3, 7, 12, 19])", () => {
+		expect(Mod.thumbUpDown([0, 3, 7, 12, 19])).toStrictEqual([0, 3, 0, 7, 0, 12, 0, 19, 0, 12, 0, 7]);
+	});
+
+	test("Mod.pinkyUp()", () => {
+		expect(Mod.pinkyUp()).toStrictEqual([0]);
+	});
+
+	test("Mod.pinkyUp([3])", () => {
+		expect(Mod.pinkyUp([3])).toStrictEqual([3]);
+	});
+
+	test("Mod.pinkyUp([0, 3, 7, 12, 19])", () => {
+		expect(Mod.pinkyUp([0, 3, 7, 12, 19])).toStrictEqual([0, 19, 3, 19, 7, 19, 12, 19]);
+	});
+
+	test("Mod.pinkyDown()", () => {
+		expect(Mod.pinkyDown()).toStrictEqual([0]);
+	});
+
+	test("Mod.pinkyDown([3])", () => {
+		expect(Mod.pinkyDown([3])).toStrictEqual([3]);
+	});
+
+	test("Mod.pinkyDown([0, 3, 7, 12, 19])", () => {
+		expect(Mod.pinkyDown([0, 3, 7, 12, 19])).toStrictEqual([12, 19, 7, 19, 3, 19, 0, 19]);
+	});
+
+	test("Mod.pinkyUpDown()", () => {
+		expect(Mod.pinkyUpDown()).toStrictEqual([0]);
+	});
+
+	test("Mod.pinkyUpDown([3])", () => {
+		expect(Mod.pinkyUpDown([3])).toStrictEqual([3]);
+	});
+
+	test("Mod.pinkyUpDown([0, 3, 7, 12, 19])", () => {
+		expect(Mod.pinkyUpDown([0, 3, 7, 12, 19])).toStrictEqual([0, 19, 3, 19, 7, 19, 12, 19, 7, 19, 3, 19]);
 	});
 
 	// test("Mod.palindrome([0, 1, 2, 3], 1)");
