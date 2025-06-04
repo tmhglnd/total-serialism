@@ -299,9 +299,13 @@ exports.arrayCalc = arrayCalc;
 // Call a list function with provided arguments
 // The difference is that first all the possible combinations of the arrays
 // are calculated allowing arrays as arguments to generate
-// multiple versions of the function and joining them together
+// multiple versions of the function and joining them together afterwards
 //
-function multiCall(func, ...a){
+// @params {Function} -> The function name to use
+// @params {Arguments} -> The arguments applied to the function
+// @return {Anything} -> The result of the multi evaluated function
+// 
+function multiEval(func, ...a){
 	// calculate the array combinations
 	let args = arrayCombinations(...a);
 	// call the function for all the argument combinations
@@ -310,7 +314,8 @@ function multiCall(func, ...a){
 	let out = flatten(args, 1);
 	return out;
 }
-exports.multiCall = multiCall;
+exports.multiEval = multiEval;
+exports.multiCall = multiEval;
 
 // Alternate through 2 or multiple lists consecutively
 // The output length is the lowest common multiple of the input lists

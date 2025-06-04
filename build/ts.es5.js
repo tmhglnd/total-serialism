@@ -2776,7 +2776,7 @@ function reviver(key,value){if(_typeof(value)==='object'&&value!==null){if(value
 // Statistical related methods and algorithms that can be helpful in
 // analysis of number sequences, melodies, rhythms and more
 //=======================================================================
-var Mod=require('./transform');var _require7=require('./utility'),maximum=_require7.maximum,minimum=_require7.minimum,flatten=_require7.flatten,toArray=_require7.toArray;// sort an array of numbers or strings. sorts ascending
+var Mod=require('./transform');var _require7=require('./utility'),maximum=_require7.maximum,minimum=_require7.minimum,flatten=_require7.flatten,toArray=_require7.toArray,lcm=_require7.lcm,gcd=_require7.gcd;// sort an array of numbers or strings. sorts ascending
 // or descending in numerical and alphabetical order
 // 
 // @param {Array} -> array to sort
@@ -2837,33 +2837,19 @@ function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments
 // @return {Array} -> list of changes
 // 
 function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0,0];var l=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;if(a.length<2||!Array.isArray(a)){return[0];}var len=a.length;var arr=[];for(var i=1;i<len;i++){arr.push(a[i]-a[i-1]);}// optionally also return diff from first and last value
-if(l){arr.push(a[0]-a[a.length-1]);}return arr;}exports.change=change;exports.delta=change;exports.difference=change;exports.diff=change;// Calculate the Greatest Common Divisor between 2 numbers
-// Based on the Euclid Algorithm described in:
-// https://en.wikipedia.org/wiki/Greatest_common_divisor
-// 
-function _gcd(a,b){// greatest common divisor found if b equals 0
-if(b===0){return a;}// swap inputs and apply a mod b
-return _gcd(b,a%b);}// Calculate the Least Common Multiple between 2 numbers
-// Based on the algorithm using the GCD() described in:
-// https://en.wikipedia.org/wiki/Least_common_multiple
-// 
-function _lcm(a,b){return Math.abs(a)*(Math.abs(b)/_gcd(a,b));}// Calculate the Greatest Common Divisor from an array
+if(l){arr.push(a[0]-a[a.length-1]);}return arr;}exports.change=change;exports.delta=change;exports.difference=change;exports.diff=change;// Calculate the Greatest Common Divisor from an array
 // The function uses the algorithm described in _gcd() above
 // 
 // @param {Array} -> array to calculate on
 // @return {Int} -> greatest common divisor
 // 
-function gcd(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];a=toArray(a);// not enough values to calculate gcd
-if(a.length<2){return a[0];}var _greatest=a[0];// calculate gcd in pairs from the array
-for(var i=1;i<a.length;i++){_greatest=_gcd(_greatest,a[i]);}return _greatest;}exports.greatestCommonDivisor=gcd;exports.gcd=gcd;// Calculate the Least Common Multiple from an array
+exports.greatestCommonDivisor=gcd;exports.gcd=gcd;// Calculate the Least Common Multiple from an array
 // the function uses the algorithm described in _lcd() above
 //
 // @param {Array} -> array to calculate on
 // @return {Int} -> least common multiple
 // 
-function lcm(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];a=toArray(a);// not enough values to calculate lcm
-if(a.length<2){return a[0];}var _least=a[0];// calculate lcm in pairs from the array
-for(var i=1;i<a.length;i++){_least=_lcm(_least,a[i]);}return _least;}exports.leastCommonMultiple=lcm;exports.lcm=lcm;},{"./transform":40,"./utility":42}],40:[function(require,module,exports){//=======================================================================
+exports.leastCommonMultiple=lcm;exports.lcm=lcm;},{"./transform":40,"./utility":42}],40:[function(require,module,exports){//=======================================================================
 // transform.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -3036,7 +3022,7 @@ function repeat(){var arr=arguments.length>0&&arguments[0]!==undefined?arguments
 // @param {Array} -> array to reverse
 // @return {Array}
 // 
-function reverse(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return[a];}return a.slice().reverse();}exports.reverse=reverse;// rotate the position of items in an array 
+function reverse(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];if(!Array.isArray(a)){return[a];}return a.slice().reverse();}exports.reverse=reverse;exports.rev=reverse;// rotate the position of items in an array 
 // 1 = direction right, -1 = direction left
 // 
 // @param {Array} -> array to rotate
@@ -3044,7 +3030,7 @@ function reverse(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[
 // @return {Array}
 // 
 function rotate(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var r=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;if(!Array.isArray(a)){return[a];}var l=a.length;var arr=[];for(var i=0;i<l;i++){// arr[i] = a[Util.mod((i - r), l)];
-arr[i]=a[((i-r)%l+l)%l];}return arr;}exports.rotate=rotate;// placeholder for the sort() method found in 
+arr[i]=a[((i-r)%l+l)%l];}return arr;}exports.rotate=rotate;exports.rot=rotate;// placeholder for the sort() method found in 
 // statistic.js
 // 
 exports.sort=sort;// slice an array in one or multiple parts 
@@ -3072,15 +3058,26 @@ function split(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]
 // param {Array} -> positions to spread to
 // return {Array}
 // 
-function spray(){var values=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];values=toArray(values);beats=toArray(beats);var arr=beats.slice();var c=0;for(var i in beats){if(beats[i]>0){arr[i]=values[c++%values.length];}}return arr;}exports.spray=spray;// Alternate through 2 or multiple lists consecutively
-// Gives a similar result as lace except the output
-// length is the lowest common denominator of the input lists
+function spray(){var values=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0];values=toArray(values);beats=toArray(beats);var arr=beats.slice();var c=0;for(var i in beats){if(beats[i]>0){arr[i]=values[c++%values.length];}}return arr;}exports.spray=spray;// Merge 2 or multiple lists by alternating over them.
+// The output length is the lowest common multiple of the input lists,
 // so that every combination of consecutive values is included
+// until they all appeared an integer multiple of times.
+// This function is used to allow arrays as input for Generators
+// And for the step function for algorithmic composition
+//
+// @param {Array0, Array1, ..., Array-n} -> arrays to alternate/interleave
+// @return {Array} -> outputs a 2D array of the results
+//
+exports.stepMerge=arrayCombinations;// Combine 2 or multiple lists by alternating over them.
+// Gives a similar result as lace except the output
+// length is the lowest common multiple of the input lists
+// so that every combination of consecutive values is included.
+// A higher dimension in the array is preserved.
 //
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array} -> array of results 1 dimension less
 //
-function step(){if(!arguments.length){return[0];}return flat(arrayCombinations.apply(void 0,arguments),1);}exports.step=step;// stretch (or shrink) an array of numbers to a specified length
+function stepCombine(){if(!arguments.length){return[0];}return flat(arrayCombinations.apply(void 0,arguments),1);}exports.stepCombine=stepCombine;exports.step=stepCombine;// stretch (or shrink) an array of numbers to a specified length
 // interpolating the values to fill in the gaps. 
 // TO-DO: Interpolations options are: none, linear, cosine, cubic
 // 
@@ -3094,7 +3091,7 @@ var a0=a[Math.max(Math.trunc(val),0)];var a1=a[Math.min(Math.trunc(val)+1,l-1)%a
 arr.push(lerp(a0,a1,val%1));}}return arr;}exports.stretch=stretch;// placeholder for unique from Utils.js
 // filter duplicate items from an array
 // does not account for 2-dimensional arrays in the array
-exports.unique=unique;},{"./statistic":39,"./utility":42}],41:[function(require,module,exports){//==============================================================================
+exports.unique=unique;exports.thin=unique;},{"./statistic":39,"./utility":42}],41:[function(require,module,exports){//==============================================================================
 // translate.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -3639,25 +3636,56 @@ if(!Array.isArray(a)){var _r=func(a,v);if(!isNaN(a)&&!isNaN(v)){return isNaN(_r)
 return a.map(function(x){return arrayCalc(x,v,func);});}exports.arrayCalc=arrayCalc;// Call a list function with provided arguments
 // The difference is that first all the possible combinations of the arrays
 // are calculated allowing arrays as arguments to generate
-// multiple versions of the function and joining them together
+// multiple versions of the function and joining them together afterwards
 //
-function multiCall(func){for(var _len8=arguments.length,a=new Array(_len8>1?_len8-1:0),_key8=1;_key8<_len8;_key8++){a[_key8-1]=arguments[_key8];}// calculate the array combinations
+// @params {Function} -> The function name to use
+// @params {Arguments} -> The arguments applied to the function
+// @return {Anything} -> The result of the multi evaluated function
+// 
+function multiEval(func){for(var _len8=arguments.length,a=new Array(_len8>1?_len8-1:0),_key8=1;_key8<_len8;_key8++){a[_key8-1]=arguments[_key8];}// calculate the array combinations
 var args=arrayCombinations.apply(void 0,a);// call the function for all the argument combinations
 args=args.map(function(a){return func.apply(void 0,_toConsumableArray(a));});// combine into a single list but preserving multi-dimensional arrays
-var out=flatten(args,1);return out;}exports.multiCall=multiCall;// Alternate through 2 or multiple lists consecutively
-// The output length is the lowest common denominator of the input lists
+var out=flatten(args,1);return out;}exports.multiEval=multiEval;exports.multiCall=multiEval;// Alternate through 2 or multiple lists consecutively
+// The output length is the lowest common multiple of the input lists
 // so that every combination of consecutive values is included
+// until they all appeared an integer multiple of times.
 // This function is used to allow arrays as input for Generators
 // And for the step function for algorithmic composition
 //
-// @param {Array0, Array1, ..., Array-n} -> arrays to interleave
+// @param {Array0, Array1, ..., Array-n} -> arrays to alternate/interleave
 // @return {Array} -> outputs a 2D array of the results
 //
 function arrayCombinations(){for(var _len9=arguments.length,arrs=new Array(_len9),_key9=0;_key9<_len9;_key9++){arrs[_key9]=arguments[_key9];}// make sure all items are an array of at least 1 item
-arrs=arrs.map(function(a){return toArray(a);});// get the lengths, but remove duplicate lengths
-var sizes=unique(arrs.map(function(a){return a.length;}));// multiply to get total of possible iterations
-var iters=1;sizes.forEach(function(l){return iters*=l;});// iterate over the total amount pushing the items to array
-var arr=[];var _loop2=function _loop2(i){arr.push(arrs.map(function(e){return e[i%e.length];}));};for(var i=0;i<iters;i++){_loop2(i);}return arr;}exports.arrayCombinations=arrayCombinations;// flatten a multidimensional array. Optionally set the depth
+arrs=arrs.map(function(a){return toArray(a);});// get the lengths, minimum of 1
+var sizes=arrs.map(function(a){return Math.max(1,a.length);});// get the least common multiple
+var iters=lcm(sizes);// iterate over the total length, pushing the items to array
+var arr=[];var _loop2=function _loop2(i){arr.push(arrs.map(function(e){return e[i%e.length];}));};for(var i=0;i<iters;i++){_loop2(i);}return arr;}exports.arrayCombinations=arrayCombinations;// Calculate the Greatest Common Divisor between 2 numbers
+// Based on the Euclid Algorithm described in:
+// https://en.wikipedia.org/wiki/Greatest_common_divisor
+// 
+function _gcd(a,b){// greatest common divisor found if b equals 0
+if(b===0){return a;}// swap inputs and apply a mod b
+return _gcd(b,a%b);}// Calculate the Least Common Multiple between 2 numbers
+// Based on the algorithm using the GCD() described in:
+// https://en.wikipedia.org/wiki/Least_common_multiple
+// 
+function _lcm(a,b){return Math.abs(a)*(Math.abs(b)/_gcd(a,b));}// Calculate the Greatest Common Divisor from an array
+// The function uses the algorithm described in _gcd() above
+// 
+// @param {Array} -> array to calculate on
+// @return {Int} -> greatest common divisor
+// 
+function gcd(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];a=toArray(a);// not enough values to calculate gcd
+if(a.length<2){return a[0];}var _greatest=a[0];// calculate gcd in pairs from the array
+for(var i=1;i<a.length;i++){_greatest=_gcd(_greatest,a[i]);}return _greatest;}exports.greatestCommonDivisor=gcd;exports.gcd=gcd;// Calculate the Least Common Multiple from an array
+// the function uses the algorithm described in _lcd() above
+//
+// @param {Array} -> array to calculate on
+// @return {Int} -> least common multiple
+// 
+function lcm(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];a=toArray(a);// not enough values to calculate lcm
+if(a.length<2){return a[0];}var _least=a[0];// calculate lcm in pairs from the array
+for(var i=1;i<a.length;i++){_least=_lcm(_least,a[i]);}return _least;}exports.leastCommonMultiple=lcm;exports.lcm=lcm;// flatten a multidimensional array. Optionally set the depth
 // for the flattening
 //
 // @param {Array} -> array to flatten

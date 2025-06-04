@@ -23,7 +23,9 @@ const Util = require('total-serialism').Utility;
 - [pow](#pow)
 - [sqrt](#sqrt)
 - [arrayCalc](#arraycalc)
-- [toArray](#toArray)
+- [multiEval](#multiEval)
+- [toArray](#toarray)
+- [fromArray](#fromarray)
 - [size](#size)
 - [sum](#sum)
 - [minimum](#minimum)
@@ -321,6 +323,29 @@ Util.arrayCalc([10, 2, 1, 5], [4, 9, 7, 3], (a, b) => Math.max(a, b) );
 // floor the values from an array
 Util.arrayCalc([3.14, 1.618, 2.718], 0, (a) => Math.floor(a) )
 //=> [ 3, 1, 2 ]
+```
+
+## multiEval
+
+Evaluate an array function with provided arguments. The difference is that first all the possible combinations of the arguments are calculated allowing arrays as arguments to generate multiple versions of the function and combining the results of the functions together afterwards.
+
+**arguments**
+- {Function} -> The function name to use
+- {Arguments} -> The arguments applied to the function
+- {Anything} -> The result of the multi evaluated function
+
+```js
+// 2x the euclidean algorithm, like join(euclid(8, 3), euclid(8, 5))
+Util.multiEval(Algo.euclid, 8, [3, 5])
+// => [ 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1 ]
+
+// 3x the spread function, like join(spread(3), spread(7), spread(2))
+Util.multiEval(Gen.spread, [3, 7, 2])
+// => [ 0, 1, 2, 0, 1, 2, 3, 4, 5, 6, 0, 1 ]
+
+// a custom addition function applied to least common multiple of listlengths
+Util.multiEval((a, b, c) => a + b + c, [0, 3, 7], [12, 24], [36])
+// => [ 48, 63, 55, 60, 51, 67 ]
 ```
 
 ## sum

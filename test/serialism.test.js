@@ -18,7 +18,7 @@ fullTest(TS);
 TS = require(es5build);
 
 // and run full test with es5.min.js build;
-// fullTest(TS);
+fullTest(TS);
 
 /*
 	Test criteria:
@@ -1568,20 +1568,24 @@ function testUtility(){
 		expect(Util.arrayCombinations([1, [2, 3]], [10, 20], [100, 200])).toStrictEqual([[1, 10, 100], [[2, 3], 20, 200]]);
 	});
 
-	test("Util.multiCall(Gen.spreadInc, 5, [12, 24])", () => {
-		expect(Util.multiCall(Gen.spreadInc, 5, [12, 24])).toStrictEqual([0, 3, 6, 9, 12, 0, 6, 12, 18, 24]);
+	test("Util.multiEval(Gen.spreadInc, 5, [12, 24])", () => {
+		expect(Util.multiEval(Gen.spreadInc, 5, [12, 24])).toStrictEqual([0, 3, 6, 9, 12, 0, 6, 12, 18, 24]);
 	});
-	test("Util.multiCall(Algo.fastEuclid, 8, [3, 5])", () => {
-		expect(Util.multiCall(Algo.fastEuclid, 8, [3, 5])).toStrictEqual([1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1]);
+	test("Util.multiEval(Algo.fastEuclid, 8, [3, 5])", () => {
+		expect(Util.multiEval(Algo.fastEuclid, 8, [3, 5])).toStrictEqual([1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1]);
 	});
-	test("Util.multiCall(Mod.rotate, [Algo.hex('ed6')], [0, -1])", () => {
-		expect(Util.multiCall(Mod.rotate, [Algo.hex('ed6')], [0, -1])).toStrictEqual([1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1]);
+	test("Util.multiEval(Mod.rotate, [Algo.hex('ed6')], [0, -1])", () => {
+		expect(Util.multiEval(Mod.rotate, [Algo.hex('ed6')], [0, -1])).toStrictEqual([1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1]);
 	});
-	test("Util.multiCall(Util.add, [[0, 3, 7, 12]], [0, 12])", () => {
-		expect(Util.multiCall(Util.add, [[ 0, 3, 7, 12 ]], [0, 12])).toStrictEqual([0, 3, 7, 12, 12, 15, 19, 24]);
+	test("Util.multiEval(Util.add, [[0, 3, 7, 12]], [0, 12])", () => {
+		expect(Util.multiEval(Util.add, [[ 0, 3, 7, 12 ]], [0, 12])).toStrictEqual([0, 3, 7, 12, 12, 15, 19, 24]);
 	});
-	test("Util.multiCall(Util.add, [0, 3, 7, 12], [0, 12])", () => {
-		expect(Util.multiCall(Util.add, [0, 3, 7, 12], [0, 12])).toStrictEqual([0, 15, 7, 24]);
+	test("Util.multiEval(Util.add, [0, 3, 7, 12], [0, 12])", () => {
+		expect(Util.multiEval(Util.add, [0, 3, 7, 12], [0, 12])).toStrictEqual([0, 15, 7, 24]);
+	});
+
+	test("Util.multiEval((a, b, c) => a + b + c, [0, 3, 7], [12, 24], [36])", () => {
+		expect(Util.multiEval((a, b, c) => a + b + c, [0, 3, 7], [12, 24], [36])).toStrictEqual([ 48, 63, 55, 60, 51, 67 ]);
 	});
 
 	// let amounts = 8;
