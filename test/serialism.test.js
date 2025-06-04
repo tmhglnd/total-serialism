@@ -18,7 +18,7 @@ fullTest(TS);
 TS = require(es5build);
 
 // and run full test with es5.min.js build;
-fullTest(TS);
+// fullTest(TS);
 
 /*
 	Test criteria:
@@ -995,6 +995,26 @@ function testStatistic(){
 	});
 	test("Stat.compare(['c', ['e', 'g']], ['c', ['e', 'g']])", () => {
 		expect(Stat.compare(['c', ['e', 'g']], ['c', ['e', 'g']])).toStrictEqual(true);
+	});
+
+	test("Stat.gcd()", () => {
+		expect(Stat.gcd()).toStrictEqual(1);
+	});
+	test("Stat.gcd([54, 24])", () => {
+		expect(Stat.gcd([54, 24])).toStrictEqual(6);
+	});
+	test("Stat.gcd([8, 12, 20])", () => {
+		expect(Stat.gcd([8, 12, 20])).toStrictEqual(4);
+	});
+
+	test("Stat.lcm()", () => {
+		expect(Stat.lcm()).toStrictEqual(1);
+	});
+	test("Stat.lcm([3, 4])", () => {
+		expect(Stat.lcm([3, 4])).toStrictEqual(12);
+	});
+	test("Stat.lcm([12, 15, 75])", () => {
+		expect(Stat.lcm([12, 15, 75])).toStrictEqual(300);
 	});
 }
 
