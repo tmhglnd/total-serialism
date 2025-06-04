@@ -313,22 +313,28 @@ function multiCall(func, ...a){
 exports.multiCall = multiCall;
 
 // Alternate through 2 or multiple lists consecutively
-// The output length is the lowest common denominator of the input lists
+// The output length is the lowest common multiple of the input lists
 // so that every combination of consecutive values is included
+// until they all appeared an integer multiple of times.
 // This function is used to allow arrays as input for Generators
 // And for the step function for algorithmic composition
 //
-// @param {Array0, Array1, ..., Array-n} -> arrays to interleave
+// @param {Array0, Array1, ..., Array-n} -> arrays to alternate/interleave
 // @return {Array} -> outputs a 2D array of the results
 //
 function arrayCombinations(...arrs){
 	// make sure all items are an array of at least 1 item
 	arrs = arrs.map(a => toArray(a));
 	// get the lengths, but remove duplicate lengths
-	let sizes = unique(arrs.map(a => a.length));
-	// multiply to get total of possible iterations
-	let iters = 1;	
-	sizes.forEach((l) => iters *= l);
+	// let sizes = unique(arrs.map(a => a.length));
+	let sizes = arrs.map(a => a.length);
+	console.log(sizes);
+	// get the least common multiple
+	// let iters = 1;	
+	// sizes.forEach((l) => iters *= l);
+	let iters = lcm(sizes);
+	console.log('lcm', iters);
+	
 	// iterate over the total amount pushing the items to array
 	let arr = [];
 	for (let i=0; i<iters; i++){
@@ -339,6 +345,67 @@ function arrayCombinations(...arrs){
 	return arr;
 }
 exports.arrayCombinations = arrayCombinations;
+
+// Calculate the Greatest Common Divisor between 2 numbers
+// Based on the Euclid Algorithm described in:
+// https://en.wikipedia.org/wiki/Greatest_common_divisor
+// 
+function _gcd(a, b){
+	// greatest common divisor found if b equals 0
+	if (b === 0){ return a; }
+	// swap inputs and apply a mod b
+	return _gcd(b, a % b);
+}
+
+// Calculate the Least Common Multiple between 2 numbers
+// Based on the algorithm using the GCD() described in:
+// https://en.wikipedia.org/wiki/Least_common_multiple
+// 
+function _lcm(a, b){
+	return Math.abs(a) * ( Math.abs(b) / _gcd(a, b) );
+}
+
+// Calculate the Greatest Common Divisor from an array
+// The function uses the algorithm described in _gcd() above
+// 
+// @param {Array} -> array to calculate on
+// @return {Int} -> greatest common divisor
+// 
+function gcd(a=[1]){
+	a = toArray(a);
+	// not enough values to calculate gcd
+	if (a.length < 2){ return a[0]; }
+
+	let _greatest = a[0];
+	// calculate gcd in pairs from the array
+	for (let i = 1; i < a.length; i++){
+		_greatest = _gcd(_greatest, a[i]);
+	}
+	return _greatest;
+}
+exports.greatestCommonDivisor = gcd;
+exports.gcd = gcd;
+
+// Calculate the Least Common Multiple from an array
+// the function uses the algorithm described in _lcd() above
+//
+// @param {Array} -> array to calculate on
+// @return {Int} -> least common multiple
+// 
+function lcm(a=[1]){
+	a = toArray(a);
+	// not enough values to calculate lcm
+	if (a.length < 2){ return a[0]; }
+
+	let _least = a[0];
+	// calculate lcm in pairs from the array
+	for (let i = 1; i < a.length; i++){
+		_least = _lcm(_least, a[i]);
+	}
+	return _least;
+}
+exports.leastCommonMultiple = lcm;
+exports.lcm = lcm;
 
 // flatten a multidimensional array. Optionally set the depth
 // for the flattening
