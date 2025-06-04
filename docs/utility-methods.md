@@ -302,19 +302,25 @@ Util.sqrt([2, [9, [16, 25], 144]]);
 
 ## arrayCalc
 
-Evaluate a function for a multi-dimensional array. Input the left and righthand side of the evaluation and set a function as third argument.
+Evaluate a function for a multi-dimensional array. Input the left and righthand side of the evaluation and set a function as third argument. Useful for many of the `Math.` operators of the JS library, or for your own more complex custom function. If you don't need a right-hand side just fill a `0` or `null` as argument.
 
 **arguments**
 - {Array/Number} -> left hand input array
 - {Array/Number} -> right hand input array
 - {Function} -> function to Evaluate
 
-```js 
-Util.arrayCalc([0, 1, [2, 3]], [[5, 7], 10], (a,b) => { return (a+b)/2 });
+```js
+// average 2 values from the arrays
+Util.arrayCalc([0, 1, [2, 3]], [[5, 7], 10], (a, b) => { return (a + b) / 2 });
 //=> [ [ 2.5, 3.5 ], 5.5, [ 3.5, 5 ] ]
 
-Util.arrayCalc([10, 2, 1, 5], [4, 9, 7, 3], (a,b) => { return Math.max(a,b) });
+// return the max value of 2 arrays
+Util.arrayCalc([10, 2, 1, 5], [4, 9, 7, 3], (a, b) => Math.max(a, b) );
 //=> [ 10, 9, 7, 5 ] 
+
+// floor the values from an array
+Util.arrayCalc([3.14, 1.618, 2.718], 0, (a) => Math.floor(a) )
+//=> [ 3, 1, 2 ]
 ```
 
 ## sum
