@@ -30,8 +30,8 @@ const Mod = require('total-serialism').Transform;
 - [slice](#slice)
 - [split](#split)
 - [spray](#spray)
-- [step](#stepcombine)
 - [stepMerge](#stepmerge)
+- [stepCombine](#stepcombine)
 - [stretch](#stretch)
 - [thumb](#thumb)
 - [unique](#unique)
@@ -66,6 +66,8 @@ Mod.clone(['c', ['e', 'g']], ['4', '5', '#3']);
 
 Join arrays into one array. More than 2 arrays as arguments is possible.
 
+Alias: `combine()`
+
 **arguments**
 - {Array-0, Array-1, ..., Array-n} -> Arrays to combine
 
@@ -81,8 +83,6 @@ Mod.join([0, 5], [[12, 19], 7]);
 // works with strings
 Mod.join(['c4', 'e4'], ['g4', 'f4']);
 //=> [ 'c4', 'e4', 'g4', 'f4' ]
-
-// Alias: Mod.combine()
 ```
 
 <!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/oDCkLCUta" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
@@ -90,6 +90,8 @@ Mod.join(['c4', 'e4'], ['g4', 'f4']);
 ## copy
 
 Duplicate an array a certain amount of times.
+
+Alias: `duplicate()`
 
 **arguments**
 - {Array} -> Array to duplicate
@@ -107,8 +109,6 @@ Mod.copy([0, [3, 7], 12], 2);
 // works with strings
 Mod.copy(['c', 'f', 'g'], 3);
 //=> [ 'c', 'f', 'g', 'c', 'f', 'g', 'c', 'f', 'g' ] 
-
-// Alias: Mod.duplicate(), Mod.dup()
 ```
 
 <!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/5n5e03e4M" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
@@ -116,6 +116,8 @@ Mod.copy(['c', 'f', 'g'], 3);
 ## padding
 
 Pad an array with zeroes (or any other value) up to the length specified. The padding value can optionally be changed and the shift argument rotates the list n-steps left or right (negative). This method is similar to `every()` except arguments are not specified in musical bars/divisions but in array length. A shorter length than input list will slice the output list.
+
+Alias: `pad()`
 
 **arguments**
 - {NumberArrray} -> Array to use every n-bars
@@ -172,6 +174,8 @@ Mod.every(['c4', 'eb4', 'g4', 'f4', 'eb4'], 2, 8, 'r');
 ## flatten
 
 Flatten a multidimensional array. Optionally set the depth for the flattening with the second argument.
+
+Alias: `flat()`
 
 **arguments**
 - {Array} -> array to flatten
@@ -249,6 +253,8 @@ Mod.invert([-1, 2, [[7, 9], 14]]);
 
 Interleave two or more arrays. Works with every length of an array. Works with 2D-arrays and string arrays as well.
 
+Alias: `zip()`
+
 **arguments**
 - {Array-0, Array-1, ..., Array-n} -> one or multiple arrays to interleave
 
@@ -264,8 +270,6 @@ Mod.lace([0, [0, 0]], [[7,7]], [9, [9, 9], 9]);
 // works with strings
 Mod.lace(['c', 'c', 'c', 'c'], ['g', 'g'], ['e']);
 //=> [ 'c', 'g', 'e', 'c', 'g', 'c', 'c' ] 
-
-// Alias: Mod.zip()
 ```
 
 ## lookup
@@ -324,6 +328,8 @@ Mod.merge([['c4', 'e4'], 'c4'], [['f4', 'a4']], ['g4', 'g4']);
 
 Reverse an array and concatenate to the input creating a palindrome of the array. Add an optional true flag to remove the double on the reverse and end points.
 
+Alias: `palin()` `mirror()`
+
 **arguments**
 - {Array} -> input array to transform to palindrome
 - {Bool} -> no-double flag (optional, default = false)
@@ -340,13 +346,13 @@ Mod.palindrome([0, [5, 7], 9, 12], true);
 // works with strings
 Mod.palindrome(['c4', 'f4', 'g4'], true);
 //=> [ 'c4', 'f4', 'g4', 'f4' ] 
-
-// Alias: Mod.mirror()
 ```
 
 ## pinky
 
 The pinky/pinkyUp technique takes an array and outputs a transformed array where the last value alternates between every other previous value in a left to right order. This function is inspired by the Ableton arpeggiator algorithms. For example a list of `[0 3 7 12 19]` results in `[0 19 3 19 7 19 12 19]`.
+
+Alias: `pinkyUp`
 
 **arguments**
 - {Array} -> array to transform
@@ -355,8 +361,6 @@ The pinky/pinkyUp technique takes an array and outputs a transformed array where
 Mod.pinkyUp([0, 3, 7, 12, 19])
 //=> [ 0, 19, 3, 19, 7, 19, 12, 19 ]
 ```
-
-Alias: `pinkyUp`
 
 ### pinkyDown
 
@@ -407,6 +411,8 @@ Mod.repeat([[0, 5], [7, 9, 12]], [2, 3]);
 
 Reverse the order of items in an array.
 
+Alias: `rev()`
+
 **arguments**
 - {Array} -> array to reverse
 
@@ -422,6 +428,8 @@ Mod.reverse(['c4', ['e4', 'f4'], 'g4']);
 ## rotate
 
 Rotate an array to the left or right of n-steps. Works with 2D-arrays and string arrays.
+
+Alias: `rot()`
 
 **arguments**
 - {Array} -> array to rotate
@@ -622,6 +630,8 @@ Mod.thumbUpDown([0, 3, 7, 12, 19])
 ## unique
 
 Remove duplicate items from an array. Does not account for 2-dimensional arrays within the array.
+
+Alias: `thin()`
 
 **arguments**
 - {Array} -> array to filter

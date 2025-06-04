@@ -453,6 +453,7 @@ function reverse(a=[0]){
 	return a.slice().reverse();
 }
 exports.reverse = reverse;
+exports.rev = reverse;
 
 // rotate the position of items in an array 
 // 1 = direction right, -1 = direction left
@@ -472,6 +473,7 @@ function rotate(a=[0], r=0){
 	return arr;
 }
 exports.rotate = rotate;
+exports.rot = rotate;
 
 // placeholder for the sort() method found in 
 // statistic.js
@@ -623,3 +625,4 @@ exports.stretch = stretch;
 // filter duplicate items from an array
 // does not account for 2-dimensional arrays in the array
 exports.unique = unique;
+exports.thin = unique;
