@@ -558,19 +558,33 @@ function spray(values=[0], beats=[0]){
 }
 exports.spray = spray;
 
-// Alternate through 2 or multiple lists consecutively
-// Gives a similar result as lace except the output
-// length is the lowest common denominator of the input lists
+// Merge 2 or multiple lists by alternating over them.
+// The output length is the lowest common multiple of the input lists,
 // so that every combination of consecutive values is included
+// until they all appeared an integer multiple of times.
+// This function is used to allow arrays as input for Generators
+// And for the step function for algorithmic composition
+//
+// @param {Array0, Array1, ..., Array-n} -> arrays to alternate/interleave
+// @return {Array} -> outputs a 2D array of the results
+//
+exports.stepMerge = arrayCombinations;
+
+// Combine 2 or multiple lists by alternating over them.
+// Gives a similar result as lace except the output
+// length is the lowest common multiple of the input lists
+// so that every combination of consecutive values is included.
+// A higher dimension in the array is preserved.
 //
 // @param {Array0, Array1, ..., Array-n} -> arrays to interleave
 // @return {Array} -> array of results 1 dimension less
 //
-function step(...arrs){
+function stepCombine(...arrs){
 	if (!arrs.length){ return [ 0 ] }
 	return flat(arrayCombinations(...arrs), 1);
 }
-exports.step = step;
+exports.stepCombine = stepCombine;
+exports.step = stepCombine;
 
 // stretch (or shrink) an array of numbers to a specified length
 // interpolating the values to fill in the gaps. 

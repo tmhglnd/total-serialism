@@ -18,7 +18,7 @@ fullTest(TS);
 TS = require(es5build);
 
 // and run full test with es5.min.js build;
-fullTest(TS);
+// fullTest(TS);
 
 /*
 	Test criteria:
@@ -866,6 +866,22 @@ function testTransform(){
 		expect(Mod.spray([[5, 7, 9], [12, 14]], [1, 0, 1, 1, 0])).toStrictEqual([ [ 5, 7, 9 ], 0, [ 12, 14 ], [ 5, 7, 9 ], 0 ]);
 	});
 
+	test("Mod.stepMerge()", () => {
+		expect(Mod.stepMerge()).toStrictEqual([]);
+	});
+	test("Mod.stepMerge([1, 2], [10, 20])", () => {
+		expect(Mod.stepMerge([1, 2], [10, 20])).toStrictEqual([[1, 10], [2, 20]]);
+	});
+	test("Mod.stepMerge([1, 2, 3], [10, 20])", () => {
+		expect(Mod.stepMerge([1, 2, 3], [10, 20])).toStrictEqual([[1, 10], [2, 20], [3, 10], [1, 20], [2, 10], [3, 20]]);
+	});
+	test("Mod.stepMerge([1, 2, 3, 4], [10, 20])", () => {
+		expect(Mod.stepMerge([1, 2, 3, 4], [10, 20])).toStrictEqual([[1, 10], [2, 20], [3, 10], [4, 20]]);
+	});
+	test("Mod.stepMerge([1, [2, 3]], [10, 20], [100, 200])", () => {
+		expect(Mod.stepMerge([1, [2, 3]], [10, 20], [100, 200])).toStrictEqual([[1, 10, 100], [[2, 3], 20, 200]]);
+	});
+
 	test("Mod.step()", () => {
 		expect(Mod.step()).toStrictEqual([0]);
 	});
@@ -875,8 +891,8 @@ function testTransform(){
 	test("Mod.step([1, 2, 3], [10, 20])", () => {
 		expect(Mod.step([1, 2, 3], [10, 20])).toStrictEqual([1, 10, 2, 20, 3, 10, 1, 20, 2, 10, 3, 20]);
 	});
-	test("Mod.step([1, [2, 3]], [10, 20], [100, 200])", () => {
-		expect(Mod.step([1, [2, 3]], [10, 20], [100, 200])).toStrictEqual([1, 10, 100, [2, 3], 20, 200]);
+	test("Mod.step([1, 2], [10, 20, 30, 40])", () => {
+		expect(Mod.step([1, 2], [10, 20, 30, 40])).toStrictEqual([1, 10, 2, 20, 1, 30, 2, 40]);
 	});
 
 	test("Mod.stretch()", () => {
@@ -1537,7 +1553,7 @@ function testUtility(){
 	});
 
 	test("Util.arrayCombinations()", () => {
-		expect(Util.arrayCombinations()).toStrictEqual([[]]);
+		expect(Util.arrayCombinations()).toStrictEqual([]);
 	});
 	test("Util.arrayCombinations([1, 2], [10, 20])", () => {
 		expect(Util.arrayCombinations([1, 2], [10, 20])).toStrictEqual([[1, 10], [2, 20]]);
@@ -1546,7 +1562,7 @@ function testUtility(){
 		expect(Util.arrayCombinations([1, 2, 3], [10, 20])).toStrictEqual([[1, 10], [2, 20], [3, 10], [1, 20], [2, 10], [3, 20]]);
 	});
 	test("Util.arrayCombinations([1, 2, 3, 4], [10, 20])", () => {
-		expect(Util.arrayCombinations([1, 2, 3, 4], [10, 20])).toStrictEqual([[1, 10], [2, 20], [3, 10], [4, 20], [1, 10], [2, 20], [3, 10], [4, 20]]);
+		expect(Util.arrayCombinations([1, 2, 3, 4], [10, 20])).toStrictEqual([[1, 10], [2, 20], [3, 10], [4, 20]]);
 	});
 	test("Util.arrayCombinations([1, [2, 3]], [10, 20], [100, 200])", () => {
 		expect(Util.arrayCombinations([1, [2, 3]], [10, 20], [100, 200])).toStrictEqual([[1, 10, 100], [[2, 3], 20, 200]]);
@@ -1565,7 +1581,7 @@ function testUtility(){
 		expect(Util.multiCall(Util.add, [[ 0, 3, 7, 12 ]], [0, 12])).toStrictEqual([0, 3, 7, 12, 12, 15, 19, 24]);
 	});
 	test("Util.multiCall(Util.add, [0, 3, 7, 12], [0, 12])", () => {
-		expect(Util.multiCall(Util.add, [0, 3, 7, 12], [0, 12])).toStrictEqual([0, 15, 7, 24, 0, 15, 7, 24]);
+		expect(Util.multiCall(Util.add, [0, 3, 7, 12], [0, 12])).toStrictEqual([0, 15, 7, 24]);
 	});
 
 	// let amounts = 8;

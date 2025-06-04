@@ -30,7 +30,8 @@ const Mod = require('total-serialism').Transform;
 - [slice](#slice)
 - [split](#split)
 - [spray](#spray)
-- [step](#step)
+- [step](#stepcombine)
+- [stepMerge](#stepmerge)
 - [stretch](#stretch)
 - [thumb](#thumb)
 - [unique](#unique)
@@ -504,9 +505,32 @@ Mod.spray(['c4', 'f4', 'g4'], [1, 0, 0, 1, 1, 0, 1, 0]);
 //=> [ 'c4', 0, 0, 'f4', 'g4', 0, 'c4', 0 ] 
 ```
 
-## step
+## stepMerge
 
-Alternate through 2 or multiple lists consecutively. This gives a similar result as lace except the output length is the lowest common denominator of the input lists and values are reused till the end until repetition wouldd occur. So that every combination of consecutive values is included in the output. A higher dimension in the array is preserved.
+Merge 2 or multiple lists by alternating over them. This gives a similar result as merge, except that the output length is the lowest common multiple of the input lists, so that every combination of consecutive values is included until they all appeared an integer multiple of times. This function is used to allow arrays as input for Generators and for the step function for algorithmic composition.
+
+**arguments**
+- {Array0, Array1, ..., Array-n} -> arrays to stepwise merge
+
+```js
+// total steps is 2 so output is 4
+Mod.step([0, 3], [7, 12]);
+//=> [[0, 7], [3, 12]]
+
+// total steps is now 6 before repetition, so output is 12
+Mod.step([0, 3, 5], [7, 12]);
+//=> [[0, 7], [3, 12], [5, 7], [0, 12], [3, 7], [5, 12]]
+
+// works with 2D and multiple arrays
+Mod.step([0, 3], [7, 12], [[19, 24]]);
+//=> [[0, 7, [19, 24]], [3, 12, [19, 24]]]
+```
+
+## stepCombine
+
+Combine 2 or multiple lists by alternating over them. This gives a similar result as lace except the output length is the lowest common multiple of the input lists so that every combination of consecutive values is included. A higher dimension in the array is preserved.
+
+Alias: `step`
 
 **arguments**
 - {Array0, Array1, ..., Array-n} -> arrays to step through

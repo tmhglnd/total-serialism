@@ -187,8 +187,20 @@ exports.delta = change;
 exports.difference = change;
 exports.diff = change;
 
-exports.leastCommonMultiple = lcm;
-exports.lcm = lcm;
-
+// Calculate the Greatest Common Divisor from an array
+// The function uses the algorithm described in _gcd() above
+// 
+// @param {Array} -> array to calculate on
+// @return {Int} -> greatest common divisor
+// 
 exports.greatestCommonDivisor = gcd;
 exports.gcd = gcd;
+
+// Calculate the Least Common Multiple from an array
+// the function uses the algorithm described in _lcd() above
+//
+// @param {Array} -> array to calculate on
+// @return {Int} -> least common multiple
+// 
+exports.leastCommonMultiple = lcm;
+exports.lcm = lcm;

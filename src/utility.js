@@ -325,17 +325,11 @@ exports.multiCall = multiCall;
 function arrayCombinations(...arrs){
 	// make sure all items are an array of at least 1 item
 	arrs = arrs.map(a => toArray(a));
-	// get the lengths, but remove duplicate lengths
-	// let sizes = unique(arrs.map(a => a.length));
-	let sizes = arrs.map(a => a.length);
-	console.log(sizes);
+	// get the lengths, minimum of 1
+	let sizes = arrs.map(a => Math.max(1, a.length));
 	// get the least common multiple
-	// let iters = 1;	
-	// sizes.forEach((l) => iters *= l);
-	let iters = lcm(sizes);
-	console.log('lcm', iters);
-	
-	// iterate over the total amount pushing the items to array
+	let iters = lcm(sizes);	
+	// iterate over the total length, pushing the items to array
 	let arr = [];
 	for (let i=0; i<iters; i++){
 		arr.push(arrs.map((e) => {
