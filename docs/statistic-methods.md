@@ -19,12 +19,12 @@ const { sort, average } = require('total-serialism').Statistic;
 - [average](#average) (mean)
 - [center](#center) (median)
 - [common](#common) (mode)
-- [maximum](#maximum)
-- [minimum](#minimum)
-- [change](#change)
-- [compare](#compare)
-- [greatestCommonDivisor](#greatestCommonDivisor) (gcd)
-- [leastCommonMultiple](#leastCommonMultiple) (lcm)
+- [maximum](#maximum) (max)
+- [minimum](#minimum) (min)
+- [change](#change) (diff)
+- [compare](#compare) 
+- [greatestCommonDivisor](#greatestcommondivisor) (gcd)
+- [leastCommonMultiple](#leastcommonmultiple) (lcm)
 
 ## sort
 

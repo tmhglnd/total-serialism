@@ -8679,7 +8679,8 @@ let seedrandom = require('seedrandom');
 
 // local pseudorandom number generator and seed storage
 let rng = seedrandom();
-let _seed = 0; seed(_seed);
+let _seed = 0; 
+seed(_seed);
 
 // Set the seed for all the Random Number Generators. 
 // 0 sets to unpredictable seeding
