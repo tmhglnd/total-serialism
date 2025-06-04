@@ -21,6 +21,7 @@
 	- [hexBeat](./algorithmic-methods.md#hexbeat)
 	- [linden](./algorithmic-methods.md#linden)
 	- [Automaton](./algorithmic-methods.md#cellular-automaton)
+	- [collatz](./algorithmic-methods.md#collatz-conjecture)
 	- [fibonacci](./algorithmic-methods.md#fibonacci)
 	- [pisano](./algorithmic-methods.md#pisano)
 	- [pell](./algorithmic-methods.md#pell)
@@ -62,9 +63,10 @@
 	- [reverse](./transform-methods.md#reverse)
 	- [rotate](./transform-methods.md#rotate)
 	- [sort](./transform-methods.md#sort)
-	- [spray](./transform-methods.md#spray)
 	- [slice](./transform-methods.md#slice)
 	- [split](./transform-methods.md#split)
+	- [spray](./transform-methods.md#spray)
+	- [step](./transform-methods.md#step)
 	- [stretch](./transform-methods.md#stretch)
 	- [thumb](./transform-methods.md#thumb)
 	- [unique](./transform-methods.md#unique)
@@ -77,6 +79,8 @@
 	- [minimum](./statistic-methods.md#minimum)
 	- [change](./statistic-methods.md#change)
 	- [compare](./statistic-methods.md#compare)
+	- [greatestCommonDivisor](./statistic-methods.md#greatestCommonDivisor) (gcd)
+	- [leastCommonMultiple](./statistic-methods.md#leastCommonMultiple) (lcm)
 - [Translate Methods](./translate-methods.md)
 	- [Conversion between pitch units](./translate-methods.md#conversion-between-pitch-units)
 		- midiToNote (mton)
@@ -85,26 +89,27 @@
 		- noteToFreq (ntof)
 		- freqToMidi (ftom)
 		- freqToNote (fton)
-		- relativeToMidi (rtom)
-		- relativeToFreq (rtof)
+		- chromaToRelative (ctor)
 		- ratioToCent (rtoc)
+		- chordsFromNumerals (chords)
+		- chordsFromNames
 	- [Conversion between time units](./translate-methods.md#conversion-between-time-units)
+		- setTempo
 		- divisionToMs (dtoms)
 		- divisionToRatio (dtor)
 		- divisionToTicks (dtotk)
 		- timevalueToRatio (ttor)
 		- timevalueToTicks (ttotk)
 	- [Scala Tuning](./translate-methods.md#using-scala-tuning-format)
-		- Scala.parse
 		- Scala.tune
 		- Scala.center
 		- Scala.scalaToFreq
+		- Scala.parse
 		- Scala.chart
 		- Scala.data
 		- Scala.names
 		- Scala.search
 	- [Working with predefined scale and root](./translate-methods.md#working-with-fixed-scale-and-root)
-		- setTempo
 		- setScale
 		- setRoot
 		- getSettings
@@ -112,11 +117,14 @@
 		- relativeToScale (toScale)
 		- relativeToMidi (toMidi)
 		- relativeToFreq (toFreq)
+	- Miscellaneous
+		- [textToCode (ttoc)](#textToCode)
 - [Utility Methods](./utility-methods.md)
 	- [wrap](./utility-methods.md#wrap)
 	- [constrain](./utility-methods.md#constrain)
 	- [fold](./utility-methods.md#fold)
 	- [scale](./utility-methods.md#scale)
+	- [lerp](./utility-methods.md#lerp)
 	- [add](./utility-methods.md#add)
 	- [subtract](./utility-methods.md#subtract)
 	- [multiply](./utility-methods.md#multiply)
@@ -125,6 +133,7 @@
 	- [pow](./utility-methods.md#pow)
 	- [sqrt](./utility-methods.md#sqrt)
 	- [arrayCalc](./utility-methods.md#arraycalc)
+	- [size](./utility-methods.md#size)
 	- [sum](./utility-methods.md#sum)
 	- [minimum](./utility-methods.md#minimum)
 	- [maximum](./utility-methods.md#maximum)
