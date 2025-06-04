@@ -14,7 +14,6 @@
 
 // require Generative methods
 const { spread } = require('./gen-basic.js');
-const { lookup } = require('./transform.js');
 const { fold, size, toArray } = require('./utility');
 const { change } = require('./statistic');
 
@@ -23,7 +22,8 @@ let seedrandom = require('seedrandom');
 
 // local pseudorandom number generator and seed storage
 let rng = seedrandom();
-let _seed = 0;
+let _seed = 0; 
+seed(_seed);
 
 // Set the seed for all the Random Number Generators. 
 // 0 sets to unpredictable seeding
@@ -33,14 +33,14 @@ let _seed = 0;
 // 
 function seed(v=0){
 	if (v === 0 || v === null || v === undefined){
-		rng = seedrandom();
-		_seed = 0;
+		// generate a random seed, which is retrievable
+		_seed = Math.floor(Math.random() * 9999) + 1;
 	} else {
-		rng = seedrandom(v);
 		_seed = v;
 	}
+	rng = seedrandom(_seed);
 	// also return the seed that has been set
-	return getSeed();
+	return _seed;
 }
 exports.seed = seed;
 

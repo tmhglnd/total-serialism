@@ -8671,7 +8671,6 @@ exports.Automaton = Automaton;
 
 // require Generative methods
 const { spread } = require('./gen-basic.js');
-const { lookup } = require('./transform.js');
 const { fold, size, toArray } = require('./utility');
 const { change } = require('./statistic');
 
@@ -8680,7 +8679,7 @@ let seedrandom = require('seedrandom');
 
 // local pseudorandom number generator and seed storage
 let rng = seedrandom();
-let _seed = 0;
+let _seed = 0; seed(_seed);
 
 // Set the seed for all the Random Number Generators. 
 // 0 sets to unpredictable seeding
@@ -8690,14 +8689,14 @@ let _seed = 0;
 // 
 function seed(v=0){
 	if (v === 0 || v === null || v === undefined){
-		rng = seedrandom();
-		_seed = 0;
+		// generate a random seed, which is retrievable
+		_seed = Math.floor(Math.random() * 9999) + 1;
 	} else {
-		rng = seedrandom(v);
 		_seed = v;
 	}
+	rng = seedrandom(_seed);
 	// also return the seed that has been set
-	return getSeed();
+	return _seed;
 }
 exports.seed = seed;
 
@@ -9252,7 +9251,7 @@ function reviver(key, value) {
 	}
 	return value;
 }
-},{"./gen-basic.js":36,"./statistic":39,"./transform.js":40,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){
+},{"./gen-basic.js":36,"./statistic":39,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){
 //=======================================================================
 // statistic.js
 // part of 'total-serialism' Package
@@ -9442,6 +9441,66 @@ exports.delta = change;
 exports.difference = change;
 exports.diff = change;
 
+// Calculate the Greatest Common Divisor between 2 numbers
+// Based on the Euclid Algorithm described in:
+// https://en.wikipedia.org/wiki/Greatest_common_divisor
+// 
+function _gcd(a, b){
+	// greatest common divisor found if b equals 0
+	if (b === 0){ return a; }
+	// swap inputs and apply a mod b
+	return _gcd(b, a % b);
+}
+
+// Calculate the Least Common Multiple between 2 numbers
+// Based on the algorithm using the GCD() described in:
+// https://en.wikipedia.org/wiki/Least_common_multiple
+// 
+function _lcm(a, b){
+	return Math.abs(a) * ( Math.abs(b) / _gcd(a, b) );
+}
+
+// Calculate the Greatest Common Divisor from an array
+// The function uses the algorithm described in _gcd() above
+// 
+// @param {Array} -> array to calculate on
+// @return {Int} -> greatest common divisor
+// 
+function gcd(a=[1]){
+	a = toArray(a);
+	// not enough values to calculate gcd
+	if (a.length < 2){ return a[0]; }
+
+	let _greatest = a[0];
+	// calculate gcd in pairs from the array
+	for (let i = 1; i < a.length; i++){
+		_greatest = _gcd(_greatest, a[i]);
+	}
+	return _greatest;
+}
+exports.greatestCommonDivisor = gcd;
+exports.gcd = gcd;
+
+// Calculate the Least Common Multiple from an array
+// the function uses the algorithm described in _lcd() above
+//
+// @param {Array} -> array to calculate on
+// @return {Int} -> least common multiple
+// 
+function lcm(a=[1]){
+	a = toArray(a);
+	// not enough values to calculate lcm
+	if (a.length < 2){ return a[0]; }
+
+	let _least = a[0];
+	// calculate lcm in pairs from the array
+	for (let i = 1; i < a.length; i++){
+		_least = _lcm(_least, a[i]);
+	}
+	return _least;
+}
+exports.leastCommonMultiple = lcm;
+exports.lcm = lcm;
 },{"./transform":40,"./utility":42}],40:[function(require,module,exports){
 //=======================================================================
 // transform.js

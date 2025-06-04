@@ -2552,16 +2552,17 @@ var c={};for(var i=0;i<8;i++){c[(7-i).toString(2).padStart(3,'0')]=Number(r[i]);
 // - Gratefully using the seedrandom package by David Bau
 //=======================================================================
 // require Generative methods
-var _require4=require('./gen-basic.js'),spread=_require4.spread;var _require5=require('./transform.js'),lookup=_require5.lookup;var _require6=require('./utility'),fold=_require6.fold,size=_require6.size,toArray=_require6.toArray;var _require7=require('./statistic'),change=_require7.change;// require seedrandom package
+var _require4=require('./gen-basic.js'),spread=_require4.spread;var _require5=require('./utility'),fold=_require5.fold,size=_require5.size,toArray=_require5.toArray;var _require6=require('./statistic'),change=_require6.change;// require seedrandom package
 var seedrandom=require('seedrandom');// local pseudorandom number generator and seed storage
-var rng=seedrandom();var _seed=0;// Set the seed for all the Random Number Generators. 
+var rng=seedrandom();var _seed=0;_seed2(_seed);// Set the seed for all the Random Number Generators. 
 // 0 sets to unpredictable seeding
 // 
 // @param {Number/String} -> the seed
 // @return {Void}
 // 
-function _seed2(){var v=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;if(v===0||v===null||v===undefined){rng=seedrandom();_seed=0;}else{rng=seedrandom(v);_seed=v;}// also return the seed that has been set
-return getSeed();}exports.seed=_seed2;// Return the seed that was set
+function _seed2(){var v=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;if(v===0||v===null||v===undefined){// generate a random seed, which is retrievable
+_seed=Math.floor(Math.random()*9999)+1;}else{_seed=v;}rng=seedrandom(_seed);// also return the seed that has been set
+return _seed;}exports.seed=_seed2;// Return the seed that was set
 //
 // @return {Value} -> the seed
 //
@@ -2766,7 +2767,7 @@ var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return DeepMark
 // helper function for Stringifying a Map() in DeepMarkov
 function replacer(key,value){if(value instanceof Map){return{dataType:'Map',value:_toConsumableArray(value)// value: [Array.from(value.entries())], 
 };}return value;}// helper function for parsing a Map() in DeepMarkov
-function reviver(key,value){if(_typeof(value)==='object'&&value!==null){if(value.dataType==='Map'){return new Map(value.value);}}return value;}},{"./gen-basic.js":36,"./statistic":39,"./transform.js":40,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){//=======================================================================
+function reviver(key,value){if(_typeof(value)==='object'&&value!==null){if(value.dataType==='Map'){return new Map(value.value);}}return value;}},{"./gen-basic.js":36,"./statistic":39,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){//=======================================================================
 // statistic.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2775,7 +2776,7 @@ function reviver(key,value){if(_typeof(value)==='object'&&value!==null){if(value
 // Statistical related methods and algorithms that can be helpful in
 // analysis of number sequences, melodies, rhythms and more
 //=======================================================================
-var Mod=require('./transform');var _require8=require('./utility'),maximum=_require8.maximum,minimum=_require8.minimum,flatten=_require8.flatten,toArray=_require8.toArray;// sort an array of numbers or strings. sorts ascending
+var Mod=require('./transform');var _require7=require('./utility'),maximum=_require7.maximum,minimum=_require7.minimum,flatten=_require7.flatten,toArray=_require7.toArray;// sort an array of numbers or strings. sorts ascending
 // or descending in numerical and alphabetical order
 // 
 // @param {Array} -> array to sort
@@ -2836,7 +2837,33 @@ function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments
 // @return {Array} -> list of changes
 // 
 function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0,0];var l=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;if(a.length<2||!Array.isArray(a)){return[0];}var len=a.length;var arr=[];for(var i=1;i<len;i++){arr.push(a[i]-a[i-1]);}// optionally also return diff from first and last value
-if(l){arr.push(a[0]-a[a.length-1]);}return arr;}exports.change=change;exports.delta=change;exports.difference=change;exports.diff=change;},{"./transform":40,"./utility":42}],40:[function(require,module,exports){//=======================================================================
+if(l){arr.push(a[0]-a[a.length-1]);}return arr;}exports.change=change;exports.delta=change;exports.difference=change;exports.diff=change;// Calculate the Greatest Common Divisor between 2 numbers
+// Based on the Euclid Algorithm described in:
+// https://en.wikipedia.org/wiki/Greatest_common_divisor
+// 
+function _gcd(a,b){// greatest common divisor found if b equals 0
+if(b===0){return a;}// swap inputs and apply a mod b
+return _gcd(b,a%b);}// Calculate the Least Common Multiple between 2 numbers
+// Based on the algorithm using the GCD() described in:
+// https://en.wikipedia.org/wiki/Least_common_multiple
+// 
+function _lcm(a,b){return Math.abs(a)*(Math.abs(b)/_gcd(a,b));}// Calculate the Greatest Common Divisor from an array
+// The function uses the algorithm described in _gcd() above
+// 
+// @param {Array} -> array to calculate on
+// @return {Int} -> greatest common divisor
+// 
+function gcd(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];a=toArray(a);// not enough values to calculate gcd
+if(a.length<2){return a[0];}var _greatest=a[0];// calculate gcd in pairs from the array
+for(var i=1;i<a.length;i++){_greatest=_gcd(_greatest,a[i]);}return _greatest;}exports.greatestCommonDivisor=gcd;exports.gcd=gcd;// Calculate the Least Common Multiple from an array
+// the function uses the algorithm described in _lcd() above
+//
+// @param {Array} -> array to calculate on
+// @return {Int} -> least common multiple
+// 
+function lcm(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];a=toArray(a);// not enough values to calculate lcm
+if(a.length<2){return a[0];}var _least=a[0];// calculate lcm in pairs from the array
+for(var i=1;i<a.length;i++){_least=_lcm(_least,a[i]);}return _least;}exports.leastCommonMultiple=lcm;exports.lcm=lcm;},{"./transform":40,"./utility":42}],40:[function(require,module,exports){//=======================================================================
 // transform.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -2860,7 +2887,7 @@ if(l){arr.push(a[0]-a[a.length-1]);}return arr;}exports.change=change;exports.de
 //=======================================================================
 // require the Utility methods
 // const Rand = require('./gen-stochastic');
-var _require9=require('./statistic'),sort=_require9.sort;var _require10=require('./utility'),flat=_require10.flat,add=_require10.add,max=_require10.max,min=_require10.min,lerp=_require10.lerp,toArray=_require10.toArray,size=_require10.size,unique=_require10.unique,arrayCombinations=_require10.arrayCombinations;// Duplicate an array multiple times,
+var _require8=require('./statistic'),sort=_require8.sort;var _require9=require('./utility'),flat=_require9.flat,add=_require9.add,max=_require9.max,min=_require9.min,lerp=_require9.lerp,toArray=_require9.toArray,size=_require9.size,unique=_require9.unique,arrayCombinations=_require9.arrayCombinations;// Duplicate an array multiple times,
 // optionaly add an offset to every value when duplicating
 // Also works with 2-dimensonal arrays
 // If string the values will be concatenated
@@ -3079,9 +3106,9 @@ exports.unique=unique;},{"./statistic":39,"./utility":42}],41:[function(require,
 // - Using the amazing Tonal.js package by @danigb for various functions
 //==============================================================================
 // require API's
-var _require11=require('@tonaljs/tonal'),Note=_require11.Note,Scale=_require11.Scale;var _require12=require('@tonaljs/tonal'),Chord=_require12.Chord;var _require13=require('@tonaljs/tonal'),Progression=_require13.Progression;// require Scale Mappings
+var _require10=require('@tonaljs/tonal'),Note=_require10.Note,Scale=_require10.Scale;var _require11=require('@tonaljs/tonal'),Chord=_require11.Chord;var _require12=require('@tonaljs/tonal'),Progression=_require12.Progression;// require Scale Mappings
 // const Scales = require('../data/scales.json');
-var ToneSet=require('../data/tones.json');var chromaSet={c:0,d:2,e:4,f:5,g:7,a:9,b:11};var _require14=require('./transform'),unique=_require14.unique;var _require15=require('./utility'),add=_require15.add,wrap=_require15.wrap,multiply=_require15.multiply,toArray=_require15.toArray;// create a mapping list of scales for 12-TET from Tonal
+var ToneSet=require('../data/tones.json');var chromaSet={c:0,d:2,e:4,f:5,g:7,a:9,b:11};var _require13=require('./transform'),unique=_require13.unique;var _require14=require('./utility'),add=_require14.add,wrap=_require14.wrap,multiply=_require14.multiply,toArray=_require14.toArray;// create a mapping list of scales for 12-TET from Tonal
 var Scales={};Scale.names().forEach(function(s){var scl=Scale.get(s);var name=scl.name.replace(/\s+/g,'_').replace(/[#'-]+/g,'');var chroma=scl.chroma.split('').map(function(x){return Number(x);});// rename aeolian to minor
 name=name==='aeolian'?'minor':name;var map=[];for(var i=0;i<chroma.length;i++){if(!chroma[i]){map.push(map[map.length-1]);continue;}map.push(i);}Scales[name]=map;});// global settings stored in object
 var notation={"scale":"chromatic","root":"c","rootInt":0,"map":Scales["chromatic"],"bpm":120,"measureInMs":2000};// Return a dictionary with all the notational preferences:
