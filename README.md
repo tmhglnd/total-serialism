@@ -37,9 +37,9 @@ Util.multiEval(Algo.euclid, 8, [5, 7, 3])
 //   1, 0, 0, 1, 0, 0, 1, 0
 // ]
 
-// 3x the spread function like: 
+// 6x the spread function, like: 
 // join(spread(5, 0, 12), spread(3, 0, 24), spread(8, 0, 12), 
-// 		spread(5, 0, 24), spread(3, 0, 12), spread(8, 0, 24))
+//      spread(5, 0, 24), spread(3, 0, 12), spread(8, 0, 24))
 Util.multiEval(Gen.spread, [5, 3, 8], 0, [12, 24])
 // [
 //   0,  2,  4,  7,  9, 0,  8, 16, 0,
