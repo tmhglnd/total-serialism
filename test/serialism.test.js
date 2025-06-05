@@ -97,6 +97,9 @@ function testGenerative(){
 	test("Gen.spread(6, -12, 3)", () => {
 		expect(Gen.spread(6, -12, 3)).toStrictEqual([-12, -10, -7, -5, -2, 0]);
 	});
+	test("Gen.spread(6, 0, -6)", () => {
+		expect(Gen.spread(6, 0, -6)).toStrictEqual([0, -1, -2, -3, -4, -5]);
+	});
 
 	test("Gen.spreadFloat()", () => {
 		expect(Gen.spreadFloat()).toStrictEqual([0]);
@@ -112,6 +115,9 @@ function testGenerative(){
 	});
 	test("Gen.spreadFloat(4, -1, 1)", () => {
 		expect(Gen.spreadFloat(4, -1, 1)).toStrictEqual([-1, -0.5, 0, 0.5]);
+	});
+	test("Gen.spreadFloat(4, 0, -1)", () => {
+		expect(Gen.spreadFloat(4, 0, -1)).toStrictEqual([0, -0.25, -0.5, -0.75]);
 	});
 	
 	test("Gen.spreadInc()", () => {
@@ -160,6 +166,9 @@ function testGenerative(){
 	});
 	test("Gen.spreadExpF(12, 0, 10, 0.5)", () => {
 		expect(Gen.spreadExpF(12, 0, 10, 0.5)).toStrictEqual([0, 2.8867513459481287, 4.08248290463863, 5, 5.773502691896257, 6.454972243679028, 7.0710678118654755, 7.637626158259733, 8.16496580927726, 8.660254037844386, 9.128709291752768, 9.574271077563381]);
+	});
+	test("Gen.spreadExpF(4, 0, -1)", () => {
+		expect(Gen.spreadExpF(4, 0, -1)).toStrictEqual([0, -0.25, -0.5, -0.75]);
 	});
 	test("Gen.spreadIncExpF(12, 0, 10, 0.5)", () => {
 		expect(Gen.spreadIncExpF(12, 0, 10, 0.5)).toStrictEqual([0, 3.0151134457776365, 4.264014327112209, 5.222329678670935, 6.030226891555273, 6.74199862463242, 7.385489458759964, 7.977240352174656, 8.528028654224418, 9.04534033733291, 9.534625892455924, 10]);

@@ -2132,11 +2132,10 @@ for(var i=0;i<range;i++){arr.push(arr[i]+dir);}return arr;}(from,to);}exports.co
 //
 function spreadFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
 if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
-var r=hi-lo;// lo is actual lowest value
-lo=Math.min(lo,hi);// len is minimum of 1 or length of array
+var r=hi-lo;// len is minimum of 1 or length of array
 len=size(len);if(len===1){return[lo];}// stepsize
-var s=Math.abs(r)/len;// generate array
-var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadFloat=spreadFloat;exports.spreadF=spreadFloat;// Spread function rounded to integers
+var s=r/len;// generate array
+var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return arr;}(lo,hi);}exports.spreadFloat=spreadFloat;exports.spreadF=spreadFloat;// Spread function rounded to integers
 // 
 // @params {length, low-output, high-output}
 // @return {Array}
@@ -2151,11 +2150,10 @@ function spread(len){var lo=arguments.length>1&&arguments[1]!==undefined?argumen
 //
 function spreadExpFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
 if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
-var r=hi-lo;// lo is actual lowest value
-lo=Math.min(lo,hi);// len is minimum of 1
+var r=hi-lo;// len is minimum of 1
 len=size(len);// len = Math.max(1, len);
 if(len===1){return[lo];}// generate array
-var arr=[];for(var i=0;i<len;i++){arr[i]=Math.pow(i/len,exp)*Math.abs(r)+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadFloatExp=spreadExpFloat;// deprecated
+var arr=[];for(var i=0;i<len;i++){arr[i]=Math.pow(i/len,exp)*r+lo;}return arr;}(lo,hi);}exports.spreadFloatExp=spreadExpFloat;// deprecated
 exports.spreadExpFloat=spreadExpFloat;exports.spreadExpF=spreadExpFloat;// Spread function floored to integers
 // 
 // @params {length, low-output, high-output, exponent}
