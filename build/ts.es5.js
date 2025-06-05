@@ -2818,7 +2818,10 @@ function median(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 // @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
 // @return {Number/Array} -> the mode or modes
 //
-function mode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=flatten(a);}var arr=a.slice().sort(function(a,b){return a-b;});var amount=1;var streak=0;var modes=[];for(var i=1;i<arr.length;i++){if(arr[i-1]!=arr[i]){amount=0;}amount++;if(amount>streak){streak=amount;modes=[arr[i]];}else if(amount==streak){modes.push(arr[i]);}}return modes;}exports.mode=mode;exports.common=mode;// Compare two arrays recursively and if all values
+function mode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=flatten(a);}// get all the unique occurances and the amount of times they occur
+var occurances={};a.forEach(function(o){if(!occurances[o]){occurances[o]=0;}occurances[o]++;});// for all the items save the best streak (or streaks)
+var modes=[];var streak=0;Object.keys(occurances).forEach(function(o){if(occurances[o]>streak){streak=occurances[o];modes=[o];}else if(occurances[o]===streak){modes.push(o);}});// remap strings to numbers if possible
+return modes.map(function(m){return isNaN(m)?m:Number(m);});}exports.mode=mode;exports.common=mode;// Compare two arrays recursively and if all values
 // of the array and subarrays are equal to eachother
 // return a true boolean
 // 

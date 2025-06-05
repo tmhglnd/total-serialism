@@ -1,4 +1,6 @@
 
+'use strict';
+
 const fs = require('fs');
 
 // test with different builds
@@ -958,7 +960,7 @@ function testStatistic(){
 	});
 	
 	test("Stat.mode()", () => {
-		expect(Stat.mode()).toStrictEqual([]);
+		expect(Stat.mode()).toStrictEqual([0]);
 	});
 	test("Stat.mode([8, 4, 3, 11, 9, 0, 11, 2, 10, 5, 11, 0])", () => {
 		expect(Stat.mode([8, 4, 3, 11, 9, 0, 11, 2, 10, 5, 11, 0])).toStrictEqual([11]);
@@ -968,6 +970,9 @@ function testStatistic(){
 	});
 	test("Stat.mode([8, [4, 3], 9, [9, 0, [2, 10], 5], 11, 0, 11])", () => {
 		expect(Stat.mode([8, [4, 3], 9, [9, 0, [2, 10], 5], 11, 0, 11])).toStrictEqual([0, 9, 11]);
+	});
+	test("Stat.mode([ 'i', '_', ')', '_', 'B', '_' ])", () => {
+		expect(Stat.mode([ 'i', '_', ')', '_', 'B', '_' ])).toStrictEqual([ '_' ]);
 	});
 	
 	test("Stat.max()", () => {

@@ -110,26 +110,28 @@ exports.center = median;
 function mode(a=[0], d=true){
 	if (!Array.isArray(a)) { return a; }
 	if (d) { a = flatten(a); }
-
-	let arr = a.slice().sort((a,b) => { return a-b; });
-
-	let amount = 1;
-	let streak = 0;
+	
+	// get all the unique occurances and the amount of times they occur
+	let occurances = {};
+	a.forEach((o) => {
+		if (!occurances[o]){
+			occurances[o] = 0;
+		}
+		occurances[o]++;
+	});
+	// for all the items save the best streak (or streaks)
 	let modes = [];
-
-	for (let i=1; i<arr.length; i++){
-		if (arr[i-1] != arr[i]){
-			amount = 0;
+	let streak = 0;
+	Object.keys(occurances).forEach((o) => {
+		if (occurances[o] > streak){
+			streak = occurances[o];
+			modes = [o];
+		} else if (occurances[o] === streak){
+			modes.push(o);
 		}
-		amount++;
-		if (amount > streak){
-			streak = amount;
-			modes = [arr[i]];
-		} else if (amount == streak){
-			modes.push(arr[i]);
-		}
-	}
-	return modes;
+	});
+	// remap strings to numbers if possible
+	return modes.map(m => isNaN(m) ? m : Number(m));
 }
 exports.mode = mode;
 exports.common = mode;
