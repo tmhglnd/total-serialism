@@ -2701,7 +2701,35 @@ function expand(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0
 if(l<=a.length){return a;}// get the differences and pick the expansion options
 var p=change(a);var chg=pick(l-a.length,p);// empty output array and axiom for output
 var arr=a.slice();var acc=arr[arr.length-1];// accumulate the change and store in array
-for(var c=0;c<chg.length;c++){arr.push(acc+=chg[c]);}return arr;}exports.expand=expand;exports.extrapolate=expand;// Initialize a Markov Chain Model (One of the simpelest forms of ML)
+for(var c=0;c<chg.length;c++){arr.push(acc+=chg[c]);}return arr;}exports.expand=expand;exports.extrapolate=expand;// generate a "cantus firmus" WIP
+// 
+// function cantusFirmus(){
+// 	let tonic = 0;
+// 	let current = tonic;
+// 	let _prev;
+// 	let arr = [];
+// 	arr.push(current);
+// 	let maxDistance = 0;
+// 	let minLength = 8;
+// 	let maxLength = 16;
+// 	for (let i = 0; i < 20; i++){
+// 		let ivl = rng() < 0.5 ? 1 : -1;
+// 		current += ivl;
+// 		arr.push(current);
+// 		_prev = current;
+// 	}
+// 	console.log(arr);
+// }
+// exports.cantusFirmus = cantusFirmus;
+// cantusFirmus();
+// generate a "first species" counterpoint
+// 
+// function firstSpeciesCounterpoint(a=[0]){
+// 	let prevInterval;
+// }
+// exports.firstSpeciesCounterpoint = firstSpeciesCounterpoint;
+// exports.counterpoint = firstSpeciesCounterpoint;
+// Initialize a Markov Chain Model (One of the simpelest forms of ML)
 // A Markov chain is a stochastic model describing a sequence 
 // of possible events in which the probability of each event depends 
 // only on the state of the previous (multiple) events.
