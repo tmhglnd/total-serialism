@@ -1,4 +1,32 @@
-//==========================================================================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: gen-basic.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: gen-basic.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//==========================================================================
 // gen-basic.js
 // part of 'total-serialism' Package
 // by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
@@ -40,7 +68,7 @@ const { map, flatten, toArray, size, TWO_PI } = require('./utility');
  * 
  * @param {Int} count (or count from, default=12)
  * @param {Int} to (optional, default=undefined)
- * @returns {Array<Number>} 
+ * @returns {Array&lt;Number>} 
 */
 function count(from=11, to){
 	// if to is undefined set to 0
@@ -48,11 +76,11 @@ function count(from=11, to){
 	// calculate the range
 	let range = Math.abs(to - from);
 	// calculate direction
-	let dir = (from < to) ? 1 : -1;
+	let dir = (from &lt; to) ? 1 : -1;
 	// start with the from value
 	let arr = [ from ];
 	// next value is the current + the direction
-	for (let i=0; i<range; i++){
+	for (let i=0; i&lt;range; i++){
 		arr.push( arr[i] + dir );
 	}
 	return arr;
@@ -76,7 +104,7 @@ exports.count = count;
  * @param {Int} length of output array
  * @param {Number} low value (optional, default=0)
  * @param {Number} high value (optional, default=length)
- * @return {Array<Number>}
+ * @return {Array&lt;Number>}
 */
 function spreadFloat(len=1, lo=1, hi){
 	// if hi undefined set lo to 0 and hi=lo
@@ -90,7 +118,7 @@ function spreadFloat(len=1, lo=1, hi){
 	let s = r / len;
 	// generate array
 	let arr = [];
-	for (let i=0; i<len; i++){
+	for (let i=0; i&lt;len; i++){
 		arr[i] = i * s + lo;
 	}
 	return arr;
@@ -121,7 +149,7 @@ exports.spreadF = spreadFloat;
  * @param {Int} length of output array
  * @param {Int} low value (optional, default=0)
  * @param {Int} high value (optional, default=length)
- * @return {Array<Number>}
+ * @return {Array&lt;Number>}
 */
 function spread(len, lo=size(len), hi){
 	let arr = spreadFloat(len, lo, hi);
@@ -140,7 +168,7 @@ exports.spread = spread;
  * @param {Number} low value (optional, default=0)
  * @param {Number} high value (exclusive, optional, default=length)
  * @param {Number} exponent (optional, default=1)
- * @returns {Array<Number>}
+ * @returns {Array&lt;Number>}
  */
 function spreadExpFloat(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
@@ -153,7 +181,7 @@ function spreadExpFloat(len=1, lo=1, hi, exp=1){
 	if (len === 1){ return [lo]; }
 	// generate array
 	let arr = [];
-	for (let i=0; i<len; i++){
+	for (let i=0; i&lt;len; i++){
 		arr[i] = Math.pow((i / len), exp) * r + lo;
 	}
 	return arr;
@@ -173,7 +201,7 @@ exports.spreadExpF = spreadExpFloat;
  * @param {Int} low value (optional, default=0)
  * @param {Int} high value (exclusive, optional, default=length)
  * @param {Number} exponent (optional, default=1)
- * @returns {Array<Number>}
+ * @returns {Array&lt;Number>}
  */
 function spreadExp(len, lo=size(len), hi, exp){
 	let arr = spreadExpFloat(len, lo, hi, exp);
@@ -197,7 +225,7 @@ exports.spreadExp = spreadExp;
  * @param {Int} length of output array
  * @param {Number} low value (optional)
  * @param {Number} high value (inclusive, optional)
- * @returns {Array<Number>}
+ * @returns {Array&lt;Number>}
  */
 function spreadInclusiveFloat(len=1, lo=1, hi){
 	// if hi undefined set lo to 0 and hi=lo
@@ -214,10 +242,10 @@ function spreadInclusiveFloat(len=1, lo=1, hi){
 	let s = Math.abs(r) / (len - 1);
 	// generate array
 	let arr = []
-	for (let i=0; i<len; i++){
+	for (let i=0; i&lt;len; i++){
 		arr[i] = i * s + lo;
 	}
-	return (r < 0)? arr.reverse() : arr;
+	return (r &lt; 0)? arr.reverse() : arr;
 }
 exports.spreadInclusiveFloat = spreadInclusiveFloat;
 exports.spreadIncF = spreadInclusiveFloat;
@@ -245,7 +273,7 @@ exports.spreadIncF = spreadInclusiveFloat;
  * @param {Int} length of output array
  * @param {Number} low value (optional)
  * @param {Number} high value (inclusive, optional)
- * @returns {Array<Number>}
+ * @returns {Array&lt;Number>}
  */
 function spreadInclusive(len, lo=size(len), hi){
 	var arr = spreadInclusiveFloat(len, lo, hi);
@@ -265,7 +293,7 @@ exports.spreadInc = spreadInclusive;
  * @param {Number} low value (optional, default=0)
  * @param {Number} high value (exclusive, optional, default=length)
  * @param {Number} exponent (optional, default=1)
- * @returns {Array<Number>}
+ * @returns {Array&lt;Number>}
  */
 function spreadInclusiveExpFloat(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
@@ -280,10 +308,10 @@ function spreadInclusiveExpFloat(len=1, lo=1, hi, exp=1){
 	if (len === 1){ return [lo]; }
 	// generate array
 	let arr = [];
-	for (let i=0; i<len; i++){
+	for (let i=0; i&lt;len; i++){
 		arr[i] = Math.pow((i / (len-1)), exp) * Math.abs(r) + lo;
 	}
-	return (r < 0)? arr.reverse() : arr;
+	return (r &lt; 0)? arr.reverse() : arr;
 }
 exports.spreadInclusiveFloatExp = spreadInclusiveExpFloat; //deprecated
 exports.spreadInclusiveExpFloat = spreadInclusiveExpFloat;
@@ -301,7 +329,7 @@ exports.spreadIncExpF = spreadInclusiveExpFloat;
  * @param {Number} low value (optional, default=0)
  * @param {Number} high value (exclusive, optional, default=length)
  * @param {Number} exponent (optional, default=1)
- * @returns {Array<Number>}
+ * @returns {Array&lt;Number>}
  */
 function spreadInclusiveExp(len, lo=size(len), hi, exp){
 	var arr = spreadInclusiveExpFloat(len, lo, hi, exp);
@@ -311,7 +339,7 @@ exports.spreadInclusiveExp = spreadInclusiveExp;
 exports.spreadIncExp = spreadInclusiveExp;
 
 // fill an array with values. Arguments are pairs.
-// Every pair consists of <value, amount>
+// Every pair consists of &lt;value, amount>
 // The value is repeated n-amount times in the list
 // Also accepts an array as a single argument
 // 
@@ -330,8 +358,8 @@ function fill(...args){
 	
 	let len = args.length/2;
 	let arr = [];
-	for (let i=0; i<len; i++){
-		for (let k=0; k<Math.abs(args[i*2+1]); k++){
+	for (let i=0; i&lt;len; i++){
+		for (let k=0; k&lt;Math.abs(args[i*2+1]); k++){
 			arr.push(args[i*2]);
 		}
 	}
@@ -370,7 +398,7 @@ function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	// let a = Math.PI * 2.0 * periods / len;
 	// let p = Math.PI * phase * 2.0;
 	let p = TWO_PI * phase;
-	for (let i=0; i<len; i++){
+	for (let i=0; i&lt;len; i++){
 		// arr[i] = Math.sin(a * i + p);
 		let a = TWO_PI * periods[i % periods.length] / len;
 		arr[i] = Math.sin(a * i + p);
@@ -441,7 +469,7 @@ function sawFloat(len=1, periods=1, lo, hi, phase=0){
 	let arr = [];
 
 	let a = 1 / len;
-	for (let i=0; i<len; i++){
+	for (let i=0; i&lt;len; i++){
 		arr[i] = ((i * a * periods[i % periods.length]) % 1.0 + 1.0) % 1.0;
 	}
 	return map(arr, 0, 1, lo, hi);
@@ -480,9 +508,9 @@ function squareFloat(len=1, periods=1, lo, hi, pulse=0.5){
 	let arr = [];
 
 	let a = 1 / len;
-	for (let i=0; i<len; i++){
+	for (let i=0; i&lt;len; i++){
 		arr[i] = ((i * a * periods[i % periods.length]) % 1 + 1) % 1;
-		arr[i] = arr[i] < pulse;
+		arr[i] = arr[i] &lt; pulse;
 	}
 	return map(arr, 0, 1, lo, hi);
 	// return arr;
@@ -512,7 +540,7 @@ function binary(...a){
 	a = flatten(a);
 
 	let arr = [];
-	for (let i=0; i<a.length; i++){
+	for (let i=0; i&lt;a.length; i++){
 		if (isNaN(a[i])){
 			arr = arr.concat(0);
 		} else {
@@ -541,13 +569,13 @@ function spacing(...a){
 	a = flatten(a);
 
 	let arr = [];
-	for (let i=0; i<a.length; i++){
-		if (isNaN(a[i]) || a[i] < 1){
+	for (let i=0; i&lt;a.length; i++){
+		if (isNaN(a[i]) || a[i] &lt; 1){
 			// if no number or less than 1 append 0
 			arr = arr.concat(0);
 		} else {
 			// for every integer push a 1 followed by 0's
-			for (let j=0; j<Math.floor(a[i]); j++){
+			for (let j=0; j&lt;Math.floor(a[i]); j++){
 				arr.push(!j ? 1 : 0);
 			}
 		}
@@ -556,4 +584,26 @@ function spacing(...a){
 }
 exports.space = spacing;
 exports.spacing = spacing;
-exports.spacingBeat = spacing;
+exports.spacingBeat = spacing;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#count">count</a></li><li><a href="global.html#spread">spread</a></li><li><a href="global.html#spreadExp">spreadExp</a></li><li><a href="global.html#spreadExpFloat">spreadExpFloat</a></li><li><a href="global.html#spreadFloat">spreadFloat</a></li><li><a href="global.html#spreadInclusive">spreadInclusive</a></li><li><a href="global.html#spreadInclusiveExp">spreadInclusiveExp</a></li><li><a href="global.html#spreadInclusiveExpFloat">spreadInclusiveExpFloat</a></li><li><a href="global.html#spreadInclusiveFloat">spreadInclusiveFloat</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Feb 24 2026 18:57:23 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

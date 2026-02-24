@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Global</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Global</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="count"><span class="type-signature"></span>count<span class="signature">(count, to)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+    <p class="summary"><p>Count whole numbers</p></p>
+    
+
+
+
+<div class="description">
+    <p>The counter function generates an array of ascending or descending
+integers, counted from a starting value up to (and including) an ending
+value. When one argument is provided this value acts as the ending value
+and the default starting value is 0. If two values are provided the first
+value is the starting value and the second value the end.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>count</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>(or count from, default=12)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>to</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>(optional, default=undefined)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>// count to 8 from 0
+Gen.counter(8);
+//=> [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]</code></pre>
+
+    <pre class="prettyprint"><code>// count to 10 from 4
+Gen.counter(4, 10);
+//=> [ 4, 5, 6, 7, 8, 9, 10 ]</code></pre>
+
+    <pre class="prettyprint"><code>// count down from 7 to 2
+Gen.counter(7, 2);
+//=> [ 7, 6, 5, 4, 3, 2 ]</code></pre>
+
+    <pre class="prettyprint"><code>// count down from 5 to -4
+Gen.counter(5, -4);
+//=> [ 5, 4, 3, 2, 1, 0, -1, -2, -3, -4 ]</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="spread"><span class="type-signature"></span>spread<span class="signature">(length, low, high)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+    <p class="summary"><p>Spread numbers between a low and high value</p></p>
+    
+
+
+
+<div class="description">
+    <p>Similar to the <a href="global.html#spreadFloat"><code>spreadFloat</code></a> function, but the output
+is only with whole numbers (integers).</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (optional, default=0)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (optional, default=length)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line126">line 126</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>// generate an array of 5 ints between range 0-5
+Gen.spread(5);
+//=> [ 0, 1, 2, 3, 4 ] </code></pre>
+
+    <pre class="prettyprint"><code>// change the range with a second argument to 0-12
+Gen.spread(5, 12);
+//=> [ 0, 2, 4, 7, 9 ] </code></pre>
+
+    <pre class="prettyprint"><code>// add a low/high range pair with 3-12
+Gen.spread(5, 3, 12);
+//=> [ 3, 4, 6, 8, 10 ] </code></pre>
+
+    <pre class="prettyprint"><code>// reverse the range for descending output with 12-3
+Gen.spread(5, 12, 3);
+//=> [ 10, 8, 6, 4, 3 ] </code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="spreadExp"><span class="type-signature"></span>spreadExp<span class="signature">(length, low, high, exponent)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+    <p class="summary"><p>Spread numbers between a low and high value (with exponent)</p></p>
+    
+
+
+
+<div class="description">
+    <p>Similar to <a href="global.html#spread"><code>spread</code></a> and <a href="global.html#spreadFloat"><code>spreadFloat</code></a> but with an optional
+exponent as 4th argument and only outputs whole numbers.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (optional, default=0)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (exclusive, optional, default=length)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>exponent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>(optional, default=1)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line178">line 178</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>Gen.spreadExp(10, 0, 10, 2);
+//=> [ 0, 0, 0, 0, 1, 2, 3, 4, 6, 8 ] </code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="spreadExpFloat"><span class="type-signature"></span>spreadExpFloat<span class="signature">(length, low, high, exponent)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+    <p class="summary"><p>Spread floats between a low and high value (with exponent)</p></p>
+    
+
+
+
+<div class="description">
+    <p>Similar to the <a href="global.html#spread"><code>spread</code></a> and <a href="global.html#spreadFloat"><code>spreadFloat</code></a> functions, but with
+an optional exponent as 4th argument.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (optional, default=0)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (exclusive, optional, default=length)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>exponent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>(optional, default=1)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line145">line 145</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>Gen.spreadExpFloat();
+Gen.spreadExpF();</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="spreadFloat"><span class="type-signature"></span>spreadFloat<span class="signature">(length, low, high)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+    <p class="summary"><p>Spread numbers between a low and high value</p></p>
+    
+
+
+
+<div class="description">
+    <p>The spreadFloat function is similar to the <a href="global.html#count"><code>count</code></a> function, but you
+can decide on the length of the array output, resulting in some numbers
+being skipped or duplicated depending if the output size should be smaller
+or larger than the start and ending points. The generated array has n-length
+of evenly spaced values between a starting number up until (but excluding)
+the 3th argument. Flipping the low and high range will result descending
+values.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (optional, default=0)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (optional, default=length)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line81">line 81</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// generate an array of 5 floats between range 0-1
+Gen.spreadFloat(5); 
+//=> [ 0, 0.2, 0.4, 0.6, 0.8 ]</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="spreadInclusive"><span class="type-signature"></span>spreadInclusive<span class="signature">(length, low, high)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+    <p class="summary"><p>Spread numbers between a low and high value (inclusive)</p></p>
+    
+
+
+
+<div class="description">
+    <p>Similar to the <a href="global.html#spreadInclusiveFloat"><code>spreadInclusiveFloat</code></a> function, but the output
+is only with whole numbers (integers).</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (optional)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (inclusive, optional)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line250">line 250</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// generate an array of 5 ints between range 0-5 (5 inclusive)
+Gen.spreadInclusive(5);
+//=> [ 0, 1, 2, 3, 5 ]
+
+// change the range with a second argument to 0-12
+Gen.spreadInclusive(5, 12);
+//=> [ 0, 3, 6, 9, 12 ] 
+
+// add a low/high range pair with 3-12
+Gen.spreadInclusive(5, 3, 12);
+//=> [ 3, 5, 7, 9, 12 ] 
+
+// reverse the range for descending output with 12-3
+Gen.spreadInclusive(5, 12, 3);
+//=> [ 12, 9, 7, 5, 3 ] </code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="spreadInclusiveExp"><span class="type-signature"></span>spreadInclusiveExp<span class="signature">(length, low, high, exponent)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+    <p class="summary"><p>Spread floats between a low and high value (with exponent)</p></p>
+    
+
+
+
+<div class="description">
+    <p>Similar to the <a href="global.html#spreadInclusive"><code>spreadInclusive</code></a> and <a href="global.html#spreadInclusiveFloat"><code>spreadInclusiveFloat</code></a>
+functions, but with an optional exponent as 4th argument and only output
+whole numbers.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (optional, default=0)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (exclusive, optional, default=length)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>exponent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>(optional, default=1)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line306">line 306</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>Gen.spreadExp(10, 0, 10, 2);
+//=> [ 0, 0, 0, 0, 1, 2, 3, 4, 6, 8 ] </code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="spreadInclusiveExpFloat"><span class="type-signature"></span>spreadInclusiveExpFloat<span class="signature">(length, low, high, exponent)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+    <p class="summary"><p>Spread floats between a low and high value (with exponent)</p></p>
+    
+
+
+
+<div class="description">
+    <p>Similar to the <a href="global.html#spreadInclusive"><code>spreadInclusive</code></a> and <a href="global.html#spreadInclusiveFloat"><code>spreadInclusiveFloat</code></a>
+functions, but with an optional exponent as 4th argument.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (optional, default=0)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (exclusive, optional, default=length)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>exponent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>(optional, default=1)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line270">line 270</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>Gen.spreadInclusiveExpFloat();
+Gen.spreadIncExpF();</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="spreadInclusiveFloat"><span class="type-signature"></span>spreadInclusiveFloat<span class="signature">(length, low, high)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+    <p class="summary"><p>Spread numbers between a low and high value (inclusive)</p></p>
+    
+
+
+
+<div class="description">
+    <p>The spreadFloat function is similar to the <a href="global.html#count"><code>count</code></a> function, but you
+can decide on the length of the array output, resulting in some numbers
+being skipped or duplicated depending if the output size should be smaller
+or larger than the start and ending points. The generated array has n-length
+of evenly spaced values between a starting number up until (but excluding)
+the 3th argument. Flipping the low and high range will result descending
+values.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (optional)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value (inclusive, optional)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line202">line 202</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// generate an array of 5 floats (inclusive)
+Gen.spreadInclusiveFloat(5);
+//=> [ 0, 0.25, 0.5, 0.75, 1 ] </code></pre>
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#count">count</a></li><li><a href="global.html#spread">spread</a></li><li><a href="global.html#spreadExp">spreadExp</a></li><li><a href="global.html#spreadExpFloat">spreadExpFloat</a></li><li><a href="global.html#spreadFloat">spreadFloat</a></li><li><a href="global.html#spreadInclusive">spreadInclusive</a></li><li><a href="global.html#spreadInclusiveExp">spreadInclusiveExp</a></li><li><a href="global.html#spreadInclusiveExpFloat">spreadInclusiveExpFloat</a></li><li><a href="global.html#spreadInclusiveFloat">spreadInclusiveFloat</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Feb 24 2026 18:57:23 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
