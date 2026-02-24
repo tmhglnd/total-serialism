@@ -307,6 +307,487 @@ Gen.counter(5, -4);
     
 
     
+    <h4 class="name" id="fill"><span class="type-signature"></span>fill<span class="signature">(value, amount, repeat, array)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Fill an array with values. Arguments are in pairs. Every pair consists of
+<code>&lt;value, amount&gt;</code> The value is repeated n-amount of times in the array. Also
+accepts an array as a single argument containing the pairs.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Anything</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>to duplicate</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>amount</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of duplicates</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>repeat</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>n-times</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>array</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>containing value/amount pairs</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line329">line 329</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>// fill an array with duplicates of a value
+Gen.fill(10, 2, 15, 3, 20, 4); 
+//=> [ 10, 10, 15, 15, 15, 20, 20, 20, 20 ]</code></pre>
+
+    <pre class="prettyprint"><code>Gen.fill([10, 2, 15, 3, 20, 4]);
+//=> [ 10, 10, 15, 15, 15, 20, 20, 20, 20 ]</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="sine"><span class="type-signature"></span>sine<span class="signature">(length, periods, low, high, phase)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Generate an array with n-periods of a (co)sine function with integer values.
+Optional last arguments set lo and hi range and phase offset. Default range
+is 0 to 12. Wave can be inverted by swapping the arguments</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>periods</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of (co)sine-wave (optional, default = 1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = 0)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = 12)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>phase</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>offset (optional, default = 0)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line413">line 413</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// generate 10 ints with 4 periods of a sine function
+Gen.sine(11, 4, 0, 7);
+//=> [ 3, 6, 0, 5, 4, 0, 6, 2, 1, 6, 0 ]
+//        6.00 ┼╭╮   ╭╮ ╭╮ 
+//        5.00 ┤││╭╮ ││ ││ 
+//        4.00 ┤│││╰╮││ ││ 
+//        3.00 ┼╯││ │││ ││ 
+//        2.00 ┤ ││ ││╰╮││ 
+//        1.00 ┤ ││ ││ ╰╯│ 
+//        0.00 ┤ ╰╯ ╰╯   ╰  </code></pre>
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="spread"><span class="type-signature"></span>spread<span class="signature">(length, low, high)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
     
 
@@ -1409,21 +1890,21 @@ is only with whole numbers (integers).</p>
 
 
 
-    <h5>Example</h5>
+    <h5>Examples</h5>
     
     <pre class="prettyprint"><code>// generate an array of 5 ints between range 0-5 (5 inclusive)
 Gen.spreadInclusive(5);
-//=> [ 0, 1, 2, 3, 5 ]
+//=> [ 0, 1, 2, 3, 5 ]</code></pre>
 
-// change the range with a second argument to 0-12
+    <pre class="prettyprint"><code>// change the range with a second argument to 0-12
 Gen.spreadInclusive(5, 12);
-//=> [ 0, 3, 6, 9, 12 ] 
+//=> [ 0, 3, 6, 9, 12 ] </code></pre>
 
-// add a low/high range pair with 3-12
+    <pre class="prettyprint"><code>// add a low/high range pair with 3-12
 Gen.spreadInclusive(5, 3, 12);
-//=> [ 3, 5, 7, 9, 12 ] 
+//=> [ 3, 5, 7, 9, 12 ] </code></pre>
 
-// reverse the range for descending output with 12-3
+    <pre class="prettyprint"><code>// reverse the range for descending output with 12-3
 Gen.spreadInclusive(5, 12, 3);
 //=> [ 12, 9, 7, 5, 3 ] </code></pre>
 
@@ -2128,13 +2609,13 @@ Gen.spreadInclusiveFloat(5);
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#count">count</a></li><li><a href="global.html#spread">spread</a></li><li><a href="global.html#spreadExp">spreadExp</a></li><li><a href="global.html#spreadExpFloat">spreadExpFloat</a></li><li><a href="global.html#spreadFloat">spreadFloat</a></li><li><a href="global.html#spreadInclusive">spreadInclusive</a></li><li><a href="global.html#spreadInclusiveExp">spreadInclusiveExp</a></li><li><a href="global.html#spreadInclusiveExpFloat">spreadInclusiveExpFloat</a></li><li><a href="global.html#spreadInclusiveFloat">spreadInclusiveFloat</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#count">count</a></li><li><a href="global.html#fill">fill</a></li><li><a href="global.html#sine">sine</a></li><li><a href="global.html#spread">spread</a></li><li><a href="global.html#spreadExp">spreadExp</a></li><li><a href="global.html#spreadExpFloat">spreadExpFloat</a></li><li><a href="global.html#spreadFloat">spreadFloat</a></li><li><a href="global.html#spreadInclusive">spreadInclusive</a></li><li><a href="global.html#spreadInclusiveExp">spreadInclusiveExp</a></li><li><a href="global.html#spreadInclusiveExpFloat">spreadInclusiveExpFloat</a></li><li><a href="global.html#spreadInclusiveFloat">spreadInclusiveFloat</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Feb 24 2026 18:57:23 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Feb 24 2026 19:11:01 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

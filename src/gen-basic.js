@@ -229,15 +229,15 @@ exports.spreadIncF = spreadInclusiveFloat;
  * // generate an array of 5 ints between range 0-5 (5 inclusive)
  * Gen.spreadInclusive(5);
  * //=> [ 0, 1, 2, 3, 5 ]
- * 
+ * @example
  * // change the range with a second argument to 0-12
  * Gen.spreadInclusive(5, 12);
  * //=> [ 0, 3, 6, 9, 12 ] 
- * 
+ * @example
  * // add a low/high range pair with 3-12
  * Gen.spreadInclusive(5, 3, 12);
  * //=> [ 3, 5, 7, 9, 12 ] 
- * 
+ * @example
  * // reverse the range for descending output with 12-3
  * Gen.spreadInclusive(5, 12, 3);
  * //=> [ 12, 9, 7, 5, 3 ] 
@@ -310,14 +310,22 @@ function spreadInclusiveExp(len, lo=size(len), hi, exp){
 exports.spreadInclusiveExp = spreadInclusiveExp;
 exports.spreadIncExp = spreadInclusiveExp;
 
-// fill an array with values. Arguments are pairs.
-// Every pair consists of <value, amount>
-// The value is repeated n-amount times in the list
-// Also accepts an array as a single argument
-// 
-// @params {value0, amount0, value1, amount1, ... value-n, amount-n}
-// @return {Array}
-// 
+/** Fill an array with values. Arguments are in pairs. Every pair consists of 
+ * `<value, amount>` The value is repeated n-amount of times in the array. Also 
+ * accepts an array as a single argument containing the pairs.
+ * @example
+ * // fill an array with duplicates of a value
+ * Gen.fill(10, 2, 15, 3, 20, 4); 
+ * //=> [ 10, 10, 15, 15, 15, 20, 20, 20, 20 ]
+ * @example
+ * Gen.fill([10, 2, 15, 3, 20, 4]);
+ * //=> [ 10, 10, 15, 15, 15, 20, 20, 20, 20 ]
+ * @param {Anything} value to duplicate
+ * @param {Int} amount of duplicates
+ * @param {*} repeat n-times
+ * @param {Array} array containing value/amount pairs
+ * @returns {Array<Number>}
+ */
 function fill(...args){
 	// also accepts a single array as argument containing the pairs
 	if (args.length === 1){
@@ -381,16 +389,27 @@ exports.sineFloat = sineFloat;
 exports.sineF = sineFloat;
 exports.sinF = sineFloat;
 
-// Generate an integer array with n-periods of a sine function
-// Optional last arguments set lo and hi range
-// 
-// @param {Int} -> Length of output array
-// @param {Number} -> Periods of sine-wave 
-// @param {Number} -> Low range of values (optional, default = 0) 
-// @param {Number} -> High range of values (optional, default = 12)
-// @param {Number} -> Phase shift (optional, default = 0)
-// @return {Array} -> Sine function
-// 
+/**
+ * Generate an array with n-periods of a (co)sine function with integer values. 
+ * Optional last arguments set lo and hi range and phase offset. Default range 
+ * is 0 to 12. Wave can be inverted by swapping the arguments
+ * @example
+ * // generate 10 ints with 4 periods of a sine function
+ * Gen.sine(11, 4, 0, 7);
+ * //=> [ 3, 6, 0, 5, 4, 0, 6, 2, 1, 6, 0 ]
+ * //        6.00 ┼╭╮   ╭╮ ╭╮ 
+ * //        5.00 ┤││╭╮ ││ ││ 
+ * //        4.00 ┤│││╰╮││ ││ 
+ * //        3.00 ┼╯││ │││ ││ 
+ * //        2.00 ┤ ││ ││╰╮││ 
+ * //        1.00 ┤ ││ ││ ╰╯│ 
+ * //        0.00 ┤ ╰╯ ╰╯   ╰  
+ * @param {Int} length of output array
+ * @param {Number} periods of (co)sine-wave (optional, default = 1)
+ * @param {Number} low range of values (optional, default = 0)
+ * @param {Number} high range of values (optional, default = 12)
+ * @param {Number} phase offset (optional, default = 0)
+ */
 function sine(len=1, periods=1, lo=12, hi, phase){
 	var arr = sineFloat(len, periods, lo, hi, phase);
 	return arr.map(v => Math.trunc(v));
