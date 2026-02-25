@@ -6,6 +6,7 @@
 		"excludePattern": "(node_modules/|docs)"
 	},
 	"templates": {
+		"name" : "Total Serialism",
 		"cleverLinks": true,
 		"monospaceLinks": true
 	},

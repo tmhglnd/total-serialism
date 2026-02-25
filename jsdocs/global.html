@@ -104,11 +104,705 @@
     
 
     
-    <h4 class="name" id="count"><span class="type-signature"></span>count<span class="signature">(count, to)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    <h4 class="name" id="binary"><span class="type-signature"></span>binary<span class="signature">(array)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
     
 
     
-    <p class="summary"><p>Count whole numbers</p></p>
+
+
+
+<div class="description">
+    <p>Generate a binary rhythm from a positive integer number or an array of
+numbers. Returns the binary value as an array of separated 1's and 0's
+useful for representing rhythmical patterns.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>array</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+|
+
+<span class="param-type">Array.&lt;Number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>numbers to convert to binary representation</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line690">line 690</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// generate a binary array from a single number
+Gen.binaryBeat(358);
+//=> [1, 0, 0, 0, 0, 1, 1, 0, 1, 0]
+
+// use an array of numbers and concatenate binary representations
+Gen.binaryBeat([4, 3, 5]);
+//=> [1, 0, 0, 1, 1, 1, 0, 1]
+
+// negative values are clipped to 0
+Gen.binaryBeat([-4, 4]);
+//=> [0, 1, 0, 0]</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="cosine"><span class="type-signature"></span>cosine<span class="signature">(length, periods, low, high, phase)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Similar to <a href="global.html#cosineF"><code>cosineF</code></a> but outputs only whole numbers.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>periods</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+|
+
+<span class="param-type">Array.&lt;Number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of wave</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = 0)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = 12)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>phase</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>offset (optional, default = 0)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line503">line 503</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// generate 10 ints with 4 periods of a cosine function
+Gen.cosine(11, 4, 0, 7); </code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="cosineF"><span class="type-signature"></span>cosineF<span class="signature">(length, periods, low, high, phase)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Similar to <a href="global.html#sineF"><code>sineF</code></a> and <a href="global.html#sine"><code>sine</code></a> but outputs a cosine wave</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>periods</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+|
+
+<span class="param-type">Array.&lt;Number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of wave</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = -1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = 1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>phase</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>offset (optional, default = 0)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line483">line 483</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// generate 16 floats with 1 period of a cosine function
+Gen.cosineFloat(8);
+//=> [ 1.00, 0.92, 0.71, 0.38, 0.00, -0.38, -0.71, -0.92, -1.00, 
+//     -0.92, -0.71, -0.38, -0.00, 0.38, 0.71, 0.92 ]
+
+//  1.00 ┼╮               
+//  0.60 ┤╰─╮          ╭─ 
+//  0.20 ┼  ╰╮        ╭╯  
+// -0.20 ┤   ╰╮      ╭╯   
+// -0.60 ┤    ╰╮    ╭╯    
+// -1.00 ┤     ╰────╯      </code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="count"><span class="type-signature"></span>count<span class="signature">(count, to)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
     
 
 
@@ -170,7 +864,7 @@ value is the starting value and the second value the end.</p>
 
             
 
-            <td class="description last"><p>(or count from, default=12)</p></td>
+            <td class="description last"><p>(or count from, default = 12)</p></td>
         </tr>
 
     
@@ -193,7 +887,7 @@ value is the starting value and the second value the end.</p>
 
             
 
-            <td class="description last"><p>(optional, default=undefined)</p></td>
+            <td class="description last"><p>(optional, default = undefined)</p></td>
         </tr>
 
     
@@ -234,7 +928,7 @@ value is the starting value and the second value the end.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line45">line 45</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line44">line 44</a>
     </li></ul></dd>
     
 
@@ -281,21 +975,21 @@ value is the starting value and the second value the end.</p>
 
 
 
-    <h5>Examples</h5>
+    <h5>Example</h5>
     
     <pre class="prettyprint"><code>// count to 8 from 0
 Gen.counter(8);
-//=> [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]</code></pre>
+//=> [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
 
-    <pre class="prettyprint"><code>// count to 10 from 4
+// count to 10 from 4
 Gen.counter(4, 10);
-//=> [ 4, 5, 6, 7, 8, 9, 10 ]</code></pre>
+//=> [ 4, 5, 6, 7, 8, 9, 10 ]
 
-    <pre class="prettyprint"><code>// count down from 7 to 2
+// count down from 7 to 2
 Gen.counter(7, 2);
-//=> [ 7, 6, 5, 4, 3, 2 ]</code></pre>
+//=> [ 7, 6, 5, 4, 3, 2 ]
 
-    <pre class="prettyprint"><code>// count down from 5 to -4
+// count down from 5 to -4
 Gen.counter(5, -4);
 //=> [ 5, 4, 3, 2, 1, 0, -1, -2, -3, -4 ]</code></pre>
 
@@ -479,7 +1173,7 @@ accepts an array as a single argument containing the pairs.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line329">line 329</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line338">line 338</a>
     </li></ul></dd>
     
 
@@ -543,7 +1237,7 @@ Gen.fill(10, 2, 15, 3, 20, 4);
     
 
     
-    <h4 class="name" id="sine"><span class="type-signature"></span>sine<span class="signature">(length, periods, low, high, phase)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="saw"><span class="type-signature"></span>saw<span class="signature">(length, periods, low, high, phase)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
     
 
     
@@ -551,9 +1245,7 @@ Gen.fill(10, 2, 15, 3, 20, 4);
 
 
 <div class="description">
-    <p>Generate an array with n-periods of a (co)sine function with integer values.
-Optional last arguments set lo and hi range and phase offset. Default range
-is 0 to 12. Wave can be inverted by swapping the arguments</p>
+    <p>Similar to <a href="global.html#sawF"><code>sawF</code></a> but only outputs whole numbers</p>
 </div>
 
 
@@ -619,6 +1311,9 @@ is 0 to 12. Wave can be inverted by swapping the arguments</p>
             
                 
 <span class="param-type">Number</span>
+|
+
+<span class="param-type">Array.&lt;Number></span>
 
 
             
@@ -628,7 +1323,556 @@ is 0 to 12. Wave can be inverted by swapping the arguments</p>
 
             
 
-            <td class="description last"><p>of (co)sine-wave (optional, default = 1)</p></td>
+            <td class="description last"><p>of the wave (option, default = 1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = -1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = 1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>phase</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>offset (optional, default = 0)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line591">line 591</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>Gen.saw(16, 8.5);
+//=> 11.00 ┼              ╭ 
+//   10.00 ┤          ╭╮╭╮│ 
+//    9.00 ┤        ╭╮│││││ 
+//    8.00 ┤      ╭╮│││││││ 
+//    7.00 ┤  ╭╮╭╮│││││││││ 
+//    6.00 ┤╭╮│││││││││││││ 
+//    5.00 ┤│││││││││││││╰╯ 
+//    4.00 ┤│││││││││││╰╯   
+//    3.00 ┤│││││││╰╯╰╯     
+//    2.00 ┤│││││╰╯         
+//    1.00 ┤│││╰╯           
+//    0.00 ┼╯╰╯ </code></pre>
+
+    <pre class="prettyprint"><code>// Modulation on frequency
+Gen.saw(34, Gen.sinF(30, 2, 0, 100), 0, 12);
+//=> 11.00 ┼         ╭╮             ╭╮╭╮      
+//   10.00 ┤         ││╭─╮     ╭╮   ││││      
+//    9.00 ┤         │││ │     ││ ╭╮││││      
+//    8.00 ┤   ╭─╮   │││ │    ╭╯│ ││││││    ╭ 
+//    7.00 ┤  ╭╯ │   │││ │   ╭╯ │ ││││││    │ 
+//    6.00 ┤  │  │   │││ │  ╭╯  │ │╰╯││╰╮   │ 
+//    5.00 ┤  │  │╭╮╭╯││ │  │   │ │  ││ │   │ 
+//    4.00 ┤  │  ││││ ││ │  │   │ │  ││ │   │ 
+//    3.00 ┤  │  ││╰╯ ││ │  │   │ │  ││ ╰╮  │ 
+//    2.00 ┤  │  ││   ││ ╰╮ │   │ │  ╰╯  │  │ 
+//    1.00 ┤ ╭╯  ││   ╰╯  │╭╯   │ │      ╰─╮│ 
+//    0.00 ┼─╯   ╰╯       ╰╯    ╰─╯        ╰╯ 
+ </code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="sawF"><span class="type-signature"></span>sawF<span class="signature">(length, periods, low, high, phase)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Generate an array with n-periods of a saw/phasor function. Optional last
+arguments set lo and hi range and phase offset. Only setting first range
+argument sets the low-range to 0</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+|
+
+<span class="param-type">Array.&lt;Number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array (uses length of Array if input)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>periods</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+|
+
+<span class="param-type">Array.&lt;Number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of the wave (option, default = 1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = -1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = 1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>phase</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>offset (optional, default = 0)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line530">line 530</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>Gen.sawFloat(25, 2.5);
+//=>  0.80 ┤       ╭─╮       ╭─╮     
+//    0.44 ┤     ╭─╯ │     ╭─╯ │     
+//    0.08 ┤    ╭╯   │    ╭╯   │     
+//   -0.28 ┼  ╭─╯    │  ╭─╯    │  ╭─ 
+//   -0.64 ┤╭─╯      │╭─╯      │╭─╯  
+//   -1.00 ┼╯        ╰╯        ╰╯    </code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="sine"><span class="type-signature"></span>sine<span class="signature">(length, periods, low, high, phase)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Similar to <a href="global.html#sineF"><code>sineF</code></a> but only outputs whole numbers.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>periods</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+|
+
+<span class="param-type">Array.&lt;Number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of wave (optional, default = 1)</p></td>
         </tr>
 
     
@@ -738,7 +1982,7 @@ is 0 to 12. Wave can be inverted by swapping the arguments</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line413">line 413</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line454">line 454</a>
     </li></ul></dd>
     
 
@@ -763,6 +2007,24 @@ is 0 to 12. Wave can be inverted by swapping the arguments</p>
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -788,17 +2050,473 @@ Gen.sine(11, 4, 0, 7);
     
 
     
-    <h4 class="name" id="spread"><span class="type-signature"></span>spread<span class="signature">(length, low, high)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    <h4 class="name" id="sineF"><span class="type-signature"></span>sineF<span class="signature">(length, periods, low, high, phase)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
     
 
-    
-    <p class="summary"><p>Spread numbers between a low and high value</p></p>
     
 
 
 
 <div class="description">
-    <p>Similar to the <a href="global.html#spreadFloat"><code>spreadFloat</code></a> function, but the output
+    <p>Generate an array with n-periods of a sine function as floats.
+Optional last arguments set lo and hi range and phase offset
+Only setting first range argument sets the low-range to 0.
+The wave can be inverted by swapping the arguments.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>periods</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+|
+
+<span class="param-type">Array.&lt;Number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of sine-wave</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = -1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = 1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>phase</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>offset (optional, default = 0)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line401">line 401</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>// generate 16 floats with 1 period of a sine function
+Gen.sineFloat(16);
+//=> [ 0.00, 0.38, 0.71, 0.92, 1.00, 0.92, 0.71, 0.38, 
+// 0.00, -0.38, -0.71, -0.92, -1.00, -0.92, -0.71, -0.38 ]
+
+//  1.00 ┤   ╭╮           
+//  0.60 ┤ ╭─╯╰─╮         
+//  0.20 ┼╭╯    ╰╮        
+// -0.20 ┼╯      ╰╮       
+// -0.60 ┤        ╰╮    ╭ 
+// -1.00 ┤         ╰────╯  
+
+Gen.sineF();</code></pre>
+
+    <pre class="prettyprint"><code>// frequency modulation of the period argument with another array
+Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5));
+//=>  1.00 ┤ ╭╮  ╭──╮           ╭╮   ╭╮  ╭─╮        
+//    0.80 ┤ │╰╮╭╯  │ ╭╮  ╭╮    ││   ││ ╭╯ │        
+//    0.60 ┤╭╯ ││   ╰╮││  ││    ││   ││ │  │        
+//    0.40 ┤│  ╰╯    │││  ││    ││   ││ │  │        
+//    0.20 ┤│        ││╰╮╭╯│╭╮  ││   ││ │  │╭╮   ╭╮ 
+//    0.00 ┼╯        ││ ││ ││╰╮╭╯│ ╭╮││ │  │││  ╭╯│ 
+//   -0.20 ┤         ││ ││ ││ ││ │ ││││ │  │││  │ │ 
+//   -0.40 ┤         ││ ││ ││ ││ │ ││││ │  ╰╯╰╮ │ │ 
+//   -0.60 ┤         ││ ╰╯ ││ ││ │ ││││ │     │ │ │ 
+//   -0.80 ┤         ││    ││ ╰╯ │ │╰╯│ │     ╰─╯ │ 
+//   -1.00 ┤         ╰╯    ╰╯    ╰─╯  ╰─╯         ╰ 
+ </code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="spacing"><span class="type-signature"></span>spacing<span class="signature">(array)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Generate an array of 1's and 0's based on a positive integer number or
+array. Every number in the array will be replaced by a 1 with a specified
+amount of 0's appended to it. Eg. a 2 =&gt; 1 0, a 4 =&gt; 1 0 0 0, etc. This
+technique is useful to generate a rhythm based on spacing length between
+onsets</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>array</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+|
+
+<span class="param-type">Array.&lt;Number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>numbers to convert to spaced rhythm</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line737">line 737</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// generate a rhythm based on numbered spacings
+Gen.spacingBeat(2, 3, 2)
+//=> [1, 0, 1, 0, 0, 1, 0]
+
+// also works with an array as input
+Gen.spacingBeat([4, 2, 0])
+//=> [1, 0, 0, 0, 1, 0, 0]</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="spread"><span class="type-signature"></span>spread<span class="signature">(length, low, high)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Similar to the <a href="global.html#spreadF"><code>spreadF</code></a> function, but the output
 is only with whole numbers (integers).</p>
 </div>
 
@@ -874,7 +2592,7 @@ is only with whole numbers (integers).</p>
 
             
 
-            <td class="description last"><p>value (optional, default=0)</p></td>
+            <td class="description last"><p>value (optional, default = 0)</p></td>
         </tr>
 
     
@@ -897,7 +2615,7 @@ is only with whole numbers (integers).</p>
 
             
 
-            <td class="description last"><p>value (optional, default=length)</p></td>
+            <td class="description last"><p>value (optional, default = length)</p></td>
         </tr>
 
     
@@ -938,7 +2656,7 @@ is only with whole numbers (integers).</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line126">line 126</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line128">line 128</a>
     </li></ul></dd>
     
 
@@ -985,21 +2703,21 @@ is only with whole numbers (integers).</p>
 
 
 
-    <h5>Examples</h5>
+    <h5>Example</h5>
     
     <pre class="prettyprint"><code>// generate an array of 5 ints between range 0-5
 Gen.spread(5);
-//=> [ 0, 1, 2, 3, 4 ] </code></pre>
+//=> [ 0, 1, 2, 3, 4 ] 
 
-    <pre class="prettyprint"><code>// change the range with a second argument to 0-12
+// change the range with a second argument to 0-12
 Gen.spread(5, 12);
-//=> [ 0, 2, 4, 7, 9 ] </code></pre>
+//=> [ 0, 2, 4, 7, 9 ] 
 
-    <pre class="prettyprint"><code>// add a low/high range pair with 3-12
+// add a low/high range pair with 3-12
 Gen.spread(5, 3, 12);
-//=> [ 3, 4, 6, 8, 10 ] </code></pre>
+//=> [ 3, 4, 6, 8, 10 ] 
 
-    <pre class="prettyprint"><code>// reverse the range for descending output with 12-3
+// reverse the range for descending output with 12-3
 Gen.spread(5, 12, 3);
 //=> [ 10, 8, 6, 4, 3 ] </code></pre>
 
@@ -1015,13 +2733,11 @@ Gen.spread(5, 12, 3);
     
 
     
-    <p class="summary"><p>Spread numbers between a low and high value (with exponent)</p></p>
-    
 
 
 
 <div class="description">
-    <p>Similar to <a href="global.html#spread"><code>spread</code></a> and <a href="global.html#spreadFloat"><code>spreadFloat</code></a> but with an optional
+    <p>Similar to <a href="global.html#spread"><code>spread</code></a> and <a href="global.html#spreadF"><code>spreadF</code></a> but with an optional
 exponent as 4th argument and only outputs whole numbers.</p>
 </div>
 
@@ -1097,7 +2813,7 @@ exponent as 4th argument and only outputs whole numbers.</p>
 
             
 
-            <td class="description last"><p>value (optional, default=0)</p></td>
+            <td class="description last"><p>value (optional, default = 0)</p></td>
         </tr>
 
     
@@ -1120,7 +2836,7 @@ exponent as 4th argument and only outputs whole numbers.</p>
 
             
 
-            <td class="description last"><p>value (exclusive, optional, default=length)</p></td>
+            <td class="description last"><p>value (exclusive, optional, default = length)</p></td>
         </tr>
 
     
@@ -1143,7 +2859,7 @@ exponent as 4th argument and only outputs whole numbers.</p>
 
             
 
-            <td class="description last"><p>(optional, default=1)</p></td>
+            <td class="description last"><p>(optional, default = 1)</p></td>
         </tr>
 
     
@@ -1184,7 +2900,7 @@ exponent as 4th argument and only outputs whole numbers.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line178">line 178</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line181">line 181</a>
     </li></ul></dd>
     
 
@@ -1244,18 +2960,16 @@ exponent as 4th argument and only outputs whole numbers.</p>
     
 
     
-    <h4 class="name" id="spreadExpFloat"><span class="type-signature"></span>spreadExpFloat<span class="signature">(length, low, high, exponent)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    <h4 class="name" id="spreadExpF"><span class="type-signature"></span>spreadExpF<span class="signature">(length, low, high, exponent)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
     
 
-    
-    <p class="summary"><p>Spread floats between a low and high value (with exponent)</p></p>
     
 
 
 
 <div class="description">
-    <p>Similar to the <a href="global.html#spread"><code>spread</code></a> and <a href="global.html#spreadFloat"><code>spreadFloat</code></a> functions, but with
-an optional exponent as 4th argument.</p>
+    <p>Similar to the <a href="global.html#spread"><code>spread</code></a> and <a href="global.html#spreadF"><code>spreadF</code></a> functions, but with
+an optional exponent as 4th argument to apply a curve.</p>
 </div>
 
 
@@ -1330,7 +3044,7 @@ an optional exponent as 4th argument.</p>
 
             
 
-            <td class="description last"><p>value (optional, default=0)</p></td>
+            <td class="description last"><p>value (optional, default = 0)</p></td>
         </tr>
 
     
@@ -1353,7 +3067,7 @@ an optional exponent as 4th argument.</p>
 
             
 
-            <td class="description last"><p>value (exclusive, optional, default=length)</p></td>
+            <td class="description last"><p>value (exclusive, optional, default = length)</p></td>
         </tr>
 
     
@@ -1376,7 +3090,7 @@ an optional exponent as 4th argument.</p>
 
             
 
-            <td class="description last"><p>(optional, default=1)</p></td>
+            <td class="description last"><p>(optional, default = 1)</p></td>
         </tr>
 
     
@@ -1417,7 +3131,7 @@ an optional exponent as 4th argument.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line145">line 145</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line148">line 148</a>
     </li></ul></dd>
     
 
@@ -1477,11 +3191,9 @@ Gen.spreadExpF();</code></pre>
     
 
     
-    <h4 class="name" id="spreadFloat"><span class="type-signature"></span>spreadFloat<span class="signature">(length, low, high)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    <h4 class="name" id="spreadF"><span class="type-signature"></span>spreadF<span class="signature">(length, low, high)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
     
 
-    
-    <p class="summary"><p>Spread numbers between a low and high value</p></p>
     
 
 
@@ -1492,7 +3204,7 @@ can decide on the length of the array output, resulting in some numbers
 being skipped or duplicated depending if the output size should be smaller
 or larger than the start and ending points. The generated array has n-length
 of evenly spaced values between a starting number up until (but excluding)
-the 3th argument. Flipping the low and high range will result descending
+the 3th argument. Flipping the low and high range will result in descending
 values.</p>
 </div>
 
@@ -1568,7 +3280,7 @@ values.</p>
 
             
 
-            <td class="description last"><p>value (optional, default=0)</p></td>
+            <td class="description last"><p>value (optional, default = 0)</p></td>
         </tr>
 
     
@@ -1591,7 +3303,7 @@ values.</p>
 
             
 
-            <td class="description last"><p>value (optional, default=length)</p></td>
+            <td class="description last"><p>value (optional, default = length)</p></td>
         </tr>
 
     
@@ -1632,7 +3344,7 @@ values.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line81">line 81</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line83">line 83</a>
     </li></ul></dd>
     
 
@@ -1683,7 +3395,9 @@ values.</p>
     
     <pre class="prettyprint"><code>// generate an array of 5 floats between range 0-1
 Gen.spreadFloat(5); 
-//=> [ 0, 0.2, 0.4, 0.6, 0.8 ]</code></pre>
+//=> [ 0, 0.2, 0.4, 0.6, 0.8 ]
+
+Gen.spreadF(5);</code></pre>
 
 
 
@@ -1693,17 +3407,15 @@ Gen.spreadFloat(5);
     
 
     
-    <h4 class="name" id="spreadInclusive"><span class="type-signature"></span>spreadInclusive<span class="signature">(length, low, high)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    <h4 class="name" id="spreadInc"><span class="type-signature"></span>spreadInc<span class="signature">(length, low, high)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
     
 
-    
-    <p class="summary"><p>Spread numbers between a low and high value (inclusive)</p></p>
     
 
 
 
 <div class="description">
-    <p>Similar to the <a href="global.html#spreadInclusiveFloat"><code>spreadInclusiveFloat</code></a> function, but the output
+    <p>Similar to the <a href="global.html#spreadIncF"><code>spreadIncF</code></a> function, but the output
 is only with whole numbers (integers).</p>
 </div>
 
@@ -1843,7 +3555,7 @@ is only with whole numbers (integers).</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line250">line 250</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line254">line 254</a>
     </li></ul></dd>
     
 
@@ -1890,21 +3602,21 @@ is only with whole numbers (integers).</p>
 
 
 
-    <h5>Examples</h5>
+    <h5>Example</h5>
     
     <pre class="prettyprint"><code>// generate an array of 5 ints between range 0-5 (5 inclusive)
 Gen.spreadInclusive(5);
-//=> [ 0, 1, 2, 3, 5 ]</code></pre>
+//=> [ 0, 1, 2, 3, 5 ]
 
-    <pre class="prettyprint"><code>// change the range with a second argument to 0-12
+// change the range with a second argument to 0-12
 Gen.spreadInclusive(5, 12);
-//=> [ 0, 3, 6, 9, 12 ] </code></pre>
+//=> [ 0, 3, 6, 9, 12 ] 
 
-    <pre class="prettyprint"><code>// add a low/high range pair with 3-12
+// add a low/high range pair with 3-12
 Gen.spreadInclusive(5, 3, 12);
-//=> [ 3, 5, 7, 9, 12 ] </code></pre>
+//=> [ 3, 5, 7, 9, 12 ] 
 
-    <pre class="prettyprint"><code>// reverse the range for descending output with 12-3
+// reverse the range for descending output with 12-3
 Gen.spreadInclusive(5, 12, 3);
 //=> [ 12, 9, 7, 5, 3 ] </code></pre>
 
@@ -1916,18 +3628,16 @@ Gen.spreadInclusive(5, 12, 3);
     
 
     
-    <h4 class="name" id="spreadInclusiveExp"><span class="type-signature"></span>spreadInclusiveExp<span class="signature">(length, low, high, exponent)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    <h4 class="name" id="spreadIncExp"><span class="type-signature"></span>spreadIncExp<span class="signature">(length, low, high, exponent)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
     
 
-    
-    <p class="summary"><p>Spread floats between a low and high value (with exponent)</p></p>
     
 
 
 
 <div class="description">
-    <p>Similar to the <a href="global.html#spreadInclusive"><code>spreadInclusive</code></a> and <a href="global.html#spreadInclusiveFloat"><code>spreadInclusiveFloat</code></a>
-functions, but with an optional exponent as 4th argument and only output
+    <p>Similar to the <a href="global.html#spreadIncF"><code>spreadIncF</code></a> and <a href="global.html#spreadIncExpF"><code>spreadIncExpF</code></a>
+functions, but with an optional exponent as 4th argument and only outputs
 whole numbers.</p>
 </div>
 
@@ -2003,7 +3713,7 @@ whole numbers.</p>
 
             
 
-            <td class="description last"><p>value (optional, default=0)</p></td>
+            <td class="description last"><p>value (optional, default = 0)</p></td>
         </tr>
 
     
@@ -2026,7 +3736,7 @@ whole numbers.</p>
 
             
 
-            <td class="description last"><p>value (exclusive, optional, default=length)</p></td>
+            <td class="description last"><p>value (exclusive, optional, default = length)</p></td>
         </tr>
 
     
@@ -2049,7 +3759,7 @@ whole numbers.</p>
 
             
 
-            <td class="description last"><p>(optional, default=1)</p></td>
+            <td class="description last"><p>(optional, default = 1)</p></td>
         </tr>
 
     
@@ -2090,7 +3800,7 @@ whole numbers.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line306">line 306</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line314">line 314</a>
     </li></ul></dd>
     
 
@@ -2139,8 +3849,10 @@ whole numbers.</p>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Gen.spreadExp(10, 0, 10, 2);
-//=> [ 0, 0, 0, 0, 1, 2, 3, 4, 6, 8 ] </code></pre>
+    <pre class="prettyprint"><code>Gen.spreadInclusiveExp(10, 0, 10, 2);
+//=> [ 0, 0, 0, 1, 1, 3, 4, 6, 7, 10 ] 
+
+Gen.spreadIncExp(10, 0, 10, 2);</code></pre>
 
 
 
@@ -2150,18 +3862,16 @@ whole numbers.</p>
     
 
     
-    <h4 class="name" id="spreadInclusiveExpFloat"><span class="type-signature"></span>spreadInclusiveExpFloat<span class="signature">(length, low, high, exponent)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    <h4 class="name" id="spreadIncExpF"><span class="type-signature"></span>spreadIncExpF<span class="signature">(length, low, high, exponent)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
     
 
-    
-    <p class="summary"><p>Spread floats between a low and high value (with exponent)</p></p>
     
 
 
 
 <div class="description">
-    <p>Similar to the <a href="global.html#spreadInclusive"><code>spreadInclusive</code></a> and <a href="global.html#spreadInclusiveFloat"><code>spreadInclusiveFloat</code></a>
-functions, but with an optional exponent as 4th argument.</p>
+    <p>Similar to the <a href="global.html#spreadInc"><code>spreadInc</code></a> and <a href="global.html#spreadIncF"><code>spreadIncF</code></a> functions, but with
+an optional exponent as 4th argument to apply a curve.</p>
 </div>
 
 
@@ -2236,7 +3946,7 @@ functions, but with an optional exponent as 4th argument.</p>
 
             
 
-            <td class="description last"><p>value (optional, default=0)</p></td>
+            <td class="description last"><p>value (optional, default = 0)</p></td>
         </tr>
 
     
@@ -2259,7 +3969,7 @@ functions, but with an optional exponent as 4th argument.</p>
 
             
 
-            <td class="description last"><p>value (exclusive, optional, default=length)</p></td>
+            <td class="description last"><p>value (exclusive, optional, default = length)</p></td>
         </tr>
 
     
@@ -2282,7 +3992,7 @@ functions, but with an optional exponent as 4th argument.</p>
 
             
 
-            <td class="description last"><p>(optional, default=1)</p></td>
+            <td class="description last"><p>(optional, default = 1)</p></td>
         </tr>
 
     
@@ -2323,7 +4033,7 @@ functions, but with an optional exponent as 4th argument.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line270">line 270</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line275">line 275</a>
     </li></ul></dd>
     
 
@@ -2383,23 +4093,17 @@ Gen.spreadIncExpF();</code></pre>
     
 
     
-    <h4 class="name" id="spreadInclusiveFloat"><span class="type-signature"></span>spreadInclusiveFloat<span class="signature">(length, low, high)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    <h4 class="name" id="spreadIncF"><span class="type-signature"></span>spreadIncF<span class="signature">(length, low, high)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
     
 
-    
-    <p class="summary"><p>Spread numbers between a low and high value (inclusive)</p></p>
     
 
 
 
 <div class="description">
-    <p>The spreadFloat function is similar to the <a href="global.html#count"><code>count</code></a> function, but you
-can decide on the length of the array output, resulting in some numbers
-being skipped or duplicated depending if the output size should be smaller
-or larger than the start and ending points. The generated array has n-length
-of evenly spaced values between a starting number up until (but excluding)
-the 3th argument. Flipping the low and high range will result descending
-values.</p>
+    <p>The spreadIncF function is similar to the <a href="global.html#spreadF"><code>spreadF</code></a> and <a href="global.html#spreadExpF"><code>spreadExpF</code></a> function. The generated array has n-length of evenly spaced
+values between a starting number up until (and including) the 3th argument.
+Flipping the low and high range will result descending values.</p>
 </div>
 
 
@@ -2538,7 +4242,7 @@ values.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line202">line 202</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line205">line 205</a>
     </li></ul></dd>
     
 
@@ -2589,7 +4293,537 @@ values.</p>
     
     <pre class="prettyprint"><code>// generate an array of 5 floats (inclusive)
 Gen.spreadInclusiveFloat(5);
-//=> [ 0, 0.25, 0.5, 0.75, 1 ] </code></pre>
+//=> [ 0, 0.25, 0.5, 0.75, 1 ] 
+
+Gen.spreadIncF(5);</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="square"><span class="type-signature"></span>square<span class="signature">(length, periods, low, high, pulse)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Similar to <a href="global.html#squareF"><code>squareF</code></a> but only outputs whole numbers</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>periods</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+|
+
+<span class="param-type">Array.&lt;Number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of the wave (option, default = 1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = 0)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = 1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pulse</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>width (optional, default = 0.5)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line663">line 663</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>Gen.square(30, 3, -2, 5, 0.8);
+//=>  5.00 ┼───────╮ ╭────────╮╭────────╮ 
+//    1.50 ┼       │ │        ││        │ 
+//   -2.00 ┤       ╰─╯        ╰╯        ╰  
+
+Gen.square(30, 4, 0, 1, 0.2);
+//=>  1.00 ┼─╮     ╭─╮    ╭─╮     ╭╮           
+//    0.00 ┤ ╰─────╯ ╰────╯ ╰─────╯╰─────  </code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="squareF"><span class="type-signature"></span>squareF<span class="signature">(length, periods, low, high, pulse)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Generate an array with n-periods of a square/pulse wave function. Optional
+last arguments set lo and hi range and pulse width. Only setting first range
+argument sets the low-range to 0.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of output array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>periods</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+|
+
+<span class="param-type">Array.&lt;Number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>of the wave (option, default = 1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>low</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = 0)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>high</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>range of values (optional, default = 1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pulse</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>width (optional, default = 0.5)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line620">line 620</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Frequency Modulation with Gen.sin
+Gen.squareFloat(30, Gen.sinF(30, 2, 1, 5));
+//=>  1.00 ┼───╮     ╭──╮╭──╮ ╭─╮  ╭─╮ ╭─ 
+//    0.80 ┤   │     │  ││  │ │ │  │ │ │  
+//    0.60 ┤   │     │  ││  │ │ │  │ │ │  
+//    0.40 ┤   │     │  ││  │ │ │  │ │ │  
+//    0.20 ┤   │     │  ││  │ │ │  │ │ │  
+//    0.00 ┤   ╰─────╯  ╰╯  ╰─╯ ╰──╯ ╰─╯ 
+Gen.squareF()
+ </code></pre>
 
 
 
@@ -2609,13 +4843,13 @@ Gen.spreadInclusiveFloat(5);
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#count">count</a></li><li><a href="global.html#fill">fill</a></li><li><a href="global.html#sine">sine</a></li><li><a href="global.html#spread">spread</a></li><li><a href="global.html#spreadExp">spreadExp</a></li><li><a href="global.html#spreadExpFloat">spreadExpFloat</a></li><li><a href="global.html#spreadFloat">spreadFloat</a></li><li><a href="global.html#spreadInclusive">spreadInclusive</a></li><li><a href="global.html#spreadInclusiveExp">spreadInclusiveExp</a></li><li><a href="global.html#spreadInclusiveExpFloat">spreadInclusiveExpFloat</a></li><li><a href="global.html#spreadInclusiveFloat">spreadInclusiveFloat</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#binary">binary</a></li><li><a href="global.html#cosine">cosine</a></li><li><a href="global.html#cosineF">cosineF</a></li><li><a href="global.html#count">count</a></li><li><a href="global.html#fill">fill</a></li><li><a href="global.html#saw">saw</a></li><li><a href="global.html#sawF">sawF</a></li><li><a href="global.html#sine">sine</a></li><li><a href="global.html#sineF">sineF</a></li><li><a href="global.html#spacing">spacing</a></li><li><a href="global.html#spread">spread</a></li><li><a href="global.html#spreadExp">spreadExp</a></li><li><a href="global.html#spreadExpF">spreadExpF</a></li><li><a href="global.html#spreadF">spreadF</a></li><li><a href="global.html#spreadInc">spreadInc</a></li><li><a href="global.html#spreadIncExp">spreadIncExp</a></li><li><a href="global.html#spreadIncExpF">spreadIncExpF</a></li><li><a href="global.html#spreadIncF">spreadIncF</a></li><li><a href="global.html#square">square</a></li><li><a href="global.html#squareF">squareF</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Feb 24 2026 19:11:01 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Feb 25 2026 18:27:36 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

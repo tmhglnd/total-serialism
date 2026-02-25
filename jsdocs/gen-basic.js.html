@@ -40,35 +40,34 @@
 // - cosine/sine array generation inspired by workshop by Steven Yi at ICLC
 //==========================================================================
 
-// const Util = require('./utility.js');
 const { map, flatten, toArray, size, TWO_PI } = require('./utility');
 
-/** The counter function generates an array of ascending or descending 
+/** 
+ * The counter function generates an array of ascending or descending 
  * integers, counted from a starting value up to (and including) an ending 
  * value. When one argument is provided this value acts as the ending value 
  * and the default starting value is 0. If two values are provided the first 
  * value is the starting value and the second value the end.
- * @summary Count whole numbers
  * @example
  * // count to 8 from 0
  * Gen.counter(8);
  * //=> [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
- * @example
+ * 
  * // count to 10 from 4
  * Gen.counter(4, 10);
  * //=> [ 4, 5, 6, 7, 8, 9, 10 ]
- * @example
+ * 
  * // count down from 7 to 2
  * Gen.counter(7, 2);
  * //=> [ 7, 6, 5, 4, 3, 2 ]
- * @example
+ * 
  * // count down from 5 to -4
  * Gen.counter(5, -4);
  * //=> [ 5, 4, 3, 2, 1, 0, -1, -2, -3, -4 ]
  * 
- * @param {Int} count (or count from, default=12)
- * @param {Int} to (optional, default=undefined)
- * @returns {Array&lt;Number>} 
+ * @param {Int} count (or count from, default = 12)
+ * @param {Int} to (optional, default = undefined)
+ * @return {Array&lt;Number>} 
 */
 function count(from=11, to){
 	// if to is undefined set to 0
@@ -88,22 +87,25 @@ function count(from=11, to){
 exports.counter = count;
 exports.count = count;
 
-/** The spreadFloat function is similar to the {@link count} function, but you 
+/** 
+ * The spreadFloat function is similar to the {@link count} function, but you 
  * can decide on the length of the array output, resulting in some numbers 
  * being skipped or duplicated depending if the output size should be smaller 
  * or larger than the start and ending points. The generated array has n-length 
  * of evenly spaced values between a starting number up until (but excluding) 
- * the 3th argument. Flipping the low and high range will result descending 
+ * the 3th argument. Flipping the low and high range will result in descending 
  * values.
- * @summary Spread numbers between a low and high value
+ * @alias spreadF
  * @example
  * // generate an array of 5 floats between range 0-1
  * Gen.spreadFloat(5); 
  * //=> [ 0, 0.2, 0.4, 0.6, 0.8 ]
  * 
+ * Gen.spreadF(5);
+ * 
  * @param {Int} length of output array
- * @param {Number} low value (optional, default=0)
- * @param {Number} high value (optional, default=length)
+ * @param {Number} low value (optional, default = 0)
+ * @param {Number} high value (optional, default = length)
  * @return {Array&lt;Number>}
 */
 function spreadFloat(len=1, lo=1, hi){
@@ -126,29 +128,29 @@ function spreadFloat(len=1, lo=1, hi){
 exports.spreadFloat = spreadFloat;
 exports.spreadF = spreadFloat;
 
-/** Similar to the {@link spreadFloat} function, but the output 
+/** 
+ * Similar to the {@link spreadF} function, but the output 
  * is only with whole numbers (integers).
- * @summary Spread numbers between a low and high value 
  * @example
  * // generate an array of 5 ints between range 0-5
  * Gen.spread(5);
  * //=> [ 0, 1, 2, 3, 4 ] 
- * @example
+ *
  * // change the range with a second argument to 0-12
  * Gen.spread(5, 12);
  * //=> [ 0, 2, 4, 7, 9 ] 
- * @example
+ *
  * // add a low/high range pair with 3-12
  * Gen.spread(5, 3, 12);
  * //=> [ 3, 4, 6, 8, 10 ] 
- * @example
+ *
  * // reverse the range for descending output with 12-3
  * Gen.spread(5, 12, 3);
  * //=> [ 10, 8, 6, 4, 3 ] 
  * 
  * @param {Int} length of output array
- * @param {Int} low value (optional, default=0)
- * @param {Int} high value (optional, default=length)
+ * @param {Int} low value (optional, default = 0)
+ * @param {Int} high value (optional, default = length)
  * @return {Array&lt;Number>}
 */
 function spread(len, lo=size(len), hi){
@@ -157,18 +159,19 @@ function spread(len, lo=size(len), hi){
 }
 exports.spread = spread;
 
-/** Similar to the {@link spread} and {@link spreadFloat} functions, but with 
- * an optional exponent as 4th argument.
- * @summary Spread floats between a low and high value (with exponent)
+/** 
+ * Similar to the {@link spread} and {@link spreadF} functions, but with 
+ * an optional exponent as 4th argument to apply a curve.
+ * @alias spreadExpF
  * @example
  * Gen.spreadExpFloat();
  * Gen.spreadExpF();
  * 
  * @param {Int} length of output array
- * @param {Number} low value (optional, default=0)
- * @param {Number} high value (exclusive, optional, default=length)
- * @param {Number} exponent (optional, default=1)
- * @returns {Array&lt;Number>}
+ * @param {Number} low value (optional, default = 0)
+ * @param {Number} high value (exclusive, optional, default = length)
+ * @param {Number} exponent (optional, default = 1)
+ * @return {Array&lt;Number>}
  */
 function spreadExpFloat(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
@@ -190,18 +193,18 @@ exports.spreadFloatExp = spreadExpFloat; // deprecated
 exports.spreadExpFloat = spreadExpFloat;
 exports.spreadExpF = spreadExpFloat;
 
-/** Similar to {@link spread} and {@link spreadFloat} but with an optional 
+/** 
+ * Similar to {@link spread} and {@link spreadF} but with an optional 
  * exponent as 4th argument and only outputs whole numbers.
- * @summary Spread numbers between a low and high value (with exponent)
  * @example
  * Gen.spreadExp(10, 0, 10, 2);
  * //=> [ 0, 0, 0, 0, 1, 2, 3, 4, 6, 8 ] 
  * 
  * @param {Int} length of output array
- * @param {Int} low value (optional, default=0)
- * @param {Int} high value (exclusive, optional, default=length)
- * @param {Number} exponent (optional, default=1)
- * @returns {Array&lt;Number>}
+ * @param {Int} low value (optional, default = 0)
+ * @param {Int} high value (exclusive, optional, default = length)
+ * @param {Number} exponent (optional, default = 1)
+ * @return {Array&lt;Number>}
  */
 function spreadExp(len, lo=size(len), hi, exp){
 	let arr = spreadExpFloat(len, lo, hi, exp);
@@ -209,23 +212,23 @@ function spreadExp(len, lo=size(len), hi, exp){
 }
 exports.spreadExp = spreadExp;
 
-/**The spreadFloat function is similar to the {@link count} function, but you 
- * can decide on the length of the array output, resulting in some numbers 
- * being skipped or duplicated depending if the output size should be smaller 
- * or larger than the start and ending points. The generated array has n-length 
- * of evenly spaced values between a starting number up until (but excluding) 
- * the 3th argument. Flipping the low and high range will result descending 
- * values.
- * @summary Spread numbers between a low and high value (inclusive)
+/**
+ * The spreadIncF function is similar to the {@link spreadF} and {@link 
+ * spreadExpF} function. The generated array has n-length of evenly spaced 
+ * values between a starting number up until (and including) the 3th argument. 
+ * Flipping the low and high range will result descending values.
+ * @alias spreadIncF
  * @example
  * // generate an array of 5 floats (inclusive)
  * Gen.spreadInclusiveFloat(5);
  * //=> [ 0, 0.25, 0.5, 0.75, 1 ] 
  * 
+ * Gen.spreadIncF(5);
+ * 
  * @param {Int} length of output array
  * @param {Number} low value (optional)
  * @param {Number} high value (inclusive, optional)
- * @returns {Array&lt;Number>}
+ * @return {Array&lt;Number>}
  */
 function spreadInclusiveFloat(len=1, lo=1, hi){
 	// if hi undefined set lo to 0 and hi=lo
@@ -250,22 +253,23 @@ function spreadInclusiveFloat(len=1, lo=1, hi){
 exports.spreadInclusiveFloat = spreadInclusiveFloat;
 exports.spreadIncF = spreadInclusiveFloat;
 
-/** Similar to the {@link spreadInclusiveFloat} function, but the output 
+/** 
+ * Similar to the {@link spreadIncF} function, but the output 
  * is only with whole numbers (integers).
- * @summary Spread numbers between a low and high value (inclusive)
+ * @alias spreadInc
  * @example
  * // generate an array of 5 ints between range 0-5 (5 inclusive)
  * Gen.spreadInclusive(5);
  * //=> [ 0, 1, 2, 3, 5 ]
- * @example
+ *
  * // change the range with a second argument to 0-12
  * Gen.spreadInclusive(5, 12);
  * //=> [ 0, 3, 6, 9, 12 ] 
- * @example
+ *
  * // add a low/high range pair with 3-12
  * Gen.spreadInclusive(5, 3, 12);
  * //=> [ 3, 5, 7, 9, 12 ] 
- * @example
+ *
  * // reverse the range for descending output with 12-3
  * Gen.spreadInclusive(5, 12, 3);
  * //=> [ 12, 9, 7, 5, 3 ] 
@@ -273,7 +277,7 @@ exports.spreadIncF = spreadInclusiveFloat;
  * @param {Int} length of output array
  * @param {Number} low value (optional)
  * @param {Number} high value (inclusive, optional)
- * @returns {Array&lt;Number>}
+ * @return {Array&lt;Number>}
  */
 function spreadInclusive(len, lo=size(len), hi){
 	var arr = spreadInclusiveFloat(len, lo, hi);
@@ -282,18 +286,19 @@ function spreadInclusive(len, lo=size(len), hi){
 exports.spreadInclusive = spreadInclusive;
 exports.spreadInc = spreadInclusive;
 
-/** Similar to the {@link spreadInclusive} and {@link spreadInclusiveFloat}
- * functions, but with an optional exponent as 4th argument.
- * @summary Spread floats between a low and high value (with exponent)
+/** 
+ * Similar to the {@link spreadInc} and {@link spreadIncF} functions, but with 
+ * an optional exponent as 4th argument to apply a curve.
+ * @alias spreadIncExpF
  * @example
  * Gen.spreadInclusiveExpFloat();
  * Gen.spreadIncExpF();
  * 
  * @param {Int} length of output array
- * @param {Number} low value (optional, default=0)
- * @param {Number} high value (exclusive, optional, default=length)
- * @param {Number} exponent (optional, default=1)
- * @returns {Array&lt;Number>}
+ * @param {Number} low value (optional, default = 0)
+ * @param {Number} high value (exclusive, optional, default = length)
+ * @param {Number} exponent (optional, default = 1)
+ * @return {Array&lt;Number>}
  */
 function spreadInclusiveExpFloat(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
@@ -317,19 +322,22 @@ exports.spreadInclusiveFloatExp = spreadInclusiveExpFloat; //deprecated
 exports.spreadInclusiveExpFloat = spreadInclusiveExpFloat;
 exports.spreadIncExpF = spreadInclusiveExpFloat;
 
-/** Similar to the {@link spreadInclusive} and {@link spreadInclusiveFloat}
- * functions, but with an optional exponent as 4th argument and only output 
+/** 
+ * Similar to the {@link spreadIncF} and {@link spreadIncExpF}
+ * functions, but with an optional exponent as 4th argument and only outputs 
  * whole numbers.
- * @summary Spread floats between a low and high value (with exponent)
+ * @alias spreadIncExp
  * @example
- * Gen.spreadExp(10, 0, 10, 2);
- * //=> [ 0, 0, 0, 0, 1, 2, 3, 4, 6, 8 ] 
+ * Gen.spreadInclusiveExp(10, 0, 10, 2);
+ * //=> [ 0, 0, 0, 1, 1, 3, 4, 6, 7, 10 ] 
+ * 
+ * Gen.spreadIncExp(10, 0, 10, 2);
  * 
  * @param {Int} length of output array
- * @param {Number} low value (optional, default=0)
- * @param {Number} high value (exclusive, optional, default=length)
- * @param {Number} exponent (optional, default=1)
- * @returns {Array&lt;Number>}
+ * @param {Number} low value (optional, default = 0)
+ * @param {Number} high value (exclusive, optional, default = length)
+ * @param {Number} exponent (optional, default = 1)
+ * @return {Array&lt;Number>}
  */
 function spreadInclusiveExp(len, lo=size(len), hi, exp){
 	var arr = spreadInclusiveExpFloat(len, lo, hi, exp);
@@ -338,7 +346,8 @@ function spreadInclusiveExp(len, lo=size(len), hi, exp){
 exports.spreadInclusiveExp = spreadInclusiveExp;
 exports.spreadIncExp = spreadInclusiveExp;
 
-/** Fill an array with values. Arguments are in pairs. Every pair consists of 
+/** 
+ * Fill an array with values. Arguments are in pairs. Every pair consists of 
  * `&lt;value, amount>` The value is repeated n-amount of times in the array. Also 
  * accepts an array as a single argument containing the pairs.
  * @example
@@ -375,17 +384,48 @@ function fill(...args){
 }
 exports.fill = fill;
 
-// Generate an array with n-periods of a sine function
-// Optional last arguments set lo and hi range and phase offset
-// Only setting first range argument sets the low-range to 0
-// 
-// @param {Int} -> Length of output array (resolution)
-// @param {NumberArray | Number} -> Periods of sine-wave 
-// @param {Number} -> Low range of values (optional, default=-1) 
-// @param {Number} -> High range of values (optional, default=1)
-// @param {Number} -> Phase offset (optional, default=0)
-// @return {Array} -> Sine function
-// 
+/**
+ * Generate an array with n-periods of a sine function as floats.
+ * Optional last arguments set lo and hi range and phase offset
+ * Only setting first range argument sets the low-range to 0. 
+ * The wave can be inverted by swapping the arguments.
+ * @alias sineF
+ * @example
+ * // generate 16 floats with 1 period of a sine function
+ * Gen.sineFloat(16);
+ * //=> [ 0.00, 0.38, 0.71, 0.92, 1.00, 0.92, 0.71, 0.38, 
+ * // 0.00, -0.38, -0.71, -0.92, -1.00, -0.92, -0.71, -0.38 ]
+ * 
+ * //  1.00 ┤   ╭╮           
+ * //  0.60 ┤ ╭─╯╰─╮         
+ * //  0.20 ┼╭╯    ╰╮        
+ * // -0.20 ┼╯      ╰╮       
+ * // -0.60 ┤        ╰╮    ╭ 
+ * // -1.00 ┤         ╰────╯  
+ * 
+ * Gen.sineF();
+ * @example
+ * // frequency modulation of the period argument with another array
+ * Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5));
+ * //=>  1.00 ┤ ╭╮  ╭──╮           ╭╮   ╭╮  ╭─╮        
+ * //    0.80 ┤ │╰╮╭╯  │ ╭╮  ╭╮    ││   ││ ╭╯ │        
+ * //    0.60 ┤╭╯ ││   ╰╮││  ││    ││   ││ │  │        
+ * //    0.40 ┤│  ╰╯    │││  ││    ││   ││ │  │        
+ * //    0.20 ┤│        ││╰╮╭╯│╭╮  ││   ││ │  │╭╮   ╭╮ 
+ * //    0.00 ┼╯        ││ ││ ││╰╮╭╯│ ╭╮││ │  │││  ╭╯│ 
+ * //   -0.20 ┤         ││ ││ ││ ││ │ ││││ │  │││  │ │ 
+ * //   -0.40 ┤         ││ ││ ││ ││ │ ││││ │  ╰╯╰╮ │ │ 
+ * //   -0.60 ┤         ││ ╰╯ ││ ││ │ ││││ │     │ │ │ 
+ * //   -0.80 ┤         ││    ││ ╰╯ │ │╰╯│ │     ╰─╯ │ 
+ * //   -1.00 ┤         ╰╯    ╰╯    ╰─╯  ╰─╯         ╰ 
+ *  
+ * @param {Int} length of output array
+ * @param {Number | Array&lt;Number>} periods of sine-wave 
+ * @param {Number} low range of values (optional, default = -1) 
+ * @param {Number} high range of values (optional, default = 1)
+ * @param {Number} phase offset (optional, default = 0)
+ * @return {Array&lt;Number>}
+ */
 function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	// if no range specified
 	if (lo === undefined){ lo = -1; hi = 1; }
@@ -418,9 +458,8 @@ exports.sineF = sineFloat;
 exports.sinF = sineFloat;
 
 /**
- * Generate an array with n-periods of a (co)sine function with integer values. 
- * Optional last arguments set lo and hi range and phase offset. Default range 
- * is 0 to 12. Wave can be inverted by swapping the arguments
+ * Similar to {@link sineF} but only outputs whole numbers.
+ * 
  * @example
  * // generate 10 ints with 4 periods of a sine function
  * Gen.sine(11, 4, 0, 7);
@@ -432,11 +471,13 @@ exports.sinF = sineFloat;
  * //        2.00 ┤ ││ ││╰╮││ 
  * //        1.00 ┤ ││ ││ ╰╯│ 
  * //        0.00 ┤ ╰╯ ╰╯   ╰  
+ * 
  * @param {Int} length of output array
- * @param {Number} periods of (co)sine-wave (optional, default = 1)
+ * @param {Number|Array&lt;Number>} periods of wave (optional, default = 1)
  * @param {Number} low range of values (optional, default = 0)
  * @param {Number} high range of values (optional, default = 12)
  * @param {Number} phase offset (optional, default = 0)
+ * @return {Array&lt;Number>}
  */
 function sine(len=1, periods=1, lo=12, hi, phase){
 	var arr = sineFloat(len, periods, lo, hi, phase);
@@ -444,10 +485,29 @@ function sine(len=1, periods=1, lo=12, hi, phase){
 }
 exports.sine = sine;
 
-// Generate an array with n-periods of a cosine function
-// Flip the low and high range to invert the function
-// See sinFloat() for details
-//
+/**
+ * Similar to {@link sineF} and {@link sine} but outputs a cosine wave
+ * @alias cosineF
+ * @example
+ * // generate 16 floats with 1 period of a cosine function
+ * Gen.cosineFloat(8);
+ * //=> [ 1.00, 0.92, 0.71, 0.38, 0.00, -0.38, -0.71, -0.92, -1.00, 
+ * //     -0.92, -0.71, -0.38, -0.00, 0.38, 0.71, 0.92 ]
+ * 
+ * //  1.00 ┼╮               
+ * //  0.60 ┤╰─╮          ╭─ 
+ * //  0.20 ┼  ╰╮        ╭╯  
+ * // -0.20 ┤   ╰╮      ╭╯   
+ * // -0.60 ┤    ╰╮    ╭╯    
+ * // -1.00 ┤     ╰────╯      
+ * 
+ * @param {Int} length of output array
+ * @param {Number|Array&lt;Number>} periods of wave 
+ * @param {Number} low range of values (optional, default = -1) 
+ * @param {Number} high range of values (optional, default = 1)
+ * @param {Number} phase offset (optional, default = 0)
+ * @return {Array&lt;Number>}
+ */
 function cosineFloat(len=1, periods=1, lo, hi, phase=0){
 	return sineFloat(len, periods, lo, hi, phase+0.25);
 }
@@ -455,27 +515,46 @@ exports.cosineFloat = cosineFloat;
 exports.cosineF = cosineFloat;
 exports.cosF = cosineFloat;
 
-// Generate an integer array with n-periods of a cosine function
-// Flip the low and high range to invert the function
-// See sin() for details
-// 
+/**
+ * Similar to {@link cosineF} but outputs only whole numbers.
+ * @example
+ * // generate 10 ints with 4 periods of a cosine function
+ * Gen.cosine(11, 4, 0, 7); 
+ * 
+ * @param {Int} length of output array
+ * @param {Number|Array&lt;Number>} periods of wave 
+ * @param {Number} low range of values (optional, default = 0) 
+ * @param {Number} high range of values (optional, default = 12)
+ * @param {Number} phase offset (optional, default = 0)
+ * @return {Array&lt;Number>}
+ */
 function cosine(len=1, periods=1, lo=12, hi, phase=0){
 	var arr = sineFloat(len, periods, lo, hi, phase+0.25);
 	return arr.map(v => Math.trunc(v));
 }
 exports.cosine = cosine;
-
-// Generate an array with n-periods of a saw/phasor function
-// Optional last arguments set lo and hi range and phase offset
-// Only setting first range argument sets the low-range to 0
-// 
-// @param {Int} -> Length of output array (resolution)
-// @param {Number/Array} -> Periods of the wave (option, default=1)
-// @param {Number} -> Low range of values (optional, default=-1) 
-// @param {Number} -> High range of values (optional, default=1)
-// @param {Number} -> Phase offset (optional, default=0)
-// @return {Array} -> wave-function as array
-//  
+ 
+/**
+ * Generate an array with n-periods of a saw/phasor function. Optional last 
+ * arguments set lo and hi range and phase offset. Only setting first range 
+ * argument sets the low-range to 0
+ * @alias sawF
+ * @example
+ * Gen.sawFloat(25, 2.5);
+ * //=>  0.80 ┤       ╭─╮       ╭─╮     
+ * //    0.44 ┤     ╭─╯ │     ╭─╯ │     
+ * //    0.08 ┤    ╭╯   │    ╭╯   │     
+ * //   -0.28 ┼  ╭─╯    │  ╭─╯    │  ╭─ 
+ * //   -0.64 ┤╭─╯      │╭─╯      │╭─╯  
+ * //   -1.00 ┼╯        ╰╯        ╰╯    
+ * 
+ * @param {Int|Array&lt;Number>} length of output array (uses length of Array if input)
+ * @param {Number|Array&lt;Number>} periods of the wave (option, default = 1)
+ * @param {Number} low range of values (optional, default = -1) 
+ * @param {Number} high range of values (optional, default = 1)
+ * @param {Number} phase offset (optional, default = 0)
+ * @returns {Array&lt;Number>}
+ */
 function sawFloat(len=1, periods=1, lo, hi, phase=0){
 	if (lo === undefined){ lo = -1; hi = 1; }
 	else if (hi === undefined){ hi = lo, lo = 0; }
@@ -498,23 +577,74 @@ exports.sawFloat = sawFloat;
 exports.phasor = sawFloat;
 exports.sawF = sawFloat;
 
+/**
+ * Similar to {@link sawF} but only outputs whole numbers
+ * @example
+ * Gen.saw(16, 8.5);
+ * //=> 11.00 ┼              ╭ 
+ * //   10.00 ┤          ╭╮╭╮│ 
+ * //    9.00 ┤        ╭╮│││││ 
+ * //    8.00 ┤      ╭╮│││││││ 
+ * //    7.00 ┤  ╭╮╭╮│││││││││ 
+ * //    6.00 ┤╭╮│││││││││││││ 
+ * //    5.00 ┤│││││││││││││╰╯ 
+ * //    4.00 ┤│││││││││││╰╯   
+ * //    3.00 ┤│││││││╰╯╰╯     
+ * //    2.00 ┤│││││╰╯         
+ * //    1.00 ┤│││╰╯           
+ * //    0.00 ┼╯╰╯ 
+ * @example
+ * // Modulation on frequency
+ * Gen.saw(34, Gen.sinF(30, 2, 0, 100), 0, 12);
+ * //=> 11.00 ┼         ╭╮             ╭╮╭╮      
+ * //   10.00 ┤         ││╭─╮     ╭╮   ││││      
+ * //    9.00 ┤         │││ │     ││ ╭╮││││      
+ * //    8.00 ┤   ╭─╮   │││ │    ╭╯│ ││││││    ╭ 
+ * //    7.00 ┤  ╭╯ │   │││ │   ╭╯ │ ││││││    │ 
+ * //    6.00 ┤  │  │   │││ │  ╭╯  │ │╰╯││╰╮   │ 
+ * //    5.00 ┤  │  │╭╮╭╯││ │  │   │ │  ││ │   │ 
+ * //    4.00 ┤  │  ││││ ││ │  │   │ │  ││ │   │ 
+ * //    3.00 ┤  │  ││╰╯ ││ │  │   │ │  ││ ╰╮  │ 
+ * //    2.00 ┤  │  ││   ││ ╰╮ │   │ │  ╰╯  │  │ 
+ * //    1.00 ┤ ╭╯  ││   ╰╯  │╭╯   │ │      ╰─╮│ 
+ * //    0.00 ┼─╯   ╰╯       ╰╯    ╰─╯        ╰╯ 
+ *  
+ * @param {Int} length of output array
+ * @param {Number|Array&lt;Number>} periods of the wave (option, default = 1)
+ * @param {Number} low range of values (optional, default = -1) 
+ * @param {Number} high range of values (optional, default = 1)
+ * @param {Number} phase offset (optional, default = 0)
+ * @returns {Array&lt;Number>}
+ */
 function saw(len=1, periods=1, lo=12, hi, phase=0){
 	var arr = sawFloat(len, periods, lo, hi, phase);
 	return arr.map(v => Math.trunc(v));
 }
 exports.saw = saw;
 
-// Generate an array with n-periods of a pulse/squarewave function
-// Optional last arguments set lo and hi range and pulse width
-// Only setting first range argument sets the low-range to 0
-// 
-// @param {Int} -> Length of output array (resolution)
-// @param {Number/Array} -> Periods of the wave (option, default=1)
-// @param {Number} -> Low range of values (optional, default=-1) 
-// @param {Number} -> High range of values (optional, default=1)
-// @param {Number} -> Pulse width (optional, default=0.5)
-// @return {Array} -> wave-function as array
-//  
+/**
+ * Generate an array with n-periods of a square/pulse wave function. Optional 
+ * last arguments set lo and hi range and pulse width. Only setting first range 
+ * argument sets the low-range to 0.
+ * @alias squareF
+ * @example
+ * // Frequency Modulation with Gen.sin
+ * Gen.squareFloat(30, Gen.sinF(30, 2, 1, 5));
+ * //=>  1.00 ┼───╮     ╭──╮╭──╮ ╭─╮  ╭─╮ ╭─ 
+ * //    0.80 ┤   │     │  ││  │ │ │  │ │ │  
+ * //    0.60 ┤   │     │  ││  │ │ │  │ │ │  
+ * //    0.40 ┤   │     │  ││  │ │ │  │ │ │  
+ * //    0.20 ┤   │     │  ││  │ │ │  │ │ │  
+ * //    0.00 ┤   ╰─────╯  ╰╯  ╰─╯ ╰──╯ ╰─╯ 
+ * Gen.squareF()
+ *  
+ * @param {Number} length of output array
+ * @param {Number|Array&lt;Number>} periods of the wave (option, default = 1)
+ * @param {Number} low range of values (optional, default = 0) 
+ * @param {Number} high range of values (optional, default = 1)
+ * @param {Number} pulse width (optional, default = 0.5)
+ * @returns {Array&lt;Number>}
+ */
 function squareFloat(len=1, periods=1, lo, hi, pulse=0.5){
 	if (lo === undefined){ lo = 0; hi = 1; }
 	else if (hi === undefined){ hi = lo, lo = 0; }
@@ -539,6 +669,25 @@ exports.squareF = squareFloat;
 exports.rectFloat = squareFloat;
 exports.rectF = squareFloat;
 
+/**
+ * Similar to {@link squareF} but only outputs whole numbers
+ * @example
+ * Gen.square(30, 3, -2, 5, 0.8);
+ * //=>  5.00 ┼───────╮ ╭────────╮╭────────╮ 
+ * //    1.50 ┼       │ │        ││        │ 
+ * //   -2.00 ┤       ╰─╯        ╰╯        ╰  
+ * 
+ * Gen.square(30, 4, 0, 1, 0.2);
+ * //=>  1.00 ┼─╮     ╭─╮    ╭─╮     ╭╮           
+ * //    0.00 ┤ ╰─────╯ ╰────╯ ╰─────╯╰─────  
+ * 
+ * @param {Number} length of output array
+ * @param {Number|Array&lt;Number>} periods of the wave (option, default = 1)
+ * @param {Number} low range of values (optional, default = 0) 
+ * @param {Number} high range of values (optional, default = 1)
+ * @param {Number} pulse width (optional, default = 0.5)
+ * @returns {Array&lt;Number>}
+ */
 function square(len=1, periods=1, lo=12, hi, pulse=0.5){
 	var arr = squareFloat(len, periods, lo, hi, pulse);
 	return arr.map(v => Math.trunc(v));
@@ -546,13 +695,26 @@ function square(len=1, periods=1, lo=12, hi, pulse=0.5){
 exports.square = square;
 exports.rect = square;
 
-// Generate a binary rhythm from a positive integer number or an array 
-// of numbers. Returns the binary value as an array of separated 1's and 0's
-// useful for representing rhythmical patterns
-// 
-// @param {Int+/Array} -> Array of numbers to convert to binary representation
-// @return {Array} -> Array of 1's and 0's
-//
+/**
+ * Generate a binary rhythm from a positive integer number or an array of 
+ * numbers. Returns the binary value as an array of separated 1's and 0's 
+ * useful for representing rhythmical patterns.
+ * @alias binary
+ * @example
+ * // generate a binary array from a single number
+ * Gen.binaryBeat(358);
+ * //=> [1, 0, 0, 0, 0, 1, 1, 0, 1, 0]
+ * 
+ * // use an array of numbers and concatenate binary representations
+ * Gen.binaryBeat([4, 3, 5]);
+ * //=> [1, 0, 0, 1, 1, 1, 0, 1]
+ * 
+ * // negative values are clipped to 0
+ * Gen.binaryBeat([-4, 4]);
+ * //=> [0, 1, 0, 0]
+ * @param {Int|Array&lt;Number>} array - numbers to convert to binary representation
+ * @returns {Array&lt;Number>}
+ */ 
 function binary(...a){
 	// if no arguments return else flatten array to 1 dimension
 	if (!a.length) { return [0]; }
@@ -582,6 +744,24 @@ exports.binaryBeat = binary;
 // @param {Int+/Array} -> Array of numbers to convert to spaced rhythm
 // @return {Array} -> Array of 1's and 0's representing a rhythm
 //
+/**
+ * Generate an array of 1's and 0's based on a positive integer number or 
+ * array. Every number in the array will be replaced by a 1 with a specified 
+ * amount of 0's appended to it. Eg. a 2 => 1 0, a 4 => 1 0 0 0, etc. This 
+ * technique is useful to generate a rhythm based on spacing length between 
+ * onsets
+ * @alias spacing
+ * @example
+ * // generate a rhythm based on numbered spacings
+ * Gen.spacingBeat(2, 3, 2)
+ * //=> [1, 0, 1, 0, 0, 1, 0]
+ * 
+ * // also works with an array as input
+ * Gen.spacingBeat([4, 2, 0])
+ * //=> [1, 0, 0, 0, 1, 0, 0]
+ * @param {Int|Array&lt;Number>} array numbers to convert to spaced rhythm
+ * @returns {Array&lt;Number>}
+ */
 function spacing(...a){
 	// if no arguments return else flatten array to 1 dimension
 	if (!a.length) { return [0]; }
@@ -613,13 +793,13 @@ exports.spacingBeat = spacing;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#count">count</a></li><li><a href="global.html#fill">fill</a></li><li><a href="global.html#sine">sine</a></li><li><a href="global.html#spread">spread</a></li><li><a href="global.html#spreadExp">spreadExp</a></li><li><a href="global.html#spreadExpFloat">spreadExpFloat</a></li><li><a href="global.html#spreadFloat">spreadFloat</a></li><li><a href="global.html#spreadInclusive">spreadInclusive</a></li><li><a href="global.html#spreadInclusiveExp">spreadInclusiveExp</a></li><li><a href="global.html#spreadInclusiveExpFloat">spreadInclusiveExpFloat</a></li><li><a href="global.html#spreadInclusiveFloat">spreadInclusiveFloat</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#binary">binary</a></li><li><a href="global.html#cosine">cosine</a></li><li><a href="global.html#cosineF">cosineF</a></li><li><a href="global.html#count">count</a></li><li><a href="global.html#fill">fill</a></li><li><a href="global.html#saw">saw</a></li><li><a href="global.html#sawF">sawF</a></li><li><a href="global.html#sine">sine</a></li><li><a href="global.html#sineF">sineF</a></li><li><a href="global.html#spacing">spacing</a></li><li><a href="global.html#spread">spread</a></li><li><a href="global.html#spreadExp">spreadExp</a></li><li><a href="global.html#spreadExpF">spreadExpF</a></li><li><a href="global.html#spreadF">spreadF</a></li><li><a href="global.html#spreadInc">spreadInc</a></li><li><a href="global.html#spreadIncExp">spreadIncExp</a></li><li><a href="global.html#spreadIncExpF">spreadIncExpF</a></li><li><a href="global.html#spreadIncF">spreadIncF</a></li><li><a href="global.html#square">square</a></li><li><a href="global.html#squareF">squareF</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Tue Feb 24 2026 19:11:01 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Feb 25 2026 18:27:36 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
