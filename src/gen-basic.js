@@ -1,33 +1,17 @@
-//==========================================================================
-// gen-basic.js
-// part of 'total-serialism' Package
-// by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
-// MIT License
-//
-// Basic methods that generate number sequences as 
-// startingpoint for composing melodies, rhythms and more
-// 
-// credits:
-// - spread-methods inspired by Max8's MC functions spread and spreadinclusive
-// - cosine/sine array generation inspired by workshop by Steven Yi at ICLC
-//==========================================================================
+/**
+ * @file gen-basic.js
+ * @description Part of the 'total-serialism' Package. Basic methods that 
+ * generate number sequences as startingpoint for composing melodies, rhythms 
+ * and more
+ * @copyright Timo Hoogland (@tmhglnd), www.timohoogland.com
+ * @license MIT License
+ * 
+ * credits:
+ * - spread-methods inspired by Max8's MC functions spread and spreadinclusive
+ * - cosine/sine array generation inspired by workshop by Steven Yi at ICLC
+ */
 
 const { map, flatten, toArray, size, TWO_PI } = require('./utility');
-
-// /**
-//  * @typedef {Int} Int
-//  * @description A whole number (integer), -Infinity to +Infinity
-//  */
-
-// /**
-//  * @typedef {IntP} IntP
-//  * @description A positive whole number, 0 or higher
-//  */
-
-// /**
-//  * @typedef {Number} Number
-//  * @description Any number, integer or float, from -Infinity to +Infinity
-//  */
 
 /** 
  * The counter function generates an array of ascending or descending 
@@ -53,7 +37,7 @@ const { map, flatten, toArray, size, TWO_PI } = require('./utility');
  * //=> [ 5, 4, 3, 2, 1, 0, -1, -2, -3, -4 ]
  * 
  * @param {IntP} count (or count from, default = 12)
- * @param {Int} to (optional, default = undefined)
+ * @param {Int=} to (optional, default = undefined)
  * @returns {Number[]} 
 */
 function count(from=11, to){
@@ -91,8 +75,8 @@ exports.count = count;
  * Gen.spreadF(5);
  * 
  * @param {Int} length of output array
- * @param {Number} low value (optional, default = 0)
- * @param {Number} high value (optional, default = length)
+ * @param {Number=} low value (optional, default = 0)
+ * @param {Number=} high value (optional, default = length)
  * @returns {Number[]}
 */
 function spreadFloat(len=1, lo=1, hi){
@@ -136,8 +120,8 @@ exports.spreadF = spreadFloat;
  * //=> [ 10, 8, 6, 4, 3 ] 
  * 
  * @param {Int} length of output array
- * @param {Int} low value (optional, default = 0)
- * @param {Int} high value (optional, default = length)
+ * @param {Int=} low value (optional, default = 0)
+ * @param {Int=} high value (optional, default = length)
  * @returns {Number[]}
 */
 function spread(len, lo=size(len), hi){
@@ -155,9 +139,9 @@ exports.spread = spread;
  * Gen.spreadExpF();
  * 
  * @param {Int} length of output array
- * @param {Number} low value (optional, default = 0)
- * @param {Number} high value (exclusive, optional, default = length)
- * @param {Number} exponent (optional, default = 1)
+ * @param {Number=} low value (optional, default = 0)
+ * @param {Number=} high value (exclusive, optional, default = length)
+ * @param {Number=} exponent (optional, default = 1)
  * @returns {Number[]}
  */
 function spreadExpFloat(len=1, lo=1, hi, exp=1){
@@ -188,9 +172,9 @@ exports.spreadExpF = spreadExpFloat;
  * //=> [ 0, 0, 0, 0, 1, 2, 3, 4, 6, 8 ] 
  * 
  * @param {Int} length of output array
- * @param {Int} low value (optional, default = 0)
- * @param {Int} high value (exclusive, optional, default = length)
- * @param {Number} exponent (optional, default = 1)
+ * @param {Int=} low value (optional, default = 0)
+ * @param {Int=} high value (exclusive, optional, default = length)
+ * @param {Number=} exponent (optional, default = 1)
  * @returns {Number[]}
  */
 function spreadExp(len, lo=size(len), hi, exp){
@@ -213,8 +197,8 @@ exports.spreadExp = spreadExp;
  * Gen.spreadIncF(5);
  * 
  * @param {Int} length of output array
- * @param {Number} low value (optional)
- * @param {Number} high value (inclusive, optional)
+ * @param {Number=} low value (optional)
+ * @param {Number=} high value (inclusive, optional)
  * @returns {Number[]}
  */
 function spreadInclusiveFloat(len=1, lo=1, hi){
@@ -262,8 +246,8 @@ exports.spreadIncF = spreadInclusiveFloat;
  * //=> [ 12, 9, 7, 5, 3 ] 
  * 
  * @param {Int} length of output array
- * @param {Number} low value (optional)
- * @param {Number} high value (inclusive, optional)
+ * @param {Number=} low value (optional)
+ * @param {Number=} high value (inclusive, optional)
  * @returns {Number[]}
  */
 function spreadInclusive(len, lo=size(len), hi){
@@ -282,9 +266,9 @@ exports.spreadInc = spreadInclusive;
  * Gen.spreadIncExpF();
  * 
  * @param {Int} length of output array
- * @param {Number} low value (optional, default = 0)
- * @param {Number} high value (exclusive, optional, default = length)
- * @param {Number} exponent (optional, default = 1)
+ * @param {Number=} low value (optional, default = 0)
+ * @param {Number=} high value (exclusive, optional, default = length)
+ * @param {Number=} exponent (optional, default = 1)
  * @returns {Number[]}
  */
 function spreadInclusiveExpFloat(len=1, lo=1, hi, exp=1){
@@ -321,9 +305,9 @@ exports.spreadIncExpF = spreadInclusiveExpFloat;
  * Gen.spreadIncExp(10, 0, 10, 2);
  * 
  * @param {Int} length of output array
- * @param {Number} low value (optional, default = 0)
- * @param {Number} high value (exclusive, optional, default = length)
- * @param {Number} exponent (optional, default = 1)
+ * @param {Number=} low value (optional, default = 0)
+ * @param {Number=} high value (exclusive, optional, default = length)
+ * @param {Number=} exponent (optional, default = 1)
  * @returns {Number[]}
  */
 function spreadInclusiveExp(len, lo=size(len), hi, exp){
@@ -346,7 +330,7 @@ exports.spreadIncExp = spreadInclusiveExp;
  * //=> [ 10, 10, 15, 15, 15, 20, 20, 20, 20 ]
  * @param {Anything} value to duplicate
  * @param {Int} amount of duplicates
- * @param {...*} repeat n-times
+ * @param {...*=} repeat n-times
  * @param {Array} array containing value/amount pairs
  * @returns {Number[]}
  */
@@ -407,10 +391,10 @@ exports.fill = fill;
  * //   -1.00 ┤         ╰╯    ╰╯    ╰─╯  ╰─╯         ╰ 
  *  
  * @param {Int} length of output array
- * @param {(Number|Number[])} periods of sine-wave 
- * @param {Number} low range of values (optional, default = -1) 
- * @param {Number} high range of values (optional, default = 1)
- * @param {Number} phase offset (optional, default = 0)
+ * @param {(Number|Number[])=} periods of sine-wave 
+ * @param {Number=} low range of values (optional, default = -1) 
+ * @param {Number=} high range of values (optional, default = 1)
+ * @param {Number=} phase offset (optional, default = 0)
  * @return {Number[]}
  */
 function sineFloat(len=1, periods=1, lo, hi, phase=0){
@@ -460,10 +444,10 @@ exports.sinF = sineFloat;
  * //        0.00 ┤ ╰╯ ╰╯   ╰  
  * 
  * @param {Int} length of output array
- * @param {(Number|Number[])} periods of wave (optional, default = 1)
- * @param {Number} low range of values (optional, default = 0)
- * @param {Number} high range of values (optional, default = 12)
- * @param {Number} phase offset (optional, default = 0)
+ * @param {(Number|Number[])=} periods of wave (optional, default = 1)
+ * @param {Number=} low range of values (optional, default = 0)
+ * @param {Number=} high range of values (optional, default = 12)
+ * @param {Number=} phase offset (optional, default = 0)
  * @returns {Number[]}
  */
 function sine(len=1, periods=1, lo=12, hi, phase){
@@ -489,10 +473,10 @@ exports.sine = sine;
  * // -1.00 ┤     ╰────╯      
  * 
  * @param {Int} length of output array
- * @param {(Number|Number[])} periods of wave 
- * @param {Number} low range of values (optional, default = -1) 
- * @param {Number} high range of values (optional, default = 1)
- * @param {Number} phase offset (optional, default = 0)
+ * @param {(Number|Number[])=} periods of wave 
+ * @param {Number=} low range of values (optional, default = -1) 
+ * @param {Number=} high range of values (optional, default = 1)
+ * @param {Number=} phase offset (optional, default = 0)
  * @returns {Number[]}
  */
 function cosineFloat(len=1, periods=1, lo, hi, phase=0){
@@ -509,10 +493,10 @@ exports.cosF = cosineFloat;
  * Gen.cosine(11, 4, 0, 7); 
  * 
  * @param {Int} length of output array
- * @param {(Number|Number[])} periods of wave 
- * @param {Number} low range of values (optional, default = 0) 
- * @param {Number} high range of values (optional, default = 12)
- * @param {Number} phase offset (optional, default = 0)
+ * @param {(Number|Number[])=} periods of wave 
+ * @param {Number=} low range of values (optional, default = 0) 
+ * @param {Number=} high range of values (optional, default = 12)
+ * @param {Number=} phase offset (optional, default = 0)
  * @returns {Number[]}
  */
 function cosine(len=1, periods=1, lo=12, hi, phase=0){
@@ -536,10 +520,10 @@ exports.cosine = cosine;
  * //   -1.00 ┼╯        ╰╯        ╰╯    
  * 
  * @param {Int|Number[]} length of output array (uses length of Array if input)
- * @param {(Number|Number[])} periods of the wave (option, default = 1)
- * @param {Number} low range of values (optional, default = -1) 
- * @param {Number} high range of values (optional, default = 1)
- * @param {Number} phase offset (optional, default = 0)
+ * @param {(Number|Number[])=} periods of the wave (optional, default = 1)
+ * @param {Number=} low range of values (optional, default = -1) 
+ * @param {Number=} high range of values (optional, default = 1)
+ * @param {Number=} phase offset (optional, default = 0)
  * @returns {Number[]}
  */
 function sawFloat(len=1, periods=1, lo, hi, phase=0){
@@ -597,10 +581,10 @@ exports.sawF = sawFloat;
  * //    0.00 ┼─╯   ╰╯       ╰╯    ╰─╯        ╰╯ 
  *  
  * @param {Int} length of output array
- * @param {(Number|Number[])} periods of the wave (option, default = 1)
- * @param {Number} low range of values (optional, default = -1) 
- * @param {Number} high range of values (optional, default = 1)
- * @param {Number} phase offset (optional, default = 0)
+ * @param {(Number|Number[])=} periods of the wave (optional, default = 1)
+ * @param {Number=} low range of values (optional, default = -1) 
+ * @param {Number=} high range of values (optional, default = 1)
+ * @param {Number=} phase offset (optional, default = 0)
  * @returns {Number[]}
  */
 function saw(len=1, periods=1, lo=12, hi, phase=0){
@@ -626,10 +610,10 @@ exports.saw = saw;
  * Gen.squareF()
  *  
  * @param {Number} length of output array
- * @param {(Number|Number[])} periods of the wave (option, default = 1)
- * @param {Number} low range of values (optional, default = 0) 
- * @param {Number} high range of values (optional, default = 1)
- * @param {Number} pulse width (optional, default = 0.5)
+ * @param {(Number|Number[])=} periods of the wave (optional, default = 1)
+ * @param {Number=} low range of values (optional, default = 0) 
+ * @param {Number=} high range of values (optional, default = 1)
+ * @param {Number=} pulse width (optional, default = 0.5)
  * @returns {Number[]}
  */
 function squareFloat(len=1, periods=1, lo, hi, pulse=0.5){
@@ -669,10 +653,10 @@ exports.rectF = squareFloat;
  * //    0.00 ┤ ╰─────╯ ╰────╯ ╰─────╯╰─────  
  * 
  * @param {Number} length of output array
- * @param {(Number|Number[])} periods of the wave (option, default = 1)
- * @param {Number} low range of values (optional, default = 0) 
- * @param {Number} high range of values (optional, default = 1)
- * @param {Number} pulse width (optional, default = 0.5)
+ * @param {(Number|Number[])=} periods of the wave (optional, default = 1)
+ * @param {Number=} low range of values (optional, default = 0) 
+ * @param {Number=} high range of values (optional, default = 1)
+ * @param {Number=} pulse width (optional, default = 0.5)
  * @returns {Number[]}
  */
 function square(len=1, periods=1, lo=12, hi, pulse=0.5){
