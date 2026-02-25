@@ -14,6 +14,21 @@
 
 const { map, flatten, toArray, size, TWO_PI } = require('./utility');
 
+// /**
+//  * @typedef {Int} Int
+//  * @description A whole number (integer), -Infinity to +Infinity
+//  */
+
+// /**
+//  * @typedef {IntP} IntP
+//  * @description A positive whole number, 0 or higher
+//  */
+
+// /**
+//  * @typedef {Number} Number
+//  * @description Any number, integer or float, from -Infinity to +Infinity
+//  */
+
 /** 
  * The counter function generates an array of ascending or descending 
  * integers, counted from a starting value up to (and including) an ending 
@@ -37,9 +52,9 @@ const { map, flatten, toArray, size, TWO_PI } = require('./utility');
  * Gen.counter(5, -4);
  * //=> [ 5, 4, 3, 2, 1, 0, -1, -2, -3, -4 ]
  * 
- * @param {Int} count (or count from, default = 12)
+ * @param {IntP} count (or count from, default = 12)
  * @param {Int} to (optional, default = undefined)
- * @return {Array<Number>} 
+ * @returns {Number[]} 
 */
 function count(from=11, to){
 	// if to is undefined set to 0
@@ -78,7 +93,7 @@ exports.count = count;
  * @param {Int} length of output array
  * @param {Number} low value (optional, default = 0)
  * @param {Number} high value (optional, default = length)
- * @return {Array<Number>}
+ * @returns {Number[]}
 */
 function spreadFloat(len=1, lo=1, hi){
 	// if hi undefined set lo to 0 and hi=lo
@@ -123,7 +138,7 @@ exports.spreadF = spreadFloat;
  * @param {Int} length of output array
  * @param {Int} low value (optional, default = 0)
  * @param {Int} high value (optional, default = length)
- * @return {Array<Number>}
+ * @returns {Number[]}
 */
 function spread(len, lo=size(len), hi){
 	let arr = spreadFloat(len, lo, hi);
@@ -143,7 +158,7 @@ exports.spread = spread;
  * @param {Number} low value (optional, default = 0)
  * @param {Number} high value (exclusive, optional, default = length)
  * @param {Number} exponent (optional, default = 1)
- * @return {Array<Number>}
+ * @returns {Number[]}
  */
 function spreadExpFloat(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
@@ -176,7 +191,7 @@ exports.spreadExpF = spreadExpFloat;
  * @param {Int} low value (optional, default = 0)
  * @param {Int} high value (exclusive, optional, default = length)
  * @param {Number} exponent (optional, default = 1)
- * @return {Array<Number>}
+ * @returns {Number[]}
  */
 function spreadExp(len, lo=size(len), hi, exp){
 	let arr = spreadExpFloat(len, lo, hi, exp);
@@ -200,7 +215,7 @@ exports.spreadExp = spreadExp;
  * @param {Int} length of output array
  * @param {Number} low value (optional)
  * @param {Number} high value (inclusive, optional)
- * @return {Array<Number>}
+ * @returns {Number[]}
  */
 function spreadInclusiveFloat(len=1, lo=1, hi){
 	// if hi undefined set lo to 0 and hi=lo
@@ -249,7 +264,7 @@ exports.spreadIncF = spreadInclusiveFloat;
  * @param {Int} length of output array
  * @param {Number} low value (optional)
  * @param {Number} high value (inclusive, optional)
- * @return {Array<Number>}
+ * @returns {Number[]}
  */
 function spreadInclusive(len, lo=size(len), hi){
 	var arr = spreadInclusiveFloat(len, lo, hi);
@@ -270,7 +285,7 @@ exports.spreadInc = spreadInclusive;
  * @param {Number} low value (optional, default = 0)
  * @param {Number} high value (exclusive, optional, default = length)
  * @param {Number} exponent (optional, default = 1)
- * @return {Array<Number>}
+ * @returns {Number[]}
  */
 function spreadInclusiveExpFloat(len=1, lo=1, hi, exp=1){
 	// if hi undefined set lo to 0 and hi=lo
@@ -309,7 +324,7 @@ exports.spreadIncExpF = spreadInclusiveExpFloat;
  * @param {Number} low value (optional, default = 0)
  * @param {Number} high value (exclusive, optional, default = length)
  * @param {Number} exponent (optional, default = 1)
- * @return {Array<Number>}
+ * @returns {Number[]}
  */
 function spreadInclusiveExp(len, lo=size(len), hi, exp){
 	var arr = spreadInclusiveExpFloat(len, lo, hi, exp);
@@ -331,9 +346,9 @@ exports.spreadIncExp = spreadInclusiveExp;
  * //=> [ 10, 10, 15, 15, 15, 20, 20, 20, 20 ]
  * @param {Anything} value to duplicate
  * @param {Int} amount of duplicates
- * @param {*} repeat n-times
+ * @param {...*} repeat n-times
  * @param {Array} array containing value/amount pairs
- * @returns {Array<Number>}
+ * @returns {Number[]}
  */
 function fill(...args){
 	// also accepts a single array as argument containing the pairs
@@ -392,11 +407,11 @@ exports.fill = fill;
  * //   -1.00 ┤         ╰╯    ╰╯    ╰─╯  ╰─╯         ╰ 
  *  
  * @param {Int} length of output array
- * @param {Number | Array<Number>} periods of sine-wave 
+ * @param {(Number|Number[])} periods of sine-wave 
  * @param {Number} low range of values (optional, default = -1) 
  * @param {Number} high range of values (optional, default = 1)
  * @param {Number} phase offset (optional, default = 0)
- * @return {Array<Number>}
+ * @return {Number[]}
  */
 function sineFloat(len=1, periods=1, lo, hi, phase=0){
 	// if no range specified
@@ -445,11 +460,11 @@ exports.sinF = sineFloat;
  * //        0.00 ┤ ╰╯ ╰╯   ╰  
  * 
  * @param {Int} length of output array
- * @param {Number|Array<Number>} periods of wave (optional, default = 1)
+ * @param {(Number|Number[])} periods of wave (optional, default = 1)
  * @param {Number} low range of values (optional, default = 0)
  * @param {Number} high range of values (optional, default = 12)
  * @param {Number} phase offset (optional, default = 0)
- * @return {Array<Number>}
+ * @returns {Number[]}
  */
 function sine(len=1, periods=1, lo=12, hi, phase){
 	var arr = sineFloat(len, periods, lo, hi, phase);
@@ -474,11 +489,11 @@ exports.sine = sine;
  * // -1.00 ┤     ╰────╯      
  * 
  * @param {Int} length of output array
- * @param {Number|Array<Number>} periods of wave 
+ * @param {(Number|Number[])} periods of wave 
  * @param {Number} low range of values (optional, default = -1) 
  * @param {Number} high range of values (optional, default = 1)
  * @param {Number} phase offset (optional, default = 0)
- * @return {Array<Number>}
+ * @returns {Number[]}
  */
 function cosineFloat(len=1, periods=1, lo, hi, phase=0){
 	return sineFloat(len, periods, lo, hi, phase+0.25);
@@ -494,11 +509,11 @@ exports.cosF = cosineFloat;
  * Gen.cosine(11, 4, 0, 7); 
  * 
  * @param {Int} length of output array
- * @param {Number|Array<Number>} periods of wave 
+ * @param {(Number|Number[])} periods of wave 
  * @param {Number} low range of values (optional, default = 0) 
  * @param {Number} high range of values (optional, default = 12)
  * @param {Number} phase offset (optional, default = 0)
- * @return {Array<Number>}
+ * @returns {Number[]}
  */
 function cosine(len=1, periods=1, lo=12, hi, phase=0){
 	var arr = sineFloat(len, periods, lo, hi, phase+0.25);
@@ -520,12 +535,12 @@ exports.cosine = cosine;
  * //   -0.64 ┤╭─╯      │╭─╯      │╭─╯  
  * //   -1.00 ┼╯        ╰╯        ╰╯    
  * 
- * @param {Int|Array<Number>} length of output array (uses length of Array if input)
- * @param {Number|Array<Number>} periods of the wave (option, default = 1)
+ * @param {Int|Number[]} length of output array (uses length of Array if input)
+ * @param {(Number|Number[])} periods of the wave (option, default = 1)
  * @param {Number} low range of values (optional, default = -1) 
  * @param {Number} high range of values (optional, default = 1)
  * @param {Number} phase offset (optional, default = 0)
- * @returns {Array<Number>}
+ * @returns {Number[]}
  */
 function sawFloat(len=1, periods=1, lo, hi, phase=0){
 	if (lo === undefined){ lo = -1; hi = 1; }
@@ -582,11 +597,11 @@ exports.sawF = sawFloat;
  * //    0.00 ┼─╯   ╰╯       ╰╯    ╰─╯        ╰╯ 
  *  
  * @param {Int} length of output array
- * @param {Number|Array<Number>} periods of the wave (option, default = 1)
+ * @param {(Number|Number[])} periods of the wave (option, default = 1)
  * @param {Number} low range of values (optional, default = -1) 
  * @param {Number} high range of values (optional, default = 1)
  * @param {Number} phase offset (optional, default = 0)
- * @returns {Array<Number>}
+ * @returns {Number[]}
  */
 function saw(len=1, periods=1, lo=12, hi, phase=0){
 	var arr = sawFloat(len, periods, lo, hi, phase);
@@ -611,11 +626,11 @@ exports.saw = saw;
  * Gen.squareF()
  *  
  * @param {Number} length of output array
- * @param {Number|Array<Number>} periods of the wave (option, default = 1)
+ * @param {(Number|Number[])} periods of the wave (option, default = 1)
  * @param {Number} low range of values (optional, default = 0) 
  * @param {Number} high range of values (optional, default = 1)
  * @param {Number} pulse width (optional, default = 0.5)
- * @returns {Array<Number>}
+ * @returns {Number[]}
  */
 function squareFloat(len=1, periods=1, lo, hi, pulse=0.5){
 	if (lo === undefined){ lo = 0; hi = 1; }
@@ -654,11 +669,11 @@ exports.rectF = squareFloat;
  * //    0.00 ┤ ╰─────╯ ╰────╯ ╰─────╯╰─────  
  * 
  * @param {Number} length of output array
- * @param {Number|Array<Number>} periods of the wave (option, default = 1)
+ * @param {(Number|Number[])} periods of the wave (option, default = 1)
  * @param {Number} low range of values (optional, default = 0) 
  * @param {Number} high range of values (optional, default = 1)
  * @param {Number} pulse width (optional, default = 0.5)
- * @returns {Array<Number>}
+ * @returns {Number[]}
  */
 function square(len=1, periods=1, lo=12, hi, pulse=0.5){
 	var arr = squareFloat(len, periods, lo, hi, pulse);
@@ -684,8 +699,8 @@ exports.rect = square;
  * // negative values are clipped to 0
  * Gen.binaryBeat([-4, 4]);
  * //=> [0, 1, 0, 0]
- * @param {Int|Array<Number>} array - numbers to convert to binary representation
- * @returns {Array<Number>}
+ * @param {Int|Number[]} array - numbers to convert to binary representation
+ * @returns {Number[]}
  */ 
 function binary(...a){
 	// if no arguments return else flatten array to 1 dimension
@@ -708,14 +723,6 @@ function binary(...a){
 exports.binary = binary;
 exports.binaryBeat = binary;
 
-// Generate an array of 1's and 0's based on a positive integer number or array
-// Every number in the array will be replaced by a 1 with a specified amount of 
-// 0's appended to it. Eg. a 2 => 1 0, a 4 => 1 0 0 0, etc. This technique is
-// useful to generate a rhythm based on spacing length between onsets
-//
-// @param {Int+/Array} -> Array of numbers to convert to spaced rhythm
-// @return {Array} -> Array of 1's and 0's representing a rhythm
-//
 /**
  * Generate an array of 1's and 0's based on a positive integer number or 
  * array. Every number in the array will be replaced by a 1 with a specified 
@@ -731,8 +738,8 @@ exports.binaryBeat = binary;
  * // also works with an array as input
  * Gen.spacingBeat([4, 2, 0])
  * //=> [1, 0, 0, 0, 1, 0, 0]
- * @param {Int|Array<Number>} array numbers to convert to spaced rhythm
- * @returns {Array<Number>}
+ * @param {Int|Number[]} array numbers to convert to spaced rhythm
+ * @returns {Number[]}
  */
 function spacing(...a){
 	// if no arguments return else flatten array to 1 dimension

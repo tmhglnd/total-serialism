@@ -210,7 +210,7 @@ useful for representing rhythmical patterns.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line690">line 690</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line705">line 705</a>
     </li></ul></dd>
     
 
@@ -475,7 +475,7 @@ Gen.binaryBeat([-4, 4]);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line503">line 503</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line518">line 518</a>
     </li></ul></dd>
     
 
@@ -731,7 +731,7 @@ Gen.cosine(11, 4, 0, 7); </code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line483">line 483</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line498">line 498</a>
     </li></ul></dd>
     
 
@@ -854,7 +854,7 @@ value is the starting value and the second value the end.</p>
             <td class="type">
             
                 
-<span class="param-type">Int</span>
+<span class="param-type">IntP</span>
 
 
             
@@ -928,7 +928,7 @@ value is the starting value and the second value the end.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line44">line 44</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line59">line 59</a>
     </li></ul></dd>
     
 
@@ -1001,7 +1001,7 @@ Gen.counter(5, -4);
     
 
     
-    <h4 class="name" id="fill"><span class="type-signature"></span>fill<span class="signature">(value, amount, repeat, array)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    <h4 class="name" id="fill"><span class="type-signature"></span>fill<span class="signature">(value, amount, &hellip;repeat, array)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
     
 
     
@@ -1035,6 +1035,8 @@ accepts an array as a single argument containing the pairs.</p>
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -1060,6 +1062,14 @@ accepts an array as a single argument containing the pairs.</p>
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
@@ -1082,6 +1092,14 @@ accepts an array as a single argument containing the pairs.</p>
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
             
 
             
@@ -1106,6 +1124,16 @@ accepts an array as a single argument containing the pairs.</p>
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                    &lt;repeatable><br>
+                
+                </td>
+            
 
             
 
@@ -1128,6 +1156,14 @@ accepts an array as a single argument containing the pairs.</p>
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
             
 
             
@@ -1173,7 +1209,7 @@ accepts an array as a single argument containing the pairs.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line338">line 338</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line353">line 353</a>
     </li></ul></dd>
     
 
@@ -1237,7 +1273,7 @@ Gen.fill(10, 2, 15, 3, 20, 4);
     
 
     
-    <h4 class="name" id="saw"><span class="type-signature"></span>saw<span class="signature">(length, periods, low, high, phase)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    <h4 class="name" id="saw"><span class="type-signature"></span>saw<span class="signature">(length, periods<span class="signature-attributes">nullable</span>, low<span class="signature-attributes">nullable</span>, high<span class="signature-attributes">nullable</span>, phase<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
     
 
     
@@ -1269,6 +1305,8 @@ Gen.fill(10, 2, 15, 3, 20, 4);
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -1293,6 +1331,14 @@ Gen.fill(10, 2, 15, 3, 20, 4);
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
             
 
             
@@ -1320,10 +1366,20 @@ Gen.fill(10, 2, 15, 3, 20, 4);
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last"><p>of the wave (option, default = 1)</p></td>
+            <td class="description last"><p>of the wave (optional, default = 1)</p></td>
         </tr>
 
     
@@ -1342,6 +1398,16 @@ Gen.fill(10, 2, 15, 3, 20, 4);
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
             
 
             
@@ -1366,6 +1432,16 @@ Gen.fill(10, 2, 15, 3, 20, 4);
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
 
             
 
@@ -1388,6 +1464,16 @@ Gen.fill(10, 2, 15, 3, 20, 4);
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
             
 
             
@@ -1433,7 +1519,7 @@ Gen.fill(10, 2, 15, 3, 20, 4);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line591">line 591</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line606">line 606</a>
     </li></ul></dd>
     
 
@@ -1721,7 +1807,7 @@ argument sets the low-range to 0</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line530">line 530</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line545">line 545</a>
     </li></ul></dd>
     
 
@@ -1982,7 +2068,7 @@ argument sets the low-range to 0</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line454">line 454</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line469">line 469</a>
     </li></ul></dd>
     
 
@@ -2249,7 +2335,7 @@ The wave can be inverted by swapping the arguments.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line401">line 401</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line416">line 416</a>
     </li></ul></dd>
     
 
@@ -2443,7 +2529,7 @@ onsets</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line737">line 737</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line744">line 744</a>
     </li></ul></dd>
     
 
@@ -2656,7 +2742,7 @@ is only with whole numbers (integers).</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line128">line 128</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line143">line 143</a>
     </li></ul></dd>
     
 
@@ -2900,7 +2986,7 @@ exponent as 4th argument and only outputs whole numbers.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line181">line 181</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line196">line 196</a>
     </li></ul></dd>
     
 
@@ -3131,7 +3217,7 @@ an optional exponent as 4th argument to apply a curve.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line148">line 148</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line163">line 163</a>
     </li></ul></dd>
     
 
@@ -3344,7 +3430,7 @@ values.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line83">line 83</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line98">line 98</a>
     </li></ul></dd>
     
 
@@ -3555,7 +3641,7 @@ is only with whole numbers (integers).</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line254">line 254</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line269">line 269</a>
     </li></ul></dd>
     
 
@@ -3800,7 +3886,7 @@ whole numbers.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line314">line 314</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line329">line 329</a>
     </li></ul></dd>
     
 
@@ -4033,7 +4119,7 @@ an optional exponent as 4th argument to apply a curve.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line275">line 275</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line290">line 290</a>
     </li></ul></dd>
     
 
@@ -4242,7 +4328,7 @@ Flipping the low and high range will result descending values.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line205">line 205</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line220">line 220</a>
     </li></ul></dd>
     
 
@@ -4501,7 +4587,7 @@ Gen.spreadIncF(5);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line663">line 663</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line678">line 678</a>
     </li></ul></dd>
     
 
@@ -4765,7 +4851,7 @@ argument sets the low-range to 0.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line620">line 620</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line635">line 635</a>
     </li></ul></dd>
     
 
@@ -4849,7 +4935,7 @@ Gen.squareF()
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Feb 25 2026 18:27:36 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Feb 25 2026 19:01:11 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
