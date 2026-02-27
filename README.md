@@ -12,8 +12,8 @@
 
 # 📋 Table of Content
 
-- [👾 Newest Features](#-newest-features)
 - [🚀 Install](#-install)
+- [👾 Newest Features](#-newest-features)
 - [🔭 Content](#-content)
 - [📟 Usage](#-usage)
 - [📖 Documentation](/docs/README.md)
@@ -21,7 +21,53 @@
 - [✨ Inspiration & Bibliography](#-inspiration--bibliography)
 - [📄 License](#-license)
 
+# 🚀 Install
+
+## Install in node_modules
+
+```
+$ npm install total-serialism
+```
+
+```js
+// entire package
+const Srl = require('total-serialism');
+
+// subset of library
+const Gen = require('total-serialism').Generative;
+
+// specific functions
+const { spread, fill } = require('total-serialism').Generative;
+```
+
+## Include in html
+
+Include latest or specific version of bundled minified es5 through url in index.html 
+
+```html
+<script src="https://unpkg.com/total-serialism/build/ts.es5.min.js"></script>
+
+<script src="https://unpkg.com/total-serialism@1.6.12/build/ts.es5.min.js"></script>
+```
+
+Here are some alternatives to unpkg.com, in case of a server error:
+
+`https://cdn.staticdelivr.com/npm/total-serialism/build/ts.es5.min.js` 
+
+or `https://cdn.jsdelivr.net/npm/total-serialism/build/ts.es5.min.js`
+
+Use in a html `<script>` like so:
+
+```js
+// entire package
+const Srl = TotalSerialism;
+// subset of library
+const Rand = TotalSerialism.Stochastic;
+```
+
 # 👾 Newest features
+
+Below are some of the newest features. Please see the documentation for all the available functions.
 
 ## multiEval
 
@@ -36,17 +82,6 @@ Util.multiEval(Algo.euclid, 8, [5, 7, 3])
 //   1, 1, 1, 1, 1, 1, 1, 0,
 //   1, 0, 0, 1, 0, 0, 1, 0
 // ]
-
-// 6x the spread function, like: 
-// join(spread(5, 0, 12), spread(3, 0, 24), spread(8, 0, 12), 
-//      spread(5, 0, 24), spread(3, 0, 12), spread(8, 0, 24))
-Util.multiEval(Gen.spread, [5, 3, 8], 0, [12, 24])
-// [
-//   0,  2,  4,  7,  9, 0,  8, 16, 0,
-//   1,  3,  4,  6,  7, 9, 10,  0, 4,
-//   9, 14, 19,  0,  4, 8,  0,  3, 6,
-//   9, 12, 15, 18, 21
-// ]
 ```
 
 ## Binary & Spacing
@@ -56,11 +91,20 @@ Generative rhythmical patterns of 1's and 0's by converting a number to binary o
 ```js
 const Gen = require('total-serialism').Generative;
 
-Gen.binary(358);
-//=> [1, 0, 1, 1, 0, 0, 1, 1, 0]
-
 Gen.space(2, 3, 2)
 //=> [1, 0, 1, 0, 0, 1, 0]
+```
+
+## Random clave patterns
+
+Use the `Rand.clave()` to generate binary beats with clave patterns
+
+```js
+const { clave } = require('total-serialism').Stochastic;
+
+clave(16, 4);
+//=> [ 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1 ] 
+//=> █   █ █   █  █ █
 ```
 
 ## n-Order Markov Chain
@@ -112,34 +156,7 @@ TL.chordsFromNumerals(['I', 'IIm', 'IVsus2', 'V7', 'VIm9'], 'c');
 //     [ 9, 0, 4, 7, 11 ]] 
 ```
 
-## Support for n-dimensional arrays
-
-Most of the transform, translate and utility functions now support calculations with n-dimensional arrays.
-
-```js 
-const TL = require('total-serialism').Translate;
-const Mod = require('total-serialism').Transform;
-
-TL.noteToMidi(['c4', ['eb4', 'g4', 'a4'], ['a3', 'f4']]);
-//=> [ 60, [ 63, 67, 69 ], [ 57, 65 ] ] 
-
-Mod.clone(['c', ['e', 'g']], ['4', '5', '#3']);
-//=> [ 'c4', [ 'e4', 'g4' ], 'c5', [ 'e5', 'g5' ], 'c#3', [ 'e#3', 'g#3' ] ]
-
-TL.relativeToMidi([[-12, -9, -5], [0, 4, 7], [2, 5, 9]], 'c4');
-//=> [ [ 36, 39, 43 ], [ 48, 52, 55 ], [ 50, 53, 57 ] ] 
-
-Stat.compare(['c', ['e', 'g']], ['c', ['e', 'g']]);
-//=> true 
-
-Mod.flatten([1, [2, 3, [ 4 ], 5], 6]);
-//=> [ 1, 2, 3, 4, 5, 6 ] 
-
-Mod.lookup([0, [1, 1, [2, 3], 0], 2], ['c4', 'e4', 'f4', 'g4']);
-//=> [ 'c4', [ 'e4', 'e4', [ 'f4', 'g4' ], 'c4' ], 'f4' ] 
-```
-
-## cellular automaton
+## Cellular Automaton
 
 Generate an Elementary Cellular Automaton class. This is an one dimensional array (collection of cells) with states that are either dead or alive (0/1). By following a set of rules the next generation is calculated for every cell based on its neighbouring cells.
 
@@ -174,112 +191,16 @@ Util.draw(gens);
 // █   █  █   ████  █   █ ██ █ ██ █  █ █ ██
 ```
 
-## Scale tuning
-
-Use the `new TL.Scala()` class to import a *.scl* file (Scala tuning format) to work with custom tuning systems apart from the Western 12-TET (Equal Temperament) tuning or use one of the tunings from a database with over 5000 tunings from [Stichting Huygens-Fokker](http://www.huygens-fokker.org/scala/).
-
-```js
-const { Scala } = require('total-serialism').Translate;
-
-// Create an instance of a Scala class
-let scl = new Scala();
-
-scl.scalaToFreq([60, 63, 67, 69, 72, 81, 36, 48]);
-//=> [ 261.63, 311.13, 392.00, 440.00, 523.25, 880.00, 65.41, 130.81 ]
-
-// Get the entire list of names from the library
-scl.names;
-// [ '05-19',
-//   '05-22',
-//   '05-24',
-//   '06-41',
-//   '07-19',
-//   '07-31',
-//   '07-37',
-//   '08-11',
-//   '08-13',
-//   '08-19', ... and 5000 more]
-```
-
-## Random clave patterns
-
-Use the `Rand.clave()` to generate binary beats with clave patterns
-
-```js
-const { clave } = require('total-serialism').Stochastic;
-
-clave(16, 4);
-//=> [ 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1 ] 
-//=> █   █ █   █  █ █
-
-clave(16, 3, 1);
-//=> [ 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1 ] 
-//=> █  █  ██  █ █  █
-```
-
-# 🚀 Install
-
-## Install in node_modules
-
-```
-$ npm install total-serialism
-```
-
-```js
-// entire package
-const Srl = require('total-serialism');
-
-// subset of library
-const Gen = require('total-serialism').Generative;
-
-// specific methods
-const { spread, fill } = require('total-serialism').Generative;
-```
-
-## Import es5 version
-
-```js
-// entire package
-const Srl = require('total-serialism/build/ts.es5.js');
-// subset of library
-const Algo = require('total-serialism/build/ts.es5.js').Algorithmic;
-```
-
-## Include in html
-
-Include latest or specific version of bundled minified es5 through url in index.html 
-
-```html
-<script src="https://unpkg.com/total-serialism/build/ts.es5.min.js"></script>
-
-<script src="https://unpkg.com/total-serialism@1.6.12/build/ts.es5.min.js"></script>
-```
-
-Here are some alternatives to unpkg.com, in case of a server error:
-
-`https://cdn.staticdelivr.com/npm/total-serialism/build/ts.es5.min.js` 
-
-or `https://cdn.jsdelivr.net/npm/total-serialism/build/ts.es5.min.js`
-
-Use in a html `<script>` like so:
-
-```js
-// entire package
-const Srl = TotalSerialism;
-// subset of library
-const Rand = TotalSerialism.Stochastic;
-```
-
 # 🔭 Content
 
 The library consists of a few subsets:
-- [`Generative`](docs/generative-methods.md) : Basic methods that generate arrays of number sequences, such as methods that generate an ascending array of numbers evenly spread between a low and high value.
-- [`Algorithmic`](docs/algorithmic-methods.md) : These are also generative methods, but are in general more complex algorithms, such as a euclidean rhythm generator, lindenmayer string expansion, cellular automaton, fibonacci sequence, pisano periods and more.
-- [`Stochastic`](docs/stochastic-methods.md) : Methods for procedurally generating number sequences based on various types of randomness, such as white noise (uniformly distributed), rolling a die, flipping a coin and more. Also includes a n-order Markov Chain.
+- [`Generative`](docs/generative-methods.md) : Basic array generators. Generate number sequences, such as ascending or descending numbers.
+- [`Algorithmic`](docs/algorithmic-methods.md) : Complex array generators. Generate euclidean rhythm generator, lindenmayer string expansion, cellular automaton, fibonacci sequence, pisano periods.
+- [`Stochastic`](docs/stochastic-methods.md) : Psuedorandom array generators. Methods for procedurally generating number sequences based on various types of randomness, such as uniformly distributed randomness, rolling a die, markov-chains.
 - [`Transform`](docs/transform-methods.md) : Methods that transform arrays. Think of methods such as reversing, palindrome, duplicating, inversing, interleaving and more.
-- [`Statistic`](docs/statistic-methods.md) : A set of methods from Statistics and Probability Theory that allow for analysis of number sequences for statistical purposes. For example getting the average value or the most common value from an array.
-- [`Translate`](docs/translate-methods.md) : Translate between different notation systems and tunings with Scala. For example convert midi values to frequency, or note names to midi integers. Or use a relative semitone notation system and convert to midi. Map values in an Array to a specified scale, and output the relative values in the specified scale, root and octave.
-- [`Utility`](docs/utility-methods.md) : Basic arithmetic and methods necessary to run functions in the libraries above. But can also be of help in your own algorithmic processes.
+- [`Statistic`](docs/statistic-methods.md) : Methods for analysing arrays. For example getting the average value or the most common value from an array.
+- [`Translate`](docs/translate-methods.md) : Methods for translating between units. For example convert midi to frequency, note names to midi integers, bpm to milliseconds and more.
+- [`Utility`](docs/utility-methods.md) : Basic arithmetic and methods necessary to run functions in the libraries above. Can also be of help in your own algorithmic processes.
 
 # 📟 Usage
 
@@ -292,7 +213,7 @@ const TS = require('total-serialism');
 TS.Generative.spread(4);
 TS.Stochastic.random(4);
 ```
-Or an individual section
+Or a specific library
 
 ```js
 const Gen  = require('total-serialism').Generative;
@@ -302,8 +223,8 @@ const Rand = require('total-serialism').Stochastic;
 const Util = require('total-serialism').Utility;
 
 // function calls look like:
-Gen.spread(4);
-Rand.random(4);
+Gen.spread();
+Rand.random();
 ```
 
 Or an individual function
@@ -313,8 +234,8 @@ const { spread } = require('total-serialism').Generative;
 const { random } = require('total-serialism').Stochastic;
 
 // function calls look like:
-spread(4);
-random(4);
+spread();
+random();
 ```
 
 It's also possible to expose entire subsets to the main package 
@@ -325,11 +246,11 @@ const TS = require('total-serialism');
 Object.assign(TS, TS.Generative, TS.Stochastic);
 
 // function calls look like:
-TS.spread(4);
-TS.random(4);
+TS.spread();
+TS.random();
 ```
 
-Or expose entire subsets to the global namespace. (not recommended, this can lead to name collisions with other functions/packages)
+Or expose entire subsets to the global namespace. *(not recommended, this can lead to name collisions with other functions/packages)*
 
 ```js
 // expose multiple sub-libraries to the global scope
@@ -337,8 +258,8 @@ const TS = require('total-serialism');
 Object.assign(globalThis, TS.Generative, TS.Stochastic);
 
 // function calls look like:
-spread(4);
-random(4);
+spread();
+random();
 // etc...
 ```
 
@@ -446,7 +367,7 @@ Total Serialism is a result of research in algorithmic composition with the [Mer
 
 The MIT License
 
-Copyright (c) 2020 Timo Hoogland
+Copyright (c) 2020-2026 Timo Hoogland
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

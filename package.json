@@ -11,7 +11,8 @@
     "build-es5": "babel build/ts.bundle.js -o build/ts.es5.js",
     "build-min": "uglifyjs build/ts.es5.js -o build/ts.es5.min.js",
     "database": "node src/database.js",
-    "build-docs": "jsdoc -c jsdoc.json"
+    "build-docs": "jsdoc -c jsdoc.json",
+    "build-md-docs": "npx jsdoc2md  --template ./docs/templates/generative-methods.hbs --no-gfm 1 --separators 1 --global-index-format grouped --param-list-format table ./src/gen-basic.js > ./docs/generative-methods.md && npx jsdoc2md  --template ./docs/templates/algorithmic-methods.hbs --no-gfm 1 --separators 1 --global-index-format grouped --param-list-format table ./src/gen-complex.js > ./docs/algorithmic-methods.md"
   },
   "repository": {
     "type": "git",

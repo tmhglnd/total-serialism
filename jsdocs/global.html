@@ -104,6 +104,392 @@
     
 
     
+    <h4 class="name" id="bigCollatz"><span class="type-signature"></span>bigCollatz<span class="signature">(start)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>The <a href="global.html#collatz"><code>collatz</code></a> conjecture, but implemented with the BigNumber library.
+The collatz sequence can encounter quite big values so alternatively you can
+use bigCollatz and bigCollatzMod to allow for larger number calculations</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>start</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>any positive integer (default = 12)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-complex.js.html">gen-complex.js</a>, <a href="gen-complex.js.html#line340">line 340</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="global.html#collatz">collatz</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>```js
+Algo.bigCollatz('931386509544713451').length;
+// => 2283
+```</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="bigCollatzMod"><span class="type-signature"></span>bigCollatzMod<span class="signature">(start, modulus<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>The <a href="global.html#collatzMod"><code>collatzMod</code></a> function, but implemented with the BigNumber library.
+The collatz sequence can encounter quite big values so alternatively you can
+use bigCollatz and bigCollatzMod to allow for larger number calculations</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>start</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>positive integer starting point</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>modulus</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>(optional, default = 2)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-complex.js.html">gen-complex.js</a>, <a href="gen-complex.js.html#line370">line 370</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="global.html#collatzMod">collatzMod</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>```js
+Algo.bigCollatzMod('931386509544713451');
+```</code></pre>
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="binary"><span class="type-signature"></span>binary<span class="signature">(array)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
     
 
@@ -210,7 +596,7 @@ useful for representing rhythmical patterns.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line707">line 707</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line691">line 691</a>
     </li></ul></dd>
     
 
@@ -270,6 +656,392 @@ Gen.binaryBeat([4, 3, 5]);
 // negative values are clipped to 0
 Gen.binaryBeat([-4, 4]);
 //=> [0, 1, 0, 0]</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="collatz"><span class="type-signature"></span>collatz<span class="signature">(start)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Generate an array of numbers from the Collatz Conjecture, also known as the
+<code>3n+1</code> conjecture. Start with any positive integer <code>n</code>. Each next number is
+obtained from the previous number as follows: If the previous number is even
+then the next term is the previous term divided by 2. If the previous term
+is odd then the next term is 3 times the prevous term plus 1. The
+conjecture is, that no matter what value of <code>n</code>, the sequence will always
+reach one. The length of the output is quite unpredicatable and can
+therefore be an interesting sequence for algorithmic composition.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>start</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>any positive integer (default = 12)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-complex.js.html">gen-complex.js</a>, <a href="gen-complex.js.html#line288">line 288</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>```js
+// the collatz sequence for the number 15
+Algo.collatz(7);
+//=> [
+//  1,  2,  4,  8, 16,  5,
+//  10, 20, 40, 13, 26, 52,
+//  17, 34, 11, 22
+//	]
+```</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="collatzMod"><span class="type-signature"></span>collatzMod<span class="signature">(start, modulus<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>The <a href="global.html#collatz"><code>collatz</code></a> conjecture sequence with a modulus operation</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>start</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>positive integer starting point</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>modulus</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>(optional, default = 2)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-complex.js.html">gen-complex.js</a>, <a href="gen-complex.js.html#line321">line 321</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>```js
+// return the collatz sequence with a modulus operation (default = 2)
+Algo.collatzMod(7, 12);
+//=> [
+//   1,  2,  4,  8, 4, 5,
+//  10,  8,  4,  1, 2, 4,
+//   5, 10, 11, 10
+//	] 
+```</code></pre>
 
 
 
@@ -525,7 +1297,7 @@ Gen.binaryBeat([-4, 4]);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line520">line 520</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line504">line 504</a>
     </li></ul></dd>
     
 
@@ -831,7 +1603,7 @@ Gen.cosine(11, 4, 0, 7); </code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line500">line 500</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line484">line 484</a>
     </li></ul></dd>
     
 
@@ -1048,7 +1820,7 @@ value is the starting value and the second value the end.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line61">line 61</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line45">line 45</a>
     </li></ul></dd>
     
 
@@ -1112,6 +1884,750 @@ Gen.counter(7, 2);
 // count down from 5 to -4
 Gen.counter(5, -4);
 //=> [ 5, 4, 3, 2, 1, 0, -1, -2, -3, -4 ]</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="euclid"><span class="type-signature"></span>euclid<span class="signature">(length<span class="signature-attributes">opt</span>, hits<span class="signature-attributes">opt</span>, rotate<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Generate a euclidean rhythm evenly spacing n-hits amongst n-steps. Inspired
+by Godfried Toussaints famous paper &quot;The Euclidean Algorithm Generates
+Traditional Musical Rhythms&quot;.</p>
+<p><strong>NB: Use <a href="global.html#fastEuclid"><code>fastEuclid</code></a> instead, it is more efficient</strong></p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>of array (default = 8)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>hits</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>(default = 4)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rotate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>(default = 0)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-complex.js.html">gen-complex.js</a>, <a href="gen-complex.js.html#line142">line 142</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>```js
+Algo.euclid(8, 5);
+//=> [ 1, 0, 1, 1, 0, 1, 1, 0 ] 
+
+Algo.euclid(16, 9, 1); 
+//=> [ 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1 ]
+```</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="fastEuclid"><span class="type-signature"></span>fastEuclid<span class="signature">(length<span class="signature-attributes">opt</span>, hits<span class="signature-attributes">opt</span>, rotate<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>A fast euclidean rhythm generating algorithm. Uses the downsampling of a
+line drawn between two points in a 2-dimensional grid to divide the squares
+into an evenly distributed amount of steps. Generates the correct
+distribution, but the rotation/order may differ a bit from the recursive
+<a href="global.html#euclid"><code>euclid</code></a> method. This algorithm is called the Bresenham Line Algorithm.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>of output array (default = 8)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>hits</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>(default = 4)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rotate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>(default = 0)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-complex.js.html">gen-complex.js</a>, <a href="gen-complex.js.html#line100">line 100</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>```js
+Algo.fastEuclid(8, 5);
+//=> [ 1, 0, 1, 0, 1, 1, 0, 1 ] 
+
+Algo.fastEuclid(16, 9, 1);
+//=> [ 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0 ]  
+```</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="fibonacci"><span class="type-signature"></span>fibonacci<span class="signature">(length, offset<span class="signature-attributes">opt</span>, string_output<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Generate an array of Fibonacci numbers <code>F[n] = F[n-1] + F[n-2]</code>. Numbers are
+by default represented as Strings in order to allow for bigger numbers than
+64-bit integers can represent. The calculations are done using the bignumber.
+js library. A second argument sets an offset to pick a certain number from
+the sequence.</p>
+<p><code>OEIS: A000045</code> (Online Encyclopedia of Integer Sequences)</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>output length of array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>offset</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>start the sequence at nth-fibonacci number (optional, default = 0)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>string_output</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Bool</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>output numbers as strings (optional, default = false)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-complex.js.html">gen-complex.js</a>, <a href="gen-complex.js.html#line453">line 453</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>```js
+// 10 fibonacci numbers, starting from 0, 1, 1 etc...
+Algo.fibonacci(12);
+//=> [ 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ] 
+
+// 2 fibonacci numbers, starting from the 100th value
+Algo.fibonacci(2, 100, true);
+//=> [ '354224848179261915075', '573147844013817084101' ] 
+```</code></pre>
 
 
 
@@ -1331,7 +2847,7 @@ accepts an array as a single argument containing the pairs.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line355">line 355</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line339">line 339</a>
     </li></ul></dd>
     
 
@@ -1386,6 +2902,652 @@ Gen.fill(10, 2, 15, 3, 20, 4);
 
     <pre class="prettyprint"><code>Gen.fill([10, 2, 15, 3, 20, 4]);
 //=> [ 10, 10, 15, 15, 15, 20, 20, 20, 20 ]</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="hex"><span class="type-signature"></span>hex<span class="signature">(string<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Generate hexadecimal rhythms. Hexadecimal beats make use of hexadecimal
+values (0 - f) that are a base-16 number system. Because one digit in a
+base-16 number system has 16 possible values (0 - 15) these can be converted
+to 4 bits that therefore can be seen as groups of 4 16th notes. These
+hexadecimal values will then represent any permutation of 1's and 0's in a 4
+bit number, where 0 = 0 0 0 0, 7 = 0 1 1 1, b = 1 0 1 1, f = 1 1 1 1 and all
+possible values in between. This method does not work with actual
+hexadecimal notation (<code>0x...</code>), for that use <code>binary()</code> as an alternative.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>string</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>of hexadecimal characters (0-f) (default = 8)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-complex.js.html">gen-complex.js</a>, <a href="gen-complex.js.html#line63">line 63</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>```js
+// generate a hexadecimal rhythm based on a hexadecimal string (0-f)
+// inspired by Steven Yi's implementation in CSound Live Coding
+Algo.hexBeat('a9d2');
+//=> [ 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0 ]
+
+Algo.hexBeat(573);
+//=> [ 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1 ] 
+```
+[Learn hex beats by Steven Yi](https://kunstmusik.github.io/learn-hex-beats/)</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="linden"><span class="type-signature"></span>linden<span class="signature">(axiom, iterations, rules)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>The original Lindenmayer string expansion returns a string of characters
+based on a set of rules and an axiom specified as strings. This is useful to
+generate fractal like structures and simulate natural growth. The default
+rule is 1 -&gt; 10, 0 -&gt; 1, where 1=A and 0=B. Rules are specified as a JS
+object consisting of strings or arrays</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>axiom</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>value to start with (default = 1)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>iterations</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>number of generations to iterate (default = 3)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rules</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>object or reference to object with rules</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-complex.js.html">gen-complex.js</a>, <a href="gen-complex.js.html#line240">line 240</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>The classic Lsystem string expansion
+```js
+// Koch curve
+Algo.linden('F', 2, {F: 'F+F-F-F+F'});
+//=> 'F+F-F-F+F+F+F-F-F+F-F+F-F-F+F-F+F-F-F+F+F+F-F-F+F'
+
+// Cantor set
+Algo.linden('A', 3, {A: 'ABA', B: 'BBB'});
+//=> 'ABABBBABABBBBBBBBBABABBBABA'
+
+// Sierpinski Triangle
+Algo.linden('F-G-G', 1, {'F': 'F−G+F+G−F', 'G' : 'GG'});
+//=> 'F−G+F+G−F-GG-GG'
+```</code></pre>
+
+    <pre class="prettyprint"><code>A more useful version that works nicely with the rest of the library. By 
+returning an array of integers it can be quickly put to use in combination 
+with other methods to generate rhythms, melodies and more based on custom 
+rulesets.
+
+```js
+Algo.linden();
+//=> [ 1, 0, 1, 1, 0 ] (default)
+
+// Cantor set as 0's and 1's in an array ruleset
+Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]});
+//=> [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1 ]
+```
+
+```js
+// Set more complex rules for generating semitones for example
+var complexRules = {
+	0: [0, 3, 7],
+	3: [-1, 0],
+	7: [12, 19, 0],
+	12: [12, 0, 0, 5], 
+	5: [0, -3, 0]
+}
+
+Algo.linden(0, 2, complexRules);
+//=> [ 0, 3, 7, -1, 0, 12, 19, 0, -1, 0, 3, 7, 12, 0, 0, 5, 19, 0, 3, 7 ]
+```</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="pisano"><span class="type-signature"></span>pisano<span class="signature">(modulus<span class="signature-attributes">opt</span>, output<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Generate Pisano periods for the Fibonacci sequence. The pisano period is a
+result of applying a modulo operation on the Fibonacci sequence <code>F[n] = (F [n-1] + F[n-2]) mod a</code>. The length of the period differs per modulus value,
+but the sequence will always have a repetition.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>modulus</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>for pisano period (optional, default = 12)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>output</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>length of array (optional, defaults to period length)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="gen-complex.js.html">gen-complex.js</a>, <a href="gen-complex.js.html#line483">line 483</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="global.html#fibonacci">fibonacci</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>```js
+// the pisano period for mod 7 has a length of 16
+Algo.pisano(7);
+//=> [ 0, 1, 1, 2, 3, 5, 1, 6, 0, 6, 6, 5, 4, 2, 6, 1 ]
+
+// second argument gives a fixed length output
+Algo.pisano(4, 10);
+//=> [ 0, 1, 1, 2, 3, 1, 0, 1, 1, 2, 3, 1 ]
+``` </code></pre>
 
 
 
@@ -1641,7 +3803,7 @@ Gen.fill(10, 2, 15, 3, 20, 4);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line608">line 608</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line592">line 592</a>
     </li></ul></dd>
     
 
@@ -1979,7 +4141,7 @@ argument sets the low-range to 0</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line547">line 547</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line531">line 531</a>
     </li></ul></dd>
     
 
@@ -2290,7 +4452,7 @@ argument sets the low-range to 0</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line471">line 471</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line455">line 455</a>
     </li></ul></dd>
     
 
@@ -2607,7 +4769,7 @@ The wave can be inverted by swapping the arguments.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line418">line 418</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line402">line 402</a>
     </li></ul></dd>
     
 
@@ -2801,7 +4963,7 @@ onsets</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line746">line 746</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line730">line 730</a>
     </li></ul></dd>
     
 
@@ -3044,7 +5206,7 @@ is only with whole numbers (integers).</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line145">line 145</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line129">line 129</a>
     </li></ul></dd>
     
 
@@ -3328,7 +5490,7 @@ exponent as 4th argument and only outputs whole numbers.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line198">line 198</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line182">line 182</a>
     </li></ul></dd>
     
 
@@ -3599,7 +5761,7 @@ an optional exponent as 4th argument to apply a curve.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line165">line 165</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line149">line 149</a>
     </li></ul></dd>
     
 
@@ -3842,7 +6004,7 @@ values.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line100">line 100</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line84">line 84</a>
     </li></ul></dd>
     
 
@@ -4083,7 +6245,7 @@ is only with whole numbers (integers).</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line271">line 271</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line255">line 255</a>
     </li></ul></dd>
     
 
@@ -4368,7 +6530,7 @@ whole numbers.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line331">line 331</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line315">line 315</a>
     </li></ul></dd>
     
 
@@ -4641,7 +6803,7 @@ an optional exponent as 4th argument to apply a curve.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line292">line 292</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line276">line 276</a>
     </li></ul></dd>
     
 
@@ -4880,7 +7042,7 @@ Flipping the low and high range will result descending values.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line222">line 222</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line206">line 206</a>
     </li></ul></dd>
     
 
@@ -5189,7 +7351,7 @@ Gen.spreadIncF(5);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line680">line 680</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line664">line 664</a>
     </li></ul></dd>
     
 
@@ -5503,7 +7665,7 @@ argument sets the low-range to 0.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line637">line 637</a>
+        <a href="gen-basic.js.html">gen-basic.js</a>, <a href="gen-basic.js.html#line621">line 621</a>
     </li></ul></dd>
     
 
@@ -5581,13 +7743,13 @@ Gen.squareF()
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#binary">binary</a></li><li><a href="global.html#cosine">cosine</a></li><li><a href="global.html#cosineF">cosineF</a></li><li><a href="global.html#count">count</a></li><li><a href="global.html#fill">fill</a></li><li><a href="global.html#saw">saw</a></li><li><a href="global.html#sawF">sawF</a></li><li><a href="global.html#sine">sine</a></li><li><a href="global.html#sineF">sineF</a></li><li><a href="global.html#spacing">spacing</a></li><li><a href="global.html#spread">spread</a></li><li><a href="global.html#spreadExp">spreadExp</a></li><li><a href="global.html#spreadExpF">spreadExpF</a></li><li><a href="global.html#spreadF">spreadF</a></li><li><a href="global.html#spreadInc">spreadInc</a></li><li><a href="global.html#spreadIncExp">spreadIncExp</a></li><li><a href="global.html#spreadIncExpF">spreadIncExpF</a></li><li><a href="global.html#spreadIncF">spreadIncF</a></li><li><a href="global.html#square">square</a></li><li><a href="global.html#squareF">squareF</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Automaton.html">Automaton</a></li></ul><h3>Global</h3><ul><li><a href="global.html#bigCollatz">bigCollatz</a></li><li><a href="global.html#bigCollatzMod">bigCollatzMod</a></li><li><a href="global.html#binary">binary</a></li><li><a href="global.html#collatz">collatz</a></li><li><a href="global.html#collatzMod">collatzMod</a></li><li><a href="global.html#cosine">cosine</a></li><li><a href="global.html#cosineF">cosineF</a></li><li><a href="global.html#count">count</a></li><li><a href="global.html#euclid">euclid</a></li><li><a href="global.html#fastEuclid">fastEuclid</a></li><li><a href="global.html#fibonacci">fibonacci</a></li><li><a href="global.html#fill">fill</a></li><li><a href="global.html#hex">hex</a></li><li><a href="global.html#linden">linden</a></li><li><a href="global.html#pisano">pisano</a></li><li><a href="global.html#saw">saw</a></li><li><a href="global.html#sawF">sawF</a></li><li><a href="global.html#sine">sine</a></li><li><a href="global.html#sineF">sineF</a></li><li><a href="global.html#spacing">spacing</a></li><li><a href="global.html#spread">spread</a></li><li><a href="global.html#spreadExp">spreadExp</a></li><li><a href="global.html#spreadExpF">spreadExpF</a></li><li><a href="global.html#spreadF">spreadF</a></li><li><a href="global.html#spreadInc">spreadInc</a></li><li><a href="global.html#spreadIncExp">spreadIncExp</a></li><li><a href="global.html#spreadIncExpF">spreadIncExpF</a></li><li><a href="global.html#spreadIncF">spreadIncF</a></li><li><a href="global.html#square">square</a></li><li><a href="global.html#squareF">squareF</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Feb 25 2026 19:28:48 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Feb 27 2026 16:46:20 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

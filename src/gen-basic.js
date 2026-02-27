@@ -1,14 +1,16 @@
 /**
  * @file gen-basic.js
- * @description Part of the 'total-serialism' Package. Basic methods that 
- * generate number sequences as startingpoint for composing melodies, rhythms 
- * and more
- * @copyright Timo Hoogland (@tmhglnd), www.timohoogland.com
- * @license MIT License
+ * @description Part of the 'total-serialism' Package. 
+ * 
+ * Basic methods that generate number sequences as startingpoint for composing 
+ * melodies, rhythms and more.
  * 
  * credits:
  * - spread-methods inspired by Max8's MC functions spread and spreadinclusive
  * - cosine/sine array generation inspired by workshop by Steven Yi at ICLC
+ * 
+ * @copyright 2020-2026 Timo Hoogland (@tmhglnd), www.timohoogland.com
+ * @license MIT License
  */
 
 const { map, flatten, toArray, size, TWO_PI } = require('./utility');

@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: gen-complex.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: gen-complex.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @file gen-complex.js
  * @description Part of the 'total-serialism' Package. 
  * 
@@ -18,7 +46,7 @@
  * reading in README.md. Also inspired by Numberphile videos on 
  * pisano period on youtube.
  * - infinitySeries(), contributed by Stephen Meyer and based on
- * https://www.lawtonhall.com/blog/2019/9/9/per-nrgrds-infinity-series#:~:text=Coding%20the%20Infinity%20Series
+ * [https://www.lawtonhall.com/blog/2019/9/9/per-nrgrds-infinity-series#:~:text=Coding%20the%20Infinity%20Series]()
  * 
  * @copyright 2020-2026 Timo Hoogland (@tmhglnd), www.timohoogland.com
  * @license MIT License
@@ -65,7 +93,7 @@ function hexBeat(hex="8"){
 	if (!hex.isNaN){ hex = hex.toString(); }
 	let a = [];
 	// for every char in string get binary expansion
-	for (let i=0; i<hex.length; i++){
+	for (let i=0; i&lt;hex.length; i++){
 		let binary = parseInt("0x" + hex[i]).toString(2);
 		binary = isNaN(binary)? '0000' : binary;
 		// pad with leading 0's to ensure 4 values
@@ -104,7 +132,7 @@ function fastEuclid(s=8, h=4, r=0){
 	s = size(s);
 	h = size(h);
 	
-	for (let i=0; i<s; i++){
+	for (let i=0; i&lt;s; i++){
 		let v = Math.floor(i * (h / s));
 		arr[i] = Number(v !== d);
 		d = v;
@@ -174,7 +202,7 @@ function build(l){
 	} else if (level == -2){
 		pattern.push(1);
 	} else {
-		for (var i=0; i<counts[level]; i++){
+		for (var i=0; i&lt;counts[level]; i++){
 			build(level-1);
 		}
 		if (remainders[level] != 0){
@@ -242,10 +270,10 @@ function linden(axiom=[1], iteration=3, rules={1: [1, 0], 0: [1]}){
 	let asString = typeof axiom === 'string';
 	let res;
 
-	// return axiom of iterations is < 1
-	if (iteration < 1){ return axiom };
+	// return axiom of iterations is &lt; 1
+	if (iteration &lt; 1){ return axiom };
 
-	for(let n=0; n<iteration; n++){
+	for(let n=0; n&lt;iteration; n++){
 		res = (asString)? "" : [];
 		for(let ch in axiom){
 			let char = axiom[ch];
@@ -393,12 +421,12 @@ function numBonacci(len=1, s1=0, s2=1, t=1){
 
 	var cur = 0, arr = [n2, n1];
 	
-	if (len < 3) {
+	if (len &lt; 3) {
 		// return arr;
 		return arr.slice(0, len);
 	} else {
 		len = Math.max(1, len-2);
-		for (var i=0; i<len; i++){	
+		for (var i=0; i&lt;len; i++){	
 			// general method for nbonacci sequences
 			// Fn = t * Fn-1 + Fn-2
 			cur = n1.times(t).plus(n2);
@@ -481,8 +509,8 @@ exports.fibonacci = fibonacci;
  * @param {Int=} output - length of array (optional, defaults to period length)
  * */
 function pisano(mod=12, len=-1){
-	if (mod < 2){ return [0]; }
-	if (len < 1){
+	if (mod &lt; 2){ return [0]; }
+	if (len &lt; 1){
 		return pisanoPeriod(mod);
 	} else {
 		return numBonacci(len, 0, 1, 1).map(x => x.mod(mod).toNumber());
@@ -496,7 +524,7 @@ function pisanoPeriod(mod=2, length=32){
 	var seq = numBonacci(length, 0, 1, 1).map(x => x.mod(mod).toNumber());
 	var p = [], l = 0;
 
-	for (var i=0; i<seq.length; i++){
+	for (var i=0; i&lt;seq.length; i++){
 		// console.log(i, seq[i]);
 		p.push(seq[i]);
 
@@ -504,12 +532,12 @@ function pisanoPeriod(mod=2, length=32){
 			var c = [0, 1, 1];
 			var equals = 0;
 			// compare last 3 values with [0, 1, 1]
-			for (let k=0; k<p.length; k++){
+			for (let k=0; k&lt;p.length; k++){
 				equals += p[k] === c[k];
 				// console.log('>>', equals);
 			}
 			// if equals slice the sequence and return
-			if (equals === 3 && l > 3){
+			if (equals === 3 &amp;&amp; l > 3){
 				// console.log('true');
 				return seq.slice(0, l);
 			}
@@ -653,7 +681,7 @@ function norgardInteger(index) {
  * 
  * // create multiple generations in a forloop
  * let gens = [];
- * for (let i=0; i<10; i++){
+ * for (let i=0; i&lt;10; i++){
  * 	gens.push(ca.next());
  * }
  * Util.draw(gens);
@@ -765,7 +793,7 @@ class Automaton {
 	 * @param {Number[]} feed - an initial array for the state
 	 */
 	feed(a){
-		if (!Array.isArray(a) || a.length < 3){
+		if (!Array.isArray(a) || a.length &lt; 3){
 			console.log('Warning: feed() expected array of at least length 3 but received:', typeof a, 'with length:', (Array.isArray(a)?a:[a]).length);
 		} else {
 			this._state = a;
@@ -780,7 +808,7 @@ class Automaton {
 		let n = [];
 		let l = this._length;
 		// for every cell in the current state, check the neighbors
-		for (let i = 0; i < l; i++){
+		for (let i = 0; i &lt; l; i++){
 			let left = this._state[((i-1 % l) + l) % l];
 			let right = this._state[((i+1 % l) + l) % l];
 			// join 3 cells to string and lookup next value from table
@@ -796,10 +824,32 @@ class Automaton {
 	binaryToTable(r){
 		// store binary sequence in lookup table
 		let c = {};
-		for (let i = 0; i < 8; i++){
+		for (let i = 0; i &lt; 8; i++){
 			c[(7-i).toString(2).padStart(3, '0')] = Number(r[i]);
 		}
 		return c;
 	}
 }
-exports.Automaton = Automaton;
+exports.Automaton = Automaton;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Automaton.html">Automaton</a></li></ul><h3>Global</h3><ul><li><a href="global.html#bigCollatz">bigCollatz</a></li><li><a href="global.html#bigCollatzMod">bigCollatzMod</a></li><li><a href="global.html#binary">binary</a></li><li><a href="global.html#collatz">collatz</a></li><li><a href="global.html#collatzMod">collatzMod</a></li><li><a href="global.html#cosine">cosine</a></li><li><a href="global.html#cosineF">cosineF</a></li><li><a href="global.html#count">count</a></li><li><a href="global.html#euclid">euclid</a></li><li><a href="global.html#fastEuclid">fastEuclid</a></li><li><a href="global.html#fibonacci">fibonacci</a></li><li><a href="global.html#fill">fill</a></li><li><a href="global.html#hex">hex</a></li><li><a href="global.html#linden">linden</a></li><li><a href="global.html#pisano">pisano</a></li><li><a href="global.html#saw">saw</a></li><li><a href="global.html#sawF">sawF</a></li><li><a href="global.html#sine">sine</a></li><li><a href="global.html#sineF">sineF</a></li><li><a href="global.html#spacing">spacing</a></li><li><a href="global.html#spread">spread</a></li><li><a href="global.html#spreadExp">spreadExp</a></li><li><a href="global.html#spreadExpF">spreadExpF</a></li><li><a href="global.html#spreadF">spreadF</a></li><li><a href="global.html#spreadInc">spreadInc</a></li><li><a href="global.html#spreadIncExp">spreadIncExp</a></li><li><a href="global.html#spreadIncExpF">spreadIncExpF</a></li><li><a href="global.html#spreadIncF">spreadIncF</a></li><li><a href="global.html#square">square</a></li><li><a href="global.html#squareF">squareF</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Fri Feb 27 2026 16:46:20 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
