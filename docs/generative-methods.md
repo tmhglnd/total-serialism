@@ -4,8 +4,6 @@ Basic functions that generate arrays consisting of number sequences. For instanc
 
 ## Include
 
-To use all the function in the Generative namespace:
-
 ```js
 const Gen = require('total-serialism').Generative;
 
@@ -13,7 +11,7 @@ Gen.spread();
 Gen.fill();
 ```
 
-To select specific functions from the Generative namespace:
+OR
 
 ```js
 const { spread, fill } = require('total-serialism').Generative;
@@ -950,4 +948,4 @@ Gen.spacingBeat([4, 2, 0])
 
 ***
 
-&copy; Timo Hoogland (@tmhglnd), www.timohoogland.com, MIT License
+&copy; 2020-2026 Timo Hoogland (@tmhglnd), www.timohoogland.com, MIT License
