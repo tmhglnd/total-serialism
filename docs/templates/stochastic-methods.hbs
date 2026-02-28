@@ -1,0 +1,29 @@
+<!-- Generated with jsdoc2md, do not edit the .md file, instead edit the .hbs and the jsdoc in the src -->
+
+# Stochastic
+
+Methods for procedurally generating number sequences based on various types of (psuedo) randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more. Also includes Markov Chain.
+
+## Include
+
+```js
+const Rand = require('total-serialism').Stochastic;
+
+Rand.drunk();
+Rand.urn();
+```
+
+OR
+
+```js
+const { drunk, urn } = require('total-serialism').Stochastic;
+
+drunk();
+urn();
+```
+
+{{>main}}
+
+***
+
+&copy; 2020-2026 Timo Hoogland (@tmhglnd), www.timohoogland.com, MIT License

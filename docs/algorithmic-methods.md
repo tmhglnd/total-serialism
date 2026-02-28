@@ -1,3 +1,5 @@
+<!-- Generated with jsdoc2md, do not edit the .md file, instead edit the .hbs and the jsdoc in the src -->
+
 # Algorithmic
 
 More generative methods, but in general more complex algorithms, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci number sequence, pisano periods and more.

@@ -1,3 +1,5 @@
+<!-- Generated with jsdoc2md, do not edit the .md file, instead edit the .hbs and the jsdoc in the src -->
+
 # Generative
 
 Basic functions that generate arrays consisting of number sequences. For instance functions that generate an ascending array of numbers evenly spread between a low and high value. Most functions follow the pattern: `function(<array-output-length>, <other-arguments>)`

@@ -25,12 +25,22 @@ let rng = seedrandom();
 let _seed = 0; 
 seed(_seed);
 
-// Set the seed for all the Random Number Generators. 
-// 0 sets to unpredictable seeding
-// 
-// @param {Number/String} -> the seed
-// @return {Void}
-// 
+/**
+ * Set the seed for the Random Number Generators. A value of `0` sets the seed 
+ * to a random value between 1 and 9999. The seed can only be set **once** for 
+ * every import of the library. However, the seed can be reset in between 
+ * function calls. You can retrieve the current seed with `getSeed()`.
+ * @example
+ * ```js
+ * // set a random seed between 0-9999
+ * Rand.seed()
+ * 
+ * // set the random number generator seed
+ * Rand.seed(19374);
+ * ```
+ * @param {Number|String} seed - set the seed
+ * @returns {Number|String} the seed
+ */
 function seed(v=0){
 	if (v === 0 || v === null || v === undefined){
 		// generate a random seed, which is retrievable
@@ -44,23 +54,36 @@ function seed(v=0){
 }
 exports.seed = seed;
 
-// Return the seed that was set
-//
-// @return {Value} -> the seed
-//
+/**
+ * Get the seed from the Random Number Generator. Returns the value that was 
+ * latest set with `seed()`.
+ * @example
+ * ```js
+ * // get the random number generator seed
+ * Rand.getSeed();
+ * // => 19374
+ * ```
+ * @returns {Number|String} the seed
+ */
 function getSeed(){
 	return _seed;
 }
 exports.getSeed = getSeed;
 
-// generate a list of random float values 
-// between a certain specified range (excluding high val)
-// 
-// @param {Int} -> number of values to output
-// @param {Number} -> minimum range (optional, default=0)
-// @param {Number} -> maximum range (optional, defautl=1)
-// @return {Array}
-// 
+/**
+ * Generate a list of random floating points between a specified range 
+ * (excluding high value).
+ * @alias randomF
+ * @example
+ * ```js
+ * Rand.randomFloat(3, -1, 1); 
+ * //=> [ 0.6291111850577886, 0.15153786227276944, 0.32814801081039646 ]
+ * ```
+ * @param {Int} size - size of output array (default = 1)
+ * @param {Number=} min - minimum range (optional, default = 0)
+ * @param {Number=} max - maximum range (optional, default = 1)
+ * @returns {Number[]}
+ */
 function randomFloat(len=1, lo=1, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
@@ -76,33 +99,51 @@ function randomFloat(len=1, lo=1, hi=0){
 exports.randomFloat = randomFloat;
 exports.randomF = randomFloat;
 
-// generate a list of random integer values 
-// between a certain specified range (excluding high val)
-// 
-// @param {Int} -> number of values to output
-// @param {Number} -> minimum range (optional, default=0)
-// @param {Number} -> maximum range (optional, defautl=2)
-// @return {Array}
-// 
+/**
+ * Generate a list of random integers between a specified range 
+ * (excluding high value).
+ * @example
+ * ```js
+ * Rand.random(5, 0, 12); 
+ * //=> [ 3, 3, 7, 1, 0 ]
+ * ```
+ * @param {Int} size - size of output array (default = 1)
+ * @param {Number=} min - minimum range (optional, default = 0)
+ * @param {Number=} max - maximum range (optional, default = 12)
+ * @returns {Number[]}
+ */
 function random(len=1, lo=12, hi=0){
 	var arr = randomFloat(len, lo, hi);
 	return arr.map(v => Math.floor(v));
 }
 exports.random = random;
 
-// generate a list of random float values but the next random 
-// value is within a limited range of the previous value generating
-// a random "drunk" walk, also referred to as brownian motion.
-// Inspired by the [drunk]-object in MaxMSP
-// 
-// @param {Int} -> length of output array
-// @param {Number} -> step range for next random value
-// @param {Number} -> minimum range (optional, default=null)
-// @param {Number} -> maximum range (optional, default=null)
-// @param {Number} -> starting point
-// @param {Bool} -> fold between lo and hi range
-// @return {Array}
-// 
+/**
+ * Generate a list of random floats, but the next random value is 
+ * within a limited step-range of the previous value generating a random 
+ * "drunk" walk, also referred to as brownian motion. Inspired by the `[drunk]
+ * `-object in MaxMSP.
+ * @alias drunkF
+ * @example
+ * ```js 
+ * Rand.drunkFloat(5);
+ * //=> [ 0.493, 0.459, 0.846, 0.963, 0.400 ] 
+ * 
+ * //  0.88 ┼╮╭╮  
+ * //  0.76 ┤╰╯│  
+ * //  0.63 ┤  │  
+ * //  0.51 ┤  ╰╮ 
+ * //  0.39 ┤   │ 
+ * //  0.26 ┤   ╰ 
+ * ```
+ * @param {Int} size - size of output array (default = 1)
+ * @param {Number=} step - step range for next random value (default = 1)
+ * @param {Number=} min - minimum range (optional, default = 0)
+ * @param {Number=} max - maximum range (optional, default = 1)
+ * @param {Number=} start - starting point (optional, default = (lo+hi)/2)
+ * @param {Bool=} fold - fold between lo and hi range (optional, default = true)
+ * @returns {Number[]}
+ */
 function drunkFloat(len=1, step=1, lo=1, hi=0, p, bound=true){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
@@ -126,47 +167,81 @@ function drunkFloat(len=1, step=1, lo=1, hi=0, p, bound=true){
 }
 exports.drunkFloat = drunkFloat;
 exports.drunkF = drunkFloat;
-exports.walkFloat = drunkFloat;
+// exports.walkFloat = drunkFloat; // removed, unnecessary
 
-// generate a list of random integer values but the next random 
-// value is within a limited range of the previous value generating
-// a random "drunk" walk, also referred to as brownian motion.
-// Inspired by the [drunk]-object in MaxMSP
-// 
-// @param {Int} -> length of output array
-// @param {Number} -> step range for next random value
-// @param {Number} -> minimum range (optional, default=null)
-// @param {Number} -> maximum range (optional, default=null)
-// @param {Number} -> starting point
-// @param {Bool} -> fold between lo and hi range
-// @return {Array}
-// 
+/**
+ * Generate a list of random integers, but the next random value is 
+ * within a limited step-range of the previous value generating a random 
+ * "drunk" walk, also referred to as brownian motion. Inspired by the `[drunk]
+ * `-object in MaxMSP.
+ * @example
+ * ```js 
+ * Rand.drunk(10, 5, 0, 24);
+ * //=> [ 13, 10, 14, 13, 14, 13, 15, 10, 8, 4 ] 
+ * 
+ * // 22.00 ┼       ╭╮ 
+ * // 17.80 ┼─╮╭─╮  ││ 
+ * // 13.60 ┤ ││ ╰╮╭╯│ 
+ * //  9.40 ┤ ││  ╰╯ │ 
+ * //  5.20 ┤ ╰╯     │ 
+ * //  1.00 ┤        ╰ 
+ * 
+ * Rand.drunk(10, 4, 0, 12, 6, false);
+ * //=> [ 2, -2, 2, 1, -3, -1, -2, -1, 3, 6 ] 
+ * 
+ * //  2.00 ┤╭╮        
+ * // -0.20 ┤│╰╮     ╭ 
+ * // -2.40 ┼╯ ╰╮    │ 
+ * // -4.60 ┤   │╭╮ ╭╯ 
+ * // -6.80 ┼   ╰╯│╭╯  
+ * // -9.00 ┤     ╰╯  
+ * ```
+ * @param {Int} size - size of output array (default = 1)
+ * @param {Number=} step - step range for next random value (default = 1)
+ * @param {Number=} min - minimum range (optional, default = 0)
+ * @param {Number=} max - maximum range (optional, default = 12)
+ * @param {Number=} start - starting point (optional, default = (lo+hi)/2)
+ * @param {Bool=} fold - fold between lo and hi range (optional, default = true)
+ * @returns {Number[]}
+ */
 function drunk(len=1, step=1, lo=12, hi=0, p, bound=true){
 	let arr = drunkFloat(len, step, lo, hi, p, bound);
 	return arr.map(v => Math.floor(v));
 }
 exports.drunk = drunk;
-exports.walk = drunk;
+// exports.walk = drunk; // removed, unnecessary
 
-// generate a list of random integer values 0 or 1
-// like a coin toss, heads/tails
-// 
-// @param {Int} -> number of tosses to output
-// @return {Array}
-// 
+/**
+ * Generate a list of random integer values 0 or 1 like a coin toss, heads/
+ * tails.
+ * @param {Int} size - number of coin tosses to output as array
+ * @returns {Number[]}
+ * @example
+ * // generate an array of coin tosses
+ * Rand.coin(10); 
+ * //=> [ 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 ]
+ */
 function coin(len=1){
 	var arr = randomFloat(len, 0, 2);
 	return arr.map(v => Math.floor(v));
 }
 exports.coin = coin;
 
-// generate a list of random integer values 1 to 6
-// like the roll of a dice
-// 
-// @param {Int} -> number of tosses to output
-// @param {Int} -> sides of the die (optional, default=6)
-// @return {Array}
-// 
+/**
+ * Generate a list of dice rolls, resulting in random integer values from 1 to 
+ * 6. Optionally use a second argument to set the amount of sides for the die.
+ * @example
+ * // generate an array of dice rolls
+ * Rand.dice(4); 
+ * //=> [ 4, 4, 2, 3 ] 
+ * 
+ * // optionally set the amount of sides for the die
+ * Rand.dice(4, 8); 
+ * //=> [ 8, 3, 7, 1 ]
+ * @param {Int} size - number of tosses to output
+ * @param {Int} sides - sides of the die (optional, default = 6)
+ * @return {Number[]}
+ */
 function dice(len=1, sides=6){
 	var arr = randomFloat(len, 1, sides+1);
 	return arr.map(v => Math.floor(v));
