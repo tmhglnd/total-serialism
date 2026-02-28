@@ -1,4 +1,3 @@
-
 # Statistic
 
 A set of methods from Statistics and Probability Theory that allow for analysis of number sequences for statistical purposes. For example getting the average value or the most common value from an array. 
@@ -7,33 +6,54 @@ A set of methods from Statistics and Probability Theory that allow for analysis 
 
 ```js
 const Stat = require('total-serialism').Statistic;
+
+Stat.sort();
+Stat.average();
 ```
+
+OR
 
 ```js
 const { sort, average } = require('total-serialism').Statistic;
+
+sort();
+average();
 ```
 
-# Methods
+## Functions
 
-- [sort](#sort)
-- [average](#average) (mean)
-- [center](#center) (median)
-- [common](#common) (mode)
-- [maximum](#maximum) (max)
-- [minimum](#minimum) (min)
-- [change](#change) (diff)
-- [compare](#compare) 
-- [greatestCommonDivisor](#greatestcommondivisor) (gcd)
-- [leastCommonMultiple](#leastcommonmultiple) (lcm)
+* [sort(array, [direction])](#sort) ⇒ <code>Array</code>
+* [mean(array, [deep])](#mean) ⇒ <code>Number</code>
+* [median(array, [deep])](#median) ⇒ <code>Number</code>
+* [mode(array, [deep])](#mode) ⇒ <code>Number</code> \| <code>Array.&lt;Number&gt;</code>
+* [compare(left, right)](#compare) ⇒ <code>Bool</code>
+* [change(array, [first_last_diff])](#change) ⇒ <code>Array</code>
 
-## sort
+<a name="sort"></a>
 
-Sort an array in ascending or descending order. When strings are included they are sorted in alphabetical order with all numbers in the beginning.
+## sort(array, [direction]) ⇒ <code>Array</code>
+Sort an array in ascending or descending order. When strings are included 
+they are sorted in alphabetical order with all numbers in the beginning.
 
-**arguments**
-- {Array} -> the array to sort
-- {Int} -> postive/negative value for sorting direction (optional, default=1)
+**Kind**: global function  
+**Returns**: <code>Array</code> - sorted array  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array</code></td><td><p>array to sort</p>
+</td>
+    </tr><tr>
+    <td>[direction]</td><td><code>Number</code></td><td><p>postive/negative value indicates sorting direction (optional, default = 1)</p>
+</td>
+    </tr>  </tbody>
+</table>
 
+**Example**  
 ```js
 // Sort an array of numbers ascending 
 Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11]);
@@ -48,130 +68,152 @@ Stat.sort([10, 3.14, 'snare', 'kick', 5, -6, 'hat']);
 //=> [ -6, 10, 3.14, 5, 'hat', 'kick', 'snare' ] 
 ```
 
+* * *
 
-## average
+<a name="mean"></a>
 
-Get the average (the arithmetic mean) value from an array. This is one method of the three measures of central tendencies (Mean, Median, Mode).
+## mean(array, [deep]) ⇒ <code>Number</code>
+Get the average (the arithmetic mean) value from an array. This is one 
+method of the three measures of central tendencies (Mean, Median, Mode).
 
-Alias: `mean()`
+Alias: `average()`
 
-**arguments**
-- {Array} -> the array to take the average of
-- {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
+**Kind**: global function  
+**Returns**: <code>Number</code> - the mean  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array</code></td><td><p>array to take the average of</p>
+</td>
+    </tr><tr>
+    <td>[deep]</td><td><code>Bool</code></td><td><p>enable/disable the deep flag for n-dim arrays (default = true)</p>
+</td>
+    </tr>  </tbody>
+</table>
 
+**Example**  
 ```js
-Stat.average([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+Stat.mean([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 //=> 5
 
-Stat.mean([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3]);
+Stat.average([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3]);
 //=> -0.0833
 ```
 
-## center
+* * *
 
-Return the center value (the median) from an array. This is one method of the three measures of central tendencies (Mean, Median, Mode).
+<a name="median"></a>
 
-Alias: `median()`
+## median(array, [deep]) ⇒ <code>Number</code>
+Return the center value (the median) from an array. This is one method of 
+the three measures of central tendencies (Mean, Median, Mode). If array is 
+even number of values the median is the average of the two center values. 
+Ignores other datatypes then Number and Boolean
 
-**arguments**
-- {Array} -> the array to get the median from
-- {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
+Alias: `center()`
 
+**Kind**: global function  
+**Returns**: <code>Number</code> - the mean  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array</code></td><td><p>array to get the median from</p>
+</td>
+    </tr><tr>
+    <td>[deep]</td><td><code>Bool</code></td><td><p>enable/disable the deep flag for n-dim arrays (default = true)</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
 ```js
-Stat.center([1, 5, 6, 9, 13]);
+Stat.median([1, 5, 6, 9, 13]);
 //=> 6 
 
 // Returns average of 2 middle values for even listlengths
 // works with "official" statistics terminology
-Stat.median([1, 7, 4, 2, 9, 5]);
+Stat.center([1, 7, 4, 2, 9, 5]);
 //=> 4.5
 ```
 
-## common
+* * *
 
-Returns the most common value (the mode) from an array as an array. This is one method of the three measures of central tendencies (Mean, Median, Mode).
+<a name="mode"></a>
 
-Alias: `mode()`
+## mode(array, [deep]) ⇒ <code>Number</code> \| <code>Array.&lt;Number&gt;</code>
+Returns the most common value (the mode) from an array as an array. This is 
+one method of the three measures of central tendencies (Mean, Median, Mode). 
+Returns an array in the case of a multi-modal system.
 
-**arguments**
-- {Array} -> the array to get the mode from
-- {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
+Alias: `common()`
 
+**Kind**: global function  
+**Returns**: <code>Number</code> \| <code>Array.&lt;Number&gt;</code> - the mode or modes  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array</code></td><td><p>array to get the mode from</p>
+</td>
+    </tr><tr>
+    <td>[deep]</td><td><code>Bool</code></td><td><p>enable/disable the deep flag for n-dim arrays (default = true)</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
 ```js
-Stat.common([8, 4, 3, 11, 9, 0, 11, 2, 10, 5, 11, 0]);
+Stat.mode([8, 4, 3, 11, 9, 0, 11, 2, 10, 5, 11, 0]);
 //=> [ 11 ] 
 
-Stat.common([8, [4, 3], 9, [9, 0, [2, 10], 5], 11, 0, 11]);
+Stat.mode([8, [4, 3], 9, [9, 0, [2, 10], 5], 11, 0, 11]);
 //=> [ 11 ] 
 
 // In the case of a multi-modal system the array contains all common values
-Stat.mode([8, 4, 3, 9, 9, 0, 2, 10, 5, 11, 0, 11]);
+Stat.common([8, 4, 3, 9, 9, 0, 2, 10, 5, 11, 0, 11]);
 //=> [ 0, 9, 11 ]
 ```
 
-## minimum
+* * *
 
-Return the minimum value from an array (Also part of `.Statistic`)
+<a name="compare"></a>
 
-Alias: `min()`
+## compare(left, right) ⇒ <code>Bool</code>
+Compare two arrays recursively and if all values of the array and subarrays 
+are equal to eachother return `true`, else return `false`.
 
-**arguments**
-- {Array} -> the array to get the minimum from
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>left</td><td><code>Array</code></td><td><p>the first array to compare</p>
+</td>
+    </tr><tr>
+    <td>right</td><td><code>Array</code></td><td><p>the second array to compare</p>
+</td>
+    </tr>  </tbody>
+</table>
 
-```js
-Util.minimum([-38, -53, -6, 33, 88, 32, -8, 73]);
-//=> -53 
-
-// Also works with n-dimensional arrays
-Stat.min([-38, [-53, [-6, 33], 88, 32], [-8, 73]]);
-//=> -53 
-```
-
-## maximum
-
-Return the maximum value from an array (Also part of `.Statistic`)
-
-Alias: `max()`
-
-**arguments**
-- {Array} -> the array to get the maximum from
-
-```js
-Util.maximum([-38, -53, -6, 33, 88, 32, -8, 73]);
-//=> 88 
-
-// Also works with n-dimensional arrays
-Stat.max([-38, [-53, [-6, 33], 88, 32], [-8, 73]]);
-//=> 88
-```
-
-## change
-
-Return the difference between consecutive numbers in an array. With an optional flag set to true as second argument the function also returns the difference between the first and last value in the array.
-
-Alias: `delta()`, `difference()`, `diff()`
-
-**arguments**
-- {Array} -> the array to get the difference between each value from
-- {Bool} -> returns diff between first and last (optional, default=false)
-
-```js 
-Util.change([0, 3, 7, 0, 12, 9, 5, 7]);
-//=> [ 3, 4, -7, 12, -3, -4, 2 ] 
-
-// also returns difference between last and first value in array
-Util.change([0, 3, 7, 0, 12, 9, 5, 7], true);
-//=> [ 3, 4, -7, 12, -3, -4, 2, -7 ] 
-```
-
-## compare
-
-Compare two arrays recursively and if all values of the array and subarrays are equal to eachother return a `true` boolean, else returns `false`. 
-
-**arguments**
-- {Array} -> the first array to compare
-- {Array} -> the second array to compare
-
+**Example**  
 ```js
 // works with multidimensional arrays
 Stat.compare([0, [3, [7, 5]], 12], [0, [3, [7, 5]], 12]);
@@ -186,42 +228,49 @@ Stat.compare([0, 5, 7], [0, '5', 7]);
 //=> false 
 ```
 
-## greatestCommonDivisor
+* * *
 
-Calculate the Greatest Common Divisor from an array. Returns an integer. Based on the Euclid Algorithm described in: https://en.wikipedia.org/wiki/Greatest_common_divisor
+<a name="change"></a>
 
-Alias: `gcd()`
+## change(array, [first_last_diff]) ⇒ <code>Array</code>
+Return the difference between consecutive numbers in an array. With an 
+optional flag set to true as second argument the function also returns the 
+difference between the first and last value in the array. With melodic 
+content from a chromatic scale this can be seen as a list of intervals that, 
+when followed from the same note, results in the same melody.
 
-**arguments**
-- {Array} -> array to calculate on
+Alias: `delta()`, `diff()`
 
-```js
-gcd()
-// => 1
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array</code></td><td><p>array to get the difference between each value from</p>
+</td>
+    </tr><tr>
+    <td>[first_last_diff]</td><td><code>Bool</code></td><td><p>also include the difference between first and last elements of array (optional, default = false)</p>
+</td>
+    </tr>  </tbody>
+</table>
 
-gcd([54, 24])
-// => 6
+**Example**  
+```js 
+Stat.change([0, 3, 7, 0, 12, 9, 5, 7]);
+//=> [ 3, 4, -7, 12, -3, -4, 2 ] 
 
-gcd([8, 12, 20])
-// => 4
+// also returns difference between last and first value in array
+Stat.change([0, 3, 7, 0, 12, 9, 5, 7], true);
+//=> [ 3, 4, -7, 12, -3, -4, 2, -7 ] 
 ```
 
-## leastCommonMultiple
+* * *
 
-Calculate the Least Common Multiple from an array. Returns an integer. Based on the algorithm using the GCD() described in: https://en.wikipedia.org/wiki/Least_common_multiple
 
-Alias: `lcm()`
+***
 
-**arguments**
-- {Array} -> array to calculate on
-
-```js
-lcm()
-//=> 1
-
-lcm([3, 4])
-//=> 12
-
-lcm([12, 15, 75])
-//=> 300
-```
+&copy; 2020-2026 Timo Hoogland (@tmhglnd), www.timohoogland.com, MIT License

@@ -410,15 +410,28 @@ function numBonacci(len=1, s1=0, s2=1, t=1){
 	}
 }
 
-// Generate any n-bonacci sequence as an array of BigNumber objects
-// for export fuction. F(n) = t * F(n-1) + F(n-2)
-// 
-// @param {Int} -> output length of array
-// @param {Int} -> start value 1 (optional, default=0)
-// @param {Int} -> start value 2 (optional, default=1)
-// @param {Int} -> multiplier (optional, default=1)
-// @return {String-Array} -> array of bignumbers as strings
-// 
+/**
+ * Generate an array of Fibonacci numbers `F[n] = F[n-1] + F[n-2]`, with the 
+ * option to set a custom starting pair of numbers. This generates n-bonacci 
+ * sequence according to the following method: `F[n] = t * F[n-1] + F[n-2]`
+ * 
+ * @example
+ * ```js
+ * // start with 1, 3, then multiply [n-1] by 2 before adding with [n-2]
+ * Algo.nbonacci(10, 1, 3, 2);
+ * //=> [ 1, 3, 7, 17, 41, 99, 239, 577, 1393, 3363 ]
+ * 
+ * // this is the same as Algo.fibonacci(12)
+ * Algo.nbonacci(12, 0, 1, 1);
+ * //=> [ 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ]  
+ * ```
+ * @param {Int} length - output length of array
+ * @param {Int=} f1 - starting value F[n-1] (optional, default = 0)
+ * @param {Int=} f2 - starting value F[n-2] (optional, default = 1)
+ * @param {Int=} multiplier - multiplication factor for t * F[n-1] (optional, default = 1)
+ * @param {Bool=} string_output - output as strings (optional, default = false)
+ * @returns {Number[]|String[]}
+ */
 function nbonacci(len=1, s1=0, s2=1, t=1, toString=false){
 	return numBonacci(len, s1, s2, t).map(x => {
 		return (toString)? x.toFixed() : x.toNumber() 
@@ -435,10 +448,6 @@ exports.nbonacci = nbonacci;
  * 
  * `OEIS: A000045` (Online Encyclopedia of Integer Sequences)
  * 
- * @param {Int} length - output length of array
- * @param {Int=} offset - start the sequence at nth-fibonacci number (optional, default = 0)
- * @param {Bool=} string_output - output numbers as strings (optional, default = false)
- * @returns {Number[]}
  * @example
  * ```js
  * // 10 fibonacci numbers, starting from 0, 1, 1 etc...
@@ -449,6 +458,10 @@ exports.nbonacci = nbonacci;
  * Algo.fibonacci(2, 100, true);
  * //=> [ '354224848179261915075', '573147844013817084101' ] 
  * ```
+ * @param {Int} length - output length of array
+ * @param {Int=} offset - start the sequence at nth-fibonacci number (optional, default = 0)
+ * @param {Bool=} string_output - output numbers as strings (optional, default = false)
+ * @returns {Number[]|String[]}
  */
 function fibonacci(len=1, offset=0, toString=false){
 	var f = numBonacci(len+offset, 0, 1, 1).map(x => {
@@ -479,6 +492,7 @@ exports.fibonacci = fibonacci;
  * ``` 
  * @param {Int=} modulus - for pisano period (optional, default = 12)
  * @param {Int=} output - length of array (optional, defaults to period length)
+ * @returns {Number[]|String[]}
  * */
 function pisano(mod=12, len=-1){
 	if (mod < 2){ return [0]; }
@@ -521,16 +535,25 @@ function pisanoPeriod(mod=2, length=32){
 	return pisanoPeriod(mod, length*2);
 }
 
-// Generate the Pell numbers as an array of BigNumber objects
-// F(n) = 2 * F(n-1) + F(n-2). The ratio between consecutive numbers 
-// in the pell sequence tends towards the Silver Ratio 1 + √2.
-// OEIS: A006190 (Online Encyclopedia of Integer Sequences)
-// 
-// @param {Int} -> output length of array
-// @param {Int} -> offset in sequence (optional, default=0)
-// @param {Bool} -> numbers as strings (optional, default=false)
-// @return {String-Array} -> array of bignumbers as strings
-// 
+/**
+ * Other integer sequences based on Fibonacci are also available. For instance
+ * generate the Pell numbers as an array according to the formula
+ * F(n) = 2 * F(n-1) + F(n-2). The ratio between consecutive numbers 
+ * in the pell sequence tends towards the Silver Ratio 1 + √2.
+ * 
+ * OEIS: A006190 (Online Encyclopedia of Integer Sequences)
+ * 
+ * @example
+ * ```js
+ * Algo.pell(10);
+ * //=> [ 0, 1, 2, 5, 12, 29, 70, 169, 408, 985 ] 
+ * ```
+ * 
+ * @param {Int} length - output length of array
+ * @param {Int=} offset - start the sequence at nth-fibonacci number (optional, default = 0)
+ * @param {Bool=} string_output - output numbers as strings (optional, default = false)
+ * @returns {Number[]|String[]}
+ */
 function pell(len=1, offset=0, toString=false){
 	var f = numBonacci(len+offset, 0, 1, 2).map(x => {
 		return (toString)? x.toFixed() : x.toNumber() 
@@ -542,16 +565,25 @@ function pell(len=1, offset=0, toString=false){
 }
 exports.pell = pell;
 
-// Generate the Tribonacci numbers as an array of BigNumber objects
-// F(n) = 2 * F(n-1) + F(n-2). The ratio between consecutive numbers in 
-// the 3-bonacci sequence tends towards the Bronze Ratio (3 + √13) / 2.
-// OEIS: A000129 (Online Encyclopedia of Integer Sequences)
-// 
-// @param {Int} -> output length of array
-// @param {Int} -> offset in sequence (optional, default=0)
-// @param {Bool} -> numbers as strings (optional, default=false)
-// @return {String-Array} -> array of bignumbers as strings
-// 
+/**
+ * Other integer sequences based on Fibonacci are also available. For instance
+ * generate the threeBonacci numbers as an array according to the formula:
+ * F(n) = 2 * F(n-1) + F(n-2). The ratio between consecutive numbers in 
+ * the 3-bonacci sequence tends towards the Bronze Ratio (3 + √13) / 2.
+ * 
+ * OEIS: A000129 (Online Encyclopedia of Integer Sequences)
+ * 
+ * @example
+ * ```js
+ * Algo.threeFibonacci(10);
+ * //=> [ 0, 1, 3, 10, 33, 109, 360, 1189, 3927, 12970 ] 
+ * ```
+ * 
+ * @param {Int} length - output length of array
+ * @param {Int=} offset - start the sequence at nth-fibonacci number (optional, default = 0)
+ * @param {Bool=} string_output - output numbers as strings (optional, default = false)
+ * @returns {Number[]|String[]}
+ */
 function threeFibonacci(len=1, offset=0, toString=false){
 	let f = numBonacci(len+offset, 0, 1, 3).map(x => {
 		return (toString)? x.toFixed() : x.toNumber() 
@@ -563,15 +595,24 @@ function threeFibonacci(len=1, offset=0, toString=false){
 }
 exports.threeFibonacci = threeFibonacci;
 
-// Generate the Lucas numbers as an array of BigNumber objects
-// F(n) = F(n-1) + F(n-2), with F0=2 and F1=1.
-// OEIS: A000032 (Online Encyclopedia of Integer Sequences)
-// 
-// @param {Int} -> output length of array
-// @param {Int} -> offset in sequence (optional, default=0)
-// @param {Bool} -> numbers as strings (optional, default=false)
-// @return {String-Array} -> array of bignumbers as strings
-// 
+/**
+ * Other integer sequences based on Fibonacci are also available. For instance
+ * Generate the Lucas numbers as an array according to the formula:
+ * F(n) = F(n-1) + F(n-2), with F0=2 and F1=1.
+ * 
+ * OEIS: A000032 (Online Encyclopedia of Integer Sequences)
+ * 
+ * @example
+ * ```js
+ * Algo.lucas(10);
+ * //=> [ 2, 1, 3, 4, 7, 11, 18, 29, 47, 76 ]  
+ * ```
+ * 
+ * @param {Int} length - output length of array
+ * @param {Int=} offset - start the sequence at nth-fibonacci number (optional, default = 0)
+ * @param {Bool=} string_output - output numbers as strings (optional, default = false)
+ * @returns {Number[]|String[]}
+ */
 function lucas(len=1, offset=0, toString=false){
 	let f = numBonacci(len+offset, 2, 1, 1).map(x => {
 		return (toString)? x.toFixed() : x.toNumber() 
@@ -583,13 +624,46 @@ function lucas(len=1, offset=0, toString=false){
 }
 exports.lucas = lucas;
 
-// Generate the Nørgård infinity series sequence.
-//
-// @param {Int+} -> size the length of the resulting Meldoy's steps (default=16)
-// @param {Array} -> seed the sequence's first two steps (defaults = [0, 1])
-// @param {Int} -> offset from which the sequence starts
-// @return {Array} -> an Array with the infinity series as its steps
-//
+/**
+ * Nørgård's music often features the use of the infinity series for 
+ * serializing melody, harmony, and rhythm in musical composition. The method 
+ * takes its name from the endlessly self-similar nature of the resulting 
+ * musical material, comparable to fractal geometry. Mathematically, the 
+ * infinity series is an integer sequence. "Invented in an attempt to unify in 
+ * a perfect way repetition and variation," the first few terms of its simplest 
+ * form are 0, 1, −1, 2, 1, 0, −2, 3, ….
+ * 
+ * `OEIS: A004718` (Online Encyclopedia of Integer Sequences)
+ * 
+ * @alias infSeries
+ * @example
+ * ```js
+ * Algo.infinitySeries();
+ * //=> [
+ * //    0,  1, -1, 2, 1, 0,
+ * //   -2,  3, -1, 2, 0, 1,
+ * //    2, -1, -3, 4
+ * // ] 
+ * 
+ * Algo.infinitySeries(16, [0, 3]);
+ * //=> [
+ * //    0,  3, -3,  6, 3, 0,
+ * //   -6,  9, -3,  6, 0, 3,
+ * //    6, -3, -9, 12
+ * // ] 
+ * 
+ * Algo.infSeries(8, [0, 1], 120);
+ * //=> [
+ * //   -4,  5,  3, -2,
+ * //    5, -4, -6,  7
+ * // ]
+ * ```
+ * 
+ * @param {Int=} size - the length of the resulting Meldoy's steps (default = 16)
+ * @param {(Number[])=} seed - the sequence's first two steps (default = [0, 1])
+ * @param {Int=} offset - from which the sequence starts (default = 0)
+ * @return {Number[]}
+ */
 function infinitySeries(len=16, seed=[0,1], offset=0){
 	len = size(len);
 	let root  = seed[0];

@@ -40,8 +40,13 @@ fibonacci();
 * [collatzMod(start, [modulus])](#collatzMod) ⇒ <code>Array.&lt;Number&gt;</code>
 * [bigCollatz(start)](#bigCollatz) ⇒ <code>Array.&lt;Number&gt;</code>
 * [bigCollatzMod(start, [modulus])](#bigCollatzMod) ⇒ <code>Array.&lt;Number&gt;</code>
-* [fibonacci(length, [offset], [string_output])](#fibonacci) ⇒ <code>Array.&lt;Number&gt;</code>
-* [pisano(modulus, output)](#pisano)
+* [nbonacci(length, [f1], [f2], [multiplier], [string_output])](#nbonacci) ⇒ <code>Array.&lt;Number&gt;</code> \| <code>Array.&lt;String&gt;</code>
+* [fibonacci(length, [offset], [string_output])](#fibonacci) ⇒ <code>Array.&lt;Number&gt;</code> \| <code>Array.&lt;String&gt;</code>
+* [pisano([modulus], [output])](#pisano) ⇒ <code>Array.&lt;Number&gt;</code> \| <code>Array.&lt;String&gt;</code>
+* [pell(length, [offset], [string_output])](#pell) ⇒ <code>Array.&lt;Number&gt;</code> \| <code>Array.&lt;String&gt;</code>
+* [threeFibonacci(length, [offset], [string_output])](#threeFibonacci) ⇒ <code>Array.&lt;Number&gt;</code> \| <code>Array.&lt;String&gt;</code>
+* [lucas(length, [offset], [string_output])](#lucas) ⇒ <code>Array.&lt;Number&gt;</code> \| <code>Array.&lt;String&gt;</code>
+* [infSeries([size], [seed], [offset])](#infSeries) ⇒ <code>Array.&lt;Number&gt;</code>
 
 <a name="Automaton"></a>
 
@@ -547,9 +552,55 @@ Algo.bigCollatzMod('931386509544713451');
 
 * * *
 
+<a name="nbonacci"></a>
+
+## nbonacci(length, [f1], [f2], [multiplier], [string_output]) ⇒ <code>Array.&lt;Number&gt;</code> \| <code>Array.&lt;String&gt;</code>
+Generate an array of Fibonacci numbers `F[n] = F[n-1] + F[n-2]`, with the 
+option to set a custom starting pair of numbers. This generates n-bonacci 
+sequence according to the following method: `F[n] = t * F[n-1] + F[n-2]`
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>length</td><td><code>Int</code></td><td><p>output length of array</p>
+</td>
+    </tr><tr>
+    <td>[f1]</td><td><code>Int</code></td><td><p>starting value F[n-1] (optional, default = 0)</p>
+</td>
+    </tr><tr>
+    <td>[f2]</td><td><code>Int</code></td><td><p>starting value F[n-2] (optional, default = 1)</p>
+</td>
+    </tr><tr>
+    <td>[multiplier]</td><td><code>Int</code></td><td><p>multiplication factor for t * F[n-1] (optional, default = 1)</p>
+</td>
+    </tr><tr>
+    <td>[string_output]</td><td><code>Bool</code></td><td><p>output as strings (optional, default = false)</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+// start with 1, 3, then multiply [n-1] by 2 before adding with [n-2]
+Algo.nbonacci(10, 1, 3, 2);
+//=> [ 1, 3, 7, 17, 41, 99, 239, 577, 1393, 3363 ]
+
+// this is the same as Algo.fibonacci(12)
+Algo.nbonacci(12, 0, 1, 1);
+//=> [ 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ]  
+```
+
+* * *
+
 <a name="fibonacci"></a>
 
-## fibonacci(length, [offset], [string_output]) ⇒ <code>Array.&lt;Number&gt;</code>
+## fibonacci(length, [offset], [string_output]) ⇒ <code>Array.&lt;Number&gt;</code> \| <code>Array.&lt;String&gt;</code>
 Generate an array of Fibonacci numbers `F[n] = F[n-1] + F[n-2]`. Numbers are 
 by default represented as Strings in order to allow for bigger numbers than 
 64-bit integers can represent. The calculations are done using the bignumber.
@@ -593,7 +644,7 @@ Algo.fibonacci(2, 100, true);
 
 <a name="pisano"></a>
 
-## pisano(modulus, output)
+## pisano([modulus], [output]) ⇒ <code>Array.&lt;Number&gt;</code> \| <code>Array.&lt;String&gt;</code>
 Generate Pisano periods for the Fibonacci sequence. The pisano period is a 
 result of applying a modulo operation on the Fibonacci sequence `F[n] = (F
 [n-1] + F[n-2]) mod a`. The length of the period differs per modulus value, 
@@ -609,10 +660,10 @@ but the sequence will always have a repetition.
   </thead>
   <tbody>
 <tr>
-    <td>modulus</td><td><code>Int</code></td><td><p>for pisano period (optional, default = 12)</p>
+    <td>[modulus]</td><td><code>Int</code></td><td><p>for pisano period (optional, default = 12)</p>
 </td>
     </tr><tr>
-    <td>output</td><td><code>Int</code></td><td><p>length of array (optional, defaults to period length)</p>
+    <td>[output]</td><td><code>Int</code></td><td><p>length of array (optional, defaults to period length)</p>
 </td>
     </tr>  </tbody>
 </table>
@@ -627,6 +678,177 @@ Algo.pisano(7);
 Algo.pisano(4, 10);
 //=> [ 0, 1, 1, 2, 3, 1, 0, 1, 1, 2, 3, 1 ]
 ``` 
+
+* * *
+
+<a name="pell"></a>
+
+## pell(length, [offset], [string_output]) ⇒ <code>Array.&lt;Number&gt;</code> \| <code>Array.&lt;String&gt;</code>
+Other integer sequences based on Fibonacci are also available. For instance
+generate the Pell numbers as an array according to the formula
+F(n) = 2 * F(n-1) + F(n-2). The ratio between consecutive numbers 
+in the pell sequence tends towards the Silver Ratio 1 + √2.
+
+OEIS: A006190 (Online Encyclopedia of Integer Sequences)
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>length</td><td><code>Int</code></td><td><p>output length of array</p>
+</td>
+    </tr><tr>
+    <td>[offset]</td><td><code>Int</code></td><td><p>start the sequence at nth-fibonacci number (optional, default = 0)</p>
+</td>
+    </tr><tr>
+    <td>[string_output]</td><td><code>Bool</code></td><td><p>output numbers as strings (optional, default = false)</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+Algo.pell(10);
+//=> [ 0, 1, 2, 5, 12, 29, 70, 169, 408, 985 ] 
+```
+
+* * *
+
+<a name="threeFibonacci"></a>
+
+## threeFibonacci(length, [offset], [string_output]) ⇒ <code>Array.&lt;Number&gt;</code> \| <code>Array.&lt;String&gt;</code>
+Other integer sequences based on Fibonacci are also available. For instance
+generate the threeBonacci numbers as an array according to the formula:
+F(n) = 2 * F(n-1) + F(n-2). The ratio between consecutive numbers in 
+the 3-bonacci sequence tends towards the Bronze Ratio (3 + √13) / 2.
+
+OEIS: A000129 (Online Encyclopedia of Integer Sequences)
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>length</td><td><code>Int</code></td><td><p>output length of array</p>
+</td>
+    </tr><tr>
+    <td>[offset]</td><td><code>Int</code></td><td><p>start the sequence at nth-fibonacci number (optional, default = 0)</p>
+</td>
+    </tr><tr>
+    <td>[string_output]</td><td><code>Bool</code></td><td><p>output numbers as strings (optional, default = false)</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+Algo.threeFibonacci(10);
+//=> [ 0, 1, 3, 10, 33, 109, 360, 1189, 3927, 12970 ] 
+```
+
+* * *
+
+<a name="lucas"></a>
+
+## lucas(length, [offset], [string_output]) ⇒ <code>Array.&lt;Number&gt;</code> \| <code>Array.&lt;String&gt;</code>
+Other integer sequences based on Fibonacci are also available. For instance
+Generate the Lucas numbers as an array according to the formula:
+F(n) = F(n-1) + F(n-2), with F0=2 and F1=1.
+
+OEIS: A000032 (Online Encyclopedia of Integer Sequences)
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>length</td><td><code>Int</code></td><td><p>output length of array</p>
+</td>
+    </tr><tr>
+    <td>[offset]</td><td><code>Int</code></td><td><p>start the sequence at nth-fibonacci number (optional, default = 0)</p>
+</td>
+    </tr><tr>
+    <td>[string_output]</td><td><code>Bool</code></td><td><p>output numbers as strings (optional, default = false)</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+Algo.lucas(10);
+//=> [ 2, 1, 3, 4, 7, 11, 18, 29, 47, 76 ]  
+```
+
+* * *
+
+<a name="infSeries"></a>
+
+## infSeries([size], [seed], [offset]) ⇒ <code>Array.&lt;Number&gt;</code>
+Nørgård's music often features the use of the infinity series for 
+serializing melody, harmony, and rhythm in musical composition. The method 
+takes its name from the endlessly self-similar nature of the resulting 
+musical material, comparable to fractal geometry. Mathematically, the 
+infinity series is an integer sequence. "Invented in an attempt to unify in 
+a perfect way repetition and variation," the first few terms of its simplest 
+form are 0, 1, −1, 2, 1, 0, −2, 3, ….
+
+`OEIS: A004718` (Online Encyclopedia of Integer Sequences)
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>[size]</td><td><code>Int</code></td><td><p>the length of the resulting Meldoy&#39;s steps (default = 16)</p>
+</td>
+    </tr><tr>
+    <td>[seed]</td><td><code>Array.&lt;Number&gt;</code></td><td><p>the sequence&#39;s first two steps (default = [0, 1])</p>
+</td>
+    </tr><tr>
+    <td>[offset]</td><td><code>Int</code></td><td><p>from which the sequence starts (default = 0)</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+Algo.infinitySeries();
+//=> [
+//    0,  1, -1, 2, 1, 0,
+//   -2,  3, -1, 2, 0, 1,
+//    2, -1, -3, 4
+// ] 
+
+Algo.infinitySeries(16, [0, 3]);
+//=> [
+//    0,  3, -3,  6, 3, 0,
+//   -6,  9, -3,  6, 0, 3,
+//    6, -3, -9, 12
+// ] 
+
+Algo.infSeries(8, [0, 1], 120);
+//=> [
+//   -4,  5,  3, -2,
+//    5, -4, -6,  7
+// ]
+```
 
 * * *
 
