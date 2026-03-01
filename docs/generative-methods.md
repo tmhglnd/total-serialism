@@ -2,7 +2,7 @@
 
 # Generative
 
-Basic functions that generate arrays consisting of number sequences. For instance functions that generate an ascending array of numbers evenly spread between a low and high value. Most functions follow the pattern: `function(<array-output-length>, <other-arguments>)`
+Basic functions that generate arrays consisting of number sequences. For instance functions that generate an ascending array of numbers evenly spread between a low and high value. Most functions follow the pattern: `function(<array-output-size>, ...<other-arguments>)`
 
 ## Include
 

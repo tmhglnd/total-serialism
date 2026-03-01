@@ -2,7 +2,7 @@
 
 # Stochastic
 
-Methods for procedurally generating number sequences based on various types of (psuedo) randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more. Also includes Markov Chain.
+Methods for procedurally generating number sequences based on various types of (psuedo) randomness, such as white noise (evenly distributed), rolling dice, flipping a coin and more. Also includes Markov Chain. Most functions follow the pattern: `function(<array-output-size>, ...<other-arguments>)`
 
 ## Include
 

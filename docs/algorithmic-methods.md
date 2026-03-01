@@ -2,7 +2,7 @@
 
 # Algorithmic
 
-More generative methods, but in general more complex algorithms, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci number sequence, pisano periods and more.
+More generative methods, but in general more complex algorithms, such as euclidean rhythm generation, lindenmayer string expansion, fibonacci number sequence, pisano periods and more. Most functions follow the pattern: `function(<array-output-size>, ...<other-arguments>)`
 
 ## Include
 

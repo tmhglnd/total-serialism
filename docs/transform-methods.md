@@ -1,53 +1,234 @@
+<!-- Generated with jsdoc2md, do not edit the .md file, instead edit the .hbs and the jsdoc in the src -->
+
 # Transform
 
-Methods that transform one or more input arrays. Examples of methods within this library are reverse, palindrome, duplicate, inverse, lace, rotate and more.
+Methods that apply a transformation on the input array (sometimes in combination with more input arrays). In general return a copy of the input array. Examples of methods within this library are reverse, palindrome, duplicate, inverse, lace, rotate and more. Most functions follow the pattern: `function(<array-to-transform>, ...<other-arguments-or-array>)`
 
-# Include
+## Include
 
 ```js
 const Mod = require('total-serialism').Transform;
+
+Mod.inverse();
+Mod.rotate();
 ```
 
-# Methods
-
-- [clone](#clone)
-- [join](#join)
-- [copy](#copy)
-- [every](#every)
-- [flatten](#flatten)
-- [filter](#filter)
-- [filterType](#filterType)
-- [invert](#invert)
-- [lace](#lace)
-- [lookup](#lookup)
-- [merge](#merge)
-- [palindrome](#palindrome)
-- [pinky](#pinky)
-- [repeat](#repeat)
-- [reverse](#reverse)
-- [rotate](#rotate)
-- [sort](#sort)
-- [slice](#slice)
-- [split](#split)
-- [spray](#spray)
-- [stepMerge](#stepmerge)
-- [stepCombine](#stepcombine)
-- [stretch](#stretch)
-- [thumb](#thumb)
-- [unique](#unique)
-
-## clone
-
-Duplicate an array with an offset added to every value 
-
-Duplicate an array multiple times, optionaly add an offset to every value when duplicating. Also works with 2-dimensonal arrays. When using strings the values will be concatenated.
-
-**arguments**
-- {NumberArray} -> Array to clone
-- {Int, Int2, ... Int-n} -> amount of clones with integer offset
+OR
 
 ```js
-// duplicate an array with an offset added to every value
+const { inverse, rotate } = require('total-serialism').Transform;
+
+inverse();
+rotate();
+```
+
+## Members
+
+* [flat](#flat) ⇒ <code>Array</code>
+* [sort](#sort) ⇒ <code>Array</code>
+* [stepMerge](#stepMerge) ⇒ <code>Array.&lt;Array&gt;</code>
+* [unique](#unique) ⇒ <code>Array.&lt;Number&gt;</code>
+
+## Functions
+
+* [clone(array, ...clone)](#clone) ⇒ <code>Array.&lt;Number&gt;</code> \| <code>Array.&lt;String&gt;</code>
+* [combine(...arrays)](#combine) ⇒ <code>Array</code>
+* [copy(array, duplicates)](#copy)
+* [every(array, [bars], [division], [padding], [shift])](#every) ⇒ <code>Array</code>
+* [pad(array, [size], [pad], [shift])](#pad) ⇒ <code>Array</code>
+* [filter(array, filter)](#filter) ⇒ <code>Array</code>
+* [filterType(array, type)](#filterType) ⇒ <code>Array</code>
+* [invert(array, center, upper)](#invert) ⇒ <code>Array.&lt;Number&gt;</code>
+* [lace(...arrays)](#lace) ⇒ <code>Array</code>
+* [lookup(indeces, values)](#lookup) ⇒ <code>Array</code>
+* [merge(...arrays)](#merge) ⇒ <code>Array</code>
+* [palin(array, no_doubles)](#palin) ⇒ <code>Array</code>
+* [pinky(input)](#pinky) ⇒ <code>Array.&lt;Number&gt;</code>
+* [pinkyDown(input)](#pinkyDown) ⇒ <code>Array.&lt;Number&gt;</code>
+* [pinkyUpDown(input)](#pinkyUpDown) ⇒ <code>Array.&lt;Number&gt;</code>
+* [thumb(input)](#thumb) ⇒ <code>Array.&lt;Number&gt;</code>
+* [thumbDown(input)](#thumbDown) ⇒ <code>Array.&lt;Number&gt;</code>
+* [thumbUpDown(input)](#thumbUpDown) ⇒ <code>Array.&lt;Number&gt;</code>
+* [repeat(input, repetitions)](#repeat) ⇒ <code>Array</code>
+* [reverse(input)](#reverse) ⇒ <code>Array</code>
+* [rotate(input, direction)](#rotate) ⇒ <code>Array</code>
+* [slice(input, slice_size, [rest])](#slice) ⇒ <code>Array.&lt;Array&gt;</code>
+* [split(input, split_size)](#split) ⇒ <code>Array.&lt;Array&gt;</code>
+* [spray(sprayer, sprayee)](#spray) ⇒ <code>Array</code>
+* [step(...arrays)](#step) ⇒ <code>Array</code>
+* [stretch(input, size, [interp])](#stretch) ⇒ <code>Array</code>
+
+<a name="flat"></a>
+
+## flat ⇒ <code>Array</code>
+Flatten a multidimensional array. Optionally set the depth for the 
+flattening with the second argument.
+
+**Kind**: global variable  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array</code></td><td><p>array to flatten</p>
+</td>
+    </tr><tr>
+    <td>depth</td><td><code>Number</code></td><td><p>depth of flatten (default=Infinity)</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+Mod.flatten([1, [2, 3, [ 4 ], 5], 6]);
+//=> [ 1, 2, 3, 4, 5, 6 ] 
+```
+
+* * *
+
+<a name="sort"></a>
+
+## sort ⇒ <code>Array</code>
+Sort an array in ascending or descending order. When strings are included 
+they are sorted in alphabetical order with all numbers in the beginning.
+
+**Kind**: global variable  
+**Returns**: <code>Array</code> - sorted array  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array</code></td><td><p>array to sort</p>
+</td>
+    </tr><tr>
+    <td>[direction]</td><td><code>Number</code></td><td><p>postive/negative value indicates sorting direction (optional, default = 1)</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+// Sort an array of numbers ascending 
+Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11]);
+//=> [ -12, -10, -7, -6, 2, 3, 4, 6, 8, 11 ] 
+
+// Sort an array of numbers descending with negative second argument
+Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11], -1);
+//=> [ 11, 8, 6, 4, 3, 2, -6, -7, -10, -12 ]
+
+// Sort a mixed array of strings and numbers
+Stat.sort([10, 3.14, 'snare', 'kick', 5, -6, 'hat']);
+//=> [ -6, 10, 3.14, 5, 'hat', 'kick', 'snare' ] 
+```
+
+* * *
+
+<a name="stepMerge"></a>
+
+## stepMerge ⇒ <code>Array.&lt;Array&gt;</code>
+Merge 2 or multiple lists by alternating over them. This gives a similar 
+result as [merge](#merge), except that the output length is the lowest common 
+multiple of the input lists, so that every combination of consecutive values 
+is included until they all appeared an integer multiple of times. This 
+function is mainly used to allow arrays as input for Generators and for the 
+step function for algorithmic composition. Returns a multi-dimensional array.
+
+**Kind**: global variable  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>...arrays</td><td><code>Array</code></td><td><blockquote>
+<p>arrays to stepwise merge</p>
+</blockquote>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+// total steps is 2 so output is 4
+Mod.step([0, 3], [7, 12]);
+//=> [[0, 7], [3, 12]]
+
+// total steps is now 6 before repetition, so output is 12
+Mod.step([0, 3, 5], [7, 12]);
+//=> [[0, 7], [3, 12], [5, 7], [0, 12], [3, 7], [5, 12]]
+
+// works with 2D and multiple arrays
+Mod.step([0, 3], [7, 12], [[19, 24]]);
+//=> [[0, 7, [19, 24]], [3, 12, [19, 24]]]
+```
+
+* * *
+
+<a name="unique"></a>
+
+## unique ⇒ <code>Array.&lt;Number&gt;</code>
+Remove duplicate items from an array. Does not account for 2-dimensional 
+arrays within the array. Preserves the order of items.
+
+Alias: `thin()`
+
+**Kind**: global variable  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td><td><code>Array.&lt;Number&gt;</code></td><td><p>array to filter</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+Mod.unique([5, 7, 5, 0, 12, 7, 5]); 
+//=> [ 5, 7, 0, 12 ] 
+```
+
+* * *
+
+<a name="clone"></a>
+
+## clone(array, ...clone) ⇒ <code>Array.&lt;Number&gt;</code> \| <code>Array.&lt;String&gt;</code>
+Duplicate an array multiple times, optionaly add an offset to every value 
+when duplicating. Also works with 2-dimensonal arrays. When using strings 
+the values will be concatenated instead of added.
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array.&lt;Number&gt;</code> | <code>Array.&lt;String&gt;</code></td><td><p>array to clone</p>
+</td>
+    </tr><tr>
+    <td>...clone</td><td><code>Number</code></td><td><p>clone with integers, offset or string concatenation</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
 Mod.clone([0, 5, 7], 0, 12, -12); 
 //=> [ 0, 5, 7, 12, 17, 19, -12, -7, -5 ] 
 
@@ -60,19 +241,31 @@ Mod.clone(['c', ['e', 'g']], ['4', '5', '#3']);
 //=> [ 'c4', [ 'e4', 'g4' ], 'c5', [ 'e5', 'g5' ], 'c#3', [ 'e#3', 'g#3' ] ]
 ```
 
-<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/6hmjQkbzj" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
+* * *
 
-## join
+<a name="combine"></a>
 
+## combine(...arrays) ⇒ <code>Array</code>
 Join arrays into one array. More than 2 arrays as arguments is possible.
 
 Alias: `combine()`
 
-**arguments**
-- {Array-0, Array-1, ..., Array-n} -> Arrays to combine
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>...arrays</td><td><code>Array</code></td><td><p>Multiple arrays to combine</p>
+</td>
+    </tr>  </tbody>
+</table>
 
+**Example**  
 ```js
-// combine multiple numbers/arrays into one
 Mod.join([0, 5], 12, [7, 3]); 
 //=> [ 0, 5, 12, 7, 3 ] 
 
@@ -85,20 +278,32 @@ Mod.join(['c4', 'e4'], ['g4', 'f4']);
 //=> [ 'c4', 'e4', 'g4', 'f4' ]
 ```
 
-<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/oDCkLCUta" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
+* * *
 
-## copy
+<a name="copy"></a>
 
+## copy(array, duplicates)
 Duplicate an array a certain amount of times.
 
-Alias: `duplicate()`
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array</code></td><td><p>array to duplicate</p>
+</td>
+    </tr><tr>
+    <td>duplicates</td><td><code>Int</code></td><td><p>amount of duplicates (optional, default = 2)</p>
+</td>
+    </tr>  </tbody>
+</table>
 
-**arguments**
-- {Array} -> Array to duplicate
-- {Int+} -> amount of duplicates (optional, default=2)
-
+**Example**  
 ```js
-// duplicate an array certain amount of times
 Mod.copy([0, 7, 12], 3);
 //=> [ 0, 7, 12, 0, 7, 12, 0, 7, 12 ] 
 
@@ -111,39 +316,43 @@ Mod.copy(['c', 'f', 'g'], 3);
 //=> [ 'c', 'f', 'g', 'c', 'f', 'g', 'c', 'f', 'g' ] 
 ```
 
-<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/5n5e03e4M" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
+* * *
 
-## padding
+<a name="every"></a>
 
-Pad an array with zeroes (or any other value) up to the length specified. The padding value can optionally be changed and the shift argument rotates the list n-steps left or right (negative). This method is similar to `every()` except arguments are not specified in musical bars/divisions but in array length. A shorter length than input list will slice the output list.
+## every(array, [bars], [division], [padding], [shift]) ⇒ <code>Array</code>
+Add zeroes to an array with a number sequence. The division determines the 
+amount of values per bar. The total length equals the bars times division. 
+This method is very useful for rhythms that must occur once in a while, but 
+can also be use for melodic phrases. Also works with strings.
 
-Alias: `pad()`
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array</code></td><td><p>array to use every n-bars</p>
+</td>
+    </tr><tr>
+    <td>[bars]</td><td><code>Int</code></td><td><p>amount of bars (optional, default=1)</p>
+</td>
+    </tr><tr>
+    <td>[division]</td><td><code>Int</code></td><td><p>amount of values per bar (optional, defaul=16)</p>
+</td>
+    </tr><tr>
+    <td>[padding]</td><td><code>Value</code></td><td><p>pad value for the added items (optional, default=0)</p>
+</td>
+    </tr><tr>
+    <td>[shift]</td><td><code>Number</code></td><td><p>optional shift in n-bars (optional, default=0)</p>
+</td>
+    </tr>  </tbody>
+</table>
 
-**arguments**
-- {NumberArrray} -> Array to use every n-bars
-- {Int} -> output length of array (optional, default=16)
-- {Value} -> padding value for the added items (optional, default=0)
-- {Number} -> shift in steps (optional, default=0)
-
-```js 
-Mod.pad([3, 7, 11, 12], 9);
-//=> [ 3, 7, 11, 12, 0, 0, 0, 0, 0 ] 
-
-Mod.pad(['c', 'f', 'g'], 11, '-', 4);
-//=> [ '-', '-', '-', '-', 'c', 'f', 'g', '-', '-', '-', '-' ] 
-```
-
-## every
-
-Add zeroes to an array with a number sequence. The division determines the amount of values per bar. The total length equals the bars times division. This method is very useful for rhythms that must occur once in a while, but can also be use for melodic phrases. Also works with strings.
-
-**arguments**
-- {NumberArrray} -> Array to use every n-bars
-- {Int} -> amount of bars (optional, default=1)
-- {Int} -> amount of values per bar (optional, defaul=16)
-- {Value} -> padding value for the added items (optional, default=0)
-- {Number} -> optional shift in n-bars (optional, default=0)
-
+**Example**  
 ```js
 // add zeroes to a rhythm to make it play once over a certain amount of bars
 Mod.every([1, 0, 1, 1, 1], 2, 8);
@@ -169,45 +378,104 @@ Mod.every(['c4', 'eb4', 'g4', 'f4', 'eb4'], 2, 8, 'r');
 //     'r',   'r',   'r',  'r' ] 
 ```
 
-<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/9AF_CeIcW" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
+* * *
 
-## flatten
+<a name="pad"></a>
 
-Flatten a multidimensional array. Optionally set the depth for the flattening with the second argument.
+## pad(array, [size], [pad], [shift]) ⇒ <code>Array</code>
+Pad an array with zeroes (or any other value) up to the length specified. 
+The padding value can optionally be changed and the shift argument rotates 
+the list n-steps left or right (negative). This method is similar to `every()
+` except arguments are not specified in musical bars/divisions but in array 
+length. A shorter length than input list will slice the output list.
 
-Alias: `flat()`
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array</code></td><td><p>Array to pad</p>
+</td>
+    </tr><tr>
+    <td>[size]</td><td><code>Int</code></td><td><p>output length of array (optional, default=16)</p>
+</td>
+    </tr><tr>
+    <td>[pad]</td><td><code>Value</code></td><td><p>padding value for the added items (optional, default=0)</p>
+</td>
+    </tr><tr>
+    <td>[shift]</td><td><code>Number</code></td><td><p>shift in steps (optional, default=0)</p>
+</td>
+    </tr>  </tbody>
+</table>
 
-**arguments**
-- {Array} -> array to flatten
-- {Number} -> depth of flatten (default=Infinity)
+**Example**  
+```js
+Mod.pad([3, 7, 11, 12], 9);
+//=> [ 3, 7, 11, 12, 0, 0, 0, 0, 0 ] 
 
-```js 
-Mod.flatten([1, [2, 3, [ 4 ], 5], 6]);
-//=> [ 1, 2, 3, 4, 5, 6 ] 
+Mod.pad(['c', 'f', 'g'], 11, '-', 4);
+//=> [ '-', '-', '-', '-', 'c', 'f', 'g', '-', '-', '-', '-' ] 
 ```
 
-## filter
+* * *
 
+<a name="filter"></a>
+
+## filter(array, filter) ⇒ <code>Array</code>
 Filter one or multiple values from an array
 
-**arguments**
-- {Array} -> array to filter
-- {Number/String/Array} -> values to filter
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array</code></td><td><p>array to filter</p>
+</td>
+    </tr><tr>
+    <td>filter</td><td><code>Number</code> | <code>String</code> | <code>Array</code></td><td><p>values to filter</p>
+</td>
+    </tr>  </tbody>
+</table>
 
+**Example**  
 ```js
-// remove values from an array
 Mod.filter([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [3, 8, 10]);
 //=> [ 0, 1, 2, 4, 5, 6, 7, 9 ] 
 ```
 
-## filterType
+* * *
 
+<a name="filterType"></a>
+
+## filterType(array, type) ⇒ <code>Array</code>
 Filter one or multiple values from an array based on their type
 
-**arguments**
-- {Array} -> array to filter
-- {String} -> datatype to filter (optional, default=number)
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array</code></td><td><p>array to filter</p>
+</td>
+    </tr><tr>
+    <td>type</td><td><code>String</code></td><td><p>datatype to filter (optional, default=number)</p>
+</td>
+    </tr>  </tbody>
+</table>
 
+**Example**  
 ```js
 // default filter is set as number
 Mod.filterType([0, 'foo', {bar : true}, 1, undefined]);
@@ -216,19 +484,43 @@ Mod.filterType([0, 'foo', {bar : true}, 1, undefined]);
 // return only a specific datatype (in this case you specify the type to return)
 Mod.filterType([0, 1, [1, 2], 'foo', 2, null, true, {bar: 5}, 3.14, undefined], 'number');
 //=> [ 0, 1, 2, 3.14 ] 
-
-// Alias: Mod.tFilter()
 ```
 
-## invert
+* * *
 
-Invert an array of values by mapping the lowest value to the highest value and vice versa, flipping everything in between.  Second optional argument sets the center to flip values against. Third optional argument sets a range to flip values against.
+<a name="invert"></a>
 
-**arguments**
-- {NumberArray} -> Array to invert
-- {Int} -> invert center / low range (optional, default=array-minimum)
-- {Int} -> high range (optional, default=array-maximum)
+## invert(array, center, upper) ⇒ <code>Array.&lt;Number&gt;</code>
+Invert an array of values by mapping the lowest value to the highest value 
+and vice versa, flipping everything in between. Second optional argument 
+sets the center to flip values against. Third optional argument sets a range 
+to flip values against.
 
+**Kind**: global function  
+**Todo**
+
+- Make work with note-values like 'c' or 'c4', etc.
+
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array.&lt;Number&gt;</code></td><td><p>Array to invert</p>
+</td>
+    </tr><tr>
+    <td>center</td><td><code>Int</code></td><td><p>invert center / low range (optional, default=array-minimum)</p>
+</td>
+    </tr><tr>
+    <td>upper</td><td><code>Int</code></td><td><p>high range (optional, default=array-maximum)</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
 ```js
 // invert an array between the highest and lowest values
 Mod.invert([-1, 2, 7, 9, 14]);
@@ -247,17 +539,31 @@ Mod.invert([-1, 2, [[7, 9], 14]]);
 //=> [ 14, 11, [ [ 6, 4 ], -1 ] ] 
 ```
 
-<!-- <iframe src="https://editor.p5js.org/tmhglnd/embed/iU3-FJDWG" width="100%" height="250px" frameBorder="0" scrolling="no"></iframe> -->
+* * *
 
-## lace
+<a name="lace"></a>
 
-Interleave two or more arrays. Works with every length of an array. Works with 2D-arrays and string arrays as well.
+## lace(...arrays) ⇒ <code>Array</code>
+Interleave two or more arrays. Works with every length of an array. Works 
+with 2D-arrays and string arrays as well.
 
 Alias: `zip()`
 
-**arguments**
-- {Array-0, Array-1, ..., Array-n} -> one or multiple arrays to interleave
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>...arrays</td><td><code>Array</code></td><td><p>two or more arrays to interleave</p>
+</td>
+    </tr>  </tbody>
+</table>
 
+**Example**  
 ```js
 // lace multiple arrays of different lengths
 Mod.lace([0, 0, 0], [7, 7], [9, 9, 9, 9]);
@@ -272,15 +578,34 @@ Mod.lace(['c', 'c', 'c', 'c'], ['g', 'g'], ['e']);
 //=> [ 'c', 'g', 'e', 'c', 'g', 'c', 'c' ] 
 ```
 
-## lookup
+* * *
 
-Build an array of items based on an array of indeces looking up values from an input array. The values are wrapped within the length of the lookup array. Works with n-dimensional arrays.
+<a name="lookup"></a>
 
-**arguments**
-- {Array} -> Array with indeces to lookup
-- {Array} -> Array with values returned from lookup
-- {Array} -> Looked up values
+## lookup(indeces, values) ⇒ <code>Array</code>
+Build an array of items based on an array of indeces looking up values from 
+an input array. The values are wrapped within the length of the lookup 
+array. Works with n-dimensional arrays.
 
+**Kind**: global function  
+**Returns**: <code>Array</code> - Looked up values  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>indeces</td><td><code>Array</code></td><td><p>Array with indeces to lookup</p>
+</td>
+    </tr><tr>
+    <td>values</td><td><code>Array</code></td><td><p>Array with values returned from lookup</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
 ```js
 // first array is the index, second array are the items to lookup
 Mod.lookup([0, 1, 1, 2, 0, 2, 2, 1], ['c4', 'e4', 'f4', 'g4']);
@@ -303,13 +628,31 @@ Mod.lookup([0, 'foo', ['1', 'bar']], [1, 2, 3]);
 //=> [ 1, [ 2 ] ] 
 ```
 
-## merge
+* * *
 
-Merge all values of multiple arrays on the same index into a 2D array. Preserves length of longest list.
+<a name="merge"></a>
 
-**arguments**
-- {Array-0, Array-1, ..., Array-n} -> arrays to be merged
+## merge(...arrays) ⇒ <code>Array</code>
+Merge all values of multiple arrays on the same index into a 2D array. 
+Preserves length of longest list.
 
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>...arrays</td><td><code>Array</code></td><td><blockquote>
+<p>two or more arrays to be merged</p>
+</blockquote>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
 ```js
 // merge multiple arrays into a 2D-array
 Mod.merge([0, 0, 0], [5, 5], [7, 7, 7, 7]);
@@ -324,71 +667,254 @@ Mod.merge([['c4', 'e4'], 'c4'], [['f4', 'a4']], ['g4', 'g4']);
 //=> [ [ 'c4', 'e4', 'f4', 'a4', 'g4' ], [ 'c4', 'g4' ] ] 
 ```
 
-## palindrome
+* * *
 
-Reverse an array and concatenate to the input creating a palindrome of the array. Add an optional true flag to remove the double on the reverse and end points.
+<a name="palin"></a>
 
-Alias: `palin()` `mirror()`
+## palin(array, no_doubles) ⇒ <code>Array</code>
+Reverse an array and concatenate to the input creating a palindrome of the 
+array. Add an optional true flag to remove the double on the reverse and end 
+points.
 
-**arguments**
-- {Array} -> input array to transform to palindrome
-- {Bool} -> no-double flag (optional, default = false)
+Alias: `mirror()`
 
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>array</td><td><code>Array</code></td><td><p>input array to transform to palindrome</p>
+</td>
+    </tr><tr>
+    <td>no_doubles</td><td><code>Bool</code></td><td><p>no-double flag (optional, default = false)</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
 ```js
 // reverse and concatenate to the original array
-Mod.palindrome([0, 5, 7, 12]);
+Mod.palin([0, 5, 7, 12]);
 //=> [ 0, 5, 7, 12, 12, 7, 5, 0] 
 
 // works with 2D-array, removes doubles in center and end
-Mod.palindrome([0, [5, 7], 9, 12], true);
+Mod.palin([0, [5, 7], 9, 12], true);
 //=> [ 0, [ 5, 7 ], 9, 12, 9, [ 5, 7 ] ] 
 
 // works with strings
-Mod.palindrome(['c4', 'f4', 'g4'], true);
+Mod.palin(['c4', 'f4', 'g4'], true);
 //=> [ 'c4', 'f4', 'g4', 'f4' ] 
 ```
 
-## pinky
+* * *
 
-The pinky/pinkyUp technique takes an array and outputs a transformed array where the last value alternates between every other previous value in a left to right order. This function is inspired by the Ableton arpeggiator algorithms. For example a list of `[0 3 7 12 19]` results in `[0 19 3 19 7 19 12 19]`.
+<a name="pinky"></a>
+
+## pinky(input) ⇒ <code>Array.&lt;Number&gt;</code>
+The pinky/pinkyUp technique takes an array and outputs a transformed array 
+where the last value alternates between every other previous value in a left 
+to right order. This function is inspired by the Ableton arpeggiator 
+algorithms. For example a list of `[0 3 7 12 19]` results in `[0 19 3 19 7 
+19 12 19]`.
 
 Alias: `pinkyUp`
 
-**arguments**
-- {Array} -> array to transform
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td><td><code>Array.&lt;Number&gt;</code></td><td><p>array to transform</p>
+</td>
+    </tr>  </tbody>
+</table>
 
+**Example**  
 ```js
-Mod.pinkyUp([0, 3, 7, 12, 19])
+Mod.pinky([0, 3, 7, 12, 19])
 //=> [ 0, 19, 3, 19, 7, 19, 12, 19 ]
 ```
 
-### pinkyDown
+* * *
 
-PinkyDown is similar to pinkyUp, but in reverse order. For instance `[0 3 7 12 19]` results in `[12 19 7 19 3 19 0 19]`.
+<a name="pinkyDown"></a>
 
+## pinkyDown(input) ⇒ <code>Array.&lt;Number&gt;</code>
+PinkyDown is similar to [pinky](#pinky), but in reverse order. For instance `
+[0 3 7 12 19]` results in `[12 19 7 19 3 19 0 19]`.
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td><td><code>Array.&lt;Number&gt;</code></td><td><p>array to transform</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
 ```js
 Mod.pinkyDown([0, 3, 7, 12, 19])
 //=> [12, 19, 7, 19, 3, 19, 0, 19]
 ```
 
-### pinkyUpDown
+* * *
 
-PinkyUpDown is similar to pinkyUp and pinkyDown and is basically a combination of both. For instance `[0 3 7 12 19]` results in `[0 19 3 19 7 19 12 19 7 19 3 19]`.
+<a name="pinkyUpDown"></a>
 
+## pinkyUpDown(input) ⇒ <code>Array.&lt;Number&gt;</code>
+PinkyUpDown is similar to [pinky](#pinky) and [pinkyDown](#pinkyDown) and is 
+basically a combination of both. For instance `[0 3 7 12 19]` results in `[0 
+19 3 19 7 19 12 19 7 19 3 19]`.
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td><td><code>Array.&lt;Number&gt;</code></td><td><p>array to transform</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
 ```js
 Mod.pinkyUpDown([0, 3, 7, 12, 19])
 //=> [0, 19, 3, 19, 7, 19, 12, 19, 7, 19, 3, 19]
 ```
 
-## repeat
+* * *
 
-Repeat the values of an array n-times
-Using a second array for repeat times iterates over that array
+<a name="thumb"></a>
 
-**arguments**
-- {Array} -> array with values to repeat
-- {Int/Array} -> array or number of repetitions per value
+## thumb(input) ⇒ <code>Array.&lt;Number&gt;</code>
+The thumb/thumbUp technique takes an array and outputs a transformed array 
+where the first value alternates between every other value of the array in a 
+left to right order. This is inspiredy by the Ableton arpeggiator 
+algorithms. For example `[0 3 7 12 19]` results in `[0 3 0 7 0 12 0 19]`.
 
+Alias: `thumbUp()`
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td><td><code>Array.&lt;Number&gt;</code></td><td><p>array to transform</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+Mod.thumbUp([0, 3, 7, 12, 19])
+//=> [0, 3, 0, 7, 0, 12, 0, 19]
+```
+
+* * *
+
+<a name="thumbDown"></a>
+
+## thumbDown(input) ⇒ <code>Array.&lt;Number&gt;</code>
+Similar to [thumb](#thumb), but in reverse order. For instance `[0 3 7 12 19]` 
+results in `[0 19 0 12 0 7 0 3]`.
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td><td><code>Array.&lt;Number&gt;</code></td><td><p>array to transform</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+Mod.thumbDown([0, 3, 7, 12, 19])
+//=> [0, 19, 0, 12, 0, 7, 0, 3]
+```
+
+* * *
+
+<a name="thumbUpDown"></a>
+
+## thumbUpDown(input) ⇒ <code>Array.&lt;Number&gt;</code>
+Similar to [thumb](#thumb) and [thumbDown](#thumbDown), basically a combination of 
+both. Creates a palindrome of the notes. For instance `[0 3 7 12 19]` 
+results in `[0 3 0 7 0 12 0 19 0 12 0 7]`.
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td><td><code>Array.&lt;Number&gt;</code></td><td><p>array to transform</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
+```js
+Mod.thumbUpDown([0, 3, 7, 12, 19])
+//=> [0, 3, 0, 7, 0, 12, 0, 19, 0, 12, 0, 7]
+```
+
+* * *
+
+<a name="repeat"></a>
+
+## repeat(input, repetitions) ⇒ <code>Array</code>
+Repeat the values of an array n-times. Using an array as second argument for 
+repeat times will iterate over that array alternating repetitions.
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td><td><code>Array</code></td><td><p>array with values to repeat</p>
+</td>
+    </tr><tr>
+    <td>repetitions</td><td><code>Number</code> | <code>Array.&lt;Number&gt;</code></td><td><p>array or number of repetitions per value</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
 ```js
 Mod.repeat([0, 5, 7], 3);
 //=> [ 0, 0, 0, 5, 5, 5, 7, 7, 7 ] 
@@ -404,18 +930,36 @@ Mod.repeat([[0, 5], [7, 9, 12]], [2, 3]);
 //   [ 0, 5 ], 
 //   [ 7, 9, 12 ], 
 //   [ 7, 9, 12 ], 
-//   [ 7, 9, 12 ] ] 
+//   [ 7, 9, 12 ] ]
 ```
 
-## reverse
+* * *
 
-Reverse the order of items in an array.
+<a name="reverse"></a>
+
+## reverse(input) ⇒ <code>Array</code>
+Reverse the order of items in an array. Similar to JavaScripts `Array.reverse
+()` but doesn't change the original array and instead returns a copy.
 
 Alias: `rev()`
 
-**arguments**
-- {Array} -> array to reverse
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td><td><code>Array</code></td><td><blockquote>
+<p>array to reverse</p>
+</blockquote>
+</td>
+    </tr>  </tbody>
+</table>
 
+**Example**  
 ```js
 Mod.reverse([0, 5, 7, 12]);
 //=> [ 12, 7, 5, 0 ] 
@@ -425,16 +969,34 @@ Mod.reverse(['c4', ['e4', 'f4'], 'g4']);
 //=> [ 'g4', [ 'e4', 'f4' ], 'c4' ] 
 ```
 
-## rotate
+* * *
 
-Rotate an array to the left or right of n-steps. Works with 2D-arrays and string arrays.
+<a name="rotate"></a>
+
+## rotate(input, direction) ⇒ <code>Array</code>
+Rotate an array to the left or right for n-steps. Works with 2D-arrays and 
+string arrays.
 
 Alias: `rot()`
 
-**arguments**
-- {Array} -> array to rotate
-- {Int} -> direction and steps to rotate
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td><td><code>Array</code></td><td><p>array to rotate</p>
+</td>
+    </tr><tr>
+    <td>direction</td><td><code>Int</code></td><td><p>direction and steps to rotate</p>
+</td>
+    </tr>  </tbody>
+</table>
 
+**Example**  
 ```js
 Mod.rotate([0, 5, 7, 12], 1);
 //=> [ 12, 0, 5, 7 ] 
@@ -443,32 +1005,36 @@ Mod.rotate(['c4', ['e4', 'f4'], 'g4', 'a4'], -1);
 //=> [ [ 'e4', 'f4' ], 'g4', 'a4', 'c4' ] 
 ```
 
-## sort
+* * *
 
-Sort an array of numbers or strings. sorts ascending or descending in numerical and alphabetical order.
+<a name="slice"></a>
 
-**arguments**
-- {Array} -> array to sort
-- {Int} -> sort direction (positive value is ascending)
+## slice(input, slice_size, [rest]) ⇒ <code>Array.&lt;Array&gt;</code>
+Slice an array in one or multiple parts. Slice lengths are determined by the 
+second argument array. Outputs an array of arrays of the result. Not to be 
+confused with JavaScripts `Array.slice()` function!
 
-```js
-Mod.sort([-5, 7, 0, 3, 12, -7, 9], -1);
-//=> [ 12, 9, 7, 3, 0, -5, -7 ] 
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td><td><code>Array</code></td><td><p>array to slice in parts</p>
+</td>
+    </tr><tr>
+    <td>slice_size</td><td><code>Number</code> | <code>Array.&lt;Number&gt;</code></td><td><p>slice lengths to slice array into</p>
+</td>
+    </tr><tr>
+    <td>[rest]</td><td><code>Bool</code></td><td><p>output rest flag (optional, default=false)</p>
+</td>
+    </tr>  </tbody>
+</table>
 
-// works with strings (but alphabetical order!)
-Mod.sort(['e4', 'g3', 'c4', 'f3', 'b5']);
-//=> [ 'b5', 'c4', 'e4', 'f3', 'g3' ]
-```
-
-## slice
-
-Slice an array in one or multiple parts. Slice lengths are determined by the second argument array. Outputs an array of arrays of the result
-
-**arguments**
-- {Array} -> array to slice in parts
-- {Number/Array} -> slice lengths to slice array into
-- {Bool} -> output rest flag (optional, default=false)
-
+**Example**  
 ```js
 Mod.slice(Gen.spread(8), [3, 2]);
 //=> [ [ 0, 1, 2 ], [ 3, 4 ], [ 5, 6, 7 ] ] 
@@ -478,14 +1044,33 @@ Mod.slice(Gen.spread(24), [3, 2, -1, 5], false);
 //=> [ [ 0, 1, 2 ], [ 3, 4 ], [ 5, 6, 7, 8, 9 ] ] 
 ```
 
-## split
+* * *
 
-Similar to slice in that it also splits an array, except that slice recursively splits until the array is completely empty. If an array is provided as split sizes it will iterate the lengths.
+<a name="split"></a>
 
-**arguments**
-- {Array} -> array to split in parts
-- {Number/Array} -> split lengths to split array into
+## split(input, split_size) ⇒ <code>Array.&lt;Array&gt;</code>
+Similar to [slice](#slice) in that it also splits an array, except that split 
+recursively slices until the array is completely empty. If an array is 
+provided as split sizes it will iterate the lengths.
 
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td><td><code>Array</code></td><td><p>array to split in parts</p>
+</td>
+    </tr><tr>
+    <td>split_size</td><td><code>Number</code> | <code>Array.&lt;Number&gt;</code></td><td><p>split lengths to split array into</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
 ```js
 Mod.split(Gen.spread(12), 3);
 //=> [ [ 0, 1, 2 ], [ 3, 4, 5 ], [ 6, 7, 8 ], [ 9, 10, 11 ] ] 
@@ -494,12 +1079,38 @@ Mod.split(Gen.spread(12), [3, 2, -1]);
 //=> [ [ 0, 1, 2 ], [ 3, 4 ], [ 5, 6, 7 ], [ 8, 9 ], [ 10, 11 ] ] 
 ```
 
-## spray
+* * *
 
-**arguments**
-- {Array} -> Array to spray out over other array
-- {Array} -> Array of non-zero positions will be sprayed
+<a name="spray"></a>
 
+## spray(sprayer, sprayee) ⇒ <code>Array</code>
+"Spray" the values of one array on the places of values of another array if 
+the value is greater than 0, resulting in a new array where all non-zere 
+values are replaced by values from the first array. If you have to ask "why?
+" you may not find this useful... otherwise: 🤘
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>sprayer</td><td><code>Array</code></td><td><blockquote>
+<p>Array to &quot;spray&quot; out over second array</p>
+</blockquote>
+</td>
+    </tr><tr>
+    <td>sprayee</td><td><code>Array</code></td><td><blockquote>
+<p>Array containing non-zero positions to be sprayed</p>
+</blockquote>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
 ```js
 Mod.spray([7, 9, 12], [1, 0, 0, 1, 1, 0, 1, 0]);
 //=> [ 7, 0, 0, 9, 12, 0, 7, 0 ] 
@@ -513,37 +1124,31 @@ Mod.spray(['c4', 'f4', 'g4'], [1, 0, 0, 1, 1, 0, 1, 0]);
 //=> [ 'c4', 0, 0, 'f4', 'g4', 0, 'c4', 0 ] 
 ```
 
-## stepMerge
+* * *
 
-Merge 2 or multiple lists by alternating over them. This gives a similar result as merge, except that the output length is the lowest common multiple of the input lists, so that every combination of consecutive values is included until they all appeared an integer multiple of times. This function is used to allow arrays as input for Generators and for the step function for algorithmic composition.
+<a name="step"></a>
 
-**arguments**
-- {Array0, Array1, ..., Array-n} -> arrays to stepwise merge
+## step(...arrays) ⇒ <code>Array</code>
+Combine 2 or multiple lists by alternating over them. This gives a similar 
+result as [lace](#lace) except the output length is the lowest common 
+multiple of the input lists so that every combination of consecutive values 
+is included. A higher dimension in the array is preserved.
 
-```js
-// total steps is 2 so output is 4
-Mod.step([0, 3], [7, 12]);
-//=> [[0, 7], [3, 12]]
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>...arrays</td><td><code>Array</code></td><td><p>arrays to step through</p>
+</td>
+    </tr>  </tbody>
+</table>
 
-// total steps is now 6 before repetition, so output is 12
-Mod.step([0, 3, 5], [7, 12]);
-//=> [[0, 7], [3, 12], [5, 7], [0, 12], [3, 7], [5, 12]]
-
-// works with 2D and multiple arrays
-Mod.step([0, 3], [7, 12], [[19, 24]]);
-//=> [[0, 7, [19, 24]], [3, 12, [19, 24]]]
-```
-
-## stepCombine
-
-Combine 2 or multiple lists by alternating over them. This gives a similar result as lace except the output length is the lowest common multiple of the input lists so that every combination of consecutive values is included. A higher dimension in the array is preserved.
-
-Alias: `step`
-
-**arguments**
-- {Array0, Array1, ..., Array-n} -> arrays to step through
-- {Array} -> array of results
-
+**Example**  
 ```js
 // total steps is 2 so output is 4
 Mod.step([0, 3], [7, 12]);
@@ -558,15 +1163,38 @@ Mod.step([0, 3], [7, 12], [[19, 24]]);
 //=> [0, 7, [19, 24], 3, 12, [19, 24]]
 ```
 
-## stretch
+* * *
 
-Stretch (or shrink) an array to a specified length, linearly interpolating between all values within the array. Minimum output length is 2 (which will be the outmost values from the array). Third optional argument sets the interpolation mode. Available modes are `none` (or `null`, `false`) and `linear`.
- 
-**arguments**
-- {Array} -> array to stretch
-- {Array} -> outputlength of array
-- {String/Int} -> interpolation on/off (optional, default=true)
+<a name="stretch"></a>
 
+## stretch(input, size, [interp]) ⇒ <code>Array</code>
+Stretch (or shrink) an array to a specific length, linearly interpolating 
+between all values within the array. The minimum output length is 2 (which 
+will be the outmost values from the array). Third optional argument sets the 
+interpolation mode. Available modes are `none` (or `null`, `false`) and 
+`linear`.
+
+**Kind**: global function  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>input</td><td><code>Array</code></td><td><p>array to stretch</p>
+</td>
+    </tr><tr>
+    <td>size</td><td><code>Array</code></td><td><p>outputlength of array</p>
+</td>
+    </tr><tr>
+    <td>[interp]</td><td><code>Bool</code></td><td><p>interpolation on/off (optional, default=true)</p>
+</td>
+    </tr>  </tbody>
+</table>
+
+**Example**  
 ```js
 Mod.stretch([0, 12, 3, 7], 24);
 //=> [ 0, 1.56, 3.13,  4.69, 6.26, 7.82, 9.39, 10.95, 
@@ -595,49 +1223,9 @@ Mod.stretch([0, 12, 3, 7], 10, 'none');
 //    0.00 ┼──╯ 
 ```
 
-## thumb
+* * *
 
-The thumb/thumbUp technique takes an array and outputs a transformed array where the first value alternates between every other value of the array in a left to right order. This is inspiredy by the Ableton arpeggiator algorithms. For example `[0 3 7 12 19]` results in `[0 3 0 7 0 12 0 19]`.
 
-Alias: `thumbUp()`
+***
 
-**arguments**
-- {Array} -> array to transform
-
-```js
-Mod.thumbUp([0, 3, 7, 12, 19])
-//=> [0, 3, 0, 7, 0, 12, 0, 19]
-```
-
-### thumbDown
-
-Similar to thumb-up, but in reverse order. For instance `[0 3 7 12 19]` results in `[0 19 0 12 0 7 0 3]`.
-
-```js
-Mod.thumbDown([0, 3, 7, 12, 19])
-//=> [0, 19, 0, 12, 0, 7, 0, 3]
-```
-
-### thumbUpDown
-
-Similar to thumbUp and thumbDown, basically a combination of both. Creates a palindrome of the notes. For instance `[0 3 7 12 19]` results in `[0 3 0 7 0 12 0 19 0 12 0 7]`.
-
-```js
-Mod.thumbUpDown([0, 3, 7, 12, 19])
-//=> [0, 3, 0, 7, 0, 12, 0, 19, 0, 12, 0, 7]
-```
-
-## unique
-
-Remove duplicate items from an array. Does not account for 2-dimensional arrays within the array.
-
-Alias: `thin()`
-
-**arguments**
-- {Array} -> array to filter
-
-```js
-// remove duplicates from an array, leave order of appearance intact
-Mod.unique([5, 7, 5, 0, 12, 7, 5]); 
-//=> [ 5, 7, 0, 12 ] 
-```
+&copy; 2020-2026 Timo Hoogland (@tmhglnd), www.timohoogland.com, MIT License

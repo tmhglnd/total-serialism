@@ -1,0 +1,29 @@
+<!-- Generated with jsdoc2md, do not edit the .md file, instead edit the .hbs and the jsdoc in the src -->
+
+# Transform
+
+Methods that apply a transformation on the input array (sometimes in combination with more input arrays). In general return a copy of the input array. Examples of methods within this library are reverse, palindrome, duplicate, inverse, lace, rotate and more. Most functions follow the pattern: `function(<array-to-transform>, ...<other-arguments-or-array>)`
+
+## Include
+
+```js
+const Mod = require('total-serialism').Transform;
+
+Mod.inverse();
+Mod.rotate();
+```
+
+OR
+
+```js
+const { inverse, rotate } = require('total-serialism').Transform;
+
+inverse();
+rotate();
+```
+
+{{>main}}
+
+***
+
+&copy; 2020-2026 Timo Hoogland (@tmhglnd), www.timohoogland.com, MIT License

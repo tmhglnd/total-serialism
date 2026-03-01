@@ -2,7 +2,7 @@
 
 # Statistic
 
-A set of methods from Statistics and Probability Theory that allow for analysis of number sequences for statistical purposes. For example getting the average value or the most common value from an array. 
+A set of methods from Statistics and Probability Theory that allow for analysis of number sequences for statistical purposes. For example getting the average value or the most common value from an array. Most functions follow the pattern: `function(<array-to-analyse>, ...<other-arguments>)`
 
 ## Include
 
