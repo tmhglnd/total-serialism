@@ -59,14 +59,26 @@ function length(a){
 exports.length = length;
 exports.size = length;
 
-// Wrap a value between a low and high range
-// Similar to mod, expect the low range is also adjustable
-// 
-// @param {Number/Array} -> input value
-// @param {Number} -> minimum value optional, (default=12)
-// @param {Number} -> maximum value optional, (default=0)
-// @return {Number} -> remainder after division
-// 
+/**
+ * Wrap values from a list within a specified low and high range. Similar to 
+ * {@link mod}, expect the low range is also adjustable.
+ * 
+ * @param {Number|Number[]} input - Array to wrap
+ * @param {Number} minimum - Low value (optional, default=12)
+ * @param {Number} maximum - High value (optional, default=0)
+ * @returns {Number|Number[]}
+ * @example
+ * Util.wrap([0, [1, [2, 3]], [4, 5], 6], 2, 5);
+ * //=> [ 3, [ 4, [ 2, 3 ] ], [ 4, 2 ], 3 ] 
+ * 
+ * Util.wrap(Gen.spread(30), 2, 8);
+ * //=>  7.00 ┤╭╮    ╭╮    ╭╮    ╭╮    ╭╮    
+ * //    6.00 ┼╯│   ╭╯│   ╭╯│   ╭╯│   ╭╯│    
+ * //    5.00 ┤ │  ╭╯ │  ╭╯ │  ╭╯ │  ╭╯ │  ╭ 
+ * //    4.00 ┤ │ ╭╯  │ ╭╯  │ ╭╯  │ ╭╯  │ ╭╯ 
+ * //    3.00 ┤ │╭╯   │╭╯   │╭╯   │╭╯   │╭╯  
+ * //    2.00 ┤ ╰╯    ╰╯    ╰╯    ╰╯    ╰╯    
+ */
 function wrap(a=0, lo=12, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
@@ -83,13 +95,26 @@ function _wrap(a, lo, hi){
 	return ((((a - lo) % r) + r) % r) + lo;
 }
 
-// Constrain a value between a low and high range
-// 
-// @param {Number/Array} -> number to constrain
-// @param {Number} -> minimum value (optional, default=12)
-// @param {Number} -> maximum value (optional, default=0)
-// @return {Number} -> constrained value
-// 
+/**
+ * Constrain values from a list within a specified low and high range.
+ * 
+ * Alias: clip(), clamp(), bound()
+ * @param {Number|Number[]} input - Array to wrap
+ * @param {Number} minimum - Low value (optional, default=12)
+ * @param {Number} maximum - High value (optional, default=0)
+ * @returns {Number|Number[]}
+ * @example
+ * Util.constrain([0, [1, [2, 3]], [4, 5], 6], 2, 5);
+ * //=> [ 2, [ 2, [ 2, 3 ] ], [ 4, 5 ], 5 ] 
+ * 
+ * Util.constrain(Gen.cosine(30, 1), 5, 9);
+ * //=>  9.00 ┼─────╮                   ╭─── 
+ * //    8.20 ┤     │                  ╭╯    
+ * //    7.40 ┤     ╰╮                ╭╯     
+ * //    6.60 ┤      ╰╮              ╭╯      
+ * //    5.80 ┤       │              │       
+ * //    5.00 ┤       ╰──────────────╯ 
+ */
 function constrain(a=0, lo=12, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
@@ -104,15 +129,28 @@ exports.bound = constrain;
 exports.clip = constrain;
 exports.clamp = constrain;
 
-// Fold a between a low and high range
-// When the value exceeds the range it is folded inwards
-// Has the effect of "bouncing" against the boundaries
-// 
-// @param {Number/Array} -> number to fold
-// @param {Number} -> minimum value (optional, default=12)
-// @param {Number} -> maximum value (optional, default=0)
-// @return {Number} -> folder value
-// 
+/**
+ * Fold values from a list within a specified low and high range. When the 
+ * value exceeds the range it is folded inwards. Has the effect of "bouncing" 
+ * against the boundaries.
+ * 
+ * Alias: bounce()
+ * @param {Number|Number[]} input - Array to wrap
+ * @param {Number} minimum - Low value (optional, default=12)
+ * @param {Number} maximum - High value (optional, default=0)
+ * @returns {Number|Number[]}
+ * @example
+ * Util.fold([0, [1, [2, 3]], [4, 5], 6], 2, 5);
+ * //=> [ 4, [ 3, [ 2, 3 ] ], [ 4, 5 ], 4 ]
+ * 
+ * Util.fold(Gen.spreadFloat(30, -9, 13), 0, 1);
+ * //=>  1.00 ┼╮         ╭╮      ╭╮          
+ * //    0.80 ┤│ ╭╮   ╭╮ ││ ╭╮╭╮ ││ ╭╮   ╭╮  
+ * //    0.60 ┤│ ││╭─╮││ ││╭╯││╰╮││ ││╭─╮││  
+ * //    0.40 ┤│╭╯││ ││╰─╯││ ││ ││╰─╯││ ││╰╮ 
+ * //    0.20 ┤╰╯ ││ ╰╯   ╰╯ ││ ╰╯   ╰╯ ││ ╰ 
+ * //    0.00 ┤   ╰╯         ╰╯         ╰╯    
+ */
 function fold(a=0, lo=12, hi=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
@@ -131,17 +169,20 @@ function _fold(a, lo, hi){
 	return _map(a, -1, 1, lo, hi);
 }
 
-// Map/scale a value or array from one input-range 
-// to a given output-range
-// 
-// @param {Number/Array} -> value to be scaled
-// @param {Number} -> input low
-// @param {Number} -> input high
-// @param {Number} -> output low
-// @param {Number} -> output high
-// @param {Number} -> exponent (optional, default=1)
-// @return {Number/Array}
-// 
+/**
+ * Rescale values from a list from a specified input range to a specified low 
+ * and high output range. Apply an optional exponent to the mapping.
+ * @param {Number|Number[]} input - Array to wrap
+ * @param {Number} low_input - Low value (optional, default=1)
+ * @param {Number} high_input - High value (optional, default=0)
+ * @param {Number} low_output - Low value (optional, default=1)
+ * @param {Number} high_output - High value (optional, default=0)
+ * @param {Number} exponent - Exponent value (optional, default=1)
+ * @returns {Number|Number[]}
+ * @example
+ * Util.scale([0, [1, [2, 3]], 4], 0, 4, -1, 1);
+ * //=> [ -1, [ -0.5, [ 0, 0.5 ] ], 1 ] 
+ */
 function map(a=0, ...params){
 	if (!Array.isArray(a)){
 		return _map(a, ...params);
@@ -231,13 +272,15 @@ function divide(a=0, v=1){
 exports.divide = divide;
 exports.div = divide;
 
-// Return the remainder after division
-// also works in the negative direction, so wrap starts at 0
-// 
-// @param {Int/Array} -> input value
-// @param {Int/Array} -> divisor (optional, default=12)
-// @return {Int/Array} -> remainder after division
-// 
+/**
+ * Return the remainder after division. Also works in the negative direction, so wrap starts at 0
+ * @param {Number|Number[]} input - input value or array
+ * @param {Number|Number[]} modulus - modulus/divisor (optional, default=12)
+ * @returns {Number|Number[]} - remainder after division
+ * @example
+ * Util.mod([-2, [4, [3, 7]]], 5);
+ * //=> [ 3, [ 4, [ 3, 2 ] ] ]
+ */
 function mod(a=0, v=12){
 	return arrayCalc(a, v, (a, b) => { return ((a % b) + b) % b });
 }
