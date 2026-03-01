@@ -1,16 +1,16 @@
-//=======================================================================
-// gen-stochastic.js
-// part of 'total-serialism' Package
-// by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
-// MIT License
-//
-// Stochastic and Probablity Theory algorithms to generate 
-// various forms of random 
-// number sequences
-// 
-// credits:
-// - Gratefully using the seedrandom package by David Bau
-//=======================================================================
+/**
+ * @file gen-stochastic.js
+ * @description Part of the 'total-serialism' Package. 
+ * 
+ * Stochastic and Probablity Theory algorithms to generate various forms of 
+ * random number sequences
+ * 
+ * credits:
+ * - Gratefully using the seedrandom package by David Bau
+ * 
+ * @copyright 2020-2026 Timo Hoogland (@tmhglnd), www.timohoogland.com
+ * @license MIT License
+ */
 
 // require Generative methods
 const { spread } = require('./gen-basic.js');
@@ -214,12 +214,14 @@ exports.drunk = drunk;
 /**
  * Generate a list of random integer values 0 or 1 like a coin toss, heads/
  * tails.
- * @param {Int} size - number of coin tosses to output as array
- * @returns {Number[]}
  * @example
+ * ```js
  * // generate an array of coin tosses
  * Rand.coin(10); 
  * //=> [ 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 ]
+ * ```
+ * @param {Int} size - number of coin tosses to output as array
+ * @returns {Number[]}
  */
 function coin(len=1){
 	var arr = randomFloat(len, 0, 2);
@@ -231,6 +233,7 @@ exports.coin = coin;
  * Generate a list of dice rolls, resulting in random integer values from 1 to 
  * 6. Optionally use a second argument to set the amount of sides for the die.
  * @example
+ * ```js
  * // generate an array of dice rolls
  * Rand.dice(4); 
  * //=> [ 4, 4, 2, 3 ] 
@@ -238,6 +241,7 @@ exports.coin = coin;
  * // optionally set the amount of sides for the die
  * Rand.dice(4, 8); 
  * //=> [ 8, 3, 7, 1 ]
+ * ```
  * @param {Int} size - number of tosses to output
  * @param {Int} sides - sides of the die (optional, default = 6)
  * @return {Number[]}
@@ -248,13 +252,34 @@ function dice(len=1, sides=6){
 }
 exports.dice = dice;
 
-// Generate random clave patterns. Outputs a binary list as rhythm, 
-// where 1's represent onsets and 0's represent rests.
-// 
-// @param {Int} -> output length of rhythm (default=8)
-// @param {Int} -> maximum gap between onsets (default=3)
-// @param {Int} -> minimum gap between onsets (default=2)
-// 
+/**
+ * Generate random clave patterns. The output is a binary list that represents 
+ * a rhythm, where 1's represent onsets and 0's rests. First argument sets the 
+ * list length output, second argument sets the maximum gap between onsets, 
+ * third argument the minimum gap.
+ * @example
+ * ```js
+ * Rand.clave();
+ * //=> [ 1, 0, 1, 0, 0, 1, 0, 1 ] 
+ * //=> █ █  █ █
+ * 
+ * Rand.clave(8);
+ * //=> [ 1, 0, 0, 1, 0, 1, 0, 1 ] 
+ * //=> █  █ █ █
+ * 
+ * Rand.clave(16, 4);
+ * //=> [ 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1 ] 
+ * //=> █   █ █   █  █ █
+ * 
+ * Rand.clave(16, 3, 1);
+ * //=> [ 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1 ] 
+ * //=> █  █  ██  █ █  █  
+ * ```
+ * @param {Int} size - length of rhythm array (default = 8)
+ * @param {Int} maximum - max gap between onsets (default = 3)
+ * @param {Int} minimum - min gap between onsets (default = 2)
+ * @returns {Number[]} 
+ */
 function clave(len=8, max=3, min=2){
 	let arr = [];
 	// set list length to minimum of 1
@@ -284,13 +309,21 @@ function clave(len=8, max=3, min=2){
 }
 exports.clave = clave;
 
-// shuffle a list, based on the Fisher-Yates shuffle algorithm
-// by Ronald Fisher and Frank Yates in 1938
-// The algorithm has run time complexity of O(n)
-// 
-// @param {Array} -> array to shuffle
-// @return {Array}
-// 
+/**
+ * Shuffle an array, influenced by the random seed. Based on the Fisher-Yates 
+ * shuffle algorithm by Ronald Fisher and Frank Yates in 1938. The algorithm 
+ * has run time complexity of O(n)
+ * 
+ * Alias: `scramble()`
+ * 
+ * @param {Array} Array array to shuffle
+ * @returns {Array} shuffled array
+ * @example
+ * ```js
+ * Rand.shuffle([0, 5, 7, 12]); 
+ * //=> [ 7, 5, 0, 12 ]
+ * ```
+ */
 function shuffle(a=[0]){
 	// slice array to avoid changing the original array
 	var arr = a.slice();
@@ -305,29 +338,51 @@ function shuffle(a=[0]){
 exports.shuffle = shuffle;
 exports.scramble = shuffle;
 
-// Generate a list of 12 semitones
-// then shuffle the list based on a random seed
-// 
-// @return {Array} -> twelve-tone series
-// 
+/**
+ * Generate a list of 12 semitones (integers 0-11), then shuffle the list based 
+ * on the random seed. 
+ * @example
+ * ```js
+ * // basically: Rand.shuffle(Gen.spread(12));
+ * Rand.twelveTone(); 
+ * //=> [ 11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10 ]
+ * ```
+ * @returns {Number[]} twelvetone row
+ */
 function twelveTone(){
 	return shuffle(spread(12));
 }
 exports.twelveTone = twelveTone;
 exports.toneRow = twelveTone;
 
-// Generate a list of unique random integer values between a 
-// certain specified range (excluding high val). An 'urn' is filled
-// with values and when one is picked it is removed from the urn. 
-// If the outputlist is longer then the range, the urn refills when
-// empty. On refill it is made sure no repeating value can be picked.
-// Inspired by the [urn]-object in MaxMSP
-// 
-// @param {Int} -> number of values to output
-// @param {Number} -> maximum range (optional, default=12)
-// @param {Number} -> minimum range (optional, defautl=0)
-// @return {Array} -> random values
-// 
+/**
+ * Generate a list of unique random integer values between a certain specified 
+ * range (excluding high val). An 'urn' is filled with values and when one is 
+ * picked it is removed from the urn. If the outputlist is longer then the 
+ * range, the urn refills when empty. On refill it is made sure no repeating 
+ * value can be picked. Inspired by the `[urn]`-object in MaxMSP.
+ * @example
+ * ```js
+ * // generate an array with random values picked from an urn
+ * // with default range 0 to 12 (exclusive)
+ * Rand.urn(5);
+ * //=> [ 3, 6, 2, 8, 7 ] 
+ * 
+ * // set the range with a second argument to 0-7 (exclusive)
+ * // when more values then range are requested the urn 
+ * // refills and reshuffles
+ * Rand.urn(10, 7);
+ * //=> [ 6, 4, 3, 2, 0, 5, 1, 4, 2, 1 ] 
+ * 
+ * // A third argument sets a lower range replacing the default 0
+ * Rand.urn(12, -3, 3);
+ * //=> [ -3, 1, -1, 2, 0, -2, 2, -2, 0, -1, -3, 1 ]
+ * ```
+ * @param {Int} size size of output array (default = 1)
+ * @param {Int} maximum max range (optional, default = 12)
+ * @param {Int} minimum min range (optional, defautl = 0)
+ * @returns {Number[]} 
+ */
 function urn(len=1, hi=12, lo=0){
 	// swap if lo > hi
 	if (lo > hi){ var t=lo, lo=hi, hi=t; }
@@ -336,13 +391,22 @@ function urn(len=1, hi=12, lo=0){
 }
 exports.urn = urn;
 
-// Choose random items from an array provided
-// The default array is an array of 0 and 1
-// 
-// @param {Int} -> output length
-// @param {Array} -> items to choose from
-// @return {Array} -> randomly selected items
-// 
+/**
+ * Choose random items from an array with uniform probability 
+ * distribution. The default array is an array of 0 and 1.
+ * @example
+ * ```js
+ * Rand.choose(5, [0, 1, 2, 3, 5, 8, 13]);
+ * //=> [ 3, 0, 13, 3, 2 ] 
+ * 
+ * // Array can have other datatypes
+ * Rand.choose(5, ['c', 'e', 'g']);
+ * //=> [ 'c', 'c', 'g', 'e', 'g' ] 
+ * ```
+ * @param {Int} size - size of output array (default = 1)
+ * @param {Array} items - array to choose from (optional, default=[0, 1])
+ * @returns {Array} randomly chosen items
+ */
 function choose(len=1, a=[0, 1]){
 	// if a is no Array make it an array
 	a = toArray(a);
@@ -357,16 +421,24 @@ function choose(len=1, a=[0, 1]){
 }
 exports.choose = choose;
 
-// Pick random items from an array provided
-// An 'urn' is filled with values and when one is picked it is removed 
-// from the urn. If the outputlist is longer then the range, the urn 
-// refills when empty. On refill it is made sure no repeating value
-// can be picked.
-// 
-// @param {Int} -> output length
-// @param {Array} -> items to choose from
-// @return {Array} -> randomly selected items
-// 
+/**
+ * Pick random items from an array provided. An "urn" is filled with values and 
+ * when one is picked it is removed from the urn. If the outputlist is longer 
+ * then the range, the urn refills when empty. On refill it is made sure no 
+ * repeating value can be picked.
+ * @example
+ * ```js
+ * Rand.pick(5, [0, 1, 2, 3, 5, 8, 13]);
+ * //=> [ 2, 5, 8, 1, 3 ] 
+ * 
+ * // Array can have other datatypes
+ * Rand.pick(5, ['c', 'e', ['g', 'd']]);
+ * //=> [ 'e', [ 'g', 'd' ], 'c', [ 'g', 'd' ], 'e' ] 
+ * ```
+ * @param {Int} size - size of output array (default = 1)
+ * @param {Array} items - array to choose from (optional, default=[0, 1])
+ * @returns {Array} randomly picked items
+ */
 function pick(len=1, a=[0, 1]){
 	// set the size to minimum of 1 or based on array length
 	len = size(len);
@@ -398,15 +470,53 @@ function pick(len=1, a=[0, 1]){
 }
 exports.pick = pick;
 
-// expand an array based upon the pattern within an array
-// the pattern is derived from the rate in change between values
-// the newly generated values are selected randomly from the list
-// of changes.
-// 
-// @param {Array} -> the array to expand
-// @param {Number} -> the resulting array length
-// @return {Array}
-// 
+/**
+ * Expand an array based on the pattern within an array. The pattern is derived 
+ * from the rate of change between values by calculating the difference (delta) 
+ * between every consecutive value. The newly generated values are selected 
+ * randomly from the list of possible changes, but in such a way that every 
+ * change occurs once in the sequence of total changes before reshuffling 
+ * and selecting the next one (see {@link pick} for explanation). The 
+ * resulting output starts with the input array followed by the expansion.
+ * 
+ * Alias: `extrapolate()`
+ * 
+ * @example
+ * ```js 
+ * Rand.seed(3141);
+ * Rand.expand([0, 9, 7, 3, 5, 0, -1], 30);
+ * 
+ * //=>  9.00 ┤╭╮      ╭╮                    
+ * //    6.80 ┤│╰╮     ││                    
+ * //    4.60 ┤│ │╭╮   ││                    
+ * //    2.40 ┤│ ╰╯│   │╰─╮             ╭─╮  
+ * //    0.20 ┼╯   ╰─╮╭╯  │             │ │╭ 
+ * //   -2.00 ┤      ╰╯   ╰╮   ╭─╮      │ ╰╯ 
+ * //   -4.20 ┼            │   │ │    ╭╮│    
+ * //   -6.40 ┤            ╰╮  │ │    │╰╯    
+ * //   -8.60 ┤             │╭╮│ ╰─╮  │      
+ * //  -10.80 ┤             ╰╯╰╯   │╭╮│      
+ * //  -13.00 ┤                    ╰╯╰╯       
+ * 
+ * Rand.seed(6181);
+ * Rand.expand([0, 9, 7, 3, 5, 0, -1], 30);
+ * 
+ * //=>  9.00 ┤╭╮                            
+ * //    6.80 ┤│╰╮                           
+ * //    4.60 ┤│ │╭╮                         
+ * //    2.40 ┤│ ╰╯│        ╭╮╭╮             
+ * //    0.20 ┼╯   ╰─╮╭╮    │╰╯╰╮        ╭── 
+ * //   -2.00 ┤      ╰╯│  ╭╮│   ╰╮       │   
+ * //   -4.20 ┼        ╰╮ │││    ╰╮   ╭╮ │   
+ * //   -6.40 ┤         │ │╰╯     │╭╮ ││ │   
+ * //   -8.60 ┤         ╰╮│       ╰╯╰╮│╰╮│   
+ * //  -10.80 ┤          ╰╯          ││ ╰╯   
+ * //  -13.00 ┤                      ╰╯      
+ * ```
+ * @param {Number[]} array - array of numbers to expand
+ * @param {Int} size - size of output array (including input size)
+ * @returns {Number[]} expanded array
+ */
 function expand(a=[0, 0], l=0){
 	a = toArray(a);
 	l = size(l);
@@ -459,22 +569,67 @@ exports.extrapolate = expand;
 // exports.firstSpeciesCounterpoint = firstSpeciesCounterpoint;
 // exports.counterpoint = firstSpeciesCounterpoint;
 
-// Initialize a Markov Chain Model (One of the simpelest forms of ML)
-// A Markov chain is a stochastic model describing a sequence 
-// of possible events in which the probability of each event depends 
-// only on the state of the previous (multiple) events.
-// 
-// @get table -> return transition table from Markov
-// @method clear() -> erase the transition table
-// @method train() -> train the markov model
-// 		@param {Array} -> array of values as training data
-// @method seed() -> seed the random number generator (global RNG)
-// 		@param {Value} -> any value as random seed (0 = unpredictable seed)
-// @method state() -> set the initial value to start the chain
-// @method next() -> generate the next value based state or set axiom
-// @method chain() -> generate an array of values (default length=2)
-// 
+/**
+ * Build a Markov Chain (One of the simpelest forms of ML) from a set of 
+ * datapoints and use it to generate new values or an array of values based on 
+ * the probabilities of the transitions in the provided training dataset. A 
+ * Markov Chain is a model that describes possible next events based on a 
+ * current state (first order) and sometimes previous states (2nd, 3rd, ... 
+ * n-order). The Markov Chain is a broadly used method in algorithmic music to 
+ * generate new material (melodies, rhythms, but even words) based on a set of 
+ * provided material, but can also be used in linguistics to analyze word or 
+ * sentence structures.
+ * @class
+ * @constructor
+ * @public
+ * @example
+ * ```js
+ * const Rand = require('total-serialism').Stochastic;
+ * 
+ * var melody = ['c', 'e', 'f', 'e', 'g', 'f', 'a', 'c'];
+ * // make a MarkovChain instance and optionally train with array
+ * let markov = new Rand.MarkovChain(melody);
+ * 
+ * // add more to the training
+ * var melody2 = ['g', 'a', 'b', 'g', 'a', 'f', 'd', 'e'];
+ * markov.train(melody2);
+ * 
+ * // view the transition table (stored as dictionary)
+ * // can also be used to export the table to a file
+ * console.log(markov.table);
+ * // { c: [ 'e' ],
+ * //   e: [ 'f', 'g' ],
+ * //   f: [ 'e', 'a', 'd' ],
+ * //   g: [ 'f', 'a', 'a' ],
+ * //   a: [ 'c', 'b', 'f' ],
+ * //   b: [ 'g' ],
+ * //   d: [ 'e' ] }
+ * 
+ * // set the state of the model used as initial value
+ * markov.state('c');
+ * 
+ * // random number generator is connected to global seed
+ * Rand.seed(31415); 
+ * 
+ * // go to the next state based on the models probabilities
+ * markov.next();
+ * // => 'e'
+ * 
+ * // generate an array of 10 values 
+ * markov.chain(10);
+ * // => [ 'f', 'd', 'e', 'g', 'a', 'b', 'g', 'a', 'c', 'e' ]
+ * 
+ * // clear the model
+ * markov.clear();
+ * 
+ * // read a model from a json/object structure
+ * markov.read({ c: ['e'], e: ['f', 'g' ]});
+ * ```
+ */
 class MarkovChain {
+	/**
+	 * @param {Array} data - training data
+	 */
 	constructor(data){
 		// transition probabilities table
 		this._table = {};
@@ -483,12 +638,17 @@ class MarkovChain {
 		// current state of markov chain
 		this._state;
 	}
+	/** output a copy of the table as an object
+	 * @returns {Object}
+	 */ 
 	get table(){
-		// output a copy of the table as an object
 		return { ...this._table };
 	}
+	/** read a markov chain table from a json file
+	 * @param {Object} table - pretrained Object table to read
+	 * @returns {Bool} true if succesful
+	 */
 	read(t){
-		// read a markov chain table from a json file
 		if (Array.isArray(t) || typeof t !== 'object'){
 			console.error(`Error: input is not a valid json formatted table. If your input is an array use train() instead.`);
 			return false;
@@ -496,15 +656,17 @@ class MarkovChain {
 		this._table = t;
 		return true;
 	}
+	/** empty the transition probabilities */
 	clear(){
-		// empty the transition probabilities
 		this._table = {};
 	}
+	/** build a transition table from array of values
+	 * @param {Array} data - training data 
+	 */
 	train(a){
 		if (!Array.isArray(a)){ 
 			return console.error(`Error: train() expected array but received: ${typeof a}`);
 		}
-		// build a transition table from array of values
 		for (let i=1; i<a.length; i++){
 			if (!this._table[a[i-1]]) {
 				this._table[a[i-1]] = [a[i]];
@@ -514,23 +676,28 @@ class MarkovChain {
 		}
 	}
 	seed(s){
-		// deprecated, seed is now also be set for the global rng
+		// deprecated, seed is now also set for the global rng
 		seed(s);
 	}
+	/** set the state
+	 * @param {*} state - the state (depends on the transition table)
+	 */ 
 	state(a){
-		// set the state
 		if (!this._table[a]){
             console.error(`Warning: ${a} is not part of transition table`);
 		}
 		this._state = a;
 	}
+	/** generate a random state */
 	randomState(){
 		let states = Object.keys(this._table);
 		this._state = states[Math.floor(rng() * states.length)];
 	}
+	/** if the state is undefined or has no transition in table randomly choose 
+	 * from all
+	 * @returns {*} next state 
+	 */
 	next(){
-		// if the state is undefined or has no transition in table
-		// randomly choose from all
 		if (this._state === undefined || !this._table[this._state]){
 			this.randomState();
 		}
@@ -540,8 +707,11 @@ class MarkovChain {
 		this._state = probs[Math.floor(rng() * probs.length)];
 		return this._state;
 	}
+	/** return an array of values generated iteratively with next()
+	 * @param {Int} size - size of output array (default = 2)
+	 * @returns {Array} generated values
+	 */
 	chain(l=2){
-		// return an array of values generated with next()
 		let c = [];
 		for (let i=0; i<l; i++){
 			c.push(this.next());
@@ -551,20 +721,74 @@ class MarkovChain {
 }
 exports.MarkovChain = MarkovChain;
 
-// Initialize a Deep Markov Chain Model (with higher order n)
-// 
-// @get table -> return transition table from Markov
-// @method clear() -> erase the transition table
-// @method train() -> train the markov model
-// 		@param {Array} -> array of values as training data
-//		@param {Int+} -> order of markov analysis
-// @method seed() -> seed the random number generator (global RNG)
-// 		@param {Value} -> any value as random seed (0 = unpredictable seed)
-// @method state() -> set the initial value to start the chain
-// @method next() -> generate the next value based state or set axiom
-// @method chain() -> generate an array of values (default length=2)
-// 
+/**
+ * This is an identical approach to the {@link MarkovChain} while also offering 
+ * the possibility of training to create n-order chains. In theory, longer 
+ * chains preserve the original structure of the model, but won't generate as 
+ * diverse outputs.
+ * @alias DeepMarkov
+ * @class
+ * @constructor
+ * @public
+ * @example
+ * ```js
+ * const Rand = require('total-serialism').Stochastic;
+ * 
+ * var pattern = [1, 2, 3, 1, 2, 4, 1, 2, 5, 2, 3, 4];
+ * // make a MarkovChain instance and optionally train with array
+ * // an optional second argument sets the order of the markov (default=2)
+ * let markov = new Rand.DeepMarkov(pattern, 2);
+ * 
+ * // view the transition table (stored as Map())
+ * // Keys are stored as stringis derived via JSON.stringify()
+ * console.log(markov.table);
+ * // Map(7) {
+ * //   '[1,2]' => [ 3, 4, 5 ],
+ * //   '[2,3]' => [ 1, 4 ],
+ * //   '[3,1]' => [ 2 ],
+ * //   '[2,4]' => [ 1 ],
+ * //   '[4,1]' => [ 2 ],
+ * //   '[2,5]' => [ 2 ],
+ * //   '[5,2]' => [ 3 ]
+ * // }
+ * 
+ * // set the state of the model used as initial value
+ * markov.state([1, 2]);
+ * 
+ * // random number generator is connected to global seed
+ * Rand.seed(31415);
+ * 
+ * // go to the next state based on the model probabilities
+ * markov.next();
+ * // => 5
+ * 
+ * // generate an array of 10 values 
+ * markov.chain(10);
+ * // => [ 2, 3, 1, 2, 5, 2, 3, 4, 1, 2 ]
+ * 
+ * // clear the model
+ * markov.clear();
+ * 
+ * // TO DO:
+ * // read/write a model from a Map structure
+ * let model = markov.table;
+ * let otherMarkov = new DeepMarkov();
+ * otherMarkov.read(model);
+ * 
+ * // for storage to file or transfer between DeepMarkov instances
+ * // you can use the build in stringify and parse methods
+ * // these methods utilize JSON.stringify() and .parse()
+ * // with specific replacer and reviver methods
+ * let modelString = markov.stringify();
+ * let fromStringMarkov = new DeepMarkov();
+ * fromStringMarkov.parse(modelString);
+ * ```
+ */
 class DeepMarkov {
+	/**
+	 * @param {Array} data - training data
+	 * @param {Int=} order - markov-chain order (default = 2)
+	 */
 	constructor(data, order){
 		// transition probabilities table
 		this._table = new Map();
@@ -573,10 +797,16 @@ class DeepMarkov {
 		// current state of markov chain
 		this._state = '';
 	}
+	/** output a copy of the table as a Map object
+	 * @returns {Map}
+	 */ 
 	get table(){
-		// return copy of Map object
 		return new Map(JSON.parse(JSON.stringify(Array.from(this._table))));
 	}
+	/** read a markov chain table from a json file
+	 * @param {Map} table - pretrained Map table to read
+	 * @returns {Bool} true if succesful
+	 */
 	read(t){
 		// read a markov chain table from a Map() generated with DeepMarkov
 		if (Array.isArray(t) || t instanceof Map === false){
@@ -586,12 +816,15 @@ class DeepMarkov {
 		this._table = t;
 		return true;
 	}
+	/** return stringified version of the DeepMarkov table */
 	stringify(){
-		// return stringified version of the DeepMarkov table
 		return JSON.stringify(this._table, replacer);
 	}
+	/** parse an incoming string to a Map() for transition table 
+	 * @param {String} table - transition table as a string to parse for Map
+	 * @return {Bool} true if succesfully parsed
+	*/
 	parse(p){
-		// parse an incoming string to a Map() for transition table
 		try {
 			let parsed = JSON.parse(p, reviver);
 			if (parsed instanceof Map === false){
@@ -605,10 +838,15 @@ class DeepMarkov {
 			return false;
 		}
 	}
+	/** empty the transition probabilities */
 	clear(){
 		// empty the transition probabilities
 		this._table = new Map();
 	}
+	/** build a transition table from array of values
+	 * @param {Array} data - training data 
+	 * @param {Int=} order - markov-chain order (default = 2)
+	 */
 	train(a, o=2){
 		if (!Array.isArray(a)){ 
 			return console.error(`Error: train() expected array but received: ${typeof a}`);
@@ -616,7 +854,6 @@ class DeepMarkov {
 		if (o < 1){
 			return console.error(`Error: train() expected order greater then 1 but received ${o}`);
 		}
-		// build a transition table from array of values
 		for (let i=0; i<(a.length-o); i++) {
 			let slice = a.slice(i, i+o);
 			let key = JSON.stringify(slice);
@@ -636,6 +873,9 @@ class DeepMarkov {
 		// deprecated, seed is now also be set for the global rng
 		seed(s);
 	}
+	/** set the state
+	 * @param {*} state - the state (depends on the transition table)
+	 */ 
 	state(a){
 		// stringify the state
 		let s = JSON.stringify(a);
@@ -645,10 +885,15 @@ class DeepMarkov {
 		}
 		this._state = s;
 	}
+	/** generate a random state */
 	randomState() {
 		let keys = Array.from(this._table.keys())
 		this._state = keys[Math.floor(rng() * keys.length)]
 	}
+	/** if the state is undefined or has no transition in table randomly choose 
+	 * from all
+	 * @returns {*} next state 
+	 */
 	next(){
         // if the state is undefined or has no transition in table
         // randomly choose from all
@@ -667,6 +912,10 @@ class DeepMarkov {
 
 		return newState;
 	}
+	/** return an array of values generated iteratively with next()
+	 * @param {Int} size - size of output array (default = 2)
+	 * @returns {Array} generated values
+	 */
 	chain(l=2){
 		// return an array of values generated with next()
 		let c = [];

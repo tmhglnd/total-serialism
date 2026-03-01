@@ -2093,135 +2093,276 @@ math['seed'+rngname]=seedrandom;}// End anonymous scope, and pass initial values
 // otherwise `this` in Node and other environments
 typeof self!=='undefined'?self:this,[],// pool: entropy pool starts empty
 Math// math: package containing random, pow, and seedrandom
-);},{"crypto":27}],36:[function(require,module,exports){//==========================================================================
-// gen-basic.js
-// part of 'total-serialism' Package
-// by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
-// MIT License
-//
-// Basic methods that generate number sequences as 
-// startingpoint for composing melodies, rhythms and more
-// 
-// credits:
-// - spread-methods inspired by Max8's MC functions spread and spreadinclusive
-// - cosine/sine array generation inspired by workshop by Steven Yi at ICLC
-//==========================================================================
-// const Util = require('./utility.js');
-var _require=require('./utility'),map=_require.map,flatten=_require.flatten,toArray=_require.toArray,size=_require.size,TWO_PI=_require.TWO_PI;// Generate a list of n-length that counts integers
-// If only one argument provided the function counts from 0 to x
-// If two arguments provided the function counts from x to y
-//
-// @param {Int+} -> count (or count from, default=12)
-// @param {Int+} -> count from (optional, default=undefined)
-// @return -> {IntArray}
-// 
-function count(){var from=arguments.length>0&&arguments[0]!==undefined?arguments[0]:11;var to=arguments.length>1?arguments[1]:undefined;return function(from,to){// if to is undefined set to 0
+);},{"crypto":27}],36:[function(require,module,exports){/**
+ * @file gen-basic.js
+ * @description Part of the 'total-serialism' Package. 
+ * 
+ * Basic methods that generate number sequences as startingpoint for composing 
+ * melodies, rhythms and more.
+ * 
+ * credits:
+ * - spread-methods inspired by Max8's MC functions spread and spreadinclusive
+ * - cosine/sine array generation inspired by workshop by Steven Yi at ICLC
+ * 
+ * @copyright 2020-2026 Timo Hoogland (@tmhglnd), www.timohoogland.com
+ * @license MIT License
+ */var _require=require('./utility'),map=_require.map,flatten=_require.flatten,toArray=_require.toArray,size=_require.size,TWO_PI=_require.TWO_PI;/** 
+ * The counter function generates an array of ascending or descending 
+ * integers, counted from a starting value up to (and including) an ending 
+ * value. When one argument is provided this value acts as the ending value 
+ * and the default starting value is 0. If two values are provided the first 
+ * value is the starting value and the second value the end.
+ * @example
+ * // count to 8 from 0
+ * Gen.counter(8);
+ * //=> [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+ * 
+ * // count to 10 from 4
+ * Gen.counter(4, 10);
+ * //=> [ 4, 5, 6, 7, 8, 9, 10 ]
+ * 
+ * // count down from 7 to 2
+ * Gen.counter(7, 2);
+ * //=> [ 7, 6, 5, 4, 3, 2 ]
+ * 
+ * // count down from 5 to -4
+ * Gen.counter(5, -4);
+ * //=> [ 5, 4, 3, 2, 1, 0, -1, -2, -3, -4 ]
+ * 
+ * @param {IntP} count (or count from, default = 12)
+ * @param {Int=} to (optional, default = undefined)
+ * @returns {Number[]} 
+*/function count(){var from=arguments.length>0&&arguments[0]!==undefined?arguments[0]:11;var to=arguments.length>1?arguments[1]:undefined;return function(from,to){// if to is undefined set to 0
 if(to===undefined){var t=from,from=0,to=t;}// calculate the range
 var range=Math.abs(to-from);// calculate direction
 var dir=from<to?1:-1;// start with the from value
 var arr=[from];// next value is the current + the direction
-for(var i=0;i<range;i++){arr.push(arr[i]+dir);}return arr;}(from,to);}exports.counter=count;exports.count=count;// Generate a list of n-length starting at one value
-// up until (but excluding) the 3th argument. 
-// Evenly spaced values in between in floating-point
-// Defaults to range of 0 - 1 for Float
-// 
-// @param {Int+} -> array-length
-// @param {Int} -> low output 
-// @param {Int} -> high output
-// @return -> {Array}
-//
-function spreadFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
+for(var i=0;i<range;i++){arr.push(arr[i]+dir);}return arr;}(from,to);}exports.counter=count;exports.count=count;/** 
+ * The spreadFloat function is similar to the {@link count} function, but you 
+ * can decide on the length of the array output, resulting in some numbers 
+ * being skipped or duplicated depending if the output size should be smaller 
+ * or larger than the start and ending points. The generated array has n-length 
+ * of evenly spaced values between a starting number up until (but excluding) 
+ * the 3th argument. Flipping the low and high range will result in descending 
+ * values.
+ * @alias spreadF
+ * @example
+ * // generate an array of 5 floats between range 0-1
+ * Gen.spreadFloat(5); 
+ * //=> [ 0, 0.2, 0.4, 0.6, 0.8 ]
+ * 
+ * Gen.spreadF(5);
+ * 
+ * @param {Int} length of output array
+ * @param {Number=} low value (optional, default = 0)
+ * @param {Number=} high value (optional, default = length)
+ * @returns {Number[]}
+*/function spreadFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
 if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
 var r=hi-lo;// len is minimum of 1 or length of array
 len=size(len);if(len===1){return[lo];}// stepsize
 var s=r/len;// generate array
-var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return arr;}(lo,hi);}exports.spreadFloat=spreadFloat;exports.spreadF=spreadFloat;// Spread function rounded to integers
-// 
-// @params {length, low-output, high-output}
-// @return {Array}
-//
-function spread(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:size(len);var hi=arguments.length>2?arguments[2]:undefined;var arr=spreadFloat(len,lo,hi);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spread=spread;// Generate a list of n-length starting at one value
-// up until (but excluding) the 3th argument. 
-// Set an exponential curve in the spacing of the values.
-// Defaults to range of 0 - 1 for Float
-// 
-// @params {length, low-output, high-output, exponent}
-// @return {Array}
-//
-function spreadExpFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
+var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return arr;}(lo,hi);}exports.spreadFloat=spreadFloat;exports.spreadF=spreadFloat;/** 
+ * Similar to the {@link spreadF} function, but the output 
+ * is only with whole numbers (integers).
+ * @example
+ * // generate an array of 5 ints between range 0-5
+ * Gen.spread(5);
+ * //=> [ 0, 1, 2, 3, 4 ] 
+ *
+ * // change the range with a second argument to 0-12
+ * Gen.spread(5, 12);
+ * //=> [ 0, 2, 4, 7, 9 ] 
+ *
+ * // add a low/high range pair with 3-12
+ * Gen.spread(5, 3, 12);
+ * //=> [ 3, 4, 6, 8, 10 ] 
+ *
+ * // reverse the range for descending output with 12-3
+ * Gen.spread(5, 12, 3);
+ * //=> [ 10, 8, 6, 4, 3 ] 
+ * 
+ * @param {Int} length of output array
+ * @param {Int=} low value (optional, default = 0)
+ * @param {Int=} high value (optional, default = length)
+ * @returns {Number[]}
+*/function spread(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:size(len);var hi=arguments.length>2?arguments[2]:undefined;var arr=spreadFloat(len,lo,hi);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spread=spread;/** 
+ * Similar to the {@link spread} and {@link spreadF} functions, but with 
+ * an optional exponent as 4th argument to apply a curve.
+ * @alias spreadExpF
+ * @example
+ * Gen.spreadExpFloat();
+ * Gen.spreadExpF();
+ * 
+ * @param {Int} length of output array
+ * @param {Number=} low value (optional, default = 0)
+ * @param {Number=} high value (exclusive, optional, default = length)
+ * @param {Number=} exponent (optional, default = 1)
+ * @returns {Number[]}
+ */function spreadExpFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
 if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
 var r=hi-lo;// len is minimum of 1
 len=size(len);// len = Math.max(1, len);
 if(len===1){return[lo];}// generate array
 var arr=[];for(var i=0;i<len;i++){arr[i]=Math.pow(i/len,exp)*r+lo;}return arr;}(lo,hi);}exports.spreadFloatExp=spreadExpFloat;// deprecated
-exports.spreadExpFloat=spreadExpFloat;exports.spreadExpF=spreadExpFloat;// Spread function floored to integers
-// 
-// @params {length, low-output, high-output, exponent}
-// @return {Array}
-//
-function spreadExp(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:size(len);var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3?arguments[3]:undefined;var arr=spreadExpFloat(len,lo,hi,exp);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadExp=spreadExp;// Generate a list of n-length starting at one value
-// ending at the 3th argument.
-// Evenly spaced values in between in floating-point
-// Defaults to range of 0 - 1 for Float
-// 
-// @params {length, low-output, high-output}
-// @return {Array}
-//
-function spreadInclusiveFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
+exports.spreadExpFloat=spreadExpFloat;exports.spreadExpF=spreadExpFloat;/** 
+ * Similar to {@link spread} and {@link spreadF} but with an optional 
+ * exponent as 4th argument and only outputs whole numbers.
+ * @example
+ * Gen.spreadExp(10, 0, 10, 2);
+ * //=> [ 0, 0, 0, 0, 1, 2, 3, 4, 6, 8 ] 
+ * 
+ * @param {Int} length of output array
+ * @param {Int=} low value (optional, default = 0)
+ * @param {Int=} high value (exclusive, optional, default = length)
+ * @param {Number=} exponent (optional, default = 1)
+ * @returns {Number[]}
+ */function spreadExp(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:size(len);var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3?arguments[3]:undefined;var arr=spreadExpFloat(len,lo,hi,exp);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadExp=spreadExp;/**
+ * The spreadIncF function is similar to the {@link spreadF} and {@link 
+ * spreadExpF} function. The generated array has n-length of evenly spaced 
+ * values between a starting number up until (and including) the 3th argument. 
+ * Flipping the low and high range will result descending values.
+ * @alias spreadIncF
+ * @example
+ * // generate an array of 5 floats (inclusive)
+ * Gen.spreadInclusiveFloat(5);
+ * //=> [ 0, 0.25, 0.5, 0.75, 1 ] 
+ * 
+ * Gen.spreadIncF(5);
+ * 
+ * @param {Int} length of output array
+ * @param {Number=} low value (optional)
+ * @param {Number=} high value (inclusive, optional)
+ * @returns {Number[]}
+ */function spreadInclusiveFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
 if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
 var r=hi-lo;// lo is actual lowest value
 lo=Math.min(lo,hi);// len is minimum of 1
 len=size(len);// len = Math.max(1, len);
 if(len===1){return[lo];}// stepsize
 var s=Math.abs(r)/(len-1);// generate array
-var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadInclusiveFloat=spreadInclusiveFloat;exports.spreadIncF=spreadInclusiveFloat;// spreadinclusiveFloat function floored to integers
-// 
-// @params {length, low-output, high-output}
-// @return {Array}
-//
-function spreadInclusive(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:size(len);var hi=arguments.length>2?arguments[2]:undefined;var arr=spreadInclusiveFloat(len,lo,hi);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadInclusive=spreadInclusive;exports.spreadInc=spreadInclusive;// Generate a list of n-length starting at one value
-// ending at the 3th argument.
-// Set an exponential curve in the spacing of the values.
-// Defaults to range of 0 - 1 for Float
-// 
-// @params {length, low-output, high-output, exponent}
-// @return {Array}
-//
-function spreadInclusiveExpFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
+var arr=[];for(var i=0;i<len;i++){arr[i]=i*s+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadInclusiveFloat=spreadInclusiveFloat;exports.spreadIncF=spreadInclusiveFloat;/** 
+ * Similar to the {@link spreadIncF} function, but the output 
+ * is only with whole numbers (integers).
+ * @alias spreadInc
+ * @example
+ * // generate an array of 5 ints between range 0-5 (5 inclusive)
+ * Gen.spreadInclusive(5);
+ * //=> [ 0, 1, 2, 3, 5 ]
+ *
+ * // change the range with a second argument to 0-12
+ * Gen.spreadInclusive(5, 12);
+ * //=> [ 0, 3, 6, 9, 12 ] 
+ *
+ * // add a low/high range pair with 3-12
+ * Gen.spreadInclusive(5, 3, 12);
+ * //=> [ 3, 5, 7, 9, 12 ] 
+ *
+ * // reverse the range for descending output with 12-3
+ * Gen.spreadInclusive(5, 12, 3);
+ * //=> [ 12, 9, 7, 5, 3 ] 
+ * 
+ * @param {Int} length of output array
+ * @param {Number=} low value (optional)
+ * @param {Number=} high value (inclusive, optional)
+ * @returns {Number[]}
+ */function spreadInclusive(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:size(len);var hi=arguments.length>2?arguments[2]:undefined;var arr=spreadInclusiveFloat(len,lo,hi);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadInclusive=spreadInclusive;exports.spreadInc=spreadInclusive;/** 
+ * Similar to the {@link spreadInc} and {@link spreadIncF} functions, but with 
+ * an optional exponent as 4th argument to apply a curve.
+ * @alias spreadIncExpF
+ * @example
+ * Gen.spreadInclusiveExpFloat();
+ * Gen.spreadIncExpF();
+ * 
+ * @param {Int} length of output array
+ * @param {Number=} low value (optional, default = 0)
+ * @param {Number=} high value (exclusive, optional, default = length)
+ * @param {Number=} exponent (optional, default = 1)
+ * @returns {Number[]}
+ */function spreadInclusiveExpFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;return function(lo,hi){// if hi undefined set lo to 0 and hi=lo
 if(hi===undefined){var t=lo,lo=0,hi=t;}// calculate the range
 var r=hi-lo;// lo is actual lowest value
 lo=Math.min(lo,hi);// len is minimum of 1
 len=size(len);// len = Math.max(1, len);
 if(len===1){return[lo];}// generate array
 var arr=[];for(var i=0;i<len;i++){arr[i]=Math.pow(i/(len-1),exp)*Math.abs(r)+lo;}return r<0?arr.reverse():arr;}(lo,hi);}exports.spreadInclusiveFloatExp=spreadInclusiveExpFloat;//deprecated
-exports.spreadInclusiveExpFloat=spreadInclusiveExpFloat;exports.spreadIncExpF=spreadInclusiveExpFloat;// spreadinclusiveFloatExp function floored to integers
-// 
-// @params {length, low-output, high-output, exponent}
-// @return {Array}
-//
-function spreadInclusiveExp(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:size(len);var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3?arguments[3]:undefined;var arr=spreadInclusiveExpFloat(len,lo,hi,exp);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadInclusiveExp=spreadInclusiveExp;exports.spreadIncExp=spreadInclusiveExp;// fill an array with values. Arguments are pairs.
-// Every pair consists of <value, amount>
-// The value is repeated n-amount times in the list
-// Also accepts an array as a single argument
-// 
-// @params {value0, amount0, value1, amount1, ... value-n, amount-n}
-// @return {Array}
-// 
-function fill(){for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}// also accepts a single array as argument containing the pairs
+exports.spreadInclusiveExpFloat=spreadInclusiveExpFloat;exports.spreadIncExpF=spreadInclusiveExpFloat;/** 
+ * Similar to the {@link spreadIncF} and {@link spreadIncExpF}
+ * functions, but with an optional exponent as 4th argument and only outputs 
+ * whole numbers.
+ * @alias spreadIncExp
+ * @example
+ * Gen.spreadInclusiveExp(10, 0, 10, 2);
+ * //=> [ 0, 0, 0, 1, 1, 3, 4, 6, 7, 10 ] 
+ * 
+ * Gen.spreadIncExp(10, 0, 10, 2);
+ * 
+ * @param {Int} length of output array
+ * @param {Number=} low value (optional, default = 0)
+ * @param {Number=} high value (exclusive, optional, default = length)
+ * @param {Number=} exponent (optional, default = 1)
+ * @returns {Number[]}
+ */function spreadInclusiveExp(len){var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:size(len);var hi=arguments.length>2?arguments[2]:undefined;var exp=arguments.length>3?arguments[3]:undefined;var arr=spreadInclusiveExpFloat(len,lo,hi,exp);return arr.map(function(v){return Math.floor(Number(v.toPrecision(15)));});}exports.spreadInclusiveExp=spreadInclusiveExp;exports.spreadIncExp=spreadInclusiveExp;/** 
+ * Fill an array with values. Arguments are in pairs. Every pair consists of 
+ * `<value, amount>` The value is repeated n-amount of times in the array. Also 
+ * accepts an array as a single argument containing the pairs.
+ * @example
+ * // fill an array with duplicates of a value
+ * Gen.fill(10, 2, 15, 3, 20, 4); 
+ * //=> [ 10, 10, 15, 15, 15, 20, 20, 20, 20 ]
+ * @example
+ * Gen.fill([10, 2, 15, 3, 20, 4]);
+ * //=> [ 10, 10, 15, 15, 15, 20, 20, 20, 20 ]
+ * @param {Anything} value to duplicate
+ * @param {Int} amount of duplicates
+ * @param {...*=} repeat n-times
+ * @param {Array} array containing value/amount pairs
+ * @returns {Number[]}
+ */function fill(){for(var _len=arguments.length,args=new Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}// also accepts a single array as argument containing the pairs
 if(args.length===1){args=args[0];}// when arguments uneven strip last argument
 if(args.length%2){args.pop();}// when no arguments return array of 0
-if(!args.length){return[0];}var len=args.length/2;var arr=[];for(var i=0;i<len;i++){for(var k=0;k<Math.abs(args[i*2+1]);k++){arr.push(args[i*2]);}}return arr;}exports.fill=fill;// Generate an array with n-periods of a sine function
-// Optional last arguments set lo and hi range and phase offset
-// Only setting first range argument sets the low-range to 0
-// 
-// @param {Int} -> Length of output array (resolution)
-// @param {NumberArray | Number} -> Periods of sine-wave 
-// @param {Number} -> Low range of values (optional, default=-1) 
-// @param {Number} -> High range of values (optional, default=1)
-// @param {Number} -> Phase offset (optional, default=0)
-// @return {Array} -> Sine function
-// 
-function sineFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;// if no range specified
+if(!args.length){return[0];}var len=args.length/2;var arr=[];for(var i=0;i<len;i++){for(var k=0;k<Math.abs(args[i*2+1]);k++){arr.push(args[i*2]);}}return arr;}exports.fill=fill;/**
+ * Generate an array with n-periods of a sine function as floats.
+ * Optional last arguments set lo and hi range and phase offset
+ * Only setting first range argument sets the low-range to 0. 
+ * The wave can be inverted by swapping the arguments.
+ * @alias sineF
+ * @example
+ * // generate 16 floats with 1 period of a sine function
+ * Gen.sineFloat(16);
+ * //=> [ 0.00, 0.38, 0.71, 0.92, 1.00, 0.92, 0.71, 0.38, 
+ * // 0.00, -0.38, -0.71, -0.92, -1.00, -0.92, -0.71, -0.38 ]
+ * 
+ * //  1.00 ┤   ╭╮           
+ * //  0.60 ┤ ╭─╯╰─╮         
+ * //  0.20 ┼╭╯    ╰╮        
+ * // -0.20 ┼╯      ╰╮       
+ * // -0.60 ┤        ╰╮    ╭ 
+ * // -1.00 ┤         ╰────╯  
+ * 
+ * Gen.sineF();
+ * @example
+ * // frequency modulation of the period argument with another array
+ * Gen.sineFloat(40, Gen.sineFloat(40, 4, 1, 5));
+ * //=>  1.00 ┤ ╭╮  ╭──╮           ╭╮   ╭╮  ╭─╮        
+ * //    0.80 ┤ │╰╮╭╯  │ ╭╮  ╭╮    ││   ││ ╭╯ │        
+ * //    0.60 ┤╭╯ ││   ╰╮││  ││    ││   ││ │  │        
+ * //    0.40 ┤│  ╰╯    │││  ││    ││   ││ │  │        
+ * //    0.20 ┤│        ││╰╮╭╯│╭╮  ││   ││ │  │╭╮   ╭╮ 
+ * //    0.00 ┼╯        ││ ││ ││╰╮╭╯│ ╭╮││ │  │││  ╭╯│ 
+ * //   -0.20 ┤         ││ ││ ││ ││ │ ││││ │  │││  │ │ 
+ * //   -0.40 ┤         ││ ││ ││ ││ │ ││││ │  ╰╯╰╮ │ │ 
+ * //   -0.60 ┤         ││ ╰╯ ││ ││ │ ││││ │     │ │ │ 
+ * //   -0.80 ┤         ││    ││ ╰╯ │ │╰╯│ │     ╰─╯ │ 
+ * //   -1.00 ┤         ╰╯    ╰╯    ╰─╯  ╰─╯         ╰ 
+ *  
+ * @param {Int} length of output array
+ * @param {(Number|Number[])=} periods of sine-wave 
+ * @param {Number=} low range of values (optional, default = -1) 
+ * @param {Number=} high range of values (optional, default = 1)
+ * @param {Number=} phase offset (optional, default = 0)
+ * @return {Number[]}
+ */function sineFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;// if no range specified
 if(lo===undefined){lo=-1;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
 periods=toArray(periods);// if (lo === undefined){ lo = -1; hi = 1; }
 // swap if lo > hi
@@ -2232,168 +2373,420 @@ var arr=[];// let twoPI = Math.PI * 2.0;
 // let a = Math.PI * 2.0 * periods / len;
 // let p = Math.PI * phase * 2.0;
 var p=TWO_PI*phase;for(var i=0;i<len;i++){// arr[i] = Math.sin(a * i + p);
-var a=TWO_PI*periods[i%periods.length]/len;arr[i]=Math.sin(a*i+p);}return map(arr,-1,1,lo,hi);}exports.sineFloat=sineFloat;exports.sineF=sineFloat;exports.sinF=sineFloat;// Generate an integer array with n-periods of a sine function
-// Optional last arguments set lo and hi range
-// 
-// @param {Int} -> Length of output array
-// @param {Number} -> Periods of sine-wave 
-// @param {Number} -> Low range of values (optional, default = 0) 
-// @param {Number} -> High range of values (optional, default = 12)
-// @param {Number} -> Phase shift (optional, default = 0)
-// @return {Array} -> Sine function
-// 
-function sine(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4?arguments[4]:undefined;var arr=sineFloat(len,periods,lo,hi,phase);return arr.map(function(v){return Math.trunc(v);});}exports.sine=sine;// Generate an array with n-periods of a cosine function
-// Flip the low and high range to invert the function
-// See sinFloat() for details
-//
-function cosineFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;return sineFloat(len,periods,lo,hi,phase+0.25);}exports.cosineFloat=cosineFloat;exports.cosineF=cosineFloat;exports.cosF=cosineFloat;// Generate an integer array with n-periods of a cosine function
-// Flip the low and high range to invert the function
-// See sin() for details
-// 
-function cosine(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var arr=sineFloat(len,periods,lo,hi,phase+0.25);return arr.map(function(v){return Math.trunc(v);});}exports.cosine=cosine;// Generate an array with n-periods of a saw/phasor function
-// Optional last arguments set lo and hi range and phase offset
-// Only setting first range argument sets the low-range to 0
-// 
-// @param {Int} -> Length of output array (resolution)
-// @param {Number/Array} -> Periods of the wave (option, default=1)
-// @param {Number} -> Low range of values (optional, default=-1) 
-// @param {Number} -> High range of values (optional, default=1)
-// @param {Number} -> Phase offset (optional, default=0)
-// @return {Array} -> wave-function as array
-//  
-function sawFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;if(lo===undefined){lo=-1;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
+var a=TWO_PI*periods[i%periods.length]/len;arr[i]=Math.sin(a*i+p);}return map(arr,-1,1,lo,hi);}exports.sineFloat=sineFloat;exports.sineF=sineFloat;exports.sinF=sineFloat;/**
+ * Similar to {@link sineF} but only outputs whole numbers.
+ * 
+ * @example
+ * // generate 10 ints with 4 periods of a sine function
+ * Gen.sine(11, 4, 0, 7);
+ * //=> [ 3, 6, 0, 5, 4, 0, 6, 2, 1, 6, 0 ]
+ * //        6.00 ┼╭╮   ╭╮ ╭╮ 
+ * //        5.00 ┤││╭╮ ││ ││ 
+ * //        4.00 ┤│││╰╮││ ││ 
+ * //        3.00 ┼╯││ │││ ││ 
+ * //        2.00 ┤ ││ ││╰╮││ 
+ * //        1.00 ┤ ││ ││ ╰╯│ 
+ * //        0.00 ┤ ╰╯ ╰╯   ╰  
+ * 
+ * @param {Int} length of output array
+ * @param {(Number|Number[])=} periods of wave (optional, default = 1)
+ * @param {Number=} low range of values (optional, default = 0)
+ * @param {Number=} high range of values (optional, default = 12)
+ * @param {Number=} phase offset (optional, default = 0)
+ * @returns {Number[]}
+ */function sine(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4?arguments[4]:undefined;var arr=sineFloat(len,periods,lo,hi,phase);return arr.map(function(v){return Math.trunc(v);});}exports.sine=sine;/**
+ * Similar to {@link sineF} and {@link sine} but outputs a cosine wave
+ * @alias cosineF
+ * @example
+ * // generate 16 floats with 1 period of a cosine function
+ * Gen.cosineFloat(8);
+ * //=> [ 1.00, 0.92, 0.71, 0.38, 0.00, -0.38, -0.71, -0.92, -1.00, 
+ * //     -0.92, -0.71, -0.38, -0.00, 0.38, 0.71, 0.92 ]
+ * 
+ * //  1.00 ┼╮               
+ * //  0.60 ┤╰─╮          ╭─ 
+ * //  0.20 ┼  ╰╮        ╭╯  
+ * // -0.20 ┤   ╰╮      ╭╯   
+ * // -0.60 ┤    ╰╮    ╭╯    
+ * // -1.00 ┤     ╰────╯      
+ * 
+ * @param {Int} length of output array
+ * @param {(Number|Number[])=} periods of wave 
+ * @param {Number=} low range of values (optional, default = -1) 
+ * @param {Number=} high range of values (optional, default = 1)
+ * @param {Number=} phase offset (optional, default = 0)
+ * @returns {Number[]}
+ */function cosineFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;return sineFloat(len,periods,lo,hi,phase+0.25);}exports.cosineFloat=cosineFloat;exports.cosineF=cosineFloat;exports.cosF=cosineFloat;/**
+ * Similar to {@link cosineF} but outputs only whole numbers.
+ * @example
+ * // generate 10 ints with 4 periods of a cosine function
+ * Gen.cosine(11, 4, 0, 7); 
+ * 
+ * @param {Int} length of output array
+ * @param {(Number|Number[])=} periods of wave 
+ * @param {Number=} low range of values (optional, default = 0) 
+ * @param {Number=} high range of values (optional, default = 12)
+ * @param {Number=} phase offset (optional, default = 0)
+ * @returns {Number[]}
+ */function cosine(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var arr=sineFloat(len,periods,lo,hi,phase+0.25);return arr.map(function(v){return Math.trunc(v);});}exports.cosine=cosine;/**
+ * Generate an array with n-periods of a saw/phasor function. Optional last 
+ * arguments set lo and hi range and phase offset. Only setting first range 
+ * argument sets the low-range to 0
+ * @alias sawF
+ * @example
+ * Gen.sawFloat(25, 2.5);
+ * //=>  0.80 ┤       ╭─╮       ╭─╮     
+ * //    0.44 ┤     ╭─╯ │     ╭─╯ │     
+ * //    0.08 ┤    ╭╯   │    ╭╯   │     
+ * //   -0.28 ┼  ╭─╯    │  ╭─╯    │  ╭─ 
+ * //   -0.64 ┤╭─╯      │╭─╯      │╭─╯  
+ * //   -1.00 ┼╯        ╰╯        ╰╯    
+ * 
+ * @param {Int|Number[]} length of output array (uses length of Array if input)
+ * @param {(Number|Number[])=} periods of the wave (optional, default = 1)
+ * @param {Number=} low range of values (optional, default = -1) 
+ * @param {Number=} high range of values (optional, default = 1)
+ * @param {Number=} phase offset (optional, default = 0)
+ * @returns {Number[]}
+ */function sawFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;if(lo===undefined){lo=-1;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
 periods=toArray(periods);// array length minimum of 1
 len=size(len);// len = Math.max(1, len);
 var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*periods[i%periods.length]%1.0+1.0)%1.0;}return map(arr,0,1,lo,hi);// return arr;
-}exports.sawFloat=sawFloat;exports.phasor=sawFloat;exports.sawF=sawFloat;function saw(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var arr=sawFloat(len,periods,lo,hi,phase);return arr.map(function(v){return Math.trunc(v);});}exports.saw=saw;// Generate an array with n-periods of a pulse/squarewave function
-// Optional last arguments set lo and hi range and pulse width
-// Only setting first range argument sets the low-range to 0
-// 
-// @param {Int} -> Length of output array (resolution)
-// @param {Number/Array} -> Periods of the wave (option, default=1)
-// @param {Number} -> Low range of values (optional, default=-1) 
-// @param {Number} -> High range of values (optional, default=1)
-// @param {Number} -> Pulse width (optional, default=0.5)
-// @return {Array} -> wave-function as array
-//  
-function squareFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var pulse=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0.5;if(lo===undefined){lo=0;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
+}exports.sawFloat=sawFloat;exports.phasor=sawFloat;exports.sawF=sawFloat;/**
+ * Similar to {@link sawF} but only outputs whole numbers
+ * @example
+ * Gen.saw(16, 8.5);
+ * //=> 11.00 ┼              ╭ 
+ * //   10.00 ┤          ╭╮╭╮│ 
+ * //    9.00 ┤        ╭╮│││││ 
+ * //    8.00 ┤      ╭╮│││││││ 
+ * //    7.00 ┤  ╭╮╭╮│││││││││ 
+ * //    6.00 ┤╭╮│││││││││││││ 
+ * //    5.00 ┤│││││││││││││╰╯ 
+ * //    4.00 ┤│││││││││││╰╯   
+ * //    3.00 ┤│││││││╰╯╰╯     
+ * //    2.00 ┤│││││╰╯         
+ * //    1.00 ┤│││╰╯           
+ * //    0.00 ┼╯╰╯ 
+ * @example
+ * // Modulation on frequency
+ * Gen.saw(34, Gen.sinF(30, 2, 0, 100), 0, 12);
+ * //=> 11.00 ┼         ╭╮             ╭╮╭╮      
+ * //   10.00 ┤         ││╭─╮     ╭╮   ││││      
+ * //    9.00 ┤         │││ │     ││ ╭╮││││      
+ * //    8.00 ┤   ╭─╮   │││ │    ╭╯│ ││││││    ╭ 
+ * //    7.00 ┤  ╭╯ │   │││ │   ╭╯ │ ││││││    │ 
+ * //    6.00 ┤  │  │   │││ │  ╭╯  │ │╰╯││╰╮   │ 
+ * //    5.00 ┤  │  │╭╮╭╯││ │  │   │ │  ││ │   │ 
+ * //    4.00 ┤  │  ││││ ││ │  │   │ │  ││ │   │ 
+ * //    3.00 ┤  │  ││╰╯ ││ │  │   │ │  ││ ╰╮  │ 
+ * //    2.00 ┤  │  ││   ││ ╰╮ │   │ │  ╰╯  │  │ 
+ * //    1.00 ┤ ╭╯  ││   ╰╯  │╭╯   │ │      ╰─╮│ 
+ * //    0.00 ┼─╯   ╰╯       ╰╯    ╰─╯        ╰╯ 
+ *  
+ * @param {Int} length of output array
+ * @param {(Number|Number[])=} periods of the wave (optional, default = 1)
+ * @param {Number=} low range of values (optional, default = -1) 
+ * @param {Number=} high range of values (optional, default = 1)
+ * @param {Number=} phase offset (optional, default = 0)
+ * @returns {Number[]}
+ */function saw(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var phase=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0;var arr=sawFloat(len,periods,lo,hi,phase);return arr.map(function(v){return Math.trunc(v);});}exports.saw=saw;/**
+ * Generate an array with n-periods of a square/pulse wave function. Optional 
+ * last arguments set lo and hi range and pulse width. Only setting first range 
+ * argument sets the low-range to 0.
+ * @alias squareF
+ * @example
+ * // Frequency Modulation with Gen.sin
+ * Gen.squareFloat(30, Gen.sinF(30, 2, 1, 5));
+ * //=>  1.00 ┼───╮     ╭──╮╭──╮ ╭─╮  ╭─╮ ╭─ 
+ * //    0.80 ┤   │     │  ││  │ │ │  │ │ │  
+ * //    0.60 ┤   │     │  ││  │ │ │  │ │ │  
+ * //    0.40 ┤   │     │  ││  │ │ │  │ │ │  
+ * //    0.20 ┤   │     │  ││  │ │ │  │ │ │  
+ * //    0.00 ┤   ╰─────╯  ╰╯  ╰─╯ ╰──╯ ╰─╯ 
+ * Gen.squareF()
+ *  
+ * @param {Number} length of output array
+ * @param {(Number|Number[])=} periods of the wave (optional, default = 1)
+ * @param {Number=} low range of values (optional, default = 0) 
+ * @param {Number=} high range of values (optional, default = 1)
+ * @param {Number=} pulse width (optional, default = 0.5)
+ * @returns {Number[]}
+ */function squareFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2?arguments[2]:undefined;var hi=arguments.length>3?arguments[3]:undefined;var pulse=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0.5;if(lo===undefined){lo=0;hi=1;}else if(hi===undefined){hi=lo,lo=0;}// make periods array
 periods=toArray(periods);// array length minimum of 1
 len=size(len);// len = Math.max(1, len);
 var arr=[];var a=1/len;for(var i=0;i<len;i++){arr[i]=(i*a*periods[i%periods.length]%1+1)%1;arr[i]=arr[i]<pulse;}return map(arr,0,1,lo,hi);// return arr;
-}exports.squareFloat=squareFloat;exports.squareF=squareFloat;exports.rectFloat=squareFloat;exports.rectF=squareFloat;function square(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var pulse=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0.5;var arr=squareFloat(len,periods,lo,hi,pulse);return arr.map(function(v){return Math.trunc(v);});}exports.square=square;exports.rect=square;// Generate a binary rhythm from a positive integer number or an array 
-// of numbers. Returns the binary value as an array of separated 1's and 0's
-// useful for representing rhythmical patterns
-// 
-// @param {Int+/Array} -> Array of numbers to convert to binary representation
-// @return {Array} -> Array of 1's and 0's
-//
-function binary(){for(var _len2=arguments.length,a=new Array(_len2),_key2=0;_key2<_len2;_key2++){a[_key2]=arguments[_key2];}// if no arguments return else flatten array to 1 dimension
+}exports.squareFloat=squareFloat;exports.squareF=squareFloat;exports.rectFloat=squareFloat;exports.rectF=squareFloat;/**
+ * Similar to {@link squareF} but only outputs whole numbers
+ * @example
+ * Gen.square(30, 3, -2, 5, 0.8);
+ * //=>  5.00 ┼───────╮ ╭────────╮╭────────╮ 
+ * //    1.50 ┼       │ │        ││        │ 
+ * //   -2.00 ┤       ╰─╯        ╰╯        ╰  
+ * 
+ * Gen.square(30, 4, 0, 1, 0.2);
+ * //=>  1.00 ┼─╮     ╭─╮    ╭─╮     ╭╮           
+ * //    0.00 ┤ ╰─────╯ ╰────╯ ╰─────╯╰─────  
+ * 
+ * @param {Number} length of output array
+ * @param {(Number|Number[])=} periods of the wave (optional, default = 1)
+ * @param {Number=} low range of values (optional, default = 0) 
+ * @param {Number=} high range of values (optional, default = 1)
+ * @param {Number=} pulse width (optional, default = 0.5)
+ * @returns {Number[]}
+ */function square(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var periods=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3?arguments[3]:undefined;var pulse=arguments.length>4&&arguments[4]!==undefined?arguments[4]:0.5;var arr=squareFloat(len,periods,lo,hi,pulse);return arr.map(function(v){return Math.trunc(v);});}exports.square=square;exports.rect=square;/**
+ * Generate a binary rhythm from a positive integer number or an array of 
+ * numbers. Returns the binary value as an array of separated 1's and 0's 
+ * useful for representing rhythmical patterns.
+ * @alias binary
+ * @example
+ * // generate a binary array from a single number
+ * Gen.binaryBeat(358);
+ * //=> [1, 0, 0, 0, 0, 1, 1, 0, 1, 0]
+ * 
+ * // use an array of numbers and concatenate binary representations
+ * Gen.binaryBeat([4, 3, 5]);
+ * //=> [1, 0, 0, 1, 1, 1, 0, 1]
+ * 
+ * // negative values are clipped to 0
+ * Gen.binaryBeat([-4, 4]);
+ * //=> [0, 1, 0, 0]
+ * @param {Int|Number[]} array - numbers to convert to binary representation
+ * @returns {Number[]}
+ */function binary(){for(var _len2=arguments.length,a=new Array(_len2),_key2=0;_key2<_len2;_key2++){a[_key2]=arguments[_key2];}// if no arguments return else flatten array to 1 dimension
 if(!a.length){return[0];}a=flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])){arr=arr.concat(0);}else{// make the value into a whole number
 var v=Math.floor(Math.max(a[i],0));// convert the number to binary string, split, convert to numbers
-arr=arr.concat(v.toString(2).split('').map(function(x){return Number(x);}));}}return arr;}exports.binary=binary;exports.binaryBeat=binary;// Generate an array of 1's and 0's based on a positive integer number or array
-// Every number in the array will be replaced by a 1 with a specified amount of 
-// 0's appended to it. Eg. a 2 => 1 0, a 4 => 1 0 0 0, etc. This technique is
-// useful to generate a rhythm based on spacing length between onsets
-//
-// @param {Int+/Array} -> Array of numbers to convert to spaced rhythm
-// @return {Array} -> Array of 1's and 0's representing a rhythm
-//
-function spacing(){for(var _len3=arguments.length,a=new Array(_len3),_key3=0;_key3<_len3;_key3++){a[_key3]=arguments[_key3];}// if no arguments return else flatten array to 1 dimension
+arr=arr.concat(v.toString(2).split('').map(function(x){return Number(x);}));}}return arr;}exports.binary=binary;exports.binaryBeat=binary;/**
+ * Generate an array of 1's and 0's based on a positive integer number or 
+ * array. Every number in the array will be replaced by a 1 with a specified 
+ * amount of 0's appended to it. Eg. a 2 => 1 0, a 4 => 1 0 0 0, etc. This 
+ * technique is useful to generate a rhythm based on spacing length between 
+ * onsets
+ * @alias spacing
+ * @example
+ * // generate a rhythm based on numbered spacings
+ * Gen.spacingBeat(2, 3, 2)
+ * //=> [1, 0, 1, 0, 0, 1, 0]
+ * 
+ * // also works with an array as input
+ * Gen.spacingBeat([4, 2, 0])
+ * //=> [1, 0, 0, 0, 1, 0, 0]
+ * @param {Int|Number[]} array numbers to convert to spaced rhythm
+ * @returns {Number[]}
+ */function spacing(){for(var _len3=arguments.length,a=new Array(_len3),_key3=0;_key3<_len3;_key3++){a[_key3]=arguments[_key3];}// if no arguments return else flatten array to 1 dimension
 if(!a.length){return[0];}a=flatten(a);var arr=[];for(var i=0;i<a.length;i++){if(isNaN(a[i])||a[i]<1){// if no number or less than 1 append 0
 arr=arr.concat(0);}else{// for every integer push a 1 followed by 0's
-for(var j=0;j<Math.floor(a[i]);j++){arr.push(!j?1:0);}}}return arr;}exports.space=spacing;exports.spacing=spacing;exports.spacingBeat=spacing;},{"./utility":42}],37:[function(require,module,exports){//==============================================================================
-// gen-complex.js
-// part of 'total-serialism' Package
-// by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
-// MIT License
-//
-// Complex Algorithms and methods that generate number sequences as 
-// startingpoint for composing melodies, rhythms and more
-// 
-// credits:
-// - euclid() based on paper by Godfried Toussaint  
-// http://cgm.cs.mcgill.ca/~godfried/publications/banff.pdf 
-// and code from https://github.com/brianhouse/bjorklund
-// - hexBeat() inspired by Steven Yi's implementation in the csound
-//  livecode environment from 
-// https://github.com/kunstmusik/csound-live-code
-// and here https://kunstmusik.github.io/learn-hex-beats/
-// - fibonacci(), nbonacci() and pisano() inspired by 'fibonacci motion' 
-// used by composer Iannis Xenakis and 'symbolic music'. See further 
-// reading in README.md. Also inspired by Numberphile videos on 
-// pisano period on youtube.
-// - infinitySeries(), contributed by Stephen Meyer and based on
-// https://www.lawtonhall.com/blog/2019/9/9/per-nrgrds-infinity-series#:~:text=Coding%20the%20Infinity%20Series
-// 
-//==============================================================================
-var _require2=require('./utility'),mod=_require2.mod,size=_require2.size;var _require3=require('./transform'),rotate=_require3.rotate;var BigNumber=require('bignumber.js');// configure the bignumber settings
-BigNumber.config({DECIMAL_PLACES:20,EXPONENTIAL_AT:[-7,20]});// A hexadecimal rhythm generator. Generates values of 0 and 1
-// based on the input of a hexadecimal character string
-// Does not work with `0x` hexadecimal notation, for that use binary()
-//
-// @param {String/Number} -> hexadecimal characters (0 t/m f)
-// @return {Array} -> rhythm
-// 
-function hexBeat(){var hex=arguments.length>0&&arguments[0]!==undefined?arguments[0]:"8";// convert to string if a number
+for(var j=0;j<Math.floor(a[i]);j++){arr.push(!j?1:0);}}}return arr;}exports.space=spacing;exports.spacing=spacing;exports.spacingBeat=spacing;},{"./utility":42}],37:[function(require,module,exports){/**
+ * @file gen-complex.js
+ * @description Part of the 'total-serialism' Package. 
+ * 
+ * Complex Algorithms and methods that generate number sequences as 
+ * startingpoint for composing melodies, rhythms and more
+ * 
+ * credits:
+ * - euclid() based on paper by Godfried Toussaint  
+ * http://cgm.cs.mcgill.ca/~godfried/publications/banff.pdf 
+ * and code from https://github.com/brianhouse/bjorklund
+ * - hexBeat() inspired by Steven Yi's implementation in the csound
+ *  livecode environment from 
+ * https://github.com/kunstmusik/csound-live-code
+ * and here https://kunstmusik.github.io/learn-hex-beats/
+ * - fibonacci(), nbonacci() and pisano() inspired by 'fibonacci motion' 
+ * used by composer Iannis Xenakis and 'symbolic music'. See further 
+ * reading in README.md. Also inspired by Numberphile videos on 
+ * pisano period on youtube.
+ * - infinitySeries(), contributed by Stephen Meyer and based on
+ * https://www.lawtonhall.com/blog/2019/9/9/per-nrgrds-infinity-series#:~:text=Coding%20the%20Infinity%20Series
+ * 
+ * @copyright 2020-2026 Timo Hoogland (@tmhglnd), www.timohoogland.com
+ * @license MIT License
+ */var _require2=require('./utility'),mod=_require2.mod,size=_require2.size;var _require3=require('./transform'),rotate=_require3.rotate;var BigNumber=require('bignumber.js');// configure the bignumber settings
+BigNumber.config({DECIMAL_PLACES:20,EXPONENTIAL_AT:[-7,20]});/**
+ * Generate hexadecimal rhythms. Hexadecimal beats make use of hexadecimal 
+ * values (0 - f) that are a base-16 number system. Because one digit in a 
+ * base-16 number system has 16 possible values (0 - 15) these can be converted 
+ * to 4 bits that therefore can be seen as groups of 4 16th notes. These 
+ * hexadecimal values will then represent any permutation of 1's and 0's in a 4 
+ * bit number, where 0 = 0 0 0 0, 7 = 0 1 1 1, b = 1 0 1 1, f = 1 1 1 1 and all 
+ * possible values in between. This method does not work with actual 
+ * hexadecimal notation (`0x...`), for that use `binary()` as an alternative.
+ * @alias hex
+ * @example
+ * ```js
+ * // generate a hexadecimal rhythm based on a hexadecimal string (0-f)
+ * // inspired by Steven Yi's implementation in CSound Live Coding
+ * Algo.hexBeat('a9d2');
+ * //=> [ 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0 ]
+ * 
+ * Algo.hexBeat(573);
+ * //=> [ 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1 ] 
+ * ```
+ * [Learn hex beats by Steven Yi](https://kunstmusik.github.io/learn-hex-beats/)
+ *
+ * 
+ * @param {(String|Number)=} string of hexadecimal characters (0-f) (default = 8)
+ * @returns {Number[]}
+ */function hexBeat(){var hex=arguments.length>0&&arguments[0]!==undefined?arguments[0]:"8";// convert to string if a number
 if(!hex.isNaN){hex=hex.toString();}var a=[];// for every char in string get binary expansion
 for(var i=0;i<hex.length;i++){var binary=parseInt("0x"+hex[i]).toString(2);binary=isNaN(binary)?'0000':binary;// pad with leading 0's to ensure 4 values
-var padding=binary.padStart(4,'0');a=a.concat(padding.split('').map(function(x){return Number(x);}));}return a;}exports.hexBeat=hexBeat;exports.hex=hexBeat;// A fast euclidean rhythm algorithm
-// Uses the downsampling of a line drawn between two points in a 
-// 2-dimensional grid to divide the squares into an evenly distributed
-// amount of steps. Generates correct distribution, but the distribution 
-// may differ a bit from the recursive euclidean distribution algorithm 
-// for steps above 44.
-//
-// @param {Int} -> steps (optional, default=8)
-// @param {Int} -> beats (optional, default=4)
-// @param {Int} -> rotate (optional, default=0)
-// @return {Array}
-// 
-function fastEuclid(){var s=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var h=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var r=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var arr=[];var d=-1;// steps/hits is minimum of 1 or array length
-s=size(s);h=size(h);for(var i=0;i<s;i++){var v=Math.floor(i*(h/s));arr[i]=Number(v!==d);d=v;}if(r){return rotate(arr,r);}return arr;}exports.fastEuclidean=fastEuclid;exports.fastEuclid=fastEuclid;// The Euclidean rhythm generator
-// Generate a euclidean rhythm evenly spacing n-beats amongst n-steps.
-// Inspired by Godfried Toussaints famous paper "The Euclidean Algorithm
-// Generates Traditional Musical Rhythms".
-//
-// @param {Int} -> steps (optional, default=8)
-// @param {Int} -> beats (optional, default=4)
-// @param {Int} -> rotate (optional, default=0)
-// @return {Array}
-// 
-var pattern,counts,remainders;function euclid(){var steps=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var rot=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;// steps/hits is minimum of 1 or array length
-steps=size(steps);beats=size(beats);pattern=[];counts=[];remainders=[];var level=0;var divisor=steps-beats;remainders.push(beats);while(remainders[level]>1){counts.push(Math.floor(divisor/remainders[level]));remainders.push(divisor%remainders[level]);divisor=remainders[level];level++;}counts.push(divisor);build(level);return rotate(pattern,rot-pattern.indexOf(1));}exports.euclidean=euclid;exports.euclid=euclid;function build(l){var level=l;if(level==-1){pattern.push(0);}else if(level==-2){pattern.push(1);}else{for(var i=0;i<counts[level];i++){build(level-1);}if(remainders[level]!=0){build(level-2);}}}// Lindenmayer String expansion
-// a recursive fractal algorithm to generate botanic (and more)
-// Default rule is 1 -> 10, 0 -> 1, where 1=A and 0=B
-// Rules are specified as a JS object consisting of strings or arrays
-//
-// @param {String} -> the axiom (the start)
-// @param {Int} -> number of generations
-// @param {Object} -> production rules
-// @return {String/Array} -> axiom determins string or array output
-// 
-function linden(){var axiom=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];var iteration=arguments.length>1&&arguments[1]!==undefined?arguments[1]:3;var rules=arguments.length>2&&arguments[2]!==undefined?arguments[2]:{1:[1,0],0:[1]};axiom=typeof axiom==='number'?[axiom]:axiom;var asString=typeof axiom==='string';var res;// return axiom of iterations is < 1
-if(iteration<1){return axiom;};for(var n=0;n<iteration;n++){res=asString?"":[];for(var ch in axiom){var _char2=axiom[ch];var rule=rules[_char2];if(rule){res=asString?res+rule:res.concat(rule);}else{res=asString?res+_char2:res.concat(_char2);}}axiom=res;}return res;}exports.linden=linden;// Generate a single sequence of the Collatz Conjecture given
-// a starting value greater than 1
-// The conjecture states that any giving positive integer will
-// eventually reach zero after iteratively applying the following rules
-// if the number is even, divide by 2
-// if the number is odd, multiply by 3 and add 1
-// 
-// @param {Int+} -> starting number
-// @return {Array} -> the sequence (inverted, so starting at 1)
-// 
-function collatz(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;n=Math.max(2,n);var sequence=[];while(n!=1){if(n%2){n=n*3+1;}else{n=n/2;}sequence.push(n);}return sequence.reverse();}exports.collatz=collatz;// Return the modulus of a collatz conjecture sequence
-// Set the modulo
-// 
-// @param {Int+} -> starting number
-// @param {Int+} -> modulus
-// 
-function collatzMod(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var m=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;return mod(collatz(n),Math.min(m,Math.floor(m)));}exports.collatzMod=collatzMod;// The collatz conjecture with BigNumber library
-// 
-function bigCollatz(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var num=new BigNumber(n);var sequence=[];while(num.gt(1)){if(num.mod(2).eq(1)){num=num.times(3);num=num.plus(1);}else{num=num.div(2);}sequence.push(num.toFixed());}return sequence.reverse();}exports.bigCollatz=bigCollatz;// Return the modulus of a collatz conjecture sequence
-// Set the modulo
-// 
-function bigCollatzMod(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var m=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;var arr=bigCollatz(n);for(var i in arr){arr[i]=new BigNumber(arr[i]);arr[i]=arr[i].mod(m).toNumber();}return arr;}exports.bigCollatzMod=bigCollatzMod;// Generate any n-bonacci sequence as an array of BigNumber objects
+var padding=binary.padStart(4,'0');a=a.concat(padding.split('').map(function(x){return Number(x);}));}return a;}exports.hexBeat=hexBeat;exports.hex=hexBeat;/**
+ * A fast euclidean rhythm generating algorithm. Uses the downsampling of a 
+ * line drawn between two points in a 2-dimensional grid to divide the squares 
+ * into an evenly distributed amount of steps. Generates the correct 
+ * distribution, but the rotation/order may differ a bit from the recursive 
+ * {@link euclid} method. This algorithm is called the Bresenham Line Algorithm.
+ * @alias fastEuclid
+ * @example
+ * ```js
+ * Algo.fastEuclid(8, 5);
+ * //=> [ 1, 0, 1, 0, 1, 1, 0, 1 ] 
+ * 
+ * Algo.fastEuclid(16, 9, 1);
+ * //=> [ 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0 ]  
+ * ```
+ * @param {Int=} length of output array (default = 8)
+ * @param {Int=} hits (default = 4)
+ * @param {Int=} rotate (default = 0)
+ * @returns {Number[]}
+ */function fastEuclid(){var s=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var h=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var r=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var arr=[];var d=-1;// steps/hits is minimum of 1 or array length
+s=size(s);h=size(h);for(var i=0;i<s;i++){var v=Math.floor(i*(h/s));arr[i]=Number(v!==d);d=v;}if(r){return rotate(arr,r);}return arr;}exports.fastEuclidean=fastEuclid;exports.fastEuclid=fastEuclid;var pattern,counts,remainders;/**
+ * Generate a euclidean rhythm evenly spacing n-hits amongst n-steps. Inspired 
+ * by Godfried Toussaints famous paper "The Euclidean Algorithm Generates 
+ * Traditional Musical Rhythms". 
+ * 
+ * **NB: Use {@link fastEuclid} instead, it is more efficient**
+ * 
+ * @alias euclid
+ * @example 
+ * ```js
+ * Algo.euclid(8, 5);
+ * //=> [ 1, 0, 1, 1, 0, 1, 1, 0 ] 
+ * 
+ * Algo.euclid(16, 9, 1); 
+ * //=> [ 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1 ]
+ * ```
+ * @param {Int=} length of array (default = 8)
+ * @param {Int=} hits (default = 4)
+ * @param {Int=} rotate (default = 0)
+ * @returns {Number[]}
+ */function euclid(){var steps=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var beats=arguments.length>1&&arguments[1]!==undefined?arguments[1]:4;var rot=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;// steps/hits is minimum of 1 or array length
+steps=size(steps);beats=size(beats);pattern=[];counts=[];remainders=[];var level=0;var divisor=steps-beats;remainders.push(beats);while(remainders[level]>1){counts.push(Math.floor(divisor/remainders[level]));remainders.push(divisor%remainders[level]);divisor=remainders[level];level++;}counts.push(divisor);build(level);return rotate(pattern,rot-pattern.indexOf(1));}exports.euclidean=euclid;exports.euclid=euclid;function build(l){var level=l;if(level==-1){pattern.push(0);}else if(level==-2){pattern.push(1);}else{for(var i=0;i<counts[level];i++){build(level-1);}if(remainders[level]!=0){build(level-2);}}}/**
+ * The original Lindenmayer string expansion returns a string of characters 
+ * based on a set of rules and an axiom specified as strings. This is useful to 
+ * generate fractal like structures and simulate natural growth. The default 
+ * rule is 1 -> 10, 0 -> 1, where 1=A and 0=B. Rules are specified as a JS 
+ * object consisting of strings or arrays
+ * @example
+ * The classic Lsystem string expansion
+ * ```js
+ * // Koch curve
+ * Algo.linden('F', 2, {F: 'F+F-F-F+F'});
+ * //=> 'F+F-F-F+F+F+F-F-F+F-F+F-F-F+F-F+F-F-F+F+F+F-F-F+F'
+ * 
+ * // Cantor set
+ * Algo.linden('A', 3, {A: 'ABA', B: 'BBB'});
+ * //=> 'ABABBBABABBBBBBBBBABABBBABA'
+ * 
+ * // Sierpinski Triangle
+ * Algo.linden('F-G-G', 1, {'F': 'F−G+F+G−F', 'G' : 'GG'});
+ * //=> 'F−G+F+G−F-GG-GG'
+ * ```
+ * @example
+ * A more useful version that works nicely with the rest of the library. By 
+ * returning an array of integers it can be quickly put to use in combination 
+ * with other methods to generate rhythms, melodies and more based on custom 
+ * rulesets.
+ * 
+ * ```js
+ * Algo.linden();
+ * //=> [ 1, 0, 1, 1, 0 ] (default)
+ * 
+ * // Cantor set as 0's and 1's in an array ruleset
+ * Algo.linden(1, 3, {1: [1, 0, 1], 0: [0, 0, 0]});
+ * //=> [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1 ]
+ * ```
+ * 
+ * ```js
+ * // Set more complex rules for generating semitones for example
+ * var complexRules = {
+ * 	0: [0, 3, 7],
+ * 	3: [-1, 0],
+ * 	7: [12, 19, 0],
+ * 	12: [12, 0, 0, 5], 
+ * 	5: [0, -3, 0]
+ * }
+ * 
+ * Algo.linden(0, 2, complexRules);
+ * //=> [ 0, 3, 7, -1, 0, 12, 19, 0, -1, 0, 3, 7, 12, 0, 0, 5, 19, 0, 3, 7 ]
+ * ```
+ * @param {*} axiom value to start with (default = 1)
+ * @param {Number} iterations number of generations to iterate (default = 3)
+ * @param {Object} rules object or reference to object with rules
+ * @returns {Number[]}
+ */function linden(){var axiom=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[1];var iteration=arguments.length>1&&arguments[1]!==undefined?arguments[1]:3;var rules=arguments.length>2&&arguments[2]!==undefined?arguments[2]:{1:[1,0],0:[1]};axiom=typeof axiom==='number'?[axiom]:axiom;var asString=typeof axiom==='string';var res;// return axiom of iterations is < 1
+if(iteration<1){return axiom;};for(var n=0;n<iteration;n++){res=asString?"":[];for(var ch in axiom){var _char2=axiom[ch];var rule=rules[_char2];if(rule){res=asString?res+rule:res.concat(rule);}else{res=asString?res+_char2:res.concat(_char2);}}axiom=res;}return res;}exports.linden=linden;/**
+ * Generate an array of numbers from the Collatz Conjecture, also known as the 
+ * `3n+1` conjecture. Start with any positive integer `n`. Each next number is 
+ * obtained from the previous number as follows: If the previous number is even 
+ * then the next term is the previous term divided by 2. If the previous term 
+ * is odd then the next term is 3 times the prevous term plus 1. The 
+ * conjecture is, that no matter what value of `n`, the sequence will always 
+ * reach one. The length of the output is quite unpredicatable and can 
+ * therefore be an interesting sequence for algorithmic composition.
+ * 
+ * @example
+ * ```js
+ * // the collatz sequence for the number 15
+ * Algo.collatz(7);
+ * //=> [
+ * //  1,  2,  4,  8, 16,  5,
+ * //  10, 20, 40, 13, 26, 52,
+ * //  17, 34, 11, 22
+ * //	]
+ * ```
+ * @param {Number} start - any positive integer (default = 12)
+ * @returns {Number[]}
+ */function collatz(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;n=Math.max(2,n);var sequence=[];while(n!=1){if(n%2){n=n*3+1;}else{n=n/2;}sequence.push(n);}return sequence.reverse();}exports.collatz=collatz;/**
+ * The {@link collatz} conjecture sequence with a modulus operation
+ * 
+ * @example
+ * ```js
+ * // return the collatz sequence with a modulus operation (default = 2)
+ * Algo.collatzMod(7, 12);
+ * //=> [
+ * //   1,  2,  4,  8, 4, 5,
+ * //  10,  8,  4,  1, 2, 4,
+ * //   5, 10, 11, 10
+ * //	] 
+ * ```
+ * @param {Int} start - positive integer starting point
+ * @param {Int=} modulus - (optional, default = 2)
+ * @returns {Number[]}
+ */function collatzMod(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var m=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;return mod(collatz(n),Math.min(m,Math.floor(m)));}exports.collatzMod=collatzMod;/**
+ * The {@link collatz} conjecture, but implemented with the BigNumber library.
+ * The collatz sequence can encounter quite big values so alternatively you can 
+ * use bigCollatz and bigCollatzMod to allow for larger number calculations
+ * @see collatz
+ * @example
+ * ```js
+ * Algo.bigCollatz('931386509544713451').length;
+ * // => 2283
+ * ```
+ * @param {Number} start - any positive integer (default = 12)
+ * @returns {Number[]}
+ */function bigCollatz(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var num=new BigNumber(n);var sequence=[];while(num.gt(1)){if(num.mod(2).eq(1)){num=num.times(3);num=num.plus(1);}else{num=num.div(2);}sequence.push(num.toFixed());}return sequence.reverse();}exports.bigCollatz=bigCollatz;/**
+ * The {@link collatzMod} function, but implemented with the BigNumber library.
+ * The collatz sequence can encounter quite big values so alternatively you can 
+ * use bigCollatz and bigCollatzMod to allow for larger number calculations
+ * @see collatzMod
+ * @example
+ * ```js
+ * Algo.bigCollatzMod('931386509544713451');
+ * ```
+ * @param {Int} start - positive integer starting point
+ * @param {Int=} modulus - (optional, default = 2)
+ * @returns {Number[]}
+ */function bigCollatzMod(){var n=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var m=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;var arr=bigCollatz(n);for(var i in arr){arr[i]=new BigNumber(arr[i]);arr[i]=arr[i].mod(m).toNumber();}return arr;}exports.bigCollatzMod=bigCollatzMod;// Generate any n-bonacci sequence as an array of BigNumber objects
 // F(n) = t * F(n-1) + F(n-2). This possibly generatres various 
 // integer sequences: fibonacci, pell, tribonacci
 // 
@@ -2411,81 +2804,169 @@ return arr.slice(0,len);}else{len=Math.max(1,len-2);for(var i=0;i<len;i++){// ge
 cur=n1.times(t).plus(n2);n2=n1;// store n-1 as n-2
 n1=cur;// store current number as n-1
 arr.push(cur);// store BigNumber in array
-}return arr;}}// Generate any n-bonacci sequence as an array of BigNumber objects
-// for export fuction. F(n) = t * F(n-1) + F(n-2)
-// 
-// @param {Int} -> output length of array
-// @param {Int} -> start value 1 (optional, default=0)
-// @param {Int} -> start value 2 (optional, default=1)
-// @param {Int} -> multiplier (optional, default=1)
-// @return {String-Array} -> array of bignumbers as strings
-// 
-function nbonacci(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var s1=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var s2=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var t=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;var toString=arguments.length>4&&arguments[4]!==undefined?arguments[4]:false;return numBonacci(len,s1,s2,t).map(function(x){return toString?x.toFixed():x.toNumber();});}exports.nbonacci=nbonacci;// Generate the Fibonacci sequence as an array of BigNumber objects
-// F(n) = F(n-1) + F(n-2). The ratio between consecutive numbers in 
-// the fibonacci sequence tends towards the Golden Ratio (1+√5)/2
-// OEIS: A000045 (Online Encyclopedia of Integer Sequences)
-// When working with larger fibonacci-numbers then possible in 64-bit
-// Set the toString to true
-// 
-// @param {Int} -> output length of array
-// @param {Int} -> offset in sequence (optional, default=0)
-// @param {Bool} -> numbers as strings (optional, default=false)
-// @return {String-Array} -> array of bignumbers as strings
-// 
-function fibonacci(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var offset=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var toString=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;var f=numBonacci(len+offset,0,1,1).map(function(x){return toString?x.toFixed():x.toNumber();});if(offset>0){return f.slice(offset,offset+len);}return f;}exports.fibonacci=fibonacci;// Generate the Pisano period sequence as an array of BigNumber objects
-// Returns array of [0] if no period is found within the default length
-// of fibonacci numbers (256). Mod value is a minimum of 2
-// 
-// F(n) = (F(n-1) + F(n-2)) mod a.
-// 
-// @param {Int} -> output length of array
-// @param {Int} -> modulus for pisano period
-// @return {Int-Array} -> array of integers
-// 
-function pisano(){var mod=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:-1;if(mod<2){return[0];}if(len<1){return pisanoPeriod(mod);}else{return numBonacci(len,0,1,1).map(function(x){return x.mod(mod).toNumber();});}}exports.pisanoPeriod=pisano;exports.pisano=pisano;function pisanoPeriod(){var mod=arguments.length>0&&arguments[0]!==undefined?arguments[0]:2;var length=arguments.length>1&&arguments[1]!==undefined?arguments[1]:32;// console.log('pisano', '@mod', mod, '@length', length);
+}return arr;}}/**
+ * Generate an array of Fibonacci numbers `F[n] = F[n-1] + F[n-2]`, with the 
+ * option to set a custom starting pair of numbers. This generates n-bonacci 
+ * sequence according to the following method: `F[n] = t * F[n-1] + F[n-2]`
+ * 
+ * @example
+ * ```js
+ * // start with 1, 3, then multiply [n-1] by 2 before adding with [n-2]
+ * Algo.nbonacci(10, 1, 3, 2);
+ * //=> [ 1, 3, 7, 17, 41, 99, 239, 577, 1393, 3363 ]
+ * 
+ * // this is the same as Algo.fibonacci(12)
+ * Algo.nbonacci(12, 0, 1, 1);
+ * //=> [ 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ]  
+ * ```
+ * @param {Int} length - output length of array
+ * @param {Int=} f1 - starting value F[n-1] (optional, default = 0)
+ * @param {Int=} f2 - starting value F[n-2] (optional, default = 1)
+ * @param {Int=} multiplier - multiplication factor for t * F[n-1] (optional, default = 1)
+ * @param {Bool=} string_output - output as strings (optional, default = false)
+ * @returns {Number[]|String[]}
+ */function nbonacci(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var s1=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var s2=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var t=arguments.length>3&&arguments[3]!==undefined?arguments[3]:1;var toString=arguments.length>4&&arguments[4]!==undefined?arguments[4]:false;return numBonacci(len,s1,s2,t).map(function(x){return toString?x.toFixed():x.toNumber();});}exports.nbonacci=nbonacci;/**
+ * Generate an array of Fibonacci numbers `F[n] = F[n-1] + F[n-2]`. Numbers are 
+ * by default represented as Strings in order to allow for bigger numbers than 
+ * 64-bit integers can represent. The calculations are done using the bignumber.
+ * js library. A second argument sets an offset to pick a certain number from 
+ * the sequence.
+ * 
+ * `OEIS: A000045` (Online Encyclopedia of Integer Sequences)
+ * 
+ * @example
+ * ```js
+ * // 10 fibonacci numbers, starting from 0, 1, 1 etc...
+ * Algo.fibonacci(12);
+ * //=> [ 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 ] 
+ * 
+ * // 2 fibonacci numbers, starting from the 100th value
+ * Algo.fibonacci(2, 100, true);
+ * //=> [ '354224848179261915075', '573147844013817084101' ] 
+ * ```
+ * @param {Int} length - output length of array
+ * @param {Int=} offset - start the sequence at nth-fibonacci number (optional, default = 0)
+ * @param {Bool=} string_output - output numbers as strings (optional, default = false)
+ * @returns {Number[]|String[]}
+ */function fibonacci(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var offset=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var toString=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;var f=numBonacci(len+offset,0,1,1).map(function(x){return toString?x.toFixed():x.toNumber();});if(offset>0){return f.slice(offset,offset+len);}return f;}exports.fibonacci=fibonacci;/**
+ * Generate Pisano periods for the Fibonacci sequence. The pisano period is a 
+ * result of applying a modulo operation on the Fibonacci sequence `F[n] = (F
+ * [n-1] + F[n-2]) mod a`. The length of the period differs per modulus value, 
+ * but the sequence will always have a repetition. 
+ * @see fibonacci
+ * @example
+ * ```js
+ * // the pisano period for mod 7 has a length of 16
+ * Algo.pisano(7);
+ * //=> [ 0, 1, 1, 2, 3, 5, 1, 6, 0, 6, 6, 5, 4, 2, 6, 1 ]
+ * 
+ * // second argument gives a fixed length output
+ * Algo.pisano(4, 10);
+ * //=> [ 0, 1, 1, 2, 3, 1, 0, 1, 1, 2, 3, 1 ]
+ * ``` 
+ * @param {Int=} modulus - for pisano period (optional, default = 12)
+ * @param {Int=} output - length of array (optional, defaults to period length)
+ * @returns {Number[]|String[]}
+ * */function pisano(){var mod=arguments.length>0&&arguments[0]!==undefined?arguments[0]:12;var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:-1;if(mod<2){return[0];}if(len<1){return pisanoPeriod(mod);}else{return numBonacci(len,0,1,1).map(function(x){return x.mod(mod).toNumber();});}}exports.pisanoPeriod=pisano;exports.pisano=pisano;function pisanoPeriod(){var mod=arguments.length>0&&arguments[0]!==undefined?arguments[0]:2;var length=arguments.length>1&&arguments[1]!==undefined?arguments[1]:32;// console.log('pisano', '@mod', mod, '@length', length);
 var seq=numBonacci(length,0,1,1).map(function(x){return x.mod(mod).toNumber();});var p=[],l=0;for(var i=0;i<seq.length;i++){// console.log(i, seq[i]);
 p.push(seq[i]);if(p.length>2){var c=[0,1,1];var equals=0;// compare last 3 values with [0, 1, 1]
 for(var k=0;k<p.length;k++){equals+=p[k]===c[k];// console.log('>>', equals);
 }// if equals slice the sequence and return
 if(equals===3&&l>3){// console.log('true');
 return seq.slice(0,l);}p=p.slice(1,3);l++;}}// console.log('no period, next iteration');
-return pisanoPeriod(mod,length*2);}// Generate the Pell numbers as an array of BigNumber objects
-// F(n) = 2 * F(n-1) + F(n-2). The ratio between consecutive numbers 
-// in the pell sequence tends towards the Silver Ratio 1 + √2.
-// OEIS: A006190 (Online Encyclopedia of Integer Sequences)
-// 
-// @param {Int} -> output length of array
-// @param {Int} -> offset in sequence (optional, default=0)
-// @param {Bool} -> numbers as strings (optional, default=false)
-// @return {String-Array} -> array of bignumbers as strings
-// 
-function pell(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var offset=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var toString=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;var f=numBonacci(len+offset,0,1,2).map(function(x){return toString?x.toFixed():x.toNumber();});if(offset>0){return f.slice(offset,offset+len);}return f;}exports.pell=pell;// Generate the Tribonacci numbers as an array of BigNumber objects
-// F(n) = 2 * F(n-1) + F(n-2). The ratio between consecutive numbers in 
-// the 3-bonacci sequence tends towards the Bronze Ratio (3 + √13) / 2.
-// OEIS: A000129 (Online Encyclopedia of Integer Sequences)
-// 
-// @param {Int} -> output length of array
-// @param {Int} -> offset in sequence (optional, default=0)
-// @param {Bool} -> numbers as strings (optional, default=false)
-// @return {String-Array} -> array of bignumbers as strings
-// 
-function threeFibonacci(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var offset=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var toString=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;var f=numBonacci(len+offset,0,1,3).map(function(x){return toString?x.toFixed():x.toNumber();});if(offset>0){return f.slice(offset,offset+len);}return f;}exports.threeFibonacci=threeFibonacci;// Generate the Lucas numbers as an array of BigNumber objects
-// F(n) = F(n-1) + F(n-2), with F0=2 and F1=1.
-// OEIS: A000032 (Online Encyclopedia of Integer Sequences)
-// 
-// @param {Int} -> output length of array
-// @param {Int} -> offset in sequence (optional, default=0)
-// @param {Bool} -> numbers as strings (optional, default=false)
-// @return {String-Array} -> array of bignumbers as strings
-// 
-function lucas(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var offset=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var toString=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;var f=numBonacci(len+offset,2,1,1).map(function(x){return toString?x.toFixed():x.toNumber();});if(offset>0){return f.slice(offset,offset+len);}return f;}exports.lucas=lucas;// Generate the Nørgård infinity series sequence.
-//
-// @param {Int+} -> size the length of the resulting Meldoy's steps (default=16)
-// @param {Array} -> seed the sequence's first two steps (defaults = [0, 1])
-// @param {Int} -> offset from which the sequence starts
-// @return {Array} -> an Array with the infinity series as its steps
-//
-function infinitySeries(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:16;var seed=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0,1];var offset=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;len=size(len);var root=seed[0];var step1=seed[1];var seedInterval=step1-root;var steps=Array.from(new Array(len),function(n,i){return i+offset;}).map(function(step){return root+norgardInteger(step)*seedInterval;});return steps;}exports.infinitySeries=infinitySeries;exports.infSeries=infinitySeries;// Returns the value for any index of the base infinity series sequence 
+return pisanoPeriod(mod,length*2);}/**
+ * Other integer sequences based on Fibonacci are also available. For instance
+ * generate the Pell numbers as an array according to the formula
+ * F(n) = 2 * F(n-1) + F(n-2). The ratio between consecutive numbers 
+ * in the pell sequence tends towards the Silver Ratio 1 + √2.
+ * 
+ * OEIS: A006190 (Online Encyclopedia of Integer Sequences)
+ * 
+ * @example
+ * ```js
+ * Algo.pell(10);
+ * //=> [ 0, 1, 2, 5, 12, 29, 70, 169, 408, 985 ] 
+ * ```
+ * 
+ * @param {Int} length - output length of array
+ * @param {Int=} offset - start the sequence at nth-fibonacci number (optional, default = 0)
+ * @param {Bool=} string_output - output numbers as strings (optional, default = false)
+ * @returns {Number[]|String[]}
+ */function pell(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var offset=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var toString=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;var f=numBonacci(len+offset,0,1,2).map(function(x){return toString?x.toFixed():x.toNumber();});if(offset>0){return f.slice(offset,offset+len);}return f;}exports.pell=pell;/**
+ * Other integer sequences based on Fibonacci are also available. For instance
+ * generate the threeBonacci numbers as an array according to the formula:
+ * F(n) = 2 * F(n-1) + F(n-2). The ratio between consecutive numbers in 
+ * the 3-bonacci sequence tends towards the Bronze Ratio (3 + √13) / 2.
+ * 
+ * OEIS: A000129 (Online Encyclopedia of Integer Sequences)
+ * 
+ * @example
+ * ```js
+ * Algo.threeFibonacci(10);
+ * //=> [ 0, 1, 3, 10, 33, 109, 360, 1189, 3927, 12970 ] 
+ * ```
+ * 
+ * @param {Int} length - output length of array
+ * @param {Int=} offset - start the sequence at nth-fibonacci number (optional, default = 0)
+ * @param {Bool=} string_output - output numbers as strings (optional, default = false)
+ * @returns {Number[]|String[]}
+ */function threeFibonacci(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var offset=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var toString=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;var f=numBonacci(len+offset,0,1,3).map(function(x){return toString?x.toFixed():x.toNumber();});if(offset>0){return f.slice(offset,offset+len);}return f;}exports.threeFibonacci=threeFibonacci;/**
+ * Other integer sequences based on Fibonacci are also available. For instance
+ * Generate the Lucas numbers as an array according to the formula:
+ * F(n) = F(n-1) + F(n-2), with F0=2 and F1=1.
+ * 
+ * OEIS: A000032 (Online Encyclopedia of Integer Sequences)
+ * 
+ * @example
+ * ```js
+ * Algo.lucas(10);
+ * //=> [ 2, 1, 3, 4, 7, 11, 18, 29, 47, 76 ]  
+ * ```
+ * 
+ * @param {Int} length - output length of array
+ * @param {Int=} offset - start the sequence at nth-fibonacci number (optional, default = 0)
+ * @param {Bool=} string_output - output numbers as strings (optional, default = false)
+ * @returns {Number[]|String[]}
+ */function lucas(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var offset=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var toString=arguments.length>2&&arguments[2]!==undefined?arguments[2]:false;var f=numBonacci(len+offset,2,1,1).map(function(x){return toString?x.toFixed():x.toNumber();});if(offset>0){return f.slice(offset,offset+len);}return f;}exports.lucas=lucas;/**
+ * Nørgård's music often features the use of the infinity series for 
+ * serializing melody, harmony, and rhythm in musical composition. The method 
+ * takes its name from the endlessly self-similar nature of the resulting 
+ * musical material, comparable to fractal geometry. Mathematically, the 
+ * infinity series is an integer sequence. "Invented in an attempt to unify in 
+ * a perfect way repetition and variation," the first few terms of its simplest 
+ * form are 0, 1, −1, 2, 1, 0, −2, 3, ….
+ * 
+ * `OEIS: A004718` (Online Encyclopedia of Integer Sequences)
+ * 
+ * @alias infSeries
+ * @example
+ * ```js
+ * Algo.infinitySeries();
+ * //=> [
+ * //    0,  1, -1, 2, 1, 0,
+ * //   -2,  3, -1, 2, 0, 1,
+ * //    2, -1, -3, 4
+ * // ] 
+ * 
+ * Algo.infinitySeries(16, [0, 3]);
+ * //=> [
+ * //    0,  3, -3,  6, 3, 0,
+ * //   -6,  9, -3,  6, 0, 3,
+ * //    6, -3, -9, 12
+ * // ] 
+ * 
+ * Algo.infSeries(8, [0, 1], 120);
+ * //=> [
+ * //   -4,  5,  3, -2,
+ * //    5, -4, -6,  7
+ * // ]
+ * ```
+ * 
+ * @param {Int=} size - the length of the resulting Meldoy's steps (default = 16)
+ * @param {(Number[])=} seed - the sequence's first two steps (default = [0, 1])
+ * @param {Int=} offset - from which the sequence starts (default = 0)
+ * @return {Number[]}
+ */function infinitySeries(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:16;var seed=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0,1];var offset=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;len=size(len);var root=seed[0];var step1=seed[1];var seedInterval=step1-root;var steps=Array.from(new Array(len),function(n,i){return i+offset;}).map(function(step){return root+norgardInteger(step)*seedInterval;});return steps;}exports.infinitySeries=infinitySeries;exports.infSeries=infinitySeries;// Returns the value for any index of the base infinity series sequence 
 // (0, 1 seed). This function enables an efficient way to compute any 
 // arbitrary section of the infinity series without needing to compute
 // the entire sequence up to that point.
@@ -2499,205 +2980,442 @@ function infinitySeries(){var len=arguments.length>0&&arguments[0]!==undefined?a
 // @param {Int} -> index the 0-based index of the infinity series
 // @return -> the value in the infinity series at the given index.
 //
-function norgardInteger(index){var binaryDigits=index.toString(2).split("").map(function(bit){return parseInt(bit);});return binaryDigits.reduce(function(integer,digit){return digit===1?integer+=1:integer*=-1;},0);}// Generate an Elementary Cellular Automaton class
-// This is an one dimensional array (collection of cells) with states
-// that are either dead or alive (0/1). By following a set of rules the
-// next generation is calculated for every cell based on its neighbouring
-// cells. Invoke the next() method to iterate the generations. Set the first
-// generation with the feed() method (usually random values work quite well)
-// Change the rule() based on a decimal number or an array of digits
-// 
-// Some interesting rules to try: 
-// 3 5 9 18 22 26 30 41 45 54 60 73 90 105 
-// 106 110 120 122 126 146 150 154 181
-// 
-// @constructor {length, rule} -> generate the CA
-// @get state -> return the current generations as array
-// @get table -> return the table of rules
-// @method rule() -> set the rule based on decimal number or array
-// @method feed() -> feed the initial generation with an array
-// @method next() -> generate the next generation and return
-// 
-var Automaton=/*#__PURE__*/function(){function Automaton(){var l=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var r=arguments.length>1&&arguments[1]!==undefined?arguments[1]:110;_classCallCheck(this,Automaton);// the size of the population for each generation
+function norgardInteger(index){var binaryDigits=index.toString(2).split("").map(function(bit){return parseInt(bit);});return binaryDigits.reduce(function(integer,digit){return digit===1?integer+=1:integer*=-1;},0);}/**
+ * Generate an Elementary Cellular Automaton class (1D). This is a 
+ * one-dimensional array (collection of cells) with states that are either dead 
+ * or alive (0/1). By following a set of rules the next generation is 
+ * calculated for every cell based on its neighbouring cells. Invoke the `next()
+ * ` method to iterate the generations. Set the first generation with the `feed
+ * ()` method (usually random values work quite well). Change the `rule()` 
+ * based on a decimal number or an array of digits.
+ * @class
+ * @constructor
+ * @public
+ * @example
+ * ```js 
+ * let ca = new Algo.Automaton();
+ * 
+ * // feed with 40 randomly generated values 0-1
+ * ca.feed(Rand.coin(40));
+ * 
+ * // set the rule with a decimal representation
+ * ca.rule(122);
+ * 
+ * // generate the next generation and store in array
+ * let gen = ca.next();
+ * 
+ * // create multiple generations in a forloop
+ * let gens = [];
+ * for (let i=0; i<10; i++){
+ * 	gens.push(ca.next());
+ * }
+ * Util.draw(gens);
+ * 
+ * //  ███ ██ █   █ ██ █ █████   ██ ████ ██   
+ * // ██ █████ █ █ ████ ██   ██ █████  █████  
+ * // ████   ██ █ ██  █████ █████   ████   ███
+ * //    ██ ████ ██████   ███   ██ ██  ██ ██  
+ * //   █████  ███    ██ ██ ██ ██████████████ 
+ * //  ██   ████ ██  ███████████            ██
+ * // ████ ██  ███████         ██          ███
+ * //    ███████     ██       ████        ██  
+ * //   ██     ██   ████     ██  ██      ████ 
+ * //  ████   ████ ██  ██   ████████    ██  ██
+ * ```
+ * @example
+ * Different rules hold different patterns:
+ * 
+ * ```js 
+ * ca.rule(120);
+ * 
+ * //  ██  ████ ████ █  ███ █    █  ██    █ ██
+ * // ████ █  ███  ██ █ █ ██ █    █ ███    ███
+ * //    ██ █ █ ██ ███ █ ████ █    ██ ██   █  
+ * //    ███ █ █████ ██ ██  ██ █   ██████   █ 
+ * //    █ ██ ██   ████████ ███ █  █    ██   █
+ * // █   ███████  █      ███ ██ █  █   ███   
+ * //  █  █     ██  █     █ █████ █  █  █ ██  
+ * //   █  █    ███  █     ██   ██ █  █  ████ 
+ * //    █  █   █ ██  █    ███  ███ █  █ █  ██
+ * // █   █  █   ████  █   █ ██ █ ██ █  █ █ ██
+ * 
+ * ca.rule(9);
+ * 
+ * //    █            ████ █  █         █  █  
+ * // ██   ██████████ █         ███████      █
+ * //    █ █            ███████ █       ████ █
+ * //  █     ██████████ █         █████ █     
+ * //    ███ █            ███████ █       ████
+ * //  █ █     ██████████ █         █████ █   
+ * //      ███ █            ███████ █       ██
+ * //  ███ █     ██████████ █         █████ █ 
+ * //  █     ███ █            ███████ █       
+ * //    ███ █     ██████████ █         ██████
+ * ```
+ * Some interesting rules to try: 3 5 9 18 22 26 30 41 45 54 60 73 90 105 
+ * 106 110 120 122 126 146 150 154 181
+ */var Automaton=/*#__PURE__*/function(){/**
+		@param {number=} population - size of the population (default = 8)
+		@param {number=} rule - the rule to apply
+	 */function Automaton(){var l=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var r=arguments.length>1&&arguments[1]!==undefined?arguments[1]:110;_classCallCheck(this,Automaton);// the size of the population for each generation
 this._length=Math.max(3,l);// the state of the current generation
 this._state=new Array(this._length).fill(0);// the rule (will be converted to binary representation)
 this._rule=this.ruleToBinary(r).split('');// the rule table for lookup
-this._table=this.binaryToTable(this._rule);}_createClass(Automaton,[{key:"state",get:function get(){// return the current state of the Automaton
-return this._state;}},{key:"table",get:function get(){// return the object of rules
-return this._table;}},{key:"rule",value:function rule(a){// set the rule for the automaton
-if(Array.isArray(a)){// when the argument is an array of 1's and 0's convert to table
+this._table=this.binaryToTable(this._rule);}/**
+	 * return the current state of the Automaton
+	 * @returns {Number[]}
+	 */_createClass(Automaton,[{key:"state",get:function get(){return this._state;}/**
+	 * return the object of rules
+	 * @returns {Object}
+	 */},{key:"table",get:function get(){return this._table;}/** set the rule for the automaton
+	 * @param {(Number|Number[]|Object)} rule - the rule to apply. Can by either a number, an array or a rule Object
+	 */},{key:"rule",value:function rule(a){if(Array.isArray(a)){// when the argument is an array of 1's and 0's convert to table
 if(a.length!=8){console.log('Warning: rule() must have length 8 to correctly represent all possible states');}var r=a.slice(0,8).join('').padStart(8,'0');// this._rule = parseInt(r, 2);
 this._table=this.binaryToTable(r);}else if(_typeof(a)==='object'){// when the argument is an object store it directly in table
 if(Object.keys(a).length!=8){console.log('Warning: rule() must have 8 keys to correctly represent all possible states');}this._rule=undefined;this._table=_objectSpread({},a);}else{if(isNaN(Number(a))){console.error('Error: rule() expected a number but received:',a);}else{// when the argument is a number
-var b=this.ruleToBinary(Number(a));this._rule=a;this._table=this.binaryToTable(b);}}}},{key:"feed",value:function feed(a){// feed the automaton with an initial array
-if(!Array.isArray(a)||a.length<3){console.log('Warning: feed() expected array of at least length 3 but received:',_typeof(a),'with length:',(Array.isArray(a)?a:[a]).length);}else{this._state=a;this._length=a.length;}}},{key:"next",value:function next(){// calculate the next generation from the rules
-var n=[];var l=this._length;// for every cell in the current state, check the neighbors
+var b=this.ruleToBinary(Number(a));this._rule=a;this._table=this.binaryToTable(b);}}}/** feed the automaton with an initial array
+	 * @param {Number[]} feed - an initial array for the state
+	 */},{key:"feed",value:function feed(a){if(!Array.isArray(a)||a.length<3){console.log('Warning: feed() expected array of at least length 3 but received:',_typeof(a),'with length:',(Array.isArray(a)?a:[a]).length);}else{this._state=a;this._length=a.length;}}/**
+	 * calculate the next generation from the rules
+	 * @returns {Number[]} 
+	 */},{key:"next",value:function next(){var n=[];var l=this._length;// for every cell in the current state, check the neighbors
 for(var i=0;i<l;i++){var left=this._state[(i-1%l+l)%l];var right=this._state[(i+1%l+l)%l];// join 3 cells to string and lookup next value from table
 n[i]=this._table[[left,this._state[i],right].join('')];}// store in state and return result as array
 return this._state=n;}},{key:"ruleToBinary",value:function ruleToBinary(r){// convert a rule number to binary sequence 
 return r.toString(2).padStart(8,'0');}},{key:"binaryToTable",value:function binaryToTable(r){// store binary sequence in lookup table
-var c={};for(var i=0;i<8;i++){c[(7-i).toString(2).padStart(3,'0')]=Number(r[i]);}return c;}}]);return Automaton;}();exports.Automaton=Automaton;},{"./transform":40,"./utility":42,"bignumber.js":26}],38:[function(require,module,exports){//=======================================================================
-// gen-stochastic.js
-// part of 'total-serialism' Package
-// by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
-// MIT License
-//
-// Stochastic and Probablity Theory algorithms to generate 
-// various forms of random 
-// number sequences
-// 
-// credits:
-// - Gratefully using the seedrandom package by David Bau
-//=======================================================================
-// require Generative methods
+var c={};for(var i=0;i<8;i++){c[(7-i).toString(2).padStart(3,'0')]=Number(r[i]);}return c;}}]);return Automaton;}();exports.Automaton=Automaton;},{"./transform":40,"./utility":42,"bignumber.js":26}],38:[function(require,module,exports){/**
+ * @file gen-stochastic.js
+ * @description Part of the 'total-serialism' Package. 
+ * 
+ * Stochastic and Probablity Theory algorithms to generate various forms of 
+ * random number sequences
+ * 
+ * credits:
+ * - Gratefully using the seedrandom package by David Bau
+ * 
+ * @copyright 2020-2026 Timo Hoogland (@tmhglnd), www.timohoogland.com
+ * @license MIT License
+ */ // require Generative methods
 var _require4=require('./gen-basic.js'),spread=_require4.spread;var _require5=require('./utility'),fold=_require5.fold,size=_require5.size,toArray=_require5.toArray;var _require6=require('./statistic'),change=_require6.change;// require seedrandom package
 var seedrandom=require('seedrandom');// local pseudorandom number generator and seed storage
-var rng=seedrandom();var _seed=0;_seed2(_seed);// Set the seed for all the Random Number Generators. 
-// 0 sets to unpredictable seeding
-// 
-// @param {Number/String} -> the seed
-// @return {Void}
-// 
-function _seed2(){var v=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;if(v===0||v===null||v===undefined){// generate a random seed, which is retrievable
+var rng=seedrandom();var _seed=0;_seed2(_seed);/**
+ * Set the seed for the Random Number Generators. A value of `0` sets the seed 
+ * to a random value between 1 and 9999. The seed can only be set **once** for 
+ * every import of the library. However, the seed can be reset in between 
+ * function calls. You can retrieve the current seed with `getSeed()`.
+ * @example
+ * ```js
+ * // set a random seed between 0-9999
+ * Rand.seed()
+ * 
+ * // set the random number generator seed
+ * Rand.seed(19374);
+ * ```
+ * @param {Number|String} seed - set the seed
+ * @returns {Number|String} the seed
+ */function _seed2(){var v=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;if(v===0||v===null||v===undefined){// generate a random seed, which is retrievable
 _seed=Math.floor(Math.random()*9999)+1;}else{_seed=v;}rng=seedrandom(_seed);// also return the seed that has been set
-return _seed;}exports.seed=_seed2;// Return the seed that was set
-//
-// @return {Value} -> the seed
-//
-function getSeed(){return _seed;}exports.getSeed=getSeed;// generate a list of random float values 
-// between a certain specified range (excluding high val)
-// 
-// @param {Int} -> number of values to output
-// @param {Number} -> minimum range (optional, default=0)
-// @param {Number} -> maximum range (optional, defautl=1)
-// @return {Array}
-// 
-function randomFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
+return _seed;}exports.seed=_seed2;/**
+ * Get the seed from the Random Number Generator. Returns the value that was 
+ * latest set with `seed()`.
+ * @example
+ * ```js
+ * // get the random number generator seed
+ * Rand.getSeed();
+ * // => 19374
+ * ```
+ * @returns {Number|String} the seed
+ */function getSeed(){return _seed;}exports.getSeed=getSeed;/**
+ * Generate a list of random floating points between a specified range 
+ * (excluding high value).
+ * @alias randomF
+ * @example
+ * ```js
+ * Rand.randomFloat(3, -1, 1); 
+ * //=> [ 0.6291111850577886, 0.15153786227276944, 0.32814801081039646 ]
+ * ```
+ * @param {Int} size - size of output array (default = 1)
+ * @param {Number=} min - minimum range (optional, default = 0)
+ * @param {Number=} max - maximum range (optional, default = 1)
+ * @returns {Number[]}
+ */function randomFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// len is positive and minimum of 1
-len=size(len);var arr=[];for(var i=0;i<len;i++){arr[i]=rng()*(hi-lo)+lo;}return arr;}(lo,hi);}exports.randomFloat=randomFloat;exports.randomF=randomFloat;// generate a list of random integer values 
-// between a certain specified range (excluding high val)
-// 
-// @param {Int} -> number of values to output
-// @param {Number} -> minimum range (optional, default=0)
-// @param {Number} -> maximum range (optional, defautl=2)
-// @return {Array}
-// 
-function random(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var arr=randomFloat(len,lo,hi);return arr.map(function(v){return Math.floor(v);});}exports.random=random;// generate a list of random float values but the next random 
-// value is within a limited range of the previous value generating
-// a random "drunk" walk, also referred to as brownian motion.
-// Inspired by the [drunk]-object in MaxMSP
-// 
-// @param {Int} -> length of output array
-// @param {Number} -> step range for next random value
-// @param {Number} -> minimum range (optional, default=null)
-// @param {Number} -> maximum range (optional, default=null)
-// @param {Number} -> starting point
-// @param {Bool} -> fold between lo and hi range
-// @return {Array}
-// 
-function drunkFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var step=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var hi=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var p=arguments.length>4?arguments[4]:undefined;var bound=arguments.length>5&&arguments[5]!==undefined?arguments[5]:true;return function(lo,hi){// swap if lo > hi
+len=size(len);var arr=[];for(var i=0;i<len;i++){arr[i]=rng()*(hi-lo)+lo;}return arr;}(lo,hi);}exports.randomFloat=randomFloat;exports.randomF=randomFloat;/**
+ * Generate a list of random integers between a specified range 
+ * (excluding high value).
+ * @example
+ * ```js
+ * Rand.random(5, 0, 12); 
+ * //=> [ 3, 3, 7, 1, 0 ]
+ * ```
+ * @param {Int} size - size of output array (default = 1)
+ * @param {Number=} min - minimum range (optional, default = 0)
+ * @param {Number=} max - maximum range (optional, default = 12)
+ * @returns {Number[]}
+ */function random(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var lo=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var hi=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;var arr=randomFloat(len,lo,hi);return arr.map(function(v){return Math.floor(v);});}exports.random=random;/**
+ * Generate a list of random floats, but the next random value is 
+ * within a limited step-range of the previous value generating a random 
+ * "drunk" walk, also referred to as brownian motion. Inspired by the `[drunk]
+ * `-object in MaxMSP.
+ * @alias drunkF
+ * @example
+ * ```js 
+ * Rand.drunkFloat(5);
+ * //=> [ 0.493, 0.459, 0.846, 0.963, 0.400 ] 
+ * 
+ * //  0.88 ┼╮╭╮  
+ * //  0.76 ┤╰╯│  
+ * //  0.63 ┤  │  
+ * //  0.51 ┤  ╰╮ 
+ * //  0.39 ┤   │ 
+ * //  0.26 ┤   ╰ 
+ * ```
+ * @param {Int} size - size of output array (default = 1)
+ * @param {Number=} step - step range for next random value (default = 1)
+ * @param {Number=} min - minimum range (optional, default = 0)
+ * @param {Number=} max - maximum range (optional, default = 1)
+ * @param {Number=} start - starting point (optional, default = (lo+hi)/2)
+ * @param {Bool=} fold - fold between lo and hi range (optional, default = true)
+ * @returns {Number[]}
+ */function drunkFloat(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var step=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:1;var hi=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var p=arguments.length>4?arguments[4]:undefined;var bound=arguments.length>5&&arguments[5]!==undefined?arguments[5]:true;return function(lo,hi){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}p=!p?(lo+hi)/2:p;// len is positive and minimum of 1
 len=size(len);var arr=[];for(var i=0;i<len;i++){// direction of next random number (+ / -)
 var dir=(rng()>0.5)*2-1;// prev + random value * step * direction
-p+=rng()*step*dir;if(bound&&(p>hi||p<lo)){p=fold(p,lo,hi);}arr.push(p);}return arr;}(lo,hi);}exports.drunkFloat=drunkFloat;exports.drunkF=drunkFloat;exports.walkFloat=drunkFloat;// generate a list of random integer values but the next random 
-// value is within a limited range of the previous value generating
-// a random "drunk" walk, also referred to as brownian motion.
-// Inspired by the [drunk]-object in MaxMSP
-// 
-// @param {Int} -> length of output array
-// @param {Number} -> step range for next random value
-// @param {Number} -> minimum range (optional, default=null)
-// @param {Number} -> maximum range (optional, default=null)
-// @param {Number} -> starting point
-// @param {Bool} -> fold between lo and hi range
-// @return {Array}
-// 
-function drunk(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var step=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var p=arguments.length>4?arguments[4]:undefined;var bound=arguments.length>5&&arguments[5]!==undefined?arguments[5]:true;var arr=drunkFloat(len,step,lo,hi,p,bound);return arr.map(function(v){return Math.floor(v);});}exports.drunk=drunk;exports.walk=drunk;// generate a list of random integer values 0 or 1
-// like a coin toss, heads/tails
-// 
-// @param {Int} -> number of tosses to output
-// @return {Array}
-// 
-function coin(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var arr=randomFloat(len,0,2);return arr.map(function(v){return Math.floor(v);});}exports.coin=coin;// generate a list of random integer values 1 to 6
-// like the roll of a dice
-// 
-// @param {Int} -> number of tosses to output
-// @param {Int} -> sides of the die (optional, default=6)
-// @return {Array}
-// 
-function dice(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var sides=arguments.length>1&&arguments[1]!==undefined?arguments[1]:6;var arr=randomFloat(len,1,sides+1);return arr.map(function(v){return Math.floor(v);});}exports.dice=dice;// Generate random clave patterns. Outputs a binary list as rhythm, 
-// where 1's represent onsets and 0's represent rests.
-// 
-// @param {Int} -> output length of rhythm (default=8)
-// @param {Int} -> maximum gap between onsets (default=3)
-// @param {Int} -> minimum gap between onsets (default=2)
-// 
-function clave(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var max=arguments.length>1&&arguments[1]!==undefined?arguments[1]:3;var min=arguments.length>2&&arguments[2]!==undefined?arguments[2]:2;return function(min){var arr=[];// set list length to minimum of 1
+p+=rng()*step*dir;if(bound&&(p>hi||p<lo)){p=fold(p,lo,hi);}arr.push(p);}return arr;}(lo,hi);}exports.drunkFloat=drunkFloat;exports.drunkF=drunkFloat;// exports.walkFloat = drunkFloat; // removed, unnecessary
+/**
+ * Generate a list of random integers, but the next random value is 
+ * within a limited step-range of the previous value generating a random 
+ * "drunk" walk, also referred to as brownian motion. Inspired by the `[drunk]
+ * `-object in MaxMSP.
+ * @example
+ * ```js 
+ * Rand.drunk(10, 5, 0, 24);
+ * //=> [ 13, 10, 14, 13, 14, 13, 15, 10, 8, 4 ] 
+ * 
+ * // 22.00 ┼       ╭╮ 
+ * // 17.80 ┼─╮╭─╮  ││ 
+ * // 13.60 ┤ ││ ╰╮╭╯│ 
+ * //  9.40 ┤ ││  ╰╯ │ 
+ * //  5.20 ┤ ╰╯     │ 
+ * //  1.00 ┤        ╰ 
+ * 
+ * Rand.drunk(10, 4, 0, 12, 6, false);
+ * //=> [ 2, -2, 2, 1, -3, -1, -2, -1, 3, 6 ] 
+ * 
+ * //  2.00 ┤╭╮        
+ * // -0.20 ┤│╰╮     ╭ 
+ * // -2.40 ┼╯ ╰╮    │ 
+ * // -4.60 ┤   │╭╮ ╭╯ 
+ * // -6.80 ┼   ╰╯│╭╯  
+ * // -9.00 ┤     ╰╯  
+ * ```
+ * @param {Int} size - size of output array (default = 1)
+ * @param {Number=} step - step range for next random value (default = 1)
+ * @param {Number=} min - minimum range (optional, default = 0)
+ * @param {Number=} max - maximum range (optional, default = 12)
+ * @param {Number=} start - starting point (optional, default = (lo+hi)/2)
+ * @param {Bool=} fold - fold between lo and hi range (optional, default = true)
+ * @returns {Number[]}
+ */function drunk(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var step=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:12;var hi=arguments.length>3&&arguments[3]!==undefined?arguments[3]:0;var p=arguments.length>4?arguments[4]:undefined;var bound=arguments.length>5&&arguments[5]!==undefined?arguments[5]:true;var arr=drunkFloat(len,step,lo,hi,p,bound);return arr.map(function(v){return Math.floor(v);});}exports.drunk=drunk;// exports.walk = drunk; // removed, unnecessary
+/**
+ * Generate a list of random integer values 0 or 1 like a coin toss, heads/
+ * tails.
+ * @example
+ * ```js
+ * // generate an array of coin tosses
+ * Rand.coin(10); 
+ * //=> [ 0, 1, 0, 1, 0, 1, 0, 0, 1, 0 ]
+ * ```
+ * @param {Int} size - number of coin tosses to output as array
+ * @returns {Number[]}
+ */function coin(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var arr=randomFloat(len,0,2);return arr.map(function(v){return Math.floor(v);});}exports.coin=coin;/**
+ * Generate a list of dice rolls, resulting in random integer values from 1 to 
+ * 6. Optionally use a second argument to set the amount of sides for the die.
+ * @example
+ * ```js
+ * // generate an array of dice rolls
+ * Rand.dice(4); 
+ * //=> [ 4, 4, 2, 3 ] 
+ * 
+ * // optionally set the amount of sides for the die
+ * Rand.dice(4, 8); 
+ * //=> [ 8, 3, 7, 1 ]
+ * ```
+ * @param {Int} size - number of tosses to output
+ * @param {Int} sides - sides of the die (optional, default = 6)
+ * @return {Number[]}
+ */function dice(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var sides=arguments.length>1&&arguments[1]!==undefined?arguments[1]:6;var arr=randomFloat(len,1,sides+1);return arr.map(function(v){return Math.floor(v);});}exports.dice=dice;/**
+ * Generate random clave patterns. The output is a binary list that represents 
+ * a rhythm, where 1's represent onsets and 0's rests. First argument sets the 
+ * list length output, second argument sets the maximum gap between onsets, 
+ * third argument the minimum gap.
+ * @example
+ * ```js
+ * Rand.clave();
+ * //=> [ 1, 0, 1, 0, 0, 1, 0, 1 ] 
+ * //=> █ █  █ █
+ * 
+ * Rand.clave(8);
+ * //=> [ 1, 0, 0, 1, 0, 1, 0, 1 ] 
+ * //=> █  █ █ █
+ * 
+ * Rand.clave(16, 4);
+ * //=> [ 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1 ] 
+ * //=> █   █ █   █  █ █
+ * 
+ * Rand.clave(16, 3, 1);
+ * //=> [ 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1 ] 
+ * //=> █  █  ██  █ █  █  
+ * ```
+ * @param {Int} size - length of rhythm array (default = 8)
+ * @param {Int} maximum - max gap between onsets (default = 3)
+ * @param {Int} minimum - min gap between onsets (default = 2)
+ * @returns {Number[]} 
+ */function clave(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:8;var max=arguments.length>1&&arguments[1]!==undefined?arguments[1]:3;var min=arguments.length>2&&arguments[2]!==undefined?arguments[2]:2;return function(min){var arr=[];// set list length to minimum of 1
 len=size(len);// swap if lo > hi
 if(min>max){var t=min,min=max;max=t;}// limit lower ranges
 min=Math.max(1,min);max=Math.max(min,max)+1;var sum=0;var rtm=[];// randomly generate list of gap intervals
 while(sum<len){var r=Math.floor(rng()*(max-min))+min;rtm.push(r);sum+=r;}// convert rhythmic "gaps" to binary pattern
-rtm.forEach(function(g){for(var i=0;i<g;i++){arr.push(!i?1:0);}});return arr.slice(0,len);}(min);}exports.clave=clave;// shuffle a list, based on the Fisher-Yates shuffle algorithm
-// by Ronald Fisher and Frank Yates in 1938
-// The algorithm has run time complexity of O(n)
-// 
-// @param {Array} -> array to shuffle
-// @return {Array}
-// 
-function shuffle(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];// slice array to avoid changing the original array
-var arr=a.slice();for(var i=arr.length-1;i>0;i-=1){var j=Math.floor(rng()*(i+1));var t=arr[i];arr[i]=arr[j];arr[j]=t;}return arr;}exports.shuffle=shuffle;exports.scramble=shuffle;// Generate a list of 12 semitones
-// then shuffle the list based on a random seed
-// 
-// @return {Array} -> twelve-tone series
-// 
-function twelveTone(){return shuffle(spread(12));}exports.twelveTone=twelveTone;exports.toneRow=twelveTone;// Generate a list of unique random integer values between a 
-// certain specified range (excluding high val). An 'urn' is filled
-// with values and when one is picked it is removed from the urn. 
-// If the outputlist is longer then the range, the urn refills when
-// empty. On refill it is made sure no repeating value can be picked.
-// Inspired by the [urn]-object in MaxMSP
-// 
-// @param {Int} -> number of values to output
-// @param {Number} -> maximum range (optional, default=12)
-// @param {Number} -> minimum range (optional, defautl=0)
-// @return {Array} -> random values
-// 
-function urn(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var hi=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(hi,lo){// swap if lo > hi
+rtm.forEach(function(g){for(var i=0;i<g;i++){arr.push(!i?1:0);}});return arr.slice(0,len);}(min);}exports.clave=clave;/**
+ * Shuffle an array, influenced by the random seed. Based on the Fisher-Yates 
+ * shuffle algorithm by Ronald Fisher and Frank Yates in 1938. The algorithm 
+ * has run time complexity of O(n)
+ * 
+ * Alias: `scramble()`
+ * 
+ * @param {Array} Array array to shuffle
+ * @returns {Array} shuffled array
+ * @example
+ * ```js
+ * Rand.shuffle([0, 5, 7, 12]); 
+ * //=> [ 7, 5, 0, 12 ]
+ * ```
+ */function shuffle(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];// slice array to avoid changing the original array
+var arr=a.slice();for(var i=arr.length-1;i>0;i-=1){var j=Math.floor(rng()*(i+1));var t=arr[i];arr[i]=arr[j];arr[j]=t;}return arr;}exports.shuffle=shuffle;exports.scramble=shuffle;/**
+ * Generate a list of 12 semitones (integers 0-11), then shuffle the list based 
+ * on the random seed. 
+ * @example
+ * ```js
+ * // basically: Rand.shuffle(Gen.spread(12));
+ * Rand.twelveTone(); 
+ * //=> [ 11, 0, 8, 2, 4, 9, 1, 6, 3, 5, 7, 10 ]
+ * ```
+ * @returns {Number[]} twelvetone row
+ */function twelveTone(){return shuffle(spread(12));}exports.twelveTone=twelveTone;exports.toneRow=twelveTone;/**
+ * Generate a list of unique random integer values between a certain specified 
+ * range (excluding high val). An 'urn' is filled with values and when one is 
+ * picked it is removed from the urn. If the outputlist is longer then the 
+ * range, the urn refills when empty. On refill it is made sure no repeating 
+ * value can be picked. Inspired by the `[urn]`-object in MaxMSP.
+ * @example
+ * ```js
+ * // generate an array with random values picked from an urn
+ * // with default range 0 to 12 (exclusive)
+ * Rand.urn(5);
+ * //=> [ 3, 6, 2, 8, 7 ] 
+ * 
+ * // set the range with a second argument to 0-7 (exclusive)
+ * // when more values then range are requested the urn 
+ * // refills and reshuffles
+ * Rand.urn(10, 7);
+ * //=> [ 6, 4, 3, 2, 0, 5, 1, 4, 2, 1 ] 
+ * 
+ * // A third argument sets a lower range replacing the default 0
+ * Rand.urn(12, -3, 3);
+ * //=> [ -3, 1, -1, 2, 0, -2, 2, -2, 0, -1, -3, 1 ]
+ * ```
+ * @param {Int} size size of output array (default = 1)
+ * @param {Int} maximum max range (optional, default = 12)
+ * @param {Int} minimum min range (optional, defautl = 0)
+ * @returns {Number[]} 
+ */function urn(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var hi=arguments.length>1&&arguments[1]!==undefined?arguments[1]:12;var lo=arguments.length>2&&arguments[2]!==undefined?arguments[2]:0;return function(hi,lo){// swap if lo > hi
 if(lo>hi){var t=lo,lo=hi,hi=t;}// generate array with values and pick
-return pick(len,spread(hi-lo,lo,hi));}(hi,lo);}exports.urn=urn;// Choose random items from an array provided
-// The default array is an array of 0 and 1
-// 
-// @param {Int} -> output length
-// @param {Array} -> items to choose from
-// @return {Array} -> randomly selected items
-// 
-function choose(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var a=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0,1];// if a is no Array make it an array
+return pick(len,spread(hi-lo,lo,hi));}(hi,lo);}exports.urn=urn;/**
+ * Choose random items from an array with uniform probability 
+ * distribution. The default array is an array of 0 and 1.
+ * @example
+ * ```js
+ * Rand.choose(5, [0, 1, 2, 3, 5, 8, 13]);
+ * //=> [ 3, 0, 13, 3, 2 ] 
+ * 
+ * // Array can have other datatypes
+ * Rand.choose(5, ['c', 'e', 'g']);
+ * //=> [ 'c', 'c', 'g', 'e', 'g' ] 
+ * ```
+ * @param {Int} size - size of output array (default = 1)
+ * @param {Array} items - array to choose from (optional, default=[0, 1])
+ * @returns {Array} randomly chosen items
+ */function choose(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var a=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0,1];// if a is no Array make it an array
 a=toArray(a);// set the size to minimum of 1 or based on array length
-len=size(len);var arr=[];for(var i=0;i<len;i++){arr.push(a[Math.floor(rng()*a.length)]);}return arr;}exports.choose=choose;// Pick random items from an array provided
-// An 'urn' is filled with values and when one is picked it is removed 
-// from the urn. If the outputlist is longer then the range, the urn 
-// refills when empty. On refill it is made sure no repeating value
-// can be picked.
-// 
-// @param {Int} -> output length
-// @param {Array} -> items to choose from
-// @return {Array} -> randomly selected items
-// 
-function pick(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var a=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0,1];// set the size to minimum of 1 or based on array length
+len=size(len);var arr=[];for(var i=0;i<len;i++){arr.push(a[Math.floor(rng()*a.length)]);}return arr;}exports.choose=choose;/**
+ * Pick random items from an array provided. An "urn" is filled with values and 
+ * when one is picked it is removed from the urn. If the outputlist is longer 
+ * then the range, the urn refills when empty. On refill it is made sure no 
+ * repeating value can be picked.
+ * @example
+ * ```js
+ * Rand.pick(5, [0, 1, 2, 3, 5, 8, 13]);
+ * //=> [ 2, 5, 8, 1, 3 ] 
+ * 
+ * // Array can have other datatypes
+ * Rand.pick(5, ['c', 'e', ['g', 'd']]);
+ * //=> [ 'e', [ 'g', 'd' ], 'c', [ 'g', 'd' ], 'e' ] 
+ * ```
+ * @param {Int} size - size of output array (default = 1)
+ * @param {Array} items - array to choose from (optional, default=[0, 1])
+ * @returns {Array} randomly picked items
+ */function pick(){var len=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;var a=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[0,1];// set the size to minimum of 1 or based on array length
 len=size(len);// fill the jar with the input
 // var jar = (!Array.isArray(a))? [a] : a;
 var jar=toArray(a);if(jar.length<2){return new Array(len).fill(jar[0]);}// shuffle the jar
 var s=shuffle(jar);// value, previous, output-array
-var v,p,arr=[];for(var i=0;i<len;i++){v=s.pop();if(v===undefined){s=shuffle(jar);v=s.pop();if(v===p){v=s.pop();s.push(p);}}arr[i]=v;p=v;}return arr;}exports.pick=pick;// expand an array based upon the pattern within an array
-// the pattern is derived from the rate in change between values
-// the newly generated values are selected randomly from the list
-// of changes.
-// 
-// @param {Array} -> the array to expand
-// @param {Number} -> the resulting array length
-// @return {Array}
-// 
-function expand(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0,0];var l=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;a=toArray(a);l=size(l);// return a if output length is smaller/equal then input array
+var v,p,arr=[];for(var i=0;i<len;i++){v=s.pop();if(v===undefined){s=shuffle(jar);v=s.pop();if(v===p){v=s.pop();s.push(p);}}arr[i]=v;p=v;}return arr;}exports.pick=pick;/**
+ * Expand an array based on the pattern within an array. The pattern is derived 
+ * from the rate of change between values by calculating the difference (delta) 
+ * between every consecutive value. The newly generated values are selected 
+ * randomly from the list of possible changes, but in such a way that every 
+ * change occurs once in the sequence of total changes before reshuffling 
+ * and selecting the next one (see {@link pick} for explanation). The 
+ * resulting output starts with the input array followed by the expansion.
+ * 
+ * Alias: `extrapolate()`
+ * 
+ * @example
+ * ```js 
+ * Rand.seed(3141);
+ * Rand.expand([0, 9, 7, 3, 5, 0, -1], 30);
+ * 
+ * //=>  9.00 ┤╭╮      ╭╮                    
+ * //    6.80 ┤│╰╮     ││                    
+ * //    4.60 ┤│ │╭╮   ││                    
+ * //    2.40 ┤│ ╰╯│   │╰─╮             ╭─╮  
+ * //    0.20 ┼╯   ╰─╮╭╯  │             │ │╭ 
+ * //   -2.00 ┤      ╰╯   ╰╮   ╭─╮      │ ╰╯ 
+ * //   -4.20 ┼            │   │ │    ╭╮│    
+ * //   -6.40 ┤            ╰╮  │ │    │╰╯    
+ * //   -8.60 ┤             │╭╮│ ╰─╮  │      
+ * //  -10.80 ┤             ╰╯╰╯   │╭╮│      
+ * //  -13.00 ┤                    ╰╯╰╯       
+ * 
+ * Rand.seed(6181);
+ * Rand.expand([0, 9, 7, 3, 5, 0, -1], 30);
+ * 
+ * //=>  9.00 ┤╭╮                            
+ * //    6.80 ┤│╰╮                           
+ * //    4.60 ┤│ │╭╮                         
+ * //    2.40 ┤│ ╰╯│        ╭╮╭╮             
+ * //    0.20 ┼╯   ╰─╮╭╮    │╰╯╰╮        ╭── 
+ * //   -2.00 ┤      ╰╯│  ╭╮│   ╰╮       │   
+ * //   -4.20 ┼        ╰╮ │││    ╰╮   ╭╮ │   
+ * //   -6.40 ┤         │ │╰╯     │╭╮ ││ │   
+ * //   -8.60 ┤         ╰╮│       ╰╯╰╮│╰╮│   
+ * //  -10.80 ┤          ╰╯          ││ ╰╯   
+ * //  -13.00 ┤                      ╰╯      
+ * ```
+ * @param {Number[]} array - array of numbers to expand
+ * @param {Int} size - size of output array (including input size)
+ * @returns {Number[]} expanded array
+ */function expand(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0,0];var l=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;a=toArray(a);l=size(l);// return a if output length is smaller/equal then input array
 if(l<=a.length){return a;}// get the differences and pick the expansion options
 var p=change(a);var chg=pick(l-a.length,p);// empty output array and axiom for output
 var arr=a.slice();var acc=arr[arr.length-1];// accumulate the change and store in array
@@ -2793,23 +3511,37 @@ var c=[];for(var i=0;i<l;i++){c.push(this.next());}return c;}}]);return DeepMark
 // helper function for Stringifying a Map() in DeepMarkov
 function replacer(key,value){if(value instanceof Map){return{dataType:'Map',value:_toConsumableArray(value)// value: [Array.from(value.entries())], 
 };}return value;}// helper function for parsing a Map() in DeepMarkov
-function reviver(key,value){if(_typeof(value)==='object'&&value!==null){if(value.dataType==='Map'){return new Map(value.value);}}return value;}},{"./gen-basic.js":36,"./statistic":39,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){//=======================================================================
-// statistic.js
-// part of 'total-serialism' Package
-// by Timo Hoogland (@t.mo / @tmhglnd), www.timohoogland.com
-// MIT License
-//
-// Statistical related methods and algorithms that can be helpful in
-// analysis of number sequences, melodies, rhythms and more
-//=======================================================================
-var Mod=require('./transform');var _require7=require('./utility'),maximum=_require7.maximum,minimum=_require7.minimum,flatten=_require7.flatten,toArray=_require7.toArray,lcm=_require7.lcm,gcd=_require7.gcd;// sort an array of numbers or strings. sorts ascending
-// or descending in numerical and alphabetical order
-// 
-// @param {Array} -> array to sort
-// @param {Int} -> sort direction (positive value is ascending)
-// @return {Array} -> sorted array, object includes order-indeces
-// 
-function sort(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;a=toArray(a);var arr;if(a.map(function(x){return _typeof(x);}).includes('string')){arr=a.slice().sort();}else{arr=a.slice().sort(function(a,b){return a-b;});}if(d<0){return arr.reverse();}return arr;}exports.sort=sort;// Return the biggest value from an array
+function reviver(key,value){if(_typeof(value)==='object'&&value!==null){if(value.dataType==='Map'){return new Map(value.value);}}return value;}},{"./gen-basic.js":36,"./statistic":39,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){/**
+ * @file statistic.js
+ * @description Part of the 'total-serialism' Package. 
+ * 
+ * Statistical related methods and algorithms that can be helpful in
+ * analysis of number sequences, melodies, rhythms and more
+ * 
+ * @copyright 2020-2026 Timo Hoogland (@tmhglnd), www.timohoogland.com
+ * @license MIT License
+ */var Mod=require('./transform');var _require7=require('./utility'),maximum=_require7.maximum,minimum=_require7.minimum,flatten=_require7.flatten,toArray=_require7.toArray,lcm=_require7.lcm,gcd=_require7.gcd;/**
+ * Sort an array in ascending or descending order. When strings are included 
+ * they are sorted in alphabetical order with all numbers in the beginning.
+ * @example
+ * ```js
+ * // Sort an array of numbers ascending 
+ * Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11]);
+ * //=> [ -12, -10, -7, -6, 2, 3, 4, 6, 8, 11 ] 
+ * 
+ * // Sort an array of numbers descending with negative second argument
+ * Stat.sort([-10, 8, 6, -12, -6, -7, 2, 4, 3, 11], -1);
+ * //=> [ 11, 8, 6, 4, 3, 2, -6, -7, -10, -12 ]
+ * 
+ * // Sort a mixed array of strings and numbers
+ * Stat.sort([10, 3.14, 'snare', 'kick', 5, -6, 'hat']);
+ * //=> [ -6, 10, 3.14, 5, 'hat', 'kick', 'snare' ] 
+ * ```
+ * 
+ * @param {Array} array - array to sort
+ * @param {Number=} direction - postive/negative value indicates sorting direction (optional, default = 1)
+ * @returns {Array} sorted array
+ */function sort(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;a=toArray(a);var arr;if(a.map(function(x){return _typeof(x);}).includes('string')){arr=a.slice().sort();}else{arr=a.slice().sort(function(a,b){return a-b;});}if(d<0){return arr.reverse();}return arr;}exports.sort=sort;// Return the biggest value from an array
 // 
 // @param {NumberArray} -> input array
 // @return {Number} -> biggest value
@@ -2819,53 +3551,110 @@ exports.maximum=maximum;exports.max=maximum;// Return the lowest value from an a
 // @param {NumberArray} -> input array
 // @return {Number} -> lowest value
 // 
-exports.minimum=minimum;exports.min=minimum;// Return the average (artihmetic mean value) from an array
-// The mean is a measure of central tendency
-// 
-// @param {NumberArray} -> input array of n-numbers
-// @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
-// @return {Number} -> mean
-// 
-function mean(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=flatten(a);}var s=0;for(var i in a){s+=isNaN(a[i])?0:a[i];}return s/a.length;}exports.mean=mean;exports.average=mean;// Return the median (center value) from an array
-// The median is a measure of central tendency
-// If array is even number of values the median is the
-// average of the two center values
-// Ignores other datatypes then Number and Boolean
-// 
-// @param {NumberArray} -> input array of n-numbers
-// @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
-// @return {Number} -> median
-// 
-function median(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=flatten(a);}var arr=a.slice();if(arr.map(function(x){return _typeof(x);}).includes('string')){arr=Mod.filterType(arr,['number','boolean']);}arr=arr.sort(function(a,b){return a-b;});var c=Math.floor(arr.length/2);if(!(arr.length%2)){return(arr[c]+arr[c-1])/2;}return arr[c];}exports.median=median;exports.center=median;// Returns the mode(s) (most common value) from an array
-// The mode is a measure of central tendency
-// Returns an array when multi-modal system
-// 
-// @param {NumberArray} -> input array of n-numbers
-// @param {Bool} -> enable/disable the deep flag for n-dim arrays (default=true)
-// @return {Number/Array} -> the mode or modes
-//
-function mode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=flatten(a);}// get all the unique occurances and the amount of times they occur
+exports.minimum=minimum;exports.min=minimum;/**
+ * Get the average (the arithmetic mean) value from an array. This is one 
+ * method of the three measures of central tendencies (Mean, Median, Mode).
+ * 
+ * Alias: `average()`
+ * @example
+ * ```js
+ * Stat.mean([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+ * //=> 5
+ * 
+ * Stat.average([2, -6, 2, 0, 10, 9, -2, 5, -8, -11, 1, -3]);
+ * //=> -0.0833
+ * ```
+ * @param {Array} array - array to take the average of
+ * @param {Bool=} deep - enable/disable the deep flag for n-dim arrays (default = true)
+ * @returns {Number} the mean
+ */function mean(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=flatten(a);}var s=0;for(var i in a){s+=isNaN(a[i])?0:a[i];}return s/a.length;}exports.mean=mean;exports.average=mean;/**
+ * Return the center value (the median) from an array. This is one method of 
+ * the three measures of central tendencies (Mean, Median, Mode). If array is 
+ * even number of values the median is the average of the two center values. 
+ * Ignores other datatypes then Number and Boolean
+ * 
+ * Alias: `center()`
+ * @example
+ * ```js
+ * Stat.median([1, 5, 6, 9, 13]);
+ * //=> 6 
+ * 
+ * // Returns average of 2 middle values for even listlengths
+ * // works with "official" statistics terminology
+ * Stat.center([1, 7, 4, 2, 9, 5]);
+ * //=> 4.5
+ * ```
+ * @param {Array} array - array to get the median from
+ * @param {Bool=} deep - enable/disable the deep flag for n-dim arrays (default = true)
+ * @returns {Number} the mean
+ */function median(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=flatten(a);}var arr=a.slice();if(arr.map(function(x){return _typeof(x);}).includes('string')){arr=Mod.filterType(arr,['number','boolean']);}arr=arr.sort(function(a,b){return a-b;});var c=Math.floor(arr.length/2);if(!(arr.length%2)){return(arr[c]+arr[c-1])/2;}return arr[c];}exports.median=median;exports.center=median;/**
+ * Returns the most common value (the mode) from an array as an array. This is 
+ * one method of the three measures of central tendencies (Mean, Median, Mode). 
+ * Returns an array in the case of a multi-modal system.
+ * 
+ * Alias: `common()`
+ * 
+ * @example
+ * ```js
+ * Stat.mode([8, 4, 3, 11, 9, 0, 11, 2, 10, 5, 11, 0]);
+ * //=> [ 11 ] 
+ * 
+ * Stat.mode([8, [4, 3], 9, [9, 0, [2, 10], 5], 11, 0, 11]);
+ * //=> [ 11 ] 
+ * 
+ * // In the case of a multi-modal system the array contains all common values
+ * Stat.common([8, 4, 3, 9, 9, 0, 2, 10, 5, 11, 0, 11]);
+ * //=> [ 0, 9, 11 ]
+ * ```
+ * 
+ * @param {Array} array - array to get the mode from
+ * @param {Bool=} deep - enable/disable the deep flag for n-dim arrays (default = true)
+ * @returns {Number|Number[]} the mode or modes
+ */function mode(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:true;if(!Array.isArray(a)){return a;}if(d){a=flatten(a);}// get all the unique occurances and the amount of times they occur
 var occurances={};a.forEach(function(o){if(!occurances[o]){occurances[o]=0;}occurances[o]++;});// for all the items save the best streak (or streaks)
 var modes=[];var streak=0;Object.keys(occurances).forEach(function(o){if(occurances[o]>streak){streak=occurances[o];modes=[o];}else if(occurances[o]===streak){modes.push(o);}});// remap strings to numbers if possible
-return modes.map(function(m){return isNaN(m)?m:Number(m);});}exports.mode=mode;exports.common=mode;// Compare two arrays recursively and if all values
-// of the array and subarrays are equal to eachother
-// return a true boolean
-// 
-// @params {Array} -> compare array1
-// @params {Array} -> compare array2
-// @return {Bool} -> true or false
-// 
-function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var a2=arguments.length>1?arguments[1]:undefined;a1=toArray(a1);a2=toArray(a2);if(a1.length!==a2.length){return false;}for(var i in a1){if(Array.isArray(a1[i])){return compare(a1[i],a2[i]);}else if(a1[i]!==a2[i]){return false;}}return true;}exports.compare=compare;// exports.equal = compare; (deprecated for equal in utility operator)
-// Return the difference between every consecutive value in an array
-// With melodic content from a chromatic scale this can be seen as
-// a list of intervals that, when followed from the same note, results
-// in the same melody.
-// 
-// @param {Array} -> array to calculate from
-// @param {Bool} -> returns diff between first and last (optional, default=false)
-// @return {Array} -> list of changes
-// 
-function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0,0];var l=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;if(a.length<2||!Array.isArray(a)){return[0];}var len=a.length;var arr=[];for(var i=1;i<len;i++){arr.push(a[i]-a[i-1]);}// optionally also return diff from first and last value
+return modes.map(function(m){return isNaN(m)?m:Number(m);});}exports.mode=mode;exports.common=mode;/**
+ * Compare two arrays recursively and if all values of the array and subarrays 
+ * are equal to eachother return `true`, else return `false`. 
+ * @example
+ * ```js
+ * // works with multidimensional arrays
+ * Stat.compare([0, [3, [7, 5]], 12], [0, [3, [7, 5]], 12]);
+ * //=> true 
+ * 
+ * // works with strings as well
+ * Stat.compare(['c', ['e', 'g']], ['c', ['e', 'g']]);
+ * //=> true 
+ * 
+ * // type has to match too
+ * Stat.compare([0, 5, 7], [0, '5', 7]);
+ * //=> false 
+ * ```
+ * @param {Array} left - the first array to compare
+ * @param {Array} right - the second array to compare
+ * @returns {Bool}
+ */function compare(){var a1=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0];var a2=arguments.length>1?arguments[1]:undefined;a1=toArray(a1);a2=toArray(a2);if(a1.length!==a2.length){return false;}for(var i in a1){if(Array.isArray(a1[i])){return compare(a1[i],a2[i]);}else if(a1[i]!==a2[i]){return false;}}return true;}exports.compare=compare;// exports.equal = compare; (deprecated for equal in utility operator)
+/**
+ * Return the difference between consecutive numbers in an array. With an 
+ * optional flag set to true as second argument the function also returns the 
+ * difference between the first and last value in the array. With melodic 
+ * content from a chromatic scale this can be seen as a list of intervals that, 
+ * when followed from the same note, results in the same melody.
+ * 
+ * Alias: `delta()`, `diff()`
+ * @example
+ * ```js 
+ * Stat.change([0, 3, 7, 0, 12, 9, 5, 7]);
+ * //=> [ 3, 4, -7, 12, -3, -4, 2 ] 
+ * 
+ * // also returns difference between last and first value in array
+ * Stat.change([0, 3, 7, 0, 12, 9, 5, 7], true);
+ * //=> [ 3, 4, -7, 12, -3, -4, 2, -7 ] 
+ * ```
+ * @param {Array} array - array to get the difference between each value from
+ * @param {Bool=} first_last_diff - also include the difference between first and last elements of array (optional, default = false)
+ * @returns {Array}
+ */function change(){var a=arguments.length>0&&arguments[0]!==undefined?arguments[0]:[0,0];var l=arguments.length>1&&arguments[1]!==undefined?arguments[1]:false;if(a.length<2||!Array.isArray(a)){return[0];}var len=a.length;var arr=[];for(var i=1;i<len;i++){arr.push(a[i]-a[i-1]);}// optionally also return diff from first and last value
 if(l){arr.push(a[0]-a[a.length-1]);}return arr;}exports.change=change;exports.delta=change;exports.difference=change;exports.diff=change;// Calculate the Greatest Common Divisor from an array
 // The function uses the algorithm described in _gcd() above
 // 
