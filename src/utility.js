@@ -173,10 +173,10 @@ function _fold(a, lo, hi){
  * Rescale values from a list from a specified input range to a specified low 
  * and high output range. Apply an optional exponent to the mapping.
  * @param {Number|Number[]} input - Array to wrap
- * @param {Number} low_input - Low value (optional, default=1)
- * @param {Number} high_input - High value (optional, default=0)
- * @param {Number} low_output - Low value (optional, default=1)
- * @param {Number} high_output - High value (optional, default=0)
+ * @param {Number} low_in - Low input range (optional, default=0)
+ * @param {Number} high_in - High input range (optional, default=1)
+ * @param {Number} low_out - Low output range (optional, default=0)
+ * @param {Number} high_out - High output range (optional, default=1)
  * @param {Number} exponent - Exponent value (optional, default=1)
  * @returns {Number|Number[]}
  * @example
@@ -201,15 +201,22 @@ function _map(a, inLo=0, inHi=1, outLo=0, outHi=1, exp=1){
 	return a * (outHi - outLo) + outLo;
 }
 
-// Lerp (Linear interpolation) two values or arrays
-// Both sides can be a single value or an array
-// Set the interpolation factor as third argument
-// 
-// @param {Number/Array} -> input 1 to be mixed
-// @param {Number/Array} -> input 2 to be mixed
-// @param {Number} -> interpolation factor (optional, default=0.5)
-// @return {Number/Array}
-// 
+/**
+ * Lerp (linear interpolation) two values or arrays. Both sides can be a single 
+ * value or an array. Set the interpolation factor as third argument.
+ * 
+ * Alias: `mix()`
+ * @param {Number|Number[]} input_1 - input 1 to be mixed with input 2
+ * @param {Number|Number[]} input_2 - input 2 to be mixed with input 1
+ * @param {Number=} -> interpolation factor (optional, default = 0.5)
+ * @returns {Number|Number[]}
+ * @example
+ * Util.lerp(2, 10, 0.5)
+ * //=> 6
+ * 
+ * Util.lerp([-2, 4, 6], [10, 20, 30], 0.5)
+ * //=> [4, 12, 18]
+ */
 function lerp(a=0, v=0, f=0.5){
 	return arrayCalc(a, v, (a, b) => { return a * (1 - f) + b * f });
 }
