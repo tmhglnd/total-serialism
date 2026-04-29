@@ -134,3484 +134,3670 @@ exports.getRoot     = Translate.getRoot;
 // This allows you to use everything without having to specify the 
 // various libraries
 // Object.assign(this, Generative, Algorithmic, Stochastic, Transform, Statistic, Translate, Utility);
-},{"./src/gen-basic.js":36,"./src/gen-complex.js":37,"./src/gen-stochastic.js":38,"./src/statistic.js":39,"./src/transform.js":40,"./src/translate.js":41,"./src/utility.js":42}],4:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/core')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/core'], factory) :
-  (global = global || self, factory(global.AbcNotation = {}, global.core));
-}(this, (function (exports, core) { 'use strict';
+},{"./src/gen-basic.js":44,"./src/gen-complex.js":45,"./src/gen-stochastic.js":46,"./src/statistic.js":47,"./src/transform.js":48,"./src/translate.js":49,"./src/utility.js":50}],4:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  var fillStr = function (character, times) {
-      return Array(times + 1).join(character);
-  };
-  var REGEX = /^(_{1,}|=|\^{1,}|)([abcdefgABCDEFG])([,']*)$/;
-  function tokenize(str) {
-      var m = REGEX.exec(str);
-      if (!m) {
-          return ["", "", ""];
+// index.ts
+var abc_notation_exports = {};
+__export(abc_notation_exports, {
+  abcToScientificNotation: () => abcToScientificNotation,
+  default: () => abc_notation_default,
+  distance: () => distance,
+  scientificToAbcNotation: () => scientificToAbcNotation,
+  tokenize: () => tokenize,
+  transpose: () => transpose
+});
+module.exports = __toCommonJS(abc_notation_exports);
+var import_pitch_distance = require("@tonaljs/pitch-distance");
+var import_pitch_note = require("@tonaljs/pitch-note");
+var fillStr = (character, times) => Array(times + 1).join(character);
+var REGEX = /^(_{1,}|=|\^{1,}|)([abcdefgABCDEFG])([,']*)$/;
+function tokenize(str) {
+  const m = REGEX.exec(str);
+  if (!m) {
+    return ["", "", ""];
+  }
+  return [m[1], m[2], m[3]];
+}
+function abcToScientificNotation(str) {
+  const [acc, letter, oct] = tokenize(str);
+  if (letter === "") {
+    return "";
+  }
+  let o = 4;
+  for (let i = 0; i < oct.length; i++) {
+    o += oct.charAt(i) === "," ? -1 : 1;
+  }
+  const a = acc[0] === "_" ? acc.replace(/_/g, "b") : acc[0] === "^" ? acc.replace(/\^/g, "#") : "";
+  return letter.charCodeAt(0) > 96 ? letter.toUpperCase() + a + (o + 1) : letter + a + o;
+}
+function scientificToAbcNotation(str) {
+  const n = (0, import_pitch_note.note)(str);
+  if (n.empty || !n.oct && n.oct !== 0) {
+    return "";
+  }
+  const { letter, acc, oct } = n;
+  const a = acc[0] === "b" ? acc.replace(/b/g, "_") : acc.replace(/#/g, "^");
+  const l = oct > 4 ? letter.toLowerCase() : letter;
+  const o = oct === 5 ? "" : oct > 4 ? fillStr("'", oct - 5) : fillStr(",", 4 - oct);
+  return a + l + o;
+}
+function transpose(note2, interval) {
+  return scientificToAbcNotation((0, import_pitch_distance.transpose)(abcToScientificNotation(note2), interval));
+}
+function distance(from, to) {
+  return (0, import_pitch_distance.distance)(abcToScientificNotation(from), abcToScientificNotation(to));
+}
+var abc_notation_default = {
+  abcToScientificNotation,
+  scientificToAbcNotation,
+  tokenize,
+  transpose,
+  distance
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  abcToScientificNotation,
+  distance,
+  scientificToAbcNotation,
+  tokenize,
+  transpose
+});
+
+},{"@tonaljs/pitch-distance":18,"@tonaljs/pitch-note":20}],5:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var array_exports = {};
+__export(array_exports, {
+  compact: () => compact,
+  permutations: () => permutations,
+  range: () => range,
+  rotate: () => rotate,
+  shuffle: () => shuffle,
+  sortedNoteNames: () => sortedNoteNames,
+  sortedUniqNoteNames: () => sortedUniqNoteNames
+});
+module.exports = __toCommonJS(array_exports);
+var import_pitch_note = require("@tonaljs/pitch-note");
+function ascR(b, n) {
+  const a = [];
+  for (; n--; a[n] = n + b) ;
+  return a;
+}
+function descR(b, n) {
+  const a = [];
+  for (; n--; a[n] = b - n) ;
+  return a;
+}
+function range(from, to) {
+  return from < to ? ascR(from, to - from + 1) : descR(from, from - to + 1);
+}
+function rotate(times, arr) {
+  const len = arr.length;
+  const n = (times % len + len) % len;
+  return arr.slice(n, len).concat(arr.slice(0, n));
+}
+function compact(arr) {
+  return arr.filter((n) => n === 0 || n);
+}
+function sortedNoteNames(notes) {
+  const valid = notes.map((n) => (0, import_pitch_note.note)(n)).filter((n) => !n.empty);
+  return valid.sort((a, b) => a.height - b.height).map((n) => n.name);
+}
+function sortedUniqNoteNames(arr) {
+  return sortedNoteNames(arr).filter((n, i, a) => i === 0 || n !== a[i - 1]);
+}
+function shuffle(arr, rnd = Math.random) {
+  let i;
+  let t;
+  let m = arr.length;
+  while (m) {
+    i = Math.floor(rnd() * m--);
+    t = arr[m];
+    arr[m] = arr[i];
+    arr[i] = t;
+  }
+  return arr;
+}
+function permutations(arr) {
+  if (arr.length === 0) {
+    return [[]];
+  }
+  return permutations(arr.slice(1)).reduce((acc, perm) => {
+    return acc.concat(
+      arr.map((e, pos) => {
+        const newPerm = perm.slice();
+        newPerm.splice(pos, 0, arr[0]);
+        return newPerm;
+      })
+    );
+  }, []);
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  compact,
+  permutations,
+  range,
+  rotate,
+  shuffle,
+  sortedNoteNames,
+  sortedUniqNoteNames
+});
+
+},{"@tonaljs/pitch-note":20}],6:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all2) => {
+  for (var name in all2)
+    __defProp(target, name, { get: all2[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var chord_detect_exports = {};
+__export(chord_detect_exports, {
+  default: () => chord_detect_default,
+  detect: () => detect
+});
+module.exports = __toCommonJS(chord_detect_exports);
+var import_chord_type = require("@tonaljs/chord-type");
+var import_pcset = require("@tonaljs/pcset");
+var import_pitch_note = require("@tonaljs/pitch-note");
+var namedSet = (notes) => {
+  const pcToName = notes.reduce((record, n) => {
+    const chroma = (0, import_pitch_note.note)(n).chroma;
+    if (chroma !== void 0) {
+      record[chroma] = record[chroma] || (0, import_pitch_note.note)(n).name;
+    }
+    return record;
+  }, {});
+  return (chroma) => pcToName[chroma];
+};
+function detect(source, options = {}) {
+  const notes = source.map((n) => (0, import_pitch_note.note)(n).pc).filter((x) => x);
+  if (import_pitch_note.note.length === 0) {
+    return [];
+  }
+  const found = findMatches(notes, 1, options);
+  return found.filter((chord) => chord.weight).sort((a, b) => b.weight - a.weight).map((chord) => chord.name);
+}
+var BITMASK = {
+  // 3m 000100000000
+  // 3M 000010000000
+  anyThirds: 384,
+  // 5P 000000010000
+  perfectFifth: 16,
+  // 5d 000000100000
+  // 5A 000000001000
+  nonPerfectFifths: 40,
+  anySeventh: 3
+};
+var testChromaNumber = (bitmask) => (chromaNumber) => Boolean(chromaNumber & bitmask);
+var hasAnyThird = testChromaNumber(BITMASK.anyThirds);
+var hasPerfectFifth = testChromaNumber(BITMASK.perfectFifth);
+var hasAnySeventh = testChromaNumber(BITMASK.anySeventh);
+var hasNonPerfectFifth = testChromaNumber(BITMASK.nonPerfectFifths);
+function hasAnyThirdAndPerfectFifthAndAnySeventh(chordType) {
+  const chromaNumber = parseInt(chordType.chroma, 2);
+  return hasAnyThird(chromaNumber) && hasPerfectFifth(chromaNumber) && hasAnySeventh(chromaNumber);
+}
+function withPerfectFifth(chroma) {
+  const chromaNumber = parseInt(chroma, 2);
+  return hasNonPerfectFifth(chromaNumber) ? chroma : (chromaNumber | 16).toString(2);
+}
+function findMatches(notes, weight, options) {
+  const tonic = notes[0];
+  const tonicChroma = (0, import_pitch_note.note)(tonic).chroma;
+  const noteName = namedSet(notes);
+  const allModes = (0, import_pcset.modes)(notes, false);
+  const found = [];
+  allModes.forEach((mode, index) => {
+    const modeWithPerfectFifth = options.assumePerfectFifth && withPerfectFifth(mode);
+    const chordTypes = (0, import_chord_type.all)().filter((chordType) => {
+      if (options.assumePerfectFifth && hasAnyThirdAndPerfectFifthAndAnySeventh(chordType)) {
+        return chordType.chroma === modeWithPerfectFifth;
       }
-      return [m[1], m[2], m[3]];
-  }
-  /**
-   * Convert a (string) note in ABC notation into a (string) note in scientific notation
-   *
-   * @example
-   * abcToScientificNotation("c") // => "C5"
-   */
-  function abcToScientificNotation(str) {
-      var _a = tokenize(str), acc = _a[0], letter = _a[1], oct = _a[2];
-      if (letter === "") {
-          return "";
-      }
-      var o = 4;
-      for (var i = 0; i < oct.length; i++) {
-          o += oct.charAt(i) === "," ? -1 : 1;
-      }
-      var a = acc[0] === "_"
-          ? acc.replace(/_/g, "b")
-          : acc[0] === "^"
-              ? acc.replace(/\^/g, "#")
-              : "";
-      return letter.charCodeAt(0) > 96
-          ? letter.toUpperCase() + a + (o + 1)
-          : letter + a + o;
-  }
-  /**
-   * Convert a (string) note in scientific notation into a (string) note in ABC notation
-   *
-   * @example
-   * scientificToAbcNotation("C#4") // => "^C"
-   */
-  function scientificToAbcNotation(str) {
-      var n = core.note(str);
-      if (n.empty || !n.oct) {
-          return "";
-      }
-      var letter = n.letter, acc = n.acc, oct = n.oct;
-      var a = acc[0] === "b" ? acc.replace(/b/g, "_") : acc.replace(/#/g, "^");
-      var l = oct > 4 ? letter.toLowerCase() : letter;
-      var o = oct === 5 ? "" : oct > 4 ? fillStr("'", oct - 5) : fillStr(",", 4 - oct);
-      return a + l + o;
-  }
-  function transpose(note, interval) {
-      return scientificToAbcNotation(core.transpose(abcToScientificNotation(note), interval));
-  }
-  function distance(from, to) {
-      return core.distance(abcToScientificNotation(from), abcToScientificNotation(to));
-  }
-  var index = {
-      abcToScientificNotation: abcToScientificNotation,
-      scientificToAbcNotation: scientificToAbcNotation,
-      tokenize: tokenize,
-      transpose: transpose,
-      distance: distance,
-  };
-
-  exports.abcToScientificNotation = abcToScientificNotation;
-  exports.default = index;
-  exports.distance = distance;
-  exports.scientificToAbcNotation = scientificToAbcNotation;
-  exports.tokenize = tokenize;
-  exports.transpose = transpose;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/core":10}],5:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/core')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/core'], factory) :
-  (global = global || self, factory(global.Array = {}, global.core));
-}(this, (function (exports, core) { 'use strict';
-
-  // ascending range
-  function ascR(b, n) {
-      var a = [];
-      // tslint:disable-next-line:curly
-      for (; n--; a[n] = n + b)
-          ;
-      return a;
-  }
-  // descending range
-  function descR(b, n) {
-      var a = [];
-      // tslint:disable-next-line:curly
-      for (; n--; a[n] = b - n)
-          ;
-      return a;
-  }
-  /**
-   * Creates a numeric range
-   *
-   * @param {number} from
-   * @param {number} to
-   * @return {Array<number>}
-   *
-   * @example
-   * range(-2, 2) // => [-2, -1, 0, 1, 2]
-   * range(2, -2) // => [2, 1, 0, -1, -2]
-   */
-  function range(from, to) {
-      return from < to ? ascR(from, to - from + 1) : descR(from, from - to + 1);
-  }
-  /**
-   * Rotates a list a number of times. It"s completly agnostic about the
-   * contents of the list.
-   *
-   * @param {Integer} times - the number of rotations
-   * @param {Array} array
-   * @return {Array} the rotated array
-   *
-   * @example
-   * rotate(1, [1, 2, 3]) // => [2, 3, 1]
-   */
-  function rotate(times, arr) {
-      var len = arr.length;
-      var n = ((times % len) + len) % len;
-      return arr.slice(n, len).concat(arr.slice(0, n));
-  }
-  /**
-   * Return a copy of the array with the null values removed
-   * @function
-   * @param {Array} array
-   * @return {Array}
-   *
-   * @example
-   * compact(["a", "b", null, "c"]) // => ["a", "b", "c"]
-   */
-  function compact(arr) {
-      return arr.filter(function (n) { return n === 0 || n; });
-  }
-  /**
-   * Sort an array of notes in ascending order. Pitch classes are listed
-   * before notes. Any string that is not a note is removed.
-   *
-   * @param {string[]} notes
-   * @return {string[]} sorted array of notes
-   *
-   * @example
-   * sortedNoteNames(['c2', 'c5', 'c1', 'c0', 'c6', 'c'])
-   * // => ['C', 'C0', 'C1', 'C2', 'C5', 'C6']
-   * sortedNoteNames(['c', 'F', 'G', 'a', 'b', 'h', 'J'])
-   * // => ['C', 'F', 'G', 'A', 'B']
-   */
-  function sortedNoteNames(notes) {
-      var valid = notes.map(function (n) { return core.note(n); }).filter(function (n) { return !n.empty; });
-      return valid.sort(function (a, b) { return a.height - b.height; }).map(function (n) { return n.name; });
-  }
-  /**
-   * Get sorted notes with duplicates removed. Pitch classes are listed
-   * before notes.
-   *
-   * @function
-   * @param {string[]} array
-   * @return {string[]} unique sorted notes
-   *
-   * @example
-   * Array.sortedUniqNoteNames(['a', 'b', 'c2', '1p', 'p2', 'c2', 'b', 'c', 'c3' ])
-   * // => [ 'C', 'A', 'B', 'C2', 'C3' ]
-   */
-  function sortedUniqNoteNames(arr) {
-      return sortedNoteNames(arr).filter(function (n, i, a) { return i === 0 || n !== a[i - 1]; });
-  }
-  /**
-   * Randomizes the order of the specified array in-place, using the Fisher–Yates shuffle.
-   *
-   * @function
-   * @param {Array} array
-   * @return {Array} the array shuffled
-   *
-   * @example
-   * shuffle(["C", "D", "E", "F"]) // => [...]
-   */
-  function shuffle(arr, rnd) {
-      if (rnd === void 0) { rnd = Math.random; }
-      var i;
-      var t;
-      var m = arr.length;
-      while (m) {
-          i = Math.floor(rnd() * m--);
-          t = arr[m];
-          arr[m] = arr[i];
-          arr[i] = t;
-      }
-      return arr;
-  }
-  /**
-   * Get all permutations of an array
-   *
-   * @param {Array} array - the array
-   * @return {Array<Array>} an array with all the permutations
-   * @example
-   * permutations(["a", "b", "c"])) // =>
-   * [
-   *   ["a", "b", "c"],
-   *   ["b", "a", "c"],
-   *   ["b", "c", "a"],
-   *   ["a", "c", "b"],
-   *   ["c", "a", "b"],
-   *   ["c", "b", "a"]
-   * ]
-   */
-  function permutations(arr) {
-      if (arr.length === 0) {
-          return [[]];
-      }
-      return permutations(arr.slice(1)).reduce(function (acc, perm) {
-          return acc.concat(arr.map(function (e, pos) {
-              var newPerm = perm.slice();
-              newPerm.splice(pos, 0, arr[0]);
-              return newPerm;
-          }));
-      }, []);
-  }
-
-  exports.compact = compact;
-  exports.permutations = permutations;
-  exports.range = range;
-  exports.rotate = rotate;
-  exports.shuffle = shuffle;
-  exports.sortedNoteNames = sortedNoteNames;
-  exports.sortedUniqNoteNames = sortedUniqNoteNames;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/core":10}],6:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/chord-type'), require('@tonaljs/core'), require('@tonaljs/pcset')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/chord-type', '@tonaljs/core', '@tonaljs/pcset'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.ChordDetect = {}, global.chordType, global.core, global.pcset));
-}(this, (function (exports, chordType, core, pcset) { 'use strict';
-
-  var namedSet = function (notes) {
-      var pcToName = notes.reduce(function (record, n) {
-          var chroma = core.note(n).chroma;
-          if (chroma !== undefined) {
-              record[chroma] = record[chroma] || core.note(n).name;
-          }
-          return record;
-      }, {});
-      return function (chroma) { return pcToName[chroma]; };
-  };
-  function detect(source) {
-      var notes = source.map(function (n) { return core.note(n).pc; }).filter(function (x) { return x; });
-      if (core.note.length === 0) {
-          return [];
-      }
-      var found = findExactMatches(notes, 1);
-      return found
-          .filter(function (chord) { return chord.weight; })
-          .sort(function (a, b) { return b.weight - a.weight; })
-          .map(function (chord) { return chord.name; });
-  }
-  function findExactMatches(notes, weight) {
-      var tonic = notes[0];
-      var tonicChroma = core.note(tonic).chroma;
-      var noteName = namedSet(notes);
-      // we need to test all chormas to get the correct baseNote
-      var allModes = pcset.modes(notes, false);
-      var found = [];
-      allModes.forEach(function (mode, index) {
-          // some chords could have the same chroma but different interval spelling
-          var chordTypes = chordType.all().filter(function (chordType) { return chordType.chroma === mode; });
-          chordTypes.forEach(function (chordType) {
-              var chordName = chordType.aliases[0];
-              var baseNote = noteName(index);
-              var isInversion = index !== tonicChroma;
-              if (isInversion) {
-                  found.push({
-                      weight: 0.5 * weight,
-                      name: "" + baseNote + chordName + "/" + tonic,
-                  });
-              }
-              else {
-                  found.push({ weight: 1 * weight, name: "" + baseNote + chordName });
-              }
-          });
-      });
-      return found;
-  }
-  var index = { detect: detect };
-
-  exports.default = index;
-  exports.detect = detect;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/chord-type":7,"@tonaljs/core":10,"@tonaljs/pcset":17}],7:[function(require,module,exports){
-(function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/core'), require('@tonaljs/pcset')) :
-    typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/core', '@tonaljs/pcset'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.ChordType = {}, global.core, global.pcset));
-}(this, (function (exports, core, pcset) { 'use strict';
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation.
-
-    Permission to use, copy, modify, and/or distribute this software for any
-    purpose with or without fee is hereby granted.
-
-    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-    PERFORMANCE OF THIS SOFTWARE.
-    ***************************************************************************** */
-
-    var __assign = function() {
-        __assign = Object.assign || function __assign(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign.apply(this, arguments);
-    };
-
-    /**
-     * @private
-     * Chord List
-     * Source: https://en.wikibooks.org/wiki/Music_Theory/Complete_List_of_Chord_Patterns
-     * Format: ["intervals", "full name", "abrv1 abrv2"]
-     */
-    var CHORDS = [
-        // ==Major==
-        ["1P 3M 5P", "major", "M ^ "],
-        ["1P 3M 5P 7M", "major seventh", "maj7 Δ ma7 M7 Maj7 ^7"],
-        ["1P 3M 5P 7M 9M", "major ninth", "maj9 Δ9 ^9"],
-        ["1P 3M 5P 7M 9M 13M", "major thirteenth", "maj13 Maj13 ^13"],
-        ["1P 3M 5P 6M", "sixth", "6 add6 add13 M6"],
-        ["1P 3M 5P 6M 9M", "sixth/ninth", "6/9 69 M69"],
-        ["1P 3M 6m 7M", "major seventh flat sixth", "M7b6 ^7b6"],
-        [
-            "1P 3M 5P 7M 11A",
-            "major seventh sharp eleventh",
-            "maj#4 Δ#4 Δ#11 M7#11 ^7#11 maj7#11",
-        ],
-        // ==Minor==
-        // '''Normal'''
-        ["1P 3m 5P", "minor", "m min -"],
-        ["1P 3m 5P 7m", "minor seventh", "m7 min7 mi7 -7"],
-        [
-            "1P 3m 5P 7M",
-            "minor/major seventh",
-            "m/ma7 m/maj7 mM7 mMaj7 m/M7 -Δ7 mΔ -^7",
-        ],
-        ["1P 3m 5P 6M", "minor sixth", "m6 -6"],
-        ["1P 3m 5P 7m 9M", "minor ninth", "m9 -9"],
-        ["1P 3m 5P 7M 9M", "minor/major ninth", "mM9 mMaj9 -^9"],
-        ["1P 3m 5P 7m 9M 11P", "minor eleventh", "m11 -11"],
-        ["1P 3m 5P 7m 9M 13M", "minor thirteenth", "m13 -13"],
-        // '''Diminished'''
-        ["1P 3m 5d", "diminished", "dim ° o"],
-        ["1P 3m 5d 7d", "diminished seventh", "dim7 °7 o7"],
-        ["1P 3m 5d 7m", "half-diminished", "m7b5 ø -7b5 h7 h"],
-        // ==Dominant/Seventh==
-        // '''Normal'''
-        ["1P 3M 5P 7m", "dominant seventh", "7 dom"],
-        ["1P 3M 5P 7m 9M", "dominant ninth", "9"],
-        ["1P 3M 5P 7m 9M 13M", "dominant thirteenth", "13"],
-        ["1P 3M 5P 7m 11A", "lydian dominant seventh", "7#11 7#4"],
-        // '''Altered'''
-        ["1P 3M 5P 7m 9m", "dominant flat ninth", "7b9"],
-        ["1P 3M 5P 7m 9A", "dominant sharp ninth", "7#9"],
-        ["1P 3M 7m 9m", "altered", "alt7"],
-        // '''Suspended'''
-        ["1P 4P 5P", "suspended fourth", "sus4 sus"],
-        ["1P 2M 5P", "suspended second", "sus2"],
-        ["1P 4P 5P 7m", "suspended fourth seventh", "7sus4 7sus"],
-        ["1P 5P 7m 9M 11P", "eleventh", "11"],
-        [
-            "1P 4P 5P 7m 9m",
-            "suspended fourth flat ninth",
-            "b9sus phryg 7b9sus 7b9sus4",
-        ],
-        // ==Other==
-        ["1P 5P", "fifth", "5"],
-        ["1P 3M 5A", "augmented", "aug + +5 ^#5"],
-        ["1P 3m 5A", "minor augmented", "m#5 -#5 m+"],
-        ["1P 3M 5A 7M", "augmented seventh", "maj7#5 maj7+5 +maj7 ^7#5"],
-        [
-            "1P 3M 5P 7M 9M 11A",
-            "major sharp eleventh (lydian)",
-            "maj9#11 Δ9#11 ^9#11",
-        ],
-        // ==Legacy==
-        ["1P 2M 4P 5P", "", "sus24 sus4add9"],
-        ["1P 3M 5A 7M 9M", "", "maj9#5 Maj9#5"],
-        ["1P 3M 5A 7m", "", "7#5 +7 7+ 7aug aug7"],
-        ["1P 3M 5A 7m 9A", "", "7#5#9 7#9#5 7alt"],
-        ["1P 3M 5A 7m 9M", "", "9#5 9+"],
-        ["1P 3M 5A 7m 9M 11A", "", "9#5#11"],
-        ["1P 3M 5A 7m 9m", "", "7#5b9 7b9#5"],
-        ["1P 3M 5A 7m 9m 11A", "", "7#5b9#11"],
-        ["1P 3M 5A 9A", "", "+add#9"],
-        ["1P 3M 5A 9M", "", "M#5add9 +add9"],
-        ["1P 3M 5P 6M 11A", "", "M6#11 M6b5 6#11 6b5"],
-        ["1P 3M 5P 6M 7M 9M", "", "M7add13"],
-        ["1P 3M 5P 6M 9M 11A", "", "69#11"],
-        ["1P 3m 5P 6M 9M", "", "m69 -69"],
-        ["1P 3M 5P 6m 7m", "", "7b6"],
-        ["1P 3M 5P 7M 9A 11A", "", "maj7#9#11"],
-        ["1P 3M 5P 7M 9M 11A 13M", "", "M13#11 maj13#11 M13+4 M13#4"],
-        ["1P 3M 5P 7M 9m", "", "M7b9"],
-        ["1P 3M 5P 7m 11A 13m", "", "7#11b13 7b5b13"],
-        ["1P 3M 5P 7m 13M", "", "7add6 67 7add13"],
-        ["1P 3M 5P 7m 9A 11A", "", "7#9#11 7b5#9 7#9b5"],
-        ["1P 3M 5P 7m 9A 11A 13M", "", "13#9#11"],
-        ["1P 3M 5P 7m 9A 11A 13m", "", "7#9#11b13"],
-        ["1P 3M 5P 7m 9A 13M", "", "13#9"],
-        ["1P 3M 5P 7m 9A 13m", "", "7#9b13"],
-        ["1P 3M 5P 7m 9M 11A", "", "9#11 9+4 9#4"],
-        ["1P 3M 5P 7m 9M 11A 13M", "", "13#11 13+4 13#4"],
-        ["1P 3M 5P 7m 9M 11A 13m", "", "9#11b13 9b5b13"],
-        ["1P 3M 5P 7m 9m 11A", "", "7b9#11 7b5b9 7b9b5"],
-        ["1P 3M 5P 7m 9m 11A 13M", "", "13b9#11"],
-        ["1P 3M 5P 7m 9m 11A 13m", "", "7b9b13#11 7b9#11b13 7b5b9b13"],
-        ["1P 3M 5P 7m 9m 13M", "", "13b9"],
-        ["1P 3M 5P 7m 9m 13m", "", "7b9b13"],
-        ["1P 3M 5P 7m 9m 9A", "", "7b9#9"],
-        ["1P 3M 5P 9M", "", "Madd9 2 add9 add2"],
-        ["1P 3M 5P 9m", "", "Maddb9"],
-        ["1P 3M 5d", "", "Mb5"],
-        ["1P 3M 5d 6M 7m 9M", "", "13b5"],
-        ["1P 3M 5d 7M", "", "M7b5"],
-        ["1P 3M 5d 7M 9M", "", "M9b5"],
-        ["1P 3M 5d 7m", "", "7b5"],
-        ["1P 3M 5d 7m 9M", "", "9b5"],
-        ["1P 3M 7m", "", "7no5"],
-        ["1P 3M 7m 13m", "", "7b13"],
-        ["1P 3M 7m 9M", "", "9no5"],
-        ["1P 3M 7m 9M 13M", "", "13no5"],
-        ["1P 3M 7m 9M 13m", "", "9b13"],
-        ["1P 3m 4P 5P", "", "madd4"],
-        ["1P 3m 5P 6m 7M", "", "mMaj7b6"],
-        ["1P 3m 5P 6m 7M 9M", "", "mMaj9b6"],
-        ["1P 3m 5P 7m 11P", "", "m7add11 m7add4"],
-        ["1P 3m 5P 9M", "", "madd9"],
-        ["1P 3m 5d 6M 7M", "", "o7M7"],
-        ["1P 3m 5d 7M", "", "oM7"],
-        ["1P 3m 6m 7M", "", "mb6M7"],
-        ["1P 3m 6m 7m", "", "m7#5"],
-        ["1P 3m 6m 7m 9M", "", "m9#5"],
-        ["1P 3m 5A 7m 9M 11P", "", "m11A"],
-        ["1P 3m 6m 9m", "", "mb6b9"],
-        ["1P 2M 3m 5d 7m", "", "m9b5"],
-        ["1P 4P 5A 7M", "", "M7#5sus4"],
-        ["1P 4P 5A 7M 9M", "", "M9#5sus4"],
-        ["1P 4P 5A 7m", "", "7#5sus4"],
-        ["1P 4P 5P 7M", "", "M7sus4"],
-        ["1P 4P 5P 7M 9M", "", "M9sus4"],
-        ["1P 4P 5P 7m 9M", "", "9sus4 9sus"],
-        ["1P 4P 5P 7m 9M 13M", "", "13sus4 13sus"],
-        ["1P 4P 5P 7m 9m 13m", "", "7sus4b9b13 7b9b13sus4"],
-        ["1P 4P 7m 10m", "", "4 quartal"],
-        ["1P 5P 7m 9m 11P", "", "11b9"],
-    ];
-
-    var NoChordType = __assign(__assign({}, pcset.EmptyPcset), { name: "", quality: "Unknown", intervals: [], aliases: [] });
-    var dictionary = [];
-    var index = {};
-    /**
-     * Given a chord name or chroma, return the chord properties
-     * @param {string} source - chord name or pitch class set chroma
-     * @example
-     * import { get } from 'tonaljs/chord-type'
-     * get('major') // => { name: 'major', ... }
-     */
-    function get(type) {
-        return index[type] || NoChordType;
-    }
-    var chordType = core.deprecate("ChordType.chordType", "ChordType.get", get);
-    /**
-     * Get all chord (long) names
-     */
-    function names() {
-        return dictionary.map(function (chord) { return chord.name; }).filter(function (x) { return x; });
-    }
-    /**
-     * Get all chord symbols
-     */
-    function symbols() {
-        return dictionary.map(function (chord) { return chord.aliases[0]; }).filter(function (x) { return x; });
-    }
-    /**
-     * Keys used to reference chord types
-     */
-    function keys() {
-        return Object.keys(index);
-    }
-    /**
-     * Return a list of all chord types
-     */
-    function all() {
-        return dictionary.slice();
-    }
-    var entries = core.deprecate("ChordType.entries", "ChordType.all", all);
-    /**
-     * Clear the dictionary
-     */
-    function removeAll() {
-        dictionary = [];
-        index = {};
-    }
-    /**
-     * Add a chord to the dictionary.
-     * @param intervals
-     * @param aliases
-     * @param [fullName]
-     */
-    function add(intervals, aliases, fullName) {
-        var quality = getQuality(intervals);
-        var chord = __assign(__assign({}, pcset.get(intervals)), { name: fullName || "", quality: quality,
-            intervals: intervals,
-            aliases: aliases });
-        dictionary.push(chord);
-        if (chord.name) {
-            index[chord.name] = chord;
-        }
-        index[chord.setNum] = chord;
-        index[chord.chroma] = chord;
-        chord.aliases.forEach(function (alias) { return addAlias(chord, alias); });
-    }
-    function addAlias(chord, alias) {
-        index[alias] = chord;
-    }
-    function getQuality(intervals) {
-        var has = function (interval) { return intervals.indexOf(interval) !== -1; };
-        return has("5A")
-            ? "Augmented"
-            : has("3M")
-                ? "Major"
-                : has("5d")
-                    ? "Diminished"
-                    : has("3m")
-                        ? "Minor"
-                        : "Unknown";
-    }
-    CHORDS.forEach(function (_a) {
-        var ivls = _a[0], fullName = _a[1], names = _a[2];
-        return add(ivls.split(" "), names.split(" "), fullName);
+      return chordType.chroma === mode;
     });
-    dictionary.sort(function (a, b) { return a.setNum - b.setNum; });
-    var index$1 = {
-        names: names,
-        symbols: symbols,
-        get: get,
-        all: all,
-        add: add,
-        removeAll: removeAll,
-        keys: keys,
-        // deprecated
-        entries: entries,
-        chordType: chordType,
-    };
-
-    exports.add = add;
-    exports.addAlias = addAlias;
-    exports.all = all;
-    exports.chordType = chordType;
-    exports.default = index$1;
-    exports.entries = entries;
-    exports.get = get;
-    exports.keys = keys;
-    exports.names = names;
-    exports.removeAll = removeAll;
-    exports.symbols = symbols;
-
-    Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/core":10,"@tonaljs/pcset":17}],8:[function(require,module,exports){
-(function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/chord-detect'), require('@tonaljs/chord-type'), require('@tonaljs/core'), require('@tonaljs/pcset'), require('@tonaljs/scale-type')) :
-    typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/chord-detect', '@tonaljs/chord-type', '@tonaljs/core', '@tonaljs/pcset', '@tonaljs/scale-type'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Chord = {}, global.chordDetect, global.chordType, global.core, global.pcset, global.scaleType));
-}(this, (function (exports, chordDetect, chordType, core, pcset, scaleType) { 'use strict';
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation.
-
-    Permission to use, copy, modify, and/or distribute this software for any
-    purpose with or without fee is hereby granted.
-
-    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-    PERFORMANCE OF THIS SOFTWARE.
-    ***************************************************************************** */
-
-    var __assign = function() {
-        __assign = Object.assign || function __assign(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign.apply(this, arguments);
-    };
-
-    var NoChord = {
-        empty: true,
-        name: "",
-        symbol: "",
-        root: "",
-        rootDegree: 0,
-        type: "",
-        tonic: null,
-        setNum: NaN,
-        quality: "Unknown",
-        chroma: "",
-        normalized: "",
-        aliases: [],
-        notes: [],
-        intervals: [],
-    };
-    // 6, 64, 7, 9, 11 and 13 are consider part of the chord
-    // (see https://github.com/danigb/tonal/issues/55)
-    var NUM_TYPES = /^(6|64|7|9|11|13)$/;
-    /**
-     * Tokenize a chord name. It returns an array with the tonic and chord type
-     * If not tonic is found, all the name is considered the chord name.
-     *
-     * This function does NOT check if the chord type exists or not. It only tries
-     * to split the tonic and chord type.
-     *
-     * @function
-     * @param {string} name - the chord name
-     * @return {Array} an array with [tonic, type]
-     * @example
-     * tokenize("Cmaj7") // => [ "C", "maj7" ]
-     * tokenize("C7") // => [ "C", "7" ]
-     * tokenize("mMaj7") // => [ null, "mMaj7" ]
-     * tokenize("Cnonsense") // => [ null, "nonsense" ]
-     */
-    function tokenize(name) {
-        var _a = core.tokenizeNote(name), letter = _a[0], acc = _a[1], oct = _a[2], type = _a[3];
-        if (letter === "") {
-            return ["", name];
-        }
-        // aug is augmented (see https://github.com/danigb/tonal/issues/55)
-        if (letter === "A" && type === "ug") {
-            return ["", "aug"];
-        }
-        // see: https://github.com/tonaljs/tonal/issues/70
-        if (!type && (oct === "4" || oct === "5")) {
-            return [letter + acc, oct];
-        }
-        if (NUM_TYPES.test(oct)) {
-            return [letter + acc, oct + type];
-        }
-        else {
-            return [letter + acc + oct, type];
-        }
-    }
-    /**
-     * Get a Chord from a chord name.
-     */
-    function get(src) {
-        if (src === "") {
-            return NoChord;
-        }
-        if (Array.isArray(src) && src.length === 2) {
-            return getChord(src[1], src[0]);
-        }
-        else {
-            var _a = tokenize(src), tonic = _a[0], type = _a[1];
-            var chord_1 = getChord(type, tonic);
-            return chord_1.empty ? getChord(src) : chord_1;
-        }
-    }
-    /**
-     * Get chord properties
-     *
-     * @param typeName - the chord type name
-     * @param [tonic] - Optional tonic
-     * @param [root]  - Optional root (requires a tonic)
-     */
-    function getChord(typeName, optionalTonic, optionalRoot) {
-        var type = chordType.get(typeName);
-        var tonic = core.note(optionalTonic || "");
-        var root = core.note(optionalRoot || "");
-        if (type.empty ||
-            (optionalTonic && tonic.empty) ||
-            (optionalRoot && root.empty)) {
-            return NoChord;
-        }
-        var rootInterval = core.distance(tonic.pc, root.pc);
-        var rootDegree = type.intervals.indexOf(rootInterval) + 1;
-        if (!root.empty && !rootDegree) {
-            return NoChord;
-        }
-        var intervals = Array.from(type.intervals);
-        for (var i = 1; i < rootDegree; i++) {
-            var num = intervals[0][0];
-            var quality = intervals[0][1];
-            var newNum = parseInt(num, 10) + 7;
-            intervals.push("" + newNum + quality);
-            intervals.shift();
-        }
-        var notes = tonic.empty
-            ? []
-            : intervals.map(function (i) { return core.transpose(tonic, i); });
-        typeName = type.aliases.indexOf(typeName) !== -1 ? typeName : type.aliases[0];
-        var symbol = "" + (tonic.empty ? "" : tonic.pc) + typeName + (root.empty || rootDegree <= 1 ? "" : "/" + root.pc);
-        var name = "" + (optionalTonic ? tonic.pc + " " : "") + type.name + (rootDegree > 1 && optionalRoot ? " over " + root.pc : "");
-        return __assign(__assign({}, type), { name: name,
-            symbol: symbol, type: type.name, root: root.name, intervals: intervals,
-            rootDegree: rootDegree, tonic: tonic.name, notes: notes });
-    }
-    var chord = core.deprecate("Chord.chord", "Chord.get", get);
-    /**
-     * Transpose a chord name
-     *
-     * @param {string} chordName - the chord name
-     * @return {string} the transposed chord
-     *
-     * @example
-     * transpose('Dm7', 'P4') // => 'Gm7
-     */
-    function transpose(chordName, interval) {
-        var _a = tokenize(chordName), tonic = _a[0], type = _a[1];
-        if (!tonic) {
-            return chordName;
-        }
-        return core.transpose(tonic, interval) + type;
-    }
-    /**
-     * Get all scales where the given chord fits
-     *
-     * @example
-     * chordScales('C7b9')
-     * // => ["phrygian dominant", "flamenco", "spanish heptatonic", "half-whole diminished", "chromatic"]
-     */
-    function chordScales(name) {
-        var s = get(name);
-        var isChordIncluded = pcset.isSupersetOf(s.chroma);
-        return scaleType.all()
-            .filter(function (scale) { return isChordIncluded(scale.chroma); })
-            .map(function (scale) { return scale.name; });
-    }
-    /**
-     * Get all chords names that are a superset of the given one
-     * (has the same notes and at least one more)
-     *
-     * @function
-     * @example
-     * extended("CMaj7")
-     * // => [ 'Cmaj#4', 'Cmaj7#9#11', 'Cmaj9', 'CM7add13', 'Cmaj13', 'Cmaj9#11', 'CM13#11', 'CM7b9' ]
-     */
-    function extended(chordName) {
-        var s = get(chordName);
-        var isSuperset = pcset.isSupersetOf(s.chroma);
-        return chordType.all()
-            .filter(function (chord) { return isSuperset(chord.chroma); })
-            .map(function (chord) { return s.tonic + chord.aliases[0]; });
-    }
-    /**
-     * Find all chords names that are a subset of the given one
-     * (has less notes but all from the given chord)
-     *
-     * @example
-     */
-    function reduced(chordName) {
-        var s = get(chordName);
-        var isSubset = pcset.isSubsetOf(s.chroma);
-        return chordType.all()
-            .filter(function (chord) { return isSubset(chord.chroma); })
-            .map(function (chord) { return s.tonic + chord.aliases[0]; });
-    }
-    var index = {
-        getChord: getChord,
-        get: get,
-        detect: chordDetect.detect,
-        chordScales: chordScales,
-        extended: extended,
-        reduced: reduced,
-        tokenize: tokenize,
-        transpose: transpose,
-        // deprecate
-        chord: chord,
-    };
-
-    Object.defineProperty(exports, 'detect', {
-        enumerable: true,
-        get: function () {
-            return chordDetect.detect;
-        }
+    chordTypes.forEach((chordType) => {
+      const chordName = chordType.aliases[0];
+      const baseNote = noteName(index);
+      const isInversion = index !== tonicChroma;
+      if (isInversion) {
+        found.push({
+          weight: 0.5 * weight,
+          name: `${baseNote}${chordName}/${tonic}`
+        });
+      } else {
+        found.push({ weight: 1 * weight, name: `${baseNote}${chordName}` });
+      }
     });
-    exports.chord = chord;
-    exports.chordScales = chordScales;
-    exports.default = index;
-    exports.extended = extended;
-    exports.get = get;
-    exports.getChord = getChord;
-    exports.reduced = reduced;
-    exports.tokenize = tokenize;
-    exports.transpose = transpose;
+  });
+  return found;
+}
+var chord_detect_default = { detect };
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  detect
+});
 
-    Object.defineProperty(exports, '__esModule', { value: true });
+},{"@tonaljs/chord-type":7,"@tonaljs/pcset":17,"@tonaljs/pitch-note":20}],7:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all2) => {
+  for (var name in all2)
+    __defProp(target, name, { get: all2[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-})));
+// index.ts
+var chord_type_exports = {};
+__export(chord_type_exports, {
+  add: () => add,
+  addAlias: () => addAlias,
+  all: () => all,
+  chordType: () => chordType,
+  default: () => chord_type_default,
+  entries: () => entries,
+  get: () => get,
+  keys: () => keys,
+  names: () => names,
+  removeAll: () => removeAll,
+  symbols: () => symbols
+});
+module.exports = __toCommonJS(chord_type_exports);
+var import_pcset = require("@tonaljs/pcset");
 
+// data.ts
+var CHORDS = [
+  // ==Major==
+  ["1P 3M 5P", "major", "M ^  maj"],
+  ["1P 3M 5P 7M", "major seventh", "maj7 \u0394 ma7 M7 Maj7 ^7"],
+  ["1P 3M 5P 7M 9M", "major ninth", "maj9 \u03949 ^9"],
+  ["1P 3M 5P 7M 9M 13M", "major thirteenth", "maj13 Maj13 ^13"],
+  ["1P 3M 5P 6M", "sixth", "6 add6 add13 M6"],
+  ["1P 3M 5P 6M 9M", "sixth added ninth", "6add9 6/9 69 M69"],
+  ["1P 3M 6m 7M", "major seventh flat sixth", "M7b6 ^7b6"],
+  [
+    "1P 3M 5P 7M 11A",
+    "major seventh sharp eleventh",
+    "maj#4 \u0394#4 \u0394#11 M7#11 ^7#11 maj7#11"
+  ],
+  // ==Minor==
+  // '''Normal'''
+  ["1P 3m 5P", "minor", "m min -"],
+  ["1P 3m 5P 7m", "minor seventh", "m7 min7 mi7 -7"],
+  [
+    "1P 3m 5P 7M",
+    "minor/major seventh",
+    "m/ma7 m/maj7 mM7 mMaj7 m/M7 -\u03947 m\u0394 -^7 -maj7"
+  ],
+  ["1P 3m 5P 6M", "minor sixth", "m6 -6"],
+  ["1P 3m 5P 7m 9M", "minor ninth", "m9 -9"],
+  ["1P 3m 5P 7M 9M", "minor/major ninth", "mM9 mMaj9 -^9"],
+  ["1P 3m 5P 7m 9M 11P", "minor eleventh", "m11 -11"],
+  ["1P 3m 5P 7m 9M 13M", "minor thirteenth", "m13 -13"],
+  // '''Diminished'''
+  ["1P 3m 5d", "diminished", "dim \xB0 o"],
+  ["1P 3m 5d 7d", "diminished seventh", "dim7 \xB07 o7"],
+  ["1P 3m 5d 7m", "half-diminished", "m7b5 \xF8 -7b5 h7 h"],
+  // ==Dominant/Seventh==
+  // '''Normal'''
+  ["1P 3M 5P 7m", "dominant seventh", "7 dom"],
+  ["1P 3M 5P 7m 9M", "dominant ninth", "9"],
+  ["1P 3M 5P 7m 9M 13M", "dominant thirteenth", "13"],
+  ["1P 3M 5P 7m 11A", "lydian dominant seventh", "7#11 7#4"],
+  // '''Altered'''
+  ["1P 3M 5P 7m 9m", "dominant flat ninth", "7b9"],
+  ["1P 3M 5P 7m 9A", "dominant sharp ninth", "7#9"],
+  ["1P 3M 7m 9m", "altered", "alt7"],
+  // '''Suspended'''
+  ["1P 4P 5P", "suspended fourth", "sus4 sus"],
+  ["1P 2M 5P", "suspended second", "sus2"],
+  ["1P 4P 5P 7m", "suspended fourth seventh", "7sus4 7sus"],
+  ["1P 5P 7m 9M 11P", "eleventh", "11"],
+  [
+    "1P 4P 5P 7m 9m",
+    "suspended fourth flat ninth",
+    "b9sus phryg 7b9sus 7b9sus4"
+  ],
+  // ==Other==
+  ["1P 5P", "fifth", "5"],
+  ["1P 3M 5A", "augmented", "aug + +5 ^#5"],
+  ["1P 3m 5A", "minor augmented", "m#5 -#5 m+"],
+  ["1P 3M 5A 7M", "augmented seventh", "maj7#5 maj7+5 +maj7 ^7#5"],
+  [
+    "1P 3M 5P 7M 9M 11A",
+    "major sharp eleventh (lydian)",
+    "maj9#11 \u03949#11 ^9#11"
+  ],
+  // ==Legacy==
+  ["1P 2M 4P 5P", "", "sus24 sus4add9"],
+  ["1P 3M 5A 7M 9M", "", "maj9#5 Maj9#5"],
+  ["1P 3M 5A 7m", "", "7#5 +7 7+ 7aug aug7"],
+  ["1P 3M 5A 7m 9A", "", "7#5#9 7#9#5 7alt"],
+  ["1P 3M 5A 7m 9M", "", "9#5 9+"],
+  ["1P 3M 5A 7m 9M 11A", "", "9#5#11"],
+  ["1P 3M 5A 7m 9m", "", "7#5b9 7b9#5"],
+  ["1P 3M 5A 7m 9m 11A", "", "7#5b9#11"],
+  ["1P 3M 5A 9A", "", "+add#9"],
+  ["1P 3M 5A 9M", "", "M#5add9 +add9"],
+  ["1P 3M 5P 6M 11A", "", "M6#11 M6b5 6#11 6b5"],
+  ["1P 3M 5P 6M 7M 9M", "", "M7add13"],
+  ["1P 3M 5P 6M 9M 11A", "", "69#11"],
+  ["1P 3m 5P 6M 9M", "", "m69 -69"],
+  ["1P 3M 5P 6m 7m", "", "7b6"],
+  ["1P 3M 5P 7M 9A 11A", "", "maj7#9#11"],
+  ["1P 3M 5P 7M 9M 11A 13M", "", "M13#11 maj13#11 M13+4 M13#4"],
+  ["1P 3M 5P 7M 9m", "", "M7b9"],
+  ["1P 3M 5P 7m 11A 13m", "", "7#11b13 7b5b13"],
+  ["1P 3M 5P 7m 13M", "", "7add6 67 7add13"],
+  ["1P 3M 5P 7m 9A 11A", "", "7#9#11 7b5#9 7#9b5"],
+  ["1P 3M 5P 7m 9A 11A 13M", "", "13#9#11"],
+  ["1P 3M 5P 7m 9A 11A 13m", "", "7#9#11b13"],
+  ["1P 3M 5P 7m 9A 13M", "", "13#9"],
+  ["1P 3M 5P 7m 9A 13m", "", "7#9b13"],
+  ["1P 3M 5P 7m 9M 11A", "", "9#11 9+4 9#4"],
+  ["1P 3M 5P 7m 9M 11A 13M", "", "13#11 13+4 13#4"],
+  ["1P 3M 5P 7m 9M 11A 13m", "", "9#11b13 9b5b13"],
+  ["1P 3M 5P 7m 9m 11A", "", "7b9#11 7b5b9 7b9b5"],
+  ["1P 3M 5P 7m 9m 11A 13M", "", "13b9#11"],
+  ["1P 3M 5P 7m 9m 11A 13m", "", "7b9b13#11 7b9#11b13 7b5b9b13"],
+  ["1P 3M 5P 7m 9m 13M", "", "13b9"],
+  ["1P 3M 5P 7m 9m 13m", "", "7b9b13"],
+  ["1P 3M 5P 7m 9m 9A", "", "7b9#9"],
+  ["1P 3M 5P 9M", "", "Madd9 2 add9 add2"],
+  ["1P 3M 5P 9m", "", "Maddb9"],
+  ["1P 3M 5d", "", "Mb5"],
+  ["1P 3M 5d 6M 7m 9M", "", "13b5"],
+  ["1P 3M 5d 7M", "", "M7b5"],
+  ["1P 3M 5d 7M 9M", "", "M9b5"],
+  ["1P 3M 5d 7m", "", "7b5"],
+  ["1P 3M 5d 7m 9M", "", "9b5"],
+  ["1P 3M 7m", "", "7no5"],
+  ["1P 3M 7m 13m", "", "7b13"],
+  ["1P 3M 7m 9M", "", "9no5"],
+  ["1P 3M 7m 9M 13M", "", "13no5"],
+  ["1P 3M 7m 9M 13m", "", "9b13"],
+  ["1P 3m 4P 5P", "", "madd4"],
+  ["1P 3m 5P 6m 7M", "", "mMaj7b6"],
+  ["1P 3m 5P 6m 7M 9M", "", "mMaj9b6"],
+  ["1P 3m 5P 7m 11P", "", "m7add11 m7add4"],
+  ["1P 3m 5P 9M", "", "madd9"],
+  ["1P 3m 5d 6M 7M", "", "o7M7"],
+  ["1P 3m 5d 7M", "", "oM7"],
+  ["1P 3m 6m 7M", "", "mb6M7"],
+  ["1P 3m 6m 7m", "", "m7#5"],
+  ["1P 3m 6m 7m 9M", "", "m9#5"],
+  ["1P 3m 5A 7m 9M 11P", "", "m11A"],
+  ["1P 3m 6m 9m", "", "mb6b9"],
+  ["1P 2M 3m 5d 7m", "", "m9b5"],
+  ["1P 4P 5A 7M", "", "M7#5sus4"],
+  ["1P 4P 5A 7M 9M", "", "M9#5sus4"],
+  ["1P 4P 5A 7m", "", "7#5sus4"],
+  ["1P 4P 5P 7M", "", "M7sus4"],
+  ["1P 4P 5P 7M 9M", "", "M9sus4"],
+  ["1P 4P 5P 7m 9M", "", "9sus4 9sus"],
+  ["1P 4P 5P 7m 9M 13M", "", "13sus4 13sus"],
+  ["1P 4P 5P 7m 9m 13m", "", "7sus4b9b13 7b9b13sus4"],
+  ["1P 4P 7m 10m", "", "4 quartal"],
+  ["1P 5P 7m 9m 11P", "", "11b9"]
+];
+var data_default = CHORDS;
 
-},{"@tonaljs/chord-detect":6,"@tonaljs/chord-type":7,"@tonaljs/core":10,"@tonaljs/pcset":17,"@tonaljs/scale-type":21}],9:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.Collection = {}));
-}(this, (function (exports) { 'use strict';
-
-  // ascending range
-  function ascR(b, n) {
-      var a = [];
-      // tslint:disable-next-line:curly
-      for (; n--; a[n] = n + b)
-          ;
-      return a;
-  }
-  // descending range
-  function descR(b, n) {
-      var a = [];
-      // tslint:disable-next-line:curly
-      for (; n--; a[n] = b - n)
-          ;
-      return a;
-  }
-  /**
-   * Creates a numeric range
-   *
-   * @param {number} from
-   * @param {number} to
-   * @return {Array<number>}
-   *
-   * @example
-   * range(-2, 2) // => [-2, -1, 0, 1, 2]
-   * range(2, -2) // => [2, 1, 0, -1, -2]
-   */
-  function range(from, to) {
-      return from < to ? ascR(from, to - from + 1) : descR(from, from - to + 1);
-  }
-  /**
-   * Rotates a list a number of times. It"s completly agnostic about the
-   * contents of the list.
-   *
-   * @param {Integer} times - the number of rotations
-   * @param {Array} collection
-   * @return {Array} the rotated collection
-   *
-   * @example
-   * rotate(1, [1, 2, 3]) // => [2, 3, 1]
-   */
-  function rotate(times, arr) {
-      var len = arr.length;
-      var n = ((times % len) + len) % len;
-      return arr.slice(n, len).concat(arr.slice(0, n));
-  }
-  /**
-   * Return a copy of the collection with the null values removed
-   * @function
-   * @param {Array} collection
-   * @return {Array}
-   *
-   * @example
-   * compact(["a", "b", null, "c"]) // => ["a", "b", "c"]
-   */
-  function compact(arr) {
-      return arr.filter(function (n) { return n === 0 || n; });
-  }
-  /**
-   * Randomizes the order of the specified collection in-place, using the Fisher–Yates shuffle.
-   *
-   * @function
-   * @param {Array} collection
-   * @return {Array} the collection shuffled
-   *
-   * @example
-   * shuffle(["C", "D", "E", "F"]) // => [...]
-   */
-  function shuffle(arr, rnd) {
-      if (rnd === void 0) { rnd = Math.random; }
-      var i;
-      var t;
-      var m = arr.length;
-      while (m) {
-          i = Math.floor(rnd() * m--);
-          t = arr[m];
-          arr[m] = arr[i];
-          arr[i] = t;
-      }
-      return arr;
-  }
-  /**
-   * Get all permutations of an collection
-   *
-   * @param {Array} collection - the collection
-   * @return {Array<Array>} an collection with all the permutations
-   * @example
-   * permutations(["a", "b", "c"])) // =>
-   * [
-   *   ["a", "b", "c"],
-   *   ["b", "a", "c"],
-   *   ["b", "c", "a"],
-   *   ["a", "c", "b"],
-   *   ["c", "a", "b"],
-   *   ["c", "b", "a"]
-   * ]
-   */
-  function permutations(arr) {
-      if (arr.length === 0) {
-          return [[]];
-      }
-      return permutations(arr.slice(1)).reduce(function (acc, perm) {
-          return acc.concat(arr.map(function (e, pos) {
-              var newPerm = perm.slice();
-              newPerm.splice(pos, 0, arr[0]);
-              return newPerm;
-          }));
-      }, []);
-  }
-  var index = {
-      compact: compact,
-      permutations: permutations,
-      range: range,
-      rotate: rotate,
-      shuffle: shuffle,
+// index.ts
+var NoChordType = {
+  ...import_pcset.EmptyPcset,
+  name: "",
+  quality: "Unknown",
+  intervals: [],
+  aliases: []
+};
+var dictionary = [];
+var index = {};
+function get(type) {
+  return index[type] || NoChordType;
+}
+var chordType = get;
+function names() {
+  return dictionary.map((chord) => chord.name).filter((x) => x);
+}
+function symbols() {
+  return dictionary.map((chord) => chord.aliases[0]).filter((x) => x);
+}
+function keys() {
+  return Object.keys(index);
+}
+function all() {
+  return dictionary.slice();
+}
+var entries = all;
+function removeAll() {
+  dictionary = [];
+  index = {};
+}
+function add(intervals, aliases, fullName) {
+  const quality = getQuality(intervals);
+  const chord = {
+    ...(0, import_pcset.get)(intervals),
+    name: fullName || "",
+    quality,
+    intervals,
+    aliases
   };
+  dictionary.push(chord);
+  if (chord.name) {
+    index[chord.name] = chord;
+  }
+  index[chord.setNum] = chord;
+  index[chord.chroma] = chord;
+  chord.aliases.forEach((alias) => addAlias(chord, alias));
+}
+function addAlias(chord, alias) {
+  index[alias] = chord;
+}
+function getQuality(intervals) {
+  const has = (interval) => intervals.indexOf(interval) !== -1;
+  return has("5A") ? "Augmented" : has("3M") ? "Major" : has("5d") ? "Diminished" : has("3m") ? "Minor" : "Unknown";
+}
+data_default.forEach(
+  ([ivls, fullName, names2]) => add(ivls.split(" "), names2.split(" "), fullName)
+);
+dictionary.sort((a, b) => a.setNum - b.setNum);
+var chord_type_default = {
+  names,
+  symbols,
+  get,
+  all,
+  add,
+  removeAll,
+  keys,
+  // deprecated
+  entries,
+  chordType
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  add,
+  addAlias,
+  all,
+  chordType,
+  entries,
+  get,
+  keys,
+  names,
+  removeAll,
+  symbols
+});
 
-  exports.compact = compact;
-  exports.default = index;
-  exports.permutations = permutations;
-  exports.range = range;
-  exports.rotate = rotate;
-  exports.shuffle = shuffle;
+},{"@tonaljs/pcset":17}],8:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  Object.defineProperty(exports, '__esModule', { value: true });
+// index.ts
+var index_exports = {};
+__export(index_exports, {
+  chord: () => chord,
+  chordScales: () => chordScales,
+  default: () => index_default,
+  degrees: () => degrees,
+  detect: () => import_chord_detect2.detect,
+  extended: () => extended,
+  get: () => get,
+  getChord: () => getChord,
+  notes: () => notes,
+  reduced: () => reduced,
+  steps: () => steps,
+  tokenize: () => tokenize,
+  transpose: () => transpose
+});
+module.exports = __toCommonJS(index_exports);
+var import_chord_detect = require("@tonaljs/chord-detect");
+var import_chord_type = require("@tonaljs/chord-type");
+var import_interval = require("@tonaljs/interval");
+var import_pcset = require("@tonaljs/pcset");
+var import_pitch_distance = require("@tonaljs/pitch-distance");
+var import_pitch_note = require("@tonaljs/pitch-note");
+var import_scale_type = require("@tonaljs/scale-type");
+var import_chord_detect2 = require("@tonaljs/chord-detect");
+var NoChord = {
+  empty: true,
+  name: "",
+  symbol: "",
+  root: "",
+  bass: "",
+  rootDegree: 0,
+  type: "",
+  tonic: null,
+  setNum: NaN,
+  quality: "Unknown",
+  chroma: "",
+  normalized: "",
+  aliases: [],
+  notes: [],
+  intervals: []
+};
+function tokenize(name) {
+  const [letter, acc, oct, type] = (0, import_pitch_note.tokenizeNote)(name);
+  if (letter === "") {
+    return tokenizeBass("", name);
+  } else if (letter === "A" && type === "ug") {
+    return tokenizeBass("", "aug");
+  } else {
+    return tokenizeBass(letter + acc, oct + type);
+  }
+}
+function tokenizeBass(note2, chord2) {
+  const split = chord2.split("/");
+  if (split.length === 1) {
+    return [note2, split[0], ""];
+  }
+  const [letter, acc, oct, type] = (0, import_pitch_note.tokenizeNote)(split[1]);
+  if (letter !== "" && oct === "" && type === "") {
+    return [note2, split[0], letter + acc];
+  } else {
+    return [note2, chord2, ""];
+  }
+}
+function get(src) {
+  if (Array.isArray(src)) {
+    return getChord(src[1] || "", src[0], src[2]);
+  } else if (src === "") {
+    return NoChord;
+  } else {
+    const [tonic, type, bass] = tokenize(src);
+    const chord2 = getChord(type, tonic, bass);
+    return chord2.empty ? getChord(src) : chord2;
+  }
+}
+function getChord(typeName, optionalTonic, optionalBass) {
+  const type = (0, import_chord_type.get)(typeName);
+  const tonic = (0, import_pitch_note.note)(optionalTonic || "");
+  const bass = (0, import_pitch_note.note)(optionalBass || "");
+  if (type.empty || optionalTonic && tonic.empty || optionalBass && bass.empty) {
+    return NoChord;
+  }
+  const bassInterval = (0, import_pitch_distance.distance)(tonic.pc, bass.pc);
+  const bassIndex = type.intervals.indexOf(bassInterval);
+  const hasRoot = bassIndex >= 0;
+  const root = hasRoot ? bass : (0, import_pitch_note.note)("");
+  const rootDegree = bassIndex === -1 ? NaN : bassIndex + 1;
+  const hasBass = bass.pc && bass.pc !== tonic.pc;
+  const intervals = Array.from(type.intervals);
+  if (hasRoot) {
+    for (let i = 1; i < rootDegree; i++) {
+      const num = intervals[0][0];
+      const quality = intervals[0][1];
+      const newNum = parseInt(num, 10) + 7;
+      intervals.push(`${newNum}${quality}`);
+      intervals.shift();
+    }
+  } else if (hasBass) {
+    const ivl = (0, import_interval.subtract)((0, import_pitch_distance.distance)(tonic.pc, bass.pc), "8P");
+    if (ivl) intervals.unshift(ivl);
+  }
+  const notes2 = tonic.empty ? [] : intervals.map((i) => (0, import_pitch_distance.transpose)(tonic.pc, i));
+  typeName = type.aliases.indexOf(typeName) !== -1 ? typeName : type.aliases[0];
+  const symbol = `${tonic.empty ? "" : tonic.pc}${typeName}${hasRoot && rootDegree > 1 ? "/" + root.pc : hasBass ? "/" + bass.pc : ""}`;
+  const name = `${optionalTonic ? tonic.pc + " " : ""}${type.name}${hasRoot && rootDegree > 1 ? " over " + root.pc : hasBass ? " over " + bass.pc : ""}`;
+  return {
+    ...type,
+    name,
+    symbol,
+    tonic: tonic.pc,
+    type: type.name,
+    root: root.pc,
+    bass: hasBass ? bass.pc : "",
+    intervals,
+    rootDegree,
+    notes: notes2
+  };
+}
+var chord = get;
+function transpose(chordName, interval) {
+  const [tonic, type, bass] = tokenize(chordName);
+  if (!tonic) {
+    return chordName;
+  }
+  const tr = (0, import_pitch_distance.transpose)(bass, interval);
+  const slash = tr ? "/" + tr : "";
+  return (0, import_pitch_distance.transpose)(tonic, interval) + type + slash;
+}
+function chordScales(name) {
+  const s = get(name);
+  const isChordIncluded = (0, import_pcset.isSupersetOf)(s.chroma);
+  return (0, import_scale_type.all)().filter((scale) => isChordIncluded(scale.chroma)).map((scale) => scale.name);
+}
+function extended(chordName) {
+  const s = get(chordName);
+  const isSuperset = (0, import_pcset.isSupersetOf)(s.chroma);
+  return (0, import_chord_type.all)().filter((chord2) => isSuperset(chord2.chroma)).map((chord2) => s.tonic + chord2.aliases[0]);
+}
+function reduced(chordName) {
+  const s = get(chordName);
+  const isSubset = (0, import_pcset.isSubsetOf)(s.chroma);
+  return (0, import_chord_type.all)().filter((chord2) => isSubset(chord2.chroma)).map((chord2) => s.tonic + chord2.aliases[0]);
+}
+function notes(chordName, tonic) {
+  const chord2 = get(chordName);
+  const note2 = tonic || chord2.tonic;
+  if (!note2 || chord2.empty) return [];
+  return chord2.intervals.map((ivl) => (0, import_pitch_distance.transpose)(note2, ivl));
+}
+function degrees(chordName, tonic) {
+  const chord2 = get(chordName);
+  const note2 = tonic || chord2.tonic;
+  const transpose2 = (0, import_pitch_distance.tonicIntervalsTransposer)(chord2.intervals, note2);
+  return (degree) => degree ? transpose2(degree > 0 ? degree - 1 : degree) : "";
+}
+function steps(chordName, tonic) {
+  const chord2 = get(chordName);
+  const note2 = tonic || chord2.tonic;
+  return (0, import_pitch_distance.tonicIntervalsTransposer)(chord2.intervals, note2);
+}
+var index_default = {
+  getChord,
+  get,
+  detect: import_chord_detect.detect,
+  chordScales,
+  extended,
+  reduced,
+  tokenize,
+  transpose,
+  degrees,
+  steps,
+  notes,
+  chord
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  chord,
+  chordScales,
+  degrees,
+  detect,
+  extended,
+  get,
+  getChord,
+  notes,
+  reduced,
+  steps,
+  tokenize,
+  transpose
+});
 
-})));
+},{"@tonaljs/chord-detect":6,"@tonaljs/chord-type":7,"@tonaljs/interval":12,"@tonaljs/pcset":17,"@tonaljs/pitch-distance":18,"@tonaljs/pitch-note":20,"@tonaljs/scale-type":26}],9:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
+// index.ts
+var collection_exports = {};
+__export(collection_exports, {
+  compact: () => compact,
+  default: () => collection_default,
+  permutations: () => permutations,
+  range: () => range,
+  rotate: () => rotate,
+  shuffle: () => shuffle
+});
+module.exports = __toCommonJS(collection_exports);
+function ascR(b, n) {
+  const a = [];
+  for (; n--; a[n] = n + b) ;
+  return a;
+}
+function descR(b, n) {
+  const a = [];
+  for (; n--; a[n] = b - n) ;
+  return a;
+}
+function range(from, to) {
+  return from < to ? ascR(from, to - from + 1) : descR(from, from - to + 1);
+}
+function rotate(times, arr) {
+  const len = arr.length;
+  const n = (times % len + len) % len;
+  return arr.slice(n, len).concat(arr.slice(0, n));
+}
+function compact(arr) {
+  return arr.filter((n) => n === 0 || n);
+}
+function shuffle(arr, rnd = Math.random) {
+  let i;
+  let t;
+  let m = arr.length;
+  while (m) {
+    i = Math.floor(rnd() * m--);
+    t = arr[m];
+    arr[m] = arr[i];
+    arr[i] = t;
+  }
+  return arr;
+}
+function permutations(arr) {
+  if (arr.length === 0) {
+    return [[]];
+  }
+  return permutations(arr.slice(1)).reduce((acc, perm) => {
+    return acc.concat(
+      arr.map((e, pos) => {
+        const newPerm = perm.slice();
+        newPerm.splice(pos, 0, arr[0]);
+        return newPerm;
+      })
+    );
+  }, []);
+}
+var collection_default = {
+  compact,
+  permutations,
+  range,
+  rotate,
+  shuffle
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  compact,
+  permutations,
+  range,
+  rotate,
+  shuffle
+});
 
 },{}],10:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.Core = {}));
-}(this, (function (exports) { 'use strict';
-
-  /**
-   * Fill a string with a repeated character
-   *
-   * @param character
-   * @param repetition
-   */
-  var fillStr = function (s, n) { return Array(Math.abs(n) + 1).join(s); };
-  function deprecate(original, alternative, fn) {
-      return function () {
-          var args = [];
-          for (var _i = 0; _i < arguments.length; _i++) {
-              args[_i] = arguments[_i];
-          }
-          // tslint:disable-next-line
-          console.warn(original + " is deprecated. Use " + alternative + ".");
-          return fn.apply(this, args);
-      };
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
   }
+  return to;
+};
+var __reExport = (target, mod, secondTarget) => (__copyProps(target, mod, "default"), secondTarget && __copyProps(secondTarget, mod, "default"));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  function isNamed(src) {
-      return src !== null && typeof src === "object" && typeof src.name === "string"
-          ? true
-          : false;
-  }
+// index.ts
+var core_exports = {};
+__export(core_exports, {
+  deprecate: () => deprecate,
+  fillStr: () => fillStr,
+  isNamed: () => isNamed
+});
+module.exports = __toCommonJS(core_exports);
+var import_pitch = require("@tonaljs/pitch");
+__reExport(core_exports, require("@tonaljs/pitch"), module.exports);
+__reExport(core_exports, require("@tonaljs/pitch-distance"), module.exports);
+__reExport(core_exports, require("@tonaljs/pitch-interval"), module.exports);
+__reExport(core_exports, require("@tonaljs/pitch-note"), module.exports);
+var fillStr = (s, n) => Array(Math.abs(n) + 1).join(s);
+function deprecate(original, alternative, fn) {
+  return function(...args) {
+    console.warn(`${original} is deprecated. Use ${alternative}.`);
+    return fn.apply(this, args);
+  };
+}
+var isNamed = deprecate("isNamed", "isNamedPitch", import_pitch.isNamedPitch);
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  deprecate,
+  fillStr,
+  isNamed,
+  ...require("@tonaljs/pitch"),
+  ...require("@tonaljs/pitch-distance"),
+  ...require("@tonaljs/pitch-interval"),
+  ...require("@tonaljs/pitch-note")
+});
 
-  function isPitch(pitch) {
-      return pitch !== null &&
-          typeof pitch === "object" &&
-          typeof pitch.step === "number" &&
-          typeof pitch.alt === "number"
-          ? true
-          : false;
+},{"@tonaljs/pitch":21,"@tonaljs/pitch-distance":18,"@tonaljs/pitch-interval":19,"@tonaljs/pitch-note":20}],11:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
   }
-  // The number of fifths of [C, D, E, F, G, A, B]
-  var FIFTHS = [0, 2, 4, -1, 1, 3, 5];
-  // The number of octaves it span each step
-  var STEPS_TO_OCTS = FIFTHS.map(function (fifths) {
-      return Math.floor((fifths * 7) / 12);
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var duration_value_exports = {};
+__export(duration_value_exports, {
+  default: () => duration_value_default,
+  fraction: () => fraction,
+  get: () => get,
+  names: () => names,
+  shorthands: () => shorthands,
+  value: () => value
+});
+module.exports = __toCommonJS(duration_value_exports);
+
+// data.ts
+var DATA = [
+  [
+    0.125,
+    "dl",
+    ["large", "duplex longa", "maxima", "octuple", "octuple whole"]
+  ],
+  [0.25, "l", ["long", "longa"]],
+  [0.5, "d", ["double whole", "double", "breve"]],
+  [1, "w", ["whole", "semibreve"]],
+  [2, "h", ["half", "minim"]],
+  [4, "q", ["quarter", "crotchet"]],
+  [8, "e", ["eighth", "quaver"]],
+  [16, "s", ["sixteenth", "semiquaver"]],
+  [32, "t", ["thirty-second", "demisemiquaver"]],
+  [64, "sf", ["sixty-fourth", "hemidemisemiquaver"]],
+  [128, "h", ["hundred twenty-eighth"]],
+  [256, "th", ["two hundred fifty-sixth"]]
+];
+var data_default = DATA;
+
+// index.ts
+var VALUES = [];
+data_default.forEach(
+  ([denominator, shorthand, names2]) => add(denominator, shorthand, names2)
+);
+var NoDuration = {
+  empty: true,
+  name: "",
+  value: 0,
+  fraction: [0, 0],
+  shorthand: "",
+  dots: "",
+  names: []
+};
+function names() {
+  return VALUES.reduce((names2, duration) => {
+    duration.names.forEach((name) => names2.push(name));
+    return names2;
+  }, []);
+}
+function shorthands() {
+  return VALUES.map((dur) => dur.shorthand);
+}
+var REGEX = /^([^.]+)(\.*)$/;
+function get(name) {
+  const [_, simple, dots] = REGEX.exec(name) || [];
+  const base = VALUES.find(
+    (dur) => dur.shorthand === simple || dur.names.includes(simple)
+  );
+  if (!base) {
+    return NoDuration;
+  }
+  const fraction2 = calcDots(base.fraction, dots.length);
+  const value2 = fraction2[0] / fraction2[1];
+  return { ...base, name, dots, value: value2, fraction: fraction2 };
+}
+var value = (name) => get(name).value;
+var fraction = (name) => get(name).fraction;
+var duration_value_default = { names, shorthands, get, value, fraction };
+function add(denominator, shorthand, names2) {
+  VALUES.push({
+    empty: false,
+    dots: "",
+    name: "",
+    value: 1 / denominator,
+    fraction: denominator < 1 ? [1 / denominator, 1] : [1, denominator],
+    shorthand,
+    names: names2
   });
-  function encode(pitch) {
-      var step = pitch.step, alt = pitch.alt, oct = pitch.oct, _a = pitch.dir, dir = _a === void 0 ? 1 : _a;
-      var f = FIFTHS[step] + 7 * alt;
-      if (oct === undefined) {
-          return [dir * f];
-      }
-      var o = oct - STEPS_TO_OCTS[step] - 4 * alt;
-      return [dir * f, dir * o];
+}
+function calcDots(fraction2, dots) {
+  const pow = Math.pow(2, dots);
+  let numerator = fraction2[0] * pow;
+  let denominator = fraction2[1] * pow;
+  const base = numerator;
+  for (let i = 0; i < dots; i++) {
+    numerator += base / Math.pow(2, i + 1);
   }
-  // We need to get the steps from fifths
-  // Fifths for CDEFGAB are [ 0, 2, 4, -1, 1, 3, 5 ]
-  // We add 1 to fifths to avoid negative numbers, so:
-  // for ["F", "C", "G", "D", "A", "E", "B"] we have:
-  var FIFTHS_TO_STEPS = [3, 0, 4, 1, 5, 2, 6];
-  function decode(coord) {
-      var f = coord[0], o = coord[1], dir = coord[2];
-      var step = FIFTHS_TO_STEPS[unaltered(f)];
-      var alt = Math.floor((f + 1) / 7);
-      if (o === undefined) {
-          return { step: step, alt: alt, dir: dir };
-      }
-      var oct = o + 4 * alt + STEPS_TO_OCTS[step];
-      return { step: step, alt: alt, oct: oct, dir: dir };
+  while (numerator % 2 === 0 && denominator % 2 === 0) {
+    numerator /= 2;
+    denominator /= 2;
   }
-  // Return the number of fifths as if it were unaltered
-  function unaltered(f) {
-      var i = (f + 1) % 7;
-      return i < 0 ? 7 + i : i;
-  }
-
-  var NoNote = { empty: true, name: "", pc: "", acc: "" };
-  var cache = new Map();
-  var stepToLetter = function (step) { return "CDEFGAB".charAt(step); };
-  var altToAcc = function (alt) {
-      return alt < 0 ? fillStr("b", -alt) : fillStr("#", alt);
-  };
-  var accToAlt = function (acc) {
-      return acc[0] === "b" ? -acc.length : acc.length;
-  };
-  /**
-   * Given a note literal (a note name or a note object), returns the Note object
-   * @example
-   * note('Bb4') // => { name: "Bb4", midi: 70, chroma: 10, ... }
-   */
-  function note(src) {
-      var cached = cache.get(src);
-      if (cached) {
-          return cached;
-      }
-      var value = typeof src === "string"
-          ? parse(src)
-          : isPitch(src)
-              ? note(pitchName(src))
-              : isNamed(src)
-                  ? note(src.name)
-                  : NoNote;
-      cache.set(src, value);
-      return value;
-  }
-  var REGEX = /^([a-gA-G]?)(#{1,}|b{1,}|x{1,}|)(-?\d*)\s*(.*)$/;
-  /**
-   * @private
-   */
-  function tokenizeNote(str) {
-      var m = REGEX.exec(str);
-      return [m[1].toUpperCase(), m[2].replace(/x/g, "##"), m[3], m[4]];
-  }
-  /**
-   * @private
-   */
-  function coordToNote(noteCoord) {
-      return note(decode(noteCoord));
-  }
-  var mod = function (n, m) { return ((n % m) + m) % m; };
-  var SEMI = [0, 2, 4, 5, 7, 9, 11];
-  function parse(noteName) {
-      var tokens = tokenizeNote(noteName);
-      if (tokens[0] === "" || tokens[3] !== "") {
-          return NoNote;
-      }
-      var letter = tokens[0];
-      var acc = tokens[1];
-      var octStr = tokens[2];
-      var step = (letter.charCodeAt(0) + 3) % 7;
-      var alt = accToAlt(acc);
-      var oct = octStr.length ? +octStr : undefined;
-      var coord = encode({ step: step, alt: alt, oct: oct });
-      var name = letter + acc + octStr;
-      var pc = letter + acc;
-      var chroma = (SEMI[step] + alt + 120) % 12;
-      var height = oct === undefined
-          ? mod(SEMI[step] + alt, 12) - 12 * 99
-          : SEMI[step] + alt + 12 * (oct + 1);
-      var midi = height >= 0 && height <= 127 ? height : null;
-      var freq = oct === undefined ? null : Math.pow(2, (height - 69) / 12) * 440;
-      return {
-          empty: false,
-          acc: acc,
-          alt: alt,
-          chroma: chroma,
-          coord: coord,
-          freq: freq,
-          height: height,
-          letter: letter,
-          midi: midi,
-          name: name,
-          oct: oct,
-          pc: pc,
-          step: step,
-      };
-  }
-  function pitchName(props) {
-      var step = props.step, alt = props.alt, oct = props.oct;
-      var letter = stepToLetter(step);
-      if (!letter) {
-          return "";
-      }
-      var pc = letter + altToAcc(alt);
-      return oct || oct === 0 ? pc + oct : pc;
-  }
-
-  var NoInterval = { empty: true, name: "", acc: "" };
-  // shorthand tonal notation (with quality after number)
-  var INTERVAL_TONAL_REGEX = "([-+]?\\d+)(d{1,4}|m|M|P|A{1,4})";
-  // standard shorthand notation (with quality before number)
-  var INTERVAL_SHORTHAND_REGEX = "(AA|A|P|M|m|d|dd)([-+]?\\d+)";
-  var REGEX$1 = new RegExp("^" + INTERVAL_TONAL_REGEX + "|" + INTERVAL_SHORTHAND_REGEX + "$");
-  /**
-   * @private
-   */
-  function tokenizeInterval(str) {
-      var m = REGEX$1.exec("" + str);
-      if (m === null) {
-          return ["", ""];
-      }
-      return m[1] ? [m[1], m[2]] : [m[4], m[3]];
-  }
-  var cache$1 = {};
-  /**
-   * Get interval properties. It returns an object with:
-   *
-   * - name: the interval name
-   * - num: the interval number
-   * - type: 'perfectable' or 'majorable'
-   * - q: the interval quality (d, m, M, A)
-   * - dir: interval direction (1 ascending, -1 descending)
-   * - simple: the simplified number
-   * - semitones: the size in semitones
-   * - chroma: the interval chroma
-   *
-   * @param {string} interval - the interval name
-   * @return {Object} the interval properties
-   *
-   * @example
-   * import { interval } from '@tonaljs/core'
-   * interval('P5').semitones // => 7
-   * interval('m3').type // => 'majorable'
-   */
-  function interval(src) {
-      return typeof src === "string"
-          ? cache$1[src] || (cache$1[src] = parse$1(src))
-          : isPitch(src)
-              ? interval(pitchName$1(src))
-              : isNamed(src)
-                  ? interval(src.name)
-                  : NoInterval;
-  }
-  var SIZES = [0, 2, 4, 5, 7, 9, 11];
-  var TYPES = "PMMPPMM";
-  function parse$1(str) {
-      var tokens = tokenizeInterval(str);
-      if (tokens[0] === "") {
-          return NoInterval;
-      }
-      var num = +tokens[0];
-      var q = tokens[1];
-      var step = (Math.abs(num) - 1) % 7;
-      var t = TYPES[step];
-      if (t === "M" && q === "P") {
-          return NoInterval;
-      }
-      var type = t === "M" ? "majorable" : "perfectable";
-      var name = "" + num + q;
-      var dir = num < 0 ? -1 : 1;
-      var simple = num === 8 || num === -8 ? num : dir * (step + 1);
-      var alt = qToAlt(type, q);
-      var oct = Math.floor((Math.abs(num) - 1) / 7);
-      var semitones = dir * (SIZES[step] + alt + 12 * oct);
-      var chroma = (((dir * (SIZES[step] + alt)) % 12) + 12) % 12;
-      var coord = encode({ step: step, alt: alt, oct: oct, dir: dir });
-      return {
-          empty: false,
-          name: name,
-          num: num,
-          q: q,
-          step: step,
-          alt: alt,
-          dir: dir,
-          type: type,
-          simple: simple,
-          semitones: semitones,
-          chroma: chroma,
-          coord: coord,
-          oct: oct,
-      };
-  }
-  /**
-   * @private
-   */
-  function coordToInterval(coord) {
-      var f = coord[0], _a = coord[1], o = _a === void 0 ? 0 : _a;
-      var isDescending = f * 7 + o * 12 < 0;
-      var ivl = isDescending ? [-f, -o, -1] : [f, o, 1];
-      return interval(decode(ivl));
-  }
-  function qToAlt(type, q) {
-      return (q === "M" && type === "majorable") ||
-          (q === "P" && type === "perfectable")
-          ? 0
-          : q === "m" && type === "majorable"
-              ? -1
-              : /^A+$/.test(q)
-                  ? q.length
-                  : /^d+$/.test(q)
-                      ? -1 * (type === "perfectable" ? q.length : q.length + 1)
-                      : 0;
-  }
-  // return the interval name of a pitch
-  function pitchName$1(props) {
-      var step = props.step, alt = props.alt, _a = props.oct, oct = _a === void 0 ? 0 : _a, dir = props.dir;
-      if (!dir) {
-          return "";
-      }
-      var num = step + 1 + 7 * oct;
-      var d = dir < 0 ? "-" : "";
-      var type = TYPES[step] === "M" ? "majorable" : "perfectable";
-      var name = d + num + altToQ(type, alt);
-      return name;
-  }
-  function altToQ(type, alt) {
-      if (alt === 0) {
-          return type === "majorable" ? "M" : "P";
-      }
-      else if (alt === -1 && type === "majorable") {
-          return "m";
-      }
-      else if (alt > 0) {
-          return fillStr("A", alt);
-      }
-      else {
-          return fillStr("d", type === "perfectable" ? alt : alt + 1);
-      }
-  }
-
-  /**
-   * Transpose a note by an interval.
-   *
-   * @param {string} note - the note or note name
-   * @param {string} interval - the interval or interval name
-   * @return {string} the transposed note name or empty string if not valid notes
-   * @example
-   * import { tranpose } from "@tonaljs/core"
-   * transpose("d3", "3M") // => "F#3"
-   * transpose("D", "3M") // => "F#"
-   * ["C", "D", "E", "F", "G"].map(pc => transpose(pc, "M3)) // => ["E", "F#", "G#", "A", "B"]
-   */
-  function transpose(noteName, intervalName) {
-      var note$1 = note(noteName);
-      var interval$1 = interval(intervalName);
-      if (note$1.empty || interval$1.empty) {
-          return "";
-      }
-      var noteCoord = note$1.coord;
-      var intervalCoord = interval$1.coord;
-      var tr = noteCoord.length === 1
-          ? [noteCoord[0] + intervalCoord[0]]
-          : [noteCoord[0] + intervalCoord[0], noteCoord[1] + intervalCoord[1]];
-      return coordToNote(tr).name;
-  }
-  /**
-   * Find the interval distance between two notes or coord classes.
-   *
-   * To find distance between coord classes, both notes must be coord classes and
-   * the interval is always ascending
-   *
-   * @param {Note|string} from - the note or note name to calculate distance from
-   * @param {Note|string} to - the note or note name to calculate distance to
-   * @return {string} the interval name or empty string if not valid notes
-   *
-   */
-  function distance(fromNote, toNote) {
-      var from = note(fromNote);
-      var to = note(toNote);
-      if (from.empty || to.empty) {
-          return "";
-      }
-      var fcoord = from.coord;
-      var tcoord = to.coord;
-      var fifths = tcoord[0] - fcoord[0];
-      var octs = fcoord.length === 2 && tcoord.length === 2
-          ? tcoord[1] - fcoord[1]
-          : -Math.floor((fifths * 7) / 12);
-      return coordToInterval([fifths, octs]).name;
-  }
-
-  exports.accToAlt = accToAlt;
-  exports.altToAcc = altToAcc;
-  exports.coordToInterval = coordToInterval;
-  exports.coordToNote = coordToNote;
-  exports.decode = decode;
-  exports.deprecate = deprecate;
-  exports.distance = distance;
-  exports.encode = encode;
-  exports.fillStr = fillStr;
-  exports.interval = interval;
-  exports.isNamed = isNamed;
-  exports.isPitch = isPitch;
-  exports.note = note;
-  exports.stepToLetter = stepToLetter;
-  exports.tokenizeInterval = tokenizeInterval;
-  exports.tokenizeNote = tokenizeNote;
-  exports.transpose = transpose;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{}],11:[function(require,module,exports){
-(function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-    typeof define === 'function' && define.amd ? define(['exports'], factory) :
-    (global = global || self, factory(global.DurationValue = {}));
-}(this, (function (exports) { 'use strict';
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
-
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
-
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
-    ***************************************************************************** */
-
-    var __assign = function() {
-        __assign = Object.assign || function __assign(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign.apply(this, arguments);
-    };
-
-    // source: https://en.wikipedia.org/wiki/Note_value
-    var DATA = [
-        [
-            0.125,
-            "dl",
-            ["large", "duplex longa", "maxima", "octuple", "octuple whole"],
-        ],
-        [0.25, "l", ["long", "longa"]],
-        [0.5, "d", ["double whole", "double", "breve"]],
-        [1, "w", ["whole", "semibreve"]],
-        [2, "h", ["half", "minim"]],
-        [4, "q", ["quarter", "crotchet"]],
-        [8, "e", ["eighth", "quaver"]],
-        [16, "s", ["sixteenth", "semiquaver"]],
-        [32, "t", ["thirty-second", "demisemiquaver"]],
-        [64, "sf", ["sixty-fourth", "hemidemisemiquaver"]],
-        [128, "h", ["hundred twenty-eighth"]],
-        [256, "th", ["two hundred fifty-sixth"]],
-    ];
-
-    var VALUES = [];
-    DATA.forEach(function (_a) {
-        var denominator = _a[0], shorthand = _a[1], names = _a[2];
-        return add(denominator, shorthand, names);
-    });
-    var NoDuration = {
-        empty: true,
-        name: "",
-        value: 0,
-        fraction: [0, 0],
-        shorthand: "",
-        dots: "",
-        names: [],
-    };
-    function names() {
-        return VALUES.reduce(function (names, duration) {
-            duration.names.forEach(function (name) { return names.push(name); });
-            return names;
-        }, []);
-    }
-    function shorthands() {
-        return VALUES.map(function (dur) { return dur.shorthand; });
-    }
-    var REGEX = /^([^.]+)(\.*)$/;
-    function get(name) {
-        var _a = REGEX.exec(name) || [], _ = _a[0], simple = _a[1], dots = _a[2];
-        var base = VALUES.find(function (dur) { return dur.shorthand === simple || dur.names.includes(simple); });
-        if (!base) {
-            return NoDuration;
-        }
-        var fraction = calcDots(base.fraction, dots.length);
-        var value = fraction[0] / fraction[1];
-        return __assign(__assign({}, base), { name: name, dots: dots, value: value, fraction: fraction });
-    }
-    var value = function (name) { return get(name).value; };
-    var fraction = function (name) { return get(name).fraction; };
-    var index = { names: names, shorthands: shorthands, get: get, value: value, fraction: fraction };
-    //// PRIVATE ////
-    function add(denominator, shorthand, names) {
-        VALUES.push({
-            empty: false,
-            dots: "",
-            name: "",
-            value: 1 / denominator,
-            fraction: denominator < 1 ? [1 / denominator, 1] : [1, denominator],
-            shorthand: shorthand,
-            names: names,
-        });
-    }
-    function calcDots(fraction, dots) {
-        var pow = Math.pow(2, dots);
-        var numerator = fraction[0] * pow;
-        var denominator = fraction[1] * pow;
-        var base = numerator;
-        // add fractions
-        for (var i = 0; i < dots; i++) {
-            numerator += base / Math.pow(2, i + 1);
-        }
-        // simplify
-        while (numerator % 2 === 0 && denominator % 2 === 0) {
-            numerator /= 2;
-            denominator /= 2;
-        }
-        return [numerator, denominator];
-    }
-
-    exports.default = index;
-    exports.fraction = fraction;
-    exports.get = get;
-    exports.names = names;
-    exports.shorthands = shorthands;
-    exports.value = value;
-
-    Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
+  return [numerator, denominator];
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  fraction,
+  get,
+  names,
+  shorthands,
+  value
+});
 
 },{}],12:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/core')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/core'], factory) :
-  (global = global || self, factory(global.Interval = {}, global.core));
-}(this, (function (exports, core) { 'use strict';
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name2 in all)
+    __defProp(target, name2, { get: all[name2], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  /**
-   * Get the natural list of names
-   */
-  function names() {
-      return "1P 2M 3M 4P 5P 6m 7m".split(" ");
+// index.ts
+var interval_exports = {};
+__export(interval_exports, {
+  add: () => add,
+  addTo: () => addTo,
+  default: () => interval_default,
+  distance: () => distance,
+  fromSemitones: () => fromSemitones,
+  get: () => get,
+  invert: () => invert,
+  name: () => name,
+  names: () => names,
+  num: () => num,
+  quality: () => quality,
+  semitones: () => semitones,
+  simplify: () => simplify,
+  subtract: () => subtract,
+  transposeFifths: () => transposeFifths
+});
+module.exports = __toCommonJS(interval_exports);
+var import_pitch_distance = require("@tonaljs/pitch-distance");
+var import_pitch_interval = require("@tonaljs/pitch-interval");
+function names() {
+  return "1P 2M 3M 4P 5P 6m 7m".split(" ");
+}
+var get = import_pitch_interval.interval;
+var name = (name2) => (0, import_pitch_interval.interval)(name2).name;
+var semitones = (name2) => (0, import_pitch_interval.interval)(name2).semitones;
+var quality = (name2) => (0, import_pitch_interval.interval)(name2).q;
+var num = (name2) => (0, import_pitch_interval.interval)(name2).num;
+function simplify(name2) {
+  const i = (0, import_pitch_interval.interval)(name2);
+  return i.empty ? "" : i.simple + i.q;
+}
+function invert(name2) {
+  const i = (0, import_pitch_interval.interval)(name2);
+  if (i.empty) {
+    return "";
   }
-  /**
-   * Get properties of an interval
-   *
-   * @function
-   * @example
-   * Interval.get('P4') // => {"alt": 0,  "dir": 1,  "name": "4P", "num": 4, "oct": 0, "q": "P", "semitones": 5, "simple": 4, "step": 3, "type": "perfectable"}
-   */
-  var get = core.interval;
-  /**
-   * Get name of an interval
-   *
-   * @function
-   * @example
-   * Interval.name('4P') // => "4P"
-   * Interval.name('P4') // => "4P"
-   * Interval.name('C4') // => ""
-   */
-  var name = function (name) { return core.interval(name).name; };
-  /**
-   * Get semitones of an interval
-   * @function
-   * @example
-   * Interval.semitones('P4') // => 5
-   */
-  var semitones = function (name) { return core.interval(name).semitones; };
-  /**
-   * Get quality of an interval
-   * @function
-   * @example
-   * Interval.quality('P4') // => "P"
-   */
-  var quality = function (name) { return core.interval(name).q; };
-  /**
-   * Get number of an interval
-   * @function
-   * @example
-   * Interval.num('P4') // => 4
-   */
-  var num = function (name) { return core.interval(name).num; };
-  /**
-   * Get the simplified version of an interval.
-   *
-   * @function
-   * @param {string} interval - the interval to simplify
-   * @return {string} the simplified interval
-   *
-   * @example
-   * Interval.simplify("9M") // => "2M"
-   * Interval.simplify("2M") // => "2M"
-   * Interval.simplify("-2M") // => "7m"
-   * ["8P", "9M", "10M", "11P", "12P", "13M", "14M", "15P"].map(Interval.simplify)
-   * // => [ "8P", "2M", "3M", "4P", "5P", "6M", "7M", "8P" ]
-   */
-  function simplify(name) {
-      var i = core.interval(name);
-      return i.empty ? "" : i.simple + i.q;
-  }
-  /**
-   * Get the inversion (https://en.wikipedia.org/wiki/Inversion_(music)#Intervals)
-   * of an interval.
-   *
-   * @function
-   * @param {string} interval - the interval to invert in interval shorthand
-   * notation or interval array notation
-   * @return {string} the inverted interval
-   *
-   * @example
-   * Interval.invert("3m") // => "6M"
-   * Interval.invert("2M") // => "7m"
-   */
-  function invert(name) {
-      var i = core.interval(name);
-      if (i.empty) {
-          return "";
-      }
-      var step = (7 - i.step) % 7;
-      var alt = i.type === "perfectable" ? -i.alt : -(i.alt + 1);
-      return core.interval({ step: step, alt: alt, oct: i.oct, dir: i.dir }).name;
-  }
-  // interval numbers
-  var IN = [1, 2, 2, 3, 3, 4, 5, 5, 6, 6, 7, 7];
-  // interval qualities
-  var IQ = "P m M m M P d P m M m M".split(" ");
-  /**
-   * Get interval name from semitones number. Since there are several interval
-   * names for the same number, the name it's arbitrary, but deterministic.
-   *
-   * @param {Integer} num - the number of semitones (can be negative)
-   * @return {string} the interval name
-   * @example
-   * Interval.fromSemitones(7) // => "5P"
-   * Interval.fromSemitones(-7) // => "-5P"
-   */
-  function fromSemitones(semitones) {
-      var d = semitones < 0 ? -1 : 1;
-      var n = Math.abs(semitones);
-      var c = n % 12;
-      var o = Math.floor(n / 12);
-      return d * (IN[c] + 7 * o) + IQ[c];
-  }
-  /**
-   * Find interval between two notes
-   *
-   * @example
-   * Interval.distance("C4", "G4"); // => "5P"
-   */
-  var distance = core.distance;
-  /**
-   * Adds two intervals
-   *
-   * @function
-   * @param {string} interval1
-   * @param {string} interval2
-   * @return {string} the added interval name
-   * @example
-   * Interval.add("3m", "5P") // => "7m"
-   */
-  var add = combinator(function (a, b) { return [a[0] + b[0], a[1] + b[1]]; });
-  /**
-   * Returns a function that adds an interval
-   *
-   * @function
-   * @example
-   * ['1P', '2M', '3M'].map(Interval.addTo('5P')) // => ["5P", "6M", "7M"]
-   */
-  var addTo = function (interval) { return function (other) {
-      return add(interval, other);
-  }; };
-  /**
-   * Subtracts two intervals
-   *
-   * @function
-   * @param {string} minuendInterval
-   * @param {string} subtrahendInterval
-   * @return {string} the substracted interval name
-   * @example
-   * Interval.substract('5P', '3M') // => '3m'
-   * Interval.substract('3M', '5P') // => '-3m'
-   */
-  var substract = combinator(function (a, b) { return [a[0] - b[0], a[1] - b[1]]; });
-  var index = {
-      names: names,
-      get: get,
-      name: name,
-      num: num,
-      semitones: semitones,
-      quality: quality,
-      fromSemitones: fromSemitones,
-      distance: distance,
-      invert: invert,
-      simplify: simplify,
-      add: add,
-      addTo: addTo,
-      substract: substract,
+  const step = (7 - i.step) % 7;
+  const alt = i.type === "perfectable" ? -i.alt : -(i.alt + 1);
+  return (0, import_pitch_interval.interval)({ step, alt, oct: i.oct, dir: i.dir }).name;
+}
+var IN = [1, 2, 2, 3, 3, 4, 5, 5, 6, 6, 7, 7];
+var IQ = "P m M m M P d P m M m M".split(" ");
+function fromSemitones(semitones2) {
+  const d = semitones2 < 0 ? -1 : 1;
+  const n = Math.abs(semitones2);
+  const c = n % 12;
+  const o = Math.floor(n / 12);
+  return d * (IN[c] + 7 * o) + IQ[c];
+}
+var distance = import_pitch_distance.distance;
+var add = combinator((a, b) => [a[0] + b[0], a[1] + b[1]]);
+var addTo = (interval) => (other) => add(interval, other);
+var subtract = combinator((a, b) => [a[0] - b[0], a[1] - b[1]]);
+function transposeFifths(interval, fifths) {
+  const ivl = get(interval);
+  if (ivl.empty) return "";
+  const [nFifths, nOcts, dir] = ivl.coord;
+  return (0, import_pitch_interval.coordToInterval)([nFifths + fifths, nOcts, dir]).name;
+}
+var interval_default = {
+  names,
+  get,
+  name,
+  num,
+  semitones,
+  quality,
+  fromSemitones,
+  distance,
+  invert,
+  simplify,
+  add,
+  addTo,
+  subtract,
+  transposeFifths
+};
+function combinator(fn) {
+  return (a, b) => {
+    const coordA = (0, import_pitch_interval.interval)(a).coord;
+    const coordB = (0, import_pitch_interval.interval)(b).coord;
+    if (coordA && coordB) {
+      const coord = fn(coordA, coordB);
+      return (0, import_pitch_interval.coordToInterval)(coord).name;
+    }
   };
-  function combinator(fn) {
-      return function (a, b) {
-          var coordA = core.interval(a).coord;
-          var coordB = core.interval(b).coord;
-          if (coordA && coordB) {
-              var coord = fn(coordA, coordB);
-              return core.coordToInterval(coord).name;
-          }
-      };
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  add,
+  addTo,
+  distance,
+  fromSemitones,
+  get,
+  invert,
+  name,
+  names,
+  num,
+  quality,
+  semitones,
+  simplify,
+  subtract,
+  transposeFifths
+});
+
+},{"@tonaljs/pitch-distance":18,"@tonaljs/pitch-interval":19}],13:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
   }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  exports.add = add;
-  exports.addTo = addTo;
-  exports.default = index;
-  exports.distance = distance;
-  exports.fromSemitones = fromSemitones;
-  exports.get = get;
-  exports.invert = invert;
-  exports.name = name;
-  exports.names = names;
-  exports.num = num;
-  exports.quality = quality;
-  exports.semitones = semitones;
-  exports.simplify = simplify;
-  exports.substract = substract;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/core":10}],13:[function(require,module,exports){
-(function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/core'), require('@tonaljs/note'), require('@tonaljs/roman-numeral')) :
-    typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/core', '@tonaljs/note', '@tonaljs/roman-numeral'], factory) :
-    (global = global || self, factory(global.Key = {}, global.core, global.note, global.romanNumeral));
-}(this, (function (exports, core, note, romanNumeral) { 'use strict';
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
-
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
-
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
-    ***************************************************************************** */
-
-    var __assign = function() {
-        __assign = Object.assign || function __assign(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign.apply(this, arguments);
-    };
-
-    var mapToScale = function (scale) { return function (symbols, sep) {
-        if (sep === void 0) { sep = ""; }
-        return symbols.map(function (symbol, index) {
-            return symbol !== "-" ? scale[index] + sep + symbol : "";
-        });
-    }; };
-    function keyScale(gradesLiteral, chordsLiteral, hfLiteral, chordScalesLiteral) {
-        return function (tonic) {
-            var grades = gradesLiteral.split(" ");
-            var intervals = grades.map(function (gr) { return romanNumeral.get(gr).interval || ""; });
-            var scale = intervals.map(function (interval) { return core.transpose(tonic, interval); });
-            var map = mapToScale(scale);
-            return {
-                tonic: tonic,
-                grades: grades,
-                intervals: intervals,
-                scale: scale,
-                chords: map(chordsLiteral.split(" ")),
-                chordsHarmonicFunction: hfLiteral.split(" "),
-                chordScales: map(chordScalesLiteral.split(","), " "),
-            };
-        };
-    }
-    var distInFifths = function (from, to) {
-        var f = core.note(from);
-        var t = core.note(to);
-        return f.empty || t.empty ? 0 : t.coord[0] - f.coord[0];
-    };
-    var MajorScale = keyScale("I II III IV V VI VII", "maj7 m7 m7 maj7 7 m7 m7b5", "T SD T SD D T D", "major,dorian,phrygian,lydian,mixolydian,minor,locrian");
-    var NaturalScale = keyScale("I II bIII IV V bVI bVII", "m7 m7b5 maj7 m7 m7 maj7 7", "T SD T SD D SD SD", "minor,locrian,major,dorian,phrygian,lydian,mixolydian");
-    var HarmonicScale = keyScale("I II bIII IV V bVI VII", "mmaj7 m7b5 +maj7 m7 7 maj7 mo7", "T SD T SD D SD D", "harmonic minor,locrian 6,major augmented,lydian diminished,phrygian dominant,lydian #9,ultralocrian");
-    var MelodicScale = keyScale("I II bIII IV V VI VII", "m6 m7 +maj7 7 7 m7b5 m7b5", "T SD T SD D - -", "melodic minor,dorian b2,lydian augmented,lydian dominant,mixolydian b6,locrian #2,altered");
-    /**
-     * Get a major key properties in a given tonic
-     * @param tonic
-     */
-    function majorKey(tonic) {
-        var keyScale = MajorScale(tonic);
-        var alteration = distInFifths("C", tonic);
-        var map = mapToScale(keyScale.scale);
-        return __assign(__assign({}, keyScale), { type: "major", minorRelative: core.transpose(tonic, "-3m"), alteration: alteration, keySignature: core.altToAcc(alteration), secondaryDominants: map("- VI7 VII7 I7 II7 III7 -".split(" ")), secondaryDominantsMinorRelative: map("- IIIm7b5 IV#m7 Vm7 VIm7 VIIm7b5 -".split(" ")), substituteDominants: map("- bIII7 IV7 bV7 bVI7 bVII7 -".split(" ")), substituteDominantsMinorRelative: map("- IIIm7 Im7 IIbm7 VIm7 IVm7 -".split(" ")) });
-    }
-    /**
-     * Get minor key properties in a given tonic
-     * @param tonic
-     */
-    function minorKey(tonic) {
-        var alteration = distInFifths("C", tonic) - 3;
-        return {
-            type: "minor",
-            tonic: tonic,
-            relativeMajor: core.transpose(tonic, "3m"),
-            alteration: alteration,
-            keySignature: core.altToAcc(alteration),
-            natural: NaturalScale(tonic),
-            harmonic: HarmonicScale(tonic),
-            melodic: MelodicScale(tonic),
-        };
-    }
-    /**
-     * Given a key signature, returns the tonic of the major key
-     * @param sigature
-     * @example
-     * majorTonicFromKeySignature('###') // => 'A'
-     */
-    function majorTonicFromKeySignature(sig) {
-        if (typeof sig === "number") {
-            return note.transposeFifths("C", sig);
-        }
-        else if (typeof sig === "string" && /^b+|#+$/.test(sig)) {
-            return note.transposeFifths("C", core.accToAlt(sig));
-        }
-        return null;
-    }
-    var index = { majorKey: majorKey, majorTonicFromKeySignature: majorTonicFromKeySignature, minorKey: minorKey };
-
-    exports.default = index;
-    exports.majorKey = majorKey;
-    exports.majorTonicFromKeySignature = majorTonicFromKeySignature;
-    exports.minorKey = minorKey;
-
-    Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/core":10,"@tonaljs/note":16,"@tonaljs/roman-numeral":20}],14:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/core')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/core'], factory) :
-  (global = global || self, factory(global.Midi = {}, global.core));
-}(this, (function (exports, core) { 'use strict';
-
-  function isMidi(arg) {
-      return +arg >= 0 && +arg <= 127;
-  }
-  /**
-   * Get the note midi number (a number between 0 and 127)
-   *
-   * It returns undefined if not valid note name
-   *
-   * @function
-   * @param {string|number} note - the note name or midi number
-   * @return {Integer} the midi number or undefined if not valid note
-   * @example
-   * import { toMidi } from '@tonaljs/midi'
-   * toMidi("C4") // => 60
-   * toMidi(60) // => 60
-   * toMidi('60') // => 60
-   */
-  function toMidi(note) {
-      if (isMidi(note)) {
-          return +note;
-      }
-      var n = core.note(note);
-      return n.empty ? null : n.midi;
-  }
-  /**
-   * Get the frequency in hertzs from midi number
-   *
-   * @param {number} midi - the note midi number
-   * @param {number} [tuning = 440] - A4 tuning frequency in Hz (440 by default)
-   * @return {number} the frequency or null if not valid note midi
-   * @example
-   * import { midiToFreq} from '@tonaljs/midi'
-   * midiToFreq(69) // => 440
-   */
-  function midiToFreq(midi, tuning) {
-      if (tuning === void 0) { tuning = 440; }
-      return Math.pow(2, (midi - 69) / 12) * tuning;
-  }
-  var L2 = Math.log(2);
-  var L440 = Math.log(440);
-  /**
-   * Get the midi number from a frequency in hertz. The midi number can
-   * contain decimals (with two digits precission)
-   *
-   * @param {number} frequency
-   * @return {number}
-   * @example
-   * import { freqToMidi} from '@tonaljs/midi'
-   * freqToMidi(220)); //=> 57
-   * freqToMidi(261.62)); //=> 60
-   * freqToMidi(261)); //=> 59.96
-   */
-  function freqToMidi(freq) {
-      var v = (12 * (Math.log(freq) - L440)) / L2 + 69;
-      return Math.round(v * 100) / 100;
-  }
-  var SHARPS = "C C# D D# E F F# G G# A A# B".split(" ");
-  var FLATS = "C Db D Eb E F Gb G Ab A Bb B".split(" ");
-  /**
-   * Given a midi number, returns a note name. The altered notes will have
-   * flats unless explicitly set with the optional `useSharps` parameter.
-   *
-   * @function
-   * @param {number} midi - the midi note number
-   * @param {Object} options = default: `{ sharps: false, pitchClass: false }`
-   * @param {boolean} useSharps - (Optional) set to true to use sharps instead of flats
-   * @return {string} the note name
-   * @example
-   * import { midiToNoteName } from '@tonaljs/midi'
-   * midiToNoteName(61) // => "Db4"
-   * midiToNoteName(61, { pitchClass: true }) // => "Db"
-   * midiToNoteName(61, { sharps: true }) // => "C#4"
-   * midiToNoteName(61, { pitchClass: true, sharps: true }) // => "C#"
-   * // it rounds to nearest note
-   * midiToNoteName(61.7) // => "D4"
-   */
-  function midiToNoteName(midi, options) {
-      if (options === void 0) { options = {}; }
-      if (isNaN(midi) || midi === -Infinity || midi === Infinity)
-          return "";
-      midi = Math.round(midi);
-      var pcs = options.sharps === true ? SHARPS : FLATS;
-      var pc = pcs[midi % 12];
-      if (options.pitchClass) {
-          return pc;
-      }
-      var o = Math.floor(midi / 12) - 1;
-      return pc + o;
-  }
-  var index = { isMidi: isMidi, toMidi: toMidi, midiToFreq: midiToFreq, midiToNoteName: midiToNoteName, freqToMidi: freqToMidi };
-
-  exports.default = index;
-  exports.freqToMidi = freqToMidi;
-  exports.isMidi = isMidi;
-  exports.midiToFreq = midiToFreq;
-  exports.midiToNoteName = midiToNoteName;
-  exports.toMidi = toMidi;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/core":10}],15:[function(require,module,exports){
-(function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/core'), require('@tonaljs/pcset')) :
-    typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/core', '@tonaljs/pcset'], factory) :
-    (global = global || self, factory(global.Mode = {}, global.core, global.pcset));
-}(this, (function (exports, core, pcset) { 'use strict';
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation.
-
-    Permission to use, copy, modify, and/or distribute this software for any
-    purpose with or without fee is hereby granted.
-
-    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-    PERFORMANCE OF THIS SOFTWARE.
-    ***************************************************************************** */
-
-    var __assign = function() {
-        __assign = Object.assign || function __assign(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign.apply(this, arguments);
-    };
-
-    var DATA = [
-        [0, 2773, 0, "ionian", "", "Maj7", "major"],
-        [1, 2902, 2, "dorian", "m", "m7"],
-        [2, 3418, 4, "phrygian", "m", "m7"],
-        [3, 2741, -1, "lydian", "", "Maj7"],
-        [4, 2774, 1, "mixolydian", "", "7"],
-        [5, 2906, 3, "aeolian", "m", "m7", "minor"],
-        [6, 3434, 5, "locrian", "dim", "m7b5"],
-    ];
-
-    var NoMode = __assign(__assign({}, pcset.EmptyPcset), { name: "", alt: 0, modeNum: NaN, triad: "", seventh: "", aliases: [] });
-    var modes = DATA.map(toMode);
-    var index = {};
-    modes.forEach(function (mode) {
-        index[mode.name] = mode;
-        mode.aliases.forEach(function (alias) {
-            index[alias] = mode;
-        });
+// index.ts
+var index_exports = {};
+__export(index_exports, {
+  default: () => index_default,
+  majorKey: () => majorKey,
+  majorKeyChords: () => majorKeyChords,
+  majorTonicFromKeySignature: () => majorTonicFromKeySignature,
+  minorKey: () => minorKey,
+  minorKeyChords: () => minorKeyChords
+});
+module.exports = __toCommonJS(index_exports);
+var import_note = require("@tonaljs/note");
+var import_pitch_note = require("@tonaljs/pitch-note");
+var import_roman_numeral = require("@tonaljs/roman-numeral");
+var Empty = Object.freeze([]);
+var NoKey = {
+  type: "major",
+  tonic: "",
+  alteration: 0,
+  keySignature: ""
+};
+var NoKeyScale = {
+  tonic: "",
+  grades: Empty,
+  intervals: Empty,
+  scale: Empty,
+  triads: Empty,
+  chords: Empty,
+  chordsHarmonicFunction: Empty,
+  chordScales: Empty,
+  secondaryDominants: Empty,
+  secondaryDominantSupertonics: Empty,
+  substituteDominantsMinorRelative: Empty,
+  substituteDominants: Empty,
+  substituteDominantSupertonics: Empty,
+  secondaryDominantsMinorRelative: Empty
+};
+var NoMajorKey = {
+  ...NoKey,
+  ...NoKeyScale,
+  type: "major",
+  minorRelative: "",
+  scale: Empty,
+  substituteDominants: Empty,
+  secondaryDominantSupertonics: Empty,
+  substituteDominantsMinorRelative: Empty
+};
+var NoMinorKey = {
+  ...NoKey,
+  type: "minor",
+  relativeMajor: "",
+  natural: NoKeyScale,
+  harmonic: NoKeyScale,
+  melodic: NoKeyScale
+};
+var mapScaleToType = (scale, list, sep = "") => list.map((type, i) => `${scale[i]}${sep}${type}`);
+function keyScale(grades, triads, chordTypes, harmonicFunctions, chordScales) {
+  return (tonic) => {
+    const intervals = grades.map((gr) => (0, import_roman_numeral.get)(gr).interval || "");
+    const scale = intervals.map((interval) => (0, import_note.transpose)(tonic, interval));
+    const chords = mapScaleToType(scale, chordTypes);
+    const secondaryDominants = scale.map((note2) => (0, import_note.transpose)(note2, "5P")).map(
+      (note2) => (
+        // A secondary dominant is a V chord which:
+        // 1. is not diatonic to the key,
+        // 2. it must have a diatonic root.
+        scale.includes(note2) && !chords.includes(note2 + "7") ? note2 + "7" : ""
+      )
+    );
+    const secondaryDominantSupertonics = supertonics(
+      secondaryDominants,
+      triads
+    );
+    const substituteDominants = secondaryDominants.map((chord) => {
+      if (!chord) return "";
+      const domRoot = chord.slice(0, -1);
+      const subRoot = (0, import_note.transpose)(domRoot, "5d");
+      return subRoot + "7";
     });
-    /**
-     * Get a Mode by it's name
-     *
-     * @example
-     * get('dorian')
-     * // =>
-     * // {
-     * //   intervals: [ '1P', '2M', '3m', '4P', '5P', '6M', '7m' ],
-     * //   modeNum: 1,
-     * //   chroma: '101101010110',
-     * //   normalized: '101101010110',
-     * //   name: 'dorian',
-     * //   setNum: 2902,
-     * //   alt: 2,
-     * //   triad: 'm',
-     * //   seventh: 'm7',
-     * //   aliases: []
-     * // }
-     */
-    function get(name) {
-        return typeof name === "string"
-            ? index[name.toLowerCase()] || NoMode
-            : name && name.name
-                ? get(name.name)
-                : NoMode;
-    }
-    var mode = core.deprecate("Mode.mode", "Mode.get", get);
-    /**
-     * Get a list of all modes
-     */
-    function all() {
-        return modes.slice();
-    }
-    var entries = core.deprecate("Mode.mode", "Mode.all", all);
-    /**
-     * Get a list of all mode names
-     */
-    function names() {
-        return modes.map(function (mode) { return mode.name; });
-    }
-    function toMode(mode) {
-        var modeNum = mode[0], setNum = mode[1], alt = mode[2], name = mode[3], triad = mode[4], seventh = mode[5], alias = mode[6];
-        var aliases = alias ? [alias] : [];
-        var chroma = Number(setNum).toString(2);
-        var intervals = pcset.chromaToIntervals(chroma);
-        return {
-            empty: false,
-            intervals: intervals,
-            modeNum: modeNum,
-            chroma: chroma,
-            normalized: chroma,
-            name: name,
-            setNum: setNum,
-            alt: alt,
-            triad: triad,
-            seventh: seventh,
-            aliases: aliases,
-        };
-    }
-    var index$1 = {
-        get: get,
-        names: names,
-        all: all,
-        // deprecated
-        entries: entries,
-        mode: mode,
+    const substituteDominantSupertonics = supertonics(
+      substituteDominants,
+      triads
+    );
+    return {
+      tonic,
+      grades,
+      intervals,
+      scale,
+      triads: mapScaleToType(scale, triads),
+      chords,
+      chordsHarmonicFunction: harmonicFunctions.slice(),
+      chordScales: mapScaleToType(scale, chordScales, " "),
+      secondaryDominants,
+      secondaryDominantSupertonics,
+      substituteDominants,
+      substituteDominantSupertonics,
+      // @deprecated use secondaryDominantsSupertonic
+      secondaryDominantsMinorRelative: secondaryDominantSupertonics,
+      // @deprecated use secondaryDominantsSupertonic
+      substituteDominantsMinorRelative: substituteDominantSupertonics
     };
-
-    exports.all = all;
-    exports.default = index$1;
-    exports.entries = entries;
-    exports.get = get;
-    exports.mode = mode;
-    exports.names = names;
-
-    Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/core":10,"@tonaljs/pcset":17}],16:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/core'), require('@tonaljs/midi')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/core', '@tonaljs/midi'], factory) :
-  (global = global || self, factory(global.Note = {}, global.core, global.midi$1));
-}(this, (function (exports, core, midi$1) { 'use strict';
-
-  var NAMES = ["C", "D", "E", "F", "G", "A", "B"];
-  var toName = function (n) { return n.name; };
-  var onlyNotes = function (array) {
-      return array.map(core.note).filter(function (n) { return !n.empty; });
   };
-  /**
-   * Return the natural note names without octave
-   * @function
-   * @example
-   * Note.names(); // => ["C", "D", "E", "F", "G", "A", "B"]
-   */
-  function names(array) {
-      if (array === undefined) {
-          return NAMES.slice();
-      }
-      else if (!Array.isArray(array)) {
-          return [];
-      }
-      else {
-          return onlyNotes(array).map(toName);
-      }
-  }
-  /**
-   * Get a note from a note name
-   *
-   * @function
-   * @example
-   * Note.get('Bb4') // => { name: "Bb4", midi: 70, chroma: 10, ... }
-   */
-  var get = core.note;
-  /**
-   * Get the note name
-   * @function
-   */
-  var name = function (note) { return get(note).name; };
-  /**
-   * Get the note pitch class name
-   * @function
-   */
-  var pitchClass = function (note) { return get(note).pc; };
-  /**
-   * Get the note accidentals
-   * @function
-   */
-  var accidentals = function (note) { return get(note).acc; };
-  /**
-   * Get the note octave
-   * @function
-   */
-  var octave = function (note) { return get(note).oct; };
-  /**
-   * Get the note midi
-   * @function
-   */
-  var midi = function (note) { return get(note).midi; };
-  /**
-   * Get the note midi
-   * @function
-   */
-  var freq = function (note) { return get(note).freq; };
-  /**
-   * Get the note chroma
-   * @function
-   */
-  var chroma = function (note) { return get(note).chroma; };
-  /**
-   * Given a midi number, returns a note name. Uses flats for altered notes.
-   *
-   * @function
-   * @param {number} midi - the midi note number
-   * @return {string} the note name
-   * @example
-   * Note.fromMidi(61) // => "Db4"
-   * Note.fromMidi(61.7) // => "D4"
-   */
-  function fromMidi(midi) {
-      return midi$1.midiToNoteName(midi);
-  }
-  /**
-   * Given a midi number, returns a note name. Uses flats for altered notes.
-   */
-  function fromFreq(freq) {
-      return midi$1.midiToNoteName(midi$1.freqToMidi(freq));
-  }
-  /**
-   * Given a midi number, returns a note name. Uses flats for altered notes.
-   */
-  function fromFreqSharps(freq) {
-      return midi$1.midiToNoteName(midi$1.freqToMidi(freq), { sharps: true });
-  }
-  /**
-   * Given a midi number, returns a note name. Uses flats for altered notes.
-   *
-   * @function
-   * @param {number} midi - the midi note number
-   * @return {string} the note name
-   * @example
-   * Note.fromMidiSharps(61) // => "C#4"
-   */
-  function fromMidiSharps(midi) {
-      return midi$1.midiToNoteName(midi, { sharps: true });
-  }
-  /**
-   * Transpose a note by an interval
-   */
-  var transpose = core.transpose;
-  var tr = core.transpose;
-  /**
-   * Transpose by an interval.
-   * @function
-   * @param {string} interval
-   * @return {function} a function that transposes by the given interval
-   * @example
-   * ["C", "D", "E"].map(Note.transposeBy("5P"));
-   * // => ["G", "A", "B"]
-   */
-  var transposeBy = function (interval) { return function (note) {
-      return transpose(note, interval);
-  }; };
-  var trBy = transposeBy;
-  /**
-   * Transpose from a note
-   * @function
-   * @param {string} note
-   * @return {function}  a function that transposes the the note by an interval
-   * ["1P", "3M", "5P"].map(Note.transposeFrom("C"));
-   * // => ["C", "E", "G"]
-   */
-  var transposeFrom = function (note) { return function (interval) {
-      return transpose(note, interval);
-  }; };
-  var trFrom = transposeFrom;
-  /**
-   * Transpose a note by a number of perfect fifths.
-   *
-   * @function
-   * @param {string} note - the note name
-   * @param {number} fifhts - the number of fifths
-   * @return {string} the transposed note name
-   *
-   * @example
-   * import { transposeFifths } from "@tonaljs/note"
-   * transposeFifths("G4", 1) // => "D"
-   * [0, 1, 2, 3, 4].map(fifths => transposeFifths("C", fifths)) // => ["C", "G", "D", "A", "E"]
-   */
-  function transposeFifths(noteName, fifths) {
-      var note = get(noteName);
-      if (note.empty) {
-          return "";
-      }
-      var _a = note.coord, nFifths = _a[0], nOcts = _a[1];
-      var transposed = nOcts === undefined
-          ? core.coordToNote([nFifths + fifths])
-          : core.coordToNote([nFifths + fifths, nOcts]);
-      return transposed.name;
-  }
-  var trFifths = transposeFifths;
-  var ascending = function (a, b) { return a.height - b.height; };
-  var descending = function (a, b) { return b.height - a.height; };
-  function sortedNames(notes, comparator) {
-      comparator = comparator || ascending;
-      return onlyNotes(notes).sort(comparator).map(toName);
-  }
-  function sortedUniqNames(notes) {
-      return sortedNames(notes, ascending).filter(function (n, i, a) { return i === 0 || n !== a[i - 1]; });
-  }
-  /**
-   * Simplify a note
-   *
-   * @function
-   * @param {string} note - the note to be simplified
-   * - sameAccType: default true. Use same kind of accidentals that source
-   * @return {string} the simplified note or '' if not valid note
-   * @example
-   * simplify("C##") // => "D"
-   * simplify("C###") // => "D#"
-   * simplify("C###")
-   * simplify("B#4") // => "C5"
-   */
-  var simplify = nameBuilder(true);
-  /**
-   * Get enharmonic of a note
-   *
-   * @function
-   * @param {string} note
-   * @return {string} the enharmonic note or '' if not valid note
-   * @example
-   * Note.enharmonic("Db") // => "C#"
-   * Note.enharmonic("C") // => "C"
-   */
-  var enharmonic = nameBuilder(false);
-  function nameBuilder(sameAccidentals) {
-      return function (noteName) {
-          var note = get(noteName);
-          if (note.empty) {
-              return "";
-          }
-          var sharps = sameAccidentals ? note.alt > 0 : note.alt < 0;
-          var pitchClass = note.midi === null;
-          return midi$1.midiToNoteName(note.midi || note.chroma, { sharps: sharps, pitchClass: pitchClass });
-      };
-  }
-  var index = {
-      names: names,
-      get: get,
-      name: name,
-      pitchClass: pitchClass,
-      accidentals: accidentals,
-      octave: octave,
-      midi: midi,
-      ascending: ascending,
-      descending: descending,
-      sortedNames: sortedNames,
-      sortedUniqNames: sortedUniqNames,
-      fromMidi: fromMidi,
-      fromMidiSharps: fromMidiSharps,
-      freq: freq,
-      fromFreq: fromFreq,
-      fromFreqSharps: fromFreqSharps,
-      chroma: chroma,
-      transpose: transpose,
-      tr: tr,
-      transposeBy: transposeBy,
-      trBy: trBy,
-      transposeFrom: transposeFrom,
-      trFrom: trFrom,
-      transposeFifths: transposeFifths,
-      trFifths: trFifths,
-      simplify: simplify,
-      enharmonic: enharmonic,
-  };
-
-  exports.accidentals = accidentals;
-  exports.ascending = ascending;
-  exports.chroma = chroma;
-  exports.default = index;
-  exports.descending = descending;
-  exports.enharmonic = enharmonic;
-  exports.freq = freq;
-  exports.fromFreq = fromFreq;
-  exports.fromFreqSharps = fromFreqSharps;
-  exports.fromMidi = fromMidi;
-  exports.fromMidiSharps = fromMidiSharps;
-  exports.get = get;
-  exports.midi = midi;
-  exports.name = name;
-  exports.names = names;
-  exports.octave = octave;
-  exports.pitchClass = pitchClass;
-  exports.simplify = simplify;
-  exports.sortedNames = sortedNames;
-  exports.sortedUniqNames = sortedUniqNames;
-  exports.tr = tr;
-  exports.trBy = trBy;
-  exports.trFifths = trFifths;
-  exports.trFrom = trFrom;
-  exports.transpose = transpose;
-  exports.transposeBy = transposeBy;
-  exports.transposeFifths = transposeFifths;
-  exports.transposeFrom = transposeFrom;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/core":10,"@tonaljs/midi":14}],17:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/collection'), require('@tonaljs/core')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/collection', '@tonaljs/core'], factory) :
-  (global = global || self, factory(global.Pcset = {}, global.collection, global.core));
-}(this, (function (exports, collection, core) { 'use strict';
-
-  var _a;
-  var EmptyPcset = {
-      empty: true,
-      name: "",
-      setNum: 0,
-      chroma: "000000000000",
-      normalized: "000000000000",
-      intervals: [],
-  };
-  // UTILITIES
-  var setNumToChroma = function (num) { return Number(num).toString(2); };
-  var chromaToNumber = function (chroma) { return parseInt(chroma, 2); };
-  var REGEX = /^[01]{12}$/;
-  function isChroma(set) {
-      return REGEX.test(set);
-  }
-  var isPcsetNum = function (set) {
-      return typeof set === "number" && set >= 0 && set <= 4095;
-  };
-  var isPcset = function (set) { return set && isChroma(set.chroma); };
-  var cache = (_a = {}, _a[EmptyPcset.chroma] = EmptyPcset, _a);
-  /**
-   * Get the pitch class set of a collection of notes or set number or chroma
-   */
-  function get(src) {
-      var chroma = isChroma(src)
-          ? src
-          : isPcsetNum(src)
-              ? setNumToChroma(src)
-              : Array.isArray(src)
-                  ? listToChroma(src)
-                  : isPcset(src)
-                      ? src.chroma
-                      : EmptyPcset.chroma;
-      return (cache[chroma] = cache[chroma] || chromaToPcset(chroma));
-  }
-  /**
-   * Use Pcset.properties
-   * @function
-   * @deprecated
-   */
-  var pcset = core.deprecate("Pcset.pcset", "Pcset.get", get);
-  /**
-   * Get pitch class set chroma
-   * @function
-   * @example
-   * Pcset.chroma(["c", "d", "e"]); //=> "101010000000"
-   */
-  var chroma = function (set) { return get(set).chroma; };
-  /**
-   * Get intervals (from C) of a set
-   * @function
-   * @example
-   * Pcset.intervals(["c", "d", "e"]); //=>
-   */
-  var intervals = function (set) { return get(set).intervals; };
-  /**
-   * Get pitch class set number
-   * @function
-   * @example
-   * Pcset.num(["c", "d", "e"]); //=> 2192
-   */
-  var num = function (set) { return get(set).setNum; };
-  var IVLS = [
-      "1P",
-      "2m",
-      "2M",
-      "3m",
-      "3M",
-      "4P",
-      "5d",
-      "5P",
-      "6m",
-      "6M",
-      "7m",
-      "7M",
-  ];
-  /**
-   * @private
-   * Get the intervals of a pcset *starting from C*
-   * @param {Set} set - the pitch class set
-   * @return {IntervalName[]} an array of interval names or an empty array
-   * if not a valid pitch class set
-   */
-  function chromaToIntervals(chroma) {
-      var intervals = [];
-      for (var i = 0; i < 12; i++) {
-          // tslint:disable-next-line:curly
-          if (chroma.charAt(i) === "1")
-              intervals.push(IVLS[i]);
-      }
-      return intervals;
-  }
-  /**
-   * Get a list of all possible pitch class sets (all possible chromas) *having
-   * C as root*. There are 2048 different chromas. If you want them with another
-   * note you have to transpose it
-   *
-   * @see http://allthescales.org/
-   * @return {Array<PcsetChroma>} an array of possible chromas from '10000000000' to '11111111111'
-   */
-  function chromas() {
-      return collection.range(2048, 4095).map(setNumToChroma);
-  }
-  /**
-   * Given a a list of notes or a pcset chroma, produce the rotations
-   * of the chroma discarding the ones that starts with "0"
-   *
-   * This is used, for example, to get all the modes of a scale.
-   *
-   * @param {Array|string} set - the list of notes or pitchChr of the set
-   * @param {boolean} normalize - (Optional, true by default) remove all
-   * the rotations that starts with "0"
-   * @return {Array<string>} an array with all the modes of the chroma
-   *
-   * @example
-   * Pcset.modes(["C", "D", "E"]).map(Pcset.intervals)
-   */
-  function modes(set, normalize) {
-      if (normalize === void 0) { normalize = true; }
-      var pcs = get(set);
-      var binary = pcs.chroma.split("");
-      return collection.compact(binary.map(function (_, i) {
-          var r = collection.rotate(i, binary);
-          return normalize && r[0] === "0" ? null : r.join("");
-      }));
-  }
-  /**
-   * Test if two pitch class sets are numentical
-   *
-   * @param {Array|string} set1 - one of the pitch class sets
-   * @param {Array|string} set2 - the other pitch class set
-   * @return {boolean} true if they are equal
-   * @example
-   * Pcset.isEqual(["c2", "d3"], ["c5", "d2"]) // => true
-   */
-  function isEqual(s1, s2) {
-      return get(s1).setNum === get(s2).setNum;
-  }
-  /**
-   * Create a function that test if a collection of notes is a
-   * subset of a given set
-   *
-   * The function is curryfied.
-   *
-   * @param {PcsetChroma|NoteName[]} set - the superset to test against (chroma or
-   * list of notes)
-   * @return{function(PcsetChroma|NoteNames[]): boolean} a function accepting a set
-   * to test against (chroma or list of notes)
-   * @example
-   * const inCMajor = Pcset.isSubsetOf(["C", "E", "G"])
-   * inCMajor(["e6", "c4"]) // => true
-   * inCMajor(["e6", "c4", "d3"]) // => false
-   */
-  function isSubsetOf(set) {
-      var s = get(set).setNum;
-      return function (notes) {
-          var o = get(notes).setNum;
-          // tslint:disable-next-line: no-bitwise
-          return s && s !== o && (o & s) === o;
-      };
-  }
-  /**
-   * Create a function that test if a collection of notes is a
-   * superset of a given set (it contains all notes and at least one more)
-   *
-   * @param {Set} set - an array of notes or a chroma set string to test against
-   * @return {(subset: Set): boolean} a function that given a set
-   * returns true if is a subset of the first one
-   * @example
-   * const extendsCMajor = Pcset.isSupersetOf(["C", "E", "G"])
-   * extendsCMajor(["e6", "a", "c4", "g2"]) // => true
-   * extendsCMajor(["c6", "e4", "g3"]) // => false
-   */
-  function isSupersetOf(set) {
-      var s = get(set).setNum;
-      return function (notes) {
-          var o = get(notes).setNum;
-          // tslint:disable-next-line: no-bitwise
-          return s && s !== o && (o | s) === o;
-      };
-  }
-  /**
-   * Test if a given pitch class set includes a note
-   *
-   * @param {Array<string>} set - the base set to test against
-   * @param {string} note - the note to test
-   * @return {boolean} true if the note is included in the pcset
-   *
-   * Can be partially applied
-   *
-   * @example
-   * const isNoteInCMajor = isNoteIncludedIn(['C', 'E', 'G'])
-   * isNoteInCMajor('C4') // => true
-   * isNoteInCMajor('C#4') // => false
-   */
-  function isNoteIncludedIn(set) {
-      var s = get(set);
-      return function (noteName) {
-          var n = core.note(noteName);
-          return s && !n.empty && s.chroma.charAt(n.chroma) === "1";
-      };
-  }
-  /** @deprecated use: isNoteIncludedIn */
-  var includes = isNoteIncludedIn;
-  /**
-   * Filter a list with a pitch class set
-   *
-   * @param {Array|string} set - the pitch class set notes
-   * @param {Array|string} notes - the note list to be filtered
-   * @return {Array} the filtered notes
-   *
-   * @example
-   * Pcset.filter(["C", "D", "E"], ["c2", "c#2", "d2", "c3", "c#3", "d3"]) // => [ "c2", "d2", "c3", "d3" ])
-   * Pcset.filter(["C2"], ["c2", "c#2", "d2", "c3", "c#3", "d3"]) // => [ "c2", "c3" ])
-   */
-  function filter(set) {
-      var isIncluded = isNoteIncludedIn(set);
-      return function (notes) {
-          return notes.filter(isIncluded);
-      };
-  }
-  var index = {
-      get: get,
-      chroma: chroma,
-      num: num,
-      intervals: intervals,
-      chromas: chromas,
-      isSupersetOf: isSupersetOf,
-      isSubsetOf: isSubsetOf,
-      isNoteIncludedIn: isNoteIncludedIn,
-      isEqual: isEqual,
-      filter: filter,
-      modes: modes,
-      // deprecated
-      pcset: pcset,
-  };
-  //// PRIVATE ////
-  function chromaRotations(chroma) {
-      var binary = chroma.split("");
-      return binary.map(function (_, i) { return collection.rotate(i, binary).join(""); });
-  }
-  function chromaToPcset(chroma) {
-      var setNum = chromaToNumber(chroma);
-      var normalizedNum = chromaRotations(chroma)
-          .map(chromaToNumber)
-          .filter(function (n) { return n >= 2048; })
-          .sort()[0];
-      var normalized = setNumToChroma(normalizedNum);
-      var intervals = chromaToIntervals(chroma);
-      return {
-          empty: false,
-          name: "",
-          setNum: setNum,
-          chroma: chroma,
-          normalized: normalized,
-          intervals: intervals,
-      };
-  }
-  function listToChroma(set) {
-      if (set.length === 0) {
-          return EmptyPcset.chroma;
-      }
-      var pitch;
-      var binary = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-      // tslint:disable-next-line:prefer-for-of
-      for (var i = 0; i < set.length; i++) {
-          pitch = core.note(set[i]);
-          // tslint:disable-next-line: curly
-          if (pitch.empty)
-              pitch = core.interval(set[i]);
-          // tslint:disable-next-line: curly
-          if (!pitch.empty)
-              binary[pitch.chroma] = 1;
-      }
-      return binary.join("");
-  }
-
-  exports.EmptyPcset = EmptyPcset;
-  exports.chromaToIntervals = chromaToIntervals;
-  exports.chromas = chromas;
-  exports.default = index;
-  exports.filter = filter;
-  exports.get = get;
-  exports.includes = includes;
-  exports.isEqual = isEqual;
-  exports.isNoteIncludedIn = isNoteIncludedIn;
-  exports.isSubsetOf = isSubsetOf;
-  exports.isSupersetOf = isSupersetOf;
-  exports.modes = modes;
-  exports.pcset = pcset;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/collection":9,"@tonaljs/core":10}],18:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/chord'), require('@tonaljs/core'), require('@tonaljs/roman-numeral')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/chord', '@tonaljs/core', '@tonaljs/roman-numeral'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Progression = {}, global.chord, global.core, global.romanNumeral));
-}(this, (function (exports, chord, core, romanNumeral) { 'use strict';
-
-  /**
-   * Given a tonic and a chord list expressed with roman numeral notation
-   * returns the progression expressed with leadsheet chords symbols notation
-   * @example
-   * fromRomanNumerals("C", ["I", "IIm7", "V7"]);
-   * // => ["C", "Dm7", "G7"]
-   */
-  function fromRomanNumerals(tonic, chords) {
-      var romanNumerals = chords.map(romanNumeral.get);
-      return romanNumerals.map(function (rn) { return core.transpose(tonic, core.interval(rn)) + rn.chordType; });
-  }
-  /**
-   * Given a tonic and a chord list with leadsheet symbols notation,
-   * return the chord list with roman numeral notation
-   * @example
-   * toRomanNumerals("C", ["CMaj7", "Dm7", "G7"]);
-   * // => ["IMaj7", "IIm7", "V7"]
-   */
-  function toRomanNumerals(tonic, chords) {
-      return chords.map(function (chord$1) {
-          var _a = chord.tokenize(chord$1), note = _a[0], chordType = _a[1];
-          var intervalName = core.distance(tonic, note);
-          var roman = romanNumeral.get(core.interval(intervalName));
-          return roman.name + chordType;
-      });
-  }
-  var index = { fromRomanNumerals: fromRomanNumerals, toRomanNumerals: toRomanNumerals };
-
-  exports.default = index;
-  exports.fromRomanNumerals = fromRomanNumerals;
-  exports.toRomanNumerals = toRomanNumerals;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/chord":8,"@tonaljs/core":10,"@tonaljs/roman-numeral":20}],19:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/collection'), require('@tonaljs/midi')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/collection', '@tonaljs/midi'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Range = {}, global.collection, global.midi));
-}(this, (function (exports, collection, midi) { 'use strict';
-
-  /**
-   * Create a numeric range. You supply a list of notes or numbers and it will
-   * be connected to create complex ranges.
-   *
-   * @param {Array} notes - the list of notes or midi numbers used
-   * @return {Array} an array of numbers or empty array if not valid parameters
-   *
-   * @example
-   * numeric(["C5", "C4"]) // => [ 72, 71, 70, 69, 68, 67, 66, 65, 64, 63, 62, 61, 60 ]
-   * // it works midi notes
-   * numeric([10, 5]) // => [ 10, 9, 8, 7, 6, 5 ]
-   * // complex range
-   * numeric(["C4", "E4", "Bb3"]) // => [60, 61, 62, 63, 64, 63, 62, 61, 60, 59, 58]
-   */
-  function numeric(notes) {
-      var midi$1 = collection.compact(notes.map(midi.toMidi));
-      if (!notes.length || midi$1.length !== notes.length) {
-          // there is no valid notes
-          return [];
-      }
-      return midi$1.reduce(function (result, note) {
-          var last = result[result.length - 1];
-          return result.concat(collection.range(last, note).slice(1));
-      }, [midi$1[0]]);
-  }
-  /**
-   * Create a range of chromatic notes. The altered notes will use flats.
-   *
-   * @function
-   * @param {Array} notes - the list of notes or midi note numbers to create a range from
-   * @param {Object} options - The same as `midiToNoteName` (`{ sharps: boolean, pitchClass: boolean }`)
-   * @return {Array} an array of note names
-   *
-   * @example
-   * Range.chromatic(["C2, "E2", "D2"]) // => ["C2", "Db2", "D2", "Eb2", "E2", "Eb2", "D2"]
-   * // with sharps
-   * Range.chromatic(["C2", "C3"], { sharps: true }) // => [ "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G2", "G#2", "A2", "A#2", "B2", "C3" ]
-   */
-  function chromatic(notes, options) {
-      return numeric(notes).map(function (midi$1) { return midi.midiToNoteName(midi$1, options); });
-  }
-  var index = { numeric: numeric, chromatic: chromatic };
-
-  exports.chromatic = chromatic;
-  exports.default = index;
-  exports.numeric = numeric;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/collection":9,"@tonaljs/midi":14}],20:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/core')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/core'], factory) :
-  (global = global || self, factory(global.RomanNumeral = {}, global.core));
-}(this, (function (exports, core) { 'use strict';
-
-  var NoRomanNumeral = { empty: true, name: "", chordType: "" };
-  var cache = {};
-  /**
-   * Get properties of a roman numeral string
-   *
-   * @function
-   * @param {string} - the roman numeral string (can have type, like: Imaj7)
-   * @return {Object} - the roman numeral properties
-   * @param {string} name - the roman numeral (tonic)
-   * @param {string} type - the chord type
-   * @param {string} num - the number (1 = I, 2 = II...)
-   * @param {boolean} major - major or not
-   *
-   * @example
-   * romanNumeral("VIIb5") // => { name: "VII", type: "b5", num: 7, major: true }
-   */
-  function get(src) {
-      return typeof src === "string"
-          ? cache[src] || (cache[src] = parse(src))
-          : typeof src === "number"
-              ? get(NAMES[src] || "")
-              : core.isPitch(src)
-                  ? fromPitch(src)
-                  : core.isNamed(src)
-                      ? get(src.name)
-                      : NoRomanNumeral;
-  }
-  var romanNumeral = core.deprecate("RomanNumeral.romanNumeral", "RomanNumeral.get", get);
-  /**
-   * Get roman numeral names
-   *
-   * @function
-   * @param {boolean} [isMajor=true]
-   * @return {Array<String>}
-   *
-   * @example
-   * names() // => ["I", "II", "III", "IV", "V", "VI", "VII"]
-   */
-  function names(major) {
-      if (major === void 0) { major = true; }
-      return (major ? NAMES : NAMES_MINOR).slice();
-  }
-  function fromPitch(pitch) {
-      return get(core.altToAcc(pitch.alt) + NAMES[pitch.step]);
-  }
-  var REGEX = /^(#{1,}|b{1,}|x{1,}|)(IV|I{1,3}|VI{0,2}|iv|i{1,3}|vi{0,2})([^IViv]*)$/;
-  function tokenize(str) {
-      return (REGEX.exec(str) || ["", "", "", ""]);
-  }
-  var ROMANS = "I II III IV V VI VII";
-  var NAMES = ROMANS.split(" ");
-  var NAMES_MINOR = ROMANS.toLowerCase().split(" ");
-  function parse(src) {
-      var _a = tokenize(src), name = _a[0], acc = _a[1], roman = _a[2], chordType = _a[3];
-      if (!roman) {
-          return NoRomanNumeral;
-      }
-      var upperRoman = roman.toUpperCase();
-      var step = NAMES.indexOf(upperRoman);
-      var alt = core.accToAlt(acc);
-      var dir = 1;
-      return {
-          empty: false,
-          name: name,
-          roman: roman,
-          interval: core.interval({ step: step, alt: alt, dir: dir }).name,
-          acc: acc,
-          chordType: chordType,
-          alt: alt,
-          step: step,
-          major: roman === upperRoman,
-          oct: 0,
-          dir: dir,
-      };
-  }
-  var index = {
-      names: names,
-      get: get,
-      // deprecated
-      romanNumeral: romanNumeral,
-  };
-
-  exports.default = index;
-  exports.get = get;
-  exports.names = names;
-  exports.tokenize = tokenize;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/core":10}],21:[function(require,module,exports){
-(function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/core'), require('@tonaljs/pcset')) :
-    typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/core', '@tonaljs/pcset'], factory) :
-    (global = global || self, factory(global.ScaleType = {}, global.core, global.pcset));
-}(this, (function (exports, core, pcset) { 'use strict';
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation.
-
-    Permission to use, copy, modify, and/or distribute this software for any
-    purpose with or without fee is hereby granted.
-
-    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-    PERFORMANCE OF THIS SOFTWARE.
-    ***************************************************************************** */
-
-    var __assign = function() {
-        __assign = Object.assign || function __assign(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign.apply(this, arguments);
-    };
-
-    // SCALES
-    // Format: ["intervals", "name", "alias1", "alias2", ...]
-    var SCALES = [
-        // 5-note scales
-        ["1P 2M 3M 5P 6M", "major pentatonic", "pentatonic"],
-        ["1P 3M 4P 5P 7M", "ionian pentatonic"],
-        ["1P 3M 4P 5P 7m", "mixolydian pentatonic", "indian"],
-        ["1P 2M 4P 5P 6M", "ritusen"],
-        ["1P 2M 4P 5P 7m", "egyptian"],
-        ["1P 3M 4P 5d 7m", "neopolitan major pentatonic"],
-        ["1P 3m 4P 5P 6m", "vietnamese 1"],
-        ["1P 2m 3m 5P 6m", "pelog"],
-        ["1P 2m 4P 5P 6m", "kumoijoshi"],
-        ["1P 2M 3m 5P 6m", "hirajoshi"],
-        ["1P 2m 4P 5d 7m", "iwato"],
-        ["1P 2m 4P 5P 7m", "in-sen"],
-        ["1P 3M 4A 5P 7M", "lydian pentatonic", "chinese"],
-        ["1P 3m 4P 6m 7m", "malkos raga"],
-        ["1P 3m 4P 5d 7m", "locrian pentatonic", "minor seven flat five pentatonic"],
-        ["1P 3m 4P 5P 7m", "minor pentatonic", "vietnamese 2"],
-        ["1P 3m 4P 5P 6M", "minor six pentatonic"],
-        ["1P 2M 3m 5P 6M", "flat three pentatonic", "kumoi"],
-        ["1P 2M 3M 5P 6m", "flat six pentatonic"],
-        ["1P 2m 3M 5P 6M", "scriabin"],
-        ["1P 3M 5d 6m 7m", "whole tone pentatonic"],
-        ["1P 3M 4A 5A 7M", "lydian #5P pentatonic"],
-        ["1P 3M 4A 5P 7m", "lydian dominant pentatonic"],
-        ["1P 3m 4P 5P 7M", "minor #7M pentatonic"],
-        ["1P 3m 4d 5d 7m", "super locrian pentatonic"],
-        // 6-note scales
-        ["1P 2M 3m 4P 5P 7M", "minor hexatonic"],
-        ["1P 2A 3M 5P 5A 7M", "augmented"],
-        ["1P 2M 3m 3M 5P 6M", "major blues"],
-        ["1P 2M 4P 5P 6M 7m", "piongio"],
-        ["1P 2m 3M 4A 6M 7m", "prometheus neopolitan"],
-        ["1P 2M 3M 4A 6M 7m", "prometheus"],
-        ["1P 2m 3M 5d 6m 7m", "mystery #1"],
-        ["1P 2m 3M 4P 5A 6M", "six tone symmetric"],
-        ["1P 2M 3M 4A 5A 7m", "whole tone", "messiaen's mode #1"],
-        ["1P 2m 4P 4A 5P 7M", "messiaen's mode #5"],
-        ["1P 3m 4P 5d 5P 7m", "minor blues", "blues"],
-        // 7-note scales
-        ["1P 2M 3M 4P 5d 6m 7m", "locrian major", "arabian"],
-        ["1P 2m 3M 4A 5P 6m 7M", "double harmonic lydian"],
-        ["1P 2M 3m 4P 5P 6m 7M", "harmonic minor"],
-        [
-            "1P 2m 3m 4d 5d 6m 7m",
-            "altered",
-            "super locrian",
-            "diminished whole tone",
-            "pomeroy",
-        ],
-        ["1P 2M 3m 4P 5d 6m 7m", "locrian #2", "half-diminished", "aeolian b5"],
-        [
-            "1P 2M 3M 4P 5P 6m 7m",
-            "mixolydian b6",
-            "melodic minor fifth mode",
-            "hindu",
-        ],
-        ["1P 2M 3M 4A 5P 6M 7m", "lydian dominant", "lydian b7", "overtone"],
-        ["1P 2M 3M 4A 5P 6M 7M", "lydian"],
-        ["1P 2M 3M 4A 5A 6M 7M", "lydian augmented"],
-        [
-            "1P 2m 3m 4P 5P 6M 7m",
-            "dorian b2",
-            "phrygian #6",
-            "melodic minor second mode",
-        ],
-        ["1P 2M 3m 4P 5P 6M 7M", "melodic minor"],
-        ["1P 2m 3m 4P 5d 6m 7m", "locrian"],
-        [
-            "1P 2m 3m 4d 5d 6m 7d",
-            "ultralocrian",
-            "superlocrian bb7",
-            "·superlocrian diminished",
-        ],
-        ["1P 2m 3m 4P 5d 6M 7m", "locrian 6", "locrian natural 6", "locrian sharp 6"],
-        ["1P 2A 3M 4P 5P 5A 7M", "augmented heptatonic"],
-        ["1P 2M 3m 5d 5P 6M 7m", "romanian minor"],
-        ["1P 2M 3m 4A 5P 6M 7m", "dorian #4"],
-        ["1P 2M 3m 4A 5P 6M 7M", "lydian diminished"],
-        ["1P 2m 3m 4P 5P 6m 7m", "phrygian"],
-        ["1P 2M 3M 4A 5A 7m 7M", "leading whole tone"],
-        ["1P 2M 3M 4A 5P 6m 7m", "lydian minor"],
-        ["1P 2m 3M 4P 5P 6m 7m", "phrygian dominant", "spanish", "phrygian major"],
-        ["1P 2m 3m 4P 5P 6m 7M", "balinese"],
-        ["1P 2m 3m 4P 5P 6M 7M", "neopolitan major"],
-        ["1P 2M 3m 4P 5P 6m 7m", "aeolian", "minor"],
-        ["1P 2M 3M 4P 5P 6m 7M", "harmonic major"],
-        ["1P 2m 3M 4P 5P 6m 7M", "double harmonic major", "gypsy"],
-        ["1P 2M 3m 4P 5P 6M 7m", "dorian"],
-        ["1P 2M 3m 4A 5P 6m 7M", "hungarian minor"],
-        ["1P 2A 3M 4A 5P 6M 7m", "hungarian major"],
-        ["1P 2m 3M 4P 5d 6M 7m", "oriental"],
-        ["1P 2m 3m 3M 4A 5P 7m", "flamenco"],
-        ["1P 2m 3m 4A 5P 6m 7M", "todi raga"],
-        ["1P 2M 3M 4P 5P 6M 7m", "mixolydian", "dominant"],
-        ["1P 2m 3M 4P 5d 6m 7M", "persian"],
-        ["1P 2M 3M 4P 5P 6M 7M", "major", "ionian"],
-        ["1P 2m 3M 5d 6m 7m 7M", "enigmatic"],
-        [
-            "1P 2M 3M 4P 5A 6M 7M",
-            "major augmented",
-            "major #5",
-            "ionian augmented",
-            "ionian #5",
-        ],
-        ["1P 2A 3M 4A 5P 6M 7M", "lydian #9"],
-        // 8-note scales
-        ["1P 2m 2M 4P 4A 5P 6m 7M", "messiaen's mode #4"],
-        ["1P 2m 3M 4P 4A 5P 6m 7M", "purvi raga"],
-        ["1P 2m 3m 3M 4P 5P 6m 7m", "spanish heptatonic"],
-        ["1P 2M 3M 4P 5P 6M 7m 7M", "bebop"],
-        ["1P 2M 3m 3M 4P 5P 6M 7m", "bebop minor"],
-        ["1P 2M 3M 4P 5P 5A 6M 7M", "bebop major"],
-        ["1P 2m 3m 4P 5d 5P 6m 7m", "bebop locrian"],
-        ["1P 2M 3m 4P 5P 6m 7m 7M", "minor bebop"],
-        ["1P 2M 3m 4P 5d 6m 6M 7M", "diminished", "whole-half diminished"],
-        ["1P 2M 3M 4P 5d 5P 6M 7M", "ichikosucho"],
-        ["1P 2M 3m 4P 5P 6m 6M 7M", "minor six diminished"],
-        [
-            "1P 2m 3m 3M 4A 5P 6M 7m",
-            "half-whole diminished",
-            "dominant diminished",
-            "messiaen's mode #2",
-        ],
-        ["1P 3m 3M 4P 5P 6M 7m 7M", "kafi raga"],
-        ["1P 2M 3M 4P 4A 5A 6A 7M", "messiaen's mode #6"],
-        // 9-note scales
-        ["1P 2M 3m 3M 4P 5d 5P 6M 7m", "composite blues"],
-        ["1P 2M 3m 3M 4A 5P 6m 7m 7M", "messiaen's mode #3"],
-        // 10-note scales
-        ["1P 2m 2M 3m 4P 4A 5P 6m 6M 7M", "messiaen's mode #7"],
-        // 12-note scales
-        ["1P 2m 2M 3m 3M 4P 5d 5P 6m 6M 7m 7M", "chromatic"],
-    ];
-
-    var NoScaleType = __assign(__assign({}, pcset.EmptyPcset), { intervals: [], aliases: [] });
-    var dictionary = [];
-    var index = {};
-    function names() {
-        return dictionary.map(function (scale) { return scale.name; });
-    }
-    /**
-     * Given a scale name or chroma, return the scale properties
-     *
-     * @param {string} type - scale name or pitch class set chroma
-     * @example
-     * import { get } from 'tonaljs/scale-type'
-     * get('major') // => { name: 'major', ... }
-     */
-    function get(type) {
-        return index[type] || NoScaleType;
-    }
-    var scaleType = core.deprecate("ScaleDictionary.scaleType", "ScaleType.get", get);
-    /**
-     * Return a list of all scale types
-     */
-    function all() {
-        return dictionary.slice();
-    }
-    var entries = core.deprecate("ScaleDictionary.entries", "ScaleType.all", all);
-    /**
-     * Keys used to reference scale types
-     */
-    function keys() {
-        return Object.keys(index);
-    }
-    /**
-     * Clear the dictionary
-     */
-    function removeAll() {
-        dictionary = [];
-        index = {};
-    }
-    /**
-     * Add a scale into dictionary
-     * @param intervals
-     * @param name
-     * @param aliases
-     */
-    function add(intervals, name, aliases) {
-        if (aliases === void 0) { aliases = []; }
-        var scale = __assign(__assign({}, pcset.get(intervals)), { name: name, intervals: intervals, aliases: aliases });
-        dictionary.push(scale);
-        index[scale.name] = scale;
-        index[scale.setNum] = scale;
-        index[scale.chroma] = scale;
-        scale.aliases.forEach(function (alias) { return addAlias(scale, alias); });
-        return scale;
-    }
-    function addAlias(scale, alias) {
-        index[alias] = scale;
-    }
-    SCALES.forEach(function (_a) {
-        var ivls = _a[0], name = _a[1], aliases = _a.slice(2);
-        return add(ivls.split(" "), name, aliases);
-    });
-    var index$1 = {
-        names: names,
-        get: get,
-        all: all,
-        add: add,
-        removeAll: removeAll,
-        keys: keys,
-        // deprecated
-        entries: entries,
-        scaleType: scaleType,
-    };
-
-    exports.NoScaleType = NoScaleType;
-    exports.add = add;
-    exports.addAlias = addAlias;
-    exports.all = all;
-    exports.default = index$1;
-    exports.entries = entries;
-    exports.get = get;
-    exports.keys = keys;
-    exports.names = names;
-    exports.removeAll = removeAll;
-    exports.scaleType = scaleType;
-
-    Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/core":10,"@tonaljs/pcset":17}],22:[function(require,module,exports){
-(function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/chord-type'), require('@tonaljs/collection'), require('@tonaljs/core'), require('@tonaljs/note'), require('@tonaljs/pcset'), require('@tonaljs/scale-type')) :
-    typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/chord-type', '@tonaljs/collection', '@tonaljs/core', '@tonaljs/note', '@tonaljs/pcset', '@tonaljs/scale-type'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Scale = {}, global.chordType, global.collection, global.core, global.note, global.pcset, global.scaleType));
-}(this, (function (exports, chordType, collection, core, note, pcset, scaleType) { 'use strict';
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation.
-
-    Permission to use, copy, modify, and/or distribute this software for any
-    purpose with or without fee is hereby granted.
-
-    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-    PERFORMANCE OF THIS SOFTWARE.
-    ***************************************************************************** */
-
-    var __assign = function() {
-        __assign = Object.assign || function __assign(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign.apply(this, arguments);
-    };
-
-    var NoScale = {
-        empty: true,
-        name: "",
-        type: "",
-        tonic: null,
-        setNum: NaN,
-        chroma: "",
-        normalized: "",
-        aliases: [],
-        notes: [],
-        intervals: [],
-    };
-    /**
-     * Given a string with a scale name and (optionally) a tonic, split
-     * that components.
-     *
-     * It retuns an array with the form [ name, tonic ] where tonic can be a
-     * note name or null and name can be any arbitrary string
-     * (this function doesn"t check if that scale name exists)
-     *
-     * @function
-     * @param {string} name - the scale name
-     * @return {Array} an array [tonic, name]
-     * @example
-     * tokenize("C mixolydean") // => ["C", "mixolydean"]
-     * tokenize("anything is valid") // => ["", "anything is valid"]
-     * tokenize() // => ["", ""]
-     */
-    function tokenize(name) {
-        if (typeof name !== "string") {
-            return ["", ""];
-        }
-        var i = name.indexOf(" ");
-        var tonic = core.note(name.substring(0, i));
-        if (tonic.empty) {
-            var n = core.note(name);
-            return n.empty ? ["", name] : [n.name, ""];
-        }
-        var type = name.substring(tonic.name.length + 1);
-        return [tonic.name, type.length ? type : ""];
-    }
-    /**
-     * Get all scale names
-     * @function
-     */
-    var names = scaleType.names;
-    /**
-     * Get a Scale from a scale name.
-     */
-    function get(src) {
-        var tokens = Array.isArray(src) ? src : tokenize(src);
-        var tonic = core.note(tokens[0]).name;
-        var st = scaleType.get(tokens[1]);
-        if (st.empty) {
-            return NoScale;
-        }
-        var type = st.name;
-        var notes = tonic
-            ? st.intervals.map(function (i) { return core.transpose(tonic, i); })
-            : [];
-        var name = tonic ? tonic + " " + type : type;
-        return __assign(__assign({}, st), { name: name, type: type, tonic: tonic, notes: notes });
-    }
-    var scale = core.deprecate("Scale.scale", "Scale.get", get);
-    /**
-     * Get all chords that fits a given scale
-     *
-     * @function
-     * @param {string} name - the scale name
-     * @return {Array<string>} - the chord names
-     *
-     * @example
-     * scaleChords("pentatonic") // => ["5", "64", "M", "M6", "Madd9", "Msus2"]
-     */
-    function scaleChords(name) {
-        var s = get(name);
-        var inScale = pcset.isSubsetOf(s.chroma);
-        return chordType.all()
-            .filter(function (chord) { return inScale(chord.chroma); })
-            .map(function (chord) { return chord.aliases[0]; });
-    }
-    /**
-     * Get all scales names that are a superset of the given one
-     * (has the same notes and at least one more)
-     *
-     * @function
-     * @param {string} name
-     * @return {Array} a list of scale names
-     * @example
-     * extended("major") // => ["bebop", "bebop dominant", "bebop major", "chromatic", "ichikosucho"]
-     */
-    function extended(name) {
-        var s = get(name);
-        var isSuperset = pcset.isSupersetOf(s.chroma);
-        return scaleType.all()
-            .filter(function (scale) { return isSuperset(scale.chroma); })
-            .map(function (scale) { return scale.name; });
-    }
-    /**
-     * Find all scales names that are a subset of the given one
-     * (has less notes but all from the given scale)
-     *
-     * @function
-     * @param {string} name
-     * @return {Array} a list of scale names
-     *
-     * @example
-     * reduced("major") // => ["ionian pentatonic", "major pentatonic", "ritusen"]
-     */
-    function reduced(name) {
-        var isSubset = pcset.isSubsetOf(get(name).chroma);
-        return scaleType.all()
-            .filter(function (scale) { return isSubset(scale.chroma); })
-            .map(function (scale) { return scale.name; });
-    }
-    /**
-     * Given an array of notes, return the scale: a pitch class set starting from
-     * the first note of the array
-     *
-     * @function
-     * @param {string[]} notes
-     * @return {string[]} pitch classes with same tonic
-     * @example
-     * scaleNotes(['C4', 'c3', 'C5', 'C4', 'c4']) // => ["C"]
-     * scaleNotes(['D4', 'c#5', 'A5', 'F#6']) // => ["D", "F#", "A", "C#"]
-     */
-    function scaleNotes(notes) {
-        var pcset = notes.map(function (n) { return core.note(n).pc; }).filter(function (x) { return x; });
-        var tonic = pcset[0];
-        var scale = note.sortedUniqNames(pcset);
-        return collection.rotate(scale.indexOf(tonic), scale);
-    }
-    /**
-     * Find mode names of a scale
-     *
-     * @function
-     * @param {string} name - scale name
-     * @example
-     * modeNames("C pentatonic") // => [
-     *   ["C", "major pentatonic"],
-     *   ["D", "egyptian"],
-     *   ["E", "malkos raga"],
-     *   ["G", "ritusen"],
-     *   ["A", "minor pentatonic"]
-     * ]
-     */
-    function modeNames(name) {
-        var s = get(name);
-        if (s.empty) {
-            return [];
-        }
-        var tonics = s.tonic ? s.notes : s.intervals;
-        return pcset.modes(s.chroma)
-            .map(function (chroma, i) {
-            var modeName = get(chroma).name;
-            return modeName ? [tonics[i], modeName] : ["", ""];
-        })
-            .filter(function (x) { return x[0]; });
-    }
-    function getNoteNameOf(scale) {
-        var names = Array.isArray(scale) ? scaleNotes(scale) : get(scale).notes;
-        var chromas = names.map(function (name) { return core.note(name).chroma; });
-        return function (noteOrMidi) {
-            var height = typeof noteOrMidi === "number" ? noteOrMidi : core.note(noteOrMidi).height;
-            if (height === undefined)
-                return undefined;
-            var chroma = height % 12;
-            var oct = Math.floor(height / 12) - 1;
-            var position = chromas.indexOf(chroma);
-            if (position === -1)
-                return undefined;
-            return names[position] + oct;
-        };
-    }
-    function rangeOf(scale) {
-        var getName = getNoteNameOf(scale);
-        return function (fromNote, toNote) {
-            var from = core.note(fromNote).height;
-            var to = core.note(toNote).height;
-            if (from === undefined || to === undefined)
-                return [];
-            return collection.range(from, to)
-                .map(getName)
-                .filter(function (x) { return x; });
-        };
-    }
-    var index = {
-        get: get,
-        names: names,
-        extended: extended,
-        modeNames: modeNames,
-        reduced: reduced,
-        scaleChords: scaleChords,
-        scaleNotes: scaleNotes,
-        tokenize: tokenize,
-        rangeOf: rangeOf,
-        // deprecated
-        scale: scale,
-    };
-
-    exports.default = index;
-    exports.extended = extended;
-    exports.get = get;
-    exports.modeNames = modeNames;
-    exports.names = names;
-    exports.rangeOf = rangeOf;
-    exports.reduced = reduced;
-    exports.scale = scale;
-    exports.scaleChords = scaleChords;
-    exports.scaleNotes = scaleNotes;
-    exports.tokenize = tokenize;
-
-    Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{"@tonaljs/chord-type":7,"@tonaljs/collection":9,"@tonaljs/core":10,"@tonaljs/note":16,"@tonaljs/pcset":17,"@tonaljs/scale-type":21}],23:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.TimeSignature = {}));
-}(this, (function (exports) { 'use strict';
-
-  // CONSTANTS
-  var NONE = {
-      empty: true,
-      name: "",
-      upper: undefined,
-      lower: undefined,
-      type: undefined,
-      additive: [],
-  };
-  var NAMES = ["4/4", "3/4", "2/4", "2/2", "12/8", "9/8", "6/8", "3/8"];
-  // PUBLIC API
-  function names() {
-      return NAMES.slice();
-  }
-  var REGEX = /^(\d?\d(?:\+\d)*)\/(\d)$/;
-  var CACHE = new Map();
-  function get(literal) {
-      var cached = CACHE.get(literal);
-      if (cached) {
-          return cached;
-      }
-      var ts = build(parse(literal));
-      CACHE.set(literal, ts);
-      return ts;
-  }
-  function parse(literal) {
-      if (typeof literal === "string") {
-          var _a = REGEX.exec(literal) || [], _ = _a[0], up_1 = _a[1], low = _a[2];
-          return parse([up_1, low]);
-      }
-      var up = literal[0], down = literal[1];
-      var denominator = +down;
-      if (typeof up === "number") {
-          return [up, denominator];
-      }
-      var list = up.split("+").map(function (n) { return +n; });
-      return list.length === 1 ? [list[0], denominator] : [list, denominator];
-  }
-  var index = { names: names, parse: parse, get: get };
-  // PRIVATE
-  function build(_a) {
-      var up = _a[0], down = _a[1];
-      var upper = Array.isArray(up) ? up.reduce(function (a, b) { return a + b; }, 0) : up;
-      var lower = down;
-      if (upper === 0 || lower === 0) {
-          return NONE;
-      }
-      var name = Array.isArray(up) ? up.join("+") + "/" + down : up + "/" + down;
-      var additive = Array.isArray(up) ? up : [];
-      var type = lower === 4 || lower === 2
-          ? "simple"
-          : lower === 8 && upper % 3 === 0
-              ? "compound"
-              : "irregular";
-      return {
-          empty: false,
-          name: name,
-          type: type,
-          upper: upper,
-          lower: lower,
-          additive: additive,
-      };
-  }
-
-  exports.default = index;
-  exports.get = get;
-  exports.names = names;
-  exports.parse = parse;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-
-},{}],24:[function(require,module,exports){
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tonaljs/abc-notation'), require('@tonaljs/array'), require('@tonaljs/chord'), require('@tonaljs/chord-type'), require('@tonaljs/collection'), require('@tonaljs/core'), require('@tonaljs/duration-value'), require('@tonaljs/interval'), require('@tonaljs/key'), require('@tonaljs/midi'), require('@tonaljs/mode'), require('@tonaljs/note'), require('@tonaljs/pcset'), require('@tonaljs/progression'), require('@tonaljs/range'), require('@tonaljs/roman-numeral'), require('@tonaljs/scale'), require('@tonaljs/scale-type'), require('@tonaljs/time-signature')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@tonaljs/abc-notation', '@tonaljs/array', '@tonaljs/chord', '@tonaljs/chord-type', '@tonaljs/collection', '@tonaljs/core', '@tonaljs/duration-value', '@tonaljs/interval', '@tonaljs/key', '@tonaljs/midi', '@tonaljs/mode', '@tonaljs/note', '@tonaljs/pcset', '@tonaljs/progression', '@tonaljs/range', '@tonaljs/roman-numeral', '@tonaljs/scale', '@tonaljs/scale-type', '@tonaljs/time-signature'], factory) :
-  (global = global || self, factory(global.Tonal = {}, global.abcNotation, global.array, global.chord, global.ChordType, global.collection, global.Core, global.durationValue, global.interval, global.key, global.midi, global.mode, global.note, global.Pcset, global.progression, global.range, global.romanNumeral, global.scale, global.ScaleType, global.timeSignature));
-}(this, (function (exports, abcNotation, array, chord, ChordType, collection, Core, durationValue, interval, key, midi, mode, note, Pcset, progression, range, romanNumeral, scale, ScaleType, timeSignature) { 'use strict';
-
-  abcNotation = abcNotation && Object.prototype.hasOwnProperty.call(abcNotation, 'default') ? abcNotation['default'] : abcNotation;
-  chord = chord && Object.prototype.hasOwnProperty.call(chord, 'default') ? chord['default'] : chord;
-  ChordType = ChordType && Object.prototype.hasOwnProperty.call(ChordType, 'default') ? ChordType['default'] : ChordType;
-  collection = collection && Object.prototype.hasOwnProperty.call(collection, 'default') ? collection['default'] : collection;
-  durationValue = durationValue && Object.prototype.hasOwnProperty.call(durationValue, 'default') ? durationValue['default'] : durationValue;
-  interval = interval && Object.prototype.hasOwnProperty.call(interval, 'default') ? interval['default'] : interval;
-  key = key && Object.prototype.hasOwnProperty.call(key, 'default') ? key['default'] : key;
-  midi = midi && Object.prototype.hasOwnProperty.call(midi, 'default') ? midi['default'] : midi;
-  mode = mode && Object.prototype.hasOwnProperty.call(mode, 'default') ? mode['default'] : mode;
-  note = note && Object.prototype.hasOwnProperty.call(note, 'default') ? note['default'] : note;
-  Pcset = Pcset && Object.prototype.hasOwnProperty.call(Pcset, 'default') ? Pcset['default'] : Pcset;
-  progression = progression && Object.prototype.hasOwnProperty.call(progression, 'default') ? progression['default'] : progression;
-  range = range && Object.prototype.hasOwnProperty.call(range, 'default') ? range['default'] : range;
-  romanNumeral = romanNumeral && Object.prototype.hasOwnProperty.call(romanNumeral, 'default') ? romanNumeral['default'] : romanNumeral;
-  scale = scale && Object.prototype.hasOwnProperty.call(scale, 'default') ? scale['default'] : scale;
-  ScaleType = ScaleType && Object.prototype.hasOwnProperty.call(ScaleType, 'default') ? ScaleType['default'] : ScaleType;
-  timeSignature = timeSignature && Object.prototype.hasOwnProperty.call(timeSignature, 'default') ? timeSignature['default'] : timeSignature;
-
-  // deprecated (backwards compatibility)
-  var Tonal = Core;
-  var PcSet = Pcset;
-  var ChordDictionary = ChordType;
-  var ScaleDictionary = ScaleType;
-
-  Object.keys(Core).forEach(function (k) {
-    if (k !== 'default') Object.defineProperty(exports, k, {
-      enumerable: true,
-      get: function () {
-        return Core[k];
-      }
-    });
+}
+var supertonics = (dominants, targetTriads) => {
+  return dominants.map((chord, index) => {
+    if (!chord) return "";
+    const domRoot = chord.slice(0, -1);
+    const minorRoot = (0, import_note.transpose)(domRoot, "5P");
+    const target = targetTriads[index];
+    const isMinor = target.endsWith("m");
+    return isMinor ? minorRoot + "m7" : minorRoot + "m7b5";
   });
-  exports.AbcNotation = abcNotation;
-  exports.Array = array;
-  exports.Chord = chord;
-  exports.ChordType = ChordType;
-  exports.Collection = collection;
-  exports.Core = Core;
-  exports.DurationValue = durationValue;
-  exports.Interval = interval;
-  exports.Key = key;
-  exports.Midi = midi;
-  exports.Mode = mode;
-  exports.Note = note;
-  exports.Pcset = Pcset;
-  exports.Progression = progression;
-  exports.Range = range;
-  exports.RomanNumeral = romanNumeral;
-  exports.Scale = scale;
-  exports.ScaleType = ScaleType;
-  exports.TimeSignature = timeSignature;
-  exports.ChordDictionary = ChordDictionary;
-  exports.PcSet = PcSet;
-  exports.ScaleDictionary = ScaleDictionary;
-  exports.Tonal = Tonal;
+};
+var distInFifths = (from, to) => {
+  const f = (0, import_pitch_note.note)(from);
+  const t = (0, import_pitch_note.note)(to);
+  return f.empty || t.empty ? 0 : t.coord[0] - f.coord[0];
+};
+var MajorScale = keyScale(
+  "I II III IV V VI VII".split(" "),
+  " m m   m dim".split(" "),
+  "maj7 m7 m7 maj7 7 m7 m7b5".split(" "),
+  "T SD T SD D T D".split(" "),
+  "major,dorian,phrygian,lydian,mixolydian,minor,locrian".split(",")
+);
+var NaturalScale = keyScale(
+  "I II bIII IV V bVI bVII".split(" "),
+  "m dim  m m  ".split(" "),
+  "m7 m7b5 maj7 m7 m7 maj7 7".split(" "),
+  "T SD T SD D SD SD".split(" "),
+  "minor,locrian,major,dorian,phrygian,lydian,mixolydian".split(",")
+);
+var HarmonicScale = keyScale(
+  "I II bIII IV V bVI VII".split(" "),
+  "m dim aug m   dim".split(" "),
+  "mMaj7 m7b5 +maj7 m7 7 maj7 o7".split(" "),
+  "T SD T SD D SD D".split(" "),
+  "harmonic minor,locrian 6,major augmented,lydian diminished,phrygian dominant,lydian #9,ultralocrian".split(
+    ","
+  )
+);
+var MelodicScale = keyScale(
+  "I II bIII IV V VI VII".split(" "),
+  "m m aug   dim dim".split(" "),
+  "m6 m7 +maj7 7 7 m7b5 m7b5".split(" "),
+  "T SD T SD D  ".split(" "),
+  "melodic minor,dorian b2,lydian augmented,lydian dominant,mixolydian b6,locrian #2,altered".split(
+    ","
+  )
+);
+function majorKey(tonic) {
+  const pc = (0, import_pitch_note.note)(tonic).pc;
+  if (!pc) return NoMajorKey;
+  const keyScale2 = MajorScale(pc);
+  const alteration = distInFifths("C", pc);
+  return {
+    ...keyScale2,
+    type: "major",
+    minorRelative: (0, import_note.transpose)(pc, "-3m"),
+    alteration,
+    keySignature: (0, import_pitch_note.altToAcc)(alteration)
+  };
+}
+function majorKeyChords(tonic) {
+  const key = majorKey(tonic);
+  const chords = [];
+  keyChordsOf(key, chords);
+  return chords;
+}
+function minorKeyChords(tonic) {
+  const key = minorKey(tonic);
+  const chords = [];
+  keyChordsOf(key.natural, chords);
+  keyChordsOf(key.harmonic, chords);
+  keyChordsOf(key.melodic, chords);
+  return chords;
+}
+function keyChordsOf(key, chords) {
+  const updateChord = (name, newRole) => {
+    if (!name) return;
+    let keyChord = chords.find((chord) => chord.name === name);
+    if (!keyChord) {
+      keyChord = { name, roles: [] };
+      chords.push(keyChord);
+    }
+    if (newRole && !keyChord.roles.includes(newRole)) {
+      keyChord.roles.push(newRole);
+    }
+  };
+  key.chords.forEach(
+    (chordName, index) => updateChord(chordName, key.chordsHarmonicFunction[index])
+  );
+  key.secondaryDominants.forEach(
+    (chordName, index) => updateChord(chordName, `V/${key.grades[index]}`)
+  );
+  key.secondaryDominantSupertonics.forEach(
+    (chordName, index) => updateChord(chordName, `ii/${key.grades[index]}`)
+  );
+  key.substituteDominants.forEach(
+    (chordName, index) => updateChord(chordName, `subV/${key.grades[index]}`)
+  );
+  key.substituteDominantSupertonics.forEach(
+    (chordName, index) => updateChord(chordName, `subii/${key.grades[index]}`)
+  );
+}
+function minorKey(tnc) {
+  const pc = (0, import_pitch_note.note)(tnc).pc;
+  if (!pc) return NoMinorKey;
+  const alteration = distInFifths("C", pc) - 3;
+  return {
+    type: "minor",
+    tonic: pc,
+    relativeMajor: (0, import_note.transpose)(pc, "3m"),
+    alteration,
+    keySignature: (0, import_pitch_note.altToAcc)(alteration),
+    natural: NaturalScale(pc),
+    harmonic: HarmonicScale(pc),
+    melodic: MelodicScale(pc)
+  };
+}
+function majorTonicFromKeySignature(sig) {
+  if (typeof sig === "number") {
+    return (0, import_note.transposeFifths)("C", sig);
+  } else if (typeof sig === "string" && /^b+|#+$/.test(sig)) {
+    return (0, import_note.transposeFifths)("C", (0, import_pitch_note.accToAlt)(sig));
+  }
+  return null;
+}
+var index_default = { majorKey, majorTonicFromKeySignature, minorKey };
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  majorKey,
+  majorKeyChords,
+  majorTonicFromKeySignature,
+  minorKey,
+  minorKeyChords
+});
 
-  Object.defineProperty(exports, '__esModule', { value: true });
+},{"@tonaljs/note":16,"@tonaljs/pitch-note":20,"@tonaljs/roman-numeral":25}],14:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-})));
+// index.ts
+var index_exports = {};
+__export(index_exports, {
+  chroma: () => chroma,
+  default: () => index_default,
+  freqToMidi: () => freqToMidi,
+  isMidi: () => isMidi,
+  midiToFreq: () => midiToFreq,
+  midiToNoteName: () => midiToNoteName,
+  pcset: () => pcset,
+  pcsetDegrees: () => pcsetDegrees,
+  pcsetNearest: () => pcsetNearest,
+  pcsetSteps: () => pcsetSteps,
+  toMidi: () => toMidi
+});
+module.exports = __toCommonJS(index_exports);
+var import_pitch_note = require("@tonaljs/pitch-note");
+function isMidi(arg) {
+  return +arg >= 0 && +arg <= 127;
+}
+function toMidi(note) {
+  if (isMidi(note)) {
+    return +note;
+  }
+  const n = (0, import_pitch_note.note)(note);
+  return n.empty ? null : n.midi;
+}
+function midiToFreq(midi, tuning = 440) {
+  return Math.pow(2, (midi - 69) / 12) * tuning;
+}
+var L2 = Math.log(2);
+var L440 = Math.log(440);
+function freqToMidi(freq) {
+  const v = 12 * (Math.log(freq) - L440) / L2 + 69;
+  return Math.round(v * 100) / 100;
+}
+var SHARPS = "C C# D D# E F F# G G# A A# B".split(" ");
+var FLATS = "C Db D Eb E F Gb G Ab A Bb B".split(" ");
+function midiToNoteName(midi, options = {}) {
+  if (isNaN(midi) || midi === -Infinity || midi === Infinity) return "";
+  midi = Math.round(midi);
+  const pcs = options.sharps === true ? SHARPS : FLATS;
+  const pc = pcs[midi % 12];
+  if (options.pitchClass) {
+    return pc;
+  }
+  const o = Math.floor(midi / 12) - 1;
+  return pc + o;
+}
+function chroma(midi) {
+  return midi % 12;
+}
+function pcsetFromChroma(chroma2) {
+  return chroma2.split("").reduce((pcset2, val, index) => {
+    if (index < 12 && val === "1") pcset2.push(index);
+    return pcset2;
+  }, []);
+}
+function pcsetFromMidi(midi) {
+  return midi.map(chroma).sort((a, b) => a - b).filter((n, i, a) => i === 0 || n !== a[i - 1]);
+}
+function pcset(notes) {
+  return Array.isArray(notes) ? pcsetFromMidi(notes) : pcsetFromChroma(notes);
+}
+function pcsetNearest(notes) {
+  const set = pcset(notes);
+  return (midi) => {
+    const ch = chroma(midi);
+    for (let i = 0; i < 12; i++) {
+      if (set.includes(ch + i)) return midi + i;
+      if (set.includes(ch - i)) return midi - i;
+    }
+    return void 0;
+  };
+}
+function pcsetSteps(notes, tonic) {
+  const set = pcset(notes);
+  const len = set.length;
+  return (step) => {
+    const index = step < 0 ? (len - -step % len) % len : step % len;
+    const octaves = Math.floor(step / len);
+    return set[index] + octaves * 12 + tonic;
+  };
+}
+function pcsetDegrees(notes, tonic) {
+  const steps = pcsetSteps(notes, tonic);
+  return (degree) => {
+    if (degree === 0) return void 0;
+    return steps(degree > 0 ? degree - 1 : degree);
+  };
+}
+var index_default = {
+  chroma,
+  freqToMidi,
+  isMidi,
+  midiToFreq,
+  midiToNoteName,
+  pcsetNearest,
+  pcset,
+  pcsetDegrees,
+  pcsetSteps,
+  toMidi
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  chroma,
+  freqToMidi,
+  isMidi,
+  midiToFreq,
+  midiToNoteName,
+  pcset,
+  pcsetDegrees,
+  pcsetNearest,
+  pcsetSteps,
+  toMidi
+});
 
+},{"@tonaljs/pitch-note":20}],15:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all2) => {
+  for (var name in all2)
+    __defProp(target, name, { get: all2[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-},{"@tonaljs/abc-notation":4,"@tonaljs/array":5,"@tonaljs/chord":8,"@tonaljs/chord-type":7,"@tonaljs/collection":9,"@tonaljs/core":10,"@tonaljs/duration-value":11,"@tonaljs/interval":12,"@tonaljs/key":13,"@tonaljs/midi":14,"@tonaljs/mode":15,"@tonaljs/note":16,"@tonaljs/pcset":17,"@tonaljs/progression":18,"@tonaljs/range":19,"@tonaljs/roman-numeral":20,"@tonaljs/scale":22,"@tonaljs/scale-type":21,"@tonaljs/time-signature":23}],25:[function(require,module,exports){
+// index.ts
+var index_exports = {};
+__export(index_exports, {
+  all: () => all,
+  default: () => index_default,
+  distance: () => distance,
+  entries: () => entries,
+  get: () => get,
+  mode: () => mode,
+  names: () => names,
+  notes: () => notes,
+  relativeTonic: () => relativeTonic,
+  seventhChords: () => seventhChords,
+  triads: () => triads
+});
+module.exports = __toCommonJS(index_exports);
+var import_collection = require("@tonaljs/collection");
+var import_interval = require("@tonaljs/interval");
+var import_pcset = require("@tonaljs/pcset");
+var import_pitch_distance = require("@tonaljs/pitch-distance");
+var import_scale_type = require("@tonaljs/scale-type");
+var MODES = [
+  [0, 2773, 0, "ionian", "", "Maj7", "major"],
+  [1, 2902, 2, "dorian", "m", "m7"],
+  [2, 3418, 4, "phrygian", "m", "m7"],
+  [3, 2741, -1, "lydian", "", "Maj7"],
+  [4, 2774, 1, "mixolydian", "", "7"],
+  [5, 2906, 3, "aeolian", "m", "m7", "minor"],
+  [6, 3434, 5, "locrian", "dim", "m7b5"]
+];
+var NoMode = {
+  ...import_pcset.EmptyPcset,
+  name: "",
+  alt: 0,
+  modeNum: NaN,
+  triad: "",
+  seventh: "",
+  aliases: []
+};
+var modes = MODES.map(toMode);
+var index = {};
+modes.forEach((mode2) => {
+  index[mode2.name] = mode2;
+  mode2.aliases.forEach((alias) => {
+    index[alias] = mode2;
+  });
+});
+function get(name) {
+  return typeof name === "string" ? index[name.toLowerCase()] || NoMode : name && name.name ? get(name.name) : NoMode;
+}
+var mode = get;
+function all() {
+  return modes.slice();
+}
+var entries = all;
+function names() {
+  return modes.map((mode2) => mode2.name);
+}
+function toMode(mode2) {
+  const [modeNum, setNum, alt, name, triad, seventh, alias] = mode2;
+  const aliases = alias ? [alias] : [];
+  const chroma = Number(setNum).toString(2);
+  const intervals = (0, import_scale_type.get)(name).intervals;
+  return {
+    empty: false,
+    intervals,
+    modeNum,
+    chroma,
+    normalized: chroma,
+    name,
+    setNum,
+    alt,
+    triad,
+    seventh,
+    aliases
+  };
+}
+function notes(modeName, tonic) {
+  return get(modeName).intervals.map((ivl) => (0, import_pitch_distance.transpose)(tonic, ivl));
+}
+function chords(chords2) {
+  return (modeName, tonic) => {
+    const mode2 = get(modeName);
+    if (mode2.empty) return [];
+    const triads2 = (0, import_collection.rotate)(mode2.modeNum, chords2);
+    const tonics = mode2.intervals.map((i) => (0, import_pitch_distance.transpose)(tonic, i));
+    return triads2.map((triad, i) => tonics[i] + triad);
+  };
+}
+var triads = chords(MODES.map((x) => x[4]));
+var seventhChords = chords(MODES.map((x) => x[5]));
+function distance(destination, source) {
+  const from = get(source);
+  const to = get(destination);
+  if (from.empty || to.empty) return "";
+  return (0, import_interval.simplify)((0, import_interval.transposeFifths)("1P", to.alt - from.alt));
+}
+function relativeTonic(destination, source, tonic) {
+  return (0, import_pitch_distance.transpose)(tonic, distance(destination, source));
+}
+var index_default = {
+  get,
+  names,
+  all,
+  distance,
+  relativeTonic,
+  notes,
+  triads,
+  seventhChords,
+  // deprecated
+  entries,
+  mode
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  all,
+  distance,
+  entries,
+  get,
+  mode,
+  names,
+  notes,
+  relativeTonic,
+  seventhChords,
+  triads
+});
+
+},{"@tonaljs/collection":9,"@tonaljs/interval":12,"@tonaljs/pcset":17,"@tonaljs/pitch-distance":18,"@tonaljs/scale-type":26}],16:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name2 in all)
+    __defProp(target, name2, { get: all[name2], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var index_exports = {};
+__export(index_exports, {
+  accidentals: () => accidentals,
+  ascending: () => ascending,
+  chroma: () => chroma,
+  default: () => index_default,
+  descending: () => descending,
+  distance: () => distance,
+  enharmonic: () => enharmonic,
+  freq: () => freq,
+  fromFreq: () => fromFreq,
+  fromFreqSharps: () => fromFreqSharps,
+  fromMidi: () => fromMidi,
+  fromMidiSharps: () => fromMidiSharps,
+  get: () => get,
+  midi: () => midi,
+  name: () => name,
+  names: () => names,
+  octave: () => octave,
+  pitchClass: () => pitchClass,
+  simplify: () => simplify,
+  sortedNames: () => sortedNames,
+  sortedUniqNames: () => sortedUniqNames,
+  tr: () => tr,
+  trBy: () => trBy,
+  trFifths: () => trFifths,
+  trFrom: () => trFrom,
+  transpose: () => transpose,
+  transposeBy: () => transposeBy,
+  transposeFifths: () => transposeFifths,
+  transposeFrom: () => transposeFrom,
+  transposeOctaves: () => transposeOctaves
+});
+module.exports = __toCommonJS(index_exports);
+var import_midi = require("@tonaljs/midi");
+var import_pitch_distance = require("@tonaljs/pitch-distance");
+var import_pitch_note = require("@tonaljs/pitch-note");
+var NAMES = ["C", "D", "E", "F", "G", "A", "B"];
+var toName = (n) => n.name;
+var onlyNotes = (array) => array.map(import_pitch_note.note).filter((n) => !n.empty);
+function names(array) {
+  if (array === void 0) {
+    return NAMES.slice();
+  } else if (!Array.isArray(array)) {
+    return [];
+  } else {
+    return onlyNotes(array).map(toName);
+  }
+}
+var get = import_pitch_note.note;
+var name = (note) => get(note).name;
+var pitchClass = (note) => get(note).pc;
+var accidentals = (note) => get(note).acc;
+var octave = (note) => get(note).oct;
+var midi = (note) => get(note).midi;
+var freq = (note) => get(note).freq;
+var chroma = (note) => get(note).chroma;
+function fromMidi(midi2) {
+  return (0, import_midi.midiToNoteName)(midi2);
+}
+function fromFreq(freq2) {
+  return (0, import_midi.midiToNoteName)((0, import_midi.freqToMidi)(freq2));
+}
+function fromFreqSharps(freq2) {
+  return (0, import_midi.midiToNoteName)((0, import_midi.freqToMidi)(freq2), { sharps: true });
+}
+function fromMidiSharps(midi2) {
+  return (0, import_midi.midiToNoteName)(midi2, { sharps: true });
+}
+var distance = import_pitch_distance.distance;
+var transpose = import_pitch_distance.transpose;
+var tr = import_pitch_distance.transpose;
+var transposeBy = (interval) => (note) => transpose(note, interval);
+var trBy = transposeBy;
+var transposeFrom = (note) => (interval) => transpose(note, interval);
+var trFrom = transposeFrom;
+function transposeFifths(noteName, fifths) {
+  return transpose(noteName, [fifths, 0]);
+}
+var trFifths = transposeFifths;
+function transposeOctaves(noteName, octaves) {
+  return transpose(noteName, [0, octaves]);
+}
+var ascending = (a, b) => a.height - b.height;
+var descending = (a, b) => b.height - a.height;
+function sortedNames(notes, comparator) {
+  comparator = comparator || ascending;
+  return onlyNotes(notes).sort(comparator).map(toName);
+}
+function sortedUniqNames(notes) {
+  return sortedNames(notes, ascending).filter(
+    (n, i, a) => i === 0 || n !== a[i - 1]
+  );
+}
+var simplify = (noteName) => {
+  const note = get(noteName);
+  if (note.empty) {
+    return "";
+  }
+  return (0, import_midi.midiToNoteName)(note.midi || note.chroma, {
+    sharps: note.alt > 0,
+    pitchClass: note.midi === null
+  });
+};
+function enharmonic(noteName, destName) {
+  const src = get(noteName);
+  if (src.empty) {
+    return "";
+  }
+  const dest = get(
+    destName || (0, import_midi.midiToNoteName)(src.midi || src.chroma, {
+      sharps: src.alt < 0,
+      pitchClass: true
+    })
+  );
+  if (dest.empty || dest.chroma !== src.chroma) {
+    return "";
+  }
+  if (src.oct === void 0) {
+    return dest.pc;
+  }
+  const srcChroma = src.chroma - src.alt;
+  const destChroma = dest.chroma - dest.alt;
+  const destOctOffset = srcChroma > 11 || destChroma < 0 ? -1 : srcChroma < 0 || destChroma > 11 ? 1 : 0;
+  const destOct = src.oct + destOctOffset;
+  return dest.pc + destOct;
+}
+var index_default = {
+  names,
+  get,
+  name,
+  pitchClass,
+  accidentals,
+  octave,
+  midi,
+  ascending,
+  descending,
+  distance,
+  sortedNames,
+  sortedUniqNames,
+  fromMidi,
+  fromMidiSharps,
+  freq,
+  fromFreq,
+  fromFreqSharps,
+  chroma,
+  transpose,
+  tr,
+  transposeBy,
+  trBy,
+  transposeFrom,
+  trFrom,
+  transposeFifths,
+  transposeOctaves,
+  trFifths,
+  simplify,
+  enharmonic
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  accidentals,
+  ascending,
+  chroma,
+  descending,
+  distance,
+  enharmonic,
+  freq,
+  fromFreq,
+  fromFreqSharps,
+  fromMidi,
+  fromMidiSharps,
+  get,
+  midi,
+  name,
+  names,
+  octave,
+  pitchClass,
+  simplify,
+  sortedNames,
+  sortedUniqNames,
+  tr,
+  trBy,
+  trFifths,
+  trFrom,
+  transpose,
+  transposeBy,
+  transposeFifths,
+  transposeFrom,
+  transposeOctaves
+});
+
+},{"@tonaljs/midi":14,"@tonaljs/pitch-distance":18,"@tonaljs/pitch-note":20}],17:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var pcset_exports = {};
+__export(pcset_exports, {
+  EmptyPcset: () => EmptyPcset,
+  chroma: () => chroma,
+  chromas: () => chromas,
+  default: () => pcset_default,
+  filter: () => filter,
+  get: () => get,
+  includes: () => includes,
+  intervals: () => intervals,
+  isChroma: () => isChroma,
+  isEqual: () => isEqual,
+  isNoteIncludedIn: () => isNoteIncludedIn,
+  isSubsetOf: () => isSubsetOf,
+  isSupersetOf: () => isSupersetOf,
+  modes: () => modes,
+  notes: () => notes,
+  num: () => num,
+  pcset: () => pcset
+});
+module.exports = __toCommonJS(pcset_exports);
+var import_collection = require("@tonaljs/collection");
+var import_pitch_distance = require("@tonaljs/pitch-distance");
+var import_pitch_interval = require("@tonaljs/pitch-interval");
+var import_pitch_note = require("@tonaljs/pitch-note");
+var EmptyPcset = {
+  empty: true,
+  name: "",
+  setNum: 0,
+  chroma: "000000000000",
+  normalized: "000000000000",
+  intervals: []
+};
+var setNumToChroma = (num2) => Number(num2).toString(2).padStart(12, "0");
+var chromaToNumber = (chroma2) => parseInt(chroma2, 2);
+var REGEX = /^[01]{12}$/;
+function isChroma(set) {
+  return REGEX.test(set);
+}
+var isPcsetNum = (set) => typeof set === "number" && set >= 0 && set <= 4095;
+var isPcset = (set) => set && isChroma(set.chroma);
+var cache = { [EmptyPcset.chroma]: EmptyPcset };
+function get(src) {
+  const chroma2 = isChroma(src) ? src : isPcsetNum(src) ? setNumToChroma(src) : Array.isArray(src) ? listToChroma(src) : isPcset(src) ? src.chroma : EmptyPcset.chroma;
+  return cache[chroma2] = cache[chroma2] || chromaToPcset(chroma2);
+}
+var pcset = get;
+var chroma = (set) => get(set).chroma;
+var intervals = (set) => get(set).intervals;
+var num = (set) => get(set).setNum;
+var IVLS = [
+  "1P",
+  "2m",
+  "2M",
+  "3m",
+  "3M",
+  "4P",
+  "5d",
+  "5P",
+  "6m",
+  "6M",
+  "7m",
+  "7M"
+];
+function chromaToIntervals(chroma2) {
+  const intervals2 = [];
+  for (let i = 0; i < 12; i++) {
+    if (chroma2.charAt(i) === "1") intervals2.push(IVLS[i]);
+  }
+  return intervals2;
+}
+function notes(set) {
+  return get(set).intervals.map((ivl) => (0, import_pitch_distance.transpose)("C", ivl));
+}
+function chromas() {
+  return (0, import_collection.range)(2048, 4095).map(setNumToChroma);
+}
+function modes(set, normalize = true) {
+  const pcs = get(set);
+  const binary = pcs.chroma.split("");
+  return (0, import_collection.compact)(
+    binary.map((_, i) => {
+      const r = (0, import_collection.rotate)(i, binary);
+      return normalize && r[0] === "0" ? null : r.join("");
+    })
+  );
+}
+function isEqual(s1, s2) {
+  return get(s1).setNum === get(s2).setNum;
+}
+function isSubsetOf(set) {
+  const s = get(set).setNum;
+  return (notes2) => {
+    const o = get(notes2).setNum;
+    return s && s !== o && (o & s) === o;
+  };
+}
+function isSupersetOf(set) {
+  const s = get(set).setNum;
+  return (notes2) => {
+    const o = get(notes2).setNum;
+    return s && s !== o && (o | s) === o;
+  };
+}
+function isNoteIncludedIn(set) {
+  const s = get(set);
+  return (noteName) => {
+    const n = (0, import_pitch_note.note)(noteName);
+    return s && !n.empty && s.chroma.charAt(n.chroma) === "1";
+  };
+}
+var includes = isNoteIncludedIn;
+function filter(set) {
+  const isIncluded = isNoteIncludedIn(set);
+  return (notes2) => {
+    return notes2.filter(isIncluded);
+  };
+}
+var pcset_default = {
+  get,
+  chroma,
+  num,
+  intervals,
+  chromas,
+  isSupersetOf,
+  isSubsetOf,
+  isNoteIncludedIn,
+  isEqual,
+  filter,
+  modes,
+  notes,
+  // deprecated
+  pcset
+};
+function chromaRotations(chroma2) {
+  const binary = chroma2.split("");
+  return binary.map((_, i) => (0, import_collection.rotate)(i, binary).join(""));
+}
+function chromaToPcset(chroma2) {
+  const setNum = chromaToNumber(chroma2);
+  const normalizedNum = chromaRotations(chroma2).map(chromaToNumber).filter((n) => n >= 2048).sort()[0];
+  const normalized = setNumToChroma(normalizedNum);
+  const intervals2 = chromaToIntervals(chroma2);
+  return {
+    empty: false,
+    name: "",
+    setNum,
+    chroma: chroma2,
+    normalized,
+    intervals: intervals2
+  };
+}
+function listToChroma(set) {
+  if (set.length === 0) {
+    return EmptyPcset.chroma;
+  }
+  let pitch;
+  const binary = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  for (let i = 0; i < set.length; i++) {
+    pitch = (0, import_pitch_note.note)(set[i]);
+    if (pitch.empty) pitch = (0, import_pitch_interval.interval)(set[i]);
+    if (!pitch.empty) binary[pitch.chroma] = 1;
+  }
+  return binary.join("");
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  EmptyPcset,
+  chroma,
+  chromas,
+  filter,
+  get,
+  includes,
+  intervals,
+  isChroma,
+  isEqual,
+  isNoteIncludedIn,
+  isSubsetOf,
+  isSupersetOf,
+  modes,
+  notes,
+  num,
+  pcset
+});
+
+},{"@tonaljs/collection":9,"@tonaljs/pitch-distance":18,"@tonaljs/pitch-interval":19,"@tonaljs/pitch-note":20}],18:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var pitch_distance_exports = {};
+__export(pitch_distance_exports, {
+  distance: () => distance,
+  tonicIntervalsTransposer: () => tonicIntervalsTransposer,
+  transpose: () => transpose
+});
+module.exports = __toCommonJS(pitch_distance_exports);
+var import_pitch_interval = require("@tonaljs/pitch-interval");
+var import_pitch_note = require("@tonaljs/pitch-note");
+function transpose(noteName, intervalName) {
+  const note = (0, import_pitch_note.note)(noteName);
+  const intervalCoord = Array.isArray(intervalName) ? intervalName : (0, import_pitch_interval.interval)(intervalName).coord;
+  if (note.empty || !intervalCoord || intervalCoord.length < 2) {
+    return "";
+  }
+  const noteCoord = note.coord;
+  const tr = noteCoord.length === 1 ? [noteCoord[0] + intervalCoord[0]] : [noteCoord[0] + intervalCoord[0], noteCoord[1] + intervalCoord[1]];
+  return (0, import_pitch_note.coordToNote)(tr).name;
+}
+function tonicIntervalsTransposer(intervals, tonic) {
+  const len = intervals.length;
+  return (normalized) => {
+    if (!tonic) return "";
+    const index = normalized < 0 ? (len - -normalized % len) % len : normalized % len;
+    const octaves = Math.floor(normalized / len);
+    const root = transpose(tonic, [0, octaves]);
+    return transpose(root, intervals[index]);
+  };
+}
+function distance(fromNote, toNote) {
+  const from = (0, import_pitch_note.note)(fromNote);
+  const to = (0, import_pitch_note.note)(toNote);
+  if (from.empty || to.empty) {
+    return "";
+  }
+  const fcoord = from.coord;
+  const tcoord = to.coord;
+  const fifths = tcoord[0] - fcoord[0];
+  const octs = fcoord.length === 2 && tcoord.length === 2 ? tcoord[1] - fcoord[1] : -Math.floor(fifths * 7 / 12);
+  const forceDescending = to.height === from.height && to.midi !== null && from.oct === to.oct && from.step > to.step;
+  return (0, import_pitch_interval.coordToInterval)([fifths, octs], forceDescending).name;
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  distance,
+  tonicIntervalsTransposer,
+  transpose
+});
+
+},{"@tonaljs/pitch-interval":19,"@tonaljs/pitch-note":20}],19:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var pitch_interval_exports = {};
+__export(pitch_interval_exports, {
+  coordToInterval: () => coordToInterval,
+  interval: () => interval,
+  tokenizeInterval: () => tokenizeInterval
+});
+module.exports = __toCommonJS(pitch_interval_exports);
+var import_pitch = require("@tonaljs/pitch");
+var fillStr = (s, n) => Array(Math.abs(n) + 1).join(s);
+var NoInterval = Object.freeze({
+  empty: true,
+  name: "",
+  num: NaN,
+  q: "",
+  type: "",
+  step: NaN,
+  alt: NaN,
+  dir: NaN,
+  simple: NaN,
+  semitones: NaN,
+  chroma: NaN,
+  coord: [],
+  oct: NaN
+});
+var INTERVAL_TONAL_REGEX = "([-+]?\\d+)(d{1,4}|m|M|P|A{1,4})";
+var INTERVAL_SHORTHAND_REGEX = "(AA|A|P|M|m|d|dd)([-+]?\\d+)";
+var REGEX = new RegExp(
+  "^" + INTERVAL_TONAL_REGEX + "|" + INTERVAL_SHORTHAND_REGEX + "$"
+);
+function tokenizeInterval(str) {
+  const m = REGEX.exec(`${str}`);
+  if (m === null) {
+    return ["", ""];
+  }
+  return m[1] ? [m[1], m[2]] : [m[4], m[3]];
+}
+var cache = {};
+function interval(src) {
+  return typeof src === "string" ? cache[src] || (cache[src] = parse(src)) : (0, import_pitch.isPitch)(src) ? interval(pitchName(src)) : (0, import_pitch.isNamedPitch)(src) ? interval(src.name) : NoInterval;
+}
+var SIZES = [0, 2, 4, 5, 7, 9, 11];
+var TYPES = "PMMPPMM";
+function parse(str) {
+  const tokens = tokenizeInterval(str);
+  if (tokens[0] === "") {
+    return NoInterval;
+  }
+  const num = +tokens[0];
+  const q = tokens[1];
+  const step = (Math.abs(num) - 1) % 7;
+  const t = TYPES[step];
+  if (t === "M" && q === "P") {
+    return NoInterval;
+  }
+  const type = t === "M" ? "majorable" : "perfectable";
+  const name = "" + num + q;
+  const dir = num < 0 ? -1 : 1;
+  const simple = num === 8 || num === -8 ? num : dir * (step + 1);
+  const alt = qToAlt(type, q);
+  const oct = Math.floor((Math.abs(num) - 1) / 7);
+  const semitones = dir * (SIZES[step] + alt + 12 * oct);
+  const chroma = (dir * (SIZES[step] + alt) % 12 + 12) % 12;
+  const coord = (0, import_pitch.coordinates)({ step, alt, oct, dir });
+  return {
+    empty: false,
+    name,
+    num,
+    q,
+    step,
+    alt,
+    dir,
+    type,
+    simple,
+    semitones,
+    chroma,
+    coord,
+    oct
+  };
+}
+function coordToInterval(coord, forceDescending) {
+  const [f, o = 0] = coord;
+  const isDescending = f * 7 + o * 12 < 0;
+  const ivl = forceDescending || isDescending ? [-f, -o, -1] : [f, o, 1];
+  return interval((0, import_pitch.pitch)(ivl));
+}
+function qToAlt(type, q) {
+  return q === "M" && type === "majorable" || q === "P" && type === "perfectable" ? 0 : q === "m" && type === "majorable" ? -1 : /^A+$/.test(q) ? q.length : /^d+$/.test(q) ? -1 * (type === "perfectable" ? q.length : q.length + 1) : 0;
+}
+function pitchName(props) {
+  const { step, alt, oct = 0, dir } = props;
+  if (!dir) {
+    return "";
+  }
+  const calcNum = step + 1 + 7 * oct;
+  const num = calcNum === 0 ? step + 1 : calcNum;
+  const d = dir < 0 ? "-" : "";
+  const type = TYPES[step] === "M" ? "majorable" : "perfectable";
+  const name = d + num + altToQ(type, alt);
+  return name;
+}
+function altToQ(type, alt) {
+  if (alt === 0) {
+    return type === "majorable" ? "M" : "P";
+  } else if (alt === -1 && type === "majorable") {
+    return "m";
+  } else if (alt > 0) {
+    return fillStr("A", alt);
+  } else {
+    return fillStr("d", type === "perfectable" ? alt : alt + 1);
+  }
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  coordToInterval,
+  interval,
+  tokenizeInterval
+});
+
+},{"@tonaljs/pitch":21}],20:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod2) => __copyProps(__defProp({}, "__esModule", { value: true }), mod2);
+
+// index.ts
+var pitch_note_exports = {};
+__export(pitch_note_exports, {
+  accToAlt: () => accToAlt,
+  altToAcc: () => altToAcc,
+  coordToNote: () => coordToNote,
+  note: () => note,
+  stepToLetter: () => stepToLetter,
+  tokenizeNote: () => tokenizeNote
+});
+module.exports = __toCommonJS(pitch_note_exports);
+var import_pitch = require("@tonaljs/pitch");
+var fillStr = (s, n) => Array(Math.abs(n) + 1).join(s);
+var NoNote = Object.freeze({
+  empty: true,
+  name: "",
+  letter: "",
+  acc: "",
+  pc: "",
+  step: NaN,
+  alt: NaN,
+  chroma: NaN,
+  height: NaN,
+  coord: [],
+  midi: null,
+  freq: null
+});
+var cache = /* @__PURE__ */ new Map();
+var stepToLetter = (step) => "CDEFGAB".charAt(step);
+var altToAcc = (alt) => alt < 0 ? fillStr("b", -alt) : fillStr("#", alt);
+var accToAlt = (acc) => acc[0] === "b" ? -acc.length : acc.length;
+function note(src) {
+  const stringSrc = JSON.stringify(src);
+  const cached = cache.get(stringSrc);
+  if (cached) {
+    return cached;
+  }
+  const value = typeof src === "string" ? parse(src) : (0, import_pitch.isPitch)(src) ? note(pitchName(src)) : (0, import_pitch.isNamedPitch)(src) ? note(src.name) : NoNote;
+  cache.set(stringSrc, value);
+  return value;
+}
+var REGEX = /^([a-gA-G]?)(#{1,}|b{1,}|x{1,}|)(-?\d*)\s*(.*)$/;
+function tokenizeNote(str) {
+  const m = REGEX.exec(str);
+  return m ? [m[1].toUpperCase(), m[2].replace(/x/g, "##"), m[3], m[4]] : ["", "", "", ""];
+}
+function coordToNote(noteCoord) {
+  return note((0, import_pitch.pitch)(noteCoord));
+}
+var mod = (n, m) => (n % m + m) % m;
+var SEMI = [0, 2, 4, 5, 7, 9, 11];
+function parse(noteName) {
+  const tokens = tokenizeNote(noteName);
+  if (tokens[0] === "" || tokens[3] !== "") {
+    return NoNote;
+  }
+  const letter = tokens[0];
+  const acc = tokens[1];
+  const octStr = tokens[2];
+  const step = (letter.charCodeAt(0) + 3) % 7;
+  const alt = accToAlt(acc);
+  const oct = octStr.length ? +octStr : void 0;
+  const coord = (0, import_pitch.coordinates)({ step, alt, oct });
+  const name = letter + acc + octStr;
+  const pc = letter + acc;
+  const chroma = (SEMI[step] + alt + 120) % 12;
+  const height = oct === void 0 ? mod(SEMI[step] + alt, 12) - 12 * 99 : SEMI[step] + alt + 12 * (oct + 1);
+  const midi = height >= 0 && height <= 127 ? height : null;
+  const freq = oct === void 0 ? null : Math.pow(2, (height - 69) / 12) * 440;
+  return {
+    empty: false,
+    acc,
+    alt,
+    chroma,
+    coord,
+    freq,
+    height,
+    letter,
+    midi,
+    name,
+    oct,
+    pc,
+    step
+  };
+}
+function pitchName(props) {
+  const { step, alt, oct } = props;
+  const letter = stepToLetter(step);
+  if (!letter) {
+    return "";
+  }
+  const pc = letter + altToAcc(alt);
+  return oct || oct === 0 ? pc + oct : pc;
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  accToAlt,
+  altToAcc,
+  coordToNote,
+  note,
+  stepToLetter,
+  tokenizeNote
+});
+
+},{"@tonaljs/pitch":21}],21:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var pitch_exports = {};
+__export(pitch_exports, {
+  chroma: () => chroma,
+  coordinates: () => coordinates,
+  height: () => height,
+  isNamedPitch: () => isNamedPitch,
+  isPitch: () => isPitch,
+  midi: () => midi,
+  pitch: () => pitch
+});
+module.exports = __toCommonJS(pitch_exports);
+function isNamedPitch(src) {
+  return src !== null && typeof src === "object" && "name" in src && typeof src.name === "string" ? true : false;
+}
+var SIZES = [0, 2, 4, 5, 7, 9, 11];
+var chroma = ({ step, alt }) => (SIZES[step] + alt + 120) % 12;
+var height = ({ step, alt, oct, dir = 1 }) => dir * (SIZES[step] + alt + 12 * (oct === void 0 ? -100 : oct));
+var midi = (pitch2) => {
+  const h = height(pitch2);
+  return pitch2.oct !== void 0 && h >= -12 && h <= 115 ? h + 12 : null;
+};
+function isPitch(pitch2) {
+  return pitch2 !== null && typeof pitch2 === "object" && "step" in pitch2 && typeof pitch2.step === "number" && "alt" in pitch2 && typeof pitch2.alt === "number" && !isNaN(pitch2.step) && !isNaN(pitch2.alt) ? true : false;
+}
+var FIFTHS = [0, 2, 4, -1, 1, 3, 5];
+var STEPS_TO_OCTS = FIFTHS.map(
+  (fifths) => Math.floor(fifths * 7 / 12)
+);
+function coordinates(pitch2) {
+  const { step, alt, oct, dir = 1 } = pitch2;
+  const f = FIFTHS[step] + 7 * alt;
+  if (oct === void 0) {
+    return [dir * f];
+  }
+  const o = oct - STEPS_TO_OCTS[step] - 4 * alt;
+  return [dir * f, dir * o];
+}
+var FIFTHS_TO_STEPS = [3, 0, 4, 1, 5, 2, 6];
+function pitch(coord) {
+  const [f, o, dir] = coord;
+  const step = FIFTHS_TO_STEPS[unaltered(f)];
+  const alt = Math.floor((f + 1) / 7);
+  if (o === void 0) {
+    return { step, alt, dir };
+  }
+  const oct = o + 4 * alt + STEPS_TO_OCTS[step];
+  return { step, alt, oct, dir };
+}
+function unaltered(f) {
+  const i = (f + 1) % 7;
+  return i < 0 ? 7 + i : i;
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  chroma,
+  coordinates,
+  height,
+  isNamedPitch,
+  isPitch,
+  midi,
+  pitch
+});
+
+},{}],22:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var index_exports = {};
+__export(index_exports, {
+  default: () => index_default,
+  fromRomanNumerals: () => fromRomanNumerals,
+  toRomanNumerals: () => toRomanNumerals
+});
+module.exports = __toCommonJS(index_exports);
+var import_chord = require("@tonaljs/chord");
+var import_pitch_distance = require("@tonaljs/pitch-distance");
+var import_pitch_interval = require("@tonaljs/pitch-interval");
+var import_roman_numeral = require("@tonaljs/roman-numeral");
+function fromRomanNumerals(tonic, chords) {
+  const romanNumerals = chords.map(import_roman_numeral.get);
+  return romanNumerals.map(
+    (rn) => (0, import_pitch_distance.transpose)(tonic, (0, import_pitch_interval.interval)(rn)) + rn.chordType
+  );
+}
+function toRomanNumerals(tonic, chords) {
+  return chords.map((chord) => {
+    const [note, chordType] = (0, import_chord.tokenize)(chord);
+    const intervalName = (0, import_pitch_distance.distance)(tonic, note);
+    const roman = (0, import_roman_numeral.get)((0, import_pitch_interval.interval)(intervalName));
+    return roman.name + chordType;
+  });
+}
+var index_default = { fromRomanNumerals, toRomanNumerals };
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  fromRomanNumerals,
+  toRomanNumerals
+});
+
+},{"@tonaljs/chord":8,"@tonaljs/pitch-distance":18,"@tonaljs/pitch-interval":19,"@tonaljs/roman-numeral":25}],23:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var index_exports = {};
+__export(index_exports, {
+  chromatic: () => chromatic,
+  default: () => index_default,
+  numeric: () => numeric
+});
+module.exports = __toCommonJS(index_exports);
+var import_collection = require("@tonaljs/collection");
+var import_midi = require("@tonaljs/midi");
+function numeric(notes) {
+  const midi = (0, import_collection.compact)(
+    notes.map((note) => typeof note === "number" ? note : (0, import_midi.toMidi)(note))
+  );
+  if (!notes.length || midi.length !== notes.length) {
+    return [];
+  }
+  return midi.reduce(
+    (result, note) => {
+      const last = result[result.length - 1];
+      return result.concat((0, import_collection.range)(last, note).slice(1));
+    },
+    [midi[0]]
+  );
+}
+function chromatic(notes, options) {
+  return numeric(notes).map((midi) => (0, import_midi.midiToNoteName)(midi, options));
+}
+var index_default = { numeric, chromatic };
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  chromatic,
+  numeric
+});
+
+},{"@tonaljs/collection":9,"@tonaljs/midi":14}],24:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var rhythm_patterm_exports = {};
+__export(rhythm_patterm_exports, {
+  binary: () => binary,
+  euclid: () => euclid,
+  hex: () => hex,
+  onsets: () => onsets,
+  probability: () => probability,
+  random: () => random,
+  rotate: () => rotate
+});
+module.exports = __toCommonJS(rhythm_patterm_exports);
+function binary(...numbers) {
+  return numbers.reduce((pattern, number) => {
+    number.toString(2).split("").forEach((digit) => {
+      pattern.push(parseInt(digit));
+    });
+    return pattern;
+  }, []);
+}
+function hex(hexNumber) {
+  const pattern = [];
+  for (let i = 0; i < hexNumber.length; i++) {
+    const digit = parseInt("0x" + hexNumber[i]);
+    const binary2 = isNaN(digit) ? "0000" : digit.toString(2).padStart(4, "0");
+    binary2.split("").forEach((digit2) => {
+      pattern.push(digit2 === "1" ? 1 : 0);
+    });
+  }
+  return pattern;
+}
+function onsets(...numbers) {
+  return numbers.reduce((pattern, number) => {
+    pattern.push(1);
+    for (let i = 0; i < number; i++) {
+      pattern.push(0);
+    }
+    return pattern;
+  }, []);
+}
+function random(length, probability2 = 0.5, rnd = Math.random) {
+  const pattern = [];
+  for (let i = 0; i < length; i++) {
+    pattern.push(rnd() >= probability2 ? 1 : 0);
+  }
+  return pattern;
+}
+function probability(probabilities, rnd = Math.random) {
+  return probabilities.map((probability2) => rnd() <= probability2 ? 1 : 0);
+}
+function rotate(pattern, rotations) {
+  const len = pattern.length;
+  const rotated = [];
+  for (let i = 0; i < len; i++) {
+    const pos = ((i - rotations) % len + len) % len;
+    rotated[i] = pattern[pos];
+  }
+  return rotated;
+}
+function euclid(steps, beats) {
+  const pattern = [];
+  let d = -1;
+  for (let i = 0; i < steps; i++) {
+    const v = Math.floor(i * (beats / steps));
+    pattern[i] = v !== d ? 1 : 0;
+    d = v;
+  }
+  return pattern;
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  binary,
+  euclid,
+  hex,
+  onsets,
+  probability,
+  random,
+  rotate
+});
+
+},{}],25:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var roman_numeral_exports = {};
+__export(roman_numeral_exports, {
+  default: () => roman_numeral_default,
+  get: () => get,
+  names: () => names,
+  romanNumeral: () => romanNumeral,
+  tokenize: () => tokenize
+});
+module.exports = __toCommonJS(roman_numeral_exports);
+var import_pitch = require("@tonaljs/pitch");
+var import_pitch_interval = require("@tonaljs/pitch-interval");
+var import_pitch_note = require("@tonaljs/pitch-note");
+var NoRomanNumeral = { empty: true, name: "", chordType: "" };
+var cache = {};
+function get(src) {
+  return typeof src === "string" ? cache[src] || (cache[src] = parse(src)) : typeof src === "number" ? get(NAMES[src] || "") : (0, import_pitch.isPitch)(src) ? fromPitch(src) : (0, import_pitch.isNamedPitch)(src) ? get(src.name) : NoRomanNumeral;
+}
+var romanNumeral = get;
+function names(major = true) {
+  return (major ? NAMES : NAMES_MINOR).slice();
+}
+function fromPitch(pitch) {
+  return get((0, import_pitch_note.altToAcc)(pitch.alt) + NAMES[pitch.step]);
+}
+var REGEX = /^(#{1,}|b{1,}|x{1,}|)(IV|I{1,3}|VI{0,2}|iv|i{1,3}|vi{0,2})([^IViv]*)$/;
+function tokenize(str) {
+  return REGEX.exec(str) || ["", "", "", ""];
+}
+var ROMANS = "I II III IV V VI VII";
+var NAMES = ROMANS.split(" ");
+var NAMES_MINOR = ROMANS.toLowerCase().split(" ");
+function parse(src) {
+  const [name, acc, roman, chordType] = tokenize(src);
+  if (!roman) {
+    return NoRomanNumeral;
+  }
+  const upperRoman = roman.toUpperCase();
+  const step = NAMES.indexOf(upperRoman);
+  const alt = (0, import_pitch_note.accToAlt)(acc);
+  const dir = 1;
+  return {
+    empty: false,
+    name,
+    roman,
+    interval: (0, import_pitch_interval.interval)({ step, alt, dir }).name,
+    acc,
+    chordType,
+    alt,
+    step,
+    major: roman === upperRoman,
+    oct: 0,
+    dir
+  };
+}
+var roman_numeral_default = {
+  names,
+  get,
+  // deprecated
+  romanNumeral
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  get,
+  names,
+  romanNumeral,
+  tokenize
+});
+
+},{"@tonaljs/pitch":21,"@tonaljs/pitch-interval":19,"@tonaljs/pitch-note":20}],26:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all2) => {
+  for (var name in all2)
+    __defProp(target, name, { get: all2[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var index_exports = {};
+__export(index_exports, {
+  NoScaleType: () => NoScaleType,
+  add: () => add,
+  addAlias: () => addAlias,
+  all: () => all,
+  default: () => index_default,
+  entries: () => entries,
+  get: () => get,
+  keys: () => keys,
+  names: () => names,
+  removeAll: () => removeAll,
+  scaleType: () => scaleType
+});
+module.exports = __toCommonJS(index_exports);
+var import_pcset = require("@tonaljs/pcset");
+
+// data.ts
+var SCALES = [
+  // Basic scales
+  ["1P 2M 3M 5P 6M", "major pentatonic", "pentatonic"],
+  ["1P 2M 3M 4P 5P 6M 7M", "major", "ionian"],
+  ["1P 2M 3m 4P 5P 6m 7m", "minor", "aeolian"],
+  // Jazz common scales
+  ["1P 2M 3m 3M 5P 6M", "major blues"],
+  ["1P 3m 4P 5d 5P 7m", "minor blues", "blues"],
+  ["1P 2M 3m 4P 5P 6M 7M", "melodic minor"],
+  ["1P 2M 3m 4P 5P 6m 7M", "harmonic minor"],
+  ["1P 2M 3M 4P 5P 6M 7m 7M", "bebop"],
+  ["1P 2M 3m 4P 5d 6m 6M 7M", "diminished", "whole-half diminished"],
+  // Modes
+  ["1P 2M 3m 4P 5P 6M 7m", "dorian"],
+  ["1P 2M 3M 4A 5P 6M 7M", "lydian"],
+  ["1P 2M 3M 4P 5P 6M 7m", "mixolydian", "dominant"],
+  ["1P 2m 3m 4P 5P 6m 7m", "phrygian"],
+  ["1P 2m 3m 4P 5d 6m 7m", "locrian"],
+  // 5-note scales
+  ["1P 3M 4P 5P 7M", "ionian pentatonic"],
+  ["1P 3M 4P 5P 7m", "mixolydian pentatonic", "indian"],
+  ["1P 2M 4P 5P 6M", "ritusen"],
+  ["1P 2M 4P 5P 7m", "egyptian"],
+  // Source: https://en.wikipedia.org/wiki/Neapolitan_scale
+  ["1P 3M 4P 5d 7m", "neapolitan major pentatonic"],
+  ["1P 3m 4P 5P 6m", "vietnamese 1"],
+  ["1P 2m 3m 5P 6m", "pelog"],
+  ["1P 2m 4P 5P 6m", "kumoijoshi"],
+  ["1P 2M 3m 5P 6m", "hirajoshi"],
+  ["1P 2m 4P 5d 7m", "iwato"],
+  ["1P 2m 4P 5P 7m", "in-sen"],
+  ["1P 3M 4A 5P 7M", "lydian pentatonic", "chinese"],
+  ["1P 3m 4P 6m 7m", "malkos raga"],
+  ["1P 3m 4P 5d 7m", "locrian pentatonic", "minor seven flat five pentatonic"],
+  ["1P 3m 4P 5P 7m", "minor pentatonic", "vietnamese 2"],
+  ["1P 3m 4P 5P 6M", "minor six pentatonic"],
+  ["1P 2M 3m 5P 6M", "flat three pentatonic", "kumoi"],
+  ["1P 2M 3M 5P 6m", "flat six pentatonic"],
+  ["1P 2m 3M 5P 6M", "scriabin"],
+  ["1P 3M 5d 6m 7m", "whole tone pentatonic"],
+  ["1P 3M 4A 5A 7M", "lydian #5p pentatonic"],
+  ["1P 3M 4A 5P 7m", "lydian dominant pentatonic"],
+  ["1P 3m 4P 5P 7M", "minor #7m pentatonic"],
+  ["1P 3m 4d 5d 7m", "super locrian pentatonic"],
+  // 6-note scales
+  ["1P 2M 3m 4P 5P 7M", "minor hexatonic"],
+  ["1P 2A 3M 5P 5A 7M", "augmented"],
+  ["1P 2M 4P 5P 6M 7m", "piongio"],
+  // Source: https://en.wikipedia.org/wiki/Neapolitan_scale
+  ["1P 2m 3M 4A 6M 7m", "prometheus neapolitan"],
+  ["1P 2M 3M 4A 6M 7m", "prometheus"],
+  ["1P 2m 3M 5d 6m 7m", "mystery #1"],
+  ["1P 2m 3M 4P 5A 6M", "six tone symmetric"],
+  ["1P 2M 3M 4A 5A 6A", "whole tone", "messiaen's mode #1"],
+  ["1P 2m 4P 4A 5P 7M", "messiaen's mode #5"],
+  // 7-note scales
+  ["1P 2M 3M 4P 5d 6m 7m", "locrian major", "arabian"],
+  ["1P 2m 3M 4A 5P 6m 7M", "double harmonic lydian"],
+  [
+    "1P 2m 2A 3M 4A 6m 7m",
+    "altered",
+    "super locrian",
+    "diminished whole tone",
+    "pomeroy"
+  ],
+  ["1P 2M 3m 4P 5d 6m 7m", "locrian #2", "half-diminished", "aeolian b5"],
+  [
+    "1P 2M 3M 4P 5P 6m 7m",
+    "mixolydian b6",
+    "melodic minor fifth mode",
+    "hindu"
+  ],
+  ["1P 2M 3M 4A 5P 6M 7m", "lydian dominant", "lydian b7", "overtone"],
+  ["1P 2M 3M 4A 5A 6M 7M", "lydian augmented"],
+  [
+    "1P 2m 3m 4P 5P 6M 7m",
+    "dorian b2",
+    "phrygian #6",
+    "melodic minor second mode"
+  ],
+  [
+    "1P 2m 3m 4d 5d 6m 7d",
+    "ultralocrian",
+    "superlocrian bb7",
+    "superlocrian diminished"
+  ],
+  ["1P 2m 3m 4P 5d 6M 7m", "locrian 6", "locrian natural 6", "locrian sharp 6"],
+  ["1P 2A 3M 4P 5P 5A 7M", "augmented heptatonic"],
+  // Source https://en.wikipedia.org/wiki/Ukrainian_Dorian_scale
+  [
+    "1P 2M 3m 4A 5P 6M 7m",
+    "dorian #4",
+    "ukrainian dorian",
+    "romanian minor",
+    "altered dorian"
+  ],
+  ["1P 2M 3m 4A 5P 6M 7M", "lydian diminished"],
+  ["1P 2M 3M 4A 5A 7m 7M", "leading whole tone"],
+  ["1P 2M 3M 4A 5P 6m 7m", "lydian minor"],
+  ["1P 2m 3M 4P 5P 6m 7m", "phrygian dominant", "spanish", "phrygian major"],
+  ["1P 2m 3m 4P 5P 6m 7M", "balinese"],
+  // Source: https://en.wikipedia.org/wiki/Neapolitan_scale
+  ["1P 2m 3m 4P 5P 6M 7M", "neapolitan major"],
+  ["1P 2M 3M 4P 5P 6m 7M", "harmonic major"],
+  ["1P 2m 3M 4P 5P 6m 7M", "double harmonic major", "gypsy"],
+  ["1P 2M 3m 4A 5P 6m 7M", "hungarian minor"],
+  ["1P 2A 3M 4A 5P 6M 7m", "hungarian major"],
+  ["1P 2m 3M 4P 5d 6M 7m", "oriental"],
+  ["1P 2m 3m 3M 4A 5P 7m", "flamenco"],
+  ["1P 2m 3m 4A 5P 6m 7M", "todi raga"],
+  ["1P 2m 3M 4P 5d 6m 7M", "persian"],
+  ["1P 2m 3M 5d 6m 7m 7M", "enigmatic"],
+  [
+    "1P 2M 3M 4P 5A 6M 7M",
+    "major augmented",
+    "major #5",
+    "ionian augmented",
+    "ionian #5"
+  ],
+  ["1P 2A 3M 4A 5P 6M 7M", "lydian #9"],
+  // 8-note scales
+  ["1P 2m 2M 4P 4A 5P 6m 7M", "messiaen's mode #4"],
+  ["1P 2m 3M 4P 4A 5P 6m 7M", "purvi raga"],
+  ["1P 2m 3m 3M 4P 5P 6m 7m", "spanish heptatonic"],
+  ["1P 2M 3m 3M 4P 5P 6M 7m", "bebop minor"],
+  ["1P 2M 3M 4P 5P 5A 6M 7M", "bebop major"],
+  ["1P 2m 3m 4P 5d 5P 6m 7m", "bebop locrian"],
+  ["1P 2M 3m 4P 5P 6m 7m 7M", "minor bebop"],
+  ["1P 2M 3M 4P 5d 5P 6M 7M", "ichikosucho"],
+  ["1P 2M 3m 4P 5P 6m 6M 7M", "minor six diminished"],
+  [
+    "1P 2m 3m 3M 4A 5P 6M 7m",
+    "half-whole diminished",
+    "dominant diminished",
+    "messiaen's mode #2"
+  ],
+  ["1P 3m 3M 4P 5P 6M 7m 7M", "kafi raga"],
+  ["1P 2M 3M 4P 4A 5A 6A 7M", "messiaen's mode #6"],
+  // 9-note scales
+  ["1P 2M 3m 3M 4P 5d 5P 6M 7m", "composite blues"],
+  ["1P 2M 3m 3M 4A 5P 6m 7m 7M", "messiaen's mode #3"],
+  // 10-note scales
+  ["1P 2m 2M 3m 4P 4A 5P 6m 6M 7M", "messiaen's mode #7"],
+  // 12-note scales
+  ["1P 2m 2M 3m 3M 4P 5d 5P 6m 6M 7m 7M", "chromatic"]
+];
+var data_default = SCALES;
+
+// index.ts
+var NoScaleType = {
+  ...import_pcset.EmptyPcset,
+  intervals: [],
+  aliases: []
+};
+var dictionary = [];
+var index = {};
+function names() {
+  return dictionary.map((scale) => scale.name);
+}
+function get(type) {
+  return index[type] || NoScaleType;
+}
+var scaleType = get;
+function all() {
+  return dictionary.slice();
+}
+var entries = all;
+function keys() {
+  return Object.keys(index);
+}
+function removeAll() {
+  dictionary = [];
+  index = {};
+}
+function add(intervals, name, aliases = []) {
+  const scale = { ...(0, import_pcset.get)(intervals), name, intervals, aliases };
+  dictionary.push(scale);
+  index[scale.name] = scale;
+  index[scale.setNum] = scale;
+  index[scale.chroma] = scale;
+  scale.aliases.forEach((alias) => addAlias(scale, alias));
+  return scale;
+}
+function addAlias(scale, alias) {
+  index[alias] = scale;
+}
+data_default.forEach(
+  ([ivls, name, ...aliases]) => add(ivls.split(" "), name, aliases)
+);
+var index_default = {
+  names,
+  get,
+  all,
+  add,
+  removeAll,
+  keys,
+  // deprecated
+  entries,
+  scaleType
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  NoScaleType,
+  add,
+  addAlias,
+  all,
+  entries,
+  get,
+  keys,
+  names,
+  removeAll,
+  scaleType
+});
+
+},{"@tonaljs/pcset":17}],27:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all2) => {
+  for (var name in all2)
+    __defProp(target, name, { get: all2[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var index_exports = {};
+__export(index_exports, {
+  default: () => index_default,
+  degrees: () => degrees,
+  detect: () => detect,
+  extended: () => extended,
+  get: () => get,
+  modeNames: () => modeNames,
+  names: () => names,
+  rangeOf: () => rangeOf,
+  reduced: () => reduced,
+  scale: () => scale,
+  scaleChords: () => scaleChords,
+  scaleNotes: () => scaleNotes,
+  steps: () => steps,
+  tokenize: () => tokenize
+});
+module.exports = __toCommonJS(index_exports);
+var import_chord_type = require("@tonaljs/chord-type");
+var import_collection = require("@tonaljs/collection");
+var import_note = require("@tonaljs/note");
+var import_pcset = require("@tonaljs/pcset");
+var import_pitch_distance = require("@tonaljs/pitch-distance");
+var import_pitch_note = require("@tonaljs/pitch-note");
+var import_scale_type = require("@tonaljs/scale-type");
+var NoScale = {
+  empty: true,
+  name: "",
+  type: "",
+  tonic: null,
+  setNum: NaN,
+  chroma: "",
+  normalized: "",
+  aliases: [],
+  notes: [],
+  intervals: []
+};
+function tokenize(name) {
+  if (typeof name !== "string") {
+    return ["", ""];
+  }
+  const i = name.indexOf(" ");
+  const tonic = (0, import_pitch_note.note)(name.substring(0, i));
+  if (tonic.empty) {
+    const n = (0, import_pitch_note.note)(name);
+    return n.empty ? ["", name.toLowerCase()] : [n.name, ""];
+  }
+  const type = name.substring(tonic.name.length + 1).toLowerCase();
+  return [tonic.name, type.length ? type : ""];
+}
+var names = import_scale_type.names;
+function get(src) {
+  const tokens = Array.isArray(src) ? src : tokenize(src);
+  const tonic = (0, import_pitch_note.note)(tokens[0]).name;
+  const st = (0, import_scale_type.get)(tokens[1]);
+  if (st.empty) {
+    return NoScale;
+  }
+  const type = st.name;
+  const notes = tonic ? st.intervals.map((i) => (0, import_pitch_distance.transpose)(tonic, i)) : [];
+  const name = tonic ? tonic + " " + type : type;
+  return { ...st, name, type, tonic, notes };
+}
+var scale = get;
+function detect(notes, options = {}) {
+  const notesChroma = (0, import_pcset.chroma)(notes);
+  const tonic = (0, import_pitch_note.note)(options.tonic ?? notes[0] ?? "");
+  const tonicChroma = tonic.chroma;
+  if (tonicChroma === void 0) {
+    return [];
+  }
+  const pitchClasses = notesChroma.split("");
+  pitchClasses[tonicChroma] = "1";
+  const scaleChroma = (0, import_collection.rotate)(tonicChroma, pitchClasses).join("");
+  const match = (0, import_scale_type.all)().find((scaleType) => scaleType.chroma === scaleChroma);
+  const results = [];
+  if (match) {
+    results.push(tonic.name + " " + match.name);
+  }
+  if (options.match === "exact") {
+    return results;
+  }
+  extended(scaleChroma).forEach((scaleName) => {
+    results.push(tonic.name + " " + scaleName);
+  });
+  return results;
+}
+function scaleChords(name) {
+  const s = get(name);
+  const inScale = (0, import_pcset.isSubsetOf)(s.chroma);
+  return (0, import_chord_type.all)().filter((chord) => inScale(chord.chroma)).map((chord) => chord.aliases[0]);
+}
+function extended(name) {
+  const chroma2 = (0, import_pcset.isChroma)(name) ? name : get(name).chroma;
+  const isSuperset = (0, import_pcset.isSupersetOf)(chroma2);
+  return (0, import_scale_type.all)().filter((scale2) => isSuperset(scale2.chroma)).map((scale2) => scale2.name);
+}
+function reduced(name) {
+  const isSubset = (0, import_pcset.isSubsetOf)(get(name).chroma);
+  return (0, import_scale_type.all)().filter((scale2) => isSubset(scale2.chroma)).map((scale2) => scale2.name);
+}
+function scaleNotes(notes) {
+  const pcset = notes.map((n) => (0, import_pitch_note.note)(n).pc).filter((x) => x);
+  const tonic = pcset[0];
+  const scale2 = (0, import_note.sortedUniqNames)(pcset);
+  return (0, import_collection.rotate)(scale2.indexOf(tonic), scale2);
+}
+function modeNames(name) {
+  const s = get(name);
+  if (s.empty) {
+    return [];
+  }
+  const tonics = s.tonic ? s.notes : s.intervals;
+  return (0, import_pcset.modes)(s.chroma).map((chroma2, i) => {
+    const modeName = get(chroma2).name;
+    return modeName ? [tonics[i], modeName] : ["", ""];
+  }).filter((x) => x[0]);
+}
+function getNoteNameOf(scale2) {
+  const names2 = Array.isArray(scale2) ? scaleNotes(scale2) : get(scale2).notes;
+  const chromas = names2.map((name) => (0, import_pitch_note.note)(name).chroma);
+  return (noteOrMidi) => {
+    const currNote = typeof noteOrMidi === "number" ? (0, import_pitch_note.note)((0, import_note.fromMidi)(noteOrMidi)) : (0, import_pitch_note.note)(noteOrMidi);
+    const height = currNote.height;
+    if (height === void 0) return void 0;
+    const chroma2 = height % 12;
+    const position = chromas.indexOf(chroma2);
+    if (position === -1) return void 0;
+    return (0, import_note.enharmonic)(currNote.name, names2[position]);
+  };
+}
+function rangeOf(scale2) {
+  const getName = getNoteNameOf(scale2);
+  return (fromNote, toNote) => {
+    const from = (0, import_pitch_note.note)(fromNote).height;
+    const to = (0, import_pitch_note.note)(toNote).height;
+    if (from === void 0 || to === void 0) return [];
+    return (0, import_collection.range)(from, to).map(getName).filter((x) => x);
+  };
+}
+function degrees(scaleName) {
+  const { intervals, tonic } = get(scaleName);
+  const transpose2 = (0, import_pitch_distance.tonicIntervalsTransposer)(intervals, tonic);
+  return (degree) => degree ? transpose2(degree > 0 ? degree - 1 : degree) : "";
+}
+function steps(scaleName) {
+  const { intervals, tonic } = get(scaleName);
+  return (0, import_pitch_distance.tonicIntervalsTransposer)(intervals, tonic);
+}
+var index_default = {
+  degrees,
+  detect,
+  extended,
+  get,
+  modeNames,
+  names,
+  rangeOf,
+  reduced,
+  scaleChords,
+  scaleNotes,
+  steps,
+  tokenize,
+  // deprecated
+  scale
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  degrees,
+  detect,
+  extended,
+  get,
+  modeNames,
+  names,
+  rangeOf,
+  reduced,
+  scale,
+  scaleChords,
+  scaleNotes,
+  steps,
+  tokenize
+});
+
+},{"@tonaljs/chord-type":7,"@tonaljs/collection":9,"@tonaljs/note":16,"@tonaljs/pcset":17,"@tonaljs/pitch-distance":18,"@tonaljs/pitch-note":20,"@tonaljs/scale-type":26}],28:[function(require,module,exports){
+"use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var time_signature_exports = {};
+__export(time_signature_exports, {
+  default: () => time_signature_default,
+  get: () => get,
+  names: () => names,
+  parse: () => parse
+});
+module.exports = __toCommonJS(time_signature_exports);
+var NONE = {
+  empty: true,
+  name: "",
+  upper: void 0,
+  lower: void 0,
+  type: void 0,
+  additive: []
+};
+var NAMES = ["4/4", "3/4", "2/4", "2/2", "12/8", "9/8", "6/8", "3/8"];
+function names() {
+  return NAMES.slice();
+}
+var REGEX = /^(\d*\d(?:\+\d)*)\/(\d+)$/;
+var CACHE = /* @__PURE__ */ new Map();
+function get(literal) {
+  const stringifiedLiteral = JSON.stringify(literal);
+  const cached = CACHE.get(stringifiedLiteral);
+  if (cached) {
+    return cached;
+  }
+  const ts = build(parse(literal));
+  CACHE.set(stringifiedLiteral, ts);
+  return ts;
+}
+function parse(literal) {
+  if (typeof literal === "string") {
+    const [_, up2, low] = REGEX.exec(literal) || [];
+    return parse([up2, low]);
+  }
+  const [up, down] = literal;
+  const denominator = +down;
+  if (typeof up === "number") {
+    return [up, denominator];
+  }
+  const list = up.split("+").map((n) => +n);
+  return list.length === 1 ? [list[0], denominator] : [list, denominator];
+}
+var time_signature_default = { names, parse, get };
+var isPowerOfTwo = (x) => Math.log(x) / Math.log(2) % 1 === 0;
+function build([up, down]) {
+  const upper = Array.isArray(up) ? up.reduce((a, b) => a + b, 0) : up;
+  const lower = down;
+  if (upper === 0 || lower === 0) {
+    return NONE;
+  }
+  const name = Array.isArray(up) ? `${up.join("+")}/${down}` : `${up}/${down}`;
+  const additive = Array.isArray(up) ? up : [];
+  const type = lower === 4 || lower === 2 ? "simple" : lower === 8 && upper % 3 === 0 ? "compound" : isPowerOfTwo(lower) ? "irregular" : "irrational";
+  return {
+    empty: false,
+    name,
+    type,
+    upper,
+    lower,
+    additive
+  };
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  get,
+  names,
+  parse
+});
+
+},{}],29:[function(require,module,exports){
+"use strict";
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var index_exports = {};
+__export(index_exports, {
+  default: () => index_default,
+  topNoteDiff: () => topNoteDiff
+});
+module.exports = __toCommonJS(index_exports);
+var import_note = __toESM(require("@tonaljs/note"));
+var topNoteDiff = (voicings, lastVoicing) => {
+  if (!lastVoicing || !lastVoicing.length) {
+    return voicings[0];
+  }
+  const topNoteMidi = (voicing) => import_note.default.midi(voicing[voicing.length - 1]) || 0;
+  const diff = (voicing) => Math.abs(topNoteMidi(lastVoicing) - topNoteMidi(voicing));
+  return voicings.sort((a, b) => diff(a) - diff(b))[0];
+};
+var index_default = {
+  topNoteDiff
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  topNoteDiff
+});
+
+},{"@tonaljs/note":16}],30:[function(require,module,exports){
+"use strict";
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all2) => {
+  for (var name in all2)
+    __defProp(target, name, { get: all2[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var index_exports = {};
+__export(index_exports, {
+  all: () => all,
+  default: () => index_default,
+  defaultDictionary: () => defaultDictionary,
+  lefthand: () => lefthand,
+  lookup: () => lookup,
+  triads: () => triads
+});
+module.exports = __toCommonJS(index_exports);
+var import_chord = __toESM(require("@tonaljs/chord"));
+
+// data.ts
+var triads = {
+  M: ["1P 3M 5P", "3M 5P 8P", "5P 8P 10M"],
+  m: ["1P 3m 5P", "3m 5P 8P", "5P 8P 10m"],
+  o: ["1P 3m 5d", "3m 5d 8P", "5d 8P 10m"],
+  aug: ["1P 3M 5A", "3M 5A 8P", "5A 8P 10M"]
+};
+var lefthand = {
+  m7: ["3m 5P 7m 9M", "7m 9M 10m 12P"],
+  "7": ["3M 6M 7m 9M", "7m 9M 10M 13M"],
+  "^7": ["3M 5P 7M 9M", "7M 9M 10M 12P"],
+  "69": ["3M 5P 6A 9M"],
+  m7b5: ["3m 5d 7m 8P", "7m 8P 10m 12d"],
+  "7b9": ["3M 6m 7m 9m", "7m 9m 10M 13m"],
+  // b9 / b13
+  "7b13": ["3M 6m 7m 9m", "7m 9m 10M 13m"],
+  // b9 / b13
+  o7: ["1P 3m 5d 6M", "5d 6M 8P 10m"],
+  "7#11": ["7m 9M 11A 13A"],
+  "7#9": ["3M 7m 9A"],
+  mM7: ["3m 5P 7M 9M", "7M 9M 10m 12P"],
+  m6: ["3m 5P 6M 9M", "6M 9M 10m 12P"]
+};
+var all = {
+  M: ["1P 3M 5P", "3M 5P 8P", "5P 8P 10M"],
+  m: ["1P 3m 5P", "3m 5P 8P", "5P 8P 10m"],
+  o: ["1P 3m 5d", "3m 5d 8P", "5d 8P 10m"],
+  aug: ["1P 3M 5A", "3M 5A 8P", "5A 8P 10M"],
+  m7: ["3m 5P 7m 9M", "7m 9M 10m 12P"],
+  "7": ["3M 6M 7m 9M", "7m 9M 10M 13M"],
+  "^7": ["3M 5P 7M 9M", "7M 9M 10M 12P"],
+  "69": ["3M 5P 6A 9M"],
+  m7b5: ["3m 5d 7m 8P", "7m 8P 10m 12d"],
+  "7b9": ["3M 6m 7m 9m", "7m 9m 10M 13m"],
+  // b9 / b13
+  "7b13": ["3M 6m 7m 9m", "7m 9m 10M 13m"],
+  // b9 / b13
+  o7: ["1P 3m 5d 6M", "5d 6M 8P 10m"],
+  "7#11": ["7m 9M 11A 13A"],
+  "7#9": ["3M 7m 9A"],
+  mM7: ["3m 5P 7M 9M", "7M 9M 10m 12P"],
+  m6: ["3m 5P 6M 9M", "6M 9M 10m 12P"]
+};
+
+// index.ts
+var defaultDictionary = lefthand;
+function lookup(symbol, dictionary = defaultDictionary) {
+  if (dictionary[symbol]) {
+    return dictionary[symbol];
+  }
+  const { aliases } = import_chord.default.get("C" + symbol);
+  const match = Object.keys(dictionary).find((_symbol) => aliases.includes(_symbol)) || "";
+  if (match !== void 0) {
+    return dictionary[match];
+  }
+  return void 0;
+}
+var index_default = {
+  lookup,
+  lefthand,
+  triads,
+  all,
+  defaultDictionary
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  all,
+  defaultDictionary,
+  lefthand,
+  lookup,
+  triads
+});
+
+},{"@tonaljs/chord":8}],31:[function(require,module,exports){
+"use strict";
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var index_exports = {};
+__export(index_exports, {
+  default: () => index_default,
+  get: () => get,
+  search: () => search,
+  sequence: () => sequence
+});
+module.exports = __toCommonJS(index_exports);
+var import_chord = __toESM(require("@tonaljs/chord"));
+var import_interval = __toESM(require("@tonaljs/interval"));
+var import_note = __toESM(require("@tonaljs/note"));
+var import_range = __toESM(require("@tonaljs/range"));
+var import_voice_leading = __toESM(require("@tonaljs/voice-leading"));
+var import_voicing_dictionary = __toESM(require("@tonaljs/voicing-dictionary"));
+var defaultRange = ["C3", "C5"];
+var defaultDictionary = import_voicing_dictionary.default.all;
+var defaultVoiceLeading = import_voice_leading.default.topNoteDiff;
+function get(chord, range = defaultRange, dictionary = defaultDictionary, voiceLeading = defaultVoiceLeading, lastVoicing) {
+  const voicings = search(chord, range, dictionary);
+  if (!lastVoicing || !lastVoicing.length) {
+    return voicings[0];
+  } else {
+    return voiceLeading(voicings, lastVoicing);
+  }
+}
+function search(chord, range = defaultRange, dictionary = import_voicing_dictionary.default.triads) {
+  const [tonic, symbol] = import_chord.default.tokenize(chord);
+  const sets = import_voicing_dictionary.default.lookup(symbol, dictionary);
+  if (!sets) {
+    return [];
+  }
+  const voicings = sets.map((intervals) => intervals.split(" "));
+  const notesInRange = import_range.default.chromatic(range);
+  return voicings.reduce((voiced, voicing) => {
+    const relativeIntervals = voicing.map(
+      (interval) => import_interval.default.subtract(interval, voicing[0]) || ""
+    );
+    const bottomPitchClass = import_note.default.transpose(tonic, voicing[0]);
+    const starts = notesInRange.filter((note) => import_note.default.chroma(note) === import_note.default.chroma(bottomPitchClass)).filter(
+      (note) => (import_note.default.midi(
+        import_note.default.transpose(
+          note,
+          relativeIntervals[relativeIntervals.length - 1]
+        )
+      ) || 0) <= (import_note.default.midi(range[1]) || 0)
+    ).map((note) => import_note.default.enharmonic(note, bottomPitchClass));
+    const notes = starts.map(
+      (start) => relativeIntervals.map((interval) => import_note.default.transpose(start, interval))
+    );
+    return voiced.concat(notes);
+  }, []);
+}
+function sequence(chords, range = defaultRange, dictionary = defaultDictionary, voiceLeading = defaultVoiceLeading, lastVoicing) {
+  const { voicings } = chords.reduce(
+    ({ voicings: voicings2, lastVoicing: lastVoicing2 }, chord) => {
+      const voicing = get(chord, range, dictionary, voiceLeading, lastVoicing2);
+      lastVoicing2 = voicing;
+      voicings2.push(voicing);
+      return { voicings: voicings2, lastVoicing: lastVoicing2 };
+    },
+    { voicings: [], lastVoicing }
+  );
+  return voicings;
+}
+var index_default = {
+  get,
+  search,
+  sequence
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  get,
+  search,
+  sequence
+});
+
+},{"@tonaljs/chord":8,"@tonaljs/interval":12,"@tonaljs/note":16,"@tonaljs/range":23,"@tonaljs/voice-leading":29,"@tonaljs/voicing-dictionary":30}],32:[function(require,module,exports){
 "use strict";
 
 (function (exports) {
@@ -3723,7 +3909,7 @@ exports.getRoot     = Translate.getRoot;
 
 }) (typeof exports === 'undefined' ? /* istanbul ignore next */ this['asciichart'] = {} : exports);
 
-},{}],26:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 ;(function (globalObject) {
   'use strict';
 
@@ -6651,9 +6837,9 @@ exports.getRoot     = Translate.getRoot;
   }
 })(this);
 
-},{}],27:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 
-},{}],28:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 // A library of seedable RNGs implemented in Javascript.
 //
 // Usage:
@@ -6715,7 +6901,7 @@ sr.tychei = tychei;
 
 module.exports = sr;
 
-},{"./lib/alea":29,"./lib/tychei":30,"./lib/xor128":31,"./lib/xor4096":32,"./lib/xorshift7":33,"./lib/xorwow":34,"./seedrandom":35}],29:[function(require,module,exports){
+},{"./lib/alea":36,"./lib/tychei":37,"./lib/xor128":38,"./lib/xor4096":39,"./lib/xorshift7":40,"./lib/xorwow":41,"./seedrandom":42}],36:[function(require,module,exports){
 // A port of an algorithm by Johannes Baagøe <baagoe@baagoe.com>, 2010
 // http://baagoe.com/en/RandomMusings/javascript/
 // https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
@@ -6831,7 +7017,7 @@ if (module && module.exports) {
 
 
 
-},{}],30:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 // A Javascript implementaion of the "Tyche-i" prng algorithm by
 // Samuel Neves and Filipe Araujo.
 // See https://eden.dei.uc.pt/~sneves/pubs/2011-snfa2.pdf
@@ -6936,7 +7122,7 @@ if (module && module.exports) {
 
 
 
-},{}],31:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 // A Javascript implementaion of the "xor128" prng algorithm by
 // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
 
@@ -7019,7 +7205,7 @@ if (module && module.exports) {
 
 
 
-},{}],32:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 // A Javascript implementaion of Richard Brent's Xorgens xor4096 algorithm.
 //
 // This fast non-cryptographic random number generator is designed for
@@ -7167,7 +7353,7 @@ if (module && module.exports) {
   (typeof define) == 'function' && define   // present with an AMD loader
 );
 
-},{}],33:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 // A Javascript implementaion of the "xorshift7" algorithm by
 // François Panneton and Pierre L'ecuyer:
 // "On the Xorgshift Random Number Generators"
@@ -7266,7 +7452,7 @@ if (module && module.exports) {
 );
 
 
-},{}],34:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 // A Javascript implementaion of the "xorwow" prng algorithm by
 // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
 
@@ -7354,7 +7540,7 @@ if (module && module.exports) {
 
 
 
-},{}],35:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 /*
 Copyright 2019 David Bau.
 
@@ -7609,7 +7795,130 @@ if ((typeof module) == 'object' && module.exports) {
   Math    // math: package containing random, pow, and seedrandom
 );
 
-},{"crypto":27}],36:[function(require,module,exports){
+},{"crypto":34}],43:[function(require,module,exports){
+"use strict";
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __reExport = (target, mod, secondTarget) => (__copyProps(target, mod, "default"), secondTarget && __copyProps(secondTarget, mod, "default"));
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// index.ts
+var index_exports = {};
+__export(index_exports, {
+  AbcNotation: () => AbcNotation,
+  Array: () => Array,
+  Chord: () => Chord,
+  ChordDictionary: () => ChordDictionary,
+  ChordType: () => ChordType,
+  Collection: () => Collection,
+  Core: () => Core,
+  DurationValue: () => DurationValue,
+  Interval: () => Interval,
+  Key: () => Key,
+  Midi: () => Midi,
+  Mode: () => Mode,
+  Note: () => Note,
+  PcSet: () => PcSet,
+  Pcset: () => Pcset,
+  Progression: () => Progression,
+  Range: () => Range,
+  RhythmPattern: () => RhythmPattern,
+  RomanNumeral: () => RomanNumeral,
+  Scale: () => Scale,
+  ScaleDictionary: () => ScaleDictionary,
+  ScaleType: () => ScaleType,
+  TimeSignature: () => TimeSignature,
+  Tonal: () => Tonal,
+  VoiceLeading: () => VoiceLeading,
+  Voicing: () => Voicing,
+  VoicingDictionary: () => VoicingDictionary
+});
+module.exports = __toCommonJS(index_exports);
+var AbcNotation = __toESM(require("@tonaljs/abc-notation"));
+var Array = __toESM(require("@tonaljs/array"));
+var Chord = __toESM(require("@tonaljs/chord"));
+var ChordType = __toESM(require("@tonaljs/chord-type"));
+var Collection = __toESM(require("@tonaljs/collection"));
+var DurationValue = __toESM(require("@tonaljs/duration-value"));
+var Interval = __toESM(require("@tonaljs/interval"));
+var Key = __toESM(require("@tonaljs/key"));
+var Midi = __toESM(require("@tonaljs/midi"));
+var Mode = __toESM(require("@tonaljs/mode"));
+var Note = __toESM(require("@tonaljs/note"));
+var Pcset = __toESM(require("@tonaljs/pcset"));
+var Progression = __toESM(require("@tonaljs/progression"));
+var Range = __toESM(require("@tonaljs/range"));
+var RhythmPattern = __toESM(require("@tonaljs/rhythm-pattern"));
+var RomanNumeral = __toESM(require("@tonaljs/roman-numeral"));
+var Scale = __toESM(require("@tonaljs/scale"));
+var ScaleType = __toESM(require("@tonaljs/scale-type"));
+var TimeSignature = __toESM(require("@tonaljs/time-signature"));
+var VoiceLeading = __toESM(require("@tonaljs/voice-leading"));
+var Voicing = __toESM(require("@tonaljs/voicing"));
+var VoicingDictionary = __toESM(require("@tonaljs/voicing-dictionary"));
+__reExport(index_exports, require("@tonaljs/core"), module.exports);
+var Core = __toESM(require("@tonaljs/core"));
+var Tonal = Core;
+var PcSet = Pcset;
+var ChordDictionary = ChordType;
+var ScaleDictionary = ScaleType;
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  AbcNotation,
+  Array,
+  Chord,
+  ChordDictionary,
+  ChordType,
+  Collection,
+  Core,
+  DurationValue,
+  Interval,
+  Key,
+  Midi,
+  Mode,
+  Note,
+  PcSet,
+  Pcset,
+  Progression,
+  Range,
+  RhythmPattern,
+  RomanNumeral,
+  Scale,
+  ScaleDictionary,
+  ScaleType,
+  TimeSignature,
+  Tonal,
+  VoiceLeading,
+  Voicing,
+  VoicingDictionary,
+  ...require("@tonaljs/core")
+});
+
+},{"@tonaljs/abc-notation":4,"@tonaljs/array":5,"@tonaljs/chord":8,"@tonaljs/chord-type":7,"@tonaljs/collection":9,"@tonaljs/core":10,"@tonaljs/duration-value":11,"@tonaljs/interval":12,"@tonaljs/key":13,"@tonaljs/midi":14,"@tonaljs/mode":15,"@tonaljs/note":16,"@tonaljs/pcset":17,"@tonaljs/progression":22,"@tonaljs/range":23,"@tonaljs/rhythm-pattern":24,"@tonaljs/roman-numeral":25,"@tonaljs/scale":27,"@tonaljs/scale-type":26,"@tonaljs/time-signature":28,"@tonaljs/voice-leading":29,"@tonaljs/voicing":31,"@tonaljs/voicing-dictionary":30}],44:[function(require,module,exports){
 //==========================================================================
 // gen-basic.js
 // part of 'total-serialism' Package
@@ -8065,7 +8374,7 @@ function spacing(...a){
 exports.space = spacing;
 exports.spacing = spacing;
 exports.spacingBeat = spacing;
-},{"./utility":42}],37:[function(require,module,exports){
+},{"./utility":50}],45:[function(require,module,exports){
 //==============================================================================
 // gen-complex.js
 // part of 'total-serialism' Package
@@ -8650,7 +8959,7 @@ class Automaton {
 	}
 }
 exports.Automaton = Automaton;
-},{"./transform":40,"./utility":42,"bignumber.js":26}],38:[function(require,module,exports){
+},{"./transform":48,"./utility":50,"bignumber.js":33}],46:[function(require,module,exports){
 //=======================================================================
 // gen-stochastic.js
 // part of 'total-serialism' Package
@@ -9280,7 +9589,7 @@ function reviver(key, value) {
 	}
 	return value;
 }
-},{"./gen-basic.js":36,"./statistic":39,"./utility":42,"seedrandom":28}],39:[function(require,module,exports){
+},{"./gen-basic.js":44,"./statistic":47,"./utility":50,"seedrandom":35}],47:[function(require,module,exports){
 //=======================================================================
 // statistic.js
 // part of 'total-serialism' Package
@@ -9490,7 +9799,7 @@ exports.gcd = gcd;
 exports.leastCommonMultiple = lcm;
 exports.lcm = lcm;
 
-},{"./transform":40,"./utility":42}],40:[function(require,module,exports){
+},{"./transform":48,"./utility":50}],48:[function(require,module,exports){
 //=======================================================================
 // transform.js
 // part of 'total-serialism' Package
@@ -10120,7 +10429,7 @@ exports.stretch = stretch;
 exports.unique = unique;
 exports.thin = unique;
 
-},{"./statistic":39,"./utility":42}],41:[function(require,module,exports){
+},{"./statistic":47,"./utility":50}],49:[function(require,module,exports){
 //==============================================================================
 // translate.js
 // part of 'total-serialism' Package
@@ -10134,9 +10443,9 @@ exports.thin = unique;
 //==============================================================================
 
 // require API's
-const { Note, Scale } = require('@tonaljs/tonal');
-const { Chord } = require('@tonaljs/tonal');
-const { Progression } = require('@tonaljs/tonal');
+const { Note, Scale } = require('tonal');
+const { Chord } = require('tonal');
+const { Progression } = require('tonal');
 
 // require Scale Mappings
 // const Scales = require('../data/scales.json');
@@ -11060,7 +11369,7 @@ class Scala {
 }
 exports.Scala = Scala;
 
-},{"../data/scldb.json":1,"../data/tones.json":2,"./transform":40,"./utility":42,"@tonaljs/tonal":24}],42:[function(require,module,exports){
+},{"../data/scldb.json":1,"../data/tones.json":2,"./transform":48,"./utility":50,"tonal":43}],50:[function(require,module,exports){
 //====================================================================
 // utility.js
 // part of 'total-serialism' Package
@@ -11667,5 +11976,5 @@ function draw(a=[0], prefs){
 	return p;	
 }
 exports.draw = draw;
-},{"asciichart":25}]},{},[3])(3)
+},{"asciichart":32}]},{},[3])(3)
 });

@@ -11,9 +11,9 @@
 //==============================================================================
 
 // require API's
-const { Note, Scale } = require('@tonaljs/tonal');
-const { Chord } = require('@tonaljs/tonal');
-const { Progression } = require('@tonaljs/tonal');
+const { Note, Scale } = require('tonal');
+const { Chord } = require('tonal');
+const { Progression } = require('tonal');
 
 // require Scale Mappings
 // const Scales = require('../data/scales.json');
