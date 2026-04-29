@@ -1162,7 +1162,7 @@ function testTranslate(){
 		expect(TL.toScale([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])).toStrictEqual([ 0, 0, 2, 3, 3, 5,  5, 7, 8, 8, 8, 11 ]);
 	});
 	test("TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11])", () => {
-		TL.setScale('harmonic_minor', 'd');
+		TL.setScale('minor_harmonic', 'd');
 		expect(TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11])).toStrictEqual([ 2, [ 2, 4, 5 ], [ 5, 7, [ 7, 9 ], 10 ], 10, 10, 13 ]);
 	});
 	test("TL.toScale([0, [1, 2, 3], [4, 5, [6, 7], 8], 9, 10, 11], 'harmonic_minor')", () => {
