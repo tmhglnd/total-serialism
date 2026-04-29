@@ -30,12 +30,12 @@ let regex = regjsgen.generate(ast);
 
 ## Support
 
-Tested in Node.js 10, 12, 14, and 16.<br>
-Compatible with regjsparser v0.7.0’s AST.
+Tested on Node.js 16 and 18.<br>
+Compatible with regjsparser v0.10.0’s AST.
 
 
 [ci]: https://github.com/bnjmnt4n/regjsgen/actions
 [ci-img]: https://github.com/bnjmnt4n/regjsgen/workflows/Node.js%20CI/badge.svg
 [codecov]: https://codecov.io/gh/bnjmnt4n/regjsgen
-[codecov-img]: https://codecov.io/gh/bnjmnt4n/regjsgen/branch/master/graph/badge.svg
+[codecov-img]: https://codecov.io/gh/bnjmnt4n/regjsgen/branch/main/graph/badge.svg
 [regjsparser]: https://github.com/jviereck/regjsparser
