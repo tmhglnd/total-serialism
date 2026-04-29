@@ -56,10 +56,10 @@
   },
   "homepage": "https://github.com/tmhglnd/serialism.js#readme",
   "dependencies": {
-    "@tonaljs/tonal": "^3.7.5",
     "asciichart": "^1.5.25",
     "bignumber.js": "^9.0.2",
-    "seedrandom": "^3.0.5"
+    "seedrandom": "^3.0.5",
+    "tonal": "^6.4.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.6",
