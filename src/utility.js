@@ -388,15 +388,21 @@ function arrayCalc(a=0, v=0, func=()=>{return a;}){
 }
 exports.arrayCalc = arrayCalc;
 
-// Call a list function with provided arguments
-// The difference is that first all the possible combinations of the arrays
-// are calculated allowing arrays as arguments to generate
-// multiple versions of the function and joining them together afterwards
-//
-// @params {Function} -> The function name to use
-// @params {Arguments} -> The arguments applied to the function
-// @return {Anything} -> The result of the multi evaluated function
-// 
+/**
+ * Call a list function repeatedly with provided arguments.
+ * The difference with arrayCalc that first all the possible combinations of 
+ * values between the arrays are calculated allowing arrays as arguments to 
+ * generate multiple versions of the function and joining them together 
+ * afterwards, so that:
+ * multiEval(add, [ [A, B, C], [D, E] ]) = [ A+D, B+E, C+D, A+E, B+D, C+E ]
+ * 
+ * @param {Function} function -> Reference to a function
+ * @param {Array} arguments -> An array of arguments applied to the function
+ * @return {*}
+ * @example
+ * Util.multiEval(Util.add, [1, 2, 3], [10, 100])
+ * //=> [ 11, 102, 13, 101, 12, 103 ]
+ */
 function multiEval(func, ...a){
 	// calculate the array combinations
 	let args = arrayCombinations(...a);
@@ -409,16 +415,19 @@ function multiEval(func, ...a){
 exports.multiEval = multiEval;
 exports.multiCall = multiEval;
 
-// Alternate through 2 or multiple lists consecutively
-// The output length is the lowest common multiple of the input lists
-// so that every combination of consecutive values is included
-// until they all appeared an integer multiple of times.
-// This function is used to allow arrays as input for Generators
-// And for the step function for algorithmic composition
-//
-// @param {Array0, Array1, ..., Array-n} -> arrays to alternate/interleave
-// @return {Array} -> outputs a 2D array of the results
-//
+/**
+ * Alternate stepwise through 2 or multiple arrays. The output length is the 
+ * lowest common multiple of the input arrays so that every combination of 
+ * consecutive values is included until they all appeared. This function can be 
+ * used to allow arrays as input for Generator functions. And for the step 
+ * function as algorithmic composition technique.
+ * 
+ * @param {...Array} arrays - Multiple arrays as input
+ * @return {Array}
+ * @example
+ * Util.arrayCombinations([1, 2, 3], [10, 20])
+ * //=> [ [ 1, 10 ], [ 2, 20 ], [ 3, 10 ], [ 1, 20 ], [ 2, 10 ], [ 3, 20 ] ]
+*/
 function arrayCombinations(...arrs){
 	// make sure all items are an array of at least 1 item
 	arrs = arrs.map(a => toArray(a));
@@ -456,12 +465,17 @@ function _lcm(a, b){
 	return Math.abs(a) * ( Math.abs(b) / _gcd(a, b) );
 }
 
-// Calculate the Greatest Common Divisor from an array
-// The function uses the algorithm described in _gcd() above
-// 
-// @param {Array} -> array to calculate on
-// @return {Int} -> greatest common divisor
-// 
+/**
+ * Calculate the Greatest Common Divisor from an array
+ * The function uses the algorithm described in: 
+ * https://en.wikipedia.org/wiki/Greatest_common_divisor
+ * 
+ * @param {Array} array
+ * @returns {Number}
+ * @example 
+ * Util.gcd([8, 10, 14])
+ * //=> 2
+ */
 function gcd(a=[1]){
 	a = toArray(a);
 	// not enough values to calculate gcd
@@ -477,12 +491,17 @@ function gcd(a=[1]){
 exports.greatestCommonDivisor = gcd;
 exports.gcd = gcd;
 
-// Calculate the Least Common Multiple from an array
-// the function uses the algorithm described in _lcd() above
-//
-// @param {Array} -> array to calculate on
-// @return {Int} -> least common multiple
-// 
+/**
+ * Calculate the Least Common Multiple from an array. 
+ * The function uses the algorithm described in:
+ * https://en.wikipedia.org/wiki/Least_common_multiple
+ * 
+ * @param {Array} array 
+ * @returns {Number}
+ * @example
+ * Util.lcm([2, 3, 4])
+ * //=> 12
+ */
 function lcm(a=[1]){
 	a = toArray(a);
 	// not enough values to calculate lcm
