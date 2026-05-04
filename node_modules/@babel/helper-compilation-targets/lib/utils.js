@@ -11,8 +11,8 @@ exports.semverMin = semverMin;
 exports.semverify = semverify;
 var _semver = require("semver");
 var _helperValidatorOption = require("@babel/helper-validator-option");
-var _targets = require("./targets");
-const versionRegExp = /^(\d+|\d+.\d+)$/;
+var _targets = require("./targets.js");
+const versionRegExp = /^(?:\d+|\d(?:\d?[^\d\n\r\u2028\u2029]\d+|\d{2,}(?:[^\d\n\r\u2028\u2029]\d+)?))$/;
 const v = new _helperValidatorOption.OptionValidator("@babel/helper-compilation-targets");
 function semverMin(first, second) {
   return first && _semver.lt(first, second) ? first : second;

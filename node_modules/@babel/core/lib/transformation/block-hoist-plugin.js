@@ -11,7 +11,7 @@ function _traverse() {
   };
   return data;
 }
-var _plugin = require("../config/plugin");
+var _plugin = require("../config/plugin.js");
 let LOADED_PLUGIN;
 const blockHoistPlugin = {
   name: "internal.blockHoist",
@@ -20,26 +20,33 @@ const blockHoistPlugin = {
       exit({
         node
       }) {
-        const {
-          body
-        } = node;
-        let max = Math.pow(2, 30) - 1;
-        let hasChange = false;
-        for (let i = 0; i < body.length; i++) {
-          const n = body[i];
-          const p = priority(n);
-          if (p > max) {
-            hasChange = true;
-            break;
-          }
-          max = p;
-        }
-        if (!hasChange) return;
-        node.body = stableSort(body.slice());
+        node.body = performHoisting(node.body);
+      }
+    },
+    SwitchCase: {
+      exit({
+        node
+      }) {
+        node.consequent = performHoisting(node.consequent);
       }
     }
   }
 };
+function performHoisting(body) {
+  let max = Math.pow(2, 30) - 1;
+  let hasChange = false;
+  for (let i = 0; i < body.length; i++) {
+    const n = body[i];
+    const p = priority(n);
+    if (p > max) {
+      hasChange = true;
+      break;
+    }
+    max = p;
+  }
+  if (!hasChange) return body;
+  return stableSort(body.slice());
+}
 function loadBlockHoistPlugin() {
   if (!LOADED_PLUGIN) {
     LOADED_PLUGIN = new _plugin.default(Object.assign({}, blockHoistPlugin, {
