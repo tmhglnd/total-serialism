@@ -517,13 +517,18 @@ function lcm(a=[1]){
 exports.leastCommonMultiple = lcm;
 exports.lcm = lcm;
 
-// flatten a multidimensional array. Optionally set the depth
-// for the flattening
-//
-// @param {Array} -> array to flatten
-// @param {Number} -> depth of flatten
-// @return {Array} -> flattened array
-//
+/**
+ * Flatten a multidimensional array. Optionally set the depth for the 
+ * flattening.
+ * 
+ * @alias flat
+ * @param {Array} array - array to flatten
+ * @param {Number} depth - depth of flatten (default=Infinity)
+ * @returns {Array}
+ * @example
+ * Util.flat([1, [2, 3, [ 4 ], 5], 6]);
+ * //=> [ 1, 2, 3, 4, 5, 6 ] 
+ * */
 function flatten(a=[0], depth=Infinity){
 	return toArray(a).flat(depth);
 }
