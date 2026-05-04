@@ -40,14 +40,21 @@ function fromArray(a, i=0){
 }
 exports.fromArray = fromArray;
 
-// Return the length/size of an array if the argument is an array
-// if argument is a number return the number as integer
-// if argument is not a number return 1
-// The method can be used to input arrays as arguments for other functions
-// 
-// @param {Value/Array} -> input value to check
-// @return {Int} -> the array length
-// 
+/**
+ * Return the length/size of an array if the argument is an array if argument 
+ * is a number. Return the number as integer if argument is not a number return 
+ * 1. The method can be used to input arrays as arguments for other functions
+ * 
+ * @param {Number[]|Number} input - Array to check size of
+ * @returns {Number}
+ * @alias size
+ * @example
+ * Util.size([1, 2, 3, 4])
+ * //=> 4
+ * 
+ * Util.size(5)
+ * //=> 5
+ */
 function length(a){
 	if (Array.isArray(a)){
 		// return array length if argument is array
@@ -223,41 +230,53 @@ function lerp(a=0, v=0, f=0.5){
 exports.lerp = lerp;
 exports.mix = lerp;
 
-// add 1 or more values to an array, 
-// preserves listlength of first argument
-// arguments are applied sequentially
-// 
-// @param {Number/Array} -> input to be added to
-// @param {Number/Array} -> value to add
-// @return {Number/Array}
-// 
+/** 
+ * Add 2 arrays, preserves the listlength of first argument.
+ * Arguments are applied sequentially so that: 
+ * add([A, B, C], [D, E]) = [A + D, B + E, C + D]
+ * 
+ * @param {Number|Number[]} left - left input
+ * @param {Number|Number[]} right - right input (optional, default=0)
+ * @returns {Number|Number[]}
+ * @example
+ * Util.add([1, 2, 3], [10, 100])
+ * //=> [ 11, 102, 13 ]
+ */
 function add(a=0, v=0){
 	return arrayCalc(a, v, (a, b) => { return a + b });
 }
 exports.add = add;
 
-// subtract 1 or more values from an array
-// preserves listlength of first argument
-// arguments are applied sequentially
-// 
-// @param {Number/Array} -> input to be subtracted from
-// @param {Number/Array} -> value to subtract
-// @return {Number/Array}
-// 
+/** 
+ * Subtract 2 arrays, preserves the listlength of first argument.
+ * Arguments are applied sequentially so that: 
+ * sub([A, B, C], [D, E]) = [A - D, B - E, C - D]
+ * 
+ * @param {Number|Number[]} left - left input
+ * @param {Number|Number[]} right - right input (optional, default=0)
+ * @returns {Number|Number[]}
+ * @example
+ * Util.sub([10, 20, 30], [1, 10])
+ * //=> [ 9, 10, 29 ]
+ */
 function subtract(a=0, v=0){
 	return arrayCalc(a, v, (a, b) => { return a - b });
 }
 exports.subtract = subtract;
 exports.sub = subtract;
 
-// multiply 1 or more values from an array
-// preserves listlength of first argument
-// arguments are applied sequentially
-// 
-// @param {Number/Array} -> input to be multiplied
-// @param {Number/Array} -> value to multiply with
-// @return {Number/Array}
-// 
+/** 
+ * Multiply 2 arrays, preserves the listlength of first argument.
+ * Arguments are applied sequentially so that: 
+ * mul([A, B, C], [D, E]) = [A * D, B * E, C * D]
+ * 
+ * @param {Number|Number[]} left - left input
+ * @param {Number|Number[]} right - right input (optional, default=1)
+ * @returns {Number|Number[]}
+ * @example
+ * Util.mul([1, 2, 3], [10, 100])
+ * //=> [ 10, 200, 30 ]
+ */
 function multiply(a=0, v=1){
 	return arrayCalc(a, v, (a, b) => { return a * b });
 }
@@ -265,25 +284,32 @@ exports.multiply = multiply;
 exports.mult = multiply;
 exports.mul = multiply;
 
-// divide 1 or more values from an array
-// preserves listlength of first argument
-// arguments are applied sequentially
-// 
-// @param {Number/Array} -> input to be divided
-// @param {Number/Array} -> value to divide with
-// @return {Number/Array}
-// 
+/** 
+ * Divide 2 arrays, preserves the listlength of first argument.
+ * Arguments are applied sequentially so that: 
+ * div([A, B, C], [D, E]) = [A / D, B / E, C / D]
+ * 
+ * @param {Number|Number[]} left - left input
+ * @param {Number|Number[]} right - right input (optional, default=1)
+ * @returns {Number|Number[]}
+ * @example
+ * Util.div([1, 2, 3], [10, 100])
+ * //=> [ 0.1, 0.02, 0.3 ]
+ */
 function divide(a=0, v=1){
 	return arrayCalc(a, v, (a, b) => { return a / b });
 }
 exports.divide = divide;
 exports.div = divide;
 
-/**
- * Return the remainder after division. Also works in the negative direction, so wrap starts at 0
- * @param {Number|Number[]} input - input value or array
+/** 
+ * Return the remainder after division. Also works in the negative direction, 
+ * where the wrap starts at 0. Arguments are applied sequentially so that: 
+ * mod([A, B, C], [D, E]) = [A % D, B % E, C % D]
+ * 
+ * @param {Number|Number[]} left - left input
  * @param {Number|Number[]} modulus - modulus/divisor (optional, default=12)
- * @returns {Number|Number[]} - remainder after division
+ * @returns {Number|Number[]}
  * @example
  * Util.mod([-2, [4, [3, 7]]], 5);
  * //=> [ 3, [ 4, [ 3, 2 ] ] ]
@@ -293,35 +319,51 @@ function mod(a=0, v=12){
 }
 exports.mod = mod;
 
-// Raise a value of one array to the power of the value
-// from the right hand array
-// 
-// @param {Number/Array} -> base
-// @param {Number/Array} -> exponent 
-// @return {Number/Array} -> result from function
-// 
+/** 
+ * Raise a value of one array to the power of the value from the right hand 
+ * array. Arguments are applied sequentially so that: 
+ * mod([A, B, C], [D, E]) = [A ^ D, B ^ E, C ^ D]
+ * 
+ * @param {Number|Number[]} left - left input
+ * @param {Number|Number[]} exponent - right input (optional, default=1)
+ * @returns {Number|Number[]}
+ * @example
+ * Util.pow([2, 3, 4], [2, 3])
+ * //=> [ 4, 27, 16 ]
+ */
 function pow(a=0, v=1){
 	return arrayCalc(a, v, (a, b) => { return Math.pow(a, b) });
 }
 exports.pow = pow;
 
-// Return the squareroot of an array of values
-// 
-// @param {Number/Array} -> values
-// @return {Number/Array} -> result
-// 
+/** 
+ * Return the squareroot of an array of values.
+ * 
+ * @param {Number|Number[]} input - input
+ * @returns {Number|Number[]}
+ * @example
+ * Util.sqrt([4, 9, 25])
+ * //=> [ 2, 3, 5 ]
+ */
 function sqrt(a=0){
 	return arrayCalc(a, 0, (a) => { return Math.sqrt(a) });
 }
 exports.sqrt = sqrt;
 
-// Evaluate a function for a multi-dimensional array
-// 
-// @params {Array|Number} -> left hand input array
-// @params {Array|Number} -> right hand input array
-// @params {Function} -> function to evaluate
-// @return {Array|Number} -> result of evaluation
-// 
+/** 
+ * Evaluate a user-defined function for a multi-dimensional array, preserving 
+ * the listlength of the first argument. Arguments are applied sequentially so 
+ * that: 
+ * arrayCalc([A, B, C], [D, E], func()) = [func(A, D), func(B, E), func(C, D)]
+ * 
+ * @param {Number|Number[]} left - left hand input (optional, default=0)
+ * @param {Number|Number[]} right - right hand input (optional, default=0)
+ * @param {Function} function - function to apply to arguments
+ * @returns {Number|Number[]}
+ * @example
+ * Util.arrayCalc([2, 4, 6], [10, 20], (a, b) => { return a * a + b })
+ * //=> [ 14, 36, 46 ]
+ */
 function arrayCalc(a=0, v=0, func=()=>{return a;}){
 	// if righthand side is array
 	if (Array.isArray(v)){
